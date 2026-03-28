@@ -3,15 +3,15 @@
 ## Commands
 
 ```bash
-bun run dev      # Dev server on port 8000
+bun run dev      # Dev server on port 3333
 bun run build    # Production build
 bun run start    # Run production build
 ```
 
 ## Key Pages
 
-- `/` — Landing page
-- `/s/[uuid]` — Shareable artifact viewer (public, no auth)
+- `/` — Landing page (`src/app/index.tsx`)
+- `/s/$uuid` — Shareable artifact viewer (`src/app/s/$uuid.tsx`, public, no auth)
 
 ## Artifact Viewers
 
@@ -25,4 +25,4 @@ bun run start    # Run production build
 
 ## Environment Variables
 
-See `.env.sample`. Set `NEXT_PUBLIC_API_URL` to point at the backend.
+See `.env.sample`. Set `VITE_API_URL` to point at the backend.

@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import { getArtifactContentUrl } from '@/lib/api';
 import type { ArtifactMetadata } from '@/lib/api';

@@ -1,5 +1,3 @@
-'use client';
-
 export function HtmlViewer({ content }: { content: string }) {
   return (
     <iframe

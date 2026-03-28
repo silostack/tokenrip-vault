@@ -1,5 +1,3 @@
-'use client';
-
 import { Download } from 'lucide-react';
 
 export function DownloadFallback({ src, filename }: { src: string; filename?: string }) {

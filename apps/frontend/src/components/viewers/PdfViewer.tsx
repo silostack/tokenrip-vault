@@ -1,5 +1,3 @@
-'use client';
-
 export function PdfViewer({ src }: { src: string }) {
   return (
     <iframe
