@@ -8,3 +8,4 @@ dist
 *.tsbuildinfo
 .idea
 uploads
+ecosystem.config.cjs
