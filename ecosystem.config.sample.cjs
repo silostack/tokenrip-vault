@@ -15,10 +15,10 @@ module.exports = {
     },
     {
       name: "tokenrip-frontend",
-      script: "node_modules/.bin/next",
-      args: "start --port 3333",
-      interpreter: "none",
+      script: process.env.HOME + "/.bun/bin/bun",
+      args: "--bun next start --port 3333",
       cwd: "./apps/frontend",
+      exec_mode: "fork",
       env_file: ".env",
       env: {
         NODE_ENV: "production",

@@ -14,7 +14,6 @@ bun run build
 echo "==> Building backend..."
 cd "$ROOT_DIR/apps/backend"
 bun run build
-find dist -name '*.map' -delete
 
 echo "==> Building frontend..."
 cd "$ROOT_DIR/apps/frontend"
