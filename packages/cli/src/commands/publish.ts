@@ -30,13 +30,13 @@ export async function publish(
   const content = fs.readFileSync(absPath, 'utf-8');
   const client = createHttpClient({ baseUrl: getApiUrl(config), apiKey });
 
-  const { data } = await client.post('/api/artifacts', {
+  const { data } = await client.post('/v0/artifacts', {
     type: options.type,
     content,
     title: options.title || path.basename(absPath),
   });
 
-  const baseUrl = getApiUrl(config).replace(/\/api$/, '').replace(/:\d+$/, ':8000');
+  const baseUrl = getApiUrl(config).replace(/:\d+$/, ':8000');
   outputSuccess({
     id: data.data.id,
     url: `${baseUrl}/s/${data.data.id}`,

@@ -12,12 +12,12 @@ bun run start:prod     # Run production build
 
 | Method | Path | Auth | Description |
 |---|---|---|---|
-| POST | `/api/artifacts` | API key | Upload file (multipart) or publish content (JSON) |
-| GET | `/api/artifacts/:uuid` | Public | Get artifact metadata |
-| GET | `/api/artifacts/:uuid/content` | Public | Stream artifact content |
-| POST | `/api/auth/keys` | Public | Create a new API key |
-| POST | `/api/auth/revoke` | API key | Revoke current API key |
-| GET | `/api/health` | Public | Health check |
+| POST | `/v0/artifacts` | API key | Upload file (multipart) or publish content (JSON) |
+| GET | `/v0/artifacts/:uuid` | Public | Get artifact metadata |
+| GET | `/v0/artifacts/:uuid/content` | Public | Stream artifact content |
+| POST | `/v0/auth/keys` | Public | Create a new API key |
+| POST | `/v0/auth/revoke` | API key | Revoke current API key |
+| GET | `/v0/health` | Public | Health check |
 
 ## Database
 

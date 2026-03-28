@@ -34,13 +34,13 @@ export async function upload(filePath: string, options: { title?: string }): Pro
     form.append('title', path.basename(absPath));
   }
 
-  const { data } = await client.post('/api/artifacts', form, {
+  const { data } = await client.post('/v0/artifacts', form, {
     headers: form.getHeaders(),
     maxContentLength: Infinity,
     maxBodyLength: Infinity,
   });
 
-  const baseUrl = getApiUrl(config).replace(/\/api$/, '').replace(/:\d+$/, ':8000');
+  const baseUrl = getApiUrl(config).replace(/:\d+$/, ':8000');
   outputSuccess({
     id: data.data.id,
     url: `${baseUrl}/s/${data.data.id}`,

@@ -15,7 +15,7 @@ import { Request, Response } from 'express';
 import { Public } from '../auth/public.decorator';
 import { ArtifactService } from '../service/artifact.service';
 
-@Controller('api/artifacts')
+@Controller('v0/artifacts')
 export class ArtifactController {
   constructor(private readonly artifactService: ArtifactService) {}
 

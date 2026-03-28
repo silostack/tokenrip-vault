@@ -15,10 +15,10 @@ export interface ArtifactMetadata {
 }
 
 export async function getArtifact(uuid: string): Promise<ArtifactMetadata> {
-  const { data } = await client.get(`/api/artifacts/${uuid}`);
+  const { data } = await client.get(`/v0/artifacts/${uuid}`);
   return data.data;
 }
 
 export function getArtifactContentUrl(uuid: string): string {
-  return `${API_URL}/api/artifacts/${uuid}/content`;
+  return `${API_URL}/v0/artifacts/${uuid}/content`;
 }

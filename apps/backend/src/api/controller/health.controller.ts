@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { Public } from '../auth/public.decorator';
 
-@Controller('api/health')
+@Controller('v0/health')
 @Public()
 export class HealthController {
   @Get()

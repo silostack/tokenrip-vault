@@ -9,7 +9,7 @@ import {
 import { Public } from './public.decorator';
 import { AuthService } from './auth.service';
 
-@Controller('api/auth')
+@Controller('v0/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
