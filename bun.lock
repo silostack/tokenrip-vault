@@ -4,6 +4,9 @@
   "workspaces": {
     "": {
       "name": "tokenrip",
+      "dependencies": {
+        "express": "^5.2.1",
+      },
     },
     "apps/backend": {
       "name": "tokenrip-backend",
@@ -54,6 +57,7 @@
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-markdown": "^10.1.0",
+        "srvx": "^0.11.13",
         "tailwind-merge": "^3.4.0",
       },
       "devDependencies": {

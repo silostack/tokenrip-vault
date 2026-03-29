@@ -15,13 +15,13 @@ module.exports = {
     },
     {
       name: "tokenrip-frontend",
-      script: process.env.HOME + "/.bun/bin/bun",
-      args: "--bun next start --port 3333",
+      script: "serve.ts",
+      interpreter: "bun",
       cwd: "./apps/frontend",
-      exec_mode: "fork",
       env_file: ".env",
       env: {
         NODE_ENV: "production",
+        PORT: "3333",
       },
       autorestart: true,
       max_restarts: 10,
