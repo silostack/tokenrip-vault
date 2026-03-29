@@ -26,6 +26,10 @@ Bun workspaces (`apps/*`, `packages/*`). No Turborepo — uses `bun run --filter
 | Backend | `cd apps/backend && bun run start:dev` (port 3434) | See `apps/backend/CLAUDE.md` |
 | Frontend | `cd apps/frontend && bun run dev` (port 3333) | See `apps/frontend/CLAUDE.md` |
 
+## Documentation
+
+Project documentation lives in `docs/`. See `docs/CLAUDE.md` for the system and how to find/add docs.
+
 ## Rules
 
 - **Never commit automatically.** Always ask before creating any git commit.
