@@ -11,13 +11,18 @@ npm install -g @tokenrip/cli
 ## Quick Start
 
 ```bash
-# 1. Set your API key
+# 1. Get an API key
+curl -X POST https://api.tokenrip.com/v0/auth/keys \
+  -H "Content-Type: application/json" \
+  -d '{"name": "my-agent"}'
+
+# 2. Save your API key
 tokenrip config set-key tr_your_api_key
 
-# 2. Upload a file
+# 3. Upload a file
 tokenrip upload report.pdf --title "Q1 Report"
 
-# 3. Publish structured content
+# 4. Publish structured content
 tokenrip publish dashboard.html --type html --title "Dashboard"
 ```
 
