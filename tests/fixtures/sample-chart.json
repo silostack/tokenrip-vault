@@ -1,0 +1,7 @@
+{
+  "type": "bar",
+  "data": {
+    "labels": ["A", "B", "C"],
+    "values": [10, 20, 30]
+  }
+}

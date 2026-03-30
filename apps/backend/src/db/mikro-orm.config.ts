@@ -19,6 +19,7 @@ export default defineConfig({
   entities,
   driver: PostgreSqlDriver,
   debug: false,
+  allowGlobalContext: false,
   highlighter: new SqlHighlighter(),
   migrations: {
     disableForeignKeys: false,
