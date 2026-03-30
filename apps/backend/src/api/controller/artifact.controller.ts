@@ -14,13 +14,16 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Request, Response } from 'express';
 import { Public } from '../auth/public.decorator';
 import { ArtifactService } from '../service/artifact.service';
+import { ArtifactType } from '../../db/models/Artifact';
+
+const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_BYTES || String(10 * 1024 * 1024), 10); // default 10MB
 
 @Controller('v0/artifacts')
 export class ArtifactController {
   constructor(private readonly artifactService: ArtifactService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('file', { limits: { fileSize: MAX_FILE_SIZE } }))
   async create(
     @UploadedFile() file: Express.Multer.File | undefined,
     @Body() body: { type?: string; content?: string; title?: string; mimeType?: string },
@@ -38,11 +41,11 @@ export class ArtifactController {
     }
 
     if (body.content && body.type) {
-      if (!['markdown', 'html', 'chart'].includes(body.type)) {
+      if (!Object.values(ArtifactType).includes(body.type as ArtifactType) || body.type === ArtifactType.FILE) {
         throw new BadRequestException({ ok: false, error: 'INVALID_TYPE', message: 'type must be: markdown, html, or chart' });
       }
       const artifact = await this.artifactService.createFromContent({
-        type: body.type as 'markdown' | 'html' | 'chart',
+        type: body.type as ArtifactType,
         content: body.content,
         title: body.title,
         apiKeyId,

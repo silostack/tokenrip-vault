@@ -1,7 +1,9 @@
 import { Injectable, Inject, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { v4 } from 'uuid';
-import { Artifact } from '../../db/models/Artifact';
+import { Artifact, ArtifactType } from '../../db/models/Artifact';
+import { ArtifactRepository } from '../../db/repositories/artifact.repository';
 import { STORAGE_SERVICE, StorageService } from '../../storage/storage.interface';
 
 interface CreateFileDto {
@@ -11,59 +13,60 @@ interface CreateFileDto {
 }
 
 interface CreateContentDto {
-  type: 'markdown' | 'html' | 'chart';
+  type: ArtifactType;
   content: string;
   title?: string;
   apiKeyId: string;
 }
 
 const CONTENT_MIME_TYPES: Record<string, string> = {
-  markdown: 'text/markdown',
-  html: 'text/html',
-  chart: 'application/json',
+  [ArtifactType.MARKDOWN]: 'text/markdown',
+  [ArtifactType.HTML]: 'text/html',
+  [ArtifactType.CHART]: 'application/json',
 };
 
 @Injectable()
 export class ArtifactService {
   constructor(
     private readonly em: EntityManager,
+    @InjectRepository(Artifact) private readonly artifactRepository: ArtifactRepository,
     @Inject(STORAGE_SERVICE) private readonly storage: StorageService,
   ) {}
 
   async createFromFile(dto: CreateFileDto): Promise<Artifact> {
+    // Storage I/O outside transaction
     const storageKey = `${v4()}/${dto.file.originalname}`;
     await this.storage.save(storageKey, dto.file.buffer);
 
-    const artifact = new Artifact();
-    artifact.type = 'file';
-    artifact.mimeType = dto.file.mimetype;
-    artifact.storageKey = storageKey;
-    artifact.title = dto.title || dto.file.originalname;
-    artifact.apiKeyId = dto.apiKeyId;
+    // Tight transaction for DB writes
+    return await this.em.transactional(async () => {
+      const artifact = new Artifact(ArtifactType.FILE, storageKey, dto.apiKeyId);
+      artifact.mimeType = dto.file.mimetype;
+      artifact.title = dto.title || dto.file.originalname;
 
-    this.em.persist(artifact);
-    await this.em.flush();
-    return artifact;
+      this.artifactRepository.persistArtifact(artifact);
+      return artifact;
+    });
   }
 
   async createFromContent(dto: CreateContentDto): Promise<Artifact> {
+    // Storage I/O outside transaction
     const storageKey = `${v4()}/content`;
     await this.storage.save(storageKey, Buffer.from(dto.content, 'utf-8'));
 
-    const artifact = new Artifact();
-    artifact.type = dto.type;
-    artifact.mimeType = CONTENT_MIME_TYPES[dto.type];
-    artifact.storageKey = storageKey;
-    artifact.title = dto.title;
-    artifact.apiKeyId = dto.apiKeyId;
+    // Tight transaction for DB writes
+    return await this.em.transactional(async () => {
+      const artifact = new Artifact(dto.type, storageKey, dto.apiKeyId);
+      artifact.mimeType = CONTENT_MIME_TYPES[dto.type];
+      artifact.title = dto.title;
 
-    this.em.persist(artifact);
-    await this.em.flush();
-    return artifact;
+      this.artifactRepository.persistArtifact(artifact);
+      return artifact;
+    });
   }
 
   async findById(id: string): Promise<Artifact> {
-    const artifact = await this.em.findOne(Artifact, { id });
+    const artifact = await this.artifactRepository.findOne({ id });
     if (!artifact) throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Artifact not found' });
     return artifact;
   }

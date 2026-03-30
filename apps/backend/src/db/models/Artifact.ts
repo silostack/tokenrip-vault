@@ -1,7 +1,15 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, Enum, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
+import { ArtifactRepository } from '../repositories/artifact.repository';
 
-@Entity()
+export enum ArtifactType {
+  FILE = 'file',
+  MARKDOWN = 'markdown',
+  HTML = 'html',
+  CHART = 'chart',
+}
+
+@Entity({ repository: () => ArtifactRepository })
 export class Artifact {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4();
@@ -12,24 +20,30 @@ export class Artifact {
   @Property({ nullable: true, type: 'text' })
   description?: string;
 
-  @Property()
-  type!: 'file' | 'markdown' | 'html' | 'chart';
+  @Enum(() => ArtifactType)
+  type: ArtifactType;
 
   @Property({ nullable: true })
   mimeType?: string;
 
   @Property()
-  storageKey!: string;
+  storageKey: string;
 
   @Property({ type: 'json', nullable: true })
   metadata?: Record<string, unknown>;
 
   @Property()
-  apiKeyId!: string;
+  apiKeyId: string;
 
   @Property()
   createdAt: Date = new Date();
 
   @Property({ onUpdate: () => new Date() })
   updatedAt: Date = new Date();
+
+  constructor(type: ArtifactType, storageKey: string, apiKeyId: string) {
+    this.type = type;
+    this.storageKey = storageKey;
+    this.apiKeyId = apiKeyId;
+  }
 }

@@ -8,9 +8,12 @@ config({ path: envFile });
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  const isDev = process.env.NODE_ENV === 'development' || !process.env.NODE_ENV;
   const allowedOrigins = process.env.ALLOWED_ORIGINS
     ? process.env.ALLOWED_ORIGINS.split(',').map((origin) => origin.trim())
-    : true;
+    : isDev
+      ? true
+      : false;
 
   app.enableCors({
     origin: allowedOrigins,
