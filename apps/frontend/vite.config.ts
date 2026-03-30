@@ -4,7 +4,7 @@ import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  server: { port: 3333 },
+  server: { port: Number(process.env.PORT) || 3333 },
   resolve: { tsconfigPaths: true },
   plugins: [
     tailwindcss(),

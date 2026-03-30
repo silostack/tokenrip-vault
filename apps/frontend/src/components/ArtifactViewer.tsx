@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import api from '@/utils/api';
 import { getArtifactContentUrl } from '@/lib/api';
 import type { ArtifactMetadata } from '@/lib/api';
 import { MarkdownViewer } from './viewers/MarkdownViewer';
@@ -15,9 +16,8 @@ export function ArtifactViewer({ artifact }: { artifact: ArtifactMetadata }) {
 
   useEffect(() => {
     if (!needsTextContent) return;
-    fetch(contentUrl)
-      .then((res) => res.text())
-      .then(setTextContent);
+    api.get(contentUrl, { responseType: 'text', baseURL: '' })
+      .then((res) => setTextContent(res.data));
   }, [contentUrl, needsTextContent]);
 
   if (needsTextContent && textContent === null) {

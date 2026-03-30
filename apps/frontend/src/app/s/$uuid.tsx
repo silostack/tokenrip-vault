@@ -1,11 +1,15 @@
+import { useEffect } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { artifactQueryOptions } from '@/lib/api'
+import { useAtomValue } from 'jotai'
+import {
+  artifactAtom,
+  isLoadingArtifactAtom,
+  artifactErrorAtom,
+} from '@/_jotai/artifact/artifact.atoms'
+import { useArtifactActions } from '@/_jotai/artifact/artifact.actions'
 import { ArtifactViewer } from '@/components/ArtifactViewer'
 
 export const Route = createFileRoute('/s/$uuid')({
-  loader: ({ context, params }) =>
-    context.queryClient.ensureQueryData(artifactQueryOptions(params.uuid)),
   component: SharePage,
   notFoundComponent: () => (
     <div className="flex items-center justify-center py-24 text-white/40">
@@ -16,7 +20,30 @@ export const Route = createFileRoute('/s/$uuid')({
 
 function SharePage() {
   const { uuid } = Route.useParams()
-  const { data: artifact } = useSuspenseQuery(artifactQueryOptions(uuid))
+  const artifact = useAtomValue(artifactAtom)
+  const isLoading = useAtomValue(isLoadingArtifactAtom)
+  const error = useAtomValue(artifactErrorAtom)
+  const { fetchArtifact } = useArtifactActions()
+
+  useEffect(() => {
+    fetchArtifact(uuid)
+  }, [uuid])
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-24 text-white/40">
+        Loading...
+      </div>
+    )
+  }
+
+  if (error || !artifact) {
+    return (
+      <div className="flex items-center justify-center py-24 text-white/40">
+        {error || 'Artifact not found.'}
+      </div>
+    )
+  }
 
   return (
     <div className="mx-auto max-w-5xl">

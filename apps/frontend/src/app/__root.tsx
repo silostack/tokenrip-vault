@@ -5,6 +5,8 @@ import {
   createRootRouteWithContext,
 } from '@tanstack/react-router'
 import type { QueryClient } from '@tanstack/react-query'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import appCss from './globals.css?url'
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
@@ -70,6 +72,7 @@ function RootLayout() {
             Powered by Tokenrip
           </footer>
         </div>
+        <ToastContainer theme="dark" position="bottom-right" />
         <Scripts />
       </body>
     </html>
