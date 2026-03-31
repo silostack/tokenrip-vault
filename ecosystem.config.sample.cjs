@@ -1,11 +1,13 @@
+const path = require('path');
+
 module.exports = {
   apps: [
     {
       name: "tokenrip-backend",
-      script: "dist/main.js",
+      script: path.join(__dirname, "apps/backend/dist/main.js"),
       interpreter: "bun",
-      cwd: "./apps/backend",
-      env_file: ".env",
+      cwd: path.join(__dirname, "apps/backend"),
+      env_file: path.join(__dirname, "apps/backend/.env"),
       env: {
         NODE_ENV: "production",
       },
@@ -15,10 +17,10 @@ module.exports = {
     },
     {
       name: "tokenrip-frontend",
-      script: "serve.ts",
+      script: path.join(__dirname, "apps/frontend/serve.ts"),
       interpreter: "bun",
-      cwd: "./apps/frontend",
-      env_file: ".env",
+      cwd: path.join(__dirname, "apps/frontend"),
+      env_file: path.join(__dirname, "apps/frontend/.env"),
       env: {
         NODE_ENV: "production",
         PORT: "3333",

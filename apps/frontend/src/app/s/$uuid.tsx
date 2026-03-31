@@ -12,9 +12,8 @@ import { ArtifactViewer } from '@/components/ArtifactViewer'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
 
-const fetchArtifactMeta = createServerFn({ method: 'GET' })
-  .validator((uuid: string) => uuid)
-  .handler(async ({ data: uuid }) => {
+const fetchArtifactMeta = createServerFn({ method: 'GET' }).handler(
+  async ({ data: uuid }: { data: string }) => {
     try {
       const res = await fetch(`${API_URL}/v0/artifacts/${uuid}`)
       if (!res.ok) return null
@@ -23,7 +22,8 @@ const fetchArtifactMeta = createServerFn({ method: 'GET' })
     } catch {
       return null
     }
-  })
+  }
+)
 
 export const Route = createFileRoute('/s/$uuid')({
   loader: ({ params }) => fetchArtifactMeta({ data: params.uuid }),
