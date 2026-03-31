@@ -110,6 +110,35 @@ describe('publish', () => {
     }
   });
 
+  test('publish code type succeeds', async () => {
+    const { publish } = await import('../../packages/cli/src/commands/publish');
+    await publish(path.resolve('tests/fixtures/sample.ts'), { type: 'code' });
+
+    const output = getOutput();
+    expect(output.ok).toBe(true);
+    expect(output.data.type).toBe('code');
+  });
+
+  test('publish text type succeeds', async () => {
+    const { publish } = await import('../../packages/cli/src/commands/publish');
+    await publish(path.resolve('tests/fixtures/sample.txt'), { type: 'text' });
+
+    const output = getOutput();
+    expect(output.ok).toBe(true);
+    expect(output.data.type).toBe('text');
+  });
+
+  test('publish returns url in response', async () => {
+    const { publish } = await import('../../packages/cli/src/commands/publish');
+    await publish(path.resolve('tests/fixtures/sample.md'), { type: 'markdown' });
+
+    const output = getOutput();
+    expect(output.ok).toBe(true);
+    expect(output.data.url).toBeDefined();
+    expect(typeof output.data.url).toBe('string');
+    expect((output.data.url as string)).toContain(`/s/${output.data.id}`);
+  });
+
   test('publish without API key throws NO_API_KEY', async () => {
     const savedKey = process.env.TOKENRIP_API_KEY;
     delete process.env.TOKENRIP_API_KEY;

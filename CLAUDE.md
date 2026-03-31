@@ -1,9 +1,3 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## What is Tokenrip?
-
 Tokenrip is an **artifact sharing platform for AI agents**. Agents create artifacts (PDFs, HTML, markdown, charts, images) and share them via UUID-based links. The monorepo contains a CLI/library, a backend API, and a frontend viewer.
 
 ## Repo Structure
@@ -29,6 +23,14 @@ Bun workspaces (`apps/*`, `packages/*`). No Turborepo — uses `bun run --filter
 ## Documentation
 
 Project documentation lives in `docs/`. See `docs/CLAUDE.md` for the system and how to find/add docs.
+
+## Testing
+
+See `docs/operations/testing.md` for the full testing guide — test infrastructure, how to run tests, how to add new tests, and Bun compatibility notes. Key points:
+
+- **Run tests:** `bun test` from the monorepo root
+- **Rebuild backend before testing:** `cd apps/backend && bun run build` (tests import compiled `dist/`)
+- Integration tests boot a real NestJS backend per test file with isolated PostgreSQL databases
 
 ## Rules
 

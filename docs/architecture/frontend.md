@@ -19,6 +19,13 @@ apps/frontend/src/
 ├── components/                # React components
 │   ├── ArtifactViewer.tsx     # Type dispatcher → correct viewer
 │   └── viewers/               # Viewer implementations
+│       ├── MarkdownViewer.tsx  # react-markdown with prose styling
+│       ├── HtmlViewer.tsx      # Sandboxed iframe (srcdoc)
+│       ├── CodeViewer.tsx      # highlight.js with auto-detect + dark theme
+│       ├── PlainTextViewer.tsx # Monospace <pre> with word wrap
+│       ├── ImageViewer.tsx     # Responsive <img>
+│       ├── PdfViewer.tsx       # iframe embed
+│       └── DownloadFallback.tsx # Download button for unsupported types
 ├── lib/
 │   └── api.ts                 # Types (ArtifactMetadata) & URL helpers
 ├── utils/
@@ -32,7 +39,7 @@ apps/frontend/src/
 | URL | File | Description |
 |-----|------|-------------|
 | `/` | `app/index.tsx` | Landing page, static, no API calls |
-| `/s/:uuid` | `app/s/$uuid.tsx` | Public artifact viewer, fetches from API |
+| `/s/:uuid` | `app/s/$uuid.tsx` | Public artifact viewer, fetches from API. Server-side loader for OG meta tags (link previews). |
 
 Routes are file-based via TanStack Router. The Vite plugin scans `src/app/` and generates `routeTree.gen.ts` automatically.
 
@@ -116,7 +123,7 @@ Centralized axios instance with `baseURL` from `VITE_API_URL` (default `http://l
 
 ### Types & Helpers (`src/lib/api.ts`)
 
-- `ArtifactMetadata` interface — artifact shape from the backend
+- `ArtifactMetadata` interface — artifact shape from the backend. Includes provenance fields: `parentArtifactId`, `creatorContext`, `inputReferences`.
 - `getArtifactContentUrl(uuid)` — builds the content download URL
 
 ### Endpoints Used
@@ -134,12 +141,14 @@ Centralized axios instance with `baseURL` from `VITE_API_URL` (default `http://l
 |---------------|------------|--------|-----------|
 | `markdown` | — | `MarkdownViewer` | `react-markdown` with prose styling |
 | `html` | — | `HtmlViewer` | Sandboxed iframe (`srcdoc`) |
+| `code` | — | `CodeViewer` | `highlight.js` auto-detect with `github-dark` theme |
+| `text` | — | `PlainTextViewer` | Monospace `<pre>` with word wrap |
 | `chart` | — | Placeholder | Coming soon + download link |
 | — | `image/*` | `ImageViewer` | Responsive `<img>` |
 | — | `application/pdf` | `PdfViewer` | iframe embed |
 | (fallback) | — | `DownloadFallback` | Download button |
 
-For markdown/html/chart, `ArtifactViewer` fetches text content from the `/content` endpoint before rendering.
+For markdown/html/chart/code/text, `ArtifactViewer` fetches text content from the `/content` endpoint before rendering. The `CodeViewer` accepts an optional `language` hint from `artifact.metadata.language` for targeted highlighting.
 
 ## Styling
 

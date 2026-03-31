@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
+import { createServerFn } from '@tanstack/react-start'
 import { useAtomValue } from 'jotai'
 import {
   artifactAtom,
@@ -9,7 +10,39 @@ import {
 import { useArtifactActions } from '@/_jotai/artifact/artifact.actions'
 import { ArtifactViewer } from '@/components/ArtifactViewer'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
+
+const fetchArtifactMeta = createServerFn({ method: 'GET' })
+  .validator((uuid: string) => uuid)
+  .handler(async ({ data: uuid }) => {
+    try {
+      const res = await fetch(`${API_URL}/v0/artifacts/${uuid}`)
+      if (!res.ok) return null
+      const json = await res.json()
+      return json.data as { id: string; title?: string; description?: string; type: string } | null
+    } catch {
+      return null
+    }
+  })
+
 export const Route = createFileRoute('/s/$uuid')({
+  loader: ({ params }) => fetchArtifactMeta({ data: params.uuid }),
+  head: ({ loaderData }) => {
+    const title = loaderData?.title || 'Shared Artifact'
+    const description = loaderData?.description || `A ${loaderData?.type || 'shared'} artifact on Tokenrip`
+    return {
+      meta: [
+        { title: `${title} — Tokenrip` },
+        { name: 'description', content: description },
+        { property: 'og:title', content: title },
+        { property: 'og:description', content: description },
+        { property: 'og:type', content: 'article' },
+        { name: 'twitter:card', content: 'summary' },
+        { name: 'twitter:title', content: title },
+        { name: 'twitter:description', content: description },
+      ],
+    }
+  },
   component: SharePage,
   notFoundComponent: () => (
     <div className="flex items-center justify-center py-24 text-white/40">

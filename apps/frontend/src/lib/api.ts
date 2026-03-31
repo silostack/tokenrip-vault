@@ -4,9 +4,12 @@ export interface ArtifactMetadata {
   id: string
   title?: string
   description?: string
-  type: 'file' | 'markdown' | 'html' | 'chart'
+  type: 'file' | 'markdown' | 'html' | 'chart' | 'code' | 'text'
   mimeType?: string
   metadata?: Record<string, unknown>
+  parentArtifactId?: string
+  creatorContext?: string
+  inputReferences?: string[]
   createdAt: string
 }
 

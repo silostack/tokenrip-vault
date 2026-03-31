@@ -1,0 +1,6 @@
+This is a plain text artifact.
+
+It contains multiple lines of unformatted text.
+No markup, no syntax — just words.
+
+Line 5: End of sample.

@@ -7,6 +7,8 @@ export enum ArtifactType {
   MARKDOWN = 'markdown',
   HTML = 'html',
   CHART = 'chart',
+  CODE = 'code',
+  TEXT = 'text',
 }
 
 @Entity({ repository: () => ArtifactRepository })
@@ -34,6 +36,15 @@ export class Artifact {
 
   @Property()
   apiKeyId: string;
+
+  @Property({ nullable: true, type: 'uuid' })
+  parentArtifactId?: string;
+
+  @Property({ nullable: true, type: 'text' })
+  creatorContext?: string;
+
+  @Property({ type: 'json', nullable: true })
+  inputReferences?: string[];
 
   @Property()
   createdAt: Date = new Date();

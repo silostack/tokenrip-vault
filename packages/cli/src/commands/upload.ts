@@ -7,7 +7,7 @@ import { createHttpClient } from '../client.js';
 import { CliError } from '../errors.js';
 import { outputSuccess } from '../output.js';
 
-export async function upload(filePath: string, options: { title?: string }): Promise<void> {
+export async function upload(filePath: string, options: { title?: string; parent?: string; context?: string; refs?: string }): Promise<void> {
   const config = loadConfig();
   const apiKey = getApiKey(config);
   if (!apiKey) {
@@ -34,16 +34,20 @@ export async function upload(filePath: string, options: { title?: string }): Pro
     form.append('title', path.basename(absPath));
   }
 
+  if (options.parent) form.append('parentArtifactId', options.parent);
+  if (options.context) form.append('creatorContext', options.context);
+  if (options.refs) form.append('inputReferences', JSON.stringify(options.refs.split(',').map((r) => r.trim())));
+
   const { data } = await client.post('/v0/artifacts', form, {
     headers: form.getHeaders(),
     maxContentLength: Infinity,
     maxBodyLength: Infinity,
   });
 
-  const baseUrl = getApiUrl(config).replace(/:\d+$/, ':8000');
+  const url = data.data.url || `${getApiUrl(config).replace(/:\d+$/, ':8000')}/s/${data.data.id}`;
   outputSuccess({
     id: data.data.id,
-    url: `${baseUrl}/s/${data.data.id}`,
+    url,
     title: data.data.title,
     type: data.data.type,
     mimeType: data.data.mimeType,

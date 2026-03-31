@@ -2,6 +2,7 @@ import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
 import { startBackend, stopBackend, type TestBackend } from '../setup/backend';
 import { generateTestDbName, createTestDatabase, dropTestDatabase } from '../setup/database';
 import { createTestApiKey } from '../setup/api-key';
+import { v4 } from 'uuid';
 
 let backend: TestBackend;
 let apiKey: string;
@@ -9,6 +10,8 @@ const dbName = generateTestDbName();
 
 let uploadedFileId: string;
 let publishedContentId: string;
+let provenanceArtifactId: string;
+const testParentId = v4();
 
 beforeAll(async () => {
   await createTestDatabase(dbName);
@@ -46,6 +49,25 @@ beforeAll(async () => {
   });
   const contentJson = (await contentRes.json()) as { data: { id: string } };
   publishedContentId = contentJson.data.id;
+
+  // Create an artifact with provenance fields
+  const provRes = await fetch(`${backend.url}/v0/artifacts`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      type: 'markdown',
+      content: '# Provenance test',
+      title: 'With Provenance',
+      parentArtifactId: testParentId,
+      creatorContext: 'test-agent',
+      inputReferences: ['ref-a', 'ref-b'],
+    }),
+  });
+  const provJson = (await provRes.json()) as { data: { id: string } };
+  provenanceArtifactId = provJson.data.id;
 });
 
 afterAll(async () => {
@@ -104,5 +126,14 @@ describe('artifact read', () => {
   test('GET content for non-existent UUID returns 404', async () => {
     const res = await fetch(`${backend.url}/v0/artifacts/00000000-0000-0000-0000-000000000000/content`);
     expect(res.status).toBe(404);
+  });
+
+  test('GET metadata includes provenance fields when set', async () => {
+    const res = await fetch(`${backend.url}/v0/artifacts/${provenanceArtifactId}`);
+    expect(res.status).toBe(200);
+    const json = (await res.json()) as { ok: boolean; data: Record<string, unknown> };
+    expect(json.data.parentArtifactId).toBe(testParentId);
+    expect(json.data.creatorContext).toBe('test-agent');
+    expect(json.data.inputReferences).toEqual(['ref-a', 'ref-b']);
   });
 });

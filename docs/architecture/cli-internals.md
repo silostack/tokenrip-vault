@@ -25,12 +25,13 @@
                           │  commander program        │
                           └──────────┬───────────────┘
                                      │
-                     ┌───────────────┼───────────────┐
-                     ▼               ▼               ▼
-              ┌────────────┐ ┌────────────┐ ┌────────────┐
-              │ config.ts  │ │ upload.ts  │ │ publish.ts │
-              │ set-key    │ │ (commands/)│ │ (commands/)│
-              │ set-url    │ └──────┬─────┘ └──────┬─────┘
+                     ┌──────────┬──────┼──────┬───────────┐
+                     ▼          ▼      ▼      ▼           ▼
+              ┌────────────┐ ┌──────┐ ┌──────┐ ┌────────┐ ┌────────┐
+              │ config.ts  │ │upload│ │publi-│ │status  │ │(future)│
+              │ set-key    │ │ .ts  │ │sh.ts │ │ .ts    │ │        │
+              │ set-url    │ └──┬───┘ └──┬───┘ └──┬─────┘ └────────┘
+              └──────┬─────┘    │        │        │
               └──────┬─────┘       │               │
                      │             ▼               ▼
                      │       ┌─────────────────────────┐
@@ -76,7 +77,8 @@
 | `src/output.ts` | JSON output helpers (`outputSuccess`, `outputError`) and `wrapCommand` async error boundary. |
 | `src/commands/config.ts` | `configSetKey` and `configSetUrl` — persist config changes. |
 | `src/commands/upload.ts` | `upload` — multipart file upload to `/v0/artifacts`. Auto-detects MIME type. |
-| `src/commands/publish.ts` | `publish` — JSON body post to `/v0/artifacts` for structured content (markdown, html, chart). |
+| `src/commands/publish.ts` | `publish` — JSON body post to `/v0/artifacts` for structured content (markdown, html, chart, code, text). |
+| `src/commands/status.ts` | `status` — GET `/v0/artifacts/status` to list artifacts for the current API key. |
 
 ---
 
@@ -161,22 +163,33 @@ function wrapCommand<T extends (...args: any[]) => Promise<void>>(fn: T): T;
 - Loads config, sets `apiUrl`, saves config
 - Output: `{ ok: true, data: { message: "API URL saved", apiUrl: "<url>" } }`
 
-### `tokenrip upload <file> [--title <title>]`
+### `tokenrip upload <file> [options]`
+
+**Options:** `--title <title>`, `--parent <uuid>`, `--context <text>`, `--refs <urls>`
 
 - **Validation:** API key must be configured (`NO_API_KEY`), file must exist (`FILE_NOT_FOUND`)
 - **MIME detection:** `mime-types` library, falls back to `application/octet-stream`
-- **Request:** `POST /v0/artifacts` as multipart form with fields: `file` (stream), `type` ("file"), `mimeType`, `title`
+- **Request:** `POST /v0/artifacts` as multipart form with fields: `file` (stream), `type` ("file"), `mimeType`, `title`, and optional provenance fields (`parentArtifactId`, `creatorContext`, `inputReferences`)
 - **Title default:** filename if `--title` not given
-- **URL construction:** strips port from apiUrl, appends `:8000/s/{id}`
+- **URL:** uses `url` from API response (backend computes from `FRONTEND_URL` env var). Falls back to port-swap logic for older backends.
 - **Output:** `{ ok: true, data: { id, url, title, type, mimeType } }`
 
-### `tokenrip publish <file> --type <type> [--title <title>]`
+### `tokenrip publish <file> --type <type> [options]`
 
-- **Validation:** API key, type must be one of `markdown | html | chart` (`INVALID_TYPE`), file must exist
-- **Request:** `POST /v0/artifacts` as JSON with fields: `type`, `content` (file read as UTF-8), `title`
+**Options:** `--title <title>`, `--parent <uuid>`, `--context <text>`, `--refs <urls>`
+
+- **Validation:** API key, type must be one of `markdown | html | chart | code | text` (`INVALID_TYPE`), file must exist
+- **Request:** `POST /v0/artifacts` as JSON with fields: `type`, `content` (file read as UTF-8), `title`, and optional provenance fields (`parentArtifactId`, `creatorContext`, `inputReferences`)
 - **Title default:** filename if `--title` not given
-- **URL construction:** same as upload
+- **URL:** uses `url` from API response (same as upload)
 - **Output:** `{ ok: true, data: { id, url, title, type } }`
+
+### `tokenrip status [--since <iso-date>]`
+
+- **Validation:** API key must be configured (`NO_API_KEY`)
+- **Request:** `GET /v0/artifacts/status` with optional `?since=` query parameter
+- **Output:** `{ ok: true, data: [{ id, title, type, mimeType, createdAt, updatedAt }, ...] }`
+- Returns artifacts created by the current API key, ordered by `updatedAt` descending (max 100)
 
 ---
 
@@ -255,9 +268,9 @@ Command handler throws
 
 | Code | Source | When |
 |------|--------|------|
-| `NO_API_KEY` | `upload.ts`, `publish.ts` | API key not configured and not in env |
+| `NO_API_KEY` | `upload.ts`, `publish.ts`, `status.ts` | API key not configured and not in env |
 | `FILE_NOT_FOUND` | `upload.ts`, `publish.ts` | Input file path doesn't exist |
-| `INVALID_TYPE` | `publish.ts` | `--type` not one of: markdown, html, chart |
+| `INVALID_TYPE` | `publish.ts` | `--type` not one of: markdown, html, chart, code, text |
 | `UNAUTHORIZED` | `client.ts` interceptor | Backend returns 401 |
 | `TIMEOUT` | `client.ts` interceptor | Request exceeds 30s |
 | `NETWORK_ERROR` | `client.ts` interceptor | Connection refused / DNS failure |
@@ -338,7 +351,7 @@ Three steps chained: ESM build → CJS build → inject CJS package.json.
 ### Upload (Binary Files)
 
 ```
-tokenrip upload report.pdf --title "Q1"
+tokenrip upload report.pdf --title "Q1" --context "agent task"
   │
   ├─ loadConfig() → getApiKey() → validate key exists
   ├─ path.resolve(filePath) → validate file exists
@@ -349,7 +362,8 @@ tokenrip upload report.pdf --title "Q1"
   │   ├─ file: fs.createReadStream(absPath)
   │   ├─ type: 'file'
   │   ├─ mimeType: 'application/pdf'
-  │   └─ title: 'Q1'
+  │   ├─ title: 'Q1'
+  │   └─ creatorContext: 'agent task' (+ parentArtifactId, inputReferences if given)
   │
   ├─ POST /v0/artifacts (multipart/form-data)
   │   └─ maxContentLength: Infinity (no client-side size limit)
@@ -360,28 +374,25 @@ tokenrip upload report.pdf --title "Q1"
 ### Publish (Structured Content)
 
 ```
-tokenrip publish dashboard.html --type html --title "Dashboard"
+tokenrip publish dashboard.html --type html --title "Dashboard" --parent <uuid>
   │
   ├─ loadConfig() → getApiKey() → validate key exists
-  ├─ validate type ∈ ['markdown', 'html', 'chart']
+  ├─ validate type ∈ ['markdown', 'html', 'chart', 'code', 'text']
   ├─ path.resolve(filePath) → validate file exists
   ├─ fs.readFileSync(absPath, 'utf-8') → content string
   ├─ createHttpClient({ baseUrl, apiKey })
   │
   ├─ POST /v0/artifacts (application/json)
-  │   └─ { type: 'html', content: '<html>...', title: 'Dashboard' }
+  │   └─ { type, content, title, parentArtifactId, creatorContext, inputReferences }
   │
   └─ outputSuccess({ id, url, title, type })
 ```
 
 ### URL Construction
 
-Both commands build the shareable URL by:
-1. Taking the configured API URL (e.g., `http://localhost:3434`)
-2. Stripping the port: `http://localhost`
-3. Appending `:8000/s/{artifact-id}`
+The shareable `url` is returned by the backend in the `POST /v0/artifacts` response. The backend computes it from the `FRONTEND_URL` environment variable (default: `http://localhost:3333`).
 
-This assumes the frontend runs on port 8000 on the same host as the API.
+The CLI uses this URL directly. If talking to an older backend that doesn't return `url`, it falls back to stripping the API port and appending `:8000/s/{id}`.
 
 ---
 
@@ -409,8 +420,12 @@ Tests use Bun's test runner. Integration tests start a real NestJS backend on a 
 ### Adding a New Content Type
 
 1. Add the type string to `VALID_TYPES` in `src/commands/publish.ts`
-2. Backend must also accept the new type in its artifact creation endpoint
-3. Frontend needs a corresponding viewer component
+2. Add the type to `ArtifactType` enum in the backend (`apps/backend/src/db/models/Artifact.ts`)
+3. Add MIME mapping in `CONTENT_MIME_TYPES` in the backend service
+4. Frontend needs a corresponding viewer component in `apps/frontend/src/components/viewers/`
+5. Update `ArtifactViewer.tsx` dispatch and `needsTextContent` check
+
+The `code` and `text` types were added following this pattern.
 
 ### Adding a New Config Field
 

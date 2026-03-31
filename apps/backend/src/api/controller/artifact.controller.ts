@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Param,
+  Query,
   Body,
   Req,
   Res,
@@ -26,34 +27,60 @@ export class ArtifactController {
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: MAX_FILE_SIZE } }))
   async create(
     @UploadedFile() file: Express.Multer.File | undefined,
-    @Body() body: { type?: string; content?: string; title?: string; mimeType?: string },
+    @Body() body: { type?: string; content?: string; title?: string; mimeType?: string; parentArtifactId?: string; creatorContext?: string; inputReferences?: string[] },
     @Req() req: Request,
   ) {
     const apiKeyId = (req as any).apiKeyId;
+
+    const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3333').replace(/\/+$/, '');
 
     if (file) {
       const artifact = await this.artifactService.createFromFile({
         file: { buffer: file.buffer, originalname: file.originalname, mimetype: file.mimetype },
         title: body.title,
         apiKeyId,
+        parentArtifactId: body.parentArtifactId,
+        creatorContext: body.creatorContext,
+        inputReferences: body.inputReferences,
       });
-      return { ok: true, data: { id: artifact.id, title: artifact.title, type: artifact.type, mimeType: artifact.mimeType } };
+      return { ok: true, data: { id: artifact.id, url: `${frontendUrl}/s/${artifact.id}`, title: artifact.title, type: artifact.type, mimeType: artifact.mimeType } };
     }
 
     if (body.content && body.type) {
       if (!Object.values(ArtifactType).includes(body.type as ArtifactType) || body.type === ArtifactType.FILE) {
-        throw new BadRequestException({ ok: false, error: 'INVALID_TYPE', message: 'type must be: markdown, html, or chart' });
+        throw new BadRequestException({ ok: false, error: 'INVALID_TYPE', message: 'type must be: markdown, html, chart, code, or text' });
       }
       const artifact = await this.artifactService.createFromContent({
         type: body.type as ArtifactType,
         content: body.content,
         title: body.title,
         apiKeyId,
+        parentArtifactId: body.parentArtifactId,
+        creatorContext: body.creatorContext,
+        inputReferences: body.inputReferences,
       });
-      return { ok: true, data: { id: artifact.id, title: artifact.title, type: artifact.type, mimeType: artifact.mimeType } };
+      return { ok: true, data: { id: artifact.id, url: `${frontendUrl}/s/${artifact.id}`, title: artifact.title, type: artifact.type, mimeType: artifact.mimeType } };
     }
 
     throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'Provide either a file upload or { type, content } JSON body' });
+  }
+
+  @Get('status')
+  async status(@Req() req: Request, @Query('since') since?: string) {
+    const apiKeyId = (req as any).apiKeyId;
+    const sinceDate = since ? new Date(since) : undefined;
+    const artifacts = await this.artifactService.findByApiKey(apiKeyId, sinceDate);
+    return {
+      ok: true,
+      data: artifacts.map((a) => ({
+        id: a.id,
+        title: a.title,
+        type: a.type,
+        mimeType: a.mimeType,
+        createdAt: a.createdAt,
+        updatedAt: a.updatedAt,
+      })),
+    };
   }
 
   @Public()
@@ -69,6 +96,9 @@ export class ArtifactController {
         type: artifact.type,
         mimeType: artifact.mimeType,
         metadata: artifact.metadata,
+        parentArtifactId: artifact.parentArtifactId,
+        creatorContext: artifact.creatorContext,
+        inputReferences: artifact.inputReferences,
         createdAt: artifact.createdAt,
       },
     };

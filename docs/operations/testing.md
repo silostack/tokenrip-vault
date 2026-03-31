@@ -5,7 +5,7 @@
 Tokenrip uses **integration tests** that boot a real NestJS backend against a real PostgreSQL database and exercise the system through HTTP requests and CLI function calls. The test runner is **Bun's built-in test framework** (`bun test`).
 
 ```
-37 tests across 7 files, ~2 seconds total
+51 tests across 9 files, ~2 seconds total
 ```
 
 ## Prerequisites
@@ -42,14 +42,18 @@ tests/
 │   ├── sample.md             # Markdown content
 │   ├── sample.html           # HTML content
 │   ├── sample-chart.json     # Chart JSON content
+│   ├── sample.ts             # TypeScript content (code type)
+│   ├── sample.txt            # Plain text content (text type)
 │   ├── sample.png            # 1x1 pixel PNG
 │   └── sample.pdf            # Minimal valid PDF
 └── integration/              # Test files
     ├── health.test.ts        # Health endpoint smoke test
     ├── auth.test.ts          # API key lifecycle (create, auth, revoke)
-    ├── upload.test.ts        # File uploads and retrieval
-    ├── publish.test.ts       # Content publishing (markdown, HTML, chart)
-    ├── artifact-read.test.ts # Artifact metadata and content endpoints
+    ├── upload.test.ts        # File uploads, retrieval, URL in response
+    ├── publish.test.ts       # Content publishing (markdown, HTML, chart, code, text), URL in response
+    ├── artifact-read.test.ts # Artifact metadata, content endpoints, provenance fields
+    ├── status.test.ts        # GET /v0/artifacts/status endpoint, CLI status command
+    ├── provenance.test.ts    # Provenance/lineage fields (parentArtifactId, creatorContext, inputReferences)
     ├── config.test.ts        # CLI config functions and env var precedence
     └── full-flow.test.ts     # End-to-end: key → upload → publish → revoke
 ```
@@ -186,31 +190,33 @@ API key lifecycle via direct `fetch` calls (the CLI doesn't expose auth commands
 - Invalid key returns 401
 - Multiple independent keys work simultaneously
 
-### `upload.test.ts` (6 tests)
+### `upload.test.ts` (7 tests)
 
 File upload via `fetch` with native `FormData`, plus CLI error path tests.
 
 - Upload PNG — success with artifact ID, title defaults to filename, correct MIME type
 - Upload PDF with custom title
 - Uploaded content is byte-for-byte retrievable via content endpoint
+- Response includes `url` field with shareable link
 - CLI `upload()` with non-existent file throws `CliError('FILE_NOT_FOUND')`
 - CLI `upload()` without API key throws `CliError('NO_API_KEY')`
 - Upload with invalid API key returns 401
 
 > **Note:** File uploads use `fetch` with Bun's native `FormData` instead of the CLI's `upload()` function. The `form-data` npm package (used by the CLI) has stream compatibility issues with Bun's runtime. See [Bun Compatibility](#bun-compatibility-notes).
 
-### `publish.test.ts` (8 tests)
+### `publish.test.ts` (11 tests)
 
 Content publishing via CLI's `publish()` function with `console.log` spy to capture output.
 
-- Publish markdown, HTML, and chart content types
+- Publish markdown, HTML, chart, code, and text content types
 - Custom title is reflected in response
 - Published content matches original file when retrieved
+- Response includes `url` field with shareable link
 - Invalid type throws `CliError('INVALID_TYPE')`
 - Non-existent file throws `CliError('FILE_NOT_FOUND')`
 - Missing API key throws `CliError('NO_API_KEY')`
 
-### `artifact-read.test.ts` (6 tests)
+### `artifact-read.test.ts` (7 tests)
 
 Artifact retrieval endpoints via `fetch`. Creates artifacts in `beforeAll`, then tests reads.
 
@@ -220,6 +226,26 @@ Artifact retrieval endpoints via `fetch`. Creates artifacts in `beforeAll`, then
 - Content endpoint returns correct text for published markdown
 - Non-existent UUID returns 404 on metadata endpoint
 - Non-existent UUID returns 404 on content endpoint
+- Metadata includes provenance fields (parentArtifactId, creatorContext, inputReferences) when set
+
+### `status.test.ts` (6 tests)
+
+Status endpoint and CLI command via `fetch` and CLI function import.
+
+- Returns empty array when no artifacts exist
+- Returns created artifacts with correct fields (id, title, type, mimeType, createdAt, updatedAt)
+- Requires authentication (401 without Bearer header)
+- `?since=` query param filters by updatedAt
+- Only returns artifacts for the calling API key (isolation between keys)
+- CLI `status()` outputs JSON array
+
+### `provenance.test.ts` (3 tests)
+
+Provenance/lineage field persistence via `fetch`.
+
+- Publish with provenance fields (parentArtifactId, creatorContext, inputReferences) stores and returns them
+- Upload with provenance fields stores and returns them
+- Provenance fields are optional — null when not provided
 
 ### `config.test.ts` (8 tests)
 

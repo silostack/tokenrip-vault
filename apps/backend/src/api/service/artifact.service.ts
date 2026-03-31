@@ -6,13 +6,19 @@ import { Artifact, ArtifactType } from '../../db/models/Artifact';
 import { ArtifactRepository } from '../../db/repositories/artifact.repository';
 import { STORAGE_SERVICE, StorageService } from '../../storage/storage.interface';
 
-interface CreateFileDto {
+interface ProvenanceFields {
+  parentArtifactId?: string;
+  creatorContext?: string;
+  inputReferences?: string[];
+}
+
+interface CreateFileDto extends ProvenanceFields {
   file: { buffer: Buffer; originalname: string; mimetype: string };
   title?: string;
   apiKeyId: string;
 }
 
-interface CreateContentDto {
+interface CreateContentDto extends ProvenanceFields {
   type: ArtifactType;
   content: string;
   title?: string;
@@ -23,6 +29,8 @@ const CONTENT_MIME_TYPES: Record<string, string> = {
   [ArtifactType.MARKDOWN]: 'text/markdown',
   [ArtifactType.HTML]: 'text/html',
   [ArtifactType.CHART]: 'application/json',
+  [ArtifactType.CODE]: 'text/plain',
+  [ArtifactType.TEXT]: 'text/plain',
 };
 
 @Injectable()
@@ -44,6 +52,9 @@ export class ArtifactService {
       const artifact = new Artifact(ArtifactType.FILE, storageKey, dto.apiKeyId);
       artifact.mimeType = dto.file.mimetype;
       artifact.title = dto.title || dto.file.originalname;
+      if (dto.parentArtifactId) artifact.parentArtifactId = dto.parentArtifactId;
+      if (dto.creatorContext) artifact.creatorContext = dto.creatorContext;
+      if (dto.inputReferences) artifact.inputReferences = dto.inputReferences;
 
       this.artifactRepository.persistArtifact(artifact);
       this.logger.debug(`Created file artifact ${artifact.id} (key=${storageKey})`);
@@ -60,6 +71,9 @@ export class ArtifactService {
       const artifact = new Artifact(dto.type, storageKey, dto.apiKeyId);
       artifact.mimeType = CONTENT_MIME_TYPES[dto.type];
       artifact.title = dto.title;
+      if (dto.parentArtifactId) artifact.parentArtifactId = dto.parentArtifactId;
+      if (dto.creatorContext) artifact.creatorContext = dto.creatorContext;
+      if (dto.inputReferences) artifact.inputReferences = dto.inputReferences;
 
       this.artifactRepository.persistArtifact(artifact);
       this.logger.debug(`Created ${dto.type} artifact ${artifact.id} (key=${storageKey})`);
@@ -75,6 +89,12 @@ export class ArtifactService {
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Artifact not found' });
     }
     return artifact;
+  }
+
+  async findByApiKey(apiKeyId: string, since?: Date): Promise<Artifact[]> {
+    const where: Record<string, unknown> = { apiKeyId };
+    if (since) where.updatedAt = { $gte: since };
+    return this.artifactRepository.find(where, { orderBy: { updatedAt: 'DESC' }, limit: 100 });
   }
 
   async getContent(id: string): Promise<{ buffer: Buffer; mimeType: string }> {

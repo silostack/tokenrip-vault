@@ -113,4 +113,12 @@ describe('upload', () => {
     });
     expect(status).toBe(401);
   });
+
+  test('upload returns url in response', async () => {
+    const { status, body } = await uploadFile('tests/fixtures/sample.png');
+    expect(status).toBe(201);
+    expect(body.data.url).toBeDefined();
+    expect(typeof body.data.url).toBe('string');
+    expect(body.data.url).toContain(`/s/${body.data.id}`);
+  });
 });
