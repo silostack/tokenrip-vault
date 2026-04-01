@@ -11,19 +11,17 @@ npm install -g @tokenrip/cli
 ## Quick Start
 
 ```bash
-# 1. Get an API key
-curl -X POST https://api.tokenrip.com/v0/auth/keys \
-  -H "Content-Type: application/json" \
-  -d '{"name": "my-agent"}'
+# 1. Create an API key (auto-saved)
+tokenrip auth create-key
 
-# 2. Save your API key
-tokenrip config set-key tr_your_api_key
+# 2. Upload a file
+tokenrip asset upload report.pdf --title "Q1 Report"
 
-# 3. Upload a file
-tokenrip upload report.pdf --title "Q1 Report"
+# 3. Publish structured content
+tokenrip asset publish dashboard.html --type html --title "Dashboard"
 
-# 4. Publish structured content
-tokenrip publish dashboard.html --type html --title "Dashboard"
+# 4. Check your assets
+tokenrip asset list
 ```
 
 Every command outputs machine-readable JSON:
@@ -34,25 +32,64 @@ Every command outputs machine-readable JSON:
 
 ## CLI Commands
 
-### `tokenrip upload <file> [--title <title>]`
+### `tokenrip asset upload <file> [--title <title>]`
 
 Upload a binary file (PDF, image, etc.) and get a shareable link. MIME type is auto-detected.
 
 ```bash
-tokenrip upload chart.png
-tokenrip upload slides.pdf --title "Team Slides"
+tokenrip asset upload chart.png
+tokenrip asset upload slides.pdf --title "Team Slides"
 ```
 
-### `tokenrip publish <file> --type <type> [--title <title>]`
+### `tokenrip asset publish <file> --type <type> [--title <title>]`
 
 Publish structured content for rich rendering in the browser.
 
-Supported types: `markdown`, `html`, `chart`
+Supported types: `markdown`, `html`, `chart`, `code`, `text`, `json`
 
 ```bash
-tokenrip publish notes.md --type markdown
-tokenrip publish page.html --type html --title "Landing Page"
-tokenrip publish data.json --type chart --title "Revenue Chart"
+tokenrip asset publish notes.md --type markdown
+tokenrip asset publish page.html --type html --title "Landing Page"
+tokenrip asset publish data.json --type chart --title "Revenue Chart"
+```
+
+### `tokenrip asset list`
+
+List your published assets and their metadata.
+
+```bash
+tokenrip asset list
+tokenrip asset list --since 2026-03-30T00:00:00Z --type markdown --limit 5
+```
+
+### `tokenrip asset update <uuid> <file> [--type <type>]`
+
+Publish a new version of an existing asset.
+
+```bash
+tokenrip asset update 550e8400-... report-v2.md --type markdown
+tokenrip asset update 550e8400-... chart.png --label "with axes fixed"
+```
+
+### `tokenrip asset delete <uuid>`
+
+Permanently delete an asset and its shareable link.
+
+```bash
+tokenrip asset delete 550e8400-e29b-41d4-a716-446655440000
+```
+
+### `tokenrip asset stats`
+
+Show storage usage statistics.
+
+### `tokenrip auth create-key`
+
+Create a new API key (auto-saved to config).
+
+```bash
+tokenrip auth create-key
+tokenrip auth create-key --name "My Agent" --no-save
 ```
 
 ### `tokenrip config set-key <key>`
@@ -61,7 +98,15 @@ Save your API key to `~/.config/tokenrip/config.json`.
 
 ### `tokenrip config set-url <url>`
 
-Set a custom API server URL (default: `http://localhost:3000`).
+Set a custom API server URL (default: `https://api.tokenrip.com`).
+
+## Provenance Tracking
+
+All asset commands support lineage metadata:
+
+- `--parent <uuid>` — Parent asset ID
+- `--context <text>` — Creator context (agent name, task description)
+- `--refs <urls>` — Comma-separated input reference URLs
 
 ## Library Usage
 
@@ -122,7 +167,7 @@ Environment variables take precedence over the config file:
 
 ## Output Format
 
-All commands output JSON to stdout. Errors exit with code 1.
+All commands output JSON to stdout. In a TTY, output is human-readable by default — use `--json` or pipe to get JSON. Errors exit with code 1.
 
 **Success:**
 ```json
@@ -140,7 +185,7 @@ All commands output JSON to stdout. Errors exit with code 1.
 |------|---------|
 | `NO_API_KEY` | No API key configured |
 | `FILE_NOT_FOUND` | Input file does not exist |
-| `INVALID_TYPE` | Publish type not one of: markdown, html, chart |
+| `INVALID_TYPE` | Publish type not one of: markdown, html, chart, code, text, json |
 | `UNAUTHORIZED` | API key is invalid or expired |
 | `TIMEOUT` | Request timed out (30s) |
 | `NETWORK_ERROR` | Cannot reach the API server |

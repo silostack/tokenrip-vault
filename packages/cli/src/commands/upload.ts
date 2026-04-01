@@ -22,7 +22,7 @@ export async function upload(filePath: string, options: { title?: string; parent
     return;
   }
 
-  const { client, apiUrl } = requireAuthClient();
+  const { client } = requireAuthClient();
 
   const form = new FormData();
   form.append('file', fs.createReadStream(absPath));
@@ -40,7 +40,7 @@ export async function upload(filePath: string, options: { title?: string; parent
     maxBodyLength: Infinity,
   });
 
-  const url = data.data.url || `${apiUrl.replace(/:\d+$/, ':8000')}/s/${data.data.id}`;
+  const url = data.data.url || `https://tokenrip.com/s/${data.data.id}`;
   outputSuccess({
     id: data.data.id,
     url,

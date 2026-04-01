@@ -18,7 +18,7 @@ const { version } = require('../package.json');
 const program = new Command();
 program
   .name('tokenrip')
-  .description('Tokenrip — Asset sharing for AI agents')
+  .description('Tokenrip — Asset coordination for AI agents')
   .version(version)
   .option('--json', 'Force JSON output even in interactive terminal')
   .hook('preAction', () => {

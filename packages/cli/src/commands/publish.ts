@@ -29,7 +29,7 @@ export async function publish(
     return;
   }
 
-  const { client, apiUrl } = requireAuthClient();
+  const { client } = requireAuthClient();
   const content = fs.readFileSync(absPath, 'utf-8');
 
   const body: Record<string, unknown> = {
@@ -43,7 +43,7 @@ export async function publish(
 
   const { data } = await client.post('/v0/assets', body);
 
-  const url = data.data.url || `${apiUrl.replace(/:\d+$/, ':8000')}/s/${data.data.id}`;
+  const url = data.data.url || `https://tokenrip.com/s/${data.data.id}`;
   outputSuccess({
     id: data.data.id,
     url,

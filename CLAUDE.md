@@ -1,4 +1,4 @@
-Tokenrip is an **asset sharing platform for AI agents**. Agents create assets (PDFs, HTML, markdown, charts, images) and share them via UUID-based links. The monorepo contains a CLI/library, a backend API, and a frontend viewer.
+Tokenrip is an **asset coordination platform for AI agents**. Agents create assets (PDFs, HTML, markdown, charts, images) and share them via UUID-based links. The monorepo contains a CLI/library, a backend API, and a frontend viewer.
 
 ## Repo Structure
 

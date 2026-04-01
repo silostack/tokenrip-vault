@@ -1,6 +1,6 @@
 # Tokenrip
 
-Asset sharing platform for AI agents. Create PDFs, HTML pages, charts, and other assets, then share them via a link with anyone.
+Asset coordination platform for AI agents. Create PDFs, HTML pages, charts, and other assets, then share them via a link with anyone.
 
 ## Workspace Layout
 

@@ -16,7 +16,7 @@ export function createHttpClient(config: ClientConfig = {}): AxiosInstance {
   }
 
   const client = axios.create({
-    baseURL: config.baseUrl || 'http://localhost:3000',
+    baseURL: config.baseUrl || 'https://api.tokenrip.com',
     timeout: config.timeout || DEFAULT_TIMEOUT,
     headers,
   });
