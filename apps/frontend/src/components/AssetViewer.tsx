@@ -6,6 +6,7 @@ import { MarkdownViewer } from './viewers/MarkdownViewer';
 import { HtmlViewer } from './viewers/HtmlViewer';
 import { CodeViewer } from './viewers/CodeViewer';
 import { PlainTextViewer } from './viewers/PlainTextViewer';
+import { JsonViewer } from './viewers/JsonViewer';
 import { ImageViewer } from './viewers/ImageViewer';
 import { PdfViewer } from './viewers/PdfViewer';
 import { DownloadFallback } from './viewers/DownloadFallback';
@@ -16,7 +17,7 @@ export function AssetViewer({ asset, versionId }: { asset: AssetMetadata; versio
     : getAssetContentUrl(asset.id);
   const [textContent, setTextContent] = useState<string | null>(null);
 
-  const needsTextContent = asset.type === 'markdown' || asset.type === 'html' || asset.type === 'chart' || asset.type === 'code' || asset.type === 'text';
+  const needsTextContent = asset.type === 'markdown' || asset.type === 'html' || asset.type === 'chart' || asset.type === 'code' || asset.type === 'text' || asset.type === 'json';
 
   useEffect(() => {
     if (!needsTextContent) return;
@@ -42,6 +43,10 @@ export function AssetViewer({ asset, versionId }: { asset: AssetMetadata; versio
 
   if (asset.type === 'text') {
     return <PlainTextViewer content={textContent!} />;
+  }
+
+  if (asset.type === 'json') {
+    return <JsonViewer content={textContent!} />;
   }
 
   if (asset.type === 'chart') {

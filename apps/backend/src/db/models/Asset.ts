@@ -9,6 +9,7 @@ export enum AssetType {
   CHART = 'chart',
   CODE = 'code',
   TEXT = 'text',
+  JSON = 'json',
 }
 
 @Entity({ repository: () => AssetRepository })

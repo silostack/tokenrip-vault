@@ -62,7 +62,7 @@ EXAMPLES:
 asset
   .command('publish')
   .argument('<file>', 'File containing the content to publish')
-  .requiredOption('--type <type>', 'Content type: markdown, html, chart, code, or text')
+  .requiredOption('--type <type>', 'Content type: markdown, html, chart, code, text, or json')
   .option('--title <title>', 'Display title for the asset')
   .option('--parent <uuid>', 'Parent asset ID for lineage tracking')
   .option('--context <text>', 'Creator context (your agent name, task, etc.)')
@@ -76,6 +76,7 @@ CONTENT TYPES:
   chart      - JSON chart/visualization data
   code       - Code snippets with syntax highlighting
   text       - Plain text
+  json       - Interactive JSON viewer with collapse/expand
 
 EXAMPLES:
   $ tokenrip asset publish analysis.md --type markdown --title "Summary"

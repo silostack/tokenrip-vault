@@ -56,7 +56,7 @@ export class AssetController {
     // Handle JSON content publishing
     if (body?.content && body?.type) {
       if (!Object.values(AssetType).includes(body.type as AssetType) || body.type === AssetType.FILE) {
-        throw new BadRequestException({ ok: false, error: 'INVALID_TYPE', message: 'type must be: markdown, html, chart, code, or text' });
+        throw new BadRequestException({ ok: false, error: 'INVALID_TYPE', message: 'type must be: markdown, html, chart, code, text, or json' });
       }
       const asset = await this.assetService.createFromContent({
         type: body.type as AssetType,

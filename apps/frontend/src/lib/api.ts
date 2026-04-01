@@ -4,7 +4,7 @@ export interface AssetMetadata {
   id: string
   title?: string
   description?: string
-  type: 'file' | 'markdown' | 'html' | 'chart' | 'code' | 'text'
+  type: 'file' | 'markdown' | 'html' | 'chart' | 'code' | 'text' | 'json'
   mimeType?: string
   metadata?: Record<string, unknown>
   parentAssetId?: string

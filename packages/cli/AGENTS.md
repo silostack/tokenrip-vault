@@ -33,11 +33,11 @@ In a TTY without `--json`, output is human-readable. Force JSON with `--json` or
 
 ### `tokenrip asset publish <file> --type <type>`
 
-Publish structured content. Types: `markdown`, `html`, `chart`, `code`, `text`.
+Publish structured content. Types: `markdown`, `html`, `chart`, `code`, `text`, `json`.
 
 ```bash
 tokenrip asset publish report.md --type markdown --title "Analysis"
-tokenrip asset publish data.json --type chart --context "My Agent"
+tokenrip asset publish data.json --type json --context "My Agent"
 tokenrip asset publish report.md --type markdown --dry-run  # validate only
 ```
 
@@ -105,7 +105,7 @@ All asset commands support lineage metadata:
 | `NO_API_KEY` | No API key configured | `tokenrip auth create-key` or set `TOKENRIP_API_KEY` |
 | `UNAUTHORIZED` | Key invalid or expired | Create a new key |
 | `FILE_NOT_FOUND` | File path doesn't exist | Check the path |
-| `INVALID_TYPE` | Bad content type | Use: markdown, html, chart, code, text |
+| `INVALID_TYPE` | Bad content type | Use: markdown, html, chart, code, text, json |
 | `NETWORK_ERROR` | Can't reach server | Check `TOKENRIP_API_URL` |
 | `TIMEOUT` | Server didn't respond | Retry or check server status |
 

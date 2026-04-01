@@ -5,7 +5,7 @@ import { CliError } from '../errors.js';
 import { outputSuccess } from '../output.js';
 import { formatAssetCreated } from '../formatters.js';
 
-const VALID_TYPES = ['markdown', 'html', 'chart', 'code', 'text'] as const;
+const VALID_TYPES = ['markdown', 'html', 'chart', 'code', 'text', 'json'] as const;
 type ContentType = (typeof VALID_TYPES)[number];
 
 export async function publish(

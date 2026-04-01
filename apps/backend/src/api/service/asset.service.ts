@@ -32,6 +32,7 @@ const CONTENT_MIME_TYPES: Record<string, string> = {
   [AssetType.CHART]: 'application/json',
   [AssetType.CODE]: 'text/plain',
   [AssetType.TEXT]: 'text/plain',
+  [AssetType.JSON]: 'application/json',
 };
 
 @Injectable()

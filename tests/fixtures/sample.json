@@ -1,0 +1,13 @@
+{
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "credentials": {
+      "user": "admin",
+      "password": "secret"
+    }
+  },
+  "features": ["auth", "storage", "api"],
+  "debug": false,
+  "version": null
+}
