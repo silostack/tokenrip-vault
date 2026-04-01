@@ -56,7 +56,7 @@ export class AssetService {
       if (dto.creatorContext) asset.creatorContext = dto.creatorContext;
       if (dto.inputReferences) asset.inputReferences = dto.inputReferences;
 
-      this.assetRepository.persistAsset(asset);
+      this.em.persist(asset);
       this.logger.debug(`Created file asset ${asset.id} (key=${storageKey})`);
       return asset;
     });
@@ -75,7 +75,7 @@ export class AssetService {
       if (dto.creatorContext) asset.creatorContext = dto.creatorContext;
       if (dto.inputReferences) asset.inputReferences = dto.inputReferences;
 
-      this.assetRepository.persistAsset(asset);
+      this.em.persist(asset);
       this.logger.debug(`Created ${dto.type} asset ${asset.id} (key=${storageKey})`);
       return asset;
     });
