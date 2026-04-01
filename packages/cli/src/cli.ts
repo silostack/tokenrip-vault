@@ -164,6 +164,7 @@ auth
   .command('create-key')
   .option('--name <name>', 'Friendly name for this key (default: tokenrip-<hostname>)')
   .option('--no-save', 'Create key but do not auto-save to config')
+  .option('--force', 'Replace existing saved API key')
   .description('Create a new API key')
   .addHelpText('after', `
 EXAMPLES:

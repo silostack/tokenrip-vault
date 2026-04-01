@@ -5,9 +5,17 @@ import { CliError } from '../errors.js';
 import { outputSuccess } from '../output.js';
 import { formatAuthKey } from '../formatters.js';
 
-export async function authCreateKey(options: { name?: string; save?: boolean }): Promise<void> {
+export async function authCreateKey(options: { name?: string; save?: boolean; force?: boolean }): Promise<void> {
   const config = loadConfig();
   const apiUrl = getApiUrl(config);
+
+  if (config.apiKey && options.save !== false && !options.force) {
+    throw new CliError('KEY_EXISTS', [
+      'An API key is already saved in ~/.config/tokenrip/config.json',
+      'To replace it, run again with --force',
+      'To create without saving, use --no-save',
+    ].join('\n'));
+  }
 
   const keyName = options.name || `tokenrip-${hostname()}`;
   const client = createHttpClient({ baseUrl: apiUrl });
