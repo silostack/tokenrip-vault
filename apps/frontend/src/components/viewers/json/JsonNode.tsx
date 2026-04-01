@@ -160,36 +160,7 @@ export function JsonNode({
     );
   }
 
-  // Inline-able small object/array — render on a single line like a leaf
   const inline = canInline(value);
-  if (inline) {
-    return (
-      <div
-        className={`flex items-center min-h-[28px] cursor-pointer select-none ${highlightKeyValue ? highlightClass : ''}`}
-        onClick={() => onTapContent(path)}
-      >
-        <span style={{ paddingLeft: `${indent}ch` }} className="flex-1 flex items-center gap-0">
-          <span className="w-[28px] shrink-0" />
-          <span className={highlightValue && !highlightKeyValue ? 'bg-blue-500/10 dark:bg-blue-500/15' : ''}>
-            {name !== null && (
-              <><span className="text-purple-700 dark:text-purple-400">"{name}"</span><span className="text-foreground/50">: </span></>
-            )}
-            {renderInline(value)}
-          </span>
-        </span>
-        {isSelected && (
-          <button
-            onClick={handleCopy}
-            className="shrink-0 w-[28px] h-[28px] flex items-center justify-center rounded-full hover:bg-foreground/10 mr-2"
-          >
-            {copied
-              ? <Check size={16} className="text-green-500" />
-              : <Copy size={16} className="text-foreground/40" />}
-          </button>
-        )}
-      </div>
-    );
-  }
 
   // Expandable node: object or array
   return (
@@ -214,7 +185,9 @@ export function JsonNode({
               <><span className="text-purple-700 dark:text-purple-400">"{name}"</span><span className="text-foreground/50">: </span></>
             )}
             {isCollapsed
-              ? <span className="text-foreground/40">{openBracket} {getSummary(value)} {closeBracket}</span>
+              ? (inline
+                  ? renderInline(value)
+                  : <span className="text-foreground/40">{openBracket} {getSummary(value)} {closeBracket}</span>)
               : <span className="text-foreground/50">{openBracket}</span>}
           </span>
         </span>

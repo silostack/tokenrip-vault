@@ -4,15 +4,15 @@ import { PlainTextViewer } from './PlainTextViewer';
 import type { Selection } from './json/JsonNode';
 
 export function JsonViewer({ content }: { content: string }) {
-  const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
-  const [selection, setSelection] = useState<Selection | null>(null);
-
   let parsed: unknown;
   try {
     parsed = JSON.parse(content);
   } catch {
     return <PlainTextViewer content={content} />;
   }
+
+  const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
+  const [selection, setSelection] = useState<Selection | null>(null);
 
   const onToggleCollapse = useCallback((path: string) => {
     setCollapsed((prev) => {
