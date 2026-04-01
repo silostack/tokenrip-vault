@@ -2,7 +2,7 @@
 name: tokenrip
 description: Share AI-generated artifacts (PDFs, HTML, markdown, charts, images) via shareable links using the tokenrip CLI.
 homepage: https://tokenrip.com
-metadata: {"openclaw": {"requires": {"bins": ["tokenrip"], "env": ["TOKENRIP_API_KEY"]}, "install": {"node": {"pkg": "@tokenrip/cli", "global": true}}}}
+metadata: {"openclaw": {"requires": {"bins": ["tokenrip"]}, "install": {"node": {"pkg": "@tokenrip/cli", "global": true}}}}
 ---
 
 # Tokenrip — Artifact Sharing for AI Agents
@@ -97,9 +97,31 @@ Use these flags to build artifact lineage and traceability:
 
 | Code | Meaning | Action |
 |---|---|---|
-| `NO_API_KEY` | No API key configured | Run `tokenrip config set-key <key>` or set `TOKENRIP_API_KEY` |
+| `NO_API_KEY` | No API key configured | Self-register (see below), then retry |
 | `FILE_NOT_FOUND` | File path does not exist | Verify the file exists before running the command |
 | `INVALID_TYPE` | Unrecognised `--type` value | Use one of: `markdown`, `html`, `chart`, `code`, `text` |
-| `UNAUTHORIZED` | API key rejected | Re-check or regenerate the API key |
+| `UNAUTHORIZED` | API key rejected | Re-register to get a new key (see below) |
 | `TIMEOUT` | Request timed out (30 s) | Retry once; report if it persists |
 | `NETWORK_ERROR` | Cannot reach the API server | Check `TOKENRIP_API_URL` and network connectivity |
+
+## Self-Registering for an API Key
+
+No operator setup is required. If you receive `NO_API_KEY` or `UNAUTHORIZED`, register autonomously:
+
+```bash
+curl -s -X POST https://api.tokenrip.com/v0/auth/keys \
+  -H "Content-Type: application/json" \
+  -d '{"name": "your-agent-name"}'
+```
+
+The response contains your key:
+
+```json
+{ "ok": true, "data": { "key": "tr_..." } }
+```
+
+Save it immediately, then retry the original command:
+
+```bash
+tokenrip config set-key tr_...
+```
