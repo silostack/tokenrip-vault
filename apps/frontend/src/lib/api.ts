@@ -10,9 +10,25 @@ export interface AssetMetadata {
   parentAssetId?: string
   creatorContext?: string
   inputReferences?: string[]
+  versionCount?: number
+  currentVersionId?: string
+  createdAt: string
+}
+
+export interface VersionInfo {
+  id: string
+  version: number
+  label?: string
+  mimeType?: string
+  sizeBytes?: number
+  creatorContext?: string
   createdAt: string
 }
 
 export function getAssetContentUrl(uuid: string): string {
   return `${api.defaults.baseURL}/v0/assets/${uuid}/content`
+}
+
+export function getVersionContentUrl(uuid: string, versionId: string): string {
+  return `${api.defaults.baseURL}/v0/assets/${uuid}/versions/${versionId}/content`
 }

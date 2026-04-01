@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '@/utils/api';
-import { getAssetContentUrl } from '@/lib/api';
+import { getAssetContentUrl, getVersionContentUrl } from '@/lib/api';
 import type { AssetMetadata } from '@/lib/api';
 import { MarkdownViewer } from './viewers/MarkdownViewer';
 import { HtmlViewer } from './viewers/HtmlViewer';
@@ -10,8 +10,10 @@ import { ImageViewer } from './viewers/ImageViewer';
 import { PdfViewer } from './viewers/PdfViewer';
 import { DownloadFallback } from './viewers/DownloadFallback';
 
-export function AssetViewer({ asset }: { asset: AssetMetadata }) {
-  const contentUrl = getAssetContentUrl(asset.id);
+export function AssetViewer({ asset, versionId }: { asset: AssetMetadata; versionId?: string }) {
+  const contentUrl = versionId
+    ? getVersionContentUrl(asset.id, versionId)
+    : getAssetContentUrl(asset.id);
   const [textContent, setTextContent] = useState<string | null>(null);
 
   const needsTextContent = asset.type === 'markdown' || asset.type === 'html' || asset.type === 'chart' || asset.type === 'code' || asset.type === 'text';

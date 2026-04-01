@@ -7,6 +7,8 @@ import { upload } from './commands/upload.js';
 import { publish } from './commands/publish.js';
 import { status } from './commands/status.js';
 import { deleteAsset } from './commands/delete.js';
+import { update } from './commands/update.js';
+import { deleteVersion } from './commands/delete-version.js';
 import { stats } from './commands/stats.js';
 import { wrapCommand, setForceJson } from './output.js';
 
@@ -110,6 +112,38 @@ CAUTION:
   This action cannot be undone.
 `)
   .action(wrapCommand(deleteAsset));
+
+asset
+  .command('update')
+  .argument('<uuid>', 'Asset ID to update with a new version')
+  .argument('<file>', 'File containing the new version content')
+  .option('--type <type>', 'Content type (markdown, html, chart, code, text) — omit for binary file upload')
+  .option('--label <text>', 'Human-readable label for this version')
+  .option('--context <text>', 'Creator context (your agent name, task, etc.)')
+  .option('--dry-run', 'Validate without publishing')
+  .description('Publish a new version of an existing asset')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip asset update 550e8400-... report-v2.md --type markdown
+  $ tokenrip asset update 550e8400-... chart.png --label "with axes fixed"
+`)
+  .action(wrapCommand(update));
+
+asset
+  .command('delete-version')
+  .argument('<uuid>', 'Asset ID')
+  .argument('<versionId>', 'Version ID to delete')
+  .option('--dry-run', 'Show what would be deleted without deleting')
+  .description('Delete a specific version of an asset')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip asset delete-version 550e8400-... 660f9500-...
+
+CAUTION:
+  This permanently removes the version content.
+  Cannot delete the last remaining version — delete the asset instead.
+`)
+  .action(wrapCommand(deleteVersion));
 
 asset
   .command('stats')

@@ -46,6 +46,18 @@ export const formatStats: Formatter = (data) => {
   return lines.join('\n');
 };
 
+export const formatVersionCreated: Formatter = (data) => {
+  const lines = [`Version ${data.version || '?'} published`];
+  if (data.id) lines.push(`  Version ID: ${data.id}`);
+  if (data.assetId) lines.push(`  Asset ID:   ${data.assetId}`);
+  if (data.label) lines.push(`  Label:      ${data.label}`);
+  return lines.join('\n');
+};
+
+export const formatVersionDeleted: Formatter = (data) => {
+  return `Deleted version ${data.versionId} from asset ${data.assetId}`;
+};
+
 export const formatConfigSaved: Formatter = (data) => {
   return data.message as string || 'Configuration saved.';
 };

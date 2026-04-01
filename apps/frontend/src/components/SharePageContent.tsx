@@ -1,0 +1,88 @@
+import { useEffect } from 'react'
+import { useAtomValue } from 'jotai'
+import {
+  assetAtom,
+  isLoadingAssetAtom,
+  assetErrorAtom,
+  versionsAtom,
+  activeVersionIdAtom,
+} from '@/_jotai/asset/asset.atoms'
+import { useAssetActions } from '@/_jotai/asset/asset.actions'
+import { AssetViewer } from './AssetViewer'
+import { AssetToolbar } from './AssetToolbar'
+import { VersionDropdown } from './VersionDropdown'
+
+interface SharePageContentProps {
+  uuid: string
+  versionId?: string
+}
+
+export function SharePageContent({ uuid, versionId }: SharePageContentProps) {
+  const asset = useAtomValue(assetAtom)
+  const isLoading = useAtomValue(isLoadingAssetAtom)
+  const error = useAtomValue(assetErrorAtom)
+  const versions = useAtomValue(versionsAtom)
+  const activeVersionId = useAtomValue(activeVersionIdAtom)
+  const { fetchAsset, fetchVersions } = useAssetActions()
+
+  useEffect(() => {
+    fetchAsset(uuid, versionId)
+  }, [uuid, versionId])
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-24 text-foreground/40">
+        Loading...
+      </div>
+    )
+  }
+
+  if (error || !asset) {
+    return (
+      <div className="flex items-center justify-center py-24 text-foreground/40">
+        {error || 'Asset not found.'}
+      </div>
+    )
+  }
+
+  const showVersions = asset.versionCount != null && asset.versionCount > 1
+  const isOlderVersion = activeVersionId != null && activeVersionId !== asset.currentVersionId
+
+  return (
+    <div className="mx-auto max-w-5xl pb-20 sm:pb-16">
+      {(asset.title || showVersions) && (
+        <div className="border-b border-foreground/10 px-6 py-4">
+          <div className="flex items-center gap-3">
+            {asset.title && (
+              <h1 className="font-mono text-xl font-bold">{asset.title}</h1>
+            )}
+            {showVersions && (
+              <VersionDropdown
+                uuid={asset.id}
+                versions={versions}
+                activeVersionId={activeVersionId}
+                currentVersionId={asset.currentVersionId}
+                onOpen={() => fetchVersions(uuid)}
+              />
+            )}
+          </div>
+          {asset.description && (
+            <p className="mt-1 text-sm text-foreground/60">
+              {asset.description}
+            </p>
+          )}
+          {isOlderVersion && (
+            <div className="mt-2 rounded bg-amber-500/10 px-3 py-1.5 text-xs text-amber-600 dark:text-amber-400">
+              Viewing an older version.{' '}
+              <a href={`/s/${asset.id}`} className="underline">
+                View latest
+              </a>
+            </div>
+          )}
+        </div>
+      )}
+      <AssetViewer asset={asset} versionId={versionId} />
+      <AssetToolbar asset={asset} />
+    </div>
+  )
+}

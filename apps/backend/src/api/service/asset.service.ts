@@ -3,6 +3,7 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { v4 } from 'uuid';
 import { Asset, AssetType } from '../../db/models/Asset';
+import { AssetVersion } from '../../db/models/AssetVersion';
 import { AssetRepository } from '../../db/repositories/asset.repository';
 import { STORAGE_SERVICE, StorageService } from '../../storage/storage.interface';
 
@@ -64,7 +65,15 @@ export class AssetService {
       if (dto.creatorContext) asset.creatorContext = dto.creatorContext;
       if (dto.inputReferences) asset.inputReferences = dto.inputReferences;
 
+      const v1 = new AssetVersion(asset, 1, storageKey);
+      v1.mimeType = dto.file.mimetype;
+      v1.sizeBytes = dto.file.buffer.byteLength;
+      if (dto.creatorContext) v1.creatorContext = dto.creatorContext;
+      asset.currentVersionId = v1.id;
+      asset.versionCount = 1;
+
       this.em.persist(asset);
+      this.em.persist(v1);
       this.logger.debug(`Created file asset ${asset.id} (key=${storageKey})`);
       return asset;
     });
@@ -91,7 +100,15 @@ export class AssetService {
       if (dto.creatorContext) asset.creatorContext = dto.creatorContext;
       if (dto.inputReferences) asset.inputReferences = dto.inputReferences;
 
+      const v1 = new AssetVersion(asset, 1, storageKey);
+      v1.mimeType = CONTENT_MIME_TYPES[dto.type];
+      v1.sizeBytes = Buffer.byteLength(dto.content, 'utf-8');
+      if (dto.creatorContext) v1.creatorContext = dto.creatorContext;
+      asset.currentVersionId = v1.id;
+      asset.versionCount = 1;
+
       this.em.persist(asset);
+      this.em.persist(v1);
       this.logger.debug(`Created ${dto.type} asset ${asset.id} (key=${storageKey})`);
       return asset;
     });
@@ -132,12 +149,13 @@ export class AssetService {
     bytesByType: Record<string, number>;
   }> {
     const knex = this.em.getKnex();
-    const rows = await knex('asset')
-      .select('type')
-      .count('* as count')
-      .sum('size_bytes as bytes')
-      .where('api_key_id', apiKeyId)
-      .groupBy('type');
+    const rows = await knex('asset_version')
+      .join('asset', 'asset.id', 'asset_version.asset_id')
+      .select('asset.type')
+      .countDistinct('asset.id as count')
+      .sum('asset_version.size_bytes as bytes')
+      .where('asset.api_key_id', apiKeyId)
+      .groupBy('asset.type');
 
     let assetCount = 0;
     let totalBytes = 0;
@@ -162,8 +180,15 @@ export class AssetService {
       throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only delete your own assets' });
     }
 
-    this.logger.debug(`Deleting asset ${id} (key=${asset.storageKey})`);
-    await this.storage.delete(asset.storageKey);
+    // Fetch version storage keys for cleanup
+    const knex = this.em.getKnex();
+    const versionRows = await knex('asset_version')
+      .select('storage_key')
+      .where('asset_id', id);
+    this.logger.debug(`Deleting asset ${id} with ${versionRows.length} version(s)`);
+
+    // Delete storage files, then asset (CASCADE removes version rows)
+    await Promise.all(versionRows.map((r: { storage_key: string }) => this.storage.delete(r.storage_key)));
     await this.em.removeAndFlush(asset);
   }
 }
