@@ -20,13 +20,18 @@ export function AssetToolbar({ asset }: AssetToolbarProps) {
     copyTimeout.current = setTimeout(() => setCopied(false), 2000)
   }, [])
 
-  const handleDownload = useCallback(() => {
+  const handleDownload = useCallback(async () => {
+    const url = getAssetContentUrl(asset.id)
+    const res = await fetch(url)
+    const blob = await res.blob()
+    const objectUrl = URL.createObjectURL(blob)
     const a = document.createElement('a')
-    a.href = getAssetContentUrl(asset.id)
+    a.href = objectUrl
     a.download = asset.title || asset.id
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
+    URL.revokeObjectURL(objectUrl)
   }, [asset.id, asset.title])
 
   const toggleSheet = useCallback(() => {
