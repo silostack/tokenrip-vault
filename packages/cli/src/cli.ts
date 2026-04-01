@@ -223,4 +223,9 @@ EXAMPLES:
 `)
   .action(wrapCommand(configSetUrl));
 
+config
+  .command('show')
+  .description('Show current configuration')
+  .action(wrapCommand(configShow));
+
 program.parse();

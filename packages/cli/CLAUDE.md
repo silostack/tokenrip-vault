@@ -33,7 +33,7 @@ The CLI entry (`src/cli.ts`) is ESM-only with a `#!/usr/bin/env node` shebang.
   - `status.ts` — `tokenrip asset list`
   - `stats.ts` — `tokenrip asset stats`
   - `auth.ts` — `tokenrip auth create-key`
-  - `config.ts` — `tokenrip config set-key`, `tokenrip config set-url`
+  - `config.ts` — `tokenrip config set-key`, `tokenrip config set-url`, `tokenrip config show`
 
 ## Publishing
 
