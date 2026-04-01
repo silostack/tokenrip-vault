@@ -42,7 +42,7 @@ export function MetadataSheet({ asset, onClose }: MetadataSheetProps) {
   rows.push({
     label: 'Type',
     value: (
-      <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-medium text-white/80">
+      <span className="rounded-full bg-foreground/10 px-2.5 py-0.5 text-xs font-medium text-foreground/80">
         {asset.type}
       </span>
     ),
@@ -67,7 +67,7 @@ export function MetadataSheet({ asset, onClose }: MetadataSheetProps) {
         <Link
           to="/s/$uuid"
           params={{ uuid: asset.parentAssetId }}
-          className="text-white/80 underline decoration-white/30 hover:text-white hover:decoration-white/60"
+          className="text-foreground/80 underline decoration-foreground/30 hover:text-foreground hover:decoration-foreground/60"
         >
           {asset.parentAssetId}
         </Link>
@@ -86,7 +86,7 @@ export function MetadataSheet({ asset, onClose }: MetadataSheetProps) {
               href={ref}
               target="_blank"
               rel="noopener noreferrer"
-              className="break-all text-white/80 underline decoration-white/30 hover:text-white hover:decoration-white/60"
+              className="break-all text-foreground/80 underline decoration-foreground/30 hover:text-foreground hover:decoration-foreground/60"
             >
               {ref}
             </a>
@@ -99,15 +99,15 @@ export function MetadataSheet({ asset, onClose }: MetadataSheetProps) {
   return (
     <div
       ref={sheetRef}
-      className="w-full max-w-5xl rounded-t-xl border border-b-0 border-white/10 bg-white/5 px-4 py-3 backdrop-blur-md sm:px-6 sm:py-4"
+      className="w-full max-w-5xl rounded-t-xl border border-b-0 border-foreground/10 bg-foreground/5 px-4 py-3 backdrop-blur-md sm:px-6 sm:py-4"
     >
       <div className="flex flex-col gap-3">
         {rows.map((row) => (
           <div key={row.label} className="flex items-baseline gap-4">
-            <span className="w-20 shrink-0 text-xs text-white/40 sm:w-24">
+            <span className="w-20 shrink-0 text-xs text-foreground/40 sm:w-24">
               {row.label}
             </span>
-            <span className="min-w-0 text-sm text-white/80">{row.value}</span>
+            <span className="min-w-0 text-sm text-foreground/80">{row.value}</span>
           </div>
         ))}
       </div>

@@ -46,7 +46,7 @@ export const Route = createFileRoute('/s/$uuid')({
   },
   component: SharePage,
   notFoundComponent: () => (
-    <div className="flex items-center justify-center py-24 text-white/40">
+    <div className="flex items-center justify-center py-24 text-foreground/40">
       Asset not found.
     </div>
   ),
@@ -65,7 +65,7 @@ function SharePage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-24 text-white/40">
+      <div className="flex items-center justify-center py-24 text-foreground/40">
         Loading...
       </div>
     )
@@ -73,7 +73,7 @@ function SharePage() {
 
   if (error || !asset) {
     return (
-      <div className="flex items-center justify-center py-24 text-white/40">
+      <div className="flex items-center justify-center py-24 text-foreground/40">
         {error || 'Asset not found.'}
       </div>
     )
@@ -82,10 +82,10 @@ function SharePage() {
   return (
     <div className="mx-auto max-w-5xl pb-20 sm:pb-16">
       {asset.title && (
-        <div className="border-b border-white/10 px-6 py-4">
+        <div className="border-b border-foreground/10 px-6 py-4">
           <h1 className="font-mono text-xl font-bold">{asset.title}</h1>
           {asset.description && (
-            <p className="mt-1 text-sm text-white/60">
+            <p className="mt-1 text-sm text-foreground/60">
               {asset.description}
             </p>
           )}

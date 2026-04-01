@@ -5,8 +5,11 @@ import {
   createRootRouteWithContext,
 } from '@tanstack/react-router'
 import type { QueryClient } from '@tanstack/react-query'
+import { useAtomValue } from 'jotai'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { themeAtom } from '@/_jotai/theme/theme.atoms'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import appCss from './globals.css?url'
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
@@ -40,8 +43,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     notFoundComponent: () => (
       <div className="flex flex-col items-center justify-center gap-4 py-24 text-center">
         <h1 className="font-mono text-2xl font-bold">404</h1>
-        <p className="text-white/60">Page not found.</p>
-        <a href="/" className="text-sm text-white/40 underline hover:text-white/60">
+        <p className="text-foreground/60">Page not found.</p>
+        <a href="/" className="text-sm text-foreground/40 underline hover:text-foreground/60">
           Go home
         </a>
       </div>
@@ -49,30 +52,36 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   },
 )
 
+const ANTI_FLASH_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){if(t==='dark')document.documentElement.classList.add('dark')}else if(window.matchMedia('(prefers-color-scheme:dark)').matches){document.documentElement.classList.add('dark')}}catch(e){document.documentElement.classList.add('dark')}})();`
+
 function RootLayout() {
+  const theme = useAtomValue(themeAtom)
+
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: ANTI_FLASH_SCRIPT }} />
         <HeadContent />
       </head>
       <body className="font-sans min-h-screen">
         <div className="relative z-10 flex min-h-screen flex-col">
-          <header className="border-b border-white/10 px-6 py-4">
+          <header className="flex items-center justify-between border-b border-foreground/10 px-6 py-4">
             <a
               href="/"
               className="font-mono text-lg font-bold tracking-tight"
             >
               tokenrip
             </a>
+            <ThemeToggle />
           </header>
           <main className="flex-1">
             <Outlet />
           </main>
-          <footer className="border-t border-white/10 px-6 py-4 text-center text-xs text-white/40">
+          <footer className="border-t border-foreground/10 px-6 py-4 text-center text-xs text-foreground/40">
             Powered by Tokenrip
           </footer>
         </div>
-        <ToastContainer theme="dark" position="bottom-right" />
+        <ToastContainer theme={theme} position="bottom-right" />
         <Scripts />
       </body>
     </html>

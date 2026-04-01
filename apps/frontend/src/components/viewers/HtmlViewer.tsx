@@ -3,7 +3,7 @@ export function HtmlViewer({ content }: { content: string }) {
     <iframe
       srcDoc={content}
       sandbox="allow-same-origin"
-      className="h-[80vh] w-full rounded border border-white/10 bg-white"
+      className="h-[80vh] w-full rounded border border-foreground/10 bg-white"
       title="HTML Preview"
     />
   );

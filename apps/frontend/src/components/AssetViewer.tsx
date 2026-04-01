@@ -23,7 +23,7 @@ export function AssetViewer({ asset }: { asset: AssetMetadata }) {
   }, [contentUrl, needsTextContent]);
 
   if (needsTextContent && textContent === null) {
-    return <div className="flex items-center justify-center py-24 text-white/40">Loading...</div>;
+    return <div className="flex items-center justify-center py-24 text-foreground/40">Loading...</div>;
   }
 
   if (asset.type === 'markdown') {
@@ -44,7 +44,7 @@ export function AssetViewer({ asset }: { asset: AssetMetadata }) {
 
   if (asset.type === 'chart') {
     return (
-      <div className="px-6 py-8 text-white/60">
+      <div className="px-6 py-8 text-foreground/60">
         Chart rendering coming soon. <a href={contentUrl} className="underline">Download raw data</a>
       </div>
     );

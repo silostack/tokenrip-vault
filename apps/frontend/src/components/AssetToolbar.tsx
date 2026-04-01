@@ -54,17 +54,17 @@ export function AssetToolbar({ asset }: AssetToolbarProps) {
       </div>
 
       {/* Toolbar pill */}
-      <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-2 py-1.5 shadow-lg backdrop-blur-md sm:gap-1">
+      <div className="flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/10 px-2 py-1.5 shadow-lg backdrop-blur-md sm:gap-1">
         <button
           type="button"
           onClick={handleCopy}
           title="Copy link"
-          className="flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-full transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-white/10 active:scale-95 active:bg-white/15"
+          className="flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-full transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-foreground/10 active:scale-95 active:bg-foreground/15"
         >
           {copied ? (
             <Check size={18} className="text-green-400" />
           ) : (
-            <LinkIcon size={18} className="text-white/70" />
+            <LinkIcon size={18} className="text-foreground/70" />
           )}
         </button>
 
@@ -72,20 +72,20 @@ export function AssetToolbar({ asset }: AssetToolbarProps) {
           type="button"
           onClick={handleDownload}
           title="Download"
-          className="flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-full transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-white/10 active:scale-95 active:bg-white/15"
+          className="flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-full transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-foreground/10 active:scale-95 active:bg-foreground/15"
         >
-          <Download size={18} className="text-white/70" />
+          <Download size={18} className="text-foreground/70" />
         </button>
 
         <button
           type="button"
           onClick={toggleSheet}
           title="Metadata"
-          className={`flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-full transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-white/10 active:scale-95 active:bg-white/15 ${
-            sheetOpen ? 'bg-white/10' : ''
+          className={`flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-full transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-foreground/10 active:scale-95 active:bg-foreground/15 ${
+            sheetOpen ? 'bg-foreground/10' : ''
           }`}
         >
-          <Info size={18} className={sheetOpen ? 'text-white' : 'text-white/70'} />
+          <Info size={18} className={sheetOpen ? 'text-foreground' : 'text-foreground/70'} />
         </button>
       </div>
     </div>
