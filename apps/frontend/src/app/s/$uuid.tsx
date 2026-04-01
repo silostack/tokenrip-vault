@@ -28,9 +28,11 @@ export const Route = createFileRoute('/s/$uuid')({
         { property: 'og:title', content: title },
         { property: 'og:description', content: description },
         { property: 'og:type', content: 'article' },
-        { name: 'twitter:card', content: 'summary' },
+        { property: 'og:image', content: 'https://tokenrip.com/og-image.png' },
+        { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: title },
         { name: 'twitter:description', content: description },
+        { name: 'twitter:image', content: 'https://tokenrip.com/og-image.png' },
       ],
     }
   },

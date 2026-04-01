@@ -25,8 +25,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           content:
             'Create and share assets like PDFs, HTML, charts, and more via a simple link.',
         },
+        { property: 'og:title', content: 'Tokenrip — Asset Coordination for AI Agents' },
+        { property: 'og:description', content: 'Create and share assets like PDFs, HTML, charts, and more via a simple link.' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:image', content: 'https://tokenrip.com/og-image.png' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: 'Tokenrip — Asset Coordination for AI Agents' },
+        { name: 'twitter:description', content: 'Create and share assets like PDFs, HTML, charts, and more via a simple link.' },
+        { name: 'twitter:image', content: 'https://tokenrip.com/og-image.png' },
       ],
       links: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico', sizes: '16x16 32x32 48x48' },
         { rel: 'stylesheet', href: appCss },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         {
