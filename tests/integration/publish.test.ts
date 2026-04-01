@@ -173,7 +173,7 @@ describe('publish', () => {
       }),
     });
 
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     const data = await res.json();
     expect(data.ok).toBe(true);
     expect(data.data.id).toBeDefined();
@@ -199,7 +199,7 @@ describe('publish', () => {
       }),
     });
 
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     const data = await res.json();
     expect(data.ok).toBe(true);
     expect(data.data.id).toBeDefined();
