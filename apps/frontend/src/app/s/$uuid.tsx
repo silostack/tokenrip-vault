@@ -9,6 +9,7 @@ import {
 } from '@/_jotai/artifact/artifact.atoms'
 import { useArtifactActions } from '@/_jotai/artifact/artifact.actions'
 import { ArtifactViewer } from '@/components/ArtifactViewer'
+import { ArtifactToolbar } from '@/components/ArtifactToolbar'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
 
@@ -79,7 +80,7 @@ function SharePage() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl">
+    <div className="mx-auto max-w-5xl pb-20 sm:pb-16">
       {artifact.title && (
         <div className="border-b border-white/10 px-6 py-4">
           <h1 className="font-mono text-xl font-bold">{artifact.title}</h1>
@@ -91,6 +92,7 @@ function SharePage() {
         </div>
       )}
       <ArtifactViewer artifact={artifact} />
+      <ArtifactToolbar artifact={artifact} />
     </div>
   )
 }
