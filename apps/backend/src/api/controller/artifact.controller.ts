@@ -27,26 +27,28 @@ export class ArtifactController {
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: MAX_FILE_SIZE } }))
   async create(
     @UploadedFile() file: Express.Multer.File | undefined,
-    @Body() body: { type?: string; content?: string; title?: string; mimeType?: string; parentArtifactId?: string; creatorContext?: string; inputReferences?: string[] },
-    @Req() req: Request,
+    @Body() body?: { type?: string; content?: string; title?: string; mimeType?: string; parentArtifactId?: string; creatorContext?: string; inputReferences?: string[] },
+    @Req() req?: Request,
   ) {
-    const apiKeyId = (req as any).apiKeyId;
+    const apiKeyId = (req as any)?.apiKeyId;
 
     const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3333').replace(/\/+$/, '');
 
+    // Handle file upload with optional metadata
     if (file) {
       const artifact = await this.artifactService.createFromFile({
         file: { buffer: file.buffer, originalname: file.originalname, mimetype: file.mimetype },
-        title: body.title,
+        title: body?.title,
         apiKeyId,
-        parentArtifactId: body.parentArtifactId,
-        creatorContext: body.creatorContext,
-        inputReferences: body.inputReferences,
+        parentArtifactId: body?.parentArtifactId,
+        creatorContext: body?.creatorContext,
+        inputReferences: body?.inputReferences,
       });
       return { ok: true, data: { id: artifact.id, url: `${frontendUrl}/s/${artifact.id}`, title: artifact.title, type: artifact.type, mimeType: artifact.mimeType } };
     }
 
-    if (body.content && body.type) {
+    // Handle JSON content publishing
+    if (body?.content && body?.type) {
       if (!Object.values(ArtifactType).includes(body.type as ArtifactType) || body.type === ArtifactType.FILE) {
         throw new BadRequestException({ ok: false, error: 'INVALID_TYPE', message: 'type must be: markdown, html, chart, code, or text' });
       }

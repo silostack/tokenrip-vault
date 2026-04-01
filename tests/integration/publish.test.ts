@@ -158,4 +158,55 @@ describe('publish', () => {
       process.env.TOKENRIP_API_KEY = savedKey;
     }
   });
+
+  test('publish via direct HTTP request with JSON body succeeds', async () => {
+    const res = await fetch(`${backend.url}/v0/artifacts`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        type: 'markdown',
+        content: '# Direct JSON Request\n\nThis was published via direct HTTP request.',
+        title: 'Direct JSON Test',
+      }),
+    });
+
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.ok).toBe(true);
+    expect(data.data.id).toBeDefined();
+    expect(data.data.type).toBe('markdown');
+    expect(data.data.title).toBe('Direct JSON Test');
+    expect(data.data.url).toBeDefined();
+    expect((data.data.url as string)).toContain(`/s/${data.data.id}`);
+  });
+
+  test('publish via direct HTTP request with large content succeeds', async () => {
+    const largeContent = '# Large Content\n\n' + 'x'.repeat(1024 * 100); // 100KB of content
+
+    const res = await fetch(`${backend.url}/v0/artifacts`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        type: 'markdown',
+        content: largeContent,
+        title: 'Large Content Test',
+      }),
+    });
+
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.ok).toBe(true);
+    expect(data.data.id).toBeDefined();
+
+    // Verify content was stored correctly
+    const contentRes = await fetch(`${backend.url}/v0/artifacts/${data.data.id}/content`);
+    const storedContent = await contentRes.text();
+    expect(storedContent).toBe(largeContent);
+  });
 });
