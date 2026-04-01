@@ -51,9 +51,9 @@ tests/
     ├── auth.test.ts          # API key lifecycle (create, auth, revoke)
     ├── upload.test.ts        # File uploads, retrieval, URL in response
     ├── publish.test.ts       # Content publishing (markdown, HTML, chart, code, text), URL in response
-    ├── artifact-read.test.ts # Artifact metadata, content endpoints, provenance fields
-    ├── status.test.ts        # GET /v0/artifacts/status endpoint, CLI status command
-    ├── provenance.test.ts    # Provenance/lineage fields (parentArtifactId, creatorContext, inputReferences)
+    ├── asset-read.test.ts # Asset metadata, content endpoints, provenance fields
+    ├── status.test.ts        # GET /v0/assets/status endpoint, CLI status command
+    ├── provenance.test.ts    # Provenance/lineage fields (parentAssetId, creatorContext, inputReferences)
     ├── config.test.ts        # CLI config functions and env var precedence
     └── full-flow.test.ts     # End-to-end: key → upload → publish → revoke
 ```
@@ -194,7 +194,7 @@ API key lifecycle via direct `fetch` calls (the CLI doesn't expose auth commands
 
 File upload via `fetch` with native `FormData`, plus CLI error path tests.
 
-- Upload PNG — success with artifact ID, title defaults to filename, correct MIME type
+- Upload PNG — success with asset ID, title defaults to filename, correct MIME type
 - Upload PDF with custom title
 - Uploaded content is byte-for-byte retrievable via content endpoint
 - Response includes `url` field with shareable link
@@ -216,9 +216,9 @@ Content publishing via CLI's `publish()` function with `console.log` spy to capt
 - Non-existent file throws `CliError('FILE_NOT_FOUND')`
 - Missing API key throws `CliError('NO_API_KEY')`
 
-### `artifact-read.test.ts` (7 tests)
+### `asset-read.test.ts` (7 tests)
 
-Artifact retrieval endpoints via `fetch`. Creates artifacts in `beforeAll`, then tests reads.
+Asset retrieval endpoints via `fetch`. Creates assets in `beforeAll`, then tests reads.
 
 - Metadata returns correct fields for uploaded files
 - Metadata returns correct fields for published content
@@ -226,24 +226,24 @@ Artifact retrieval endpoints via `fetch`. Creates artifacts in `beforeAll`, then
 - Content endpoint returns correct text for published markdown
 - Non-existent UUID returns 404 on metadata endpoint
 - Non-existent UUID returns 404 on content endpoint
-- Metadata includes provenance fields (parentArtifactId, creatorContext, inputReferences) when set
+- Metadata includes provenance fields (parentAssetId, creatorContext, inputReferences) when set
 
 ### `status.test.ts` (6 tests)
 
 Status endpoint and CLI command via `fetch` and CLI function import.
 
-- Returns empty array when no artifacts exist
-- Returns created artifacts with correct fields (id, title, type, mimeType, createdAt, updatedAt)
+- Returns empty array when no assets exist
+- Returns created assets with correct fields (id, title, type, mimeType, createdAt, updatedAt)
 - Requires authentication (401 without Bearer header)
 - `?since=` query param filters by updatedAt
-- Only returns artifacts for the calling API key (isolation between keys)
+- Only returns assets for the calling API key (isolation between keys)
 - CLI `status()` outputs JSON array
 
 ### `provenance.test.ts` (3 tests)
 
 Provenance/lineage field persistence via `fetch`.
 
-- Publish with provenance fields (parentArtifactId, creatorContext, inputReferences) stores and returns them
+- Publish with provenance fields (parentAssetId, creatorContext, inputReferences) stores and returns them
 - Upload with provenance fields stores and returns them
 - Provenance fields are optional — null when not provided
 

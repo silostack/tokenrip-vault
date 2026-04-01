@@ -1,6 +1,6 @@
 # Hello World
 
-This is a test markdown artifact.
+This is a test markdown asset.
 
 - Item one
 - Item two

@@ -1,14 +1,14 @@
 import { useState, useCallback, useRef } from 'react'
 import { Link as LinkIcon, Check, Download, Info } from 'lucide-react'
-import type { ArtifactMetadata } from '@/lib/api'
-import { getArtifactContentUrl } from '@/lib/api'
+import type { AssetMetadata } from '@/lib/api'
+import { getAssetContentUrl } from '@/lib/api'
 import { MetadataSheet } from './MetadataSheet'
 
-interface ArtifactToolbarProps {
-  artifact: ArtifactMetadata
+interface AssetToolbarProps {
+  asset: AssetMetadata
 }
 
-export function ArtifactToolbar({ artifact }: ArtifactToolbarProps) {
+export function AssetToolbar({ asset }: AssetToolbarProps) {
   const [copied, setCopied] = useState(false)
   const [sheetOpen, setSheetOpen] = useState(false)
   const copyTimeout = useRef<ReturnType<typeof setTimeout>>()
@@ -22,12 +22,12 @@ export function ArtifactToolbar({ artifact }: ArtifactToolbarProps) {
 
   const handleDownload = useCallback(() => {
     const a = document.createElement('a')
-    a.href = getArtifactContentUrl(artifact.id)
-    a.download = artifact.title || artifact.id
+    a.href = getAssetContentUrl(asset.id)
+    a.download = asset.title || asset.id
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
-  }, [artifact.id, artifact.title])
+  }, [asset.id, asset.title])
 
   const toggleSheet = useCallback(() => {
     setSheetOpen((prev) => !prev)
@@ -44,7 +44,7 @@ export function ArtifactToolbar({ artifact }: ArtifactToolbarProps) {
         }`}
       >
         {sheetOpen && (
-          <MetadataSheet artifact={artifact} onClose={() => setSheetOpen(false)} />
+          <MetadataSheet asset={asset} onClose={() => setSheetOpen(false)} />
         )}
       </div>
 

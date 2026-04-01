@@ -1,18 +1,18 @@
 import api from '@/utils/api'
 
-export interface ArtifactMetadata {
+export interface AssetMetadata {
   id: string
   title?: string
   description?: string
   type: 'file' | 'markdown' | 'html' | 'chart' | 'code' | 'text'
   mimeType?: string
   metadata?: Record<string, unknown>
-  parentArtifactId?: string
+  parentAssetId?: string
   creatorContext?: string
   inputReferences?: string[]
   createdAt: string
 }
 
-export function getArtifactContentUrl(uuid: string): string {
-  return `${api.defaults.baseURL}/v0/artifacts/${uuid}/content`
+export function getAssetContentUrl(uuid: string): string {
+  return `${api.defaults.baseURL}/v0/assets/${uuid}/content`
 }

@@ -39,9 +39,9 @@ The raw key is returned once and never stored — only its SHA256 hash is persis
 
 ---
 
-## Artifacts
+## Assets
 
-### `POST /v0/artifacts` — Create Artifact
+### `POST /v0/assets` — Create Asset
 
 **Auth:** API key (Bearer)
 
@@ -54,7 +54,7 @@ Two modes: file upload (multipart) or content publish (JSON).
 | `file` | binary | yes | The file to upload |
 | `title` | string | no | Display title (defaults to filename) |
 | `mimeType` | string | no | MIME type override |
-| `parentArtifactId` | uuid | no | Parent artifact for lineage tracking |
+| `parentAssetId` | uuid | no | Parent asset for lineage tracking |
 | `creatorContext` | string | no | Free-text creator context (agent name, task) |
 | `inputReferences` | JSON string | no | JSON array of reference URLs/IDs |
 
@@ -67,7 +67,7 @@ Max file size: 10 MB (configurable via `MAX_FILE_SIZE_BYTES`).
   "type": "markdown",
   "content": "# Hello World",
   "title": "My Document",
-  "parentArtifactId": "uuid-of-parent",
+  "parentAssetId": "uuid-of-parent",
   "creatorContext": "Claude analysis task",
   "inputReferences": ["https://example.com/source"]
 }
@@ -78,7 +78,7 @@ Max file size: 10 MB (configurable via `MAX_FILE_SIZE_BYTES`).
 | `type` | string | yes | `markdown`, `html`, `chart`, `code`, `text` |
 | `content` | string | yes | Raw content (UTF-8) |
 | `title` | string | no | Display title |
-| `parentArtifactId` | uuid | no | Parent artifact for lineage |
+| `parentAssetId` | uuid | no | Parent asset for lineage |
 | `creatorContext` | string | no | Creator context |
 | `inputReferences` | string[] | no | Input reference URLs/IDs |
 
@@ -103,15 +103,15 @@ The `url` field is the shareable link. It's computed from the `FRONTEND_URL` bac
 
 ---
 
-### `GET /v0/artifacts/status` — List My Artifacts
+### `GET /v0/assets/status` — List My Assets
 
 **Auth:** API key (Bearer)
 
-Returns artifacts created by the calling API key, ordered by `updatedAt` descending. Max 100 results.
+Returns assets created by the calling API key, ordered by `updatedAt` descending. Max 100 results.
 
 | Query Param | Type | Description |
 |-------------|------|-------------|
-| `since` | ISO 8601 | Only return artifacts updated after this timestamp |
+| `since` | ISO 8601 | Only return assets updated after this timestamp |
 
 **Response (200):**
 ```json
@@ -132,7 +132,7 @@ Returns artifacts created by the calling API key, ordered by `updatedAt` descend
 
 ---
 
-### `GET /v0/artifacts/:uuid` — Get Artifact Metadata
+### `GET /v0/assets/:uuid` — Get Asset Metadata
 
 **Auth:** Public
 
@@ -147,7 +147,7 @@ Returns artifacts created by the calling API key, ordered by `updatedAt` descend
     "type": "markdown",
     "mimeType": "text/markdown",
     "metadata": null,
-    "parentArtifactId": "uuid-or-null",
+    "parentAssetId": "uuid-or-null",
     "creatorContext": "string-or-null",
     "inputReferences": ["url1", "url2"],
     "createdAt": "2026-03-31T..."
@@ -155,11 +155,11 @@ Returns artifacts created by the calling API key, ordered by `updatedAt` descend
 }
 ```
 
-**404:** `{ "ok": false, "error": "NOT_FOUND", "message": "Artifact not found" }`
+**404:** `{ "ok": false, "error": "NOT_FOUND", "message": "Asset not found" }`
 
 ---
 
-### `GET /v0/artifacts/:uuid/content` — Stream Artifact Content
+### `GET /v0/assets/:uuid/content` — Stream Asset Content
 
 **Auth:** Public
 

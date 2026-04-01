@@ -19,8 +19,8 @@ afterAll(async () => {
 });
 
 describe('status endpoint', () => {
-  test('returns empty array with no artifacts', async () => {
-    const res = await fetch(`${backend.url}/v0/artifacts/status`, {
+  test('returns empty array with no assets', async () => {
+    const res = await fetch(`${backend.url}/v0/assets/status`, {
       headers: { Authorization: `Bearer ${apiKey}` },
     });
     expect(res.status).toBe(200);
@@ -29,9 +29,9 @@ describe('status endpoint', () => {
     expect(json.data).toEqual([]);
   });
 
-  test('returns created artifacts', async () => {
-    // Create two artifacts
-    await fetch(`${backend.url}/v0/artifacts`, {
+  test('returns created assets', async () => {
+    // Create two assets
+    await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -39,7 +39,7 @@ describe('status endpoint', () => {
       },
       body: JSON.stringify({ type: 'markdown', content: '# First', title: 'First' }),
     });
-    await fetch(`${backend.url}/v0/artifacts`, {
+    await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -48,7 +48,7 @@ describe('status endpoint', () => {
       body: JSON.stringify({ type: 'text', content: 'Second', title: 'Second' }),
     });
 
-    const res = await fetch(`${backend.url}/v0/artifacts/status`, {
+    const res = await fetch(`${backend.url}/v0/assets/status`, {
       headers: { Authorization: `Bearer ${apiKey}` },
     });
     const json = (await res.json()) as { ok: boolean; data: Record<string, unknown>[] };
@@ -64,18 +64,18 @@ describe('status endpoint', () => {
   });
 
   test('requires authentication', async () => {
-    const res = await fetch(`${backend.url}/v0/artifacts/status`);
+    const res = await fetch(`${backend.url}/v0/assets/status`);
     expect(res.status).toBe(401);
   });
 
   test('?since= filters by updatedAt', async () => {
-    // Record timestamp after existing artifacts
+    // Record timestamp after existing assets
     await new Promise((r) => setTimeout(r, 50));
     const since = new Date().toISOString();
     await new Promise((r) => setTimeout(r, 50));
 
-    // Create a new artifact after the timestamp
-    await fetch(`${backend.url}/v0/artifacts`, {
+    // Create a new asset after the timestamp
+    await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -84,17 +84,17 @@ describe('status endpoint', () => {
       body: JSON.stringify({ type: 'markdown', content: '# After', title: 'After Timestamp' }),
     });
 
-    const res = await fetch(`${backend.url}/v0/artifacts/status?since=${since}`, {
+    const res = await fetch(`${backend.url}/v0/assets/status?since=${since}`, {
       headers: { Authorization: `Bearer ${apiKey}` },
     });
     const json = (await res.json()) as { ok: boolean; data: Record<string, unknown>[] };
     expect(json.ok).toBe(true);
-    // Only the new artifact should be returned
+    // Only the new asset should be returned
     expect(json.data.length).toBe(1);
     expect(json.data[0].title).toBe('After Timestamp');
   });
 
-  test('only returns artifacts for the calling API key', async () => {
+  test('only returns assets for the calling API key', async () => {
     // Create a second API key
     const keyRes = await fetch(`${backend.url}/v0/auth/keys`, {
       method: 'POST',
@@ -104,8 +104,8 @@ describe('status endpoint', () => {
     const keyJson = (await keyRes.json()) as { ok: boolean; data: { apiKey: string } };
     const otherKey = keyJson.data.apiKey;
 
-    // Status with the new key should be empty (no artifacts created with it)
-    const res = await fetch(`${backend.url}/v0/artifacts/status`, {
+    // Status with the new key should be empty (no assets created with it)
+    const res = await fetch(`${backend.url}/v0/assets/status`, {
       headers: { Authorization: `Bearer ${otherKey}` },
     });
     const json = (await res.json()) as { ok: boolean; data: unknown[] };

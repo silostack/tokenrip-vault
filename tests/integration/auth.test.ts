@@ -36,8 +36,8 @@ describe('auth', () => {
     });
     const { data } = (await createRes.json()) as { data: { apiKey: string } };
 
-    // Use the key to hit a protected endpoint (POST /v0/artifacts with no body should return 400, not 401)
-    const res = await fetch(`${backend.url}/v0/artifacts`, {
+    // Use the key to hit a protected endpoint (POST /v0/assets with no body should return 400, not 401)
+    const res = await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${data.apiKey}`,
@@ -65,7 +65,7 @@ describe('auth', () => {
     expect(revokeRes.status).toBe(201);
 
     // Revoked key should now fail
-    const afterRes = await fetch(`${backend.url}/v0/artifacts`, {
+    const afterRes = await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${data.apiKey}`,
@@ -86,7 +86,7 @@ describe('auth', () => {
   });
 
   test('request without auth header returns 401', async () => {
-    const res = await fetch(`${backend.url}/v0/artifacts`, {
+    const res = await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type: 'markdown', content: 'test' }),
@@ -95,7 +95,7 @@ describe('auth', () => {
   });
 
   test('request with invalid key returns 401', async () => {
-    const res = await fetch(`${backend.url}/v0/artifacts`, {
+    const res = await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: {
         Authorization: 'Bearer tr_invalid_key_that_does_not_exist',
@@ -123,7 +123,7 @@ describe('auth', () => {
 
     // All keys authenticate independently
     for (const key of keys) {
-      const res = await fetch(`${backend.url}/v0/artifacts`, {
+      const res = await fetch(`${backend.url}/v0/assets`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${key}`,

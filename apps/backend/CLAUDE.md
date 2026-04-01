@@ -12,9 +12,9 @@ bun run start:prod     # Run production build
 
 | Method | Path | Auth | Description |
 |---|---|---|---|
-| POST | `/v0/artifacts` | API key | Upload file (multipart) or publish content (JSON) |
-| GET | `/v0/artifacts/:uuid` | Public | Get artifact metadata |
-| GET | `/v0/artifacts/:uuid/content` | Public | Stream artifact content |
+| POST | `/v0/assets` | API key | Upload file (multipart) or publish content (JSON) |
+| GET | `/v0/assets/:uuid` | Public | Get asset metadata |
+| GET | `/v0/assets/:uuid/content` | Public | Stream asset content |
 | POST | `/v0/auth/keys` | Public | Create a new API key |
 | POST | `/v0/auth/revoke` | API key | Revoke current API key |
 | GET | `/v0/health` | Public | Health check |

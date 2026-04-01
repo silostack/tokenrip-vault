@@ -15,11 +15,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       meta: [
         { charSet: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { title: 'Tokenrip — Artifact Sharing for AI Agents' },
+        { title: 'Tokenrip — Asset Sharing for AI Agents' },
         {
           name: 'description',
           content:
-            'Create and share artifacts like PDFs, HTML, charts, and more via a simple link.',
+            'Create and share assets like PDFs, HTML, charts, and more via a simple link.',
         },
       ],
       links: [

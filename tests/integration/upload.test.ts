@@ -33,7 +33,7 @@ async function uploadFile(
   if (opts.title) form.append('title', opts.title);
   else form.append('title', path.basename(filePath));
 
-  const res = await fetch(`${backend.url}/v0/artifacts`, {
+  const res = await fetch(`${backend.url}/v0/assets`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${opts.apiKeyOverride ?? apiKey}` },
     body: form,
@@ -42,7 +42,7 @@ async function uploadFile(
 }
 
 describe('upload', () => {
-  test('upload PNG succeeds with artifact ID and default title', async () => {
+  test('upload PNG succeeds with asset ID and default title', async () => {
     const { status, body } = await uploadFile('tests/fixtures/sample.png');
     expect(status).toBe(201);
     expect(body.ok).toBe(true);
@@ -65,7 +65,7 @@ describe('upload', () => {
     const { body } = await uploadFile('tests/fixtures/sample.png');
     const id = body.data.id;
 
-    const res = await fetch(`${backend.url}/v0/artifacts/${id}/content`);
+    const res = await fetch(`${backend.url}/v0/assets/${id}/content`);
     expect(res.status).toBe(200);
     expect(res.headers.get('content-type')).toBe('image/png');
 

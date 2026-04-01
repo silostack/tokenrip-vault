@@ -10,7 +10,7 @@ const dbName = generateTestDbName();
 
 let uploadedFileId: string;
 let publishedContentId: string;
-let provenanceArtifactId: string;
+let provenanceAssetId: string;
 const testParentId = v4();
 
 beforeAll(async () => {
@@ -18,7 +18,7 @@ beforeAll(async () => {
   backend = await startBackend(dbName);
   apiKey = await createTestApiKey(backend.url);
 
-  // Create a file artifact via API
+  // Create a file asset via API
   const fileForm = new FormData();
   const pngBytes = await Bun.file('tests/fixtures/sample.png').arrayBuffer();
   fileForm.append('file', new Blob([pngBytes], { type: 'image/png' }), 'sample.png');
@@ -26,7 +26,7 @@ beforeAll(async () => {
   fileForm.append('mimeType', 'image/png');
   fileForm.append('title', 'Test PNG');
 
-  const fileRes = await fetch(`${backend.url}/v0/artifacts`, {
+  const fileRes = await fetch(`${backend.url}/v0/assets`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${apiKey}` },
     body: fileForm,
@@ -34,8 +34,8 @@ beforeAll(async () => {
   const fileJson = (await fileRes.json()) as { data: { id: string } };
   uploadedFileId = fileJson.data.id;
 
-  // Create a content artifact via API
-  const contentRes = await fetch(`${backend.url}/v0/artifacts`, {
+  // Create a content asset via API
+  const contentRes = await fetch(`${backend.url}/v0/assets`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -50,8 +50,8 @@ beforeAll(async () => {
   const contentJson = (await contentRes.json()) as { data: { id: string } };
   publishedContentId = contentJson.data.id;
 
-  // Create an artifact with provenance fields
-  const provRes = await fetch(`${backend.url}/v0/artifacts`, {
+  // Create an asset with provenance fields
+  const provRes = await fetch(`${backend.url}/v0/assets`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -61,13 +61,13 @@ beforeAll(async () => {
       type: 'markdown',
       content: '# Provenance test',
       title: 'With Provenance',
-      parentArtifactId: testParentId,
+      parentAssetId: testParentId,
       creatorContext: 'test-agent',
       inputReferences: ['ref-a', 'ref-b'],
     }),
   });
   const provJson = (await provRes.json()) as { data: { id: string } };
-  provenanceArtifactId = provJson.data.id;
+  provenanceAssetId = provJson.data.id;
 });
 
 afterAll(async () => {
@@ -75,9 +75,9 @@ afterAll(async () => {
   await dropTestDatabase(dbName);
 });
 
-describe('artifact read', () => {
+describe('asset read', () => {
   test('GET metadata for uploaded file', async () => {
-    const res = await fetch(`${backend.url}/v0/artifacts/${uploadedFileId}`);
+    const res = await fetch(`${backend.url}/v0/assets/${uploadedFileId}`);
     expect(res.status).toBe(200);
     const json = (await res.json()) as { ok: boolean; data: Record<string, unknown> };
     expect(json.ok).toBe(true);
@@ -89,7 +89,7 @@ describe('artifact read', () => {
   });
 
   test('GET metadata for published content', async () => {
-    const res = await fetch(`${backend.url}/v0/artifacts/${publishedContentId}`);
+    const res = await fetch(`${backend.url}/v0/assets/${publishedContentId}`);
     expect(res.status).toBe(200);
     const json = (await res.json()) as { ok: boolean; data: Record<string, unknown> };
     expect(json.ok).toBe(true);
@@ -100,7 +100,7 @@ describe('artifact read', () => {
   });
 
   test('GET content streams correct bytes for file', async () => {
-    const res = await fetch(`${backend.url}/v0/artifacts/${uploadedFileId}/content`);
+    const res = await fetch(`${backend.url}/v0/assets/${uploadedFileId}/content`);
     expect(res.status).toBe(200);
     expect(res.headers.get('content-type')).toBe('image/png');
 
@@ -110,7 +110,7 @@ describe('artifact read', () => {
   });
 
   test('GET content streams correct text for published content', async () => {
-    const res = await fetch(`${backend.url}/v0/artifacts/${publishedContentId}/content`);
+    const res = await fetch(`${backend.url}/v0/assets/${publishedContentId}/content`);
     expect(res.status).toBe(200);
     expect(res.headers.get('content-type')).toContain('text/markdown');
 
@@ -119,20 +119,20 @@ describe('artifact read', () => {
   });
 
   test('GET metadata for non-existent UUID returns 404', async () => {
-    const res = await fetch(`${backend.url}/v0/artifacts/00000000-0000-0000-0000-000000000000`);
+    const res = await fetch(`${backend.url}/v0/assets/00000000-0000-0000-0000-000000000000`);
     expect(res.status).toBe(404);
   });
 
   test('GET content for non-existent UUID returns 404', async () => {
-    const res = await fetch(`${backend.url}/v0/artifacts/00000000-0000-0000-0000-000000000000/content`);
+    const res = await fetch(`${backend.url}/v0/assets/00000000-0000-0000-0000-000000000000/content`);
     expect(res.status).toBe(404);
   });
 
   test('GET metadata includes provenance fields when set', async () => {
-    const res = await fetch(`${backend.url}/v0/artifacts/${provenanceArtifactId}`);
+    const res = await fetch(`${backend.url}/v0/assets/${provenanceAssetId}`);
     expect(res.status).toBe(200);
     const json = (await res.json()) as { ok: boolean; data: Record<string, unknown> };
-    expect(json.data.parentArtifactId).toBe(testParentId);
+    expect(json.data.parentAssetId).toBe(testParentId);
     expect(json.data.creatorContext).toBe('test-agent');
     expect(json.data.inputReferences).toEqual(['ref-a', 'ref-b']);
   });

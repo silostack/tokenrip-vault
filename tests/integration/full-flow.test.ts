@@ -40,7 +40,7 @@ describe('full flow', () => {
     uploadForm.append('type', 'file');
     uploadForm.append('title', 'Flow Test Image');
 
-    const uploadRes = await fetch(`${backend.url}/v0/artifacts`, {
+    const uploadRes = await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${apiKey}` },
       body: uploadForm,
@@ -50,7 +50,7 @@ describe('full flow', () => {
     const uploadId = uploadJson.data.id;
 
     // 4. Fetch metadata
-    const metaRes = await fetch(`${backend.url}/v0/artifacts/${uploadId}`);
+    const metaRes = await fetch(`${backend.url}/v0/assets/${uploadId}`);
     const metaJson = (await metaRes.json()) as { ok: boolean; data: Record<string, any> };
     expect(metaJson.ok).toBe(true);
     expect(metaJson.data.title).toBe('Flow Test Image');
@@ -58,7 +58,7 @@ describe('full flow', () => {
     expect(metaJson.data.mimeType).toBe('image/png');
 
     // 5. Fetch content and verify binary match
-    const contentRes = await fetch(`${backend.url}/v0/artifacts/${uploadId}/content`);
+    const contentRes = await fetch(`${backend.url}/v0/assets/${uploadId}/content`);
     const downloadedBytes = Buffer.from(await contentRes.arrayBuffer());
     const originalBytes = Buffer.from(await pngFile.arrayBuffer());
     expect(downloadedBytes).toEqual(originalBytes);
@@ -79,7 +79,7 @@ describe('full flow', () => {
     consoleSpy.mockRestore();
 
     // 7. Fetch published content and verify text match
-    const mdRes = await fetch(`${backend.url}/v0/artifacts/${publishId}/content`);
+    const mdRes = await fetch(`${backend.url}/v0/assets/${publishId}/content`);
     const mdContent = await mdRes.text();
     const originalMd = await Bun.file('tests/fixtures/sample.md').text();
     expect(mdContent).toBe(originalMd);
@@ -97,7 +97,7 @@ describe('full flow', () => {
     failForm.append('type', 'file');
     failForm.append('title', 'Should Fail');
 
-    const failRes = await fetch(`${backend.url}/v0/artifacts`, {
+    const failRes = await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${apiKey}` },
       body: failForm,

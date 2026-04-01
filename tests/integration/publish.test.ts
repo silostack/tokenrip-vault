@@ -78,7 +78,7 @@ describe('publish', () => {
     const output = getOutput();
     const id = output.data.id as string;
 
-    const res = await fetch(`${backend.url}/v0/artifacts/${id}/content`);
+    const res = await fetch(`${backend.url}/v0/assets/${id}/content`);
     const content = await res.text();
     const original = await Bun.file('tests/fixtures/sample.md').text();
     expect(content).toBe(original);
@@ -160,7 +160,7 @@ describe('publish', () => {
   });
 
   test('publish via direct HTTP request with JSON body succeeds', async () => {
-    const res = await fetch(`${backend.url}/v0/artifacts`, {
+    const res = await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
@@ -186,7 +186,7 @@ describe('publish', () => {
   test('publish via direct HTTP request with large content succeeds', async () => {
     const largeContent = '# Large Content\n\n' + 'x'.repeat(1024 * 100); // 100KB of content
 
-    const res = await fetch(`${backend.url}/v0/artifacts`, {
+    const res = await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
@@ -205,7 +205,7 @@ describe('publish', () => {
     expect(data.data.id).toBeDefined();
 
     // Verify content was stored correctly
-    const contentRes = await fetch(`${backend.url}/v0/artifacts/${data.data.id}/content`);
+    const contentRes = await fetch(`${backend.url}/v0/assets/${data.data.id}/content`);
     const storedContent = await contentRes.text();
     expect(storedContent).toBe(largeContent);
   });

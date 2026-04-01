@@ -1,8 +1,8 @@
 import { Entity, Enum, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
-import { ArtifactRepository } from '../repositories/artifact.repository';
+import { AssetRepository } from '../repositories/asset.repository';
 
-export enum ArtifactType {
+export enum AssetType {
   FILE = 'file',
   MARKDOWN = 'markdown',
   HTML = 'html',
@@ -11,8 +11,8 @@ export enum ArtifactType {
   TEXT = 'text',
 }
 
-@Entity({ repository: () => ArtifactRepository })
-export class Artifact {
+@Entity({ repository: () => AssetRepository })
+export class Asset {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4();
 
@@ -22,8 +22,8 @@ export class Artifact {
   @Property({ nullable: true, type: 'text' })
   description?: string;
 
-  @Enum(() => ArtifactType)
-  type: ArtifactType;
+  @Enum(() => AssetType)
+  type: AssetType;
 
   @Property({ nullable: true })
   mimeType?: string;
@@ -38,7 +38,7 @@ export class Artifact {
   apiKeyId: string;
 
   @Property({ nullable: true, type: 'uuid' })
-  parentArtifactId?: string;
+  parentAssetId?: string;
 
   @Property({ nullable: true, type: 'text' })
   creatorContext?: string;
@@ -52,7 +52,7 @@ export class Artifact {
   @Property({ onUpdate: () => new Date() })
   updatedAt: Date = new Date();
 
-  constructor(type: ArtifactType, storageKey: string, apiKeyId: string) {
+  constructor(type: AssetType, storageKey: string, apiKeyId: string) {
     this.type = type;
     this.storageKey = storageKey;
     this.apiKeyId = apiKeyId;

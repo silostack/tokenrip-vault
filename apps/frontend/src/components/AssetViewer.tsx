@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import api from '@/utils/api';
-import { getArtifactContentUrl } from '@/lib/api';
-import type { ArtifactMetadata } from '@/lib/api';
+import { getAssetContentUrl } from '@/lib/api';
+import type { AssetMetadata } from '@/lib/api';
 import { MarkdownViewer } from './viewers/MarkdownViewer';
 import { HtmlViewer } from './viewers/HtmlViewer';
 import { CodeViewer } from './viewers/CodeViewer';
@@ -10,11 +10,11 @@ import { ImageViewer } from './viewers/ImageViewer';
 import { PdfViewer } from './viewers/PdfViewer';
 import { DownloadFallback } from './viewers/DownloadFallback';
 
-export function ArtifactViewer({ artifact }: { artifact: ArtifactMetadata }) {
-  const contentUrl = getArtifactContentUrl(artifact.id);
+export function AssetViewer({ asset }: { asset: AssetMetadata }) {
+  const contentUrl = getAssetContentUrl(asset.id);
   const [textContent, setTextContent] = useState<string | null>(null);
 
-  const needsTextContent = artifact.type === 'markdown' || artifact.type === 'html' || artifact.type === 'chart' || artifact.type === 'code' || artifact.type === 'text';
+  const needsTextContent = asset.type === 'markdown' || asset.type === 'html' || asset.type === 'chart' || asset.type === 'code' || asset.type === 'text';
 
   useEffect(() => {
     if (!needsTextContent) return;
@@ -26,23 +26,23 @@ export function ArtifactViewer({ artifact }: { artifact: ArtifactMetadata }) {
     return <div className="flex items-center justify-center py-24 text-white/40">Loading...</div>;
   }
 
-  if (artifact.type === 'markdown') {
+  if (asset.type === 'markdown') {
     return <MarkdownViewer content={textContent!} />;
   }
 
-  if (artifact.type === 'html') {
+  if (asset.type === 'html') {
     return <HtmlViewer content={textContent!} />;
   }
 
-  if (artifact.type === 'code') {
-    return <CodeViewer content={textContent!} language={artifact.metadata?.language as string | undefined} />;
+  if (asset.type === 'code') {
+    return <CodeViewer content={textContent!} language={asset.metadata?.language as string | undefined} />;
   }
 
-  if (artifact.type === 'text') {
+  if (asset.type === 'text') {
     return <PlainTextViewer content={textContent!} />;
   }
 
-  if (artifact.type === 'chart') {
+  if (asset.type === 'chart') {
     return (
       <div className="px-6 py-8 text-white/60">
         Chart rendering coming soon. <a href={contentUrl} className="underline">Download raw data</a>
@@ -50,13 +50,13 @@ export function ArtifactViewer({ artifact }: { artifact: ArtifactMetadata }) {
     );
   }
 
-  if (artifact.mimeType?.startsWith('image/')) {
-    return <ImageViewer src={contentUrl} alt={artifact.title} />;
+  if (asset.mimeType?.startsWith('image/')) {
+    return <ImageViewer src={contentUrl} alt={asset.title} />;
   }
 
-  if (artifact.mimeType === 'application/pdf') {
+  if (asset.mimeType === 'application/pdf') {
     return <PdfViewer src={contentUrl} />;
   }
 
-  return <DownloadFallback src={contentUrl} filename={artifact.title} />;
+  return <DownloadFallback src={contentUrl} filename={asset.title} />;
 }

@@ -45,7 +45,7 @@ Our MikroORM configuration has **`allowGlobalContext: false`** (see `apps/backen
 ```typescript
 // ✅ CORRECT - @Transactional creates context automatically
 @Transactional()
-async createArtifact(data: CreateArtifactDto): Promise<Artifact> {
+async createAsset(data: CreateAssetDto): Promise<Asset> {
   // Has both context and transaction
 }
 
@@ -75,7 +75,7 @@ MikroORM is designed around **one EntityManager + identity map per request**. In
 
 ```typescript
 @Injectable()
-export class ArtifactService {
+export class AssetService {
   constructor(
     private readonly em: EntityManager,  // Request-scoped via context
   ) {}
@@ -93,12 +93,12 @@ When you call `em.transactional()` or use `@Transactional()`:
 
 ```typescript
 // Entity loaded in request context
-const artifact = await this.em.findOne(Artifact, { id: artifactId });
+const asset = await this.em.findOne(Asset, { id: assetId });
 
 await this.em.transactional(async (em) => {
-  // artifact IS in the forked EM's identity map - this works!
-  artifact.title = 'Updated Title';
-  em.persist(artifact);  // Changes will be tracked and persisted
+  // asset IS in the forked EM's identity map - this works!
+  asset.title = 'Updated Title';
+  em.persist(asset);  // Changes will be tracked and persisted
 });
 ```
 
@@ -109,7 +109,7 @@ Inside `em.transactional()` or a `@Transactional()` method, **any use of the inj
 ```typescript
 await this.em.transactional(async (em) => {
   // Both of these use the transaction's EM automatically:
-  const artifact = await this.em.findOne(Artifact, { id });  // Uses transaction EM via context propagation
+  const asset = await this.em.findOne(Asset, { id });  // Uses transaction EM via context propagation
   this.em.persist(newEntity);  // Also uses transaction EM
 });
 ```
@@ -158,20 +158,20 @@ For each service, have a small number of methods that explicitly define transact
 ```typescript
 // Option 1: @Transactional decorator
 @Transactional()
-async createArtifact(data: CreateArtifactDto): Promise<Artifact> {
+async createAsset(data: CreateAssetDto): Promise<Asset> {
   // All DB work here shares one transaction
 }
 
 // Option 2: em.transactional for tight, surgical transactions
-async processArtifact(artifactId: string): Promise<void> {
+async processAsset(assetId: string): Promise<void> {
   // Do external I/O outside transaction
-  const metadata = await this.externalService.fetchMetadata(artifactId);
+  const metadata = await this.externalService.fetchMetadata(assetId);
 
   // Tight transaction for DB writes only
   await this.em.transactional(async (em) => {
-    const artifact = await em.findOne(Artifact, { id: artifactId });
-    artifact.metadata = metadata;
-    em.persist(artifact);
+    const asset = await em.findOne(Asset, { id: assetId });
+    asset.metadata = metadata;
+    em.persist(asset);
   });
 }
 ```
@@ -221,15 +221,15 @@ External API calls, file operations, or any slow I/O should stay outside transac
 
 ```typescript
 // Good: I/O outside, DB inside
-async processAndStore(artifactId: string): Promise<void> {
+async processAndStore(assetId: string): Promise<void> {
   // 1. External I/O (may be slow) - OUTSIDE transaction
-  const result = await this.externalService.process(artifactId);
+  const result = await this.externalService.process(assetId);
 
   // 2. Tight transaction for DB writes only
   await this.em.transactional(async (em) => {
-    const artifact = await em.findOne(Artifact, { id: artifactId });
-    artifact.metadata = result;
-    em.persist(artifact);
+    const asset = await em.findOne(Asset, { id: assetId });
+    asset.metadata = result;
+    em.persist(asset);
   });
 }
 
@@ -251,15 +251,15 @@ Inside one service and one transaction context, passing entity instances is conv
 
 ```typescript
 @Transactional()
-async processArtifact(artifactId: string): Promise<void> {
-  const artifact = await this.em.findOne(Artifact, { id: artifactId });
+async processAsset(assetId: string): Promise<void> {
+  const asset = await this.em.findOne(Asset, { id: assetId });
 
   // Fine to pass entity to private helper within same transaction
-  await this.validate(artifact);
-  await this.updateMetadata(artifact);
+  await this.validate(asset);
+  await this.updateMetadata(asset);
 }
 
-private async validate(artifact: Artifact): Promise<void> {
+private async validate(asset: Asset): Promise<void> {
   // Same transaction context, entity is managed
 }
 ```
@@ -271,13 +271,13 @@ When calling other services, especially those with their own `@Transactional`:
 ```typescript
 // Prefer this
 @Transactional()
-async handleArtifact(artifactId: string): Promise<void> {
-  const artifact = await this.em.findOne(Artifact, { id: artifactId });
-  artifact.title = 'Updated';
-  this.em.persist(artifact);
+async handleAsset(assetId: string): Promise<void> {
+  const asset = await this.em.findOne(Asset, { id: assetId });
+  asset.title = 'Updated';
+  this.em.persist(asset);
 
   // Pass ID to other service
-  await this.otherService.notify(artifactId);
+  await this.otherService.notify(assetId);
 }
 
 // Instead of passing entity across service boundaries
@@ -297,9 +297,9 @@ Services that perform side effects (email, webhooks, external APIs) don't need O
 ```typescript
 // Good: Pass only needed data
 await this.notificationService.send({
-  artifactId: artifact.id,
-  title: artifact.title,
-  type: artifact.type,
+  assetId: asset.id,
+  title: asset.title,
+  type: asset.type,
 });
 ```
 
@@ -320,12 +320,12 @@ Inside transactional contexts, call `em.persist()` as needed - no manual flush r
 
 ```typescript
 await this.em.transactional(async (em) => {
-  const artifact = new Artifact(...);
-  em.persist(artifact);
-  await em.flush();  // Get artifact.id
+  const asset = new Asset(...);
+  em.persist(asset);
+  await em.flush();  // Get asset.id
 
-  // Now use artifact.id
-  await this.createRelatedRecord(artifact.id);
+  // Now use asset.id
+  await this.createRelatedRecord(asset.id);
 });
 ```
 
@@ -333,14 +333,14 @@ await this.em.transactional(async (em) => {
 
 ```typescript
 @Transactional()
-async createAndNotify(data: CreateDto): Promise<Artifact> {
-  const artifact = new Artifact(data);
-  this.em.persist(artifact);
+async createAndNotify(data: CreateDto): Promise<Asset> {
+  const asset = new Asset(data);
+  this.em.persist(asset);
   await this.em.flush();  // Ensure DB state is durable
 
-  // Now safe to send notification - artifact exists in DB
-  await this.notificationService.send(artifact.id);
-  return artifact;
+  // Now safe to send notification - asset exists in DB
+  await this.notificationService.send(asset.id);
+  return asset;
 }
 ```
 
@@ -348,14 +348,14 @@ async createAndNotify(data: CreateDto): Promise<Artifact> {
 
 ```typescript
 @Transactional()
-async processArtifact(artifactId: string): Promise<void> {
-  const artifact = await this.em.findOne(Artifact, { id: artifactId });
-  artifact.title = 'Processing';
-  this.em.persist(artifact);
+async processAsset(assetId: string): Promise<void> {
+  const asset = await this.em.findOne(Asset, { id: assetId });
+  asset.title = 'Processing';
+  this.em.persist(asset);
 
   await this.em.flush();  // Commit before nested call
 
-  await this.otherService.processDetails(artifactId);  // Has its own @Transactional
+  await this.otherService.processDetails(assetId);  // Has its own @Transactional
 }
 ```
 
@@ -370,14 +370,14 @@ All database access — including raw SQL — belongs in repository classes. Ser
 ```typescript
 // ✅ CORRECT - Service delegates to repository
 async getSummary(apiKeyId: string): Promise<SummaryDto> {
-  const counts = await this.artifactRepository.getCountsByType(apiKeyId);
+  const counts = await this.assetRepository.getCountsByType(apiKeyId);
   return { counts };
 }
 
 // ❌ INCORRECT - Service does direct DB access
 async getSummary(apiKeyId: string): Promise<SummaryDto> {
   const knex = this.em.getKnex();
-  const result = await knex.raw('SELECT COUNT(*) FROM artifact WHERE ...');
+  const result = await knex.raw('SELECT COUNT(*) FROM asset WHERE ...');
   return { count: parseInt(result.rows[0].count) };
 }
 ```
@@ -391,13 +391,13 @@ MikroORM lacks native aggregation support (SUM, COUNT, GROUP BY). For these quer
 ```typescript
 // ✅ CORRECT - Parameterized raw SQL via em.getConnection().execute()
 const rows = await this.em.getConnection().execute<Array<{ total: string }>>(
-  `SELECT COUNT(*) as total FROM artifact WHERE api_key_id = ?`,
+  `SELECT COUNT(*) as total FROM asset WHERE api_key_id = ?`,
   [apiKeyId]
 );
 
 // ❌ INCORRECT - em.getKnex() query builder
 const knex = this.em.getKnex();
-const result = await knex('artifact').count().where('api_key_id', apiKeyId);
+const result = await knex('asset').count().where('api_key_id', apiKeyId);
 ```
 
 **Why `em.getConnection().execute()` over `em.getKnex()`:** It uses MikroORM's connection pool directly, keeps SQL explicit and reviewable, and avoids mixing two query-building abstractions.
@@ -412,7 +412,7 @@ For most DB-centric methods, `@Transactional()` is the right choice:
 
 ```typescript
 @Transactional()
-async createArtifact(...): Promise<Artifact> {
+async createAsset(...): Promise<Asset> {
   // DB work
 }
 ```
@@ -458,10 +458,10 @@ Annotate and keep them small:
 
 ```typescript
 /**
- * Transaction boundary: Creates artifact and persists storage key.
+ * Transaction boundary: Creates asset and persists storage key.
  */
 @Transactional()
-async createFromContent(...): Promise<Artifact> {
+async createFromContent(...): Promise<Asset> {
   // Clear, focused transaction
 }
 ```
@@ -473,10 +473,10 @@ async createFromContent(...): Promise<Artifact> {
 ### Event Handler with Context
 
 ```typescript
-@OnEvent(EventType.ARTIFACT_CREATED)
+@OnEvent(EventType.ASSET_CREATED)
 @EnsureRequestContext()
-async handleArtifactCreated(event: ArtifactCreatedEvent): Promise<void> {
-  await this.processingService.process(event.artifactId);
+async handleAssetCreated(event: AssetCreatedEvent): Promise<void> {
+  await this.processingService.process(event.assetId);
 }
 ```
 
@@ -484,32 +484,32 @@ async handleArtifactCreated(event: ArtifactCreatedEvent): Promise<void> {
 
 ```typescript
 @Transactional()
-async handleArtifactComplete(artifactId: string): Promise<void> {
-  const artifact = await this.em.findOne(Artifact, { id: artifactId });
-  artifact.metadata = { processed: true };
-  this.em.persist(artifact);
+async handleAssetComplete(assetId: string): Promise<void> {
+  const asset = await this.em.findOne(Asset, { id: assetId });
+  asset.metadata = { processed: true };
+  this.em.persist(asset);
 
   // Pass ID - other service has its own @Transactional
   // With REQUIRED propagation, shares same transaction
-  await this.otherService.recordCompletion(artifactId);
+  await this.otherService.recordCompletion(assetId);
 }
 ```
 
 ### I/O + Tight Transaction Pattern
 
 ```typescript
-async processArtifact(artifactId: string): Promise<void> {
+async processAsset(assetId: string): Promise<void> {
   // 1. External I/O outside transaction
-  const result = await this.externalService.process(artifactId);
+  const result = await this.externalService.process(assetId);
 
   // 2. Early return if no changes needed
   if (!result.hasChanges) return;
 
   // 3. Tight transaction for writes
   await this.em.transactional(async (em) => {
-    const artifact = await em.findOne(Artifact, { id: artifactId });
-    artifact.metadata = result.data;
-    em.persist(artifact);
+    const asset = await em.findOne(Asset, { id: assetId });
+    asset.metadata = result.data;
+    em.persist(asset);
   });
 }
 ```
@@ -545,9 +545,9 @@ async slowMethod(): Promise<void> {
 
 ```typescript
 // Avoid
-private async helper(em: EntityManager, entity: Artifact): Promise<void> {
+private async helper(em: EntityManager, entity: Asset): Promise<void> {
   // em passed but not used
-  await this.em.findOne(Artifact, { id: entity.id });  // Uses injected EM instead
+  await this.em.findOne(Asset, { id: entity.id });  // Uses injected EM instead
 }
 ```
 
@@ -557,30 +557,30 @@ If you pass `em`, use it. If you don't need it, don't pass it.
 
 ```typescript
 // Avoid
-async processArtifact(artifactId: string): Promise<void> {
+async processAsset(assetId: string): Promise<void> {
   // Transaction 1
-  const artifact = await this.em.transactional(async (em) => {
-    return await em.findOne(Artifact, { id: artifactId });
+  const asset = await this.em.transactional(async (em) => {
+    return await em.findOne(Asset, { id: assetId });
   });
-  // Transaction 1 commits - artifact now detached
+  // Transaction 1 commits - asset now detached
 
   // Transaction 2
   await this.em.transactional(async (em) => {
-    artifact.title = 'Updated';  // artifact not in this EM's identity map
-    em.persist(artifact);
+    asset.title = 'Updated';  // asset not in this EM's identity map
+    em.persist(asset);
   });
 }
 
 // Better: re-fetch in second transaction
-async processArtifact(artifactId: string): Promise<void> {
+async processAsset(assetId: string): Promise<void> {
   await this.em.transactional(async (em) => {
-    await this.updateStatus(artifactId);
+    await this.updateStatus(assetId);
   });
 
   await this.em.transactional(async (em) => {
-    const artifact = await em.findOneOrFail(Artifact, { id: artifactId });  // Fresh fetch
-    artifact.title = 'Updated';
-    em.persist(artifact);
+    const asset = await em.findOneOrFail(Asset, { id: assetId });  // Fresh fetch
+    asset.title = 'Updated';
+    em.persist(asset);
   });
 }
 ```

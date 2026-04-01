@@ -22,7 +22,7 @@ afterAll(async () => {
 describe('provenance fields', () => {
   test('publish with provenance fields stores them', async () => {
     const parentId = v4();
-    const res = await fetch(`${backend.url}/v0/artifacts`, {
+    const res = await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -32,7 +32,7 @@ describe('provenance fields', () => {
         type: 'markdown',
         content: '# With provenance',
         title: 'Provenance Test',
-        parentArtifactId: parentId,
+        parentAssetId: parentId,
         creatorContext: 'Claude analysis task',
         inputReferences: ['https://example.com/doc1', 'https://example.com/doc2'],
       }),
@@ -41,10 +41,10 @@ describe('provenance fields', () => {
     expect(createJson.ok).toBe(true);
 
     // Fetch metadata and verify provenance fields
-    const metaRes = await fetch(`${backend.url}/v0/artifacts/${createJson.data.id}`);
+    const metaRes = await fetch(`${backend.url}/v0/assets/${createJson.data.id}`);
     const metaJson = (await metaRes.json()) as { ok: boolean; data: Record<string, unknown> };
     expect(metaJson.ok).toBe(true);
-    expect(metaJson.data.parentArtifactId).toBe(parentId);
+    expect(metaJson.data.parentAssetId).toBe(parentId);
     expect(metaJson.data.creatorContext).toBe('Claude analysis task');
     expect(metaJson.data.inputReferences).toEqual([
       'https://example.com/doc1',
@@ -59,11 +59,11 @@ describe('provenance fields', () => {
     form.append('file', new Blob([pngBytes], { type: 'image/png' }), 'sample.png');
     form.append('type', 'file');
     form.append('title', 'Upload Provenance');
-    form.append('parentArtifactId', parentId);
+    form.append('parentAssetId', parentId);
     form.append('creatorContext', 'Agent file generation');
     form.append('inputReferences', JSON.stringify(['ref1', 'ref2']));
 
-    const res = await fetch(`${backend.url}/v0/artifacts`, {
+    const res = await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${apiKey}` },
       body: form,
@@ -71,14 +71,14 @@ describe('provenance fields', () => {
     const createJson = (await res.json()) as { ok: boolean; data: { id: string } };
     expect(createJson.ok).toBe(true);
 
-    const metaRes = await fetch(`${backend.url}/v0/artifacts/${createJson.data.id}`);
+    const metaRes = await fetch(`${backend.url}/v0/assets/${createJson.data.id}`);
     const metaJson = (await metaRes.json()) as { ok: boolean; data: Record<string, unknown> };
-    expect(metaJson.data.parentArtifactId).toBe(parentId);
+    expect(metaJson.data.parentAssetId).toBe(parentId);
     expect(metaJson.data.creatorContext).toBe('Agent file generation');
   });
 
   test('provenance fields are optional', async () => {
-    const res = await fetch(`${backend.url}/v0/artifacts`, {
+    const res = await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -93,9 +93,9 @@ describe('provenance fields', () => {
     const createJson = (await res.json()) as { ok: boolean; data: { id: string } };
     expect(createJson.ok).toBe(true);
 
-    const metaRes = await fetch(`${backend.url}/v0/artifacts/${createJson.data.id}`);
+    const metaRes = await fetch(`${backend.url}/v0/assets/${createJson.data.id}`);
     const metaJson = (await metaRes.json()) as { ok: boolean; data: Record<string, unknown> };
-    expect(metaJson.data.parentArtifactId).toBeNull();
+    expect(metaJson.data.parentAssetId).toBeNull();
     expect(metaJson.data.creatorContext).toBeNull();
     expect(metaJson.data.inputReferences).toBeNull();
   });

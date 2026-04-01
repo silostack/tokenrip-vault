@@ -1,8 +1,8 @@
-import { Artifact } from './Artifact';
+import { Asset } from './Asset';
 import { ApiKey } from './ApiKey';
 
-export { Artifact, ArtifactType } from './Artifact';
+export { Asset, AssetType } from './Asset';
 export { ApiKey } from './ApiKey';
-export { ArtifactRepository } from '../repositories/artifact.repository';
+export { AssetRepository } from '../repositories/asset.repository';
 
-export const entities = [Artifact, ApiKey];
+export const entities = [Asset, ApiKey];

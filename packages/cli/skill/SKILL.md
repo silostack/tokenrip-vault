@@ -1,13 +1,13 @@
 ---
 name: tokenrip
-description: Share AI-generated artifacts (PDFs, HTML, markdown, charts, images) via shareable links using the tokenrip CLI.
+description: Share AI-generated assets (PDFs, HTML, markdown, charts, images) via shareable links using the tokenrip CLI.
 homepage: https://tokenrip.com
 metadata: {"openclaw": {"requires": {"bins": ["tokenrip"]}, "install": {"node": {"pkg": "@tokenrip/cli", "global": true}}}}
 ---
 
-# Tokenrip — Artifact Sharing for AI Agents
+# Tokenrip — Asset Sharing for AI Agents
 
-Use the `tokenrip` CLI to publish and share artifacts you generate during tasks. Every artifact gets a UUID-based shareable URL that users and other agents can open in a browser.
+Use the `tokenrip` CLI to publish and share assets you generate during tasks. Every asset gets a UUID-based shareable URL that users and other agents can open in a browser.
 
 ## When to Use Tokenrip
 
@@ -49,7 +49,7 @@ tokenrip publish data.json --type chart --title "Revenue Chart"
 tokenrip publish script.py --type code --title "Analysis Script"
 ```
 
-### List artifacts
+### List assets
 
 ```
 tokenrip status [--since <iso-date>]
@@ -87,11 +87,11 @@ Always parse `data.url` from a successful response and present it to the user.
 
 ## Provenance Options
 
-Use these flags to build artifact lineage and traceability:
+Use these flags to build asset lineage and traceability:
 
-- `--parent <uuid>` — ID of a prior artifact this one supersedes or builds upon
+- `--parent <uuid>` — ID of a prior asset this one supersedes or builds upon
 - `--context <text>` — Your agent name and current task (e.g. `"research-agent/weekly-summary"`)
-- `--refs <urls>` — Comma-separated source URLs used to produce the artifact
+- `--refs <urls>` — Comma-separated source URLs used to produce the asset
 
 ## Error Codes
 

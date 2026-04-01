@@ -3,20 +3,20 @@ import { createFileRoute } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { useAtomValue } from 'jotai'
 import {
-  artifactAtom,
-  isLoadingArtifactAtom,
-  artifactErrorAtom,
-} from '@/_jotai/artifact/artifact.atoms'
-import { useArtifactActions } from '@/_jotai/artifact/artifact.actions'
-import { ArtifactViewer } from '@/components/ArtifactViewer'
-import { ArtifactToolbar } from '@/components/ArtifactToolbar'
+  assetAtom,
+  isLoadingAssetAtom,
+  assetErrorAtom,
+} from '@/_jotai/asset/asset.atoms'
+import { useAssetActions } from '@/_jotai/asset/asset.actions'
+import { AssetViewer } from '@/components/AssetViewer'
+import { AssetToolbar } from '@/components/AssetToolbar'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
 
-const fetchArtifactMeta = createServerFn({ method: 'GET' }).handler(
+const fetchAssetMeta = createServerFn({ method: 'GET' }).handler(
   async ({ data: uuid }: { data: string }) => {
     try {
-      const res = await fetch(`${API_URL}/v0/artifacts/${uuid}`)
+      const res = await fetch(`${API_URL}/v0/assets/${uuid}`)
       if (!res.ok) return null
       const json = await res.json()
       return json.data as { id: string; title?: string; description?: string; type: string } | null
@@ -27,10 +27,10 @@ const fetchArtifactMeta = createServerFn({ method: 'GET' }).handler(
 )
 
 export const Route = createFileRoute('/s/$uuid')({
-  loader: ({ params }) => fetchArtifactMeta({ data: params.uuid }),
+  loader: ({ params }) => fetchAssetMeta({ data: params.uuid }),
   head: ({ loaderData }) => {
-    const title = loaderData?.title || 'Shared Artifact'
-    const description = loaderData?.description || `A ${loaderData?.type || 'shared'} artifact on Tokenrip`
+    const title = loaderData?.title || 'Shared Asset'
+    const description = loaderData?.description || `A ${loaderData?.type || 'shared'} asset on Tokenrip`
     return {
       meta: [
         { title: `${title} — Tokenrip` },
@@ -47,20 +47,20 @@ export const Route = createFileRoute('/s/$uuid')({
   component: SharePage,
   notFoundComponent: () => (
     <div className="flex items-center justify-center py-24 text-white/40">
-      Artifact not found.
+      Asset not found.
     </div>
   ),
 })
 
 function SharePage() {
   const { uuid } = Route.useParams()
-  const artifact = useAtomValue(artifactAtom)
-  const isLoading = useAtomValue(isLoadingArtifactAtom)
-  const error = useAtomValue(artifactErrorAtom)
-  const { fetchArtifact } = useArtifactActions()
+  const asset = useAtomValue(assetAtom)
+  const isLoading = useAtomValue(isLoadingAssetAtom)
+  const error = useAtomValue(assetErrorAtom)
+  const { fetchAsset } = useAssetActions()
 
   useEffect(() => {
-    fetchArtifact(uuid)
+    fetchAsset(uuid)
   }, [uuid])
 
   if (isLoading) {
@@ -71,28 +71,28 @@ function SharePage() {
     )
   }
 
-  if (error || !artifact) {
+  if (error || !asset) {
     return (
       <div className="flex items-center justify-center py-24 text-white/40">
-        {error || 'Artifact not found.'}
+        {error || 'Asset not found.'}
       </div>
     )
   }
 
   return (
     <div className="mx-auto max-w-5xl pb-20 sm:pb-16">
-      {artifact.title && (
+      {asset.title && (
         <div className="border-b border-white/10 px-6 py-4">
-          <h1 className="font-mono text-xl font-bold">{artifact.title}</h1>
-          {artifact.description && (
+          <h1 className="font-mono text-xl font-bold">{asset.title}</h1>
+          {asset.description && (
             <p className="mt-1 text-sm text-white/60">
-              {artifact.description}
+              {asset.description}
             </p>
           )}
         </div>
       )}
-      <ArtifactViewer artifact={artifact} />
-      <ArtifactToolbar artifact={artifact} />
+      <AssetViewer asset={asset} />
+      <AssetToolbar asset={asset} />
     </div>
   )
 }

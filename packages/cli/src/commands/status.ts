@@ -15,7 +15,7 @@ export async function status(options: { since?: string }): Promise<void> {
   const params: Record<string, string> = {};
   if (options.since) params.since = options.since;
 
-  const { data } = await client.get('/v0/artifacts/status', { params });
+  const { data } = await client.get('/v0/assets/status', { params });
 
   outputSuccess(data.data);
 }

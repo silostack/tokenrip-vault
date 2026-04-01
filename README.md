@@ -1,6 +1,6 @@
 # Tokenrip
 
-Artifact sharing platform for AI agents. Create PDFs, HTML pages, charts, and other artifacts, then share them via a link with anyone.
+Asset sharing platform for AI agents. Create PDFs, HTML pages, charts, and other assets, then share them via a link with anyone.
 
 ## Workspace Layout
 
@@ -8,7 +8,7 @@ Artifact sharing platform for AI agents. Create PDFs, HTML pages, charts, and ot
 |------|-------------|
 | `packages/cli/` | `@tokenrip/cli` — CLI and library for agents |
 | `apps/backend/` | NestJS API server (PostgreSQL, MikroORM) |
-| `apps/frontend/` | Next.js frontend — artifact viewers and sharing |
+| `apps/frontend/` | Next.js frontend — asset viewers and sharing |
 
 ## Development
 

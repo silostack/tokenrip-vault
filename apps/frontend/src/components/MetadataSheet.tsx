@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { Link } from '@tanstack/react-router'
-import type { ArtifactMetadata } from '@/lib/api'
+import type { AssetMetadata } from '@/lib/api'
 
 interface MetadataSheetProps {
-  artifact: ArtifactMetadata
+  asset: AssetMetadata
   onClose: () => void
 }
 
@@ -17,7 +17,7 @@ function formatDate(iso: string): string {
   })
 }
 
-export function MetadataSheet({ artifact, onClose }: MetadataSheetProps) {
+export function MetadataSheet({ asset, onClose }: MetadataSheetProps) {
   const sheetRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -43,44 +43,44 @@ export function MetadataSheet({ artifact, onClose }: MetadataSheetProps) {
     label: 'Type',
     value: (
       <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-medium text-white/80">
-        {artifact.type}
+        {asset.type}
       </span>
     ),
   })
 
-  if (artifact.createdAt) {
-    rows.push({ label: 'Created', value: formatDate(artifact.createdAt) })
+  if (asset.createdAt) {
+    rows.push({ label: 'Created', value: formatDate(asset.createdAt) })
   }
 
-  if (artifact.mimeType && artifact.type === 'file') {
-    rows.push({ label: 'MIME Type', value: artifact.mimeType })
+  if (asset.mimeType && asset.type === 'file') {
+    rows.push({ label: 'MIME Type', value: asset.mimeType })
   }
 
-  if (artifact.creatorContext) {
-    rows.push({ label: 'Creator', value: artifact.creatorContext })
+  if (asset.creatorContext) {
+    rows.push({ label: 'Creator', value: asset.creatorContext })
   }
 
-  if (artifact.parentArtifactId) {
+  if (asset.parentAssetId) {
     rows.push({
       label: 'Parent',
       value: (
         <Link
           to="/s/$uuid"
-          params={{ uuid: artifact.parentArtifactId }}
+          params={{ uuid: asset.parentAssetId }}
           className="text-white/80 underline decoration-white/30 hover:text-white hover:decoration-white/60"
         >
-          {artifact.parentArtifactId}
+          {asset.parentAssetId}
         </Link>
       ),
     })
   }
 
-  if (artifact.inputReferences && artifact.inputReferences.length > 0) {
+  if (asset.inputReferences && asset.inputReferences.length > 0) {
     rows.push({
       label: 'References',
       value: (
         <div className="flex flex-col gap-1">
-          {artifact.inputReferences.map((ref) => (
+          {asset.inputReferences.map((ref) => (
             <a
               key={ref}
               href={ref}

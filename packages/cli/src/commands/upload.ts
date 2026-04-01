@@ -34,11 +34,11 @@ export async function upload(filePath: string, options: { title?: string; parent
     form.append('title', path.basename(absPath));
   }
 
-  if (options.parent) form.append('parentArtifactId', options.parent);
+  if (options.parent) form.append('parentAssetId', options.parent);
   if (options.context) form.append('creatorContext', options.context);
   if (options.refs) form.append('inputReferences', JSON.stringify(options.refs.split(',').map((r) => r.trim())));
 
-  const { data } = await client.post('/v0/artifacts', form, {
+  const { data } = await client.post('/v0/assets', form, {
     headers: form.getHeaders(),
     maxContentLength: Infinity,
     maxBodyLength: Infinity,

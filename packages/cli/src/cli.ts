@@ -13,7 +13,7 @@ const { version } = require('../package.json');
 const program = new Command();
 program
   .name('tokenrip')
-  .description('Tokenrip — Artifact sharing for AI agents')
+  .description('Tokenrip — Asset sharing for AI agents')
   .version(version);
 
 // config commands
@@ -33,8 +33,8 @@ config
 program
   .command('upload')
   .argument('<file>', 'File to upload')
-  .option('--title <title>', 'Artifact title')
-  .option('--parent <uuid>', 'Parent artifact ID (lineage)')
+  .option('--title <title>', 'Asset title')
+  .option('--parent <uuid>', 'Parent asset ID (lineage)')
   .option('--context <text>', 'Creator context (agent name, task)')
   .option('--refs <urls>', 'Comma-separated input reference URLs')
   .description('Upload a file (PDF, image, etc.) and get a shareable link')
@@ -45,8 +45,8 @@ program
   .command('publish')
   .argument('<file>', 'Content file to publish')
   .requiredOption('--type <type>', 'Content type: markdown, html, chart, code, or text')
-  .option('--title <title>', 'Artifact title')
-  .option('--parent <uuid>', 'Parent artifact ID (lineage)')
+  .option('--title <title>', 'Asset title')
+  .option('--parent <uuid>', 'Parent asset ID (lineage)')
   .option('--context <text>', 'Creator context (agent name, task)')
   .option('--refs <urls>', 'Comma-separated input reference URLs')
   .description('Publish structured content (markdown, HTML, chart, code, text) for rich rendering')
@@ -55,8 +55,8 @@ program
 // status command
 program
   .command('status')
-  .option('--since <iso-date>', 'Only show artifacts updated after this ISO timestamp')
-  .description('List your artifacts and their current status')
+  .option('--since <iso-date>', 'Only show assets updated after this ISO timestamp')
+  .description('List your assets and their current status')
   .action(wrapCommand(status));
 
 program.parse();

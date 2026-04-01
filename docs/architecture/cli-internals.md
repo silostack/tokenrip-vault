@@ -4,7 +4,7 @@
 
 ## Overview
 
-`@tokenrip/cli` is a dual-mode package: a CLI binary (`tokenrip`) and a Node.js library (`@tokenrip/cli`). It is the primary interface for AI agents to create and share artifacts on the Tokenrip platform.
+`@tokenrip/cli` is a dual-mode package: a CLI binary (`tokenrip`) and a Node.js library (`@tokenrip/cli`). It is the primary interface for AI agents to create and share assets on the Tokenrip platform.
 
 ### Design Principles
 
@@ -58,7 +58,7 @@
 1. CLI parses args via Commander → dispatches to command handler
 2. Command handler loads config, resolves API key/URL
 3. Command validates inputs (file exists, type valid, key present)
-4. HTTP client sends request to backend `POST /v0/artifacts`
+4. HTTP client sends request to backend `POST /v0/assets`
 5. Response interceptor maps HTTP errors to `CliError` codes
 6. `outputSuccess` / `outputError` prints JSON to stdout
 7. On error, process exits with code 1
@@ -76,9 +76,9 @@
 | `src/errors.ts` | `CliError` class (code + message) and `toCliError()` normalizer. |
 | `src/output.ts` | JSON output helpers (`outputSuccess`, `outputError`) and `wrapCommand` async error boundary. |
 | `src/commands/config.ts` | `configSetKey` and `configSetUrl` — persist config changes. |
-| `src/commands/upload.ts` | `upload` — multipart file upload to `/v0/artifacts`. Auto-detects MIME type. |
-| `src/commands/publish.ts` | `publish` — JSON body post to `/v0/artifacts` for structured content (markdown, html, chart, code, text). |
-| `src/commands/status.ts` | `status` — GET `/v0/artifacts/status` to list artifacts for the current API key. |
+| `src/commands/upload.ts` | `upload` — multipart file upload to `/v0/assets`. Auto-detects MIME type. |
+| `src/commands/publish.ts` | `publish` — JSON body post to `/v0/assets` for structured content (markdown, html, chart, code, text). |
+| `src/commands/status.ts` | `status` — GET `/v0/assets/status` to list assets for the current API key. |
 
 ---
 
@@ -169,7 +169,7 @@ function wrapCommand<T extends (...args: any[]) => Promise<void>>(fn: T): T;
 
 - **Validation:** API key must be configured (`NO_API_KEY`), file must exist (`FILE_NOT_FOUND`)
 - **MIME detection:** `mime-types` library, falls back to `application/octet-stream`
-- **Request:** `POST /v0/artifacts` as multipart form with fields: `file` (stream), `type` ("file"), `mimeType`, `title`, and optional provenance fields (`parentArtifactId`, `creatorContext`, `inputReferences`)
+- **Request:** `POST /v0/assets` as multipart form with fields: `file` (stream), `type` ("file"), `mimeType`, `title`, and optional provenance fields (`parentAssetId`, `creatorContext`, `inputReferences`)
 - **Title default:** filename if `--title` not given
 - **URL:** uses `url` from API response (backend computes from `FRONTEND_URL` env var). Falls back to port-swap logic for older backends.
 - **Output:** `{ ok: true, data: { id, url, title, type, mimeType } }`
@@ -179,7 +179,7 @@ function wrapCommand<T extends (...args: any[]) => Promise<void>>(fn: T): T;
 **Options:** `--title <title>`, `--parent <uuid>`, `--context <text>`, `--refs <urls>`
 
 - **Validation:** API key, type must be one of `markdown | html | chart | code | text` (`INVALID_TYPE`), file must exist
-- **Request:** `POST /v0/artifacts` as JSON with fields: `type`, `content` (file read as UTF-8), `title`, and optional provenance fields (`parentArtifactId`, `creatorContext`, `inputReferences`)
+- **Request:** `POST /v0/assets` as JSON with fields: `type`, `content` (file read as UTF-8), `title`, and optional provenance fields (`parentAssetId`, `creatorContext`, `inputReferences`)
 - **Title default:** filename if `--title` not given
 - **URL:** uses `url` from API response (same as upload)
 - **Output:** `{ ok: true, data: { id, url, title, type } }`
@@ -187,9 +187,9 @@ function wrapCommand<T extends (...args: any[]) => Promise<void>>(fn: T): T;
 ### `tokenrip status [--since <iso-date>]`
 
 - **Validation:** API key must be configured (`NO_API_KEY`)
-- **Request:** `GET /v0/artifacts/status` with optional `?since=` query parameter
+- **Request:** `GET /v0/assets/status` with optional `?since=` query parameter
 - **Output:** `{ ok: true, data: [{ id, title, type, mimeType, createdAt, updatedAt }, ...] }`
-- Returns artifacts created by the current API key, ordered by `updatedAt` descending (max 100)
+- Returns assets created by the current API key, ordered by `updatedAt` descending (max 100)
 
 ---
 
@@ -346,7 +346,7 @@ Three steps chained: ESM build → CJS build → inject CJS package.json.
 
 ---
 
-## Artifact Creation Flow
+## Asset Creation Flow
 
 ### Upload (Binary Files)
 
@@ -363,9 +363,9 @@ tokenrip upload report.pdf --title "Q1" --context "agent task"
   │   ├─ type: 'file'
   │   ├─ mimeType: 'application/pdf'
   │   ├─ title: 'Q1'
-  │   └─ creatorContext: 'agent task' (+ parentArtifactId, inputReferences if given)
+  │   └─ creatorContext: 'agent task' (+ parentAssetId, inputReferences if given)
   │
-  ├─ POST /v0/artifacts (multipart/form-data)
+  ├─ POST /v0/assets (multipart/form-data)
   │   └─ maxContentLength: Infinity (no client-side size limit)
   │
   └─ outputSuccess({ id, url, title, type, mimeType })
@@ -382,15 +382,15 @@ tokenrip publish dashboard.html --type html --title "Dashboard" --parent <uuid>
   ├─ fs.readFileSync(absPath, 'utf-8') → content string
   ├─ createHttpClient({ baseUrl, apiKey })
   │
-  ├─ POST /v0/artifacts (application/json)
-  │   └─ { type, content, title, parentArtifactId, creatorContext, inputReferences }
+  ├─ POST /v0/assets (application/json)
+  │   └─ { type, content, title, parentAssetId, creatorContext, inputReferences }
   │
   └─ outputSuccess({ id, url, title, type })
 ```
 
 ### URL Construction
 
-The shareable `url` is returned by the backend in the `POST /v0/artifacts` response. The backend computes it from the `FRONTEND_URL` environment variable (default: `http://localhost:3333`).
+The shareable `url` is returned by the backend in the `POST /v0/assets` response. The backend computes it from the `FRONTEND_URL` environment variable (default: `http://localhost:3333`).
 
 The CLI uses this URL directly. If talking to an older backend that doesn't return `url`, it falls back to stripping the API port and appending `:8000/s/{id}`.
 
@@ -420,10 +420,10 @@ Tests use Bun's test runner. Integration tests start a real NestJS backend on a 
 ### Adding a New Content Type
 
 1. Add the type string to `VALID_TYPES` in `src/commands/publish.ts`
-2. Add the type to `ArtifactType` enum in the backend (`apps/backend/src/db/models/Artifact.ts`)
+2. Add the type to `AssetType` enum in the backend (`apps/backend/src/db/models/Asset.ts`)
 3. Add MIME mapping in `CONTENT_MIME_TYPES` in the backend service
 4. Frontend needs a corresponding viewer component in `apps/frontend/src/components/viewers/`
-5. Update `ArtifactViewer.tsx` dispatch and `needsTextContent` check
+5. Update `AssetViewer.tsx` dispatch and `needsTextContent` check
 
 The `code` and `text` types were added following this pattern.
 

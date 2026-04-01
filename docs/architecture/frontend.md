@@ -1,6 +1,6 @@
 # Frontend Architecture
 
-Tokenrip frontend — artifact viewer and sharing pages. Built with TanStack Start (SSR), Jotai (state), Axios (HTTP), and Tailwind CSS v4.
+Tokenrip frontend — asset viewer and sharing pages. Built with TanStack Start (SSR), Jotai (state), Axios (HTTP), and Tailwind CSS v4.
 
 ## Directory Structure
 
@@ -15,9 +15,9 @@ apps/frontend/src/
 │   ├── globals.css            # Tailwind theme & CSS variables
 │   ├── index.tsx              # / — landing page
 │   └── s/
-│       └── $uuid.tsx          # /s/:uuid — artifact viewer
+│       └── $uuid.tsx          # /s/:uuid — asset viewer
 ├── components/                # React components
-│   ├── ArtifactViewer.tsx     # Type dispatcher → correct viewer
+│   ├── AssetViewer.tsx     # Type dispatcher → correct viewer
 │   └── viewers/               # Viewer implementations
 │       ├── MarkdownViewer.tsx  # react-markdown with prose styling
 │       ├── HtmlViewer.tsx      # Sandboxed iframe (srcdoc)
@@ -27,7 +27,7 @@ apps/frontend/src/
 │       ├── PdfViewer.tsx       # iframe embed
 │       └── DownloadFallback.tsx # Download button for unsupported types
 ├── lib/
-│   └── api.ts                 # Types (ArtifactMetadata) & URL helpers
+│   └── api.ts                 # Types (AssetMetadata) & URL helpers
 ├── utils/
 │   └── api.ts                 # Axios instance
 ├── router.tsx                 # Router factory + SSR integration
@@ -39,7 +39,7 @@ apps/frontend/src/
 | URL | File | Description |
 |-----|------|-------------|
 | `/` | `app/index.tsx` | Landing page, static, no API calls |
-| `/s/:uuid` | `app/s/$uuid.tsx` | Public artifact viewer, fetches from API. Server-side loader for OG meta tags (link previews). |
+| `/s/:uuid` | `app/s/$uuid.tsx` | Public asset viewer, fetches from API. Server-side loader for OG meta tags (link previews). |
 
 Routes are file-based via TanStack Router. The Vite plugin scans `src/app/` and generates `routeTree.gen.ts` automatically.
 
@@ -63,31 +63,31 @@ Follows the pattern from the Midas project. All state lives in `src/_jotai/`, or
 
 ```typescript
 // Data atom
-export const artifactAtom = atom<ArtifactMetadata | null>(null)
+export const assetAtom = atom<AssetMetadata | null>(null)
 
 // Loading flag
-export const isLoadingArtifactAtom = atom<boolean>(false)
+export const isLoadingAssetAtom = atom<boolean>(false)
 
 // Error message
-export const artifactErrorAtom = atom<string | null>(null)
+export const assetErrorAtom = atom<string | null>(null)
 ```
 
 ### Action Hook Pattern
 
 ```typescript
-export const useArtifactActions = () => {
-  const setArtifact = useSetAtom(artifactAtom)
-  const setIsLoading = useSetAtom(isLoadingArtifactAtom)
-  const setError = useSetAtom(artifactErrorAtom)
+export const useAssetActions = () => {
+  const setAsset = useSetAtom(assetAtom)
+  const setIsLoading = useSetAtom(isLoadingAssetAtom)
+  const setError = useSetAtom(assetErrorAtom)
 
-  const fetchArtifact = async (uuid: string) => {
+  const fetchAsset = async (uuid: string) => {
     setIsLoading(true)
     setError(null)
     try {
-      const response = await api.get(`/v0/artifacts/${uuid}`)
-      setArtifact(response.data.data)
+      const response = await api.get(`/v0/assets/${uuid}`)
+      setAsset(response.data.data)
     } catch (error: any) {
-      const message = error.response?.data?.message || 'Failed to fetch artifact'
+      const message = error.response?.data?.message || 'Failed to fetch asset'
       setError(message)
       toast.error(message)
     } finally {
@@ -95,7 +95,7 @@ export const useArtifactActions = () => {
     }
   }
 
-  return { fetchArtifact }
+  return { fetchAsset }
 }
 ```
 
@@ -108,11 +108,11 @@ export const useArtifactActions = () => {
 ### Component Consumption
 
 ```typescript
-const artifact = useAtomValue(artifactAtom)
-const isLoading = useAtomValue(isLoadingArtifactAtom)
-const { fetchArtifact } = useArtifactActions()
+const asset = useAtomValue(assetAtom)
+const isLoading = useAtomValue(isLoadingAssetAtom)
+const { fetchAsset } = useAssetActions()
 
-useEffect(() => { fetchArtifact(uuid) }, [uuid])
+useEffect(() => { fetchAsset(uuid) }, [uuid])
 ```
 
 ## API Layer
@@ -123,21 +123,21 @@ Centralized axios instance with `baseURL` from `VITE_API_URL` (default `http://l
 
 ### Types & Helpers (`src/lib/api.ts`)
 
-- `ArtifactMetadata` interface — artifact shape from the backend. Includes provenance fields: `parentArtifactId`, `creatorContext`, `inputReferences`.
-- `getArtifactContentUrl(uuid)` — builds the content download URL
+- `AssetMetadata` interface — asset shape from the backend. Includes provenance fields: `parentAssetId`, `creatorContext`, `inputReferences`.
+- `getAssetContentUrl(uuid)` — builds the content download URL
 
 ### Endpoints Used
 
 | Method | Path | Purpose |
 |--------|------|---------|
-| GET | `/v0/artifacts/:uuid` | Fetch artifact metadata |
-| GET | `/v0/artifacts/:uuid/content` | Fetch raw content (text, binary) |
+| GET | `/v0/assets/:uuid` | Fetch asset metadata |
+| GET | `/v0/assets/:uuid/content` | Fetch raw content (text, binary) |
 
-## Artifact Viewers
+## Asset Viewers
 
-`ArtifactViewer.tsx` dispatches to the correct viewer based on `type` and `mimeType`:
+`AssetViewer.tsx` dispatches to the correct viewer based on `type` and `mimeType`:
 
-| Artifact Type | MIME Match | Viewer | Rendering |
+| Asset Type | MIME Match | Viewer | Rendering |
 |---------------|------------|--------|-----------|
 | `markdown` | — | `MarkdownViewer` | `react-markdown` with prose styling |
 | `html` | — | `HtmlViewer` | Sandboxed iframe (`srcdoc`) |
@@ -148,7 +148,7 @@ Centralized axios instance with `baseURL` from `VITE_API_URL` (default `http://l
 | — | `application/pdf` | `PdfViewer` | iframe embed |
 | (fallback) | — | `DownloadFallback` | Download button |
 
-For markdown/html/chart/code/text, `ArtifactViewer` fetches text content from the `/content` endpoint before rendering. The `CodeViewer` accepts an optional `language` hint from `artifact.metadata.language` for targeted highlighting.
+For markdown/html/chart/code/text, `AssetViewer` fetches text content from the `/content` endpoint before rendering. The `CodeViewer` accepts an optional `language` hint from `asset.metadata.language` for targeted highlighting.
 
 ## Styling
 

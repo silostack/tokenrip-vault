@@ -35,11 +35,11 @@ export async function publish(
     content,
     title: options.title || path.basename(absPath),
   };
-  if (options.parent) body.parentArtifactId = options.parent;
+  if (options.parent) body.parentAssetId = options.parent;
   if (options.context) body.creatorContext = options.context;
   if (options.refs) body.inputReferences = options.refs.split(',').map((r) => r.trim());
 
-  const { data } = await client.post('/v0/artifacts', body);
+  const { data } = await client.post('/v0/assets', body);
 
   const url = data.data.url || `${getApiUrl(config).replace(/:\d+$/, ':8000')}/s/${data.data.id}`;
   outputSuccess({
