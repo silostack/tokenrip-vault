@@ -30,7 +30,7 @@ export function saveConfig(config: TokenripConfig): void {
 }
 
 export function getApiUrl(config: TokenripConfig): string {
-  return config.apiUrl || process.env.TOKENRIP_API_URL || 'http://localhost:3000';
+  return config.apiUrl || process.env.TOKENRIP_API_URL || 'http://localhost:3434';
 }
 
 export function getApiKey(config: TokenripConfig): string | undefined {
