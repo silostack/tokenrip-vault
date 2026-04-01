@@ -43,11 +43,18 @@ export class AssetService {
     @Inject(STORAGE_SERVICE) private readonly storage: StorageService,
   ) {}
 
+  /**
+   * Transaction boundary: Creates asset record + stores file.
+   * External I/O (file storage) outside transaction to avoid holding DB locks during slow I/O.
+   * Tight transaction for DB write only.
+   */
   async createFromFile(dto: CreateFileDto): Promise<Asset> {
     const storageKey = `${v4()}/${dto.file.originalname}`;
     this.logger.debug(`Saving file to storage: ${storageKey} (${dto.file.mimetype}, ${dto.file.buffer.length} bytes)`);
+    // 1. External I/O - outside transaction
     await this.storage.save(storageKey, dto.file.buffer);
 
+    // 2. Tight transaction for DB write only
     return await this.em.transactional(async () => {
       const asset = new Asset(AssetType.FILE, storageKey, dto.apiKeyId);
       asset.mimeType = dto.file.mimetype;
@@ -62,11 +69,18 @@ export class AssetService {
     });
   }
 
+  /**
+   * Transaction boundary: Creates asset record + stores content.
+   * External I/O (file storage) outside transaction to avoid holding DB locks during slow I/O.
+   * Tight transaction for DB write only.
+   */
   async createFromContent(dto: CreateContentDto): Promise<Asset> {
     const storageKey = `${v4()}/content`;
     this.logger.debug(`Saving ${dto.type} content to storage: ${storageKey} (${dto.content.length} chars)`);
+    // 1. External I/O - outside transaction
     await this.storage.save(storageKey, Buffer.from(dto.content, 'utf-8'));
 
+    // 2. Tight transaction for DB write only
     return await this.em.transactional(async () => {
       const asset = new Asset(dto.type, storageKey, dto.apiKeyId);
       asset.mimeType = CONTENT_MIME_TYPES[dto.type];

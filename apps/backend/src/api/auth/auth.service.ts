@@ -7,13 +7,16 @@ import { ApiKey } from '../../db/models/ApiKey';
 export class AuthService {
   constructor(private readonly em: EntityManager) {}
 
+  /**
+   * Creates a new API key. Explicitly flushes before returning to ensure durability.
+   */
   async createKey(name: string): Promise<string> {
     const rawKey = `tr_${randomBytes(32).toString('hex')}`;
     const keyHash = createHash('sha256').update(rawKey).digest('hex');
 
     const record = new ApiKey(keyHash, name);
     this.em.persist(record);
-    await this.em.flush();
+    await this.em.flush();  // Ensure DB state is durable before returning raw key
 
     return rawKey;
   }
