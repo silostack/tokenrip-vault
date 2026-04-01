@@ -5,7 +5,7 @@
 Tokenrip uses **integration tests** that boot a real NestJS backend against a real PostgreSQL database and exercise the system through HTTP requests and CLI function calls. The test runner is **Bun's built-in test framework** (`bun test`).
 
 ```
-51 tests across 9 files, ~2 seconds total
+102 tests across 13 files, ~3 seconds total
 ```
 
 ## Prerequisites
@@ -54,6 +54,10 @@ tests/
     ├── asset-read.test.ts # Asset metadata, content endpoints, provenance fields
     ├── status.test.ts        # GET /v0/assets/status endpoint, CLI status command
     ├── provenance.test.ts    # Provenance/lineage fields (parentAssetId, creatorContext, inputReferences)
+    ├── delete.test.ts        # Asset deletion, ownership enforcement, CLI delete
+    ├── size-bytes.test.ts    # sizeBytes tracking for published and uploaded content
+    ├── stats.test.ts         # Storage statistics endpoint
+    ├── versioning.test.ts    # Asset versioning lifecycle (31 tests — CRUD, auth, 404s, file uploads, stats)
     ├── config.test.ts        # CLI config functions and env var precedence
     └── full-flow.test.ts     # End-to-end: key → upload → publish → revoke
 ```
@@ -246,6 +250,53 @@ Provenance/lineage field persistence via `fetch`.
 - Publish with provenance fields (parentAssetId, creatorContext, inputReferences) stores and returns them
 - Upload with provenance fields stores and returns them
 - Provenance fields are optional — null when not provided
+
+### `delete.test.ts` (6 tests)
+
+Asset deletion via `fetch` and CLI function.
+
+- Delete returns 204 and asset becomes 404
+- Non-existent asset returns 404
+- Cannot delete another key's asset (403)
+- Asset content removed from storage after delete
+- Deleted asset disappears from status
+- Requires authentication (401)
+
+### `size-bytes.test.ts` (2 tests)
+
+File size tracking for published and uploaded content.
+
+- Published content `sizeBytes` matches UTF-8 byte length
+- Uploaded file `sizeBytes` matches file buffer length
+
+### `stats.test.ts` (4 tests)
+
+Storage statistics aggregation.
+
+- Returns correct asset count and total bytes
+- Breaks down counts and bytes by type
+- Key isolation (only own assets)
+- Empty stats for key with no assets
+
+### `versioning.test.ts` (31 tests)
+
+Asset versioning lifecycle — the largest test file. Covers 7 describe blocks:
+
+**Core versioning (8):** New asset has versionCount=1, publishing increments count, list versions in desc order, get specific version content, latest content matches newest version, version metadata fields, status includes versionCount.
+
+**Content preservation (4):** v1 accessible after adding newer versions, correct Content-Type header per version, null label when omitted, creatorContext tracked per version.
+
+**File upload versioning (2):** File upload as a new version, sizeBytes tracked per file version.
+
+**Version deletion (4):** Deleting version updates latest pointer, cannot delete last version (400 LAST_VERSION), deleting middle version preserves others, deleting entire asset removes all versions.
+
+**Auth & ownership (5):** Cannot create version on another key's asset (403), cannot delete version on another key's asset (403), auth required to create version (401), auth required to delete version (401), version list and content are publicly accessible.
+
+**404 handling (5):** Non-existent asset → 404 for list, metadata, content, create, and delete.
+
+**Stats with versions (2):** Stats sum bytes across all versions, sizeBytes correct per individual version.
+
+**Invalid requests (2):** Missing body → 400, content without type → 400.
 
 ### `config.test.ts` (8 tests)
 

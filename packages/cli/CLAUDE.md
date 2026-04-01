@@ -19,11 +19,21 @@ The CLI entry (`src/cli.ts`) is ESM-only with a `#!/usr/bin/env node` shebang.
 
 ## Structure
 
-- `src/cli.ts` — Commander entry point (bin: `tokenrip`)
+- `src/cli.ts` — Commander entry point (bin: `tokenrip`), command groups: `asset`, `auth`, `config`
 - `src/index.ts` — Library barrel export
 - `src/config.ts` — Config stored at `~/.config/tokenrip/config.json`
 - `src/client.ts` — Axios HTTP client with auth header
-- `src/commands/` — CLI command implementations (config, upload, publish)
+- `src/formatters.ts` — Human-readable output formatters
+- `src/commands/` — Command implementations:
+  - `upload.ts` — `tokenrip asset upload`
+  - `publish.ts` — `tokenrip asset publish`
+  - `update.ts` — `tokenrip asset update` (new version)
+  - `delete.ts` — `tokenrip asset delete`
+  - `delete-version.ts` — `tokenrip asset delete-version`
+  - `status.ts` — `tokenrip asset list`
+  - `stats.ts` — `tokenrip asset stats`
+  - `auth.ts` — `tokenrip auth create-key`
+  - `config.ts` — `tokenrip config set-key`, `tokenrip config set-url`
 
 ## Publishing
 
