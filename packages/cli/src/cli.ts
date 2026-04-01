@@ -2,6 +2,7 @@
 import { createRequire } from 'node:module';
 import { Command } from 'commander';
 import { configSetKey, configSetUrl } from './commands/config.js';
+import { authCreateKey } from './commands/auth.js';
 import { upload } from './commands/upload.js';
 import { publish } from './commands/publish.js';
 import { status } from './commands/status.js';
@@ -17,15 +18,10 @@ program
   .version(version)
   .addHelpText('after', `
 QUICK START:
-  1. Get an API key:
-     $ curl -X POST http://localhost:3434/v0/auth/keys \\
-       -H "Content-Type: application/json" \\
-       -d '{"name":"my-agent"}' | jq -r .data.key
+  1. Create an API key (auto-saved):
+     $ tokenrip auth create-key
 
-  2. Configure your CLI:
-     $ tokenrip config set-key <your-api-key>
-
-  3. Start sharing assets:
+  2. Start sharing assets:
      $ tokenrip publish examples/report.md --type markdown
      $ tokenrip upload image.png --title "Screenshot"
 
@@ -77,6 +73,29 @@ EXAMPLES:
     You can also set TOKENRIP_API_URL instead of using this command.
 `)
   .action(wrapCommand(configSetUrl));
+
+// auth command
+const auth = program.command('auth').description('Manage API keys and authentication');
+
+auth
+  .command('create-key')
+  .option('--name <name>', 'Friendly name for this key (default: tokenrip-<hostname>)')
+  .option('--no-save', 'Create key but do not auto-save to config')
+  .description('Create a new API key')
+  .addHelpText('after', `
+EXAMPLES:
+  Create a key with a default name (auto-saved):
+    $ tokenrip auth create-key
+
+  Create a key with a custom name:
+    $ tokenrip auth create-key --name "My Agent"
+
+  Create a key without auto-saving:
+    $ tokenrip auth create-key --no-save
+
+The API key is sensitive — treat it like a password.
+`)
+  .action(wrapCommand(authCreateKey));
 
 // upload command
 program
