@@ -77,8 +77,14 @@
 | `src/output.ts` | JSON output helpers (`outputSuccess`, `outputError`) and `wrapCommand` async error boundary. |
 | `src/commands/config.ts` | `configSetKey` and `configSetUrl` — persist config changes. |
 | `src/commands/upload.ts` | `upload` — multipart file upload to `/v0/assets`. Auto-detects MIME type. |
-| `src/commands/publish.ts` | `publish` — JSON body post to `/v0/assets` for structured content (markdown, html, chart, code, text). |
+| `src/commands/publish.ts` | `publish` — JSON body post to `/v0/assets` for structured content (markdown, html, chart, code, text, json). |
 | `src/commands/status.ts` | `status` — GET `/v0/assets/status` to list assets for the current API key. |
+| `src/commands/delete.ts` | `deleteAsset` — DELETE `/v0/assets/:uuid` to delete an asset and all its versions. |
+| `src/commands/update.ts` | `update` — POST `/v0/assets/:uuid/versions` to publish a new version (file upload or content). |
+| `src/commands/delete-version.ts` | `deleteVersion` — DELETE `/v0/assets/:uuid/versions/:vid` to delete a specific version. |
+| `src/commands/stats.ts` | `stats` — GET `/v0/assets/stats` to show storage usage. |
+| `src/commands/auth.ts` | `authCreateKey` — POST `/v0/auth/keys` to create and auto-save an API key. |
+| `src/formatters.ts` | Human-readable formatters for each command output (asset created, deleted, version created, etc.). |
 
 ---
 
@@ -153,43 +159,74 @@ function wrapCommand<T extends (...args: any[]) => Promise<void>>(fn: T): T;
 
 ## CLI Commands
 
-### `tokenrip config set-key <key>`
+Commands are organized into groups: `asset`, `auth`, and `config`.
 
-- Loads config, sets `apiKey`, saves config
-- Output: `{ ok: true, data: { message: "API key saved" } }`
+### `tokenrip asset upload <file> [options]`
 
-### `tokenrip config set-url <url>`
-
-- Loads config, sets `apiUrl`, saves config
-- Output: `{ ok: true, data: { message: "API URL saved", apiUrl: "<url>" } }`
-
-### `tokenrip upload <file> [options]`
-
-**Options:** `--title <title>`, `--parent <uuid>`, `--context <text>`, `--refs <urls>`
+**Options:** `--title <title>`, `--parent <uuid>`, `--context <text>`, `--refs <urls>`, `--dry-run`
 
 - **Validation:** API key must be configured (`NO_API_KEY`), file must exist (`FILE_NOT_FOUND`)
 - **MIME detection:** `mime-types` library, falls back to `application/octet-stream`
 - **Request:** `POST /v0/assets` as multipart form with fields: `file` (stream), `type` ("file"), `mimeType`, `title`, and optional provenance fields (`parentAssetId`, `creatorContext`, `inputReferences`)
 - **Title default:** filename if `--title` not given
-- **URL:** uses `url` from API response (backend computes from `FRONTEND_URL` env var). Falls back to port-swap logic for older backends.
 - **Output:** `{ ok: true, data: { id, url, title, type, mimeType } }`
 
-### `tokenrip publish <file> --type <type> [options]`
+### `tokenrip asset publish <file> --type <type> [options]`
 
-**Options:** `--title <title>`, `--parent <uuid>`, `--context <text>`, `--refs <urls>`
+**Options:** `--title <title>`, `--parent <uuid>`, `--context <text>`, `--refs <urls>`, `--dry-run`
 
-- **Validation:** API key, type must be one of `markdown | html | chart | code | text` (`INVALID_TYPE`), file must exist
-- **Request:** `POST /v0/assets` as JSON with fields: `type`, `content` (file read as UTF-8), `title`, and optional provenance fields (`parentAssetId`, `creatorContext`, `inputReferences`)
+- **Validation:** API key, type must be one of `markdown | html | chart | code | text | json` (`INVALID_TYPE`), file must exist
+- **Request:** `POST /v0/assets` as JSON with fields: `type`, `content` (file read as UTF-8), `title`, and optional provenance fields
 - **Title default:** filename if `--title` not given
-- **URL:** uses `url` from API response (same as upload)
 - **Output:** `{ ok: true, data: { id, url, title, type } }`
 
-### `tokenrip status [--since <iso-date>]`
+### `tokenrip asset update <uuid> <file> [options]`
 
-- **Validation:** API key must be configured (`NO_API_KEY`)
-- **Request:** `GET /v0/assets/status` with optional `?since=` query parameter
-- **Output:** `{ ok: true, data: [{ id, title, type, mimeType, createdAt, updatedAt }, ...] }`
-- Returns assets created by the current API key, ordered by `updatedAt` descending (max 100)
+**Options:** `--type <type>`, `--label <text>`, `--context <text>`, `--dry-run`
+
+- Publishes a new version of an existing asset
+- **With `--type`:** content publish mode (reads file as UTF-8, posts JSON)
+- **Without `--type`:** file upload mode (multipart form)
+- **Request:** `POST /v0/assets/:uuid/versions`
+- **Output:** `{ ok: true, data: { id, assetId, version, label, createdAt } }`
+
+### `tokenrip asset delete <uuid> [--dry-run]`
+
+- Deletes an asset and all its versions
+- **Request:** `DELETE /v0/assets/:uuid`
+- **Output:** `{ ok: true, data: { id, deleted: true } }`
+
+### `tokenrip asset delete-version <uuid> <versionId> [--dry-run]`
+
+- Deletes a specific version of an asset
+- Cannot delete the last remaining version
+- **Request:** `DELETE /v0/assets/:uuid/versions/:versionId`
+- **Output:** `{ ok: true, data: { assetId, versionId, deleted: true } }`
+
+### `tokenrip asset list [options]`
+
+**Options:** `--since <iso-date>`, `--limit <n>`, `--type <type>`
+
+- **Request:** `GET /v0/assets/status` with optional query params
+- **Output:** `{ ok: true, data: [{ id, title, type, mimeType, sizeBytes, versionCount, createdAt, updatedAt }, ...] }`
+
+### `tokenrip asset stats`
+
+- **Request:** `GET /v0/assets/stats`
+- **Output:** `{ ok: true, data: { assetCount, totalBytes, countsByType, bytesByType } }`
+
+### `tokenrip auth create-key [--name <name>] [--no-save]`
+
+- Creates a new API key and auto-saves it to config (unless `--no-save`)
+- **Request:** `POST /v0/auth/keys`
+
+### `tokenrip config set-key <key>`
+
+- Saves API key to `~/.config/tokenrip/config.json`
+
+### `tokenrip config set-url <url>`
+
+- Saves API URL to config
 
 ---
 
@@ -268,9 +305,9 @@ Command handler throws
 
 | Code | Source | When |
 |------|--------|------|
-| `NO_API_KEY` | `upload.ts`, `publish.ts`, `status.ts` | API key not configured and not in env |
-| `FILE_NOT_FOUND` | `upload.ts`, `publish.ts` | Input file path doesn't exist |
-| `INVALID_TYPE` | `publish.ts` | `--type` not one of: markdown, html, chart, code, text |
+| `NO_API_KEY` | `upload.ts`, `publish.ts`, `status.ts`, `update.ts` | API key not configured and not in env |
+| `FILE_NOT_FOUND` | `upload.ts`, `publish.ts`, `update.ts` | Input file path doesn't exist |
+| `INVALID_TYPE` | `publish.ts`, `update.ts` | `--type` not one of: markdown, html, chart, code, text, json |
 | `UNAUTHORIZED` | `client.ts` interceptor | Backend returns 401 |
 | `TIMEOUT` | `client.ts` interceptor | Request exceeds 30s |
 | `NETWORK_ERROR` | `client.ts` interceptor | Connection refused / DNS failure |
@@ -351,7 +388,7 @@ Three steps chained: ESM build → CJS build → inject CJS package.json.
 ### Upload (Binary Files)
 
 ```
-tokenrip upload report.pdf --title "Q1" --context "agent task"
+tokenrip asset upload report.pdf --title "Q1" --context "agent task"
   │
   ├─ loadConfig() → getApiKey() → validate key exists
   ├─ path.resolve(filePath) → validate file exists
@@ -374,10 +411,10 @@ tokenrip upload report.pdf --title "Q1" --context "agent task"
 ### Publish (Structured Content)
 
 ```
-tokenrip publish dashboard.html --type html --title "Dashboard" --parent <uuid>
+tokenrip asset publish dashboard.html --type html --title "Dashboard" --parent <uuid>
   │
   ├─ loadConfig() → getApiKey() → validate key exists
-  ├─ validate type ∈ ['markdown', 'html', 'chart', 'code', 'text']
+  ├─ validate type ∈ ['markdown', 'html', 'chart', 'code', 'text', 'json']
   ├─ path.resolve(filePath) → validate file exists
   ├─ fs.readFileSync(absPath, 'utf-8') → content string
   ├─ createHttpClient({ baseUrl, apiKey })
@@ -393,6 +430,25 @@ tokenrip publish dashboard.html --type html --title "Dashboard" --parent <uuid>
 The shareable `url` is returned by the backend in the `POST /v0/assets` response. The backend computes it from the `FRONTEND_URL` environment variable (default: `http://localhost:3333`).
 
 The CLI uses this URL directly. If talking to an older backend that doesn't return `url`, it falls back to stripping the API port and appending `:8000/s/{id}`.
+
+### Update (New Version)
+
+```
+tokenrip asset update <uuid> report-v2.md --type markdown --label "revised"
+  │
+  ├─ loadConfig() → getApiKey() → validate key exists
+  ├─ path.resolve(filePath) → validate file exists
+  │
+  ├─ If --type given: content publish mode
+  │   ├─ fs.readFileSync(absPath, 'utf-8') → content string
+  │   └─ POST /v0/assets/:uuid/versions (JSON { type, content, label?, creatorContext? })
+  │
+  ├─ If --type omitted: file upload mode
+  │   ├─ FormData with file stream + optional label/creatorContext
+  │   └─ POST /v0/assets/:uuid/versions (multipart)
+  │
+  └─ outputSuccess({ id, assetId, version, label, createdAt })
+```
 
 ---
 

@@ -9,6 +9,7 @@ export enum AssetType {
   CHART = 'chart',
   CODE = 'code',
   TEXT = 'text',
+  JSON = 'json',
 }
 
 @Entity({ repository: () => AssetRepository })
@@ -45,6 +46,15 @@ export class Asset {
 
   @Property({ type: 'json', nullable: true })
   inputReferences?: string[];
+
+  @Property({ type: 'bigint', nullable: true })
+  sizeBytes?: number;
+
+  @Property({ type: 'uuid', nullable: true })
+  currentVersionId?: string;
+
+  @Property({ type: 'int', default: 1 })
+  versionCount: number = 1;
 
   @Property()
   createdAt: Date = new Date();

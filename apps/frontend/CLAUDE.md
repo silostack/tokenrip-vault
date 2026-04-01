@@ -11,7 +11,10 @@ bun run start    # Run production build
 ## Key Pages
 
 - `/` — Landing page (`src/app/index.tsx`)
-- `/s/$uuid` — Shareable asset viewer (`src/app/s/$uuid.tsx`, public, no auth)
+- `/s/$uuid` — Shareable asset viewer, shows latest version (`src/app/s/$uuid/index.tsx`, public, no auth)
+- `/s/$uuid/$versionId` — Specific version viewer (`src/app/s/$uuid/$versionId.tsx`, public, no auth)
+
+Both share pages use `SharePageContent` component. The parent layout (`src/app/s/$uuid.tsx`) handles SSR metadata/OG tags. A `VersionDropdown` appears in the header when `versionCount > 1`, with a stale-version banner when viewing older versions.
 
 ## Asset Viewers
 
@@ -19,6 +22,9 @@ bun run start    # Run production build
 
 - `MarkdownViewer` — renders markdown via `react-markdown`
 - `HtmlViewer` — sandboxed iframe with `srcdoc`
+- `CodeViewer` — syntax highlighting via `highlight.js`
+- `JsonViewer` — interactive tree with collapse/expand and section copy
+- `PlainTextViewer` — monospace `<pre>` with word wrap
 - `ImageViewer` — responsive `<img>`
 - `PdfViewer` — iframe embed
 - `DownloadFallback` — download button for unknown types

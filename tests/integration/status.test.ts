@@ -113,6 +113,47 @@ describe('status endpoint', () => {
     expect(json.data).toEqual([]);
   });
 
+  test('?type= filters by asset type', async () => {
+    const res = await fetch(`${backend.url}/v0/assets/status?type=markdown`, {
+      headers: { Authorization: `Bearer ${apiKey}` },
+    });
+    const json = (await res.json()) as { ok: boolean; data: Record<string, unknown>[] };
+    expect(json.ok).toBe(true);
+    // Should only return markdown assets (First + After Timestamp), not the text asset
+    expect(json.data.length).toBe(2);
+    for (const asset of json.data) {
+      expect(asset.type).toBe('markdown');
+    }
+  });
+
+  test('?type= returns empty for unused type', async () => {
+    const res = await fetch(`${backend.url}/v0/assets/status?type=chart`, {
+      headers: { Authorization: `Bearer ${apiKey}` },
+    });
+    const json = (await res.json()) as { ok: boolean; data: unknown[] };
+    expect(json.ok).toBe(true);
+    expect(json.data).toEqual([]);
+  });
+
+  test('?limit= restricts number of results', async () => {
+    const res = await fetch(`${backend.url}/v0/assets/status?limit=1`, {
+      headers: { Authorization: `Bearer ${apiKey}` },
+    });
+    const json = (await res.json()) as { ok: boolean; data: Record<string, unknown>[] };
+    expect(json.ok).toBe(true);
+    expect(json.data.length).toBe(1);
+  });
+
+  test('?limit= and ?type= combine correctly', async () => {
+    const res = await fetch(`${backend.url}/v0/assets/status?type=markdown&limit=1`, {
+      headers: { Authorization: `Bearer ${apiKey}` },
+    });
+    const json = (await res.json()) as { ok: boolean; data: Record<string, unknown>[] };
+    expect(json.ok).toBe(true);
+    expect(json.data.length).toBe(1);
+    expect(json.data[0].type).toBe('markdown');
+  });
+
   test('CLI status command outputs JSON', async () => {
     process.env.TOKENRIP_API_URL = backend.url;
     process.env.TOKENRIP_API_KEY = apiKey;

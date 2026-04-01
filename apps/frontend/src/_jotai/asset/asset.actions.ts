@@ -5,16 +5,21 @@ import {
   assetAtom,
   isLoadingAssetAtom,
   assetErrorAtom,
+  versionsAtom,
+  activeVersionIdAtom,
 } from './asset.atoms'
 
 export const useAssetActions = () => {
   const setAsset = useSetAtom(assetAtom)
   const setIsLoading = useSetAtom(isLoadingAssetAtom)
   const setError = useSetAtom(assetErrorAtom)
+  const setVersions = useSetAtom(versionsAtom)
+  const setActiveVersionId = useSetAtom(activeVersionIdAtom)
 
-  const fetchAsset = async (uuid: string) => {
+  const fetchAsset = async (uuid: string, versionId?: string) => {
     setIsLoading(true)
     setError(null)
+    setActiveVersionId(versionId || null)
     try {
       const response = await api.get(`/v0/assets/${uuid}`)
       setAsset(response.data.data)
@@ -28,5 +33,14 @@ export const useAssetActions = () => {
     }
   }
 
-  return { fetchAsset }
+  const fetchVersions = async (uuid: string) => {
+    try {
+      const response = await api.get(`/v0/assets/${uuid}/versions`)
+      setVersions(response.data.data)
+    } catch {
+      // silently fail — version list is non-critical
+    }
+  }
+
+  return { fetchAsset, fetchVersions }
 }

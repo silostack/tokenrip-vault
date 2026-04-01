@@ -35,7 +35,7 @@ describe('config', () => {
     delete process.env.TOKENRIP_API_URL;
     try {
       const url = getApiUrl({ preferences: {} });
-      expect(url).toBe('http://localhost:3000');
+      expect(url).toBe('https://api.tokenrip.com');
     } finally {
       if (saved) process.env.TOKENRIP_API_URL = saved;
     }

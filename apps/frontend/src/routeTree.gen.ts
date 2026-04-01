@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './app/__root'
 import { Route as IndexRouteImport } from './app/index'
 import { Route as SUuidRouteImport } from './app/s/$uuid'
+import { Route as SUuidIndexRouteImport } from './app/s/$uuid/index'
+import { Route as SUuidVersionIdRouteImport } from './app/s/$uuid/$versionId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +24,46 @@ const SUuidRoute = SUuidRouteImport.update({
   path: '/s/$uuid',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SUuidIndexRoute = SUuidIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SUuidRoute,
+} as any)
+const SUuidVersionIdRoute = SUuidVersionIdRouteImport.update({
+  id: '/$versionId',
+  path: '/$versionId',
+  getParentRoute: () => SUuidRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/s/$uuid': typeof SUuidRoute
+  '/s/$uuid': typeof SUuidRouteWithChildren
+  '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
+  '/s/$uuid/': typeof SUuidIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/s/$uuid': typeof SUuidRoute
+  '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
+  '/s/$uuid': typeof SUuidIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/s/$uuid': typeof SUuidRoute
+  '/s/$uuid': typeof SUuidRouteWithChildren
+  '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
+  '/s/$uuid/': typeof SUuidIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/s/$uuid'
+  fullPaths: '/' | '/s/$uuid' | '/s/$uuid/$versionId' | '/s/$uuid/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/s/$uuid'
-  id: '__root__' | '/' | '/s/$uuid'
+  to: '/' | '/s/$uuid/$versionId' | '/s/$uuid'
+  id: '__root__' | '/' | '/s/$uuid' | '/s/$uuid/$versionId' | '/s/$uuid/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SUuidRoute: typeof SUuidRoute
+  SUuidRoute: typeof SUuidRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +82,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SUuidRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/s/$uuid/': {
+      id: '/s/$uuid/'
+      path: '/'
+      fullPath: '/s/$uuid/'
+      preLoaderRoute: typeof SUuidIndexRouteImport
+      parentRoute: typeof SUuidRoute
+    }
+    '/s/$uuid/$versionId': {
+      id: '/s/$uuid/$versionId'
+      path: '/$versionId'
+      fullPath: '/s/$uuid/$versionId'
+      preLoaderRoute: typeof SUuidVersionIdRouteImport
+      parentRoute: typeof SUuidRoute
+    }
   }
 }
 
+interface SUuidRouteChildren {
+  SUuidVersionIdRoute: typeof SUuidVersionIdRoute
+  SUuidIndexRoute: typeof SUuidIndexRoute
+}
+
+const SUuidRouteChildren: SUuidRouteChildren = {
+  SUuidVersionIdRoute: SUuidVersionIdRoute,
+  SUuidIndexRoute: SUuidIndexRoute,
+}
+
+const SUuidRouteWithChildren = SUuidRoute._addFileChildren(SUuidRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SUuidRoute: SUuidRoute,
+  SUuidRoute: SUuidRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

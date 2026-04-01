@@ -128,6 +128,16 @@ describe('publish', () => {
     expect(output.data.type).toBe('text');
   });
 
+  test('publish json type succeeds', async () => {
+    const { publish } = await import('../../packages/cli/src/commands/publish');
+    await publish(path.resolve('tests/fixtures/sample.json'), { type: 'json' });
+
+    const output = getOutput();
+    expect(output.ok).toBe(true);
+    expect(output.data.id).toBeDefined();
+    expect(output.data.type).toBe('json');
+  });
+
   test('publish returns url in response', async () => {
     const { publish } = await import('../../packages/cli/src/commands/publish');
     await publish(path.resolve('tests/fixtures/sample.md'), { type: 'markdown' });
@@ -173,7 +183,7 @@ describe('publish', () => {
       }),
     });
 
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     const data = await res.json();
     expect(data.ok).toBe(true);
     expect(data.data.id).toBeDefined();
@@ -199,7 +209,7 @@ describe('publish', () => {
       }),
     });
 
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     const data = await res.json();
     expect(data.ok).toBe(true);
     expect(data.data.id).toBeDefined();

@@ -3,11 +3,14 @@
 require('reflect-metadata');
 const { NestFactory } = require('@nestjs/core');
 const { MikroORM } = require('@mikro-orm/core');
+const express = require('express');
 
 async function createTestApp() {
   const { AppModule } = require('./dist/app.module');
 
   const app = await NestFactory.create(AppModule, { logger: false });
+  app.use(express.json({ limit: '50mb' }));
+  app.use(express.urlencoded({ limit: '50mb', extended: true }));
   await app.listen(0);
 
   const orm = app.get(MikroORM);

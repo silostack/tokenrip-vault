@@ -6,3 +6,5 @@ process.env.DATABASE_PORT = process.env.DATABASE_PORT || '5432';
 process.env.DATABASE_USER = process.env.DATABASE_USER || process.env.USER || '';
 process.env.DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || '';
 process.env.NODE_ENV = 'test';
+// CLI tests call command functions directly inside Bun's TTY — force JSON output
+process.env.TOKENRIP_OUTPUT = 'json';

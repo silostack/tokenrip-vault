@@ -75,14 +75,14 @@ Max file size: 10 MB (configurable via `MAX_FILE_SIZE_BYTES`).
 
 | Field | Type | Required | Values |
 |-------|------|----------|--------|
-| `type` | string | yes | `markdown`, `html`, `chart`, `code`, `text` |
+| `type` | string | yes | `markdown`, `html`, `chart`, `code`, `text`, `json` |
 | `content` | string | yes | Raw content (UTF-8) |
 | `title` | string | no | Display title |
 | `parentAssetId` | uuid | no | Parent asset for lineage |
 | `creatorContext` | string | no | Creator context |
 | `inputReferences` | string[] | no | Input reference URLs/IDs |
 
-MIME types are auto-assigned: markdown → `text/markdown`, html → `text/html`, chart → `application/json`, code → `text/plain`, text → `text/plain`.
+MIME types are auto-assigned: markdown → `text/markdown`, html → `text/html`, chart → `application/json`, code → `text/plain`, text → `text/plain`, json → `application/json`.
 
 #### Response (201)
 
@@ -112,6 +112,8 @@ Returns assets created by the calling API key, ordered by `updatedAt` descending
 | Query Param | Type | Description |
 |-------------|------|-------------|
 | `since` | ISO 8601 | Only return assets updated after this timestamp |
+| `limit` | integer | Max results to return (default 100, max 100) |
+| `type` | string | Filter by asset type (e.g. `markdown`, `json`) |
 
 **Response (200):**
 ```json
@@ -123,12 +125,46 @@ Returns assets created by the calling API key, ordered by `updatedAt` descending
       "title": "My Document",
       "type": "markdown",
       "mimeType": "text/markdown",
+      "sizeBytes": 1234,
+      "versionCount": 2,
       "createdAt": "2026-03-31T...",
       "updatedAt": "2026-03-31T..."
     }
   ]
 }
 ```
+
+---
+
+### `GET /v0/assets/stats` — Get Storage Stats
+
+**Auth:** API key (Bearer)
+
+Returns aggregated storage statistics for the calling API key. Byte totals include all versions.
+
+**Response (200):**
+```json
+{
+  "ok": true,
+  "data": {
+    "assetCount": 5,
+    "totalBytes": 102400,
+    "countsByType": { "markdown": 3, "file": 2 },
+    "bytesByType": { "markdown": 2400, "file": 100000 }
+  }
+}
+```
+
+---
+
+### `DELETE /v0/assets/:uuid` — Delete Asset
+
+**Auth:** API key (Bearer)
+
+Permanently deletes the asset and all its versions. Storage files are cleaned up. Returns 204 on success.
+
+**403:** `{ "ok": false, "error": "FORBIDDEN", "message": "You can only delete your own assets" }`
+**404:** `{ "ok": false, "error": "NOT_FOUND", "message": "Asset not found" }`
 
 ---
 
@@ -150,6 +186,8 @@ Returns assets created by the calling API key, ordered by `updatedAt` descending
     "parentAssetId": "uuid-or-null",
     "creatorContext": "string-or-null",
     "inputReferences": ["url1", "url2"],
+    "versionCount": 2,
+    "currentVersionId": "uuid",
     "createdAt": "2026-03-31T..."
   }
 }
@@ -163,9 +201,125 @@ Returns assets created by the calling API key, ordered by `updatedAt` descending
 
 **Auth:** Public
 
-Returns raw bytes with the correct `Content-Type` header. For text-based types (markdown, html, code, text), returns UTF-8 text. For files, returns the original binary.
+Returns raw bytes with the correct `Content-Type` header. For text-based types (markdown, html, code, text, json), returns UTF-8 text. For files, returns the original binary.
+
+Always serves the **latest version's** content.
 
 **404:** Same as metadata endpoint.
+
+---
+
+## Versions
+
+Assets support versioning. Each version has its own UUID and content. The asset UUID always resolves to the latest version.
+
+### `POST /v0/assets/:uuid/versions` — Publish New Version
+
+**Auth:** API key (Bearer)
+
+Same dual-mode as asset creation (file upload or JSON content). The asset must belong to the calling API key.
+
+#### Mode 1: File Upload (multipart/form-data)
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `file` | binary | yes | The new version file |
+| `label` | string | no | Human-readable version label |
+| `creatorContext` | string | no | Who/what created this version |
+
+#### Mode 2: Content Publish (application/json)
+
+```json
+{
+  "type": "markdown",
+  "content": "# Updated content",
+  "label": "with corrections",
+  "creatorContext": "Claude revision task"
+}
+```
+
+**Response (201):**
+```json
+{
+  "ok": true,
+  "data": {
+    "id": "version-uuid",
+    "assetId": "asset-uuid",
+    "version": 2,
+    "label": "with corrections",
+    "createdAt": "2026-04-01T..."
+  }
+}
+```
+
+---
+
+### `GET /v0/assets/:uuid/versions` — List Versions
+
+**Auth:** Public
+
+Returns all versions ordered by version number descending.
+
+**Response (200):**
+```json
+{
+  "ok": true,
+  "data": [
+    { "id": "uuid", "version": 3, "label": "final", "mimeType": "text/markdown", "sizeBytes": 1500, "creatorContext": null, "createdAt": "..." },
+    { "id": "uuid", "version": 2, "label": null, "mimeType": "text/markdown", "sizeBytes": 1200, "creatorContext": null, "createdAt": "..." },
+    { "id": "uuid", "version": 1, "label": null, "mimeType": "text/markdown", "sizeBytes": 800, "creatorContext": null, "createdAt": "..." }
+  ]
+}
+```
+
+**404:** Asset not found.
+
+---
+
+### `GET /v0/assets/:uuid/versions/:versionId` — Get Version Metadata
+
+**Auth:** Public
+
+**Response (200):**
+```json
+{
+  "ok": true,
+  "data": {
+    "id": "version-uuid",
+    "version": 2,
+    "label": "with corrections",
+    "mimeType": "text/markdown",
+    "sizeBytes": 1200,
+    "creatorContext": "Claude revision task",
+    "createdAt": "..."
+  }
+}
+```
+
+**404:** Version or asset not found.
+
+---
+
+### `GET /v0/assets/:uuid/versions/:versionId/content` — Stream Version Content
+
+**Auth:** Public
+
+Returns raw bytes for a specific version with the correct `Content-Type` header.
+
+**404:** Version or asset not found.
+
+---
+
+### `DELETE /v0/assets/:uuid/versions/:versionId` — Delete Version
+
+**Auth:** API key (Bearer)
+
+Deletes a specific version. Cannot delete the last remaining version — delete the asset instead. If the deleted version was the latest, the pointer is updated to the next most recent.
+
+**204:** Success.
+**400:** `{ "ok": false, "error": "LAST_VERSION", "message": "Cannot delete the last version. Delete the asset instead." }`
+**403:** Not the owner.
+**404:** Version or asset not found.
 
 ---
 

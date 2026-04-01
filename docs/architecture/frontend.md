@@ -15,9 +15,14 @@ apps/frontend/src/
 │   ├── globals.css            # Tailwind theme & CSS variables
 │   ├── index.tsx              # / — landing page
 │   └── s/
-│       └── $uuid.tsx          # /s/:uuid — asset viewer
+│       ├── $uuid.tsx          # /s/:uuid — layout (SSR loader + OG meta)
+│       └── $uuid/
+│           ├── index.tsx      # /s/:uuid — latest version page
+│           └── $versionId.tsx # /s/:uuid/:versionId — specific version page
 ├── components/                # React components
-│   ├── AssetViewer.tsx     # Type dispatcher → correct viewer
+│   ├── AssetViewer.tsx        # Type dispatcher → correct viewer
+│   ├── SharePageContent.tsx   # Shared page body (used by both routes)
+│   ├── VersionDropdown.tsx    # Version history dropdown (shown when versionCount > 1)
 │   └── viewers/               # Viewer implementations
 │       ├── MarkdownViewer.tsx  # react-markdown with prose styling
 │       ├── HtmlViewer.tsx      # Sandboxed iframe (srcdoc)
@@ -39,14 +44,17 @@ apps/frontend/src/
 | URL | File | Description |
 |-----|------|-------------|
 | `/` | `app/index.tsx` | Landing page, static, no API calls |
-| `/s/:uuid` | `app/s/$uuid.tsx` | Public asset viewer, fetches from API. Server-side loader for OG meta tags (link previews). |
+| `/s/:uuid` | `app/s/$uuid.tsx` (layout) + `$uuid/index.tsx` | Public asset viewer (latest version). Layout handles SSR OG meta tags. |
+| `/s/:uuid/:versionId` | `app/s/$uuid/$versionId.tsx` | Specific version viewer. Shares layout with parent. |
 
 Routes are file-based via TanStack Router. The Vite plugin scans `src/app/` and generates `routeTree.gen.ts` automatically.
 
 **Conventions:**
 - `__root.tsx` — layout wrapper (not a route itself)
-- `$param.tsx` — dynamic route segment
+- `$param.tsx` — dynamic route segment (also used as layout when directory exists)
 - `index.tsx` — index route for a directory
+
+**Version routing:** `$uuid.tsx` is a layout route that renders `<Outlet>`. It runs the SSR loader for OG meta tags. Child routes (`index.tsx` and `$versionId.tsx`) both render `<SharePageContent>` with an optional `versionId` prop.
 
 ## State Management (Jotai)
 
@@ -70,6 +78,10 @@ export const isLoadingAssetAtom = atom<boolean>(false)
 
 // Error message
 export const assetErrorAtom = atom<string | null>(null)
+
+// Version atoms
+export const versionsAtom = atom<VersionInfo[]>([])
+export const activeVersionIdAtom = atom<string | null>(null)  // null = latest
 ```
 
 ### Action Hook Pattern
@@ -123,15 +135,19 @@ Centralized axios instance with `baseURL` from `VITE_API_URL` (default `http://l
 
 ### Types & Helpers (`src/lib/api.ts`)
 
-- `AssetMetadata` interface — asset shape from the backend. Includes provenance fields: `parentAssetId`, `creatorContext`, `inputReferences`.
-- `getAssetContentUrl(uuid)` — builds the content download URL
+- `AssetMetadata` interface — asset shape from the backend. Includes provenance fields (`parentAssetId`, `creatorContext`, `inputReferences`) and version fields (`versionCount`, `currentVersionId`).
+- `VersionInfo` interface — version shape from the list versions endpoint.
+- `getAssetContentUrl(uuid)` — builds the content download URL (latest version)
+- `getVersionContentUrl(uuid, versionId)` — builds a version-specific content URL
 
 ### Endpoints Used
 
 | Method | Path | Purpose |
 |--------|------|---------|
-| GET | `/v0/assets/:uuid` | Fetch asset metadata |
-| GET | `/v0/assets/:uuid/content` | Fetch raw content (text, binary) |
+| GET | `/v0/assets/:uuid` | Fetch asset metadata (includes versionCount, currentVersionId) |
+| GET | `/v0/assets/:uuid/content` | Fetch raw content for latest version |
+| GET | `/v0/assets/:uuid/versions` | List all versions (fetched lazily on dropdown open) |
+| GET | `/v0/assets/:uuid/versions/:vid/content` | Fetch content for a specific version |
 
 ## Asset Viewers
 
@@ -143,12 +159,13 @@ Centralized axios instance with `baseURL` from `VITE_API_URL` (default `http://l
 | `html` | — | `HtmlViewer` | Sandboxed iframe (`srcdoc`) |
 | `code` | — | `CodeViewer` | `highlight.js` auto-detect with `github-dark` theme |
 | `text` | — | `PlainTextViewer` | Monospace `<pre>` with word wrap |
+| `json` | — | `JsonViewer` | Interactive tree with collapse/expand and section copy |
 | `chart` | — | Placeholder | Coming soon + download link |
 | — | `image/*` | `ImageViewer` | Responsive `<img>` |
 | — | `application/pdf` | `PdfViewer` | iframe embed |
 | (fallback) | — | `DownloadFallback` | Download button |
 
-For markdown/html/chart/code/text, `AssetViewer` fetches text content from the `/content` endpoint before rendering. The `CodeViewer` accepts an optional `language` hint from `asset.metadata.language` for targeted highlighting.
+For markdown/html/chart/code/text/json, `AssetViewer` fetches text content from the `/content` endpoint before rendering. The `CodeViewer` accepts an optional `language` hint from `asset.metadata.language` for targeted highlighting.
 
 ## Styling
 
