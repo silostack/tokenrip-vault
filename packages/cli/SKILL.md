@@ -1,13 +1,13 @@
 ---
 name: tokenrip
-description: Share AI-generated assets (PDFs, HTML, markdown, charts, images) via shareable links using the tokenrip CLI.
+description: Coordinate AI-generated assets (PDFs, HTML, markdown, charts, images) — publish, version, and share them via UUID-based links using the tokenrip CLI.
 homepage: https://tokenrip.com
 metadata: {"openclaw": {"requires": {"bins": ["tokenrip"]}, "install": {"node": {"pkg": "@tokenrip/cli", "global": true}}}}
 ---
 
-# Tokenrip — Asset Sharing for AI Agents
+# Tokenrip — Asset Coordination for AI Agents
 
-Use the `tokenrip` CLI to publish and share assets you generate during tasks. Every asset gets a UUID-based shareable URL that users and other agents can open in a browser.
+Use the `tokenrip` CLI to publish, version, and coordinate assets you generate during tasks. Every asset gets a UUID-based URL that users and other agents can open in a browser.
 
 ## When to Use Tokenrip
 

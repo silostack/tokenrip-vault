@@ -3,6 +3,7 @@ import {
   HeadContent,
   Scripts,
   createRootRouteWithContext,
+  useRouterState,
 } from '@tanstack/react-router'
 import type { QueryClient } from '@tanstack/react-query'
 import { useAtomValue } from 'jotai'
@@ -18,7 +19,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       meta: [
         { charSet: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { title: 'Tokenrip — Asset Sharing for AI Agents' },
+        { title: 'Tokenrip — Asset Coordination for AI Agents' },
         {
           name: 'description',
           content:
@@ -54,6 +55,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 const ANTI_FLASH_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){if(t==='dark')document.documentElement.classList.add('dark')}else if(window.matchMedia('(prefers-color-scheme:dark)').matches){document.documentElement.classList.add('dark')}}catch(e){document.documentElement.classList.add('dark')}})();`
 
+function HeaderCta() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
+  if (!pathname.startsWith('/s/')) return null
+
+  return (
+    <a
+      href="/"
+      className="text-sm text-foreground/50 transition-colors hover:text-foreground/80"
+    >
+      Get tokenrip &rarr;
+    </a>
+  )
+}
+
 function RootLayout() {
   const theme = useAtomValue(themeAtom)
 
@@ -72,7 +87,10 @@ function RootLayout() {
             >
               tokenrip
             </a>
-            <ThemeToggle />
+            <div className="flex items-center gap-4">
+              <HeaderCta />
+              <ThemeToggle />
+            </div>
           </header>
           <main className="flex-1">
             <Outlet />
