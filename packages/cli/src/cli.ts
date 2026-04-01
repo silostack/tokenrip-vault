@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { createRequire } from 'node:module';
 import { Command } from 'commander';
-import { configSetKey, configSetUrl } from './commands/config.js';
+import { configSetKey, configSetUrl, configShow } from './commands/config.js';
 import { authCreateKey } from './commands/auth.js';
 import { upload } from './commands/upload.js';
 import { publish } from './commands/publish.js';
@@ -39,6 +39,13 @@ EXAMPLES:
 
 // config commands
 const config = program.command('config').description('Manage CLI configuration');
+config
+  .command('show')
+  .description('Show current configuration')
+  .addHelpText('after', `
+Shows the API URL and whether an API key is configured.
+`)
+  .action(wrapCommand(configShow));
 config
   .command('set-key')
   .argument('<key>', 'API key from /v0/auth/keys')

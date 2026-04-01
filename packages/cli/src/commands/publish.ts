@@ -27,8 +27,9 @@ export async function publish(
     throw new CliError('FILE_NOT_FOUND', `File not found: ${absPath}`);
   }
 
+  const apiUrl = getApiUrl(config);
   const content = fs.readFileSync(absPath, 'utf-8');
-  const client = createHttpClient({ baseUrl: getApiUrl(config), apiKey });
+  const client = createHttpClient({ baseUrl: apiUrl, apiKey });
 
   const body: Record<string, unknown> = {
     type: options.type,
