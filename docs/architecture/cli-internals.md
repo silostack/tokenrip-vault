@@ -111,7 +111,7 @@ function saveConfig(config: TokenripConfig): void;
 // Creates config dir if needed, writes JSON.
 
 function getApiUrl(config: TokenripConfig): string;
-// Resolution: config.apiUrl → TOKENRIP_API_URL → 'http://localhost:3000'
+// Resolution: config.apiUrl → TOKENRIP_API_URL → 'https://api.tokenrip.com'
 
 function getApiKey(config: TokenripConfig): string | undefined;
 // Resolution: config.apiKey → TOKENRIP_API_KEY → undefined
@@ -121,7 +121,7 @@ function getApiKey(config: TokenripConfig): string | undefined;
 
 ```typescript
 interface ClientConfig {
-  baseUrl?: string;   // default: 'http://localhost:3000'
+  baseUrl?: string;   // default: 'https://api.tokenrip.com'
   timeout?: number;   // default: 30000 (30s)
   apiKey?: string;    // set as Bearer token
 }
@@ -235,7 +235,7 @@ Commands are organized into groups: `asset`, `auth`, and `config`.
 `createHttpClient()` in `src/client.ts` returns an Axios instance configured with:
 
 ### Request Config
-- `baseURL` from config (default `http://localhost:3000`)
+- `baseURL` from config (default `https://api.tokenrip.com`)
 - `timeout` of 30 seconds
 - `Authorization: Bearer <apiKey>` header when key is provided
 
@@ -280,7 +280,7 @@ For both `apiUrl` and `apiKey`, the resolution order is:
 
 1. Config file value (if set)
 2. Environment variable (`TOKENRIP_API_URL` / `TOKENRIP_API_KEY`)
-3. Default (apiUrl: `http://localhost:3000`, apiKey: `undefined`)
+3. Default (apiUrl: `https://api.tokenrip.com`, apiKey: `undefined`)
 
 Note: config file takes precedence over env vars. This means `set-key` overrides `TOKENRIP_API_KEY`.
 
@@ -429,7 +429,7 @@ tokenrip asset publish dashboard.html --type html --title "Dashboard" --parent <
 
 The shareable `url` is returned by the backend in the `POST /v0/assets` response. The backend computes it from the `FRONTEND_URL` environment variable (default: `http://localhost:3333`).
 
-The CLI uses this URL directly. If talking to an older backend that doesn't return `url`, it falls back to stripping the API port and appending `:8000/s/{id}`.
+The CLI uses this URL directly. If talking to an older backend that doesn't return `url`, it falls back to `https://tokenrip.com/s/{id}`.
 
 ### Update (New Version)
 
