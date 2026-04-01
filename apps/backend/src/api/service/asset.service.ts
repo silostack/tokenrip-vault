@@ -1,4 +1,4 @@
-import { Injectable, Inject, NotFoundException, Logger } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException, ForbiddenException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { v4 } from 'uuid';
@@ -59,6 +59,7 @@ export class AssetService {
       const asset = new Asset(AssetType.FILE, storageKey, dto.apiKeyId);
       asset.mimeType = dto.file.mimetype;
       asset.title = dto.title || dto.file.originalname;
+      asset.sizeBytes = dto.file.buffer.byteLength;
       if (dto.parentAssetId) asset.parentAssetId = dto.parentAssetId;
       if (dto.creatorContext) asset.creatorContext = dto.creatorContext;
       if (dto.inputReferences) asset.inputReferences = dto.inputReferences;
@@ -84,6 +85,7 @@ export class AssetService {
     return await this.em.transactional(async () => {
       const asset = new Asset(dto.type, storageKey, dto.apiKeyId);
       asset.mimeType = CONTENT_MIME_TYPES[dto.type];
+      asset.sizeBytes = Buffer.byteLength(dto.content, 'utf-8');
       asset.title = dto.title;
       if (dto.parentAssetId) asset.parentAssetId = dto.parentAssetId;
       if (dto.creatorContext) asset.creatorContext = dto.creatorContext;
@@ -105,10 +107,15 @@ export class AssetService {
     return asset;
   }
 
-  async findByApiKey(apiKeyId: string, since?: Date): Promise<Asset[]> {
+  async findByApiKey(
+    apiKeyId: string,
+    opts: { since?: Date; limit?: number; type?: string } = {},
+  ): Promise<Asset[]> {
     const where: Record<string, unknown> = { apiKeyId };
-    if (since) where.updatedAt = { $gte: since };
-    return this.assetRepository.find(where, { orderBy: { updatedAt: 'DESC' }, limit: 100 });
+    if (opts.since) where.updatedAt = { $gte: opts.since };
+    if (opts.type) where.type = opts.type;
+    const limit = Math.min(opts.limit ?? 100, 100);
+    return this.assetRepository.find(where, { orderBy: { updatedAt: 'DESC' }, limit });
   }
 
   async getContent(id: string): Promise<{ buffer: Buffer; mimeType: string }> {
@@ -116,5 +123,47 @@ export class AssetService {
     this.logger.debug(`Reading content for asset ${id} (key=${asset.storageKey})`);
     const buffer = await this.storage.read(asset.storageKey);
     return { buffer, mimeType: asset.mimeType || 'application/octet-stream' };
+  }
+
+  async getStats(apiKeyId: string): Promise<{
+    assetCount: number;
+    totalBytes: number;
+    countsByType: Record<string, number>;
+    bytesByType: Record<string, number>;
+  }> {
+    const knex = this.em.getKnex();
+    const rows = await knex('asset')
+      .select('type')
+      .count('* as count')
+      .sum('size_bytes as bytes')
+      .where('api_key_id', apiKeyId)
+      .groupBy('type');
+
+    let assetCount = 0;
+    let totalBytes = 0;
+    const countsByType: Record<string, number> = {};
+    const bytesByType: Record<string, number> = {};
+
+    for (const row of rows) {
+      const count = Number(row.count);
+      const bytes = Number(row.bytes) || 0;
+      assetCount += count;
+      totalBytes += bytes;
+      countsByType[row.type] = count;
+      if (bytes > 0) bytesByType[row.type] = bytes;
+    }
+
+    return { assetCount, totalBytes, countsByType, bytesByType };
+  }
+
+  async deleteAsset(id: string, apiKeyId: string): Promise<void> {
+    const asset = await this.findById(id);
+    if (asset.apiKeyId !== apiKeyId) {
+      throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only delete your own assets' });
+    }
+
+    this.logger.debug(`Deleting asset ${id} (key=${asset.storageKey})`);
+    await this.storage.delete(asset.storageKey);
+    await this.em.removeAndFlush(asset);
   }
 }

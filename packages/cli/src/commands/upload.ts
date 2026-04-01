@@ -2,37 +2,33 @@ import fs from 'node:fs';
 import path from 'node:path';
 import FormData from 'form-data';
 import mime from 'mime-types';
-import { loadConfig, getApiUrl, getApiKey } from '../config.js';
-import { createHttpClient } from '../client.js';
+import { requireAuthClient } from '../auth-client.js';
 import { CliError } from '../errors.js';
 import { outputSuccess } from '../output.js';
+import { formatAssetCreated } from '../formatters.js';
 
-export async function upload(filePath: string, options: { title?: string; parent?: string; context?: string; refs?: string }): Promise<void> {
-  const config = loadConfig();
-  const apiKey = getApiKey(config);
-  if (!apiKey) {
-    throw new CliError('NO_API_KEY', 'No API key configured. Run `tokenrip config set-key <key>`');
-  }
-
+export async function upload(filePath: string, options: { title?: string; parent?: string; context?: string; refs?: string; dryRun?: boolean }): Promise<void> {
   const absPath = path.resolve(filePath);
   if (!fs.existsSync(absPath)) {
     throw new CliError('FILE_NOT_FOUND', `File not found: ${absPath}`);
   }
 
-  const client = createHttpClient({ baseUrl: getApiUrl(config), apiKey });
+  const mimeType = mime.lookup(absPath) || 'application/octet-stream';
+  const title = options.title || path.basename(absPath);
+  const size = fs.statSync(absPath).size;
+
+  if (options.dryRun) {
+    outputSuccess({ dryRun: true, action: 'would upload', file: absPath, title, mimeType, size }, formatAssetCreated);
+    return;
+  }
+
+  const { client, apiUrl } = requireAuthClient();
 
   const form = new FormData();
   form.append('file', fs.createReadStream(absPath));
   form.append('type', 'file');
-
-  const mimeType = mime.lookup(absPath) || 'application/octet-stream';
   form.append('mimeType', mimeType);
-
-  if (options.title) {
-    form.append('title', options.title);
-  } else {
-    form.append('title', path.basename(absPath));
-  }
+  form.append('title', title);
 
   if (options.parent) form.append('parentAssetId', options.parent);
   if (options.context) form.append('creatorContext', options.context);
@@ -44,12 +40,12 @@ export async function upload(filePath: string, options: { title?: string; parent
     maxBodyLength: Infinity,
   });
 
-  const url = data.data.url || `${getApiUrl(config).replace(/:\d+$/, ':8000')}/s/${data.data.id}`;
+  const url = data.data.url || `${apiUrl.replace(/:\d+$/, ':8000')}/s/${data.data.id}`;
   outputSuccess({
     id: data.data.id,
     url,
     title: data.data.title,
     type: data.data.type,
     mimeType: data.data.mimeType,
-  });
+  }, formatAssetCreated);
 }

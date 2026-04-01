@@ -1,21 +1,16 @@
-import { loadConfig, getApiUrl, getApiKey } from '../config.js';
-import { createHttpClient } from '../client.js';
-import { CliError } from '../errors.js';
+import { requireAuthClient } from '../auth-client.js';
 import { outputSuccess } from '../output.js';
+import { formatAssetList } from '../formatters.js';
 
-export async function status(options: { since?: string }): Promise<void> {
-  const config = loadConfig();
-  const apiKey = getApiKey(config);
-  if (!apiKey) {
-    throw new CliError('NO_API_KEY', 'No API key configured. Run `tokenrip config set-key <key>`');
-  }
-
-  const client = createHttpClient({ baseUrl: getApiUrl(config), apiKey });
+export async function status(options: { since?: string; limit?: string; type?: string }): Promise<void> {
+  const { client } = requireAuthClient();
 
   const params: Record<string, string> = {};
   if (options.since) params.since = options.since;
+  if (options.limit) params.limit = options.limit;
+  if (options.type) params.type = options.type;
 
   const { data } = await client.get('/v0/assets/status', { params });
 
-  outputSuccess(data.data);
+  outputSuccess(data.data, formatAssetList);
 }

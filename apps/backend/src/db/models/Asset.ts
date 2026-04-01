@@ -46,6 +46,9 @@ export class Asset {
   @Property({ type: 'json', nullable: true })
   inputReferences?: string[];
 
+  @Property({ type: 'bigint', nullable: true })
+  sizeBytes?: number;
+
   @Property()
   createdAt: Date = new Date();
 

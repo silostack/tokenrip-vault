@@ -341,6 +341,22 @@
           "comment": null,
           "enumItems": [],
           "mappedType": "json"
+        },
+        "size_bytes": {
+          "name": "size_bytes",
+          "type": "int8",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": null,
+          "precision": 64,
+          "scale": 0,
+          "default": null,
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "bigint"
         }
       },
       "name": "asset",
@@ -352,7 +368,7 @@
           ],
           "composite": false,
           "constraint": false,
-          "keyName": "asset_pkey",
+          "keyName": "artifact_pkey",
           "unique": true,
           "primary": true
         }

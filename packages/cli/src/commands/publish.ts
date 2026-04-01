@@ -1,23 +1,17 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { loadConfig, getApiUrl, getApiKey } from '../config.js';
-import { createHttpClient } from '../client.js';
+import { requireAuthClient } from '../auth-client.js';
 import { CliError } from '../errors.js';
 import { outputSuccess } from '../output.js';
+import { formatAssetCreated } from '../formatters.js';
 
 const VALID_TYPES = ['markdown', 'html', 'chart', 'code', 'text'] as const;
 type ContentType = (typeof VALID_TYPES)[number];
 
 export async function publish(
   filePath: string,
-  options: { type: string; title?: string; parent?: string; context?: string; refs?: string },
+  options: { type: string; title?: string; parent?: string; context?: string; refs?: string; dryRun?: boolean },
 ): Promise<void> {
-  const config = loadConfig();
-  const apiKey = getApiKey(config);
-  if (!apiKey) {
-    throw new CliError('NO_API_KEY', 'No API key configured. Run `tokenrip config set-key <key>`');
-  }
-
   if (!VALID_TYPES.includes(options.type as ContentType)) {
     throw new CliError('INVALID_TYPE', `Type must be one of: ${VALID_TYPES.join(', ')}`);
   }
@@ -27,13 +21,21 @@ export async function publish(
     throw new CliError('FILE_NOT_FOUND', `File not found: ${absPath}`);
   }
 
+  const title = options.title || path.basename(absPath);
+  const size = fs.statSync(absPath).size;
+
+  if (options.dryRun) {
+    outputSuccess({ dryRun: true, action: 'would publish', file: absPath, title, type: options.type, size }, formatAssetCreated);
+    return;
+  }
+
+  const { client, apiUrl } = requireAuthClient();
   const content = fs.readFileSync(absPath, 'utf-8');
-  const client = createHttpClient({ baseUrl: getApiUrl(config), apiKey });
 
   const body: Record<string, unknown> = {
     type: options.type,
     content,
-    title: options.title || path.basename(absPath),
+    title,
   };
   if (options.parent) body.parentAssetId = options.parent;
   if (options.context) body.creatorContext = options.context;
@@ -41,11 +43,11 @@ export async function publish(
 
   const { data } = await client.post('/v0/assets', body);
 
-  const url = data.data.url || `${getApiUrl(config).replace(/:\d+$/, ':8000')}/s/${data.data.id}`;
+  const url = data.data.url || `${apiUrl.replace(/:\d+$/, ':8000')}/s/${data.data.id}`;
   outputSuccess({
     id: data.data.id,
     url,
     title: data.data.title,
     type: data.data.type,
-  });
+  }, formatAssetCreated);
 }

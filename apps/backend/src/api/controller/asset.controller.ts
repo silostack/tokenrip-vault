@@ -2,11 +2,13 @@ import {
   Controller,
   Get,
   Post,
+  Delete,
   Param,
   Query,
   Body,
   Req,
   Res,
+  HttpCode,
   UseInterceptors,
   UploadedFile,
   BadRequestException,
@@ -67,11 +69,28 @@ export class AssetController {
     throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'Provide either a file upload or { type, content } JSON body' });
   }
 
+  @Delete(':uuid')
+  @HttpCode(204)
+  async delete(@Param('uuid') uuid: string, @Req() req: Request) {
+    const apiKeyId = (req as any).apiKeyId;
+    await this.assetService.deleteAsset(uuid, apiKeyId);
+  }
+
   @Get('status')
-  async status(@Req() req: Request, @Query('since') since?: string) {
+  async status(
+    @Req() req: Request,
+    @Query('since') since?: string,
+    @Query('limit') limit?: string,
+    @Query('type') type?: string,
+  ) {
     const apiKeyId = (req as any).apiKeyId;
     const sinceDate = since ? new Date(since) : undefined;
-    const assets = await this.assetService.findByApiKey(apiKeyId, sinceDate);
+    const parsedLimit = limit ? parseInt(limit, 10) : undefined;
+    const assets = await this.assetService.findByApiKey(apiKeyId, {
+      since: sinceDate,
+      limit: parsedLimit,
+      type,
+    });
     return {
       ok: true,
       data: assets.map((a) => ({
@@ -79,10 +98,18 @@ export class AssetController {
         title: a.title,
         type: a.type,
         mimeType: a.mimeType,
+        sizeBytes: a.sizeBytes ?? null,
         createdAt: a.createdAt,
         updatedAt: a.updatedAt,
       })),
     };
+  }
+
+  @Get('stats')
+  async stats(@Req() req: Request) {
+    const apiKeyId = (req as any).apiKeyId;
+    const stats = await this.assetService.getStats(apiKeyId);
+    return { ok: true, data: stats };
   }
 
   @Public()
