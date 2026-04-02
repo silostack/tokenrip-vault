@@ -30,21 +30,6 @@ function getSummary(value: unknown): string {
   return '';
 }
 
-const INLINE_CHAR_LIMIT = 80;
-
-/** True when a value is small enough to render on a single line. */
-function canInline(value: unknown): boolean {
-  if (!isExpandable(value)) return true;
-  const items = Array.isArray(value) ? value : Object.values(value as Record<string, unknown>);
-  // Only inline if every child is a primitive and the serialised form is short
-  if (items.some(isExpandable)) return false;
-  try {
-    return JSON.stringify(value).length <= INLINE_CHAR_LIMIT;
-  } catch {
-    return false;
-  }
-}
-
 function renderPrimitive(value: unknown): JSX.Element {
   if (value === null) return <span className="text-foreground/40">null</span>;
   if (typeof value === 'boolean')
@@ -56,43 +41,16 @@ function renderPrimitive(value: unknown): JSX.Element {
   return <span>{String(value)}</span>;
 }
 
-/** Render a small object/array as a single coloured line. */
-function renderInline(value: unknown): JSX.Element {
-  if (!isExpandable(value)) return renderPrimitive(value);
-  const isArray = Array.isArray(value);
-  const entries = isArray
-                  ? (value as unknown[]).map((v, i) => ({ key: String(i), value: v }))
-                  : Object.entries(value as Record<string, unknown>).map(([k, v]) => ({ key: k, value: v }));
-  const open = isArray ? '[' : '{';
-  const close = isArray ? ']' : '}';
-
-  return (
-    <span>
-      <span className="text-foreground/50">{open}</span>
-      {entries.map(({ key, value: v }, i) => (
-        <span key={key}>
-          {i > 0 && <span className="text-foreground/50">, </span>}
-          {!isArray && (
-            <><span className="text-purple-700 dark:text-purple-400">"{key}"</span><span className="text-foreground/50">: </span></>
-          )}
-          {renderPrimitive(v)}
-        </span>
-      ))}
-      <span className="text-foreground/50">{close}</span>
-    </span>
-  );
-}
-
 export function JsonNode({
-                           name,
-                           value,
-                           path,
-                           depth,
-                           collapsed,
-                           selection,
-                           onToggleCollapse,
-                           onTapContent,
-                         }: JsonNodeProps) {
+  name,
+  value,
+  path,
+  depth,
+  collapsed,
+  selection,
+  onToggleCollapse,
+  onTapContent,
+}: JsonNodeProps) {
   const [copied, setCopied] = useState(false);
   const expandable = isExpandable(value);
   const isCollapsed = collapsed.has(path);
@@ -115,10 +73,10 @@ export function JsonNode({
   }, [value, name, selection?.depth]);
 
   const entries = expandable
-                  ? Array.isArray(value)
-                    ? value.map((v, i) => ({ key: String(i), value: v }))
-                    : Object.entries(value as Record<string, unknown>).map(([k, v]) => ({ key: k, value: v }))
-                  : [];
+    ? Array.isArray(value)
+      ? value.map((v, i) => ({ key: String(i), value: v }))
+      : Object.entries(value as Record<string, unknown>).map(([k, v]) => ({ key: k, value: v }))
+    : [];
 
   const isArray = Array.isArray(value);
   const openBracket = isArray ? '[' : '{';
@@ -126,8 +84,8 @@ export function JsonNode({
 
   // Highlight styles
   const highlightClass = (highlightValue || highlightKeyValue)
-                         ? 'bg-blue-500/10 dark:bg-blue-500/15 border-l-2 border-blue-500'
-                         : '';
+    ? 'bg-blue-500/10 dark:bg-blue-500/15 border-l-2 border-blue-500'
+    : '';
 
   if (!expandable) {
     // Leaf node: "key": value
@@ -152,39 +110,8 @@ export function JsonNode({
             className="shrink-0 w-[28px] h-[28px] flex items-center justify-center rounded-full hover:bg-foreground/10 mr-2"
           >
             {copied
-             ? <Check size={16} className="text-green-500" />
-             : <Copy size={16} className="text-foreground/40" />}
-          </button>
-        )}
-      </div>
-    );
-  }
-
-  // Inline-able small object/array — render on a single line like a leaf
-  const inline = canInline(value);
-  if (inline) {
-    return (
-      <div
-        className={`flex items-center min-h-[28px] cursor-pointer select-none ${highlightKeyValue ? highlightClass : ''}`}
-        onClick={() => onTapContent(path)}
-      >
-        <span style={{ paddingLeft: `${indent}ch` }} className="flex-1 flex items-center gap-0">
-          <span className="w-[28px] shrink-0" />
-          <span className={highlightValue && !highlightKeyValue ? 'bg-blue-500/10 dark:bg-blue-500/15' : ''}>
-            {name !== null && (
-              <><span className="text-purple-700 dark:text-purple-400">"{name}"</span><span className="text-foreground/50">: </span></>
-            )}
-            {renderInline(value)}
-          </span>
-        </span>
-        {isSelected && (
-          <button
-            onClick={handleCopy}
-            className="shrink-0 w-[28px] h-[28px] flex items-center justify-center rounded-full hover:bg-foreground/10 mr-2"
-          >
-            {copied
-             ? <Check size={16} className="text-green-500" />
-             : <Copy size={16} className="text-foreground/40" />}
+              ? <Check size={16} className="text-green-500" />
+              : <Copy size={16} className="text-foreground/40" />}
           </button>
         )}
       </div>
@@ -205,8 +132,8 @@ export function JsonNode({
             className="w-[28px] h-[44px] shrink-0 flex items-center justify-center cursor-pointer"
           >
             {isCollapsed
-             ? <ChevronRight size={14} className="text-foreground/40" />
-             : <ChevronDown size={14} className="text-foreground/40" />}
+              ? <ChevronRight size={14} className="text-foreground/40" />
+              : <ChevronDown size={14} className="text-foreground/40" />}
           </button>
           {/* Content — tap to cycle highlight */}
           <span className={`cursor-pointer ${highlightValue && !highlightKeyValue ? 'bg-blue-500/10 dark:bg-blue-500/15' : ''}`} onClick={() => onTapContent(path)}>
@@ -214,8 +141,8 @@ export function JsonNode({
               <><span className="text-purple-700 dark:text-purple-400">"{name}"</span><span className="text-foreground/50">: </span></>
             )}
             {isCollapsed
-             ? <span className="text-foreground/40">{openBracket} {getSummary(value)} {closeBracket}</span>
-             : <span className="text-foreground/50">{openBracket}</span>}
+              ? <span className="text-foreground/40">{openBracket} {getSummary(value)} {closeBracket}</span>
+              : <span className="text-foreground/50">{openBracket}</span>}
           </span>
         </span>
         {isSelected && (
@@ -224,8 +151,8 @@ export function JsonNode({
             className="shrink-0 w-[28px] h-[28px] flex items-center justify-center rounded-full hover:bg-foreground/10 mr-2"
           >
             {copied
-             ? <Check size={16} className="text-green-500" />
-             : <Copy size={16} className="text-foreground/40" />}
+              ? <Check size={16} className="text-green-500" />
+              : <Copy size={16} className="text-foreground/40" />}
           </button>
         )}
       </div>
