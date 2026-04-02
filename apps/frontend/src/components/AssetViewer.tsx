@@ -11,16 +11,16 @@ import { ImageViewer } from './viewers/ImageViewer';
 import { PdfViewer } from './viewers/PdfViewer';
 import { DownloadFallback } from './viewers/DownloadFallback';
 
-export function AssetViewer({ asset, versionId }: { asset: AssetMetadata; versionId?: string }) {
+export function AssetViewer({ asset, versionId, initialContent }: { asset: AssetMetadata; versionId?: string; initialContent?: string }) {
   const contentUrl = versionId
     ? getVersionContentUrl(asset.id, versionId)
     : getAssetContentUrl(asset.id);
-  const [textContent, setTextContent] = useState<string | null>(null);
+  const [textContent, setTextContent] = useState<string | null>(initialContent ?? null);
 
   const needsTextContent = asset.type === 'markdown' || asset.type === 'html' || asset.type === 'chart' || asset.type === 'code' || asset.type === 'text' || asset.type === 'json';
 
   useEffect(() => {
-    if (!needsTextContent) return;
+    if (!needsTextContent || initialContent != null) return;
     api.get(contentUrl, { responseType: 'text', baseURL: '' })
       .then((res) => setTextContent(res.data));
   }, [contentUrl, needsTextContent]);

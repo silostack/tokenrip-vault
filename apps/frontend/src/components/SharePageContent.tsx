@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { useAtomValue } from 'jotai'
+import { useEffect, useState } from 'react'
+import { useAtomValue, useSetAtom } from 'jotai'
 import {
   assetAtom,
   isLoadingAssetAtom,
@@ -10,26 +10,50 @@ import {
 import { useAssetActions } from '@/_jotai/asset/asset.actions'
 import { AssetViewer } from './AssetViewer'
 import { AssetToolbar } from './AssetToolbar'
+import { AssetJsonEmbed } from './AssetJsonEmbed'
 import { VersionDropdown } from './VersionDropdown'
+import type { AssetMetadata } from '@/lib/api'
 
 interface SharePageContentProps {
   uuid: string
   versionId?: string
+  ssrAsset?: AssetMetadata | null
+  ssrTextContent?: string | null
 }
 
-export function SharePageContent({ uuid, versionId }: SharePageContentProps) {
-  const asset = useAtomValue(assetAtom)
+export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent }: SharePageContentProps) {
+  const [mounted, setMounted] = useState(false)
+  const jotaiAsset = useAtomValue(assetAtom)
   const isLoading = useAtomValue(isLoadingAssetAtom)
   const error = useAtomValue(assetErrorAtom)
   const versions = useAtomValue(versionsAtom)
   const activeVersionId = useAtomValue(activeVersionIdAtom)
+  const setAsset = useSetAtom(assetAtom)
+  const setIsLoading = useSetAtom(isLoadingAssetAtom)
+  const setActiveVersionId = useSetAtom(activeVersionIdAtom)
   const { fetchAsset, fetchVersions } = useAssetActions()
 
   useEffect(() => {
-    fetchAsset(uuid, versionId)
+    setMounted(true)
+    if (ssrAsset) {
+      setAsset(ssrAsset)
+      setIsLoading(false)
+      setActiveVersionId(versionId || null)
+    } else {
+      fetchAsset(uuid, versionId)
+    }
   }, [uuid, versionId])
 
-  if (isLoading) {
+  const asset = ssrAsset || jotaiAsset
+
+  // During SSR and initial hydration: render only the JSON embed
+  if (!mounted) {
+    return ssrAsset ? (
+      <AssetJsonEmbed asset={ssrAsset} textContent={ssrTextContent} versionId={versionId} />
+    ) : null
+  }
+
+  if (!ssrAsset && isLoading) {
     return (
       <div className="flex items-center justify-center py-24 text-foreground/40">
         Loading...
@@ -37,7 +61,7 @@ export function SharePageContent({ uuid, versionId }: SharePageContentProps) {
     )
   }
 
-  if (error || !asset) {
+  if (!asset) {
     return (
       <div className="flex items-center justify-center py-24 text-foreground/40">
         {error || 'Asset not found.'}
@@ -49,40 +73,44 @@ export function SharePageContent({ uuid, versionId }: SharePageContentProps) {
   const isOlderVersion = activeVersionId != null && activeVersionId !== asset.currentVersionId
 
   return (
-    <div className="mx-auto max-w-5xl pb-20 sm:pb-16">
-      {(asset.title || showVersions) && (
-        <div className="border-b border-foreground/10 px-6 py-4">
-          <div className="flex items-center gap-3">
-            {asset.title && (
-              <h1 className="font-mono text-xl font-bold">{asset.title}</h1>
+    <>
+      <AssetJsonEmbed asset={asset} textContent={ssrTextContent} versionId={versionId} />
+      <div className="mx-auto max-w-5xl pb-20 sm:pb-16">
+        {(asset.title || showVersions) && (
+          <div className="border-b border-foreground/10 px-6 py-4">
+            <div className="flex items-center gap-3">
+              {asset.title && (
+                <h1 className="font-mono text-xl font-bold">{asset.title}</h1>
+              )}
+              {showVersions && (
+                <VersionDropdown
+                  uuid={asset.id}
+                  versions={versions}
+                  activeVersionId={activeVersionId}
+                  currentVersionId={asset.currentVersionId}
+                  versionCount={asset.versionCount}
+                  onOpen={() => fetchVersions(uuid)}
+                />
+              )}
+            </div>
+            {asset.description && (
+              <p className="mt-1 text-sm text-foreground/60">
+                {asset.description}
+              </p>
             )}
-            {showVersions && (
-              <VersionDropdown
-                uuid={asset.id}
-                versions={versions}
-                activeVersionId={activeVersionId}
-                currentVersionId={asset.currentVersionId}
-                onOpen={() => fetchVersions(uuid)}
-              />
+            {isOlderVersion && (
+              <div className="mt-2 rounded bg-amber-500/10 px-3 py-1.5 text-xs text-amber-600 dark:text-amber-400">
+                Viewing an older version.{' '}
+                <a href={`/s/${asset.id}`} className="underline">
+                  View latest
+                </a>
+              </div>
             )}
           </div>
-          {asset.description && (
-            <p className="mt-1 text-sm text-foreground/60">
-              {asset.description}
-            </p>
-          )}
-          {isOlderVersion && (
-            <div className="mt-2 rounded bg-amber-500/10 px-3 py-1.5 text-xs text-amber-600 dark:text-amber-400">
-              Viewing an older version.{' '}
-              <a href={`/s/${asset.id}`} className="underline">
-                View latest
-              </a>
-            </div>
-          )}
-        </div>
-      )}
-      <AssetViewer asset={asset} versionId={versionId} />
-      <AssetToolbar asset={asset} />
-    </div>
+        )}
+        <AssetViewer asset={asset} versionId={versionId} initialContent={ssrTextContent ?? undefined} />
+        <AssetToolbar asset={asset} />
+      </div>
+    </>
   )
 }

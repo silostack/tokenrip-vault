@@ -8,6 +8,7 @@ interface VersionDropdownProps {
   versions: VersionInfo[]
   activeVersionId: string | null
   currentVersionId?: string
+  versionCount?: number
   onOpen?: () => void
 }
 
@@ -27,6 +28,7 @@ export function VersionDropdown({
   versions,
   activeVersionId,
   currentVersionId,
+  versionCount,
   onOpen,
 }: VersionDropdownProps) {
   const [open, setOpen] = useState(false)
@@ -44,8 +46,9 @@ export function VersionDropdown({
   const activeVersion = versions.find((v) => v.id === activeVersionId)
   const isLatest = !activeVersionId || activeVersionId === currentVersionId
 
+  const latestVersionNumber = versions[0]?.version ?? versionCount ?? '?'
   const label = isLatest
-    ? `v${versions[0]?.version ?? '?'} (latest)`
+    ? `v${latestVersionNumber} (latest)`
     : `v${activeVersion?.version ?? '?'}${activeVersion?.label ? ` — ${activeVersion.label}` : ''}`
 
   return (

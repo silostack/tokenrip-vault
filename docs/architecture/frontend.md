@@ -54,7 +54,7 @@ Routes are file-based via TanStack Router. The Vite plugin scans `src/app/` and 
 - `$param.tsx` — dynamic route segment (also used as layout when directory exists)
 - `index.tsx` — index route for a directory
 
-**Version routing:** `$uuid.tsx` is a layout route that renders `<Outlet>`. It runs the SSR loader for OG meta tags. Child routes (`index.tsx` and `$versionId.tsx`) both render `<SharePageContent>` with an optional `versionId` prop.
+**Version routing:** `$uuid.tsx` is a layout route that renders `<Outlet>`. It runs the SSR loader for OG meta tags. Child routes (`index.tsx` and `$versionId.tsx`) each have their own SSR loaders that fetch both asset metadata and text content server-side, passing the data as `ssrAsset` and `ssrTextContent` props to `<SharePageContent>`. See `docs/architecture/agent-friendly-rendering.md` for the full SSR content strategy.
 
 ## State Management (Jotai)
 
@@ -165,7 +165,7 @@ Centralized axios instance with `baseURL` from `VITE_API_URL` (default `http://l
 | — | `application/pdf` | `PdfViewer` | iframe embed |
 | (fallback) | — | `DownloadFallback` | Download button |
 
-For markdown/html/chart/code/text/json, `AssetViewer` fetches text content from the `/content` endpoint before rendering. The `CodeViewer` accepts an optional `language` hint from `asset.metadata.language` for targeted highlighting.
+For markdown/html/chart/code/text/json, content is fetched server-side via the route loader and passed to `AssetViewer` as `initialContent`. If `initialContent` is provided, the client-side fetch is skipped entirely. This ensures agents see the full content in the initial HTML response. The `CodeViewer` accepts an optional `language` hint from `asset.metadata.language` for targeted highlighting.
 
 ## Styling
 
