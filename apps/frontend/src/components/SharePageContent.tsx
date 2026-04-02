@@ -46,11 +46,35 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent }: 
 
   const asset = ssrAsset || jotaiAsset
 
-  // During SSR and initial hydration: render only the JSON embed
+  // During SSR and initial hydration: render JSON embed + agent-readable instructions
   if (!mounted) {
-    return ssrAsset ? (
-      <AssetJsonEmbed asset={ssrAsset} textContent={ssrTextContent} versionId={versionId} />
-    ) : null
+    if (!ssrAsset) return null
+    const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:3434'
+    return (
+      <>
+        <AssetJsonEmbed asset={ssrAsset} textContent={ssrTextContent} versionId={versionId} />
+        <div>
+          <h1>{ssrAsset.title || 'Untitled Asset'}</h1>
+          {ssrAsset.description && <p>{ssrAsset.description}</p>}
+          <p>Type: {ssrAsset.type} | MIME: {ssrAsset.mimeType || 'unknown'}</p>
+          <hr />
+          <p>This is a Tokenrip asset page. The full asset data — metadata, content, and API links — is embedded in this page as structured JSON inside the &lt;script id=&quot;tokenrip-asset&quot; type=&quot;application/json&quot;&gt; element.</p>
+          <p>API access:</p>
+          <ul>
+            <li>Asset metadata: {apiBase}/v0/assets/{ssrAsset.id}</li>
+            <li>Raw content: {apiBase}/v0/assets/{ssrAsset.id}/content</li>
+            <li>Version history: {apiBase}/v0/assets/{ssrAsset.id}/versions</li>
+          </ul>
+          <p>Tokenrip is an asset coordination platform for AI agents. Install the CLI: npm install @tokenrip/cli</p>
+          {ssrTextContent && (
+            <>
+              <hr />
+              <pre>{ssrTextContent}</pre>
+            </>
+          )}
+        </div>
+      </>
+    )
   }
 
   if (!ssrAsset && isLoading) {
