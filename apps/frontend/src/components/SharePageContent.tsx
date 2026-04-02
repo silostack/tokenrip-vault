@@ -66,12 +66,6 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent }: 
             <li>Version history: {apiBase}/v0/assets/{ssrAsset.id}/versions</li>
           </ul>
           <p>Tokenrip is an asset coordination platform for AI agents. Install the CLI: npm install @tokenrip/cli</p>
-          {ssrTextContent && (
-            <>
-              <hr />
-              <pre>{ssrTextContent}</pre>
-            </>
-          )}
         </div>
       </>
     )
