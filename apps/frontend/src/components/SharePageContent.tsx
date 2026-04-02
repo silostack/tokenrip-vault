@@ -10,15 +10,46 @@ import {
 import { useAssetActions } from '@/_jotai/asset/asset.actions'
 import { AssetViewer } from './AssetViewer'
 import { AssetToolbar } from './AssetToolbar'
-import { AssetJsonEmbed } from './AssetJsonEmbed'
 import { VersionDropdown } from './VersionDropdown'
 import type { AssetMetadata } from '@/lib/api'
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
 
 interface SharePageContentProps {
   uuid: string
   versionId?: string
   ssrAsset?: AssetMetadata | null
   ssrTextContent?: string | null
+}
+
+function StaticContent({ asset, textContent, versionId }: { asset: AssetMetadata; textContent?: string | null; versionId?: string }) {
+  const contentUrl = versionId
+    ? `${API_URL}/v0/assets/${asset.id}/versions/${versionId}/content`
+    : `${API_URL}/v0/assets/${asset.id}/content`
+
+  if (textContent != null) {
+    switch (asset.type) {
+      case 'markdown':
+        return <div>{textContent}</div>
+      case 'code':
+        return <pre><code>{textContent}</code></pre>
+      case 'json': {
+        let formatted = textContent
+        try { formatted = JSON.stringify(JSON.parse(textContent), null, 2) } catch {}
+        return <pre>{formatted}</pre>
+      }
+      case 'html':
+      case 'text':
+      case 'chart':
+        return <pre>{textContent}</pre>
+    }
+  }
+
+  if (asset.mimeType?.startsWith('image/')) {
+    return <img src={contentUrl} alt={asset.title || 'Image asset'} />
+  }
+
+  return <a href={contentUrl}>Download: {asset.title || 'asset'}</a>
 }
 
 export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent }: SharePageContentProps) {
@@ -46,28 +77,13 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent }: 
 
   const asset = ssrAsset || jotaiAsset
 
-  // During SSR and initial hydration: render JSON embed + agent-readable instructions
+  // During SSR and initial hydration: render raw content directly
   if (!mounted) {
     if (!ssrAsset) return null
-    const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:3434'
     return (
-      <>
-        <AssetJsonEmbed asset={ssrAsset} textContent={ssrTextContent} versionId={versionId} />
-        <div>
-          <h1>{ssrAsset.title || 'Untitled Asset'}</h1>
-          {ssrAsset.description && <p>{ssrAsset.description}</p>}
-          <p>Type: {ssrAsset.type} | MIME: {ssrAsset.mimeType || 'unknown'}</p>
-          <hr />
-          <p>This is a Tokenrip asset page. The full asset data — metadata, content, and API links — is embedded in this page as structured JSON inside the &lt;script id=&quot;tokenrip-asset&quot; type=&quot;application/json&quot;&gt; element.</p>
-          <p>API access:</p>
-          <ul>
-            <li>Asset metadata: {apiBase}/v0/assets/{ssrAsset.id}</li>
-            <li>Raw content: {apiBase}/v0/assets/{ssrAsset.id}/content</li>
-            <li>Version history: {apiBase}/v0/assets/{ssrAsset.id}/versions</li>
-          </ul>
-          <p>Tokenrip is an asset coordination platform for AI agents. Install the CLI: npm install @tokenrip/cli</p>
-        </div>
-      </>
+      <article className="sr-only">
+        <StaticContent asset={ssrAsset} textContent={ssrTextContent} versionId={versionId} />
+      </article>
     )
   }
 
@@ -91,44 +107,41 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent }: 
   const isOlderVersion = activeVersionId != null && activeVersionId !== asset.currentVersionId
 
   return (
-    <>
-      <AssetJsonEmbed asset={asset} textContent={ssrTextContent} versionId={versionId} />
-      <div className="mx-auto max-w-5xl pb-20 sm:pb-16">
-        {(asset.title || showVersions) && (
-          <div className="border-b border-foreground/10 px-6 py-4">
-            <div className="flex items-center gap-3">
-              {asset.title && (
-                <h1 className="font-mono text-xl font-bold">{asset.title}</h1>
-              )}
-              {showVersions && (
-                <VersionDropdown
-                  uuid={asset.id}
-                  versions={versions}
-                  activeVersionId={activeVersionId}
-                  currentVersionId={asset.currentVersionId}
-                  versionCount={asset.versionCount}
-                  onOpen={() => fetchVersions(uuid)}
-                />
-              )}
-            </div>
-            {asset.description && (
-              <p className="mt-1 text-sm text-foreground/60">
-                {asset.description}
-              </p>
+    <div className="mx-auto max-w-5xl pb-20 sm:pb-16">
+      {(asset.title || showVersions) && (
+        <div className="border-b border-foreground/10 px-6 py-4">
+          <div className="flex items-center gap-3">
+            {asset.title && (
+              <h1 className="font-mono text-xl font-bold">{asset.title}</h1>
             )}
-            {isOlderVersion && (
-              <div className="mt-2 rounded bg-amber-500/10 px-3 py-1.5 text-xs text-amber-600 dark:text-amber-400">
-                Viewing an older version.{' '}
-                <a href={`/s/${asset.id}`} className="underline">
-                  View latest
-                </a>
-              </div>
+            {showVersions && (
+              <VersionDropdown
+                uuid={asset.id}
+                versions={versions}
+                activeVersionId={activeVersionId}
+                currentVersionId={asset.currentVersionId}
+                versionCount={asset.versionCount}
+                onOpen={() => fetchVersions(uuid)}
+              />
             )}
           </div>
-        )}
-        <AssetViewer asset={asset} versionId={versionId} initialContent={ssrTextContent ?? undefined} />
-        <AssetToolbar asset={asset} />
-      </div>
-    </>
+          {asset.description && (
+            <p className="mt-1 text-sm text-foreground/60">
+              {asset.description}
+            </p>
+          )}
+          {isOlderVersion && (
+            <div className="mt-2 rounded bg-amber-500/10 px-3 py-1.5 text-xs text-amber-600 dark:text-amber-400">
+              Viewing an older version.{' '}
+              <a href={`/s/${asset.id}`} className="underline">
+                View latest
+              </a>
+            </div>
+          )}
+        </div>
+      )}
+      <AssetViewer asset={asset} versionId={versionId} initialContent={ssrTextContent ?? undefined} />
+      <AssetToolbar asset={asset} />
+    </div>
   )
 }

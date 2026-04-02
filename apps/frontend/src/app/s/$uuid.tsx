@@ -21,6 +21,7 @@ export const Route = createFileRoute('/s/$uuid')({
   head: ({ loaderData }) => {
     const title = loaderData?.title || 'Shared Asset'
     const description = loaderData?.description || `A ${loaderData?.type || 'shared'} asset on Tokenrip`
+    const id = loaderData?.id
     return {
       meta: [
         { title: `${title} — Tokenrip` },
@@ -33,6 +34,15 @@ export const Route = createFileRoute('/s/$uuid')({
         { name: 'twitter:title', content: title },
         { name: 'twitter:description', content: description },
         { name: 'twitter:image', content: 'https://tokenrip.com/og-image.png' },
+        // Agent-readable metadata
+        ...(id ? [
+          { name: 'tokenrip:id', content: id },
+          { name: 'tokenrip:type', content: loaderData?.type || '' },
+          { name: 'tokenrip:api', content: `${API_URL}/v0/assets/${id}` },
+          { name: 'tokenrip:content', content: `${API_URL}/v0/assets/${id}/content` },
+          { name: 'tokenrip:versions', content: `${API_URL}/v0/assets/${id}/versions` },
+          { name: 'tokenrip:cli', content: 'npm install @tokenrip/cli' },
+        ] : []),
       ],
     }
   },
