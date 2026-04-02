@@ -44,6 +44,12 @@ export const Route = createFileRoute('/s/$uuid')({
           { name: 'tokenrip:cli', content: 'npm install @tokenrip/cli' },
         ] : []),
       ],
+      links: [
+        ...(id ? [
+          { rel: 'alternate', type: 'application/json', href: `${API_URL}/v0/assets/${id}` },
+          { rel: 'alternate', href: `${API_URL}/v0/assets/${id}/content` },
+        ] : []),
+      ],
     }
   },
   component: ShareLayout,
