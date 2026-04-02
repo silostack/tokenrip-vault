@@ -10,6 +10,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.19",
     "@tanstack/react-query": "^5.90.0",
     "@tanstack/react-router": "^1.168.8",
     "@tanstack/react-router-ssr-query": "^1.166.10",
@@ -24,6 +25,8 @@
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",
     "react-toastify": "^11.0.5",
+    "rehype-highlight": "^7.0.2",
+    "remark-gfm": "^4.0.1",
     "srvx": "^0.11.13",
     "tailwind-merge": "^3.4.0"
   },
