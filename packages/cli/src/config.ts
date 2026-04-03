@@ -30,7 +30,7 @@ export function saveConfig(config: TokenripConfig): void {
 }
 
 export function getApiUrl(config: TokenripConfig): string {
-  return config.apiUrl || process.env.TOKENRIP_API_URL || 'https://api.tokenrip.com';
+  return process.env.TOKENRIP_API_URL || config.apiUrl || 'https://api.tokenrip.com';
 }
 
 export function getApiKey(config: TokenripConfig): string | undefined {
