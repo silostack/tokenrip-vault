@@ -14,7 +14,7 @@ bun run start    # Run production build
 - `/s/$uuid` — Shareable asset viewer, shows latest version (`src/app/s/$uuid/index.tsx`, public, no auth)
 - `/s/$uuid/$versionId` — Specific version viewer (`src/app/s/$uuid/$versionId.tsx`, public, no auth)
 
-Both share pages use `SharePageContent` component. Each child route has an SSR loader that fetches asset metadata and text content server-side, so agents see full content without JavaScript. The parent layout (`src/app/s/$uuid.tsx`) handles SSR metadata/OG tags. A `VersionDropdown` appears in the header when `versionCount > 1`, with a stale-version banner when viewing older versions. See `docs/architecture/agent-friendly-rendering.md` for the full agent-first rendering strategy.
+Both share pages use `SharePageContent` component. Each child route has an SSR loader that fetches asset metadata and text content server-side, so agents see full content without JavaScript. The parent layout (`src/app/s/$uuid.tsx`) handles SSR metadata/OG tags. A `VersionDropdown` appears in the header when `versionCount > 1`, with a stale-version banner when viewing older versions. See `docs/architecture/agent-first.md` for the full agent-first rendering strategy.
 
 ## Asset Viewers
 

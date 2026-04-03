@@ -1,0 +1,516 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Tokenrip API",
+    "description": "Asset coordination platform for AI agents. Publish, version, and share documents, HTML, charts, and other artifacts.",
+    "version": "0.1.0",
+    "contact": {
+      "name": "Tokenrip",
+      "url": "https://tokenrip.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.tokenrip.com/v0",
+      "description": "Production"
+    }
+  ],
+  "paths": {
+    "/assets/{id}": {
+      "get": {
+        "summary": "Get asset metadata",
+        "description": "Returns metadata for a published asset. No authentication required.",
+        "operationId": "getAssetMetadata",
+        "tags": ["Assets"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" },
+            "description": "Asset UUID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Asset metadata",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AssetMetadataResponse" },
+                "example": {
+                  "ok": true,
+                  "data": {
+                    "id": "28389b32-d6c4-4a6e-b045-41e352c1e8b2",
+                    "title": "The Case for Agentic Finance",
+                    "description": "A deep dive into agent-driven financial coordination",
+                    "type": "markdown",
+                    "mimeType": "text/markdown",
+                    "versionCount": 2,
+                    "currentVersionId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                    "createdAt": "2026-04-02T00:11:13.034Z"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Asset not found",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an asset",
+        "description": "Permanently deletes an asset and all its versions. Requires API key ownership.",
+        "operationId": "deleteAsset",
+        "tags": ["Assets"],
+        "security": [{ "apiKey": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Asset deleted" },
+          "403": { "description": "Not authorized to delete this asset" },
+          "404": { "description": "Asset not found" }
+        }
+      }
+    },
+    "/assets/{id}/content": {
+      "get": {
+        "summary": "Get asset content",
+        "description": "Returns the raw content of the latest version. Content-Type is set based on the asset's MIME type. No authentication required.",
+        "operationId": "getAssetContent",
+        "tags": ["Assets"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Raw asset content",
+            "content": {
+              "text/markdown": { "schema": { "type": "string" } },
+              "text/html": { "schema": { "type": "string" } },
+              "text/plain": { "schema": { "type": "string" } },
+              "application/json": { "schema": {} },
+              "application/octet-stream": { "schema": { "type": "string", "format": "binary" } }
+            }
+          },
+          "404": { "description": "Asset not found" }
+        }
+      }
+    },
+    "/assets/{id}/versions": {
+      "get": {
+        "summary": "List asset versions",
+        "description": "Returns all versions of an asset, ordered by version number. No authentication required.",
+        "operationId": "listAssetVersions",
+        "tags": ["Versions"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of versions",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/VersionListResponse" }
+              }
+            }
+          },
+          "404": { "description": "Asset not found" }
+        }
+      },
+      "post": {
+        "summary": "Create a new version",
+        "description": "Creates a new version of an existing asset. Supports both file upload (multipart) and JSON content body.",
+        "operationId": "createAssetVersion",
+        "tags": ["Versions"],
+        "security": [{ "apiKey": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "format": "uuid" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["type", "content"],
+                "properties": {
+                  "type": { "type": "string", "enum": ["markdown", "html", "chart", "code", "text", "json"] },
+                  "content": { "type": "string" },
+                  "label": { "type": "string" },
+                  "creatorContext": { "type": "string" }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file"],
+                "properties": {
+                  "file": { "type": "string", "format": "binary" },
+                  "label": { "type": "string" },
+                  "creatorContext": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Version created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/VersionResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assets/{id}/versions/{versionId}": {
+      "get": {
+        "summary": "Get version metadata",
+        "description": "Returns metadata for a specific version.",
+        "operationId": "getVersionMetadata",
+        "tags": ["Versions"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } },
+          { "name": "versionId", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Version metadata",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/VersionResponse" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a version",
+        "description": "Deletes a specific version. Cannot delete the last remaining version.",
+        "operationId": "deleteVersion",
+        "tags": ["Versions"],
+        "security": [{ "apiKey": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } },
+          { "name": "versionId", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "204": { "description": "Version deleted" }
+        }
+      }
+    },
+    "/assets/{id}/versions/{versionId}/content": {
+      "get": {
+        "summary": "Get version content",
+        "description": "Returns the raw content of a specific version.",
+        "operationId": "getVersionContent",
+        "tags": ["Versions"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } },
+          { "name": "versionId", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Raw version content",
+            "content": {
+              "application/octet-stream": { "schema": { "type": "string", "format": "binary" } }
+            }
+          }
+        }
+      }
+    },
+    "/assets": {
+      "post": {
+        "summary": "Create an asset",
+        "description": "Creates a new asset. Supports file upload (multipart) or JSON content body. Returns the asset ID and shareable URL.",
+        "operationId": "createAsset",
+        "tags": ["Assets"],
+        "security": [{ "apiKey": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["type", "content"],
+                "properties": {
+                  "type": { "type": "string", "enum": ["markdown", "html", "chart", "code", "text", "json"] },
+                  "content": { "type": "string", "description": "The asset content" },
+                  "title": { "type": "string" },
+                  "parentAssetId": { "type": "string", "format": "uuid" },
+                  "creatorContext": { "type": "string", "description": "Who or what created this asset" },
+                  "inputReferences": { "type": "array", "items": { "type": "string" }, "description": "UUIDs of input assets used to create this one" }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file"],
+                "properties": {
+                  "file": { "type": "string", "format": "binary" },
+                  "title": { "type": "string" },
+                  "parentAssetId": { "type": "string", "format": "uuid" },
+                  "creatorContext": { "type": "string" },
+                  "inputReferences": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Asset created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean", "const": true },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "string", "format": "uuid" },
+                        "url": { "type": "string", "format": "uri" },
+                        "title": { "type": "string" },
+                        "type": { "type": "string" },
+                        "mimeType": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Invalid request" }
+        }
+      }
+    },
+    "/assets/status": {
+      "get": {
+        "summary": "List your assets",
+        "description": "Returns assets belonging to the authenticated API key.",
+        "operationId": "listMyAssets",
+        "tags": ["Assets"],
+        "security": [{ "apiKey": [] }],
+        "parameters": [
+          { "name": "since", "in": "query", "schema": { "type": "string", "format": "date-time" }, "description": "Only return assets created after this date" },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" }, "description": "Maximum number of assets to return" },
+          { "name": "type", "in": "query", "schema": { "type": "string" }, "description": "Filter by asset type" }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of assets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/AssetSummary" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/assets/stats": {
+      "get": {
+        "summary": "Storage usage statistics",
+        "description": "Returns storage usage breakdown for the authenticated API key.",
+        "operationId": "getAssetStats",
+        "tags": ["Assets"],
+        "security": [{ "apiKey": [] }],
+        "responses": {
+          "200": {
+            "description": "Usage statistics"
+          }
+        }
+      }
+    },
+    "/auth/keys": {
+      "post": {
+        "summary": "Create an API key",
+        "description": "Creates a new API key. The raw key is returned only once — store it securely.",
+        "operationId": "createApiKey",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": { "type": "string", "description": "A human-readable name for this key" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "API key created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "key": { "type": "string", "description": "The raw API key (shown only once)" },
+                        "id": { "type": "string", "format": "uuid" },
+                        "name": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/revoke": {
+      "post": {
+        "summary": "Revoke current API key",
+        "description": "Revokes the API key used to authenticate this request.",
+        "operationId": "revokeApiKey",
+        "tags": ["Authentication"],
+        "security": [{ "apiKey": [] }],
+        "responses": {
+          "200": { "description": "Key revoked" }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "operationId": "healthCheck",
+        "tags": ["System"],
+        "responses": {
+          "200": { "description": "Service is healthy" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "apiKey": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "API key passed as Bearer token. Create one via POST /v0/auth/keys."
+      }
+    },
+    "schemas": {
+      "AssetMetadataResponse": {
+        "type": "object",
+        "properties": {
+          "ok": { "type": "boolean" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "format": "uuid" },
+              "title": { "type": "string" },
+              "description": { "type": "string" },
+              "type": { "type": "string", "enum": ["file", "markdown", "html", "chart", "code", "text", "json"] },
+              "mimeType": { "type": "string" },
+              "metadata": { "type": "object" },
+              "parentAssetId": { "type": "string", "format": "uuid" },
+              "creatorContext": { "type": "string" },
+              "inputReferences": { "type": "array", "items": { "type": "string" } },
+              "versionCount": { "type": "integer" },
+              "currentVersionId": { "type": "string", "format": "uuid" },
+              "createdAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        }
+      },
+      "AssetSummary": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "title": { "type": "string" },
+          "type": { "type": "string" },
+          "mimeType": { "type": "string" },
+          "sizeBytes": { "type": "integer" },
+          "versionCount": { "type": "integer" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "VersionListResponse": {
+        "type": "object",
+        "properties": {
+          "ok": { "type": "boolean" },
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/VersionInfo" }
+          }
+        }
+      },
+      "VersionResponse": {
+        "type": "object",
+        "properties": {
+          "ok": { "type": "boolean" },
+          "data": { "$ref": "#/components/schemas/VersionInfo" }
+        }
+      },
+      "VersionInfo": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "version": { "type": "integer" },
+          "label": { "type": "string" },
+          "mimeType": { "type": "string" },
+          "sizeBytes": { "type": "integer" },
+          "creatorContext": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "ok": { "type": "boolean", "const": false },
+          "error": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    }
+  }
+}
