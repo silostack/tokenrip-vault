@@ -1,5 +1,6 @@
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
+import { NotFound } from '@/components/NotFound'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
 const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://tokenrip.com'
@@ -110,11 +111,7 @@ export const Route = createFileRoute('/s/$uuid')({
     }
   },
   component: ShareLayout,
-  notFoundComponent: () => (
-    <div className="flex items-center justify-center py-24 text-foreground/40">
-      Asset not found.
-    </div>
-  ),
+  notFoundComponent: () => <NotFound variant="asset" />,
 })
 
 function ShareLayout() {

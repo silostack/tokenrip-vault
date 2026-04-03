@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { themeAtom } from '@/_jotai/theme/theme.atoms'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { NotFound } from '@/components/NotFound'
 import appCss from './globals.css?url'
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
@@ -51,15 +52,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       ],
     }),
     component: RootLayout,
-    notFoundComponent: () => (
-      <div className="flex flex-col items-center justify-center gap-4 py-24 text-center">
-        <h1 className="font-mono text-2xl font-bold">404</h1>
-        <p className="text-foreground/60">Page not found.</p>
-        <a href="/" className="text-sm text-foreground/40 underline hover:text-foreground/60">
-          Go home
-        </a>
-      </div>
-    ),
+    notFoundComponent: () => <NotFound variant="page" />,
   },
 )
 
