@@ -1,7 +1,7 @@
 import { Injectable, Inject, NotFoundException, ForbiddenException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityManager } from '@mikro-orm/postgresql';
-import { v4 } from 'uuid';
+import { v4, validate as uuidValidate } from 'uuid';
 import { Asset, AssetType } from '../../db/models/Asset';
 import { AssetVersion } from '../../db/models/AssetVersion';
 import { AssetRepository } from '../../db/repositories/asset.repository';
@@ -117,6 +117,9 @@ export class AssetService {
 
   async findById(id: string): Promise<Asset> {
     this.logger.debug(`Looking up asset ${id}`);
+    if (!uuidValidate(id)) {
+      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
+    }
     const asset = await this.assetRepository.findOne({ id });
     if (!asset) {
       this.logger.debug(`Asset ${id} not found`);
