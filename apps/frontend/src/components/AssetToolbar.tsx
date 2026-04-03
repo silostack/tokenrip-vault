@@ -1,8 +1,10 @@
 import { useState, useCallback, useRef } from 'react'
-import { Link as LinkIcon, Check, Download, Info } from 'lucide-react'
+import { Link as LinkIcon, Check, Copy, Download, Info } from 'lucide-react'
 import type { AssetMetadata } from '@/lib/api'
 import { getAssetContentUrl } from '@/lib/api'
 import { MetadataSheet } from './MetadataSheet'
+
+const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json'])
 
 interface AssetToolbarProps {
   asset: AssetMetadata
@@ -10,8 +12,10 @@ interface AssetToolbarProps {
 
 export function AssetToolbar({ asset }: AssetToolbarProps) {
   const [copied, setCopied] = useState(false)
+  const [contentCopied, setContentCopied] = useState(false)
   const [sheetOpen, setSheetOpen] = useState(false)
   const copyTimeout = useRef<ReturnType<typeof setTimeout>>()
+  const copyContentTimeout = useRef<ReturnType<typeof setTimeout>>()
 
   const handleCopy = useCallback(() => {
     navigator.clipboard.writeText(window.location.href)
@@ -19,6 +23,20 @@ export function AssetToolbar({ asset }: AssetToolbarProps) {
     clearTimeout(copyTimeout.current)
     copyTimeout.current = setTimeout(() => setCopied(false), 2000)
   }, [])
+
+  const handleCopyContent = useCallback(async () => {
+    try {
+      const url = getAssetContentUrl(asset.id)
+      const res = await fetch(url)
+      const text = await res.text()
+      await navigator.clipboard.writeText(text)
+      setContentCopied(true)
+      clearTimeout(copyContentTimeout.current)
+      copyContentTimeout.current = setTimeout(() => setContentCopied(false), 2000)
+    } catch {
+      // clipboard or fetch failed — no-op
+    }
+  }, [asset.id])
 
   const handleDownload = useCallback(async () => {
     const url = getAssetContentUrl(asset.id)
@@ -55,6 +73,21 @@ export function AssetToolbar({ asset }: AssetToolbarProps) {
 
       {/* Toolbar pill */}
       <div className="flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/10 px-2 py-1.5 shadow-lg backdrop-blur-md sm:gap-1">
+        {TEXT_TYPES.has(asset.type) && (
+          <button
+            type="button"
+            onClick={handleCopyContent}
+            title="Copy content"
+            className="flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-full transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-foreground/10 active:scale-95 active:bg-foreground/15"
+          >
+            {contentCopied ? (
+              <Check size={18} className="text-green-400" />
+            ) : (
+              <Copy size={18} className="text-foreground/70" />
+            )}
+          </button>
+        )}
+
         <button
           type="button"
           onClick={handleCopy}

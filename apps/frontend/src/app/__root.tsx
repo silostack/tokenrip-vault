@@ -81,7 +81,7 @@ function RootLayout() {
         <script dangerouslySetInnerHTML={{ __html: ANTI_FLASH_SCRIPT }} />
         <HeadContent />
       </head>
-      <body className="font-sans min-h-screen">
+      <body className="font-sans min-h-screen" suppressHydrationWarning>
         <div className="relative z-10 flex min-h-screen flex-col">
           <header className="flex items-center justify-between border-b border-foreground/10 px-6 py-4">
             <a

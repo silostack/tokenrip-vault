@@ -1,4 +1,4 @@
-import { Outlet, createFileRoute } from '@tanstack/react-router'
+import { Outlet, createFileRoute, notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { NotFound } from '@/components/NotFound'
 
@@ -68,7 +68,11 @@ const fetchAssetMeta = createServerFn({ method: 'GET' }).handler(
 )
 
 export const Route = createFileRoute('/s/$uuid')({
-  loader: ({ params }) => fetchAssetMeta({ data: params.uuid }),
+  loader: async ({ params }) => {
+    const data = await fetchAssetMeta({ data: params.uuid })
+    if (data === null) throw notFound()
+    return data
+  },
   head: ({ loaderData }) => {
     const rawTitle = loaderData?.title || 'Shared Asset'
     const title = sanitizeForMeta(rawTitle)
