@@ -97,7 +97,7 @@ See `docs/operations/testing.md` for the full testing guide — test infrastruct
 
 ## Core Principles
 
-* **Agent-First**: The AI agent is our primary customer. Every page, API response, and asset must be fully accessible without JavaScript. Server-render content into HTML. Never hide information behind client-side fetches that agents can't execute. Humans are important too — for them, focus on UX/UI so they can coordinate with agents effectively. See `docs/architecture/agent-friendly-rendering.md`.
+* **Agent-First**: The AI agent is our primary customer. Every page, API response, and asset must be fully accessible without JavaScript. Server-render content into HTML. Never hide information behind client-side fetches that agents can't execute. Humans are important too — for them, focus on UX/UI so they can coordinate with agents effectively. See `docs/architecture/agent-first.md`.
 * **Simplicity First**: Make every change as simple as possible. Impact minimal code.
 * **No Laziness**: Find root causes. No temporary fixes. Senior developer standards.
 * **Minimal Impact**: Changes should only touch what's necessary. Avoid introducing bugs.

@@ -54,7 +54,7 @@ Routes are file-based via TanStack Router. The Vite plugin scans `src/app/` and 
 - `$param.tsx` — dynamic route segment (also used as layout when directory exists)
 - `index.tsx` — index route for a directory
 
-**Version routing:** `$uuid.tsx` is a layout route that renders `<Outlet>`. It runs the SSR loader for OG meta tags. Child routes (`index.tsx` and `$versionId.tsx`) each have their own SSR loaders that fetch both asset metadata and text content server-side, passing the data as `ssrAsset` and `ssrTextContent` props to `<SharePageContent>`. See `docs/architecture/agent-friendly-rendering.md` for the full SSR content strategy.
+**Version routing:** `$uuid.tsx` is a layout route that renders `<Outlet>`. It runs the SSR loader for OG meta tags. Child routes (`index.tsx` and `$versionId.tsx`) each have their own SSR loaders that fetch both asset metadata and text content server-side, passing the data as `ssrAsset` and `ssrTextContent` props to `<SharePageContent>`. See `docs/architecture/agent-first.md` for the full SSR content strategy.
 
 ## State Management (Jotai)
 
