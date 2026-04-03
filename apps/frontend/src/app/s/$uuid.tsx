@@ -2,6 +2,31 @@ import { Outlet, createFileRoute } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
+const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://tokenrip.com'
+const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json'])
+
+interface AssetMeta {
+  id: string
+  title?: string
+  description?: string
+  type: string
+  mimeType?: string
+  versionCount?: number
+  createdAt?: string
+  contentSnippet?: string
+}
+
+function stripMarkup(raw: string): string {
+  return raw
+    .replace(/<[^>]+>/g, '')        // strip HTML tags
+    .replace(/[#*_`~\[\]()>|=-]/g, '') // strip markdown syntax
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function sanitizeForMeta(str: string): string {
+  return str.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
 
 const fetchAssetMeta = createServerFn({ method: 'GET' }).handler(
   async ({ data: uuid }: { data: string }) => {
@@ -9,7 +34,32 @@ const fetchAssetMeta = createServerFn({ method: 'GET' }).handler(
       const res = await fetch(`${API_URL}/v0/assets/${uuid}`)
       if (!res.ok) return null
       const json = await res.json()
-      return json.data as { id: string; title?: string; description?: string; type: string } | null
+      const d = json.data as AssetMeta
+
+      // Fetch content snippet for description fallback
+      let contentSnippet: string | undefined
+      if (!d.description && TEXT_TYPES.has(d.type)) {
+        try {
+          const contentRes = await fetch(`${API_URL}/v0/assets/${uuid}/content`)
+          if (contentRes.ok) {
+            const raw = await contentRes.text()
+            contentSnippet = stripMarkup(raw).slice(0, 155) || undefined
+          }
+        } catch {
+          // skip snippet on failure
+        }
+      }
+
+      return {
+        id: d.id,
+        title: d.title,
+        description: d.description,
+        type: d.type,
+        mimeType: d.mimeType,
+        versionCount: d.versionCount,
+        createdAt: d.createdAt,
+        contentSnippet,
+      } as AssetMeta
     } catch {
       return null
     }
@@ -19,9 +69,15 @@ const fetchAssetMeta = createServerFn({ method: 'GET' }).handler(
 export const Route = createFileRoute('/s/$uuid')({
   loader: ({ params }) => fetchAssetMeta({ data: params.uuid }),
   head: ({ loaderData }) => {
-    const title = loaderData?.title || 'Shared Asset'
-    const description = loaderData?.description || `A ${loaderData?.type || 'shared'} asset on Tokenrip`
+    const rawTitle = loaderData?.title || 'Shared Asset'
+    const title = sanitizeForMeta(rawTitle)
+    const rawDesc = loaderData?.description
+      || loaderData?.contentSnippet
+      || `A ${loaderData?.type || 'shared'} asset on Tokenrip`
+    const description = sanitizeForMeta(rawDesc)
     const id = loaderData?.id
+    const mimeType = loaderData?.mimeType || 'text/plain'
+    const pageUrl = id ? `${SITE_URL}/s/${id}` : undefined
     return {
       meta: [
         { title: `${title} — Tokenrip` },
@@ -29,11 +85,12 @@ export const Route = createFileRoute('/s/$uuid')({
         { property: 'og:title', content: title },
         { property: 'og:description', content: description },
         { property: 'og:type', content: 'article' },
-        { property: 'og:image', content: 'https://tokenrip.com/og-image.png' },
+        { property: 'og:image', content: `${SITE_URL}/og-image.png` },
+        ...(pageUrl ? [{ property: 'og:url', content: pageUrl }] : []),
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: title },
         { name: 'twitter:description', content: description },
-        { name: 'twitter:image', content: 'https://tokenrip.com/og-image.png' },
+        { name: 'twitter:image', content: `${SITE_URL}/og-image.png` },
         // Agent-readable metadata
         ...(id ? [
           { name: 'tokenrip:id', content: id },
@@ -47,7 +104,7 @@ export const Route = createFileRoute('/s/$uuid')({
       links: [
         ...(id ? [
           { rel: 'alternate', type: 'application/json', href: `${API_URL}/v0/assets/${id}` },
-          { rel: 'alternate', href: `${API_URL}/v0/assets/${id}/content` },
+          { rel: 'alternate', type: mimeType, href: `${API_URL}/v0/assets/${id}/content` },
         ] : []),
       ],
     }
@@ -61,5 +118,38 @@ export const Route = createFileRoute('/s/$uuid')({
 })
 
 function ShareLayout() {
-  return <Outlet />
+  const data = Route.useLoaderData()
+  const id = data?.id
+  const title = data?.title || 'Shared Asset'
+  const mimeType = data?.mimeType || 'text/plain'
+  const pageUrl = id ? `${SITE_URL}/s/${id}` : undefined
+
+  const jsonLd = id ? {
+    '@context': 'https://schema.org',
+    '@type': 'DigitalDocument',
+    name: title,
+    identifier: id,
+    encodingFormat: mimeType,
+    url: pageUrl,
+    dateCreated: data?.createdAt,
+    version: data?.versionCount || 1,
+    provider: {
+      '@type': 'Organization',
+      name: 'Tokenrip',
+      url: 'https://tokenrip.com',
+    },
+    ...(data?.description ? { description: data.description } : {}),
+  } : null
+
+  return (
+    <>
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+      <Outlet />
+    </>
+  )
 }

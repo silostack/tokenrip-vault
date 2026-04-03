@@ -5,6 +5,7 @@ import { AssetVersion } from '../db/models/AssetVersion';
 import { ApiKey } from '../db/models/ApiKey';
 import { AssetController } from './controller/asset.controller';
 import { HealthController } from './controller/health.controller';
+import { OpenapiController } from './controller/openapi.controller';
 import { AuthController } from './auth/auth.controller';
 import { AssetService } from './service/asset.service';
 import { AssetVersionService } from './service/asset-version.service';
@@ -12,7 +13,7 @@ import { AuthService } from './auth/auth.service';
 
 @Module({
   imports: [MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey])],
-  controllers: [AssetController, HealthController, AuthController],
+  controllers: [AssetController, HealthController, OpenapiController, AuthController],
   providers: [AssetService, AssetVersionService, AuthService],
   exports: [AuthService],
 })
