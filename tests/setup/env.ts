@@ -1,3 +1,6 @@
+import { tmpdir } from 'os';
+import { join } from 'path';
+
 // Preloaded before every test file — sets baseline env vars
 // Individual test files override DATABASE_NAME with their own unique DB
 process.env.DATABASE_HOST = process.env.DATABASE_HOST || 'localhost';
@@ -8,3 +11,5 @@ process.env.DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || '';
 process.env.NODE_ENV = 'test';
 // CLI tests call command functions directly inside Bun's TTY — force JSON output
 process.env.TOKENRIP_OUTPUT = 'json';
+// Isolate CLI config from user's local ~/.config/tokenrip so disk config never leaks into tests
+process.env.TOKENRIP_CONFIG_DIR = join(tmpdir(), 'tokenrip-test-config-isolated');
