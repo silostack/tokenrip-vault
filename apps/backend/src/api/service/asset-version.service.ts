@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityManager } from '@mikro-orm/postgresql';
-import { v4 } from 'uuid';
+import { v4, validate as uuidValidate } from 'uuid';
 import { Asset, AssetType } from '../../db/models/Asset';
 import { AssetVersion } from '../../db/models/AssetVersion';
 import { AssetRepository } from '../../db/repositories/asset.repository';
@@ -107,6 +107,9 @@ export class AssetVersionService {
   }
 
   async listVersions(assetId: string): Promise<AssetVersion[]> {
+    if (!uuidValidate(assetId)) {
+      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
+    }
     const asset = await this.assetRepo.findOne({ id: assetId });
     if (!asset) {
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
@@ -118,6 +121,9 @@ export class AssetVersionService {
   }
 
   async findVersion(assetId: string, versionId: string): Promise<AssetVersion> {
+    if (!uuidValidate(assetId) || !uuidValidate(versionId)) {
+      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Version not found' });
+    }
     const version = await this.versionRepo.findOne({ id: versionId, asset: { id: assetId } });
     if (!version) {
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Version not found' });
@@ -169,6 +175,9 @@ export class AssetVersionService {
   }
 
   private async findOwnedAsset(assetId: string, apiKeyId: string): Promise<Asset> {
+    if (!uuidValidate(assetId)) {
+      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
+    }
     const asset = await this.assetRepo.findOne({ id: assetId });
     if (!asset) {
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });

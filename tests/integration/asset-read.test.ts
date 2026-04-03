@@ -128,6 +128,16 @@ describe('asset read', () => {
     expect(res.status).toBe(404);
   });
 
+  test('GET metadata for invalid UUID returns 404', async () => {
+    const res = await fetch(`${backend.url}/v0/assets/not-a-valid-uuid`);
+    expect(res.status).toBe(404);
+  });
+
+  test('GET content for invalid UUID returns 404', async () => {
+    const res = await fetch(`${backend.url}/v0/assets/b3ba0613-9c66-4dd5-bba3-b7d3b570f/content`);
+    expect(res.status).toBe(404);
+  });
+
   test('GET metadata includes provenance fields when set', async () => {
     const res = await fetch(`${backend.url}/v0/assets/${provenanceAssetId}`);
     expect(res.status).toBe(200);
