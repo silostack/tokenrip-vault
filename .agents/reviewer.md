@@ -1,5 +1,18 @@
 # Reviewer Instructions — Tokenrip
 
+## Identifying PRs
+
+**GitHub repo slug: `tokenrip/tokenrip`**
+
+Run PR queries from within the repo directory so `gh` infers the remote, or pass the slug explicitly:
+
+```bash
+cd /home/dbot/projects/tokenrip-work && gh pr list --state open --json number,title,headRefName,labels
+# or: gh pr list --repo tokenrip/tokenrip --state open --json number,title,headRefName,labels
+```
+
+**Branch prefix: `developer/implement-`** — the developer agent creates branches named `developer/implement-<slug>`. Filter for `headRefName` starting with `developer/implement-`. Do not use `tokenrip-developer/` — that prefix is incorrect.
+
 ## Build Before Testing
 
 Always rebuild the backend before running tests — tests import compiled `dist/`:
@@ -18,7 +31,7 @@ bun test
 bun test --verbose
 ```
 
-102 tests across 13 files, ~3 seconds total. Tests boot a real NestJS backend against isolated PostgreSQL databases. PostgreSQL must be running locally with peer/trust auth.
+102 tests across 13 files, ~3 seconds. Tests boot a real NestJS backend against isolated PostgreSQL databases. PostgreSQL must be running locally with peer/trust auth.
 
 ## Test Framework
 
@@ -27,25 +40,11 @@ bun test --verbose
 - **Helpers:** `tests/setup/` — database, backend, API key provisioning
 - **Pattern:** `beforeAll` creates DB + starts backend + creates API key; `afterAll` stops backend + drops DB
 
-New test files go in `tests/integration/`. Follow the existing `beforeAll`/`afterAll` lifecycle pattern. See `docs/operations/testing.md` for the full guide.
+New test files go in `tests/integration/`. See `docs/operations/testing.md` for the full guide.
 
 ## Review Focus Areas
 
-- **Agent-first**: API responses and pages must be fully accessible without JavaScript. Server-rendered HTML, not client-side-only fetches.
-- **Auth boundaries**: check that new endpoints enforce API key authentication; unauthenticated access should return 401, wrong-key access should return 403
-- **Isolation**: new tests must use isolated databases (no shared state between test files)
-- **Backend rebuild**: if the change touches backend source, verify the test suite passes after `cd apps/backend && bun run build`
+- **Agent-first**: API responses and pages must be fully accessible without JavaScript
+- **Auth boundaries**: new endpoints must enforce API key auth (401 unauthenticated, 403 wrong key)
+- **Isolation**: new tests must use isolated databases per test file
 - **Type safety**: TypeScript strict mode, no `any`, Zod for runtime validation
-
-## Identifying PRs
-
-**GitHub repo slug: `tokenrip/tokenrip`**
-
-Run PR queries from within the repo directory so `gh` can infer the remote, or pass the slug explicitly:
-
-```bash
-cd /home/dbot/projects/tokenrip-work && gh pr list --state open --json number,title,headRefName,labels
-# or: gh pr list --repo tokenrip/tokenrip --state open --json number,title,headRefName,labels
-```
-
-**Branch prefix: `developer/implement-`** — the developer agent creates branches named `developer/implement-<slug>`, not `tokenrip-developer/implement-<slug>`. Filter for `headRefName` starting with `developer/implement-`.
