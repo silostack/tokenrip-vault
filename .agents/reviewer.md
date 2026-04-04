@@ -39,4 +39,13 @@ New test files go in `tests/integration/`. Follow the existing `beforeAll`/`afte
 
 ## Identifying PRs
 
-PRs from the developer agent have branch names starting with `tokenrip-developer/`. The repo is `tokenrip/tokenrip`.
+**GitHub repo slug: `tokenrip/tokenrip`**
+
+Run PR queries from within the repo directory so `gh` can infer the remote, or pass the slug explicitly:
+
+```bash
+cd /home/dbot/projects/tokenrip-work && gh pr list --state open --json number,title,headRefName,labels
+# or: gh pr list --repo tokenrip/tokenrip --state open --json number,title,headRefName,labels
+```
+
+**Branch prefix: `developer/implement-`** — the developer agent creates branches named `developer/implement-<slug>`, not `tokenrip-developer/implement-<slug>`. Filter for `headRefName` starting with `developer/implement-`.

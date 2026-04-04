@@ -67,13 +67,8 @@ tasks/plans/done/      ← deployer moves plan here after deploy
 - TypeScript throughout, strict mode
 - Follow existing patterns in the codebase for file structure, naming, and test style
 
-## PR Workflow
-
-- Feature branch naming: `tokenrip-developer/implement-<slug>`
-- Squash-merge PRs (already enforced on repo)
-- Run tests before opening a PR — if tests fail due to your changes, fix them before opening
-
 ## Notes
 
-- The `"Never commit automatically"` rule in CLAUDE.md applies to interactive Claude Code sessions, not to this Agent OS pipeline. Committing and pushing is expected and required here.
+- Run tests before opening a PR — if tests fail due to your changes, fix them first
+- The `"Never commit automatically"` rule in CLAUDE.md applies to interactive sessions only; committing and pushing is expected here
 - Component-specific guides: `apps/backend/CLAUDE.md`, `apps/frontend/CLAUDE.md`, `packages/cli/CLAUDE.md`
