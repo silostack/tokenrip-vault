@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/postgresql';
+import { Transactional } from '@mikro-orm/core';
 import { createHash, randomBytes } from 'crypto';
 import { ApiKey } from '../../db/models/ApiKey';
 import { Agent } from '../../db/models/Agent';
@@ -14,18 +15,17 @@ export class AuthService {
 
     const record = new ApiKey(keyHash, name, agent);
     this.em.persist(record);
-    await this.em.flush();
 
     return rawKey;
   }
 
+  @Transactional()
   async validateKey(rawKey: string): Promise<{ apiKeyId: string; agentId: string } | null> {
     const keyHash = createHash('sha256').update(rawKey).digest('hex');
     const record = await this.em.findOne(ApiKey, { keyHash }, { populate: ['agent'] });
     if (!record || record.revokedAt) return null;
 
     record.lastUsedAt = new Date();
-    await this.em.flush();
 
     return { apiKeyId: record.id, agentId: record.agent.id };
   }
@@ -38,6 +38,5 @@ export class AuthService {
     for (const key of keys) {
       key.revokedAt = new Date();
     }
-    await this.em.flush();
   }
 }

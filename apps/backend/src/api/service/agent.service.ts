@@ -1,5 +1,6 @@
 import { Injectable, BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/postgresql';
+import { Transactional } from '@mikro-orm/core';
 import { Agent } from '../../db/models/Agent';
 import { AuthService } from '../auth/auth.service';
 import { publicKeyToAgentId } from '../auth/crypto';
@@ -11,6 +12,7 @@ export class AgentService {
     private readonly authService: AuthService,
   ) {}
 
+  @Transactional()
   async register(publicKey: string, alias?: string): Promise<{ agent: Agent; apiKey: string }> {
     if (!/^[0-9a-f]{64}$/i.test(publicKey)) {
       throw new BadRequestException({
@@ -40,7 +42,6 @@ export class AgentService {
     if (alias) agent.alias = alias;
 
     this.em.persist(agent);
-    await this.em.flush();
 
     const apiKey = await this.authService.createKey(agent, 'default');
 
@@ -59,6 +60,7 @@ export class AgentService {
     return agent;
   }
 
+  @Transactional()
   async updateAlias(agentId: string, alias: string | null): Promise<Agent> {
     const agent = await this.findById(agentId);
 
@@ -70,14 +72,13 @@ export class AgentService {
       agent.alias = undefined;
     }
 
-    await this.em.flush();
     return agent;
   }
 
+  @Transactional()
   async updateMetadata(agentId: string, metadata: Record<string, unknown>): Promise<Agent> {
     const agent = await this.findById(agentId);
     agent.metadata = metadata;
-    await this.em.flush();
     return agent;
   }
 

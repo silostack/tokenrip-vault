@@ -152,14 +152,16 @@ export class AssetService {
     countsByType: Record<string, number>;
     bytesByType: Record<string, number>;
   }> {
-    const knex = this.em.getKnex();
-    const rows = await knex('asset_version')
-      .join('asset', 'asset.id', 'asset_version.asset_id')
-      .select('asset.type')
-      .countDistinct('asset.id as count')
-      .sum('asset_version.size_bytes as bytes')
-      .where('asset.owner_id', ownerId)
-      .groupBy('asset.type');
+    const rows = await this.em.getConnection().execute<
+      Array<{ type: string; count: string; bytes: string }>
+    >(
+      `SELECT a.type, COUNT(DISTINCT a.id) AS count, COALESCE(SUM(av.size_bytes), 0) AS bytes
+       FROM asset_version av
+       JOIN asset a ON a.id = av.asset_id
+       WHERE a.owner_id = ?
+       GROUP BY a.type`,
+      [ownerId],
+    );
 
     let assetCount = 0;
     let totalBytes = 0;
@@ -185,14 +187,18 @@ export class AssetService {
     }
 
     // Fetch version storage keys for cleanup
-    const knex = this.em.getKnex();
-    const versionRows = await knex('asset_version')
-      .select('storage_key')
-      .where('asset_id', asset.id);
+    const versionRows = await this.em.getConnection().execute<Array<{ storage_key: string }>>(
+      `SELECT storage_key FROM asset_version WHERE asset_id = ?`,
+      [asset.id],
+    );
     this.logger.debug(`Deleting asset ${asset.id} (publicId=${publicId}) with ${versionRows.length} version(s)`);
 
-    // Delete storage files, then asset (CASCADE removes version rows)
-    await Promise.all(versionRows.map((r: { storage_key: string }) => this.storage.delete(r.storage_key)));
-    await this.em.removeAndFlush(asset);
+    // DB delete first (CASCADE removes version rows), then storage cleanup
+    await this.em.transactional(async () => {
+      this.em.remove(asset);
+    });
+
+    // External I/O outside transaction — orphaned storage files are cleanable
+    await Promise.all(versionRows.map((r) => this.storage.delete(r.storage_key)));
   }
 }
