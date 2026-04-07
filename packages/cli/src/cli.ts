@@ -2,7 +2,6 @@
 import { createRequire } from 'node:module';
 import { Command } from 'commander';
 import { configSetKey, configSetUrl, configShow } from './commands/config.js';
-import { authCreateKey } from './commands/auth.js';
 import { upload } from './commands/upload.js';
 import { publish } from './commands/publish.js';
 import { status } from './commands/status.js';
@@ -158,28 +157,33 @@ Shows total asset count and storage bytes broken down by type.
   .action(wrapCommand(stats));
 
 // ── auth commands ───────────────────────────────────────────────────
-const auth = program.command('auth').description('Manage API keys and authentication');
+const auth = program.command('auth').description('Agent identity and authentication');
+
+auth
+  .command('register')
+  .description('Register a new agent identity')
+  .option('--alias <alias>', 'Set agent alias (must end with .ai)')
+  .option('--force', 'Overwrite existing identity')
+  .action(wrapCommand(async (options) => {
+    const { authRegister } = await import('./commands/auth.js');
+    await authRegister(options);
+  }));
 
 auth
   .command('create-key')
-  .option('--name <name>', 'Friendly name for this key (default: tokenrip-<hostname>)')
-  .option('--no-save', 'Create key but do not auto-save to config')
-  .option('--force', 'Replace existing saved API key')
-  .description('Create a new API key')
-  .addHelpText('after', `
-EXAMPLES:
-  Create a key with a default name (auto-saved):
-    $ tokenrip auth create-key
+  .description('Regenerate API key (revokes current key)')
+  .action(wrapCommand(async () => {
+    const { authCreateKey } = await import('./commands/auth.js');
+    await authCreateKey();
+  }));
 
-  Create a key with a custom name:
-    $ tokenrip auth create-key --name "My Agent"
-
-  Create a key without auto-saving:
-    $ tokenrip auth create-key --no-save
-
-The API key is sensitive — treat it like a password.
-`)
-  .action(wrapCommand(authCreateKey));
+auth
+  .command('whoami')
+  .description('Show current agent identity')
+  .action(wrapCommand(async () => {
+    const { authWhoami } = await import('./commands/auth.js');
+    await authWhoami();
+  }));
 
 // ── config commands ─────────────────────────────────────────────────
 const config = program.command('config').description('Manage CLI configuration');

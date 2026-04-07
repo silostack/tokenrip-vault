@@ -21,6 +21,7 @@ const CONTENT_MIME_TYPES: Record<string, string> = {
   [AssetType.CHART]: 'application/json',
   [AssetType.CODE]: 'text/plain',
   [AssetType.TEXT]: 'text/plain',
+  [AssetType.JSON]: 'application/json',
 };
 
 interface CreateVersionFromFileOpts {
@@ -48,11 +49,11 @@ export class AssetVersionService {
   ) {}
 
   async createVersionFromFile(
-    assetId: string,
-    apiKeyId: string,
+    publicId: string,
+    ownerId: string,
     opts: CreateVersionFromFileOpts,
   ): Promise<AssetVersion> {
-    const asset = await this.findOwnedAsset(assetId, apiKeyId);
+    const asset = await this.findOwnedAsset(publicId, ownerId);
 
     const storageKey = `${v4()}/${opts.file.originalname}`;
     await this.storage.save(storageKey, opts.file.buffer);
@@ -76,11 +77,11 @@ export class AssetVersionService {
   }
 
   async createVersionFromContent(
-    assetId: string,
-    apiKeyId: string,
+    publicId: string,
+    ownerId: string,
     opts: CreateVersionFromContentOpts,
   ): Promise<AssetVersion> {
-    const asset = await this.findOwnedAsset(assetId, apiKeyId);
+    const asset = await this.findOwnedAsset(publicId, ownerId);
 
     const storageKey = `${v4()}/content`;
     const buffer = Buffer.from(opts.content, 'utf-8');
@@ -106,25 +107,29 @@ export class AssetVersionService {
     });
   }
 
-  async listVersions(assetId: string): Promise<AssetVersion[]> {
-    if (!uuidValidate(assetId)) {
+  async listVersions(publicId: string): Promise<AssetVersion[]> {
+    if (!uuidValidate(publicId)) {
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
     }
-    const asset = await this.assetRepo.findOne({ id: assetId });
+    const asset = await this.assetRepo.findOne({ publicId });
     if (!asset) {
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
     }
     return this.versionRepo.find(
-      { asset: { id: assetId } },
+      { asset: { id: asset.id } },
       { orderBy: { version: 'DESC' } },
     );
   }
 
-  async findVersion(assetId: string, versionId: string): Promise<AssetVersion> {
-    if (!uuidValidate(assetId) || !uuidValidate(versionId)) {
+  async findVersion(publicId: string, versionId: string): Promise<AssetVersion> {
+    if (!uuidValidate(publicId) || !uuidValidate(versionId)) {
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Version not found' });
     }
-    const version = await this.versionRepo.findOne({ id: versionId, asset: { id: assetId } });
+    const asset = await this.assetRepo.findOne({ publicId });
+    if (!asset) {
+      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Version not found' });
+    }
+    const version = await this.versionRepo.findOne({ id: versionId, asset: { id: asset.id } });
     if (!version) {
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Version not found' });
     }
@@ -132,17 +137,23 @@ export class AssetVersionService {
   }
 
   async getVersionContent(
-    assetId: string,
+    publicId: string,
     versionId: string,
   ): Promise<{ buffer: Buffer; mimeType: string }> {
-    const version = await this.findVersion(assetId, versionId);
+    const version = await this.findVersion(publicId, versionId);
     const buffer = await this.storage.read(version.storageKey);
     return { buffer, mimeType: version.mimeType || 'application/octet-stream' };
   }
 
-  async deleteVersion(assetId: string, versionId: string, apiKeyId: string): Promise<void> {
-    const asset = await this.findOwnedAsset(assetId, apiKeyId);
-    const version = await this.findVersion(assetId, versionId);
+  async deleteVersion(publicId: string, versionId: string, ownerId: string): Promise<void> {
+    const asset = await this.findOwnedAsset(publicId, ownerId);
+    if (!uuidValidate(versionId)) {
+      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Version not found' });
+    }
+    const version = await this.versionRepo.findOne({ id: versionId, asset: { id: asset.id } });
+    if (!version) {
+      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Version not found' });
+    }
 
     if (asset.versionCount <= 1) {
       throw new BadRequestException({
@@ -159,7 +170,7 @@ export class AssetVersionService {
 
       if (asset.currentVersionId === versionId) {
         const latest = await this.versionRepo.findOne(
-          { asset: { id: assetId }, id: { $ne: versionId } },
+          { asset: { id: asset.id }, id: { $ne: versionId } },
           { orderBy: { version: 'DESC' } },
         );
         if (latest) {
@@ -174,15 +185,15 @@ export class AssetVersionService {
     });
   }
 
-  private async findOwnedAsset(assetId: string, apiKeyId: string): Promise<Asset> {
-    if (!uuidValidate(assetId)) {
+  private async findOwnedAsset(publicId: string, ownerId: string): Promise<Asset> {
+    if (!uuidValidate(publicId)) {
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
     }
-    const asset = await this.assetRepo.findOne({ id: assetId });
+    const asset = await this.assetRepo.findOne({ publicId });
     if (!asset) {
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
     }
-    if (asset.apiKeyId !== apiKeyId) {
+    if (asset.ownerId !== ownerId) {
       throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only modify your own assets' });
     }
     return asset;

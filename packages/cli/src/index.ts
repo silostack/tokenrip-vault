@@ -6,3 +6,5 @@ export { CliError, toCliError } from './errors.js';
 export { outputSuccess, outputError, wrapCommand } from './output.js';
 export { requireAuthClient } from './auth-client.js';
 export type { AuthContext } from './auth-client.js';
+export * from './crypto.js';
+export * from './identity.js';

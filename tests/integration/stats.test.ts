@@ -1,7 +1,7 @@
 import { describe, test, expect, beforeAll, afterAll, spyOn } from 'bun:test';
 import { startBackend, stopBackend, type TestBackend } from '../setup/backend';
 import { generateTestDbName, createTestDatabase, dropTestDatabase } from '../setup/database';
-import { createTestApiKey } from '../setup/api-key';
+import { createTestAgent } from '../setup/agent';
 
 let backend: TestBackend;
 let apiKey: string;
@@ -10,7 +10,8 @@ const dbName = generateTestDbName();
 beforeAll(async () => {
   await createTestDatabase(dbName);
   backend = await startBackend(dbName);
-  apiKey = await createTestApiKey(backend.url);
+  const agent = await createTestAgent(backend.url);
+  apiKey = agent.apiKey;
 });
 
 afterAll(async () => {
@@ -64,7 +65,8 @@ describe('stats endpoint', () => {
   });
 
   test('only counts assets for the calling API key', async () => {
-    const otherKey = await createTestApiKey(backend.url, 'stats-other');
+    const otherAgent = await createTestAgent(backend.url);
+    const otherKey = otherAgent.apiKey;
     const res = await fetch(`${backend.url}/v0/assets/stats`, {
       headers: { Authorization: `Bearer ${otherKey}` },
     });

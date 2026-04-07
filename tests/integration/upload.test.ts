@@ -2,7 +2,7 @@ import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
 import path from 'path';
 import { startBackend, stopBackend, type TestBackend } from '../setup/backend';
 import { generateTestDbName, createTestDatabase, dropTestDatabase } from '../setup/database';
-import { createTestApiKey } from '../setup/api-key';
+import { createTestAgent } from '../setup/agent';
 
 let backend: TestBackend;
 let apiKey: string;
@@ -11,7 +11,8 @@ const dbName = generateTestDbName();
 beforeAll(async () => {
   await createTestDatabase(dbName);
   backend = await startBackend(dbName);
-  apiKey = await createTestApiKey(backend.url);
+  const agent = await createTestAgent(backend.url);
+  apiKey = agent.apiKey;
   process.env.TOKENRIP_API_URL = backend.url;
   process.env.TOKENRIP_API_KEY = apiKey;
 });

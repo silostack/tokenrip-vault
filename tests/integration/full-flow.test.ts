@@ -2,6 +2,7 @@ import { describe, test, expect, beforeAll, afterAll, spyOn } from 'bun:test';
 import path from 'path';
 import { startBackend, stopBackend, type TestBackend } from '../setup/backend';
 import { generateTestDbName, createTestDatabase, dropTestDatabase } from '../setup/database';
+import { createTestAgent } from '../setup/agent';
 
 let backend: TestBackend;
 const dbName = generateTestDbName();
@@ -17,17 +18,12 @@ afterAll(async () => {
 });
 
 describe('full flow', () => {
-  test('create key → upload → fetch → publish → fetch → revoke → fail', async () => {
-    // 1. Create an API key
-    const keyRes = await fetch(`${backend.url}/v0/auth/keys`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'full-flow-test' }),
-    });
-    const keyJson = (await keyRes.json()) as { ok: boolean; data: { apiKey: string } };
-    expect(keyJson.ok).toBe(true);
-    const apiKey = keyJson.data.apiKey;
+  test('register agent → upload → fetch → publish → fetch → revoke → fail', async () => {
+    // 1. Register an agent
+    const agent = await createTestAgent(backend.url);
+    const apiKey = agent.apiKey;
     expect(apiKey).toMatch(/^tr_/);
+    expect(agent.agentId).toMatch(/^trip1/);
 
     // 2. Set env vars for CLI
     process.env.TOKENRIP_API_URL = backend.url;
@@ -84,8 +80,8 @@ describe('full flow', () => {
     const originalMd = await Bun.file('tests/fixtures/sample.md').text();
     expect(mdContent).toBe(originalMd);
 
-    // 8. Revoke the API key
-    const revokeRes = await fetch(`${backend.url}/v0/auth/revoke`, {
+    // 8. Revoke the API key via agent endpoint
+    const revokeRes = await fetch(`${backend.url}/v0/agents/revoke-key`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${apiKey}` },
     });

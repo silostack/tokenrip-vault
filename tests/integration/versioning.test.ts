@@ -1,7 +1,7 @@
 import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
 import { startBackend, stopBackend, type TestBackend } from '../setup/backend';
 import { generateTestDbName, createTestDatabase, dropTestDatabase } from '../setup/database';
-import { createTestApiKey } from '../setup/api-key';
+import { createTestAgent } from '../setup/agent';
 
 let backend: TestBackend;
 let apiKey: string;
@@ -11,8 +11,10 @@ const dbName = generateTestDbName();
 beforeAll(async () => {
   await createTestDatabase(dbName);
   backend = await startBackend(dbName);
-  apiKey = await createTestApiKey(backend.url);
-  otherApiKey = await createTestApiKey(backend.url, 'other-key');
+  const agent1 = await createTestAgent(backend.url);
+  const agent2 = await createTestAgent(backend.url);
+  apiKey = agent1.apiKey;
+  otherApiKey = agent2.apiKey;
 });
 
 afterAll(async () => {
@@ -416,7 +418,8 @@ describe('version 404 handling', () => {
 describe('stats with versioning', () => {
   test('stats sums bytes across all versions', async () => {
     // Create a fresh key so stats are isolated
-    const freshKey = await createTestApiKey(backend.url, 'stats-key');
+    const freshAgent = await createTestAgent(backend.url);
+    const freshKey = freshAgent.apiKey;
     const content1 = 'a'.repeat(100);
     const content2 = 'b'.repeat(200);
 

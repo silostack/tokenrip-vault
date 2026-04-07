@@ -1,6 +1,7 @@
 import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
 import { startBackend, stopBackend, type TestBackend } from '../setup/backend';
 import { generateTestDbName, createTestDatabase, dropTestDatabase } from '../setup/database';
+import { createTestAgent } from '../setup/agent';
 
 let backend: TestBackend;
 const dbName = generateTestDbName();
@@ -16,75 +17,6 @@ afterAll(async () => {
 });
 
 describe('auth', () => {
-  test('POST /v0/auth/keys creates a key with tr_ prefix', async () => {
-    const res = await fetch(`${backend.url}/v0/auth/keys`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'test-key' }),
-    });
-    expect(res.status).toBe(201);
-    const json = (await res.json()) as { ok: boolean; data: { apiKey: string } };
-    expect(json.ok).toBe(true);
-    expect(json.data.apiKey).toMatch(/^tr_/);
-  });
-
-  test('created key authenticates against protected endpoint', async () => {
-    const createRes = await fetch(`${backend.url}/v0/auth/keys`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'auth-test' }),
-    });
-    const { data } = (await createRes.json()) as { data: { apiKey: string } };
-
-    // Use the key to hit a protected endpoint (POST /v0/assets with no body should return 400, not 401)
-    const res = await fetch(`${backend.url}/v0/assets`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${data.apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({}),
-    });
-    // 400 means auth passed but request was invalid — that's what we want
-    expect(res.status).toBe(400);
-  });
-
-  test('POST /v0/auth/revoke revokes a key', async () => {
-    const createRes = await fetch(`${backend.url}/v0/auth/keys`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'revoke-test' }),
-    });
-    const { data } = (await createRes.json()) as { data: { apiKey: string } };
-
-    // Revoke
-    const revokeRes = await fetch(`${backend.url}/v0/auth/revoke`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${data.apiKey}` },
-    });
-    expect(revokeRes.status).toBe(201);
-
-    // Revoked key should now fail
-    const afterRes = await fetch(`${backend.url}/v0/assets`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${data.apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({}),
-    });
-    expect(afterRes.status).toBe(401);
-  });
-
-  test('POST /v0/auth/keys without name returns 400', async () => {
-    const res = await fetch(`${backend.url}/v0/auth/keys`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({}),
-    });
-    expect(res.status).toBe(400);
-  });
-
   test('request without auth header returns 401', async () => {
     const res = await fetch(`${backend.url}/v0/assets`, {
       method: 'POST',
@@ -106,27 +38,60 @@ describe('auth', () => {
     expect(res.status).toBe(401);
   });
 
-  test('multiple independent keys work', async () => {
-    const keys: string[] = [];
+  test('valid API key authenticates against protected endpoint', async () => {
+    const agent = await createTestAgent(backend.url);
+
+    // Use the key to hit a protected endpoint (POST /v0/assets with no body should return 400, not 401)
+    const res = await fetch(`${backend.url}/v0/assets`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${agent.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
+    });
+    // 400 means auth passed but request was invalid
+    expect(res.status).toBe(400);
+  });
+
+  test('revoked key returns 401', async () => {
+    const agent = await createTestAgent(backend.url);
+
+    // Revoke the key
+    const revokeRes = await fetch(`${backend.url}/v0/agents/revoke-key`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${agent.apiKey}` },
+    });
+    expect(revokeRes.status).toBe(201);
+
+    // Old key should now fail
+    const afterRes = await fetch(`${backend.url}/v0/assets`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${agent.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
+    });
+    expect(afterRes.status).toBe(401);
+  });
+
+  test('multiple independent agents work', async () => {
+    const agents = [];
     for (let i = 0; i < 3; i++) {
-      const res = await fetch(`${backend.url}/v0/auth/keys`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: `multi-${i}` }),
-      });
-      const json = (await res.json()) as { data: { apiKey: string } };
-      keys.push(json.data.apiKey);
+      agents.push(await createTestAgent(backend.url));
     }
 
     // All keys are unique
+    const keys = agents.map((a) => a.apiKey);
     expect(new Set(keys).size).toBe(3);
 
     // All keys authenticate independently
-    for (const key of keys) {
+    for (const agent of agents) {
       const res = await fetch(`${backend.url}/v0/assets`, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${key}`,
+          Authorization: `Bearer ${agent.apiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({}),

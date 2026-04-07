@@ -1,7 +1,7 @@
 import { describe, test, expect, beforeAll, afterAll, spyOn } from 'bun:test';
 import { startBackend, stopBackend, type TestBackend } from '../setup/backend';
 import { generateTestDbName, createTestDatabase, dropTestDatabase } from '../setup/database';
-import { createTestApiKey } from '../setup/api-key';
+import { createTestAgent } from '../setup/agent';
 
 let backend: TestBackend;
 let apiKey: string;
@@ -10,7 +10,8 @@ const dbName = generateTestDbName();
 beforeAll(async () => {
   await createTestDatabase(dbName);
   backend = await startBackend(dbName);
-  apiKey = await createTestApiKey(backend.url);
+  const agent = await createTestAgent(backend.url);
+  apiKey = agent.apiKey;
 });
 
 afterAll(async () => {
@@ -95,14 +96,9 @@ describe('status endpoint', () => {
   });
 
   test('only returns assets for the calling API key', async () => {
-    // Create a second API key
-    const keyRes = await fetch(`${backend.url}/v0/auth/keys`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'other-key' }),
-    });
-    const keyJson = (await keyRes.json()) as { ok: boolean; data: { apiKey: string } };
-    const otherKey = keyJson.data.apiKey;
+    // Create a second agent
+    const otherAgent = await createTestAgent(backend.url);
+    const otherKey = otherAgent.apiKey;
 
     // Status with the new key should be empty (no assets created with it)
     const res = await fetch(`${backend.url}/v0/assets/status`, {

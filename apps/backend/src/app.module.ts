@@ -6,7 +6,7 @@ import ormConfig from './db/mikro-orm.config';
 import { ApiModule } from './api/api.module';
 import { StorageModule } from './storage/storage.module';
 import { LoggerModule } from './logger/logger.module';
-import { ApiKeyGuard } from './api/auth/auth.guard';
+import { AuthGuard } from './api/auth/auth.guard';
 
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import { ApiKeyGuard } from './api/auth/auth.guard';
   providers: [
     {
       provide: APP_GUARD,
-      useClass: ApiKeyGuard,
+      useClass: AuthGuard,
     },
   ],
 })

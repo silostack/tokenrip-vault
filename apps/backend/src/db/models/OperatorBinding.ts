@@ -1,33 +1,24 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 import { Agent } from './Agent';
+import { User } from './User';
 
 @Entity()
-export class ApiKey {
+export class OperatorBinding {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4();
-
-  @Property({ unique: true })
-  keyHash!: string;
-
-  @Property()
-  name!: string;
 
   @ManyToOne(() => Agent, { fieldName: 'agent_id' })
   agent!: Agent;
 
+  @ManyToOne(() => User, { fieldName: 'user_id' })
+  user!: User;
+
   @Property()
   createdAt: Date = new Date();
 
-  @Property({ nullable: true })
-  lastUsedAt?: Date;
-
-  @Property({ nullable: true })
-  revokedAt?: Date;
-
-  constructor(keyHash: string, name: string, agent: Agent) {
-    this.keyHash = keyHash;
-    this.name = name;
+  constructor(agent: Agent, user: User) {
     this.agent = agent;
+    this.user = user;
   }
 }

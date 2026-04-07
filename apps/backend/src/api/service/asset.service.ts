@@ -16,14 +16,14 @@ interface ProvenanceFields {
 interface CreateFileDto extends ProvenanceFields {
   file: { buffer: Buffer; originalname: string; mimetype: string };
   title?: string;
-  apiKeyId: string;
+  ownerId: string;
 }
 
 interface CreateContentDto extends ProvenanceFields {
   type: AssetType;
   content: string;
   title?: string;
-  apiKeyId: string;
+  ownerId: string;
 }
 
 const CONTENT_MIME_TYPES: Record<string, string> = {
@@ -58,7 +58,7 @@ export class AssetService {
 
     // 2. Tight transaction for DB write only
     return await this.em.transactional(async () => {
-      const asset = new Asset(AssetType.FILE, storageKey, dto.apiKeyId);
+      const asset = new Asset(AssetType.FILE, storageKey, dto.ownerId);
       asset.mimeType = dto.file.mimetype;
       asset.title = dto.title || dto.file.originalname;
       asset.sizeBytes = dto.file.buffer.byteLength;
@@ -93,7 +93,7 @@ export class AssetService {
 
     // 2. Tight transaction for DB write only
     return await this.em.transactional(async () => {
-      const asset = new Asset(dto.type, storageKey, dto.apiKeyId);
+      const asset = new Asset(dto.type, storageKey, dto.ownerId);
       asset.mimeType = CONTENT_MIME_TYPES[dto.type];
       asset.sizeBytes = Buffer.byteLength(dto.content, 'utf-8');
       asset.title = dto.title;
@@ -115,38 +115,38 @@ export class AssetService {
     });
   }
 
-  async findById(id: string): Promise<Asset> {
-    this.logger.debug(`Looking up asset ${id}`);
-    if (!uuidValidate(id)) {
+  async findByPublicId(publicId: string): Promise<Asset> {
+    this.logger.debug(`Looking up asset by publicId ${publicId}`);
+    if (!uuidValidate(publicId)) {
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
     }
-    const asset = await this.assetRepository.findOne({ id });
+    const asset = await this.assetRepository.findOne({ publicId });
     if (!asset) {
-      this.logger.debug(`Asset ${id} not found`);
+      this.logger.debug(`Asset with publicId ${publicId} not found`);
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
     }
     return asset;
   }
 
-  async findByApiKey(
-    apiKeyId: string,
+  async findByOwner(
+    ownerId: string,
     opts: { since?: Date; limit?: number; type?: string } = {},
   ): Promise<Asset[]> {
-    const where: Record<string, unknown> = { apiKeyId };
+    const where: Record<string, unknown> = { ownerId };
     if (opts.since) where.updatedAt = { $gte: opts.since };
     if (opts.type) where.type = opts.type;
     const limit = Math.min(opts.limit ?? 100, 100);
     return this.assetRepository.find(where, { orderBy: { updatedAt: 'DESC' }, limit });
   }
 
-  async getContent(id: string): Promise<{ buffer: Buffer; mimeType: string }> {
-    const asset = await this.findById(id);
-    this.logger.debug(`Reading content for asset ${id} (key=${asset.storageKey})`);
+  async getContent(publicId: string): Promise<{ buffer: Buffer; mimeType: string }> {
+    const asset = await this.findByPublicId(publicId);
+    this.logger.debug(`Reading content for asset publicId=${publicId} (key=${asset.storageKey})`);
     const buffer = await this.storage.read(asset.storageKey);
     return { buffer, mimeType: asset.mimeType || 'application/octet-stream' };
   }
 
-  async getStats(apiKeyId: string): Promise<{
+  async getStats(ownerId: string): Promise<{
     assetCount: number;
     totalBytes: number;
     countsByType: Record<string, number>;
@@ -158,7 +158,7 @@ export class AssetService {
       .select('asset.type')
       .countDistinct('asset.id as count')
       .sum('asset_version.size_bytes as bytes')
-      .where('asset.api_key_id', apiKeyId)
+      .where('asset.owner_id', ownerId)
       .groupBy('asset.type');
 
     let assetCount = 0;
@@ -178,9 +178,9 @@ export class AssetService {
     return { assetCount, totalBytes, countsByType, bytesByType };
   }
 
-  async deleteAsset(id: string, apiKeyId: string): Promise<void> {
-    const asset = await this.findById(id);
-    if (asset.apiKeyId !== apiKeyId) {
+  async deleteAsset(publicId: string, ownerId: string): Promise<void> {
+    const asset = await this.findByPublicId(publicId);
+    if (asset.ownerId !== ownerId) {
       throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only delete your own assets' });
     }
 
@@ -188,8 +188,8 @@ export class AssetService {
     const knex = this.em.getKnex();
     const versionRows = await knex('asset_version')
       .select('storage_key')
-      .where('asset_id', id);
-    this.logger.debug(`Deleting asset ${id} with ${versionRows.length} version(s)`);
+      .where('asset_id', asset.id);
+    this.logger.debug(`Deleting asset ${asset.id} (publicId=${publicId}) with ${versionRows.length} version(s)`);
 
     // Delete storage files, then asset (CASCADE removes version rows)
     await Promise.all(versionRows.map((r: { storage_key: string }) => this.storage.delete(r.storage_key)));

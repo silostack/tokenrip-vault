@@ -12,10 +12,28 @@ export enum AssetType {
   JSON = 'json',
 }
 
+export enum AssetState {
+  DRAFT = 'draft',
+  PUBLISHED = 'published',
+  ARCHIVED = 'archived',
+}
+
 @Entity({ repository: () => AssetRepository })
 export class Asset {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4();
+
+  @Property({ type: 'uuid', unique: true })
+  publicId: string = v4();
+
+  @Property({ type: 'uuid' })
+  token: string = v4();
+
+  @Property()
+  ownerId: string; // Agent.id (bech32)
+
+  @Enum(() => AssetState)
+  state: AssetState = AssetState.PUBLISHED;
 
   @Property({ nullable: true })
   title?: string;
@@ -34,9 +52,6 @@ export class Asset {
 
   @Property({ type: 'json', nullable: true })
   metadata?: Record<string, unknown>;
-
-  @Property()
-  apiKeyId: string;
 
   @Property({ nullable: true, type: 'uuid' })
   parentAssetId?: string;
@@ -62,9 +77,9 @@ export class Asset {
   @Property({ onUpdate: () => new Date() })
   updatedAt: Date = new Date();
 
-  constructor(type: AssetType, storageKey: string, apiKeyId: string) {
+  constructor(type: AssetType, storageKey: string, ownerId: string) {
     this.type = type;
     this.storageKey = storageKey;
-    this.apiKeyId = apiKeyId;
+    this.ownerId = ownerId;
   }
 }
