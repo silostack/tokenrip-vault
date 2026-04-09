@@ -5,7 +5,7 @@
 Tokenrip uses **integration tests** that boot a real NestJS backend against a real PostgreSQL database and exercise the system through HTTP requests and CLI function calls. The test runner is **Bun's built-in test framework** (`bun test`).
 
 ```
-102 tests across 13 files, ~3 seconds total
+168 tests across 19 files, ~5 seconds total
 ```
 
 ## Prerequisites
@@ -37,7 +37,7 @@ tests/
 │   ├── env.ts                # Preloaded env vars (DB connection defaults)
 │   ├── database.ts           # Create/drop PostgreSQL test databases
 │   ├── backend.ts            # Start/stop NestJS backend programmatically
-│   └── api-key.ts            # Create API keys via the auth endpoint
+│   └── agent.ts              # Register test agents and get API keys
 ├── fixtures/                 # Static test files
 │   ├── sample.md             # Markdown content
 │   ├── sample.html           # HTML content
@@ -48,18 +48,24 @@ tests/
 │   └── sample.pdf            # Minimal valid PDF
 └── integration/              # Test files
     ├── health.test.ts        # Health endpoint smoke test
-    ├── auth.test.ts          # API key lifecycle (create, auth, revoke)
+    ├── auth.test.ts          # Agent registration, API key lifecycle
+    ├── operator.test.ts      # Operator registration & login flows
     ├── upload.test.ts        # File uploads, retrieval, URL in response
-    ├── publish.test.ts       # Content publishing (markdown, HTML, chart, code, text), URL in response
-    ├── asset-read.test.ts # Asset metadata, content endpoints, provenance fields
-    ├── status.test.ts        # GET /v0/assets/status endpoint, CLI status command
-    ├── provenance.test.ts    # Provenance/lineage fields (parentAssetId, creatorContext, inputReferences)
-    ├── delete.test.ts        # Asset deletion, ownership enforcement, CLI delete
+    ├── publish.test.ts       # Content publishing (markdown, HTML, chart, code, text)
+    ├── asset-read.test.ts    # Asset metadata, content endpoints, provenance fields
+    ├── status.test.ts        # GET /v0/assets/mine endpoint, CLI list command
+    ├── provenance.test.ts    # Provenance/lineage fields
+    ├── delete.test.ts        # Asset deletion, ownership enforcement
     ├── size-bytes.test.ts    # sizeBytes tracking for published and uploaded content
     ├── stats.test.ts         # Storage statistics endpoint
-    ├── versioning.test.ts    # Asset versioning lifecycle (31 tests — CRUD, auth, 404s, file uploads, stats)
+    ├── versioning.test.ts    # Asset versioning lifecycle (31 tests)
+    ├── thread.test.ts        # Thread CRUD, messages, participants, resolution
+    ├── message.test.ts       # Top-level message send, thread creation
+    ├── msg-cli.test.ts       # CLI msg send/list commands
+    ├── inbox.test.ts         # Inbox polling, thread/asset activity aggregation
+    ├── alias-resolution.test.ts # Alias resolution in message/thread creation
     ├── config.test.ts        # CLI config functions and env var precedence
-    └── full-flow.test.ts     # End-to-end: key → upload → publish → revoke
+    └── full-flow.test.ts     # End-to-end: register → upload → publish → message
 ```
 
 Supporting files outside `tests/`:
@@ -98,7 +104,7 @@ process.env.DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || '';
 process.env.NODE_ENV = 'test';
 ```
 
-Uses the OS username (`process.env.USER`) for PostgreSQL auth, matching macOS local Postgres defaults. Override any of these with environment variables to point at a different database server.
+Uses the OS username (`process.env.USER`) for PostgreSQL auth, matching macOS local Postgres defaults.
 
 ### 3. Database Per Test File (`tests/setup/database.ts`)
 
@@ -107,7 +113,6 @@ Each test file gets its own PostgreSQL database with a random name:
 ```
 tokenrip_test_a3f8c912
 tokenrip_test_7b2e4d01
-...
 ```
 
 Databases are created/dropped via `createdb`/`dropdb` CLI commands (spawned with `Bun.spawn`). The `--force` flag on `dropdb` terminates any lingering connections.
@@ -119,12 +124,10 @@ Databases are created/dropped via `createdb`/`dropdb` CLI commands (spawned with
 A CommonJS module in the backend directory that creates a NestJS app:
 
 1. **Loads `reflect-metadata`** — required by NestJS decorators
-2. **Imports the compiled `AppModule`** from `dist/app.module` (not the TypeScript source — see [Bun Compatibility](#bun-compatibility-notes))
+2. **Imports the compiled `AppModule`** from `dist/app.module` (not TypeScript source)
 3. **Creates the NestJS app** with logging disabled
 4. **Listens on port 0** — OS assigns a random free port
 5. **Creates the database schema** — `orm.getSchemaGenerator().dropSchema()` then `.createSchema()` generates all tables from MikroORM entity metadata
-
-This file lives in `apps/backend/` so that `require('@nestjs/core')` and `require('@mikro-orm/core')` resolve from the backend's dependency tree.
 
 ### 5. Backend Lifecycle (`tests/setup/backend.ts`)
 
@@ -138,16 +141,16 @@ This file lives in `apps/backend/` so that `require('@nestjs/core')` and `requir
 2. Closes the HTTP server
 3. Closes the MikroORM connection pool
 
-### 6. API Key Provisioning (`tests/setup/api-key.ts`)
+### 6. Agent Provisioning (`tests/setup/agent.ts`)
 
-Tests that need authenticated CLI access call `createTestApiKey(baseUrl)`:
+Tests that need authenticated access register a test agent:
 
 ```typescript
-const apiKey = await createTestApiKey(backend.url);
+const { agentId, apiKey } = await registerTestAgent(backend.url);
 process.env.TOKENRIP_API_KEY = apiKey;
 ```
 
-This hits `POST /v0/auth/keys` (a public endpoint) to create a real API key, then injects it as an env var so CLI functions pick it up.
+This generates an Ed25519 keypair, registers via `POST /v0/agents`, and returns the agent ID + API key.
 
 ### 7. Test File Lifecycle
 
@@ -159,20 +162,21 @@ let apiKey: string;
 const dbName = generateTestDbName();
 
 beforeAll(async () => {
-  await createTestDatabase(dbName);          // createdb tokenrip_test_xxxx
-  backend = await startBackend(dbName);      // Boot NestJS on random port
-  apiKey = await createTestApiKey(backend.url); // Get a tr_... API key
+  await createTestDatabase(dbName);
+  backend = await startBackend(dbName);
+  const agent = await registerTestAgent(backend.url);
+  apiKey = agent.apiKey;
   process.env.TOKENRIP_API_URL = backend.url;
   process.env.TOKENRIP_API_KEY = apiKey;
 });
 
 afterAll(async () => {
-  await stopBackend(backend);                // Close server + ORM
-  await dropTestDatabase(dbName);            // dropdb --force tokenrip_test_xxxx
+  await stopBackend(backend);
+  await dropTestDatabase(dbName);
 });
 ```
 
-The `config.test.ts` file is an exception — it doesn't start a backend since it only tests pure config functions and env var precedence.
+The `config.test.ts` file is an exception — it doesn't start a backend since it only tests pure config functions.
 
 ## Test Files
 
@@ -180,157 +184,123 @@ The `config.test.ts` file is an exception — it doesn't start a backend since i
 
 Smoke test that the backend booted correctly.
 
-- `GET /v0/health` returns `{ ok: true }` with status 200
+### `auth.test.ts`
 
-### `auth.test.ts` (7 tests)
-
-API key lifecycle via direct `fetch` calls (the CLI doesn't expose auth commands).
-
-- Create key returns `tr_` prefixed key
+Agent registration and API key lifecycle:
+- Register agent returns `trip1` prefixed agent ID and `tr_` API key
 - Created key authenticates against protected endpoints
-- Revoke key, then verify 401 on subsequent requests
-- Missing `name` field returns 400
-- Missing auth header returns 401
-- Invalid key returns 401
-- Multiple independent keys work simultaneously
+- Key rotation (revoke + regenerate)
+- Alias validation (`.ai` suffix required, uniqueness)
+- Missing/invalid auth returns 401
 
-### `upload.test.ts` (7 tests)
+### `operator.test.ts`
 
-File upload via `fetch` with native `FormData`, plus CLI error path tests.
+Operator registration and login:
+- Register with valid operator token creates User + OperatorBinding
+- Operator token is consumed (one-time use)
+- Login with alias + password returns session token
+- Invalid token / wrong password rejected
 
-- Upload PNG — success with asset ID, title defaults to filename, correct MIME type
-- Upload PDF with custom title
-- Uploaded content is byte-for-byte retrievable via content endpoint
-- Response includes `url` field with shareable link
-- CLI `upload()` with non-existent file throws `CliError('FILE_NOT_FOUND')`
-- CLI `upload()` without API key throws `CliError('NO_API_KEY')`
-- Upload with invalid API key returns 401
+### `upload.test.ts`
 
-> **Note:** File uploads use `fetch` with Bun's native `FormData` instead of the CLI's `upload()` function. The `form-data` npm package (used by the CLI) has stream compatibility issues with Bun's runtime. See [Bun Compatibility](#bun-compatibility-notes).
+File upload via `fetch` with native `FormData`:
+- Upload PNG/PDF with correct MIME type detection
+- Content byte-for-byte retrievable
+- Response includes `url` and `token` fields
 
-### `publish.test.ts` (11 tests)
+### `publish.test.ts`
 
-Content publishing via CLI's `publish()` function with `console.log` spy to capture output.
+Content publishing via CLI's `publish()` function:
+- Publish markdown, HTML, chart, code, text content types
+- Published content matches original when retrieved
 
-- Publish markdown, HTML, chart, code, and text content types
-- Custom title is reflected in response
-- Published content matches original file when retrieved
-- Response includes `url` field with shareable link
-- Invalid type throws `CliError('INVALID_TYPE')`
-- Non-existent file throws `CliError('FILE_NOT_FOUND')`
-- Missing API key throws `CliError('NO_API_KEY')`
+### `asset-read.test.ts`
 
-### `asset-read.test.ts` (7 tests)
+Asset retrieval:
+- Metadata returns correct fields (including `public_id`, `state`, `token`)
+- Content streams with correct `Content-Type`
+- Provenance fields included when set
 
-Asset retrieval endpoints via `fetch`. Creates assets in `beforeAll`, then tests reads.
+### `status.test.ts`
 
-- Metadata returns correct fields for uploaded files
-- Metadata returns correct fields for published content
-- Content endpoint streams correct bytes with correct `Content-Type` header
-- Content endpoint returns correct text for published markdown
-- Non-existent UUID returns 404 on metadata endpoint
-- Non-existent UUID returns 404 on content endpoint
-- Metadata includes provenance fields (parentAssetId, creatorContext, inputReferences) when set
+Asset listing:
+- Returns owned assets with metadata
+- `?since=` query param filters by timestamp
+- Agent isolation (only own assets)
 
-### `status.test.ts` (6 tests)
+### `provenance.test.ts`
 
-Status endpoint and CLI command via `fetch` and CLI function import.
+Provenance/lineage fields — stores and returns `parentAssetId`, `creatorContext`, `inputReferences`.
 
-- Returns empty array when no assets exist
-- Returns created assets with correct fields (id, title, type, mimeType, createdAt, updatedAt)
-- Requires authentication (401 without Bearer header)
-- `?since=` query param filters by updatedAt
-- Only returns assets for the calling API key (isolation between keys)
-- CLI `status()` outputs JSON array
+### `delete.test.ts`
 
-### `provenance.test.ts` (3 tests)
+Asset deletion — 204 on success, ownership enforcement (403), storage cleanup.
 
-Provenance/lineage field persistence via `fetch`.
-
-- Publish with provenance fields (parentAssetId, creatorContext, inputReferences) stores and returns them
-- Upload with provenance fields stores and returns them
-- Provenance fields are optional — null when not provided
-
-### `delete.test.ts` (6 tests)
-
-Asset deletion via `fetch` and CLI function.
-
-- Delete returns 204 and asset becomes 404
-- Non-existent asset returns 404
-- Cannot delete another key's asset (403)
-- Asset content removed from storage after delete
-- Deleted asset disappears from status
-- Requires authentication (401)
-
-### `size-bytes.test.ts` (2 tests)
+### `size-bytes.test.ts`
 
 File size tracking for published and uploaded content.
 
-- Published content `sizeBytes` matches UTF-8 byte length
-- Uploaded file `sizeBytes` matches file buffer length
+### `stats.test.ts`
 
-### `stats.test.ts` (4 tests)
-
-Storage statistics aggregation.
-
-- Returns correct asset count and total bytes
-- Breaks down counts and bytes by type
-- Key isolation (only own assets)
-- Empty stats for key with no assets
+Storage statistics aggregation — counts, bytes, breakdowns by type.
 
 ### `versioning.test.ts` (31 tests)
 
-Asset versioning lifecycle — the largest test file. Covers 7 describe blocks:
+Largest test file. Covers: core versioning, content preservation, file upload versioning, version deletion, auth & ownership, 404 handling, stats with versions.
 
-**Core versioning (8):** New asset has versionCount=1, publishing increments count, list versions in desc order, get specific version content, latest content matches newest version, version metadata fields, status includes versionCount.
+### `thread.test.ts`
 
-**Content preservation (4):** v1 accessible after adding newer versions, correct Content-Type header per version, null label when omitted, creatorContext tracked per version.
+Thread CRUD:
+- Create thread with participants and initial message
+- Thread metadata includes participants with agent info
+- Set resolution (immutable — rejects double-set)
+- Post messages with atomic sequence assignment
+- Cursor pagination via `since_sequence`
+- Participant access control
+- Add participant (any participant can invite)
 
-**File upload versioning (2):** File upload as a new version, sizeBytes tracked per file version.
+### `message.test.ts`
 
-**Version deletion (4):** Deleting version updates latest pointer, cannot delete last version (400 LAST_VERSION), deleting middle version preserves others, deleting entire asset removes all versions.
+Top-level message send:
+- `POST /v0/messages` creates thread + participants + message
+- `to` field accepts agent IDs
+- Intent, type, data fields stored correctly
 
-**Auth & ownership (5):** Cannot create version on another key's asset (403), cannot delete version on another key's asset (403), auth required to create version (401), auth required to delete version (401), version list and content are publicly accessible.
+### `msg-cli.test.ts`
 
-**404 handling (5):** Non-existent asset → 404 for list, metadata, content, create, and delete.
+CLI messaging commands:
+- `msg send --to` creates thread and message
+- `msg send --thread` replies to existing thread
+- `msg list --thread` returns paginated messages
 
-**Stats with versions (2):** Stats sum bytes across all versions, sizeBytes correct per individual version.
+### `inbox.test.ts`
 
-**Invalid requests (2):** Missing body → 400, content without type → 400.
+Inbox polling:
+- Returns threads with new messages since `since`
+- Returns assets with new versions
+- `new_message_count`, `last_intent`, `last_body_preview` populated
+- Refs included for threads
+- `types` filter works
+
+### `alias-resolution.test.ts`
+
+Alias resolution in message/thread creation:
+- Agent aliases resolved in `POST /v0/messages` `to` field
+- Agent aliases resolved in `POST /v0/threads` participants
 
 ### `config.test.ts` (8 tests)
 
-CLI config utility functions — no backend needed.
+CLI config functions — `loadConfig`, `saveConfig`, `getApiUrl`, `getApiKey`, env var precedence.
 
-- `getApiUrl()` returns env var when set
-- `getApiUrl()` returns config value over default
-- `getApiUrl()` returns `http://localhost:3000` as fallback default
-- `getApiKey()` returns env var when set
-- `getApiKey()` returns config value over env var
-- `getApiKey()` returns undefined when nothing set
-- `saveConfig()` + `loadConfig()` roundtrip preserves all fields
-- `loadConfig()` returns defaults shape when config exists
+### `full-flow.test.ts`
 
-> **Note:** The roundtrip test modifies the real `~/.config/tokenrip/config.json` but restores the original in a `finally` block.
-
-### `full-flow.test.ts` (1 test)
-
-End-to-end integration test covering the complete user journey:
-
-1. Create an API key
-2. Upload a file (via `fetch`)
-3. Fetch metadata — verify title, type, MIME type
-4. Fetch content — verify binary match with original
-5. Publish markdown (via CLI `publish()`)
-6. Fetch published content — verify text match
-7. Revoke the API key
-8. Attempt upload with revoked key — verify 401
+End-to-end: register agent → upload file → publish content → send message → verify.
 
 ## Bun Compatibility Notes
 
 ### MikroORM Decorators
 
-Bun's transpiler doesn't fully support TypeScript's `emitDecoratorMetadata`, which MikroORM's entity decorators (`@Entity`, `@PrimaryKey`, `@Property`) require. Tests import the **compiled `dist/`** directory (built by SWC via `nest build`) instead of the TypeScript source.
+Bun's transpiler doesn't fully support TypeScript's `emitDecoratorMetadata`, which MikroORM's entity decorators require. Tests import the **compiled `dist/`** directory instead of TypeScript source.
 
 **Consequence:** After changing backend source code, you must rebuild before running tests:
 
@@ -340,13 +310,11 @@ cd apps/backend && bun run build
 
 ### `form-data` npm Package
 
-The `form-data` npm package (used by the CLI's `upload()` function) uses Node.js `fs.createReadStream()` which has stream compatibility issues in Bun. File upload tests use Bun's native `FormData` + `Bun.file()` with `fetch` instead.
-
-The CLI's `publish()` function works fine in Bun because it sends JSON via `axios.post()` (no streams involved).
+The `form-data` npm package uses Node.js `fs.createReadStream()` which has stream compatibility issues in Bun. File upload tests use Bun's native `FormData` + `Bun.file()` with `fetch` instead.
 
 ### NestJS Shutdown
 
-`app.close()` in NestJS can hang in Bun's event loop due to differences in how Bun handles the underlying connection pool teardown. `stopBackend()` works around this by directly closing the HTTP server and ORM connection pool rather than relying on NestJS's shutdown sequence.
+`app.close()` in NestJS can hang in Bun's event loop. `stopBackend()` works around this by directly closing the HTTP server and ORM connection pool rather than relying on NestJS's shutdown sequence.
 
 ## Adding New Tests
 
@@ -368,12 +336,12 @@ consoleSpy.mockRestore();
 ## Troubleshooting
 
 **`createdb failed: role "postgres" does not exist`**
-The `DATABASE_USER` env var isn't set correctly. Ensure your local Postgres accepts connections with your OS username (`whoami`), or set `DATABASE_USER` explicitly before running tests.
+The `DATABASE_USER` env var isn't set correctly. Ensure your local Postgres accepts connections with your OS username (`whoami`), or set `DATABASE_USER` explicitly.
 
 **`Cannot find module '@nestjs/core'`**
-NestJS packages resolve from the backend's dependency tree. Ensure `test-bootstrap.js` lives in `apps/backend/` and imports are resolved from there.
+NestJS packages resolve from the backend's dependency tree. Ensure `test-bootstrap.js` lives in `apps/backend/`.
 
-**`relation "api_key" already exists`**
+**`relation "agent" already exists`**
 A previous test run left a database behind. Clean up with:
 ```bash
 psql -lqt | grep tokenrip_test | awk '{print $1}' | xargs -I{} dropdb --force {}
@@ -383,4 +351,4 @@ psql -lqt | grep tokenrip_test | awk '{print $1}' | xargs -I{} dropdb --force {}
 Rebuild the backend: `cd apps/backend && bun run build`
 
 **CLI `upload()` hangs or times out**
-Known Bun compatibility issue with the `form-data` npm package. Use `fetch` with native `FormData` for upload tests instead.
+Known Bun compatibility issue with `form-data`. Use `fetch` with native `FormData` for upload tests.

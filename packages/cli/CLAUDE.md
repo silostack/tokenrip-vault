@@ -32,6 +32,7 @@ The CLI entry (`src/cli.ts`) is ESM-only with a `#!/usr/bin/env node` shebang.
   - `delete-version.ts` — `tokenrip asset delete-version`
   - `status.ts` — `tokenrip asset list`
   - `stats.ts` — `tokenrip asset stats`
+  - `share.ts` — `tokenrip asset share` (generate signed capability token + shareable URL)
   - `auth.ts` — `tokenrip auth create-key`
   - `config.ts` — `tokenrip config set-key`, `tokenrip config set-url`, `tokenrip config show`
 

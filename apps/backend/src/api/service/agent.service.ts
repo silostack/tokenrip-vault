@@ -1,19 +1,23 @@
 import { Injectable, BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { Transactional } from '@mikro-orm/core';
+import { InjectRepository } from '@mikro-orm/nestjs';
+import { randomBytes } from 'crypto';
 import { Agent } from '../../db/models/Agent';
+import { AgentRepository } from '../../db/models';
 import { AuthService } from '../auth/auth.service';
-import { publicKeyToAgentId } from '../auth/crypto';
+import { publicKeyToAgentId, sha256 } from '../auth/crypto';
 
 @Injectable()
 export class AgentService {
   constructor(
     private readonly em: EntityManager,
+    @InjectRepository(Agent) private readonly agentRepo: AgentRepository,
     private readonly authService: AuthService,
   ) {}
 
   @Transactional()
-  async register(publicKey: string, alias?: string): Promise<{ agent: Agent; apiKey: string }> {
+  async register(publicKey: string, alias?: string): Promise<{ agent: Agent; apiKey: string; operatorRegistrationUrl: string }> {
     if (!/^[0-9a-f]{64}$/i.test(publicKey)) {
       throw new BadRequestException({
         ok: false,
@@ -24,7 +28,7 @@ export class AgentService {
 
     const agentId = publicKeyToAgentId(publicKey.toLowerCase());
 
-    const existing = await this.em.findOne(Agent, { id: agentId });
+    const existing = await this.agentRepo.findOne({ id: agentId });
     if (existing) {
       throw new ConflictException({
         ok: false,
@@ -41,15 +45,21 @@ export class AgentService {
     const agent = new Agent(agentId, publicKey.toLowerCase());
     if (alias) agent.alias = alias;
 
+    const operatorToken = `ot_${randomBytes(32).toString('hex')}`;
+    agent.operatorTokenHash = sha256(operatorToken);
+
     this.em.persist(agent);
 
     const apiKey = await this.authService.createKey(agent, 'default');
 
-    return { agent, apiKey };
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3333';
+    const operatorRegistrationUrl = `${frontendUrl}/operators/register?token=${operatorToken}`;
+
+    return { agent, apiKey, operatorRegistrationUrl };
   }
 
   async findById(id: string): Promise<Agent> {
-    const agent = await this.em.findOne(Agent, { id });
+    const agent = await this.agentRepo.findOne({ id });
     if (!agent) {
       throw new NotFoundException({
         ok: false,
@@ -58,6 +68,23 @@ export class AgentService {
       });
     }
     return agent;
+  }
+
+  async findByAlias(alias: string): Promise<Agent | null> {
+    return this.agentRepo.findOne({ alias });
+  }
+
+  async resolveByIdOrAlias(target: string): Promise<string> {
+    if (target.startsWith('trip1')) return target;
+    const agent = await this.findByAlias(target);
+    if (!agent) {
+      throw new NotFoundException({
+        ok: false,
+        error: 'AGENT_NOT_FOUND',
+        message: `Agent not found: ${target}`,
+      });
+    }
+    return agent.id;
   }
 
   @Transactional()
@@ -115,7 +142,7 @@ export class AgentService {
   }
 
   private async checkAliasUnique(alias: string, excludeAgentId?: string): Promise<void> {
-    const existing = await this.em.findOne(Agent, { alias });
+    const existing = await this.agentRepo.findOne({ alias });
     if (existing && existing.id !== excludeAgentId) {
       throw new ConflictException({
         ok: false,

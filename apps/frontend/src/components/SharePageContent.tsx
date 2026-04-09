@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 import { useAtomValue, useSetAtom } from 'jotai'
 import {
   assetAtom,
@@ -11,6 +11,8 @@ import { useAssetActions } from '@/_jotai/asset/asset.actions'
 import { AssetViewer } from './AssetViewer'
 import { AssetToolbar } from './AssetToolbar'
 import { VersionDropdown } from './VersionDropdown'
+import { CommentPanel } from './CommentPanel'
+import { fetchAssetMessages } from '@/lib/thread'
 import type { AssetMetadata } from '@/lib/api'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
@@ -75,6 +77,23 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent }: 
     }
   }, [uuid, versionId])
 
+  const [panelOpen, setPanelOpen] = useState(false)
+  const [commentCount, setCommentCount] = useState<number | undefined>(undefined)
+
+  const cap = useMemo(
+    () => (typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('cap') : null),
+    [],
+  )
+
+  useEffect(() => {
+    if (!cap || !mounted) return
+    fetchAssetMessages(uuid, cap)
+      .then((result) => setCommentCount(result.messages.length))
+      .catch(() => {})
+  }, [uuid, cap, mounted])
+
+  const togglePanel = useCallback(() => setPanelOpen((prev) => !prev), [])
+
   const asset = ssrAsset || jotaiAsset
 
   // During SSR and initial hydration: render raw content directly
@@ -107,7 +126,7 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent }: 
   const isOlderVersion = activeVersionId != null && activeVersionId !== asset.currentVersionId
 
   return (
-    <div className="mx-auto max-w-5xl pb-20 sm:pb-16">
+    <div className={`mx-auto pb-20 sm:pb-16 transition-all duration-200 ${panelOpen ? 'md:mr-[380px] md:max-w-[calc(100vw-380px-2rem)]' : 'max-w-5xl'}`}>
       {(asset.title || showVersions) && (
         <div className="border-b border-foreground/10 px-6 py-4">
           <div className="flex items-center gap-3">
@@ -131,7 +150,7 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent }: 
             </p>
           )}
           {isOlderVersion && (
-            <div className="mt-2 rounded bg-amber-500/10 px-3 py-1.5 text-xs text-amber-600 dark:text-amber-400">
+            <div className="mt-2 rounded bg-status-warning/10 px-3 py-1.5 text-xs text-status-warning">
               Viewing an older version.{' '}
               <a href={`/s/${asset.id}`} className="underline">
                 View latest
@@ -141,7 +160,21 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent }: 
         </div>
       )}
       <AssetViewer asset={asset} versionId={versionId} initialContent={ssrTextContent ?? undefined} />
-      <AssetToolbar asset={asset} />
+      <AssetToolbar
+        asset={asset}
+        cap={cap}
+        commentCount={commentCount}
+        commentPanelOpen={panelOpen}
+        onToggleComments={togglePanel}
+      />
+      {cap && (
+        <CommentPanel
+          publicId={uuid}
+          cap={cap}
+          open={panelOpen}
+          onClose={() => setPanelOpen(false)}
+        />
+      )}
     </div>
   )
 }

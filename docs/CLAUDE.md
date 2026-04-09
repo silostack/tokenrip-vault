@@ -8,6 +8,7 @@ Centralized project documentation for Tokenrip. Agent-first, self-indexing via d
 |---|---|---|---|
 | `architecture/` | System design, component relationships, tech decisions | `<slug>.md` | Living |
 | `design/` | Completed feature designs — the *why* behind implemented features | `<slug>.md` | Living |
+| `guides/` | Coding standards, review process, debugging patterns | `<slug>.md` | Living |
 | `api/` | Endpoint docs, request/response formats, auth flows | `<slug>.md` | Living |
 | `operations/` | Deployment, infrastructure, env setup, monitoring | `<slug>.md` | Living |
 

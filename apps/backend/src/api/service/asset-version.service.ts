@@ -48,48 +48,29 @@ export class AssetVersionService {
     @Inject(STORAGE_SERVICE) private readonly storage: StorageService,
   ) {}
 
-  async createVersionFromFile(
-    publicId: string,
-    ownerId: string,
-    opts: CreateVersionFromFileOpts,
+  async createVersionForAsset(
+    asset: Asset,
+    opts: CreateVersionFromFileOpts | CreateVersionFromContentOpts,
   ): Promise<AssetVersion> {
-    const asset = await this.findOwnedAsset(publicId, ownerId);
-
-    const storageKey = `${v4()}/${opts.file.originalname}`;
-    await this.storage.save(storageKey, opts.file.buffer);
-
-    return await this.em.transactional(async () => {
-      const version = new AssetVersion(asset, asset.versionCount + 1, storageKey);
-      version.mimeType = opts.file.mimetype;
-      version.sizeBytes = opts.file.buffer.byteLength;
-      if (opts.label) version.label = opts.label;
-      if (opts.creatorContext) version.creatorContext = opts.creatorContext;
-
-      asset.currentVersionId = version.id;
-      asset.versionCount += 1;
-      asset.storageKey = storageKey;
-      asset.mimeType = opts.file.mimetype;
-      asset.sizeBytes = opts.file.buffer.byteLength;
-
-      this.em.persist(version);
-      return version;
-    });
-  }
-
-  async createVersionFromContent(
-    publicId: string,
-    ownerId: string,
-    opts: CreateVersionFromContentOpts,
-  ): Promise<AssetVersion> {
-    const asset = await this.findOwnedAsset(publicId, ownerId);
-
+    if ('file' in opts) {
+      const storageKey = `${v4()}/${opts.file.originalname}`;
+      return this.persistVersion(asset, storageKey, opts.file.buffer, opts.file.mimetype, opts);
+    }
     const storageKey = `${v4()}/content`;
     const buffer = Buffer.from(opts.content, 'utf-8');
-    await this.storage.save(storageKey, buffer);
-
     const mimeType = CONTENT_MIME_TYPES[opts.type] || 'text/plain';
+    return this.persistVersion(asset, storageKey, buffer, mimeType, opts);
+  }
 
-    return await this.em.transactional(async () => {
+  private async persistVersion(
+    asset: Asset,
+    storageKey: string,
+    buffer: Buffer,
+    mimeType: string,
+    opts: { label?: string; creatorContext?: string },
+  ): Promise<AssetVersion> {
+    await this.storage.save(storageKey, buffer);
+    return this.em.transactional(async () => {
       const version = new AssetVersion(asset, asset.versionCount + 1, storageKey);
       version.mimeType = mimeType;
       version.sizeBytes = buffer.byteLength;

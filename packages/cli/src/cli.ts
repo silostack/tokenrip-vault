@@ -9,7 +9,8 @@ import { deleteAsset } from './commands/delete.js';
 import { update } from './commands/update.js';
 import { deleteVersion } from './commands/delete-version.js';
 import { stats } from './commands/stats.js';
-import { wrapCommand, setForceJson } from './output.js';
+import { share } from './commands/share.js';
+import { wrapCommand, setForceHuman } from './output.js';
 
 const require = createRequire(import.meta.url);
 const { version } = require('../package.json');
@@ -19,9 +20,9 @@ program
   .name('tokenrip')
   .description('Tokenrip — Asset coordination for AI agents')
   .version(version)
-  .option('--json', 'Force JSON output even in interactive terminal')
+  .option('--human', 'Use human-readable output instead of JSON')
   .hook('preAction', () => {
-    if (program.opts().json) setForceJson(true);
+    if (program.opts().human) setForceHuman(true);
   })
   .addHelpText('after', `
 QUICK START:
@@ -146,6 +147,21 @@ CAUTION:
   .action(wrapCommand(deleteVersion));
 
 asset
+  .command('share')
+  .argument('<uuid>', 'Asset public ID to generate a share link for')
+  .option('--comment-only', 'Only allow commenting (no version creation)')
+  .option('--expires <duration>', 'Token expiry: 30m, 1h, 7d, 30d, etc.')
+  .option('--for <agentId>', 'Restrict token to a specific agent (trip1...)')
+  .description('Generate a shareable link with scoped permissions')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip asset share 550e8400-e29b-41d4-a716-446655440000
+  $ tokenrip asset share 550e8400-... --comment-only --expires 7d
+  $ tokenrip asset share 550e8400-... --for trip1x9a2f...
+`)
+  .action(wrapCommand(share));
+
+asset
   .command('stats')
   .description('Show storage usage statistics')
   .addHelpText('after', `
@@ -183,6 +199,138 @@ auth
   .action(wrapCommand(async () => {
     const { authWhoami } = await import('./commands/auth.js');
     await authWhoami();
+  }));
+
+// ── inbox command ──────────────────────────────────────────────────
+program
+  .command('inbox')
+  .description('Poll for new thread messages and asset updates')
+  .option('--since <iso-date>', 'Override stored cursor (ISO 8601, does not update state)')
+  .option('--types <types>', 'Filter: threads, assets, or both (comma-separated)')
+  .option('--limit <n>', 'Max items per type (default: 50, max: 200)')
+  .action(wrapCommand(async (options) => {
+    const { inbox: inboxCmd } = await import('./commands/inbox.js');
+    await inboxCmd(options);
+  }));
+
+// ── msg commands ─────────────────────────────────────────────────────
+const msg = program.command('msg').description('Send and read messages');
+
+msg
+  .command('send')
+  .argument('<body>', 'Message text')
+  .option('--to <recipient>', 'Recipient: agent ID, contact name, or alias')
+  .option('--thread <id>', 'Reply to existing thread')
+  .option('--intent <intent>', 'Message intent: propose, accept, reject, counter, inform, request, confirm')
+  .option('--type <type>', 'Message type: meeting, review, notification, status_update')
+  .option('--data <json>', 'Structured JSON payload')
+  .option('--in-reply-to <id>', 'Message ID being replied to')
+  .description('Send a message to an agent or thread')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip msg send --to alice "Can you generate the Q3 report?"
+  $ tokenrip msg send --to trip1x9a2... "Ready" --intent request
+  $ tokenrip msg send --thread 550e8400-... "Looks good" --intent accept
+`)
+  .action(wrapCommand(async (body, options) => {
+    const { msgSend } = await import('./commands/msg.js');
+    await msgSend(body, options);
+  }));
+
+msg
+  .command('list')
+  .requiredOption('--thread <id>', 'Thread ID to read messages from')
+  .option('--since <sequence>', 'Show messages after this sequence number')
+  .option('--limit <n>', 'Max messages to return (default: 50, max: 200)')
+  .description('List messages in a thread')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip msg list --thread 550e8400-...
+  $ tokenrip msg list --thread 550e8400-... --since 10 --limit 20
+`)
+  .action(wrapCommand(async (options) => {
+    const { msgList } = await import('./commands/msg.js');
+    await msgList(options);
+  }));
+
+// ── thread commands ──────────────────────────────────────────────────
+const thread = program.command('thread').description('Manage threads');
+
+thread
+  .command('create')
+  .option('--participants <agents>', 'Comma-separated agent IDs, contact names, or aliases')
+  .option('--message <text>', 'Initial message body')
+  .description('Create a new thread')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip thread create --participants alice,bob
+  $ tokenrip thread create --participants alice --message "Kickoff"
+`)
+  .action(wrapCommand(async (options) => {
+    const { threadCreate } = await import('./commands/thread.js');
+    await threadCreate(options);
+  }));
+
+thread
+  .command('share')
+  .argument('<uuid>', 'Thread ID to generate a share link for')
+  .option('--expires <duration>', 'Token expiry: 30m, 1h, 7d, 30d, etc.')
+  .option('--for <agentId>', 'Restrict token to a specific agent (trip1...)')
+  .description('Generate a shareable link to view a thread')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip thread share 727fb4f2-29a5-4afc-840e-f606a783fade
+  $ tokenrip thread share 727fb4f2-... --expires 7d
+`)
+  .action(wrapCommand(async (uuid, options) => {
+    const { threadShare } = await import('./commands/thread.js');
+    await threadShare(uuid, options);
+  }));
+
+// ── contacts commands ────────────────────────────────────────────────
+const contacts = program.command('contacts').description('Manage local agent contacts');
+
+contacts
+  .command('add')
+  .argument('<name>', 'Short name for this contact')
+  .argument('<agent-id>', 'Agent ID (starts with trip1)')
+  .option('--alias <alias>', 'Agent alias (e.g. alice.ai)')
+  .option('--notes <text>', 'Notes about this contact')
+  .description('Add or update a contact')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip contacts add alice trip1x9a2f... --alias alice.ai
+  $ tokenrip contacts add bob trip1k7m3d... --notes "Report generator"
+`)
+  .action(wrapCommand(async (name, agentId, options) => {
+    const { contactsAdd } = await import('./commands/contacts.js');
+    await contactsAdd(name, agentId, options);
+  }));
+
+contacts
+  .command('list')
+  .description('List all contacts')
+  .action(wrapCommand(async () => {
+    const { contactsList } = await import('./commands/contacts.js');
+    await contactsList();
+  }));
+
+contacts
+  .command('resolve')
+  .argument('<name>', 'Contact name to look up')
+  .description('Resolve a contact name to an agent ID')
+  .action(wrapCommand(async (name) => {
+    const { contactsResolve } = await import('./commands/contacts.js');
+    await contactsResolve(name);
+  }));
+
+contacts
+  .command('remove')
+  .argument('<name>', 'Contact name to remove')
+  .description('Remove a contact')
+  .action(wrapCommand(async (name) => {
+    const { contactsRemove } = await import('./commands/contacts.js');
+    await contactsRemove(name);
   }));
 
 // ── config commands ─────────────────────────────────────────────────

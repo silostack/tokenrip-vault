@@ -110,7 +110,7 @@ export function JsonNode({
             className="shrink-0 w-[28px] h-[28px] flex items-center justify-center rounded-full hover:bg-foreground/10 mr-2"
           >
             {copied
-              ? <Check size={16} className="text-green-500" />
+              ? <Check size={16} className="text-status-success" />
               : <Copy size={16} className="text-foreground/40" />}
           </button>
         )}
@@ -151,7 +151,7 @@ export function JsonNode({
             className="shrink-0 w-[28px] h-[28px] flex items-center justify-center rounded-full hover:bg-foreground/10 mr-2"
           >
             {copied
-              ? <Check size={16} className="text-green-500" />
+              ? <Check size={16} className="text-status-success" />
               : <Copy size={16} className="text-foreground/40" />}
           </button>
         )}

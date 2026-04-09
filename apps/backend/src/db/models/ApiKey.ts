@@ -1,8 +1,9 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 import { Agent } from './Agent';
+import { ApiKeyRepository } from '../repositories/api-key.repository';
 
-@Entity()
+@Entity({ repository: () => ApiKeyRepository })
 export class ApiKey {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4();

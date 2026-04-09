@@ -21,3 +21,37 @@ export const AuthAgent = createParamDecorator(
     return request.auth?.agent;
   },
 );
+
+
+/**
+ * Extracts the authenticated user from the request.
+ * Use in controllers: @AuthUser() user: { id: string }
+ */
+export const AuthUser = createParamDecorator(
+  (_data: unknown, ctx: ExecutionContext) => {
+    const request = ctx.switchToHttp().getRequest();
+    return request.auth?.user;
+  },
+);
+
+/**
+ * Extracts the verified capability payload from the request.
+ * Use in controllers: @AuthCapability() cap: CapabilityPayload
+ */
+export const AuthCapability = createParamDecorator(
+  (_data: unknown, ctx: ExecutionContext) => {
+    const request = ctx.switchToHttp().getRequest();
+    return request.auth?.capability;
+  },
+);
+
+/**
+ * Extracts the full auth object from the request.
+ * Use in controllers: @ReqAuth() auth: RequestAuth
+ */
+export const ReqAuth = createParamDecorator(
+  (_data: unknown, ctx: ExecutionContext) => {
+    const request = ctx.switchToHttp().getRequest();
+    return request.auth;
+  },
+);

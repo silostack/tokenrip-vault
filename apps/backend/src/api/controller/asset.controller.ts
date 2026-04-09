@@ -11,14 +11,21 @@ import {
   UseInterceptors,
   UploadedFile,
   BadRequestException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { EntityManager } from '@mikro-orm/postgresql';
 import { Response } from 'express';
 import { Public } from '../auth/public.decorator';
-import { Auth, AuthAgent } from '../auth/auth.decorator';
+import { Auth, AuthAgent, ReqAuth } from '../auth/auth.decorator';
+import { RequestAuth } from '../auth/auth.guard';
 import { AssetService } from '../service/asset.service';
 import { AssetVersionService } from '../service/asset-version.service';
+import { ThreadService } from '../service/thread.service';
+import { ParticipantService } from '../service/participant.service';
+import { MessageService } from '../service/message.service';
 import { Asset, AssetType } from '../../db/models/Asset';
+import { parseCapSub } from '../auth/crypto';
 
 const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_BYTES || String(10 * 1024 * 1024), 10); // default 10MB
 const FRONTEND_URL = (process.env.FRONTEND_URL || 'http://localhost:3333').replace(/\/+$/, '');
@@ -28,6 +35,10 @@ export class AssetController {
   constructor(
     private readonly assetService: AssetService,
     private readonly assetVersionService: AssetVersionService,
+    private readonly threadService: ThreadService,
+    private readonly participantService: ParticipantService,
+    private readonly messageService: MessageService,
+    private readonly em: EntityManager,
   ) {}
 
   @Post()
@@ -69,8 +80,52 @@ export class AssetController {
     throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'Provide either a file upload or { type, content } JSON body' });
   }
 
+  private verifyAssetAccess(asset: Asset, auth: RequestAuth, requiredPerm?: string): void {
+    if (auth.capability) {
+      const cap = parseCapSub(auth.capability.sub);
+      if (!cap || cap.type !== 'asset' || cap.id !== asset.publicId) {
+        throw new ForbiddenException({
+          ok: false,
+          error: 'TOKEN_MISMATCH',
+          message: 'Capability token does not match this asset',
+        });
+      }
+      if (auth.capability.iss !== asset.ownerId) {
+        throw new ForbiddenException({
+          ok: false,
+          error: 'INVALID_ISSUER',
+          message: 'Capability token was not issued by the asset owner',
+        });
+      }
+      if (requiredPerm && !auth.capability.perm.includes(requiredPerm)) {
+        throw new ForbiddenException({
+          ok: false,
+          error: 'INSUFFICIENT_PERMISSION',
+          message: `Token does not grant '${requiredPerm}' permission`,
+        });
+      }
+      return;
+    }
+    if (auth.agent) {
+      if (auth.agent.id !== asset.ownerId) {
+        throw new ForbiddenException({
+          ok: false,
+          error: 'ACCESS_DENIED',
+          message: 'Only the asset owner or capability token holders can access this',
+        });
+      }
+      return;
+    }
+    throw new ForbiddenException({
+      ok: false,
+      error: 'ACCESS_DENIED',
+      message: 'Only the asset owner or capability token holders can access this',
+    });
+  }
+
+
   private assetCreatedResponse(asset: Asset) {
-    return { id: asset.publicId, url: `${FRONTEND_URL}/s/${asset.publicId}`, token: asset.token, title: asset.title, type: asset.type, mimeType: asset.mimeType };
+    return { id: asset.publicId, url: `${FRONTEND_URL}/s/${asset.publicId}`, title: asset.title, type: asset.type, mimeType: asset.mimeType };
   }
 
   @Delete(':publicId')
@@ -117,6 +172,87 @@ export class AssetController {
     return { ok: true, data: stats };
   }
 
+  @Auth('agent', 'token')
+  @Post(':publicId/messages')
+  async postAssetMessage(
+    @Param('publicId') publicId: string,
+    @Body() body: { body?: string; intent?: string; type?: string },
+    @ReqAuth() auth: RequestAuth,
+  ) {
+    if (!body?.body) {
+      throw new BadRequestException({
+        ok: false,
+        error: 'MISSING_FIELD',
+        message: 'body is required',
+      });
+    }
+
+    const asset = await this.assetService.findByPublicId(publicId);
+    this.verifyAssetAccess(asset, auth, 'comment');
+    const thread = await this.threadService.findOrCreateAssetThread(asset.publicId, asset.ownerId);
+    const participant = await this.participantService.getOrCreateForAuth(thread, auth);
+
+    const message = await this.messageService.create(thread, participant, body.body, {
+      intent: body.intent,
+      type: body.type,
+    });
+
+    return {
+      ok: true,
+      data: {
+        id: message.id,
+        thread_id: thread.id,
+        sequence: message.sequence,
+        body: message.body,
+        intent: message.intent ?? null,
+        type: message.type ?? null,
+        sender: {
+          agent_id: auth.agent?.id ?? null,
+          user_id: auth.user?.id ?? null,
+        },
+        created_at: message.createdAt,
+      },
+    };
+  }
+
+  @Auth('agent', 'token')
+  @Get(':publicId/messages')
+  async getAssetMessages(
+    @Param('publicId') publicId: string,
+    @Query('since_sequence') sinceSequence: string | undefined,
+    @Query('limit') limit: string | undefined,
+    @ReqAuth() auth: RequestAuth,
+  ) {
+    const asset = await this.assetService.findByPublicId(publicId);
+    this.verifyAssetAccess(asset, auth, 'comment');
+
+    const thread = await this.threadService.findAssetThread(asset.publicId);
+    if (!thread) {
+      return { ok: true, data: [] };
+    }
+
+    const messages = await this.messageService.list(thread.id, {
+      sinceSequence: sinceSequence ? parseInt(sinceSequence, 10) : undefined,
+      limit: limit ? parseInt(limit, 10) : undefined,
+    });
+
+    return {
+      ok: true,
+      data: messages.map((m) => ({
+        id: m.id,
+        sequence: m.sequence,
+        body: m.body,
+        intent: m.intent ?? null,
+        type: m.type ?? null,
+        sender: {
+          agent_id: m.participant?.agent?.id ?? null,
+          user_id: m.participant?.user?.id ?? null,
+        },
+        created_at: m.createdAt,
+      })),
+    };
+  }
+
   @Public()
   @Get(':publicId')
   async getMetadata(@Param('publicId') publicId: string) {
@@ -149,16 +285,19 @@ export class AssetController {
   }
 
   @Post(':publicId/versions')
-  @Auth('agent')
+  @Auth('agent', 'token')
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: MAX_FILE_SIZE } }))
   async createVersion(
     @Param('publicId') publicId: string,
     @UploadedFile() file: Express.Multer.File | undefined,
-    @Body() body?: { type?: string; content?: string; label?: string; creatorContext?: string },
-    @AuthAgent() agent: { id: string },
+    @Body() body: { type?: string; content?: string; label?: string; creatorContext?: string } | undefined,
+    @ReqAuth() auth: RequestAuth,
   ) {
+    const asset = await this.assetService.findByPublicId(publicId);
+    this.verifyAssetAccess(asset, auth, 'version:create');
+
     if (file) {
-      const version = await this.assetVersionService.createVersionFromFile(publicId, agent.id, {
+      const version = await this.assetVersionService.createVersionForAsset(asset, {
         file: { buffer: file.buffer, originalname: file.originalname, mimetype: file.mimetype },
         label: body?.label,
         creatorContext: body?.creatorContext,
@@ -167,7 +306,7 @@ export class AssetController {
     }
 
     if (body?.content && body?.type) {
-      const version = await this.assetVersionService.createVersionFromContent(publicId, agent.id, {
+      const version = await this.assetVersionService.createVersionForAsset(asset, {
         type: body.type,
         content: body.content,
         label: body.label,

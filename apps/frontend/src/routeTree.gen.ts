@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './app/__root'
 import { Route as IndexRouteImport } from './app/index'
+import { Route as ThreadsThreadIdRouteImport } from './app/threads/$threadId'
 import { Route as SUuidRouteImport } from './app/s/$uuid'
 import { Route as SUuidIndexRouteImport } from './app/s/$uuid/index'
 import { Route as SUuidVersionIdRouteImport } from './app/s/$uuid/$versionId'
@@ -17,6 +18,11 @@ import { Route as SUuidVersionIdRouteImport } from './app/s/$uuid/$versionId'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ThreadsThreadIdRoute = ThreadsThreadIdRouteImport.update({
+  id: '/threads/$threadId',
+  path: '/threads/$threadId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SUuidRoute = SUuidRouteImport.update({
@@ -38,11 +44,13 @@ const SUuidVersionIdRoute = SUuidVersionIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/s/$uuid': typeof SUuidRouteWithChildren
+  '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
   '/s/$uuid/': typeof SUuidIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
   '/s/$uuid': typeof SUuidIndexRoute
 }
@@ -50,20 +58,33 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/s/$uuid': typeof SUuidRouteWithChildren
+  '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
   '/s/$uuid/': typeof SUuidIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/s/$uuid' | '/s/$uuid/$versionId' | '/s/$uuid/'
+  fullPaths:
+    | '/'
+    | '/s/$uuid'
+    | '/threads/$threadId'
+    | '/s/$uuid/$versionId'
+    | '/s/$uuid/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/s/$uuid/$versionId' | '/s/$uuid'
-  id: '__root__' | '/' | '/s/$uuid' | '/s/$uuid/$versionId' | '/s/$uuid/'
+  to: '/' | '/threads/$threadId' | '/s/$uuid/$versionId' | '/s/$uuid'
+  id:
+    | '__root__'
+    | '/'
+    | '/s/$uuid'
+    | '/threads/$threadId'
+    | '/s/$uuid/$versionId'
+    | '/s/$uuid/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SUuidRoute: typeof SUuidRouteWithChildren
+  ThreadsThreadIdRoute: typeof ThreadsThreadIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -73,6 +94,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/threads/$threadId': {
+      id: '/threads/$threadId'
+      path: '/threads/$threadId'
+      fullPath: '/threads/$threadId'
+      preLoaderRoute: typeof ThreadsThreadIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/s/$uuid': {
@@ -114,6 +142,7 @@ const SUuidRouteWithChildren = SUuidRoute._addFileChildren(SUuidRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SUuidRoute: SUuidRouteWithChildren,
+  ThreadsThreadIdRoute: ThreadsThreadIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

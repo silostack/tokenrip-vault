@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { Transactional } from '@mikro-orm/core';
-import { createHash, randomBytes } from 'crypto';
+import { randomBytes } from 'crypto';
+import { sha256 } from './crypto';
 import { ApiKey } from '../../db/models/ApiKey';
 import { Agent } from '../../db/models/Agent';
+import { User } from '../../db/models/User';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +13,7 @@ export class AuthService {
 
   async createKey(agent: Agent, name: string): Promise<string> {
     const rawKey = `tr_${randomBytes(32).toString('hex')}`;
-    const keyHash = createHash('sha256').update(rawKey).digest('hex');
+    const keyHash = sha256(rawKey);
 
     const record = new ApiKey(keyHash, name, agent);
     this.em.persist(record);
@@ -21,7 +23,7 @@ export class AuthService {
 
   @Transactional()
   async validateKey(rawKey: string): Promise<{ apiKeyId: string; agentId: string } | null> {
-    const keyHash = createHash('sha256').update(rawKey).digest('hex');
+    const keyHash = sha256(rawKey);
     const record = await this.em.findOne(ApiKey, { keyHash }, { populate: ['agent'] });
     if (!record || record.revokedAt) return null;
 
@@ -39,4 +41,12 @@ export class AuthService {
       key.revokedAt = new Date();
     }
   }
+
+  async validateSessionToken(rawToken: string): Promise<{ userId: string } | null> {
+    const hash = sha256(rawToken);
+    const user = await this.em.findOne(User, { sessionTokenHash: hash });
+    if (!user) return null;
+    return { userId: user.id };
+  }
+
 }

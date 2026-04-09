@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react'
-import { Link as LinkIcon, Check, Copy, Download, Info } from 'lucide-react'
+import { Link as LinkIcon, Check, Copy, Download, Info, MessageCircle } from 'lucide-react'
 import type { AssetMetadata } from '@/lib/api'
 import { getAssetContentUrl } from '@/lib/api'
 import { MetadataSheet } from './MetadataSheet'
@@ -8,9 +8,13 @@ const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json'])
 
 interface AssetToolbarProps {
   asset: AssetMetadata
+  cap?: string | null
+  commentCount?: number
+  commentPanelOpen?: boolean
+  onToggleComments?: () => void
 }
 
-export function AssetToolbar({ asset }: AssetToolbarProps) {
+export function AssetToolbar({ asset, cap, commentCount, commentPanelOpen, onToggleComments }: AssetToolbarProps) {
   const [copied, setCopied] = useState(false)
   const [contentCopied, setContentCopied] = useState(false)
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -81,7 +85,7 @@ export function AssetToolbar({ asset }: AssetToolbarProps) {
             className="flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-full transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-foreground/10 active:scale-95 active:bg-foreground/15"
           >
             {contentCopied ? (
-              <Check size={18} className="text-green-400" />
+              <Check size={18} className="text-status-success" />
             ) : (
               <Copy size={18} className="text-foreground/70" />
             )}
@@ -95,7 +99,7 @@ export function AssetToolbar({ asset }: AssetToolbarProps) {
           className="flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-full transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-foreground/10 active:scale-95 active:bg-foreground/15"
         >
           {copied ? (
-            <Check size={18} className="text-green-400" />
+            <Check size={18} className="text-status-success" />
           ) : (
             <LinkIcon size={18} className="text-foreground/70" />
           )}
@@ -109,6 +113,24 @@ export function AssetToolbar({ asset }: AssetToolbarProps) {
         >
           <Download size={18} className="text-foreground/70" />
         </button>
+
+        {cap && onToggleComments && (
+          <button
+            type="button"
+            onClick={onToggleComments}
+            title="Comments"
+            className={`relative flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-full transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-foreground/10 active:scale-95 active:bg-foreground/15 ${
+              commentPanelOpen ? 'bg-foreground/10' : ''
+            }`}
+          >
+            <MessageCircle size={18} className={commentPanelOpen ? 'text-foreground' : 'text-foreground/70'} />
+            {commentCount != null && commentCount > 0 && !commentPanelOpen && (
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-foreground/80 px-1 text-[10px] font-bold text-background">
+                {commentCount > 99 ? '99+' : commentCount}
+              </span>
+            )}
+          </button>
+        )}
 
         <button
           type="button"

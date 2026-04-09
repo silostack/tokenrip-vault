@@ -36,3 +36,7 @@ export function getApiUrl(config: TokenripConfig): string {
 export function getApiKey(config: TokenripConfig): string | undefined {
   return process.env.TOKENRIP_API_KEY || config.apiKey;
 }
+
+export function getFrontendUrl(): string {
+  return process.env.TOKENRIP_FRONTEND_URL || 'https://tokenrip.com';
+}

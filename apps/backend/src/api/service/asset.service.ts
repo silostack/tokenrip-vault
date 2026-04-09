@@ -152,6 +152,7 @@ export class AssetService {
     countsByType: Record<string, number>;
     bytesByType: Record<string, number>;
   }> {
+    // Raw SQL: MikroORM lacks native support for cross-table aggregation (JOIN + COUNT DISTINCT + SUM + GROUP BY).
     const rows = await this.em.getConnection().execute<
       Array<{ type: string; count: string; bytes: string }>
     >(
@@ -186,12 +187,8 @@ export class AssetService {
       throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only delete your own assets' });
     }
 
-    // Fetch version storage keys for cleanup
-    const versionRows = await this.em.getConnection().execute<Array<{ storage_key: string }>>(
-      `SELECT storage_key FROM asset_version WHERE asset_id = ?`,
-      [asset.id],
-    );
-    this.logger.debug(`Deleting asset ${asset.id} (publicId=${publicId}) with ${versionRows.length} version(s)`);
+    const versions = await this.em.find(AssetVersion, { asset: { id: asset.id } }, { fields: ['storageKey'] });
+    this.logger.debug(`Deleting asset ${asset.id} (publicId=${publicId}) with ${versions.length} version(s)`);
 
     // DB delete first (CASCADE removes version rows), then storage cleanup
     await this.em.transactional(async () => {
@@ -199,6 +196,6 @@ export class AssetService {
     });
 
     // External I/O outside transaction — orphaned storage files are cleanable
-    await Promise.all(versionRows.map((r) => this.storage.delete(r.storage_key)));
+    await Promise.all(versions.map((v) => this.storage.delete(v.storageKey)));
   }
 }

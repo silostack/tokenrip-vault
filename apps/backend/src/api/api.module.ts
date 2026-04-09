@@ -6,19 +6,33 @@ import { ApiKey } from '../db/models/ApiKey';
 import { Agent } from '../db/models/Agent';
 import { User } from '../db/models/User';
 import { OperatorBinding } from '../db/models/OperatorBinding';
+import { Thread } from '../db/models/Thread';
+import { Participant } from '../db/models/Participant';
+import { Message } from '../db/models/Message';
+import { Ref } from '../db/models/Ref';
 import { AssetController } from './controller/asset.controller';
 import { AgentController } from './controller/agent.controller';
+import { OperatorController } from './controller/operator.controller';
+import { ThreadController } from './controller/thread.controller';
+import { MessageController } from './controller/message.controller';
 import { HealthController } from './controller/health.controller';
 import { OpenapiController } from './controller/openapi.controller';
 import { AssetService } from './service/asset.service';
 import { AssetVersionService } from './service/asset-version.service';
 import { AgentService } from './service/agent.service';
+import { UserService } from './service/user.service';
+import { ThreadService } from './service/thread.service';
+import { ParticipantService } from './service/participant.service';
+import { MessageService } from './service/message.service';
+import { RefService } from './service/ref.service';
+import { InboxController } from './controller/inbox.controller';
+import { InboxService } from './service/inbox.service';
 import { AuthService } from './auth/auth.service';
 
 @Module({
-  imports: [MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey, Agent, User, OperatorBinding])],
-  controllers: [AssetController, AgentController, HealthController, OpenapiController],
-  providers: [AssetService, AssetVersionService, AgentService, AuthService],
+  imports: [MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey, Agent, User, OperatorBinding, Thread, Participant, Message, Ref])],
+  controllers: [AssetController, AgentController, OperatorController, ThreadController, MessageController, InboxController, HealthController, OpenapiController],
+  providers: [AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, AuthService],
   exports: [AuthService],
 })
 export class ApiModule {}

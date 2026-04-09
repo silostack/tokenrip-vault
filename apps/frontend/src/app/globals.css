@@ -6,6 +6,21 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface-0: var(--surface-0);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-ghost: var(--text-ghost);
+  --color-signal: var(--signal);
+  --color-signal-muted: var(--signal-muted);
+  --color-signal-strong: var(--signal-strong);
+  --color-status-success: var(--status-success);
+  --color-status-warning: var(--status-warning);
+  --color-status-error: var(--status-error);
+  --color-status-info: var(--status-info);
   --font-sans: "Geist", system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
 }
@@ -13,11 +28,60 @@
 :root {
   --background: #fafafa;
   --foreground: #171717;
+
+  /* Design system tokens — Surfaces (steel neutrals) */
+  --surface-0: #fafafa;
+  --surface-1: #f4f4f5;
+  --surface-2: #e4e4e7;
+  --surface-3: #d4d4d8;
+
+  /* Text */
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --text-tertiary: #a1a1aa;
+  --text-ghost: #d4d4d8;
+
+  /* Signal (cyan accent) */
+  --signal: #22d3ee;
+  --signal-muted: rgba(34, 211, 238, 0.15);
+  --signal-strong: #06b6d4;
+
+  /* Status — darker shades for light backgrounds */
+  --status-success: #16a34a;
+  --status-warning: #d97706;
+  --status-error: #dc2626;
+  --status-info: var(--signal);
+
+  /* Geometry */
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .dark {
   --background: #0a0a0a;
   --foreground: #ededed;
+
+  /* Dark surfaces */
+  --surface-0: #09090b;
+  --surface-1: #111113;
+  --surface-2: #1a1a1f;
+  --surface-3: #27272f;
+
+  /* Dark text */
+  --text-primary: #ededef;
+  --text-secondary: #a1a1a8;
+  --text-tertiary: #63636e;
+  --text-ghost: #3f3f47;
+
+  /* Dark status — brighter shades for dark backgrounds */
+  --status-success: #4ade80;
+  --status-warning: #fbbf24;
+  --status-error: #f87171;
 }
 
 body {
@@ -50,6 +114,29 @@ body {
   60%  { opacity: 0.7; transform: translateX(1px); }
   80%  { opacity: 0.9; transform: translateX(0); }
   100% { opacity: 1; transform: translateX(0); }
+}
+
+/* ========================================
+   Thread Messages
+   ======================================== */
+
+.thread-message {
+  animation: thread-msg-enter 0.3s ease-out both;
+}
+
+@keyframes thread-msg-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.thread-avatar {
+  background: hsl(var(--avatar-hue) 40% 90%);
+  color: hsl(var(--avatar-hue) 50% 32%);
+}
+
+.dark .thread-avatar {
+  background: hsl(var(--avatar-hue) 25% 20%);
+  color: hsl(var(--avatar-hue) 40% 72%);
 }
 
 /* ========================================

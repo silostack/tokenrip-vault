@@ -2,8 +2,9 @@ import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 import { Agent } from './Agent';
 import { User } from './User';
+import { OperatorBindingRepository } from '../repositories/operator-binding.repository';
 
-@Entity()
+@Entity({ repository: () => OperatorBindingRepository })
 export class OperatorBinding {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4();

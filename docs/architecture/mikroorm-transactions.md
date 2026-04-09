@@ -363,41 +363,78 @@ async processAsset(assetId: string): Promise<void> {
 
 ## Repository Boundaries
 
-### Services Must Not Do Direct DB Access
+### Repositories Are the Default Data Access Layer
 
-All database access — including raw SQL — belongs in repository classes. Services orchestrate business logic and delegate data access to repositories. Never use `em.getKnex()` or `em.getConnection().execute()` directly in a service.
+Inject `@InjectRepository(Entity)` and use the repository for all entity CRUD. Every entity in the codebase has a corresponding repository class; use it. Only inject `EntityManager` when repositories can't do the job (see below).
 
 ```typescript
-// ✅ CORRECT - Service delegates to repository
-async getSummary(apiKeyId: string): Promise<SummaryDto> {
-  const counts = await this.assetRepository.getCountsByType(apiKeyId);
-  return { counts };
+// ✅ CORRECT - Inject and use repository
+@Injectable()
+export class AgentService {
+  constructor(
+    @InjectRepository(Agent) private readonly agentRepo: AgentRepository,
+  ) {}
+
+  async findById(id: string): Promise<Agent | null> {
+    return this.agentRepo.findOne({ id });
+  }
+
+  @Transactional()
+  async create(agentId: string, publicKey: string): Promise<Agent> {
+    const agent = new Agent(agentId, publicKey);
+    this.agentRepo.persist(agent);
+    return agent;
+  }
 }
 
-// ❌ INCORRECT - Service does direct DB access
-async getSummary(apiKeyId: string): Promise<SummaryDto> {
-  const knex = this.em.getKnex();
-  const result = await knex.raw('SELECT COUNT(*) FROM asset WHERE ...');
-  return { count: parseInt(result.rows[0].count) };
+// ❌ INCORRECT - Bypassing the repository
+@Injectable()
+export class AgentService {
+  constructor(private readonly em: EntityManager) {}
+
+  async findById(id: string): Promise<Agent | null> {
+    return this.em.findOne(Agent, { id });  // Use agentRepo.findOne({ id }) instead
+  }
 }
 ```
 
-> **Note:** Tokenrip currently uses direct `em` calls in services (no repository classes). As the backend grows, extract data access into dedicated repository classes.
+### When `EntityManager` Is Still Needed
+
+Inject `em` only when repositories can't handle the operation:
+
+| Scenario | Example |
+|---|---|
+| Explicit transaction blocks | `this.em.transactional(async (em) => {...})` |
+| Cross-entity `getReference()` | `this.em.getReference(Agent, agentId)` |
+| Raw SQL inside a forked EM block | `em.getConnection().execute(...)` within `em.transactional()` |
+
+When `em` is needed alongside repositories, inject both. Use the repository for entity queries and persists; use `em` only for the specific operation that requires it.
+
+### Services Must Not Use Raw SQL Directly
+
+Raw SQL belongs in repository methods, not in services. The one exception is raw SQL that must run inside an `em.transactional()` block with a forked EM (e.g. for pessimistic locking + aggregation), where it's acceptable in the service within that block. Never use `em.getKnex()` or call `em.getConnection().execute()` at the top level of a service method.
 
 ### Aggregation Queries in Repositories
 
-MikroORM lacks native aggregation support (SUM, COUNT, GROUP BY). For these queries, use `em.getConnection().execute()` with parameterized raw SQL in repository methods:
+MikroORM lacks native aggregation support (SUM, COUNT, GROUP BY). For these queries, use `em.getConnection().execute()` with parameterized raw SQL in a **repository method**, not in a service:
 
 ```typescript
-// ✅ CORRECT - Parameterized raw SQL via em.getConnection().execute()
-const rows = await this.em.getConnection().execute<Array<{ total: string }>>(
-  `SELECT COUNT(*) as total FROM asset WHERE api_key_id = ?`,
-  [apiKeyId]
-);
+// ✅ CORRECT - Raw SQL in a repository method
+export class AssetRepository extends SqlEntityRepository<Asset> {
+  async getStatsByKey(apiKeyId: string): Promise<{ total: string }[]> {
+    return this.getEntityManager().getConnection().execute<Array<{ total: string }>>(
+      `SELECT COUNT(*) as total FROM asset WHERE api_key_id = ?`,
+      [apiKeyId]
+    );
+  }
+}
 
-// ❌ INCORRECT - em.getKnex() query builder
-const knex = this.em.getKnex();
-const result = await knex('asset').count().where('api_key_id', apiKeyId);
+// ❌ INCORRECT - Raw SQL directly in a service
+async getSummary(apiKeyId: string): Promise<SummaryDto> {
+  const knex = this.em.getKnex();
+  const result = await knex('asset').count().where('api_key_id', apiKeyId);
+  return { count: parseInt(result.rows[0].count) };
+}
 ```
 
 **Why `em.getConnection().execute()` over `em.getKnex()`:** It uses MikroORM's connection pool directly, keeps SQL explicit and reviewable, and avoids mixing two query-building abstractions.
@@ -406,7 +443,11 @@ const result = await knex('asset').count().where('api_key_id', apiKeyId);
 
 ## Rules of Thumb
 
-### 1. Use @Transactional as Your Main Tool
+### 1. Use Repositories for Entity Access
+
+Always inject `@InjectRepository(Entity)` and call `repo.findOne()`, `repo.find()`, `repo.persist()`, etc. Reach for `EntityManager` only when you need `em.transactional()`, `em.getReference()`, or raw SQL inside a transaction block.
+
+### 2. Use @Transactional as Your Main Tool
 
 For most DB-centric methods, `@Transactional()` is the right choice:
 
@@ -417,7 +458,7 @@ async createAsset(...): Promise<Asset> {
 }
 ```
 
-### 2. Use em.transactional for Surgical Transactions
+### 3. Use em.transactional for Surgical Transactions
 
 Inside larger orchestration flows that include external I/O:
 
@@ -433,7 +474,7 @@ async orchestrateFlow(): Promise<void> {
 }
 ```
 
-### 3. Keep Slow I/O Outside Transactions
+### 4. Keep Slow I/O Outside Transactions
 
 ```typescript
 // Do this
@@ -447,12 +488,12 @@ await this.em.transactional(async (em) => {
 });
 ```
 
-### 4. Entities Within, IDs Across
+### 5. Entities Within, IDs Across
 
 - **Within** a single service/transaction: entities are fine
 - **Across** service boundaries: prefer IDs/DTOs
 
-### 5. Identify Transaction Boundary Methods
+### 6. Identify Transaction Boundary Methods
 
 Annotate and keep them small:
 
@@ -485,9 +526,9 @@ async handleAssetCreated(event: AssetCreatedEvent): Promise<void> {
 ```typescript
 @Transactional()
 async handleAssetComplete(assetId: string): Promise<void> {
-  const asset = await this.em.findOne(Asset, { id: assetId });
+  const asset = await this.assetRepo.findOne({ id: assetId });
   asset.metadata = { processed: true };
-  this.em.persist(asset);
+  this.assetRepo.persist(asset);
 
   // Pass ID - other service has its own @Transactional
   // With REQUIRED propagation, shares same transaction
@@ -517,6 +558,21 @@ async processAsset(assetId: string): Promise<void> {
 ---
 
 ## Anti-Patterns
+
+### Bypassing Repositories for Entity CRUD
+
+```typescript
+// Avoid - calling em directly when a repository exists
+@Transactional()
+async updateAlias(agentId: string, alias: string): Promise<Agent> {
+  const agent = await this.em.findOne(Agent, { id: agentId });  // Use agentRepo
+  agent.alias = alias;
+  this.em.persist(agent);  // Use agentRepo.persist(agent)
+  return agent;
+}
+```
+
+Inject the repository and call `repo.findOne()` / `repo.persist()` / `repo.find()` instead.
 
 ### Mixing @Transactional with Inner em.transactional
 
@@ -591,6 +647,7 @@ async processAsset(assetId: string): Promise<void> {
 
 | Concept                 | Key Point                                                           |
 |-------------------------|---------------------------------------------------------------------|
+| **Repositories**        | Default data access — use `@InjectRepository`; `em` only when repos can't |
 | **Request Context**     | One EM per request; injected EM/repos use it automatically          |
 | **Transactional Fork**  | Shares identity map with parent; entities are available             |
 | **Context Propagation** | Repos/EM inside transaction use the transaction's EM                |

@@ -3,11 +3,12 @@ import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from './public.decorator';
 import { AUTH_MODES_KEY } from './auth.decorator';
 import { AuthService } from './auth.service';
+import { parseAndVerifyCapabilityToken, type CapabilityPayload } from './crypto';
 
 export interface RequestAuth {
   agent?: { id: string };
   user?: { id: string };
-  token?: { value: string; scope: 'asset' | 'thread'; entityId: string };
+  capability?: CapabilityPayload;
 }
 
 @Injectable()
@@ -37,7 +38,14 @@ export class AuthGuard implements CanActivate {
         request.auth = auth;
         return true;
       }
-      // Phase 2: add 'user' and 'token' modes here
+      if (mode === 'user' && await this.tryUserAuth(request, auth)) {
+        request.auth = auth;
+        return true;
+      }
+      if (mode === 'token' && await this.tryTokenAuth(request, auth)) {
+        request.auth = auth;
+        return true;
+      }
     }
 
     throw new UnauthorizedException({
@@ -52,10 +60,35 @@ export class AuthGuard implements CanActivate {
     if (!authHeader?.startsWith('Bearer ')) return false;
 
     const rawKey = authHeader.slice(7);
+    if (rawKey.startsWith('ut_')) return false;
+
     const result = await this.authService.validateKey(rawKey);
     if (!result) return false;
 
     auth.agent = { id: result.agentId };
+    return true;
+  }
+
+  private async tryUserAuth(request: any, auth: RequestAuth): Promise<boolean> {
+    const authHeader: string | undefined = request.headers['authorization'];
+    if (!authHeader?.startsWith('Bearer ut_')) return false;
+
+    const rawToken = authHeader.slice(7);
+    const result = await this.authService.validateSessionToken(rawToken);
+    if (!result) return false;
+
+    auth.user = { id: result.userId };
+    return true;
+  }
+
+  private tryTokenAuth(request: any, auth: RequestAuth): boolean {
+    const rawToken = request.query?.cap || request.headers['x-capability'];
+    if (!rawToken) return false;
+
+    const payload = parseAndVerifyCapabilityToken(rawToken);
+    if (!payload) return false;
+
+    auth.capability = payload;
     return true;
   }
 }

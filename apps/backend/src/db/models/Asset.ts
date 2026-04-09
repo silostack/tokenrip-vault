@@ -26,9 +26,6 @@ export class Asset {
   @Property({ type: 'uuid', unique: true })
   publicId: string = v4();
 
-  @Property({ type: 'uuid' })
-  token: string = v4();
-
   @Property()
   ownerId: string; // Agent.id (bech32)
 

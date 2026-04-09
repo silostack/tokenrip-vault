@@ -1,13 +1,14 @@
-import { generateKeypair } from '../../packages/cli/src/crypto';
+import { generateKeypair, createCapabilityToken } from '../../packages/cli/src/crypto';
 
 export interface TestAgent {
   agentId: string;
   apiKey: string;
   publicKeyHex: string;
+  secretKeyHex: string;
 }
 
 export async function createTestAgent(baseUrl: string, alias?: string): Promise<TestAgent> {
-  const { publicKeyHex } = generateKeypair();
+  const { publicKeyHex, secretKeyHex } = generateKeypair();
 
   const body: Record<string, string> = { public_key: publicKeyHex };
   if (alias) body.alias = alias;
@@ -26,5 +27,30 @@ export async function createTestAgent(baseUrl: string, alias?: string): Promise<
     agentId: json.data.agent_id,
     apiKey: json.data.api_key,
     publicKeyHex,
+    secretKeyHex,
   };
+}
+
+export function createCapToken(
+  agent: TestAgent,
+  assetPublicId: string,
+  perm: string[] = ['comment', 'version:create'],
+  opts?: { exp?: number; aud?: string },
+): string {
+  return createCapabilityToken(
+    { sub: `asset:${assetPublicId}`, iss: agent.agentId, perm, exp: opts?.exp, aud: opts?.aud },
+    agent.secretKeyHex,
+  );
+}
+
+export function createThreadCapToken(
+  agent: TestAgent,
+  threadId: string,
+  perm: string[] = ['comment'],
+  opts?: { exp?: number; aud?: string },
+): string {
+  return createCapabilityToken(
+    { sub: `thread:${threadId}`, iss: agent.agentId, perm, exp: opts?.exp, aud: opts?.aud },
+    agent.secretKeyHex,
+  );
 }

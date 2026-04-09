@@ -1,6 +1,7 @@
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { AgentRepository } from '../repositories/agent.repository';
 
-@Entity()
+@Entity({ repository: () => AgentRepository })
 export class Agent {
   @PrimaryKey({ type: 'string' })
   id!: string; // bech32-encoded public key (trip1...)
@@ -13,6 +14,9 @@ export class Agent {
 
   @Property({ type: 'json', nullable: true })
   metadata?: Record<string, unknown>;
+
+  @Property({ nullable: true })
+  operatorTokenHash?: string;
 
   @Property()
   registeredAt: Date = new Date();

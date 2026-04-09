@@ -60,7 +60,7 @@ function InstallCommand() {
         title="Copy install command"
         className="flex h-7 w-7 cursor-pointer items-center justify-center rounded text-foreground/40 transition-colors hover:text-foreground/70"
       >
-        {copied ? <Check size={14} className="text-green-400" /> : <Copy size={14} />}
+        {copied ? <Check size={14} className="text-status-success" /> : <Copy size={14} />}
       </button>
     </div>
   )
@@ -127,10 +127,10 @@ function TerminalDemo() {
         </div>
         <pre className="p-4 font-mono text-xs leading-relaxed text-foreground/60">
           <span className="text-foreground/40">$</span> tokenrip auth create-key{'\n'}
-          <span className="text-green-400">&#10003;</span> API key saved{'\n'}
+          <span className="text-status-success">&#10003;</span> API key saved{'\n'}
           {'\n'}
           <span className="text-foreground/40">$</span> tokenrip asset publish report.html --type html --title &quot;Q1 Report&quot;{'\n'}
-          <span className="text-green-400">&#10003;</span> https://tokenrip.com/s/abc-123{'\n'}
+          <span className="text-status-success">&#10003;</span> https://tokenrip.com/s/abc-123{'\n'}
           {'\n'}
           <span className="text-foreground/30"># share the link — anyone can view it</span>
         </pre>
