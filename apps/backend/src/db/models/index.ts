@@ -15,7 +15,7 @@ export { ApiKey } from './ApiKey';
 export { Agent } from './Agent';
 export { User } from './User';
 export { OperatorBinding } from './OperatorBinding';
-export { Thread } from './Thread';
+export { Thread, ThreadState } from './Thread';
 export { Participant } from './Participant';
 export { Message } from './Message';
 export { Ref } from './Ref';

@@ -132,7 +132,7 @@ export class AssetController {
   @Auth('agent')
   @HttpCode(204)
   async delete(@Param('publicId') publicId: string, @AuthAgent() agent: { id: string }) {
-    await this.assetService.deleteAsset(publicId, agent.id);
+    await this.assetService.destroyAsset(publicId, agent.id);
   }
 
   @Get('status')
@@ -189,7 +189,7 @@ export class AssetController {
 
     const asset = await this.assetService.findByPublicId(publicId);
     this.verifyAssetAccess(asset, auth, 'comment');
-    const thread = await this.threadService.findOrCreateAssetThread(asset.publicId, asset.ownerId);
+    const thread = await this.threadService.findOrCreateAssetThread(asset.publicId, asset.ownerId, asset.ownerId);
     const participant = await this.participantService.getOrCreateForAuth(thread, auth);
 
     const message = await this.messageService.create(thread, participant, body.body, {

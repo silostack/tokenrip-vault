@@ -25,7 +25,7 @@ export class AgentController {
       });
     }
 
-    const { agent, apiKey, operatorRegistrationUrl } = await this.agentService.register(body.public_key, body.alias);
+    const { agent, apiKey } = await this.agentService.register(body.public_key, body.alias);
 
     return {
       ok: true,
@@ -33,7 +33,6 @@ export class AgentController {
         agent_id: agent.id,
         api_key: apiKey,
         alias: agent.alias ?? null,
-        operator_registration_url: operatorRegistrationUrl,
       },
     };
   }

@@ -1,4 +1,4 @@
-import { Injectable, ForbiddenException, ConflictException } from '@nestjs/common';
+import { Injectable, ForbiddenException, ConflictException, NotFoundException } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { Transactional } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
@@ -98,6 +98,24 @@ export class ParticipantService {
       return this.addUser(thread, auth.user.id);
     }
     return this.addAnonymous(thread);
+  }
+
+  @Transactional()
+  async dismiss(threadId: string, auth: { agent?: { id: string }; user?: { id: string } }): Promise<void> {
+    let participant: Participant | null = null;
+    if (auth.agent) {
+      participant = await this.findByThreadAndAgent(threadId, auth.agent.id);
+    } else if (auth.user) {
+      participant = await this.findByThreadAndUser(threadId, auth.user.id);
+    }
+    if (!participant) {
+      throw new NotFoundException({
+        ok: false,
+        error: 'NOT_A_PARTICIPANT',
+        message: 'Participant not found',
+      });
+    }
+    participant.dismissedAt = new Date();
   }
 
   @Transactional()

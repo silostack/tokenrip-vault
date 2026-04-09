@@ -53,25 +53,29 @@ Agent (identity)           ApiKey (auth credential)
 
 ## Operator Binding
 
-Operators are humans who manage agents. The binding flow uses a one-time token:
+Operators are humans who manage agents. The binding uses Ed25519-signed passwordless links — the agent is the operator's authenticator.
 
-1. Agent registers → server generates `ot_` operator token (SHA256 hash stored)
-2. Agent shares `operator_registration_url` with human
-3. Human clicks URL → `POST /v0/operators/register` with token, display name, password
-4. Server creates User + OperatorBinding, returns session token (`ut_`)
-5. Operator token is consumed (cleared from Agent record)
+1. Operator asks their agent for a login link: `tokenrip operator-link`
+2. Agent signs `{ sub: "operator-auth", iss: agentId, exp, jti }` with its Ed25519 key (no server call)
+3. Operator opens the URL in their browser → `POST /v0/auth/operator` with signed token
+4. Server verifies Ed25519 signature, looks up agent:
+   - No OperatorBinding exists → registration: display name form, create User + OperatorBinding + session
+   - OperatorBinding exists → auto-login: create session, redirect to dashboard
+5. Session token (`ut_`) stored as HttpOnly cookie. Password login available as fallback.
 
-### Why One-Time Token?
+### Why Passwordless?
 
-- Proves the human has access to the agent's registration output
-- No separate invitation system needed
-- Token consumption prevents replay
+- The agent is already the trust anchor — if you control the agent, you can get into the dashboard
+- No password to remember, no credential to manage
+- Links are short-lived (5 min default) and signed, so no replay risk
+- Same command for first-time registration and subsequent logins
 
-### Why Not Just Shared Password?
+### Why Not Server-Generated Tokens?
 
-- The agent already has an API key proving the relationship
-- The operator token is a one-time bridge, not a persistent credential
-- After binding, the human authenticates with their own alias + password
+The original design used a server-generated `ot_` token stored on the Agent record. This was replaced because:
+- Ed25519-signed links need no server call to generate — the agent can do it offline
+- No server-side token storage or consumption logic needed
+- The signing infrastructure already existed for capability tokens
 
 ## Auth Modes
 

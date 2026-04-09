@@ -43,11 +43,15 @@ export function sign(data: Buffer, secretKeyHex: string): Buffer {
   return ed25519Sign(null, data, keyObj);
 }
 
+export function signPayload(payload: Record<string, unknown>, secretKeyHex: string): string {
+  const payloadB64 = Buffer.from(JSON.stringify(payload)).toString('base64url');
+  const signature = sign(Buffer.from(payloadB64), secretKeyHex);
+  return `${payloadB64}.${signature.toString('base64url')}`;
+}
+
 export function createCapabilityToken(opts: CapabilityTokenOptions, secretKeyHex: string): string {
   const payload: Record<string, unknown> = { sub: opts.sub, iss: opts.iss, perm: opts.perm };
   if (opts.exp != null) payload.exp = opts.exp;
   if (opts.aud != null) payload.aud = opts.aud;
-  const payloadB64 = Buffer.from(JSON.stringify(payload)).toString('base64url');
-  const signature = sign(Buffer.from(payloadB64), secretKeyHex);
-  return `${payloadB64}.${signature.toString('base64url')}`;
+  return signPayload(payload, secretKeyHex);
 }

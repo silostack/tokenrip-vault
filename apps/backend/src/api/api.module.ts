@@ -27,12 +27,14 @@ import { MessageService } from './service/message.service';
 import { RefService } from './service/ref.service';
 import { InboxController } from './controller/inbox.controller';
 import { InboxService } from './service/inbox.service';
+import { OperatorAuthService } from './service/operator-auth.service';
+import { OperatorBindingService } from './service/operator-binding.service';
 import { AuthService } from './auth/auth.service';
 
 @Module({
   imports: [MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey, Agent, User, OperatorBinding, Thread, Participant, Message, Ref])],
   controllers: [AssetController, AgentController, OperatorController, ThreadController, MessageController, InboxController, HealthController, OpenapiController],
-  providers: [AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, AuthService],
+  providers: [AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, OperatorAuthService, OperatorBindingService, AuthService],
   exports: [AuthService],
 })
 export class ApiModule {}

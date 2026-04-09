@@ -2,11 +2,10 @@ import { Injectable, BadRequestException, ConflictException, NotFoundException }
 import { EntityManager } from '@mikro-orm/postgresql';
 import { Transactional } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { randomBytes } from 'crypto';
 import { Agent } from '../../db/models/Agent';
 import { AgentRepository } from '../../db/models';
 import { AuthService } from '../auth/auth.service';
-import { publicKeyToAgentId, sha256 } from '../auth/crypto';
+import { publicKeyToAgentId } from '../auth/crypto';
 
 @Injectable()
 export class AgentService {
@@ -17,7 +16,7 @@ export class AgentService {
   ) {}
 
   @Transactional()
-  async register(publicKey: string, alias?: string): Promise<{ agent: Agent; apiKey: string; operatorRegistrationUrl: string }> {
+  async register(publicKey: string, alias?: string): Promise<{ agent: Agent; apiKey: string }> {
     if (!/^[0-9a-f]{64}$/i.test(publicKey)) {
       throw new BadRequestException({
         ok: false,
@@ -45,17 +44,11 @@ export class AgentService {
     const agent = new Agent(agentId, publicKey.toLowerCase());
     if (alias) agent.alias = alias;
 
-    const operatorToken = `ot_${randomBytes(32).toString('hex')}`;
-    agent.operatorTokenHash = sha256(operatorToken);
-
     this.em.persist(agent);
 
     const apiKey = await this.authService.createKey(agent, 'default');
 
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3333';
-    const operatorRegistrationUrl = `${frontendUrl}/operators/register?token=${operatorToken}`;
-
-    return { agent, apiKey, operatorRegistrationUrl };
+    return { agent, apiKey };
   }
 
   async findById(id: string): Promise<Agent> {

@@ -22,7 +22,7 @@ Bun workspaces (`apps/*`, `packages/*`). No Turborepo — uses `bun run --filter
 
 ## Documentation
 
-Project documentation lives in `docs/`. See `docs/CLAUDE.md` for the system and how to find/add/update docs.
+Project documentation lives in `docs/`. **Before creating or updating any doc**, consult `docs/CLAUDE.md` — it defines which category to use, naming conventions, and living-doc update rules.
 
 ## Testing
 

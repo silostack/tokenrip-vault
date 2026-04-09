@@ -24,4 +24,7 @@ export class Participant {
 
   @Property()
   joinedAt: Date = new Date();
+
+  @Property({ nullable: true })
+  dismissedAt?: Date;
 }

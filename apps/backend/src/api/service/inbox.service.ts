@@ -54,14 +54,34 @@ export class InboxService {
       ? this.assetRepo.findAssetUpdatesForOwner(agentId, since, limit)
       : Promise.resolve([] as AssetUpdateRow[]);
 
+    return this.assembleResult(threadRowsPromise, assetRowsPromise);
+  }
+
+  async getOperatorInbox(
+    agentId: string,
+    userId: string,
+    since: Date,
+    opts?: { limit?: number },
+  ): Promise<InboxResult> {
+    const limit = Math.min(opts?.limit ?? 50, 200);
+
+    const threadRowsPromise = this.participantRepo.findUnifiedThreadActivity(agentId, userId, since, limit);
+    const assetRowsPromise = this.assetRepo.findAssetUpdatesForOwner(agentId, since, limit);
+
+    return this.assembleResult(threadRowsPromise, assetRowsPromise);
+  }
+
+  private async assembleResult(
+    threadRowsPromise: Promise<ThreadActivityRow[]>,
+    assetRowsPromise: Promise<AssetUpdateRow[]>,
+  ): Promise<InboxResult> {
     const threadRows = await threadRowsPromise;
 
-    // Batch-fetch refs in parallel with asset query (no N+1)
     const [assetRows, refs] = await Promise.all([
       assetRowsPromise,
       threadRows.length > 0
         ? this.refRepo.find({ ownerType: 'thread', ownerId: { $in: threadRows.map((r) => r.thread_id) } })
-        : Promise.resolve([] as import('../../db/models/Ref').Ref[]),
+        : Promise.resolve([] as Ref[]),
     ]);
 
     const refsByThread = new Map<string, Array<{ type: string; target_id: string; version?: number }>>();

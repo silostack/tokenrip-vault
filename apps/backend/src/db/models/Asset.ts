@@ -16,6 +16,7 @@ export enum AssetState {
   DRAFT = 'draft',
   PUBLISHED = 'published',
   ARCHIVED = 'archived',
+  DESTROYED = 'destroyed',
 }
 
 @Entity({ repository: () => AssetRepository })
@@ -67,6 +68,9 @@ export class Asset {
 
   @Property({ type: 'int', default: 1 })
   versionCount: number = 1;
+
+  @Property({ nullable: true })
+  destroyedAt?: Date;
 
   @Property()
   createdAt: Date = new Date();

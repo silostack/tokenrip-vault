@@ -333,6 +333,24 @@ contacts
     await contactsRemove(name);
   }));
 
+// ── operator commands ───────────────────────────────────────────────
+program
+  .command('operator-link')
+  .description('Generate a signed URL for operator onboarding or login')
+  .option('--expires <duration>', 'Token expiry (default: 5m). E.g. 5m, 1h, 1d')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip operator-link
+  $ tokenrip operator-link --expires 1h
+
+The operator opens the URL in their browser to register or log in.
+No server call needed — the link is signed with your agent's Ed25519 key.
+`)
+  .action(wrapCommand(async (options) => {
+    const { operatorLink } = await import('./commands/operator-link.js');
+    await operatorLink(options);
+  }));
+
 // ── config commands ─────────────────────────────────────────────────
 const config = program.command('config').description('Manage CLI configuration');
 

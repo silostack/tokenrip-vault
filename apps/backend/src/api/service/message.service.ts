@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ForbiddenException } from '@nestjs/common';
 import { EntityManager, LockMode } from '@mikro-orm/postgresql';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Message } from '../../db/models/Message';
 import { MessageRepository } from '../../db/models';
-import { Thread } from '../../db/models/Thread';
+import { Thread, ThreadState } from '../../db/models/Thread';
 import { Participant } from '../../db/models/Participant';
 
 interface CreateMessageOpts {
@@ -28,6 +28,14 @@ export class MessageService {
   ): Promise<Message> {
     return this.em.transactional(async (em) => {
       const lockedThread = await em.findOneOrFail(Thread, { id: thread.id }, { lockMode: LockMode.PESSIMISTIC_WRITE });
+
+      if (lockedThread.state === ThreadState.CLOSED) {
+        throw new ForbiddenException({
+          ok: false,
+          error: 'THREAD_CLOSED',
+          message: 'This thread is closed and no longer accepts messages',
+        });
+      }
 
       // Raw SQL: aggregate MAX() inside a pessimistic lock transaction — MikroORM's QB
       // doesn't reliably support aggregates within transactional forked EMs.

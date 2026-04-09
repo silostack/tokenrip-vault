@@ -43,11 +43,13 @@ export class MessageController {
 
     let thread: Thread;
     if (uuidValidate(target)) {
-      thread = await this.threadService.findOrCreateAssetThread(target, agent.id);
+      thread = await this.threadService.findOrCreateAssetThread(target, agent.id, agent.id);
     } else {
-      const agentId = await this.agentService.resolveByIdOrAlias(target);
-      thread = await this.threadService.create(agent.id);
-      await this.participantService.addAgent(thread, agentId);
+      const recipientId = await this.agentService.resolveByIdOrAlias(target);
+      // 1:1 thread: recipient is owner. Group: creator is owner.
+      const ownerId = body.to!.length === 1 ? recipientId : agent.id;
+      thread = await this.threadService.create(agent.id, { ownerId });
+      await this.participantService.addAgent(thread, recipientId);
     }
 
     const participant = await this.participantService.getOrCreateForAuth(thread, { agent });

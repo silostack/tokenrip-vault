@@ -15,9 +15,6 @@ export class Agent {
   @Property({ type: 'json', nullable: true })
   metadata?: Record<string, unknown>;
 
-  @Property({ nullable: true })
-  operatorTokenHash?: string;
-
   @Property()
   registeredAt: Date = new Date();
 

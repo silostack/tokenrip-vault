@@ -1,6 +1,11 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { Entity, Enum, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 import { ThreadRepository } from '../repositories/thread.repository';
+
+export enum ThreadState {
+  OPEN = 'open',
+  CLOSED = 'closed',
+}
 
 @Entity({ repository: () => ThreadRepository })
 export class Thread {
@@ -9,6 +14,12 @@ export class Thread {
 
   @Property({ type: 'string' })
   createdBy!: string; // Agent.id (bech32)
+
+  @Property({ type: 'string' })
+  ownerId!: string; // Agent.id (bech32) — immutable after creation
+
+  @Enum(() => ThreadState)
+  state: ThreadState = ThreadState.OPEN;
 
   @Property({ type: 'json', nullable: true })
   resolution?: Record<string, unknown>;
@@ -22,7 +33,8 @@ export class Thread {
   @Property({ onUpdate: () => new Date() })
   updatedAt: Date = new Date();
 
-  constructor(createdBy: string) {
+  constructor(createdBy: string, ownerId?: string) {
     this.createdBy = createdBy;
+    this.ownerId = ownerId ?? createdBy;
   }
 }

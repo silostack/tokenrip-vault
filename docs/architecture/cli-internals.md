@@ -27,15 +27,15 @@
                           │  --human global flag      │
                           └──────────┬───────────────┘
                                      │
-               ┌────────┬────────┬───┼───┬────────┬─────────┬──────────┐
-               ▼        ▼        ▼   ▼   ▼        ▼         ▼          ▼
-          ┌────────┐ ┌──────┐ ┌─────┐ ┌──────┐ ┌──────┐ ┌────────┐ ┌────────┐
-          │ auth   │ │asset │ │inbox│ │ msg  │ │thread│ │contacts│ │ config │
-          │register│ │upload│ │ .ts │ │ .ts  │ │ .ts  │ │  .ts   │ │  .ts   │
-          │create- │ │publi-│ │     │ │      │ │      │ │        │ │        │
-          │key,    │ │sh,   │ │     │ │      │ │      │ │        │ │        │
-          │whoami  │ │etc.  │ │     │ │      │ │      │ │        │ │        │
-          └───┬────┘ └──┬───┘ └──┬──┘ └──┬───┘ └──┬───┘ └───┬────┘ └───┬────┘
+          ┌────────┬────────┬───┼───┬────────┬─────────┬──────────┬──────────┐
+          ▼        ▼        ▼   ▼   ▼        ▼         ▼          ▼          ▼
+     ┌────────┐ ┌──────┐ ┌─────┐ ┌──────┐ ┌──────┐ ┌────────┐ ┌────────┐ ┌────────┐
+     │ auth   │ │asset │ │inbox│ │ msg  │ │thread│ │contacts│ │operator│ │ config │
+     │register│ │upload│ │ .ts │ │ .ts  │ │ .ts  │ │  .ts   │ │-link   │ │  .ts   │
+     │create- │ │publi-│ │     │ │      │ │      │ │        │ │  .ts   │ │        │
+     │key,    │ │sh,   │ │     │ │      │ │      │ │        │ │        │ │        │
+     │whoami  │ │etc.  │ │     │ │      │ │      │ │        │ │        │ │        │
+     └───┬────┘ └──┬───┘ └──┬──┘ └──┬───┘ └──┬───┘ └───┬────┘ └───┬────┘ └───┬────┘
               │         │        │       │        │         │          │
               ▼         ▼        ▼       ▼        ▼         ▼          ▼
         ┌───────────┐ ┌──────────────────────────────────┐ ┌────────────┐
@@ -103,7 +103,7 @@
 
 ## CLI Commands
 
-Commands are organized into groups: `auth`, `asset`, `inbox`, `msg`, `thread`, `contacts`, and `config`.
+Commands are organized into groups: `auth`, `asset`, `inbox`, `msg`, `thread`, `contacts`, `config`, plus the top-level `operator-link`.
 
 ### Auth Commands
 
@@ -114,7 +114,7 @@ Commands are organized into groups: `auth`, `asset`, `inbox`, `msg`, `thread`, `
 - Registers with server: `POST /v0/agents { public_key, alias? }`
 - Saves returned API key to config
 - `--force` overwrites existing identity
-- **Output:** `{ agent_id, api_key, alias, operator_registration_url }`
+- **Output:** `{ agent_id, api_key, alias }`
 
 #### `tokenrip auth create-key`
 
@@ -213,6 +213,17 @@ Types: `markdown`, `html`, `chart`, `code`, `text`, `json`.
 - Returns agent ID for a contact name
 
 #### `tokenrip contacts remove <name>`
+
+### Operator Command
+
+#### `tokenrip operator-link [--expires <duration>]`
+
+- Generates an Ed25519-signed operator auth URL (no server call needed)
+- Default expiry: 5 minutes. Override with `--expires 1h`, `--expires 1d`, etc.
+- Token payload: `{ sub: "operator-auth", iss: agentId, exp, jti }`
+- Operator opens the URL → auto-registers (first time) or auto-logs in (subsequent)
+- Uses `signPayload()` from `crypto.ts` — same signing primitive as capability tokens
+- **Output:** `{ url, token, agent_id, expires_at }`
 
 ### Config Commands
 

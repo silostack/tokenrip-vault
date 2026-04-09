@@ -1,11 +1,13 @@
-import { Injectable, Inject, NotFoundException, ForbiddenException, Logger } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException, ForbiddenException, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { v4, validate as uuidValidate } from 'uuid';
-import { Asset, AssetType } from '../../db/models/Asset';
+import { Asset, AssetType, AssetState } from '../../db/models/Asset';
 import { AssetVersion } from '../../db/models/AssetVersion';
 import { AssetRepository } from '../../db/repositories/asset.repository';
 import { STORAGE_SERVICE, StorageService } from '../../storage/storage.interface';
+import { RefService } from './ref.service';
+import { ThreadService } from './thread.service';
 
 interface ProvenanceFields {
   parentAssetId?: string;
@@ -43,6 +45,8 @@ export class AssetService {
     private readonly em: EntityManager,
     @InjectRepository(Asset) private readonly assetRepository: AssetRepository,
     @Inject(STORAGE_SERVICE) private readonly storage: StorageService,
+    private readonly refService: RefService,
+    private readonly threadService: ThreadService,
   ) {}
 
   /**
@@ -125,6 +129,19 @@ export class AssetService {
       this.logger.debug(`Asset with publicId ${publicId} not found`);
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
     }
+    if (asset.state === AssetState.DESTROYED) {
+      throw new HttpException({
+        ok: false,
+        error: 'ASSET_DESTROYED',
+        message: 'This asset has been destroyed',
+        data: {
+          id: asset.publicId,
+          title: asset.title ?? null,
+          owner_id: asset.ownerId,
+          destroyed_at: asset.destroyedAt,
+        },
+      }, HttpStatus.GONE);
+    }
     return asset;
   }
 
@@ -132,7 +149,7 @@ export class AssetService {
     ownerId: string,
     opts: { since?: Date; limit?: number; type?: string } = {},
   ): Promise<Asset[]> {
-    const where: Record<string, unknown> = { ownerId };
+    const where: Record<string, unknown> = { ownerId, state: { $ne: AssetState.DESTROYED } };
     if (opts.since) where.updatedAt = { $gte: opts.since };
     if (opts.type) where.type = opts.type;
     const limit = Math.min(opts.limit ?? 100, 100);
@@ -181,21 +198,34 @@ export class AssetService {
     return { assetCount, totalBytes, countsByType, bytesByType };
   }
 
-  async deleteAsset(publicId: string, ownerId: string): Promise<void> {
+  /**
+   * Destroy an asset: delete storage, tombstone the row, cascade-close referencing threads.
+   */
+  async destroyAsset(publicId: string, ownerId: string): Promise<void> {
     const asset = await this.findByPublicId(publicId);
     if (asset.ownerId !== ownerId) {
-      throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only delete your own assets' });
+      throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only destroy your own assets' });
     }
 
     const versions = await this.em.find(AssetVersion, { asset: { id: asset.id } }, { fields: ['storageKey'] });
-    this.logger.debug(`Deleting asset ${asset.id} (publicId=${publicId}) with ${versions.length} version(s)`);
+    this.logger.debug(`Destroying asset ${asset.id} (publicId=${publicId}) with ${versions.length} version(s)`);
 
-    // DB delete first (CASCADE removes version rows), then storage cleanup
+    // Tombstone before storage deletion — other agents see 410 immediately
     await this.em.transactional(async () => {
-      this.em.remove(asset);
+      asset.state = AssetState.DESTROYED;
+      asset.destroyedAt = new Date();
+      for (const v of versions) {
+        this.em.remove(v);
+      }
     });
 
-    // External I/O outside transaction — orphaned storage files are cleanable
-    await Promise.all(versions.map((v) => this.storage.delete(v.storageKey)));
+    // Storage deletes and thread cascade are independent — run concurrently
+    const storageDeletePromise = Promise.all(versions.map((v) => this.storage.delete(v.storageKey)));
+    const refs = await this.refService.findByTarget('asset', asset.publicId);
+    const threadIds = refs.filter((r) => r.ownerType === 'thread').map((r) => r.ownerId);
+    if (threadIds.length) {
+      await this.threadService.closeByIds(threadIds);
+    }
+    await storageDeletePromise;
   }
 }

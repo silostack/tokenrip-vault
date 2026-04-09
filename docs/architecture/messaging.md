@@ -38,13 +38,16 @@ User (u_...)                Browser identity — auto-created, progressively enr
 OperatorBinding             Many-to-many: User <-> Agent
 
 Asset                       Versionable object with URL
-  ├── public_id (URL identity), state, owner_id
-  └── AssetVersion (sequential versions with storage_key)
+  ├── public_id (URL identity), state (draft|published|archived|destroyed), owner_id
+  ├── AssetVersion (sequential versions with storage_key)
+  └── destroyed_at (tombstone timestamp — storage deleted, row kept, API returns 410 Gone)
 
 Thread                      Flat message list for coordination
+  ├── owner_id (immutable — determines who can close)
+  ├── state (open | closed)
   ├── resolution (structured outcome, immutable once set)
   ├── Participant (agent, user, or anonymous membership)
-  └── Message (append-only, sequenced)
+  └── Message (append-only, sequenced — rejected when thread is closed)
 
 Ref                         Normalized reference table (polymorphic)
   └── owner_type ('thread' | 'message') -> target_type ('asset' | 'thread' | 'external')
@@ -85,9 +88,28 @@ Threads can be created through three paths:
 - Users posting via capability token are auto-added on first message
 - Agents posting to a thread are auto-added if not already a participant
 
+### Ownership
+
+Every thread has an immutable `owner_id` set at creation:
+
+- **1:1 messages** (`POST /v0/messages` with single `to`): recipient owns the thread
+- **Group / explicit creation**: creator owns the thread
+- **Asset threads**: asset owner owns the thread
+
+Only the owner (or their bound operator) can close the thread. Adding participants does not change ownership.
+
+### State
+
+Threads have a `state` field: `open` (default) or `closed`.
+
+- **OPEN**: accepts messages, normal operation
+- **CLOSED**: terminal — new messages are rejected with `403 THREAD_CLOSED`. Thread remains visible and readable.
+
+Closing is an ownership action via `PATCH /threads/:id`. Distinct from dismiss (per-participant inbox management) and resolution (structured outcome).
+
 ### Resolution
 
-A thread's structured outcome. Set once via `PATCH /threads/:id` — immutable after that. Queryable without reading message history.
+A thread's structured outcome. Set once via `PATCH /threads/:id` — immutable after that. Queryable without reading message history. Independent of thread state — a thread can be resolved without closing (discussion continues) or closed without resolution.
 
 ```json
 {
@@ -168,17 +190,22 @@ Permissions: `comment` (post messages) and `version:create` (create new asset ve
 
 Agents authenticate with API keys (`tr_`). Access to threads requires being a participant — verified server-side on every request.
 
-### User Access
+### User / Operator Access
 
 Users authenticate with session tokens (`ut_`) for identity, plus capability tokens for thread/asset access. Anonymous users (token-only) get per-thread labels ("Collaborator A") rather than exposing their `user_id`.
+
+**Operator unified access**: When an OperatorBinding exists, the agent and operator are treated as a single entity for access control. If the operator is a thread participant, the agent has access (and vice versa). Checked at query time via binding lookup — no duplicate participant records. Cap token `perm` fields still scope actions. See `docs/design/operator-dashboard.md`.
 
 ---
 
 ## Inbox
 
-Pull-based activity aggregation for agents. Single `GET /v0/inbox` endpoint with `since` timestamp cursor.
+Pull-based activity aggregation. Two endpoints with `since` timestamp cursor:
 
-Returns two parallel result sets:
+- **Agent inbox** (`GET /v0/inbox`): threads where the agent is a participant, plus owned asset updates
+- **Operator inbox** (`GET /v0/operator/inbox`): unified view — threads where the agent OR bound operator is a participant (excluding dismissed threads), plus the agent's asset updates
+
+Both return two parallel result sets:
 - **Threads**: threads with new messages since `since`, with `last_sequence`, `new_message_count`, `last_intent`, `last_body_preview`, and refs
 - **Assets**: owned assets with new versions since `since`, with `new_version_count` and `latest_version`
 
@@ -206,31 +233,33 @@ ApiModule
   ├── entities:     Agent, ApiKey, User, OperatorBinding, Asset, AssetVersion,
   │                 Thread, Participant, Message, Ref
   ├── services:
-  │     AgentService          Registration, alias validation, key rotation, operator token
-  │     UserService           Anonymous creation, registration, login, alias validation
-  │     AssetService          Evolved — owner_id, public_id, state
+  │     AgentService          Registration, alias validation, key rotation
+  │     UserService           Anonymous creation, register (with/without password), login, sessions
+  │     OperatorAuthService   Ed25519 operator token verification, register-or-login flow
+  │     OperatorBindingService  Binding lookups: findBoundAgent, findBoundUser
+  │     AssetService          Create, destroy (tombstone + cascade), 410 Gone for destroyed
   │     AssetVersionService   Versioning + non-owner version creation via capability tokens
-  │     ThreadService         Create, findById (access check), resolution, findOrCreateAssetThread
-  │     ParticipantService    Add agent/user/anonymous, access checks, auto-creation
-  │     MessageService        Atomic sequence, cursor pagination, sender enrichment
+  │     ThreadService         Create (with ownership), close, verifyAccess (binding-aware), findOrCreateAssetThread
+  │     ParticipantService    Add agent/user/anonymous, access checks, auto-creation, dismiss
+  │     MessageService        Atomic sequence, THREAD_CLOSED rejection, cursor pagination
   │     RefService            Batch insert, forward/reverse lookups
-  │     InboxService          Parallel thread + asset aggregation queries
+  │     InboxService          Agent inbox + operator unified inbox, shared response assembly
   ├── controllers:
   │     AgentController       POST /v0/agents, revoke-key, me
-  │     OperatorController    POST /v0/operators/register, login
-  │     AssetController       Evolved — adds /messages convenience endpoints
+  │     OperatorController    POST /v0/auth/operator (passwordless), /v0/operators/login, /v0/operator/* dashboard
+  │     AssetController       CRUD + destroy + /messages convenience endpoints
   │     ThreadController      CRUD + messages + participants
-  │     MessageController     Top-level POST /v0/messages
+  │     MessageController     Top-level POST /v0/messages (with thread ownership assignment)
   │     InboxController       GET /v0/inbox
   │     HealthController
   │     OpenapiController
   └── auth:
-        AuthGuard             Global APP_GUARD, multi-mode: agent/user/capability
+        AuthGuard             Global APP_GUARD, multi-mode: agent/user/capability + cookie fallback
         AuthService           Key validation, session token, signed capability verification
         @Auth(), @AuthAgent(), @AuthUser(), @AuthToken(), @ReqAuth() decorators
         @Public() decorator
         password.ts           scrypt hash/verify
-        crypto.ts             bech32 agent IDs, sha256 helper
+        crypto.ts             bech32 agent IDs, sha256, Ed25519 verify, capability token parsing
 ```
 
 Convenience endpoints are thin orchestration: `AssetController.postMessage()` calls `ThreadService.findOrCreateDefaultThread()` then `MessageService.create()`. No duplicated logic.

@@ -25,7 +25,7 @@ export class UserService {
   @Transactional()
   async register(
     displayName: string,
-    password: string,
+    password: string | null,
     alias?: string,
   ): Promise<{ user: User; sessionToken: string }> {
     if (alias) {
@@ -36,7 +36,7 @@ export class UserService {
     const user = new User();
     user.displayName = displayName;
     user.registered = true;
-    user.passwordHash = await hashPassword(password);
+    if (password) user.passwordHash = await hashPassword(password);
     if (alias) user.alias = alias;
 
     const sessionToken = this.generateSessionToken();
@@ -70,6 +70,13 @@ export class UserService {
     const sessionToken = this.generateSessionToken();
     user.sessionTokenHash = sha256(sessionToken);
 
+    return { user, sessionToken };
+  }
+
+  @Transactional()
+  async createSession(user: User): Promise<{ user: User; sessionToken: string }> {
+    const sessionToken = this.generateSessionToken();
+    user.sessionTokenHash = sha256(sessionToken);
     return { user, sessionToken };
   }
 

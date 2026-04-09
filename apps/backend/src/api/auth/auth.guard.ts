@@ -70,10 +70,16 @@ export class AuthGuard implements CanActivate {
   }
 
   private async tryUserAuth(request: any, auth: RequestAuth): Promise<boolean> {
+    // Try Authorization header first, then cookie fallback
+    let rawToken: string | undefined;
     const authHeader: string | undefined = request.headers['authorization'];
-    if (!authHeader?.startsWith('Bearer ut_')) return false;
+    if (authHeader?.startsWith('Bearer ut_')) {
+      rawToken = authHeader.slice(7);
+    } else if (request.cookies?.session?.startsWith('ut_')) {
+      rawToken = request.cookies.session;
+    }
+    if (!rawToken) return false;
 
-    const rawToken = authHeader.slice(7);
     const result = await this.authService.validateSessionToken(rawToken);
     if (!result) return false;
 
