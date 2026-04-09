@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { ChevronDown } from 'lucide-react'
+import { formatTimeAgo } from '@/utils/time'
 import type { VersionInfo } from '@/lib/api'
 
 interface VersionDropdownProps {
@@ -12,16 +13,6 @@ interface VersionDropdownProps {
   onOpen?: () => void
 }
 
-function timeAgo(dateStr: string): string {
-  const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000)
-  if (seconds < 60) return 'just now'
-  const minutes = Math.floor(seconds / 60)
-  if (minutes < 60) return `${minutes}m ago`
-  const hours = Math.floor(minutes / 60)
-  if (hours < 24) return `${hours}h ago`
-  const days = Math.floor(hours / 24)
-  return `${days}d ago`
-}
 
 export function VersionDropdown({
   uuid,
@@ -97,7 +88,7 @@ export function VersionDropdown({
                   v{v.version}
                   {v.label ? ` — ${v.label}` : ''}
                 </span>
-                <span className="ml-3 text-foreground/30">{timeAgo(v.createdAt)}</span>
+                <span className="ml-3 text-foreground/30">{formatTimeAgo(v.createdAt)}</span>
               </button>
             )
           })}

@@ -9,16 +9,32 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './app/__root'
+import { Route as OperatorRouteImport } from './app/operator'
 import { Route as IndexRouteImport } from './app/index'
+import { Route as OperatorIndexRouteImport } from './app/operator/index'
 import { Route as ThreadsThreadIdRouteImport } from './app/threads/$threadId'
 import { Route as SUuidRouteImport } from './app/s/$uuid'
+import { Route as OperatorAuthRouteImport } from './app/operator/auth'
 import { Route as SUuidIndexRouteImport } from './app/s/$uuid/index'
+import { Route as OperatorAssetsIndexRouteImport } from './app/operator/assets/index'
 import { Route as SUuidVersionIdRouteImport } from './app/s/$uuid/$versionId'
+import { Route as OperatorThreadsThreadIdRouteImport } from './app/operator/threads/$threadId'
+import { Route as OperatorAssetsPublicIdRouteImport } from './app/operator/assets/$publicId'
 
+const OperatorRoute = OperatorRouteImport.update({
+  id: '/operator',
+  path: '/operator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const OperatorIndexRoute = OperatorIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => OperatorRoute,
 } as any)
 const ThreadsThreadIdRoute = ThreadsThreadIdRouteImport.update({
   id: '/threads/$threadId',
@@ -30,71 +46,144 @@ const SUuidRoute = SUuidRouteImport.update({
   path: '/s/$uuid',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OperatorAuthRoute = OperatorAuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => OperatorRoute,
+} as any)
 const SUuidIndexRoute = SUuidIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => SUuidRoute,
+} as any)
+const OperatorAssetsIndexRoute = OperatorAssetsIndexRouteImport.update({
+  id: '/assets/',
+  path: '/assets/',
+  getParentRoute: () => OperatorRoute,
 } as any)
 const SUuidVersionIdRoute = SUuidVersionIdRouteImport.update({
   id: '/$versionId',
   path: '/$versionId',
   getParentRoute: () => SUuidRoute,
 } as any)
+const OperatorThreadsThreadIdRoute = OperatorThreadsThreadIdRouteImport.update({
+  id: '/threads/$threadId',
+  path: '/threads/$threadId',
+  getParentRoute: () => OperatorRoute,
+} as any)
+const OperatorAssetsPublicIdRoute = OperatorAssetsPublicIdRouteImport.update({
+  id: '/assets/$publicId',
+  path: '/assets/$publicId',
+  getParentRoute: () => OperatorRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/operator': typeof OperatorRouteWithChildren
+  '/operator/auth': typeof OperatorAuthRoute
   '/s/$uuid': typeof SUuidRouteWithChildren
   '/threads/$threadId': typeof ThreadsThreadIdRoute
+  '/operator/': typeof OperatorIndexRoute
+  '/operator/assets/$publicId': typeof OperatorAssetsPublicIdRoute
+  '/operator/threads/$threadId': typeof OperatorThreadsThreadIdRoute
   '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
+  '/operator/assets/': typeof OperatorAssetsIndexRoute
   '/s/$uuid/': typeof SUuidIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/operator/auth': typeof OperatorAuthRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
+  '/operator': typeof OperatorIndexRoute
+  '/operator/assets/$publicId': typeof OperatorAssetsPublicIdRoute
+  '/operator/threads/$threadId': typeof OperatorThreadsThreadIdRoute
   '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
+  '/operator/assets': typeof OperatorAssetsIndexRoute
   '/s/$uuid': typeof SUuidIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/operator': typeof OperatorRouteWithChildren
+  '/operator/auth': typeof OperatorAuthRoute
   '/s/$uuid': typeof SUuidRouteWithChildren
   '/threads/$threadId': typeof ThreadsThreadIdRoute
+  '/operator/': typeof OperatorIndexRoute
+  '/operator/assets/$publicId': typeof OperatorAssetsPublicIdRoute
+  '/operator/threads/$threadId': typeof OperatorThreadsThreadIdRoute
   '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
+  '/operator/assets/': typeof OperatorAssetsIndexRoute
   '/s/$uuid/': typeof SUuidIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/operator'
+    | '/operator/auth'
     | '/s/$uuid'
     | '/threads/$threadId'
+    | '/operator/'
+    | '/operator/assets/$publicId'
+    | '/operator/threads/$threadId'
     | '/s/$uuid/$versionId'
+    | '/operator/assets/'
     | '/s/$uuid/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/threads/$threadId' | '/s/$uuid/$versionId' | '/s/$uuid'
+  to:
+    | '/'
+    | '/operator/auth'
+    | '/threads/$threadId'
+    | '/operator'
+    | '/operator/assets/$publicId'
+    | '/operator/threads/$threadId'
+    | '/s/$uuid/$versionId'
+    | '/operator/assets'
+    | '/s/$uuid'
   id:
     | '__root__'
     | '/'
+    | '/operator'
+    | '/operator/auth'
     | '/s/$uuid'
     | '/threads/$threadId'
+    | '/operator/'
+    | '/operator/assets/$publicId'
+    | '/operator/threads/$threadId'
     | '/s/$uuid/$versionId'
+    | '/operator/assets/'
     | '/s/$uuid/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  OperatorRoute: typeof OperatorRouteWithChildren
   SUuidRoute: typeof SUuidRouteWithChildren
   ThreadsThreadIdRoute: typeof ThreadsThreadIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/operator': {
+      id: '/operator'
+      path: '/operator'
+      fullPath: '/operator'
+      preLoaderRoute: typeof OperatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/operator/': {
+      id: '/operator/'
+      path: '/'
+      fullPath: '/operator/'
+      preLoaderRoute: typeof OperatorIndexRouteImport
+      parentRoute: typeof OperatorRoute
     }
     '/threads/$threadId': {
       id: '/threads/$threadId'
@@ -110,12 +199,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SUuidRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/operator/auth': {
+      id: '/operator/auth'
+      path: '/auth'
+      fullPath: '/operator/auth'
+      preLoaderRoute: typeof OperatorAuthRouteImport
+      parentRoute: typeof OperatorRoute
+    }
     '/s/$uuid/': {
       id: '/s/$uuid/'
       path: '/'
       fullPath: '/s/$uuid/'
       preLoaderRoute: typeof SUuidIndexRouteImport
       parentRoute: typeof SUuidRoute
+    }
+    '/operator/assets/': {
+      id: '/operator/assets/'
+      path: '/assets'
+      fullPath: '/operator/assets/'
+      preLoaderRoute: typeof OperatorAssetsIndexRouteImport
+      parentRoute: typeof OperatorRoute
     }
     '/s/$uuid/$versionId': {
       id: '/s/$uuid/$versionId'
@@ -124,8 +227,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SUuidVersionIdRouteImport
       parentRoute: typeof SUuidRoute
     }
+    '/operator/threads/$threadId': {
+      id: '/operator/threads/$threadId'
+      path: '/threads/$threadId'
+      fullPath: '/operator/threads/$threadId'
+      preLoaderRoute: typeof OperatorThreadsThreadIdRouteImport
+      parentRoute: typeof OperatorRoute
+    }
+    '/operator/assets/$publicId': {
+      id: '/operator/assets/$publicId'
+      path: '/assets/$publicId'
+      fullPath: '/operator/assets/$publicId'
+      preLoaderRoute: typeof OperatorAssetsPublicIdRouteImport
+      parentRoute: typeof OperatorRoute
+    }
   }
 }
+
+interface OperatorRouteChildren {
+  OperatorAuthRoute: typeof OperatorAuthRoute
+  OperatorIndexRoute: typeof OperatorIndexRoute
+  OperatorAssetsPublicIdRoute: typeof OperatorAssetsPublicIdRoute
+  OperatorThreadsThreadIdRoute: typeof OperatorThreadsThreadIdRoute
+  OperatorAssetsIndexRoute: typeof OperatorAssetsIndexRoute
+}
+
+const OperatorRouteChildren: OperatorRouteChildren = {
+  OperatorAuthRoute: OperatorAuthRoute,
+  OperatorIndexRoute: OperatorIndexRoute,
+  OperatorAssetsPublicIdRoute: OperatorAssetsPublicIdRoute,
+  OperatorThreadsThreadIdRoute: OperatorThreadsThreadIdRoute,
+  OperatorAssetsIndexRoute: OperatorAssetsIndexRoute,
+}
+
+const OperatorRouteWithChildren = OperatorRoute._addFileChildren(
+  OperatorRouteChildren,
+)
 
 interface SUuidRouteChildren {
   SUuidVersionIdRoute: typeof SUuidVersionIdRoute
@@ -141,6 +278,7 @@ const SUuidRouteWithChildren = SUuidRoute._addFileChildren(SUuidRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  OperatorRoute: OperatorRouteWithChildren,
   SUuidRoute: SUuidRouteWithChildren,
   ThreadsThreadIdRoute: ThreadsThreadIdRoute,
 }

@@ -11,7 +11,13 @@ const fetchAssetVersionWithContent = createServerFn({ method: 'GET' }).handler(
   async ({ data }: { data: { uuid: string; versionId: string } }) => {
     try {
       const metaRes = await fetch(`${API_URL}/v0/assets/${data.uuid}`)
-      if (!metaRes.ok) return { asset: null, textContent: null }
+      if (!metaRes.ok) {
+        if (metaRes.status === 410) {
+          const body = await metaRes.json().catch(() => null)
+          return { asset: null, textContent: null, destroyed: true, destroyedTitle: body?.data?.title ?? null }
+        }
+        return { asset: null, textContent: null, destroyed: false, destroyedTitle: null }
+      }
       const metaJson = await metaRes.json()
       const asset = metaJson.data as AssetMetadata
 
@@ -25,9 +31,9 @@ const fetchAssetVersionWithContent = createServerFn({ method: 'GET' }).handler(
         }
       }
 
-      return { asset, textContent }
+      return { asset, textContent, destroyed: false, destroyedTitle: null }
     } catch {
-      return { asset: null, textContent: null }
+      return { asset: null, textContent: null, destroyed: false, destroyedTitle: null }
     }
   }
 )
@@ -40,13 +46,15 @@ export const Route = createFileRoute('/s/$uuid/$versionId')({
 
 function ShareVersionPage() {
   const { uuid, versionId } = Route.useParams()
-  const { asset, textContent } = Route.useLoaderData()
+  const { asset, textContent, destroyed, destroyedTitle } = Route.useLoaderData()
   return (
     <SharePageContent
       uuid={uuid}
       versionId={versionId}
       ssrAsset={asset}
       ssrTextContent={textContent}
+      ssrDestroyed={destroyed}
+      ssrDestroyedTitle={destroyedTitle}
     />
   )
 }

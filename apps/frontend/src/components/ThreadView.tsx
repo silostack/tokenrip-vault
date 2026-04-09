@@ -14,6 +14,7 @@ interface ThreadViewProps {
   fetchMessages: (sinceSequence?: number) => Promise<ThreadMessage[]>
   sendMessage: (body: string) => Promise<ThreadMessage | void>
   emptyText?: string
+  disabled?: boolean
 }
 
 function getSenderId(sender: { agent_id?: string; user_id?: string }): string {
@@ -43,7 +44,7 @@ function computeGroups(messages: ThreadMessage[]) {
   })
 }
 
-export function ThreadView({ fetchMessages, sendMessage, emptyText }: ThreadViewProps) {
+export function ThreadView({ fetchMessages, sendMessage, emptyText, disabled }: ThreadViewProps) {
   const messages = useAtomValue(messagesAtom)
   const isLoading = useAtomValue(isLoadingMessagesAtom)
   const setMessages = useSetAtom(messagesAtom)
@@ -150,7 +151,7 @@ export function ThreadView({ fetchMessages, sendMessage, emptyText }: ThreadView
           </div>
         )}
       </div>
-      <MessageComposer onSend={handleSend} />
+      {!disabled && <MessageComposer onSend={handleSend} />}
     </div>
   )
 }

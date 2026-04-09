@@ -1,0 +1,177 @@
+import api from '@/utils/api'
+import type { ThreadMessage } from '@/lib/thread'
+
+// ── Types ──────────────────────────────────────────────
+
+export interface OperatorAgent {
+  agent_id: string
+  alias: string | null
+  metadata: Record<string, unknown> | null
+  registered_at: string
+}
+
+export interface InboxThread {
+  thread_id: string
+  updated_at: string
+  new_message_count: number
+  last_sequence: number | null
+  last_intent: string | null
+  last_body_preview: string | null
+  refs: Array<{ type: string; target_id: string; version?: number }>
+}
+
+export interface InboxAsset {
+  asset_id: string
+  title: string | null
+  updated_at: string
+  new_version_count: number
+  latest_version: number
+}
+
+export interface InboxData {
+  threads: InboxThread[]
+  assets: InboxAsset[]
+  poll_after: number
+}
+
+export interface OperatorAssetItem {
+  id: string
+  title: string | null
+  type: string
+  mimeType: string | null
+  state: string
+  versionCount: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface ThreadUpdate {
+  thread_id: string
+  state: string
+  resolution: Record<string, unknown> | null
+  owner_id: string
+}
+
+export interface AuthResponse {
+  user_id: string
+  auth_token: string
+  is_new_registration: boolean
+}
+
+// ── Inbox item (unified feed) ──────────────────────────
+
+export type InboxItem =
+  | { kind: 'thread'; data: InboxThread }
+  | { kind: 'asset'; data: InboxAsset }
+
+export function mergeInboxItems(inbox: InboxData): InboxItem[] {
+  const items: InboxItem[] = [
+    ...inbox.threads.map((t) => ({ kind: 'thread' as const, data: t })),
+    ...inbox.assets.map((a) => ({ kind: 'asset' as const, data: a })),
+  ]
+  items.sort((a, b) => new Date(b.data.updated_at).getTime() - new Date(a.data.updated_at).getTime())
+  return items
+}
+
+// ── Auth ───────────────────────────────────────────────
+
+export async function authenticateOperator(params: {
+  token: string
+  display_name?: string
+  password?: string
+}): Promise<AuthResponse> {
+  const res = await api.post('/v0/auth/operator', params)
+  return res.data.data
+}
+
+// ── Dashboard ──────────────────────────────────────────
+
+export async function fetchOperatorAgent(): Promise<OperatorAgent> {
+  const res = await api.get('/v0/operator/agent')
+  return res.data.data
+}
+
+export async function fetchInbox(
+  since?: string,
+  limit?: number,
+): Promise<InboxData> {
+  const params: Record<string, string | number> = {}
+  if (since) params.since = since
+  if (limit) params.limit = limit
+  const res = await api.get('/v0/operator/inbox', { params })
+  return res.data.data
+}
+
+export async function fetchOperatorAssets(params?: {
+  since?: string
+  limit?: number
+  type?: string
+}): Promise<OperatorAssetItem[]> {
+  const res = await api.get('/v0/operator/assets', { params })
+  return res.data.data
+}
+
+// ── Actions ────────────────────────────────────────────
+
+export async function destroyAsset(publicId: string): Promise<void> {
+  await api.delete(`/v0/operator/assets/${publicId}`)
+}
+
+export async function updateThread(
+  threadId: string,
+  body: { state?: string; resolution?: Record<string, unknown> },
+): Promise<ThreadUpdate> {
+  const res = await api.patch(`/v0/operator/threads/${threadId}`, body)
+  return res.data.data
+}
+
+export async function dismissThread(threadId: string): Promise<void> {
+  await api.post(`/v0/operator/threads/${threadId}/dismiss`)
+}
+
+export async function postOperatorMessage(
+  threadId: string,
+  body: string,
+): Promise<ThreadMessage> {
+  const res = await api.post(`/v0/operator/threads/${threadId}/messages`, {
+    body,
+  })
+  return res.data.data
+}
+
+// ── Share tokens ───────────────────────────────────────────
+
+export interface ShareTokenResult {
+  id: string
+  token: string
+  url: string
+  perm: string[]
+  label: string | null
+  expires_at: string | null
+  created_at: string
+}
+
+export async function createShareToken(
+  publicId: string,
+  opts?: { perm?: string[]; label?: string; expires_in?: string },
+): Promise<ShareTokenResult> {
+  const res = await api.post(`/v0/operator/assets/${publicId}/share`, opts ?? {})
+  return res.data.data
+}
+
+// ── Thread data (uses regular endpoints with session cookie) ──
+
+export async function fetchOperatorThread(threadId: string) {
+  const res = await api.get(`/v0/threads/${threadId}`)
+  return res.data.data
+}
+
+export async function fetchOperatorMessages(
+  threadId: string,
+  sinceSequence?: number,
+): Promise<ThreadMessage[]> {
+  const params: Record<string, string> = {}
+  if (sinceSequence != null) params.since_sequence = String(sinceSequence)
+  const res = await api.get(`/v0/threads/${threadId}/messages`, { params })
+  return res.data.data
+}

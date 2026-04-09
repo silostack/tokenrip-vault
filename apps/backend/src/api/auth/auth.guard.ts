@@ -1,9 +1,10 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, Inject, Optional } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from './public.decorator';
 import { AUTH_MODES_KEY } from './auth.decorator';
 import { AuthService } from './auth.service';
 import { parseAndVerifyCapabilityToken, type CapabilityPayload } from './crypto';
+import { ShareTokenService } from '../service/share-token.service';
 
 export interface RequestAuth {
   agent?: { id: string };
@@ -16,6 +17,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private readonly authService: AuthService,
     private readonly reflector: Reflector,
+    @Optional() @Inject(ShareTokenService) private readonly shareTokenService?: ShareTokenService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -87,10 +89,19 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 
-  private tryTokenAuth(request: any, auth: RequestAuth): boolean {
+  private async tryTokenAuth(request: any, auth: RequestAuth): Promise<boolean> {
     const rawToken = request.query?.cap || request.headers['x-capability'];
     if (!rawToken) return false;
 
+    // Server-issued share tokens (st_ prefix) — validate via DB lookup
+    if (typeof rawToken === 'string' && rawToken.startsWith('st_') && this.shareTokenService) {
+      const payload = await this.shareTokenService.validate(rawToken);
+      if (!payload) return false;
+      auth.capability = payload;
+      return true;
+    }
+
+    // Agent-signed capability tokens — verify Ed25519 signature
     const payload = parseAndVerifyCapabilityToken(rawToken);
     if (!payload) return false;
 

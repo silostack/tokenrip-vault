@@ -10,6 +10,7 @@ import { Thread } from '../db/models/Thread';
 import { Participant } from '../db/models/Participant';
 import { Message } from '../db/models/Message';
 import { Ref } from '../db/models/Ref';
+import { ShareToken } from '../db/models/ShareToken';
 import { AssetController } from './controller/asset.controller';
 import { AgentController } from './controller/agent.controller';
 import { OperatorController } from './controller/operator.controller';
@@ -29,12 +30,13 @@ import { InboxController } from './controller/inbox.controller';
 import { InboxService } from './service/inbox.service';
 import { OperatorAuthService } from './service/operator-auth.service';
 import { OperatorBindingService } from './service/operator-binding.service';
+import { ShareTokenService } from './service/share-token.service';
 import { AuthService } from './auth/auth.service';
 
 @Module({
-  imports: [MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey, Agent, User, OperatorBinding, Thread, Participant, Message, Ref])],
+  imports: [MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken])],
   controllers: [AssetController, AgentController, OperatorController, ThreadController, MessageController, InboxController, HealthController, OpenapiController],
-  providers: [AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, OperatorAuthService, OperatorBindingService, AuthService],
+  providers: [AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, OperatorAuthService, OperatorBindingService, ShareTokenService, AuthService],
   exports: [AuthService],
 })
 export class ApiModule {}

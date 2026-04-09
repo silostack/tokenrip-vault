@@ -22,11 +22,14 @@ export function AssetToolbar({ asset, cap, commentCount, commentPanelOpen, onTog
   const copyContentTimeout = useRef<ReturnType<typeof setTimeout>>()
 
   const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(window.location.href)
+    const publicUrl = cap
+      ? `${window.location.origin}/s/${asset.id}?cap=${cap}`
+      : `${window.location.origin}/s/${asset.id}`
+    navigator.clipboard.writeText(publicUrl)
     setCopied(true)
     clearTimeout(copyTimeout.current)
     copyTimeout.current = setTimeout(() => setCopied(false), 2000)
-  }, [])
+  }, [asset.id, cap])
 
   const handleCopyContent = useCallback(async () => {
     try {
@@ -95,7 +98,7 @@ export function AssetToolbar({ asset, cap, commentCount, commentPanelOpen, onTog
         <button
           type="button"
           onClick={handleCopy}
-          title="Copy link"
+          title={cap ? 'Copy link' : 'Copy view link'}
           className="flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-full transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-foreground/10 active:scale-95 active:bg-foreground/15"
         >
           {copied ? (

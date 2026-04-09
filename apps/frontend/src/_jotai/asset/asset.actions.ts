@@ -1,5 +1,4 @@
 import { useSetAtom } from 'jotai'
-import { toast } from 'react-toastify'
 import api from '@/utils/api'
 import {
   assetAtom,
@@ -24,10 +23,10 @@ export const useAssetActions = () => {
       const response = await api.get(`/v0/assets/${uuid}`)
       setAsset(response.data.data)
     } catch (error: any) {
-      const message =
-        error.response?.data?.message || 'Failed to fetch asset'
-      setError(message)
-      toast.error(message)
+      const message = error.response?.data?.message || 'Failed to fetch asset'
+      const code = error.response?.data?.error || 'UNKNOWN'
+      const title = error.response?.data?.data?.title ?? undefined
+      setError({ message, code, title })
     } finally {
       setIsLoading(false)
     }

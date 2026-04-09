@@ -8,6 +8,7 @@ import { Thread } from './Thread';
 import { Participant } from './Participant';
 import { Message } from './Message';
 import { Ref } from './Ref';
+import { ShareToken } from './ShareToken';
 
 export { Asset, AssetType, AssetState } from './Asset';
 export { AssetVersion } from './AssetVersion';
@@ -29,5 +30,7 @@ export { MessageRepository } from '../repositories/message.repository';
 export { ApiKeyRepository } from '../repositories/api-key.repository';
 export { OperatorBindingRepository } from '../repositories/operator-binding.repository';
 export { RefRepository } from '../repositories/ref.repository';
+export { ShareToken } from './ShareToken';
+export { ShareTokenRepository } from '../repositories/share-token.repository';
 
-export const entities = [Asset, ApiKey, AssetVersion, Agent, User, OperatorBinding, Thread, Participant, Message, Ref];
+export const entities = [Asset, ApiKey, AssetVersion, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken];

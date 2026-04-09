@@ -22,6 +22,7 @@ import { AssetService } from '../service/asset.service';
 import { ThreadService } from '../service/thread.service';
 import { ParticipantService } from '../service/participant.service';
 import { MessageService } from '../service/message.service';
+import { ShareTokenService } from '../service/share-token.service';
 
 @Controller('v0')
 export class OperatorController {
@@ -34,6 +35,7 @@ export class OperatorController {
     private readonly threadService: ThreadService,
     private readonly participantService: ParticipantService,
     private readonly messageService: MessageService,
+    private readonly shareTokenService: ShareTokenService,
   ) {}
 
   // --- Auth ---
@@ -223,4 +225,98 @@ export class OperatorController {
       },
     };
   }
+
+  // --- Share tokens ---
+
+  @Auth('user')
+  @Post('operator/assets/:publicId/share')
+  async createShareToken(
+    @AuthUser() user: { id: string },
+    @Param('publicId') publicId: string,
+    @Body() body: { perm?: string[]; label?: string; expires_in?: string },
+  ) {
+    const agent = await this.requireBoundAgent(user.id);
+    const asset = await this.assetService.findByPublicId(publicId);
+    if (asset.ownerId !== agent.id) {
+      throw new ForbiddenException({ ok: false, error: 'NOT_ASSET_OWNER', message: 'Asset not owned by your agent' });
+    }
+
+    let expiresAt: Date | undefined;
+    if (body.expires_in) {
+      const seconds = parseExpiry(body.expires_in);
+      if (!seconds) {
+        throw new BadRequestException({ ok: false, error: 'INVALID_EXPIRY', message: 'Invalid expires_in. Use e.g. 1h, 7d, 30d' });
+      }
+      expiresAt = new Date(Date.now() + seconds * 1000);
+    }
+
+    const { token, record } = await this.shareTokenService.create({
+      assetPublicId: publicId,
+      agentId: agent.id,
+      issuedBy: user.id,
+      perm: body.perm,
+      label: body.label,
+      expiresAt,
+    });
+
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3333';
+    const url = `${frontendUrl}/s/${publicId}?cap=${encodeURIComponent(token)}`;
+
+    return {
+      ok: true,
+      data: {
+        id: record.id,
+        token,
+        url,
+        perm: record.perm,
+        label: record.label ?? null,
+        expires_at: record.expiresAt ?? null,
+        created_at: record.createdAt,
+      },
+    };
+  }
+
+  @Auth('user')
+  @Get('operator/assets/:publicId/shares')
+  async listShareTokens(
+    @AuthUser() user: { id: string },
+    @Param('publicId') publicId: string,
+  ) {
+    const agent = await this.requireBoundAgent(user.id);
+    const asset = await this.assetService.findByPublicId(publicId);
+    if (asset.ownerId !== agent.id) {
+      throw new ForbiddenException({ ok: false, error: 'NOT_ASSET_OWNER', message: 'Asset not owned by your agent' });
+    }
+
+    const tokens = await this.shareTokenService.findByAsset(publicId);
+
+    return {
+      ok: true,
+      data: tokens.map((t) => ({
+        id: t.id,
+        perm: t.perm,
+        label: t.label ?? null,
+        expires_at: t.expiresAt ?? null,
+        created_at: t.createdAt,
+      })),
+    };
+  }
+
+  @Auth('user')
+  @Delete('operator/shares/:id')
+  @HttpCode(204)
+  async revokeShareToken(
+    @AuthUser() user: { id: string },
+    @Param('id') id: string,
+  ) {
+    await this.shareTokenService.revoke(id, user.id);
+  }
+}
+
+function parseExpiry(s: string): number | null {
+  const match = s.match(/^(\d+)(m|h|d)$/);
+  if (!match) return null;
+  const n = parseInt(match[1], 10);
+  const multipliers: Record<string, number> = { m: 60, h: 3600, d: 86400 };
+  return n * multipliers[match[2]];
 }

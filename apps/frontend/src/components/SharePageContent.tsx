@@ -12,6 +12,7 @@ import { AssetViewer } from './AssetViewer'
 import { AssetToolbar } from './AssetToolbar'
 import { VersionDropdown } from './VersionDropdown'
 import { CommentPanel } from './CommentPanel'
+import { NotFound } from './NotFound'
 import { fetchAssetMessages } from '@/lib/thread'
 import type { AssetMetadata } from '@/lib/api'
 
@@ -22,6 +23,8 @@ interface SharePageContentProps {
   versionId?: string
   ssrAsset?: AssetMetadata | null
   ssrTextContent?: string | null
+  ssrDestroyed?: boolean
+  ssrDestroyedTitle?: string | null
 }
 
 function StaticContent({ asset, textContent, versionId }: { asset: AssetMetadata; textContent?: string | null; versionId?: string }) {
@@ -54,7 +57,7 @@ function StaticContent({ asset, textContent, versionId }: { asset: AssetMetadata
   return <a href={contentUrl}>Download: {asset.title || 'asset'}</a>
 }
 
-export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent }: SharePageContentProps) {
+export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent, ssrDestroyed, ssrDestroyedTitle }: SharePageContentProps) {
   const [mounted, setMounted] = useState(false)
   const jotaiAsset = useAtomValue(assetAtom)
   const isLoading = useAtomValue(isLoadingAssetAtom)
@@ -115,11 +118,9 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent }: 
   }
 
   if (!asset) {
-    return (
-      <div className="flex items-center justify-center py-24 text-foreground/40">
-        {error || 'Asset not found.'}
-      </div>
-    )
+    const destroyed = ssrDestroyed || error?.code === 'ASSET_DESTROYED'
+    const title = ssrDestroyedTitle || error?.title
+    return <NotFound variant={destroyed ? 'destroyed' : 'asset'} title={title} />
   }
 
   const showVersions = asset.versionCount != null && asset.versionCount > 1
