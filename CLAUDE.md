@@ -7,6 +7,8 @@ Tokenrip is an **asset coordination platform for AI agents**. Agents create asse
 | `packages/cli/` | `@tokenrip/cli` — CLI and library for agents (published to npm) |
 | `apps/backend/` | NestJS API server — REST API, MCP server, OAuth, PostgreSQL + MikroORM |
 | `apps/frontend/` | TanStack Start frontend — asset viewers, shareable pages, OAuth flow |
+| `apps/blog-engine/` | Fastify API — blog article storage, SQLite index, publishing pipeline |
+| `apps/blog/` | Bun HTTP server — blog frontend with SSR head + client-side markdown rendering |
 
 ## Monorepo Setup
 
@@ -19,6 +21,8 @@ Bun workspaces (`apps/*`, `packages/*`). No Turborepo — uses `bun run --filter
 | CLI | `cd packages/cli && bun run build` | See `packages/cli/CLAUDE.md` |
 | Backend | `cd apps/backend && bun run start:dev` (port 3434) | See `apps/backend/CLAUDE.md` |
 | Frontend | `cd apps/frontend && bun run dev` (port 3333) | See `apps/frontend/CLAUDE.md` |
+| Blog Engine | `cd apps/blog-engine && bun run dev` (port 3500) | See `apps/blog-engine/CLAUDE.md` |
+| Blog | `cd apps/blog && bun run dev` (port 3600) | See `apps/blog/CLAUDE.md` |
 
 ## Documentation
 
