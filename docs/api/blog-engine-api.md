@@ -17,6 +17,7 @@ Internal service — no authentication. The blog-engine owns article storage (ma
 | `GET` | `/articles` | List articles with pagination |
 | `GET` | `/articles/tags` | Get all tags with counts |
 | `POST` | `/articles/reindex` | Rebuild the SQLite index from storage |
+| `POST` | `/articles/:slug/enrich` | Trigger LLM enrichment for an article |
 | `DELETE` | `/articles/:slug` | Delete an article |
 
 ---
@@ -204,6 +205,45 @@ Clears the SQLite index and rebuilds it from all stored markdown files. Articles
 **curl:**
 ```bash
 curl -X POST http://localhost:3500/articles/reindex
+```
+
+---
+
+## `POST /articles/:slug/enrich` — Enrich Article
+
+Triggers LLM-driven enrichment for a specific article. The enrichment pipeline calls the Claude API to generate a description, tags, FAQ Q&A pairs, and JSON-LD structured data, then merges the results into the article's frontmatter additively (existing values are preserved).
+
+Enrichment is only available when `ANTHROPIC_API_KEY` is configured. If the API key is not set, this endpoint returns 503.
+
+If the article already has `jsonLd.faq` in its frontmatter, it is considered already enriched and `enriched` will be `false`.
+
+**Response (200):**
+```json
+{
+  "ok": true,
+  "enriched": true
+}
+```
+
+`enriched` is `true` if the LLM was called and frontmatter was updated, `false` if the article was already enriched or is currently being enriched by another request.
+
+**Error (404):**
+```json
+{
+  "error": "Article not found"
+}
+```
+
+**Error (503) — API key not configured:**
+```json
+{
+  "error": "Enrichment not available — ANTHROPIC_API_KEY not configured"
+}
+```
+
+**curl:**
+```bash
+curl -X POST http://localhost:3500/articles/getting-started/enrich
 ```
 
 ---

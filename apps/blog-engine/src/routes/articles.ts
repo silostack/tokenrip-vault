@@ -1,12 +1,13 @@
 import { FastifyInstance } from 'fastify';
 import { ArticleService } from '../services/article.service';
 import { enrichArticle } from '../services/publish.service';
+import { EnrichService } from '../services/enrich.service';
 
 export async function articleRoutes(
   fastify: FastifyInstance,
-  opts: { articleService: ArticleService },
+  opts: { articleService: ArticleService; enrichService: EnrichService | null },
 ) {
-  const { articleService } = opts;
+  const { articleService, enrichService } = opts;
 
   // Static routes must come before parameterized routes
   fastify.get('/articles/tags', async () => {
@@ -69,6 +70,27 @@ export async function articleRoutes(
       const { slug } = request.params;
       await articleService.deleteBySlug(slug);
       return { ok: true };
+    },
+  );
+
+  // Manual enrichment trigger
+  fastify.post<{ Params: { slug: string } }>(
+    '/articles/:slug/enrich',
+    async (request, reply) => {
+      if (!enrichService) {
+        return reply.status(503).send({
+          error: 'Enrichment not available — ANTHROPIC_API_KEY not configured',
+        });
+      }
+
+      const { slug } = request.params;
+      const article = await articleService.getBySlug(slug);
+      if (!article) {
+        return reply.status(404).send({ error: 'Article not found' });
+      }
+
+      const enriched = await enrichService.enrichArticle(slug);
+      return { ok: true, enriched };
     },
   );
 }

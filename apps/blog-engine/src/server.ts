@@ -6,6 +6,7 @@ import { LocalStorage } from './storage/local-storage';
 import { ArticleIndex } from './db';
 import { ArticleService } from './services/article.service';
 import { articleRoutes } from './routes/articles';
+import { EnrichService } from './services/enrich.service';
 
 export async function buildServer() {
   const config = getConfig();
@@ -27,7 +28,33 @@ export async function buildServer() {
     },
   );
 
-  await fastify.register(articleRoutes, { articleService });
+  let enrichService: EnrichService | null = null;
+
+  if (config.anthropicApiKey) {
+    enrichService = new EnrichService(
+      storage,
+      articleService,
+      config.anthropicModel,
+      { authorName: config.blogAuthorName, authorType: config.blogAuthorType },
+      config.anthropicApiKey,
+    );
+
+    // Background enrichment scanner
+    let scanInterval: ReturnType<typeof setInterval>;
+    fastify.addHook('onReady', () => {
+      scanInterval = setInterval(() => {
+        enrichService!.scanAndEnrich().catch((err) => {
+          console.error('enrichment scan failed:', err.message);
+        });
+      }, 30_000);
+    });
+
+    fastify.addHook('onClose', () => {
+      if (scanInterval) clearInterval(scanInterval);
+    });
+  }
+
+  await fastify.register(articleRoutes, { articleService, enrichService });
 
   fastify.addHook('onClose', () => {
     articleService.close();

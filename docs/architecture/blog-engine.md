@@ -336,15 +336,58 @@ Response: `{ ok: true, slug: "my-article" }`
 
 The server registers a custom Fastify content type parser for `text/markdown` that passes the body through as a raw string. The route calls `enrichArticle()` then `articleService.store()` with the enriched output and pre-parsed frontmatter.
 
-### Future: LLM-driven enrichment
+### LLM-Driven Enrichment
 
-The enrichment pipeline is the natural place for LLM-generated metadata:
+Articles published with just a title and body are automatically enriched with FAQ Q&A pairs, tags, a polished description, and JSON-LD structured data via the Claude API. Enrichment is optional — it is fully disabled when `ANTHROPIC_API_KEY` is not set.
 
-- **FAQ generation** -- analyze article content and generate `jsonLd.faq` pairs for Featured Snippet eligibility
-- **Tag suggestion** -- classify articles into the existing tag taxonomy
-- **Description refinement** -- generate a more compelling meta description than the first paragraph
+#### Background scanner
 
-These would slot into `enrichArticle()` as async enrichment steps, gated by a config flag.
+A 30-second `setInterval` runs in the Fastify server (registered via `onReady` hook, cleared on `onClose`). Each tick:
+
+1. Calls `storage.list()` to enumerate all `.md` files
+2. Parses each file's frontmatter with `gray-matter`
+3. Skips articles that already have `jsonLd.faq` (the enrichment marker)
+4. Skips articles currently being enriched (in-progress set)
+5. Enriches **one article per tick** then returns — avoids flooding the API
+
+#### LLM prompt structure
+
+A single Claude API call per article. The prompt (`buildEnrichPrompt()`) produces:
+
+- **System message:** Instructs the model to act as a content enrichment engine and return structured JSON with `description`, `tags`, `faq`, and `og` fields
+- **User message:** The article title and full markdown body
+
+The response is parsed as JSON directly (no markdown fencing). The model is configured via `ANTHROPIC_MODEL` (default: `claude-sonnet-4-5-20250514`).
+
+#### Additive merge strategy
+
+`mergeEnrichment()` fills in missing frontmatter fields without overwriting existing values:
+
+| Field | Behavior |
+|---|---|
+| `description` | Set only if missing |
+| `tags` | Set only if missing or empty array |
+| `og` | Set only if missing |
+| `jsonLd.faq` | Set only if missing — this is also the "already enriched" marker |
+| `jsonLd.article` | Set only if missing — includes author name/type from config |
+
+After merging, the article is re-serialized with `matter.stringify()` and overwritten in storage.
+
+#### Concurrency control
+
+An in-memory `Set<string>` in `EnrichService` tracks slugs currently being enriched. If `enrichArticle()` is called for a slug that's already in progress, it returns `false` immediately. The slug is removed from the set in a `finally` block.
+
+#### Graceful degradation
+
+When `ANTHROPIC_API_KEY` is not set:
+- `EnrichService` is not instantiated
+- The background scanner does not start
+- `POST /articles/:slug/enrich` returns 503 with an explanatory error message
+- All other blog-engine functionality works normally
+
+#### Manual trigger
+
+`POST /articles/:slug/enrich` allows on-demand enrichment of a specific article. Useful for testing the pipeline or re-enriching after clearing an article's `jsonLd.faq`.
 
 ---
 
@@ -403,6 +446,7 @@ curl -sI https://tokenrip.com/blog/my-article | grep -i vary
 | Engine config (ports, paths) | `apps/blog-engine/src/config.ts` |
 | Article CRUD + reindex | `apps/blog-engine/src/services/article.service.ts` |
 | Publish enrichment pipeline | `apps/blog-engine/src/services/publish.service.ts` |
+| LLM enrichment service | `apps/blog-engine/src/services/enrich.service.ts` |
 | Storage interface | `apps/blog-engine/src/storage/storage.interface.ts` |
 | Local filesystem storage | `apps/blog-engine/src/storage/local-storage.ts` |
 | SQLite index (schema, queries) | `apps/blog-engine/src/db/index.ts` |

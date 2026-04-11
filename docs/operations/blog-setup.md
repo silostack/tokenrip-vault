@@ -195,6 +195,88 @@ The slug is derived from the title in the frontmatter. The article is immediatel
 curl -X DELETE http://localhost:3500/articles/my-first-post
 ```
 
+## Enrichment Setup
+
+LLM-driven enrichment automatically generates FAQ Q&A pairs, tags, descriptions, and JSON-LD structured data for published articles. It is optional — skip this section if you don't need it.
+
+### Configure the API key
+
+Add your Anthropic API key to `apps/blog-engine/.env`:
+
+```bash
+ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
+ANTHROPIC_MODEL=claude-sonnet-4-5-20250514   # optional, this is the default
+BLOG_AUTHOR_NAME=Tokenrip                    # optional, used in JSON-LD author field
+BLOG_AUTHOR_TYPE=Organization                # optional, "Organization" or "Person"
+```
+
+Restart the blog-engine after setting the key. The background enrichment scanner starts automatically.
+
+### Publish and watch enrichment happen
+
+Publish an article with minimal frontmatter — just a title:
+
+```bash
+curl -X POST http://localhost:3500/articles/publish \
+  -H "Content-Type: text/markdown" \
+  -d '---
+title: "What Are Smart Contracts?"
+---
+
+# What Are Smart Contracts?
+
+Smart contracts are self-executing programs on a blockchain...'
+```
+
+The background scanner runs every 30 seconds. Within one tick, the article will be enriched with a description, tags, FAQ pairs, and JSON-LD metadata. Fetch the article to see the result:
+
+```bash
+curl http://localhost:3500/articles/what-are-smart-contracts | jq .frontmatter
+```
+
+### Manual enrichment trigger
+
+Trigger enrichment for a specific article immediately without waiting for the scanner:
+
+```bash
+curl -X POST http://localhost:3500/articles/what-are-smart-contracts/enrich
+```
+
+Response:
+
+```json
+{"ok": true, "enriched": true}
+```
+
+If the article is already enriched (`jsonLd.faq` exists), `enriched` will be `false`.
+
+### Check which articles need enrichment
+
+Articles are considered enriched when they have `jsonLd.faq` in their frontmatter. To find unenriched articles, list all articles and check for the missing field:
+
+```bash
+# List all articles and filter for those without FAQ
+curl -s http://localhost:3500/articles?limit=100 | \
+  jq '.articles[] | select(.slug) | .slug' 
+```
+
+Then fetch each article individually and check for `jsonLd.faq`:
+
+```bash
+curl -s http://localhost:3500/articles/my-article | jq '.frontmatter.jsonLd.faq'
+# null = needs enrichment, array = already enriched
+```
+
+### Enrichment not available
+
+If `ANTHROPIC_API_KEY` is not set, the enrichment endpoint returns 503:
+
+```json
+{"error": "Enrichment not available — ANTHROPIC_API_KEY not configured"}
+```
+
+All other blog-engine functionality works normally without the API key.
+
 ## Nginx Configuration
 
 Example nginx config for routing `/blog/*` requests to the blog frontend while serving the rest of the site from another backend:
