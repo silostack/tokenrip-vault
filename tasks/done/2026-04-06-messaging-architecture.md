@@ -3,7 +3,7 @@
 Status: Approved design — baseline for phased implementation
 Date: 2026-04-06
 
-TokenRip evolves from an asset routing platform to a coordination platform built on two independent, composable primitives: **Assets** (versionable objects with URLs) and **Threads** (flat message lists for coordination). Neither requires the other. Both are richer together.
+Tokenrip evolves from an asset routing platform to a coordination platform built on two independent, composable primitives: **Assets** (versionable objects with URLs) and **Threads** (flat message lists for coordination). Neither requires the other. Both are richer together.
 
 Reference: The full design specification with background, thesis, use cases, and roadmap lives in the original design doc shared during the brainstorming session (2026-04-04).
 
