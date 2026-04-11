@@ -36,13 +36,14 @@ export class AgentService {
       });
     }
 
+    let normalizedAlias: string | undefined;
     if (alias !== undefined) {
-      this.validateAlias(alias);
-      await this.checkAliasUnique(alias);
+      normalizedAlias = this.normalizeAlias(alias);
+      await this.checkAliasUnique(normalizedAlias);
     }
 
     const agent = new Agent(agentId, publicKey.toLowerCase());
-    if (alias) agent.alias = alias;
+    if (normalizedAlias) agent.alias = normalizedAlias;
 
     this.em.persist(agent);
 
@@ -69,7 +70,8 @@ export class AgentService {
 
   async resolveByIdOrAlias(target: string): Promise<string> {
     if (target.startsWith('trip1')) return target;
-    const agent = await this.findByAlias(target);
+    const normalized = target.endsWith('.ai') ? target : `${target}.ai`;
+    const agent = await this.findByAlias(normalized);
     if (!agent) {
       throw new NotFoundException({
         ok: false,
@@ -85,9 +87,9 @@ export class AgentService {
     const agent = await this.findById(agentId);
 
     if (alias !== null) {
-      this.validateAlias(alias);
-      await this.checkAliasUnique(alias, agentId);
-      agent.alias = alias;
+      const normalized = this.normalizeAlias(alias);
+      await this.checkAliasUnique(normalized, agentId);
+      agent.alias = normalized;
     } else {
       agent.alias = undefined;
     }
@@ -110,26 +112,25 @@ export class AgentService {
     });
   }
 
-  private validateAlias(alias: string): void {
-    if (!alias.endsWith('.ai')) {
+  private normalizeAlias(alias: string): string {
+    const base = alias.endsWith('.ai') ? alias.slice(0, -3) : alias;
+    this.validateAlias(base);
+    return `${base}.ai`;
+  }
+
+  private validateAlias(base: string): void {
+    if (base.length < 1) {
       throw new BadRequestException({
         ok: false,
         error: 'INVALID_ALIAS',
-        message: 'Agent alias must end with .ai',
+        message: 'Agent alias must be at least 1 character',
       });
     }
-    if (alias.length < 4) {
+    if (!/^[a-z0-9][a-z0-9_-]*$/.test(base)) {
       throw new BadRequestException({
         ok: false,
         error: 'INVALID_ALIAS',
-        message: 'Agent alias must be at least 4 characters (including .ai)',
-      });
-    }
-    if (!/^[a-z0-9][a-z0-9-]*\.ai$/.test(alias)) {
-      throw new BadRequestException({
-        ok: false,
-        error: 'INVALID_ALIAS',
-        message: 'Agent alias must be lowercase alphanumeric with optional hyphens, ending in .ai',
+        message: 'Agent alias must be lowercase alphanumeric with optional hyphens or underscores',
       });
     }
   }

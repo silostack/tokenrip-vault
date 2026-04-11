@@ -23,18 +23,18 @@ describe('contacts', () => {
   });
 
   test('addContact stores contact with metadata', () => {
-    addContact('alice', 'trip1abc123def456', { alias: 'alice.ai', notes: 'PDF agent' });
+    addContact('alice', 'trip1abc123def456', { alias: 'alice', notes: 'PDF agent' });
     const contacts = loadContacts();
     expect(contacts.alice).toEqual({
       agent_id: 'trip1abc123def456',
-      alias: 'alice.ai',
+      alias: 'alice',
       notes: 'PDF agent',
     });
   });
 
   test('addContact overwrites existing entry', () => {
     addContact('alice', 'trip1old');
-    addContact('alice', 'trip1new', { alias: 'alice.ai' });
+    addContact('alice', 'trip1new', { alias: 'alice' });
     expect(loadContacts().alice.agent_id).toBe('trip1new');
   });
 
@@ -58,6 +58,6 @@ describe('contacts', () => {
   });
 
   test('resolveRecipient with unknown name passes through', () => {
-    expect(resolveRecipient('bob.ai')).toBe('bob.ai');
+    expect(resolveRecipient('bob')).toBe('bob');
   });
 });

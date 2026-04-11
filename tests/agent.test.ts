@@ -26,7 +26,7 @@ describe('agent registration', () => {
   });
 
   test('registers with alias', async () => {
-    const agent = await createTestAgent(backend.url, 'test-agent.ai');
+    const agent = await createTestAgent(backend.url, 'test-agent');
     expect(agent.agentId).toMatch(/^trip1/);
 
     const res = await fetch(`${backend.url}/v0/agents/me`, {
@@ -84,16 +84,13 @@ describe('agent registration', () => {
 });
 
 describe('agent alias', () => {
-  test('rejects alias without .ai suffix', async () => {
-    const { publicKey } = generateKeyPairSync('ed25519');
-    const hex = (publicKey.export({ type: 'spki', format: 'der' }) as Buffer).subarray(12).toString('hex');
-
-    const res = await fetch(`${backend.url}/v0/agents`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ public_key: hex, alias: 'no-suffix' }),
+  test('auto-appends .ai to alias', async () => {
+    const agent = await createTestAgent(backend.url, 'auto-suffix');
+    const res = await fetch(`${backend.url}/v0/agents/me`, {
+      headers: { Authorization: `Bearer ${agent.apiKey}` },
     });
-    expect(res.status).toBe(400);
+    const json = (await res.json()) as any;
+    expect(json.data.alias).toBe('auto-suffix.ai');
   });
 
   test('update alias via PATCH', async () => {
@@ -105,7 +102,7 @@ describe('agent alias', () => {
         Authorization: `Bearer ${agent.apiKey}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ alias: 'updated.ai' }),
+      body: JSON.stringify({ alias: 'updated' }),
     });
     expect(res.status).toBe(200);
     const json = (await res.json()) as any;
@@ -113,7 +110,7 @@ describe('agent alias', () => {
   });
 
   test('rejects duplicate alias', async () => {
-    await createTestAgent(backend.url, 'unique-alias.ai');
+    await createTestAgent(backend.url, 'unique-alias');
     const agent2 = await createTestAgent(backend.url);
 
     const res = await fetch(`${backend.url}/v0/agents/me`, {
@@ -122,7 +119,7 @@ describe('agent alias', () => {
         Authorization: `Bearer ${agent2.apiKey}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ alias: 'unique-alias.ai' }),
+      body: JSON.stringify({ alias: 'unique-alias' }),
     });
     expect(res.status).toBe(409);
   });
@@ -157,7 +154,7 @@ describe('key revocation', () => {
 
 describe('agent profile', () => {
   test('GET /agents/me returns agent info', async () => {
-    const agent = await createTestAgent(backend.url, 'profile-test.ai');
+    const agent = await createTestAgent(backend.url, 'profile-test');
 
     const res = await fetch(`${backend.url}/v0/agents/me`, {
       headers: { Authorization: `Bearer ${agent.apiKey}` },

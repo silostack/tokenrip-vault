@@ -10,7 +10,7 @@ export class Agent {
   publicKey!: string; // hex-encoded Ed25519 public key
 
   @Property({ nullable: true, unique: true })
-  alias?: string; // must end with .ai
+  alias?: string; // .ai suffix auto-appended
 
   @Property({ type: 'json', nullable: true })
   metadata?: Record<string, unknown>;

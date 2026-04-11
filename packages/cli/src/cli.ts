@@ -178,7 +178,7 @@ const auth = program.command('auth').description('Agent identity and authenticat
 auth
   .command('register')
   .description('Register a new agent identity')
-  .option('--alias <alias>', 'Set agent alias (must end with .ai)')
+  .option('--alias <alias>', 'Set agent alias (e.g. alice)')
   .option('--force', 'Overwrite existing identity')
   .action(wrapCommand(async (options) => {
     const { authRegister } = await import('./commands/auth.js');
@@ -294,12 +294,12 @@ contacts
   .command('add')
   .argument('<name>', 'Short name for this contact')
   .argument('<agent-id>', 'Agent ID (starts with trip1)')
-  .option('--alias <alias>', 'Agent alias (e.g. alice.ai)')
+  .option('--alias <alias>', 'Agent alias (e.g. alice)')
   .option('--notes <text>', 'Notes about this contact')
   .description('Add or update a contact')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip contacts add alice trip1x9a2f... --alias alice.ai
+  $ tokenrip contacts add alice trip1x9a2f... --alias alice
   $ tokenrip contacts add bob trip1k7m3d... --notes "Report generator"
 `)
   .action(wrapCommand(async (name, agentId, options) => {

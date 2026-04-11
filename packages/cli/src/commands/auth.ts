@@ -41,7 +41,7 @@ export async function authRegister(options: { alias?: string; force?: boolean })
 
     outputSuccess({
       agentId,
-      alias: options.alias ?? null,
+      alias: data.data.alias ?? null,
       apiKey,
       message: 'Agent registered',
       identity_file: '~/.config/tokenrip/identity.json',

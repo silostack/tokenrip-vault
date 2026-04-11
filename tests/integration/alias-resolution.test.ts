@@ -11,8 +11,8 @@ const dbName = generateTestDbName();
 beforeAll(async () => {
   await createTestDatabase(dbName);
   backend = await startBackend(dbName);
-  agentA = await createTestAgent(backend.url, 'alice.ai');
-  agentB = await createTestAgent(backend.url, 'bob.ai');
+  agentA = await createTestAgent(backend.url, 'alice');
+  agentB = await createTestAgent(backend.url, 'bob');
 });
 
 afterAll(async () => {
@@ -28,7 +28,7 @@ describe('alias resolution in POST /v0/messages', () => {
         Authorization: `Bearer ${agentA.apiKey}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ to: ['bob.ai'], body: 'Hello via alias' }),
+      body: JSON.stringify({ to: ['bob'], body: 'Hello via alias' }),
     });
     const json = await res.json();
     expect(res.status).toBe(201);
@@ -43,7 +43,7 @@ describe('alias resolution in POST /v0/messages', () => {
         Authorization: `Bearer ${agentA.apiKey}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ to: ['nonexistent.ai'], body: 'Hello' }),
+      body: JSON.stringify({ to: ['nonexistent'], body: 'Hello' }),
     });
     expect(res.status).toBe(404);
   });
@@ -69,7 +69,7 @@ describe('alias resolution in POST /v0/threads', () => {
         Authorization: `Bearer ${agentA.apiKey}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ participants: ['bob.ai'] }),
+      body: JSON.stringify({ participants: ['bob'] }),
     });
     const json = await res.json();
     expect(res.status).toBe(201);
@@ -83,7 +83,7 @@ describe('alias resolution in POST /v0/threads', () => {
         Authorization: `Bearer ${agentA.apiKey}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ participants: ['ghost.ai'] }),
+      body: JSON.stringify({ participants: ['ghost'] }),
     });
     expect(res.status).toBe(404);
   });

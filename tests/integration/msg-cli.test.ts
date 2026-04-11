@@ -11,8 +11,8 @@ const dbName = generateTestDbName();
 beforeAll(async () => {
   await createTestDatabase(dbName);
   backend = await startBackend(dbName);
-  agentA = await createTestAgent(backend.url, 'sender.ai');
-  agentB = await createTestAgent(backend.url, 'receiver.ai');
+  agentA = await createTestAgent(backend.url, 'sender');
+  agentB = await createTestAgent(backend.url, 'receiver');
   process.env.TOKENRIP_API_URL = backend.url;
   process.env.TOKENRIP_API_KEY = agentA.apiKey;
 });
