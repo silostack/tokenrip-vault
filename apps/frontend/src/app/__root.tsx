@@ -72,6 +72,49 @@ function HeaderCta() {
   )
 }
 
+function HeaderNav() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
+  if (pathname.startsWith('/s/') || pathname.startsWith('/operator')) return null
+
+  return (
+    <nav className="flex items-center gap-5">
+      <a href="/about" className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60">About</a>
+      <a href="/faq" className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60">FAQ</a>
+    </nav>
+  )
+}
+
+function Footer() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
+
+  if (pathname.startsWith('/operator')) return null
+
+  if (pathname.startsWith('/s/')) {
+    return (
+      <footer className="border-t border-foreground/10 px-6 py-4 text-center text-xs text-foreground/40">
+        <a href="/about" className="transition-colors hover:text-foreground/60">
+          Powered by Tokenrip
+        </a>
+      </footer>
+    )
+  }
+
+  return (
+    <footer className="border-t border-foreground/10 px-6 py-6">
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-4">
+        <nav className="flex items-center gap-6">
+          <a href="/about" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">About</a>
+          <a href="/faq" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">FAQ</a>
+          <a href="/docs" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">Docs</a>
+          <a href="/blog" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">Blog</a>
+          <a href="https://github.com/tokenrip/tokenrip-cli" target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">GitHub</a>
+        </nav>
+        <span className="text-xs text-foreground/30">&copy; 2026 Tokenrip</span>
+      </div>
+    </footer>
+  )
+}
+
 function RootLayout() {
   const theme = useAtomValue(themeAtom)
 
@@ -90,7 +133,8 @@ function RootLayout() {
             >
               tokenrip
             </a>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
+              <HeaderNav />
               <HeaderCta />
               <ThemeToggle />
             </div>
@@ -98,9 +142,7 @@ function RootLayout() {
           <main className="flex-1">
             <Outlet />
           </main>
-          <footer className="border-t border-foreground/10 px-6 py-4 text-center text-xs text-foreground/40">
-            Powered by Tokenrip
-          </footer>
+          <Footer />
         </div>
         <ToastContainer theme={theme} position="bottom-right" />
         <Scripts />

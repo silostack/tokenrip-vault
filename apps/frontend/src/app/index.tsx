@@ -2,7 +2,12 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState, useCallback, useRef } from 'react'
 import { Copy, Check } from 'lucide-react'
 
+const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://tokenrip.com'
+
 export const Route = createFileRoute('/')({
+  head: () => ({
+    links: [{ rel: 'canonical', href: `${SITE_URL}/` }],
+  }),
   component: Home,
 })
 

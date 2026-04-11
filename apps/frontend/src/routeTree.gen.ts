@@ -10,6 +10,10 @@
 
 import { Route as rootRouteImport } from './app/__root'
 import { Route as OperatorRouteImport } from './app/operator'
+import { Route as FaqRouteImport } from './app/faq'
+import { Route as DocsRouteImport } from './app/docs'
+import { Route as BlogRouteImport } from './app/blog'
+import { Route as AboutRouteImport } from './app/about'
 import { Route as IndexRouteImport } from './app/index'
 import { Route as OperatorIndexRouteImport } from './app/operator/index'
 import { Route as ThreadsThreadIdRouteImport } from './app/threads/$threadId'
@@ -24,6 +28,26 @@ import { Route as OperatorAssetsPublicIdRouteImport } from './app/operator/asset
 const OperatorRoute = OperatorRouteImport.update({
   id: '/operator',
   path: '/operator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -79,6 +103,10 @@ const OperatorAssetsPublicIdRoute = OperatorAssetsPublicIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
+  '/docs': typeof DocsRoute
+  '/faq': typeof FaqRoute
   '/operator': typeof OperatorRouteWithChildren
   '/operator/auth': typeof OperatorAuthRoute
   '/s/$uuid': typeof SUuidRouteWithChildren
@@ -92,6 +120,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
+  '/docs': typeof DocsRoute
+  '/faq': typeof FaqRoute
   '/operator/auth': typeof OperatorAuthRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/operator': typeof OperatorIndexRoute
@@ -104,6 +136,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
+  '/docs': typeof DocsRoute
+  '/faq': typeof FaqRoute
   '/operator': typeof OperatorRouteWithChildren
   '/operator/auth': typeof OperatorAuthRoute
   '/s/$uuid': typeof SUuidRouteWithChildren
@@ -119,6 +155,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
+    | '/blog'
+    | '/docs'
+    | '/faq'
     | '/operator'
     | '/operator/auth'
     | '/s/$uuid'
@@ -132,6 +172,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
+    | '/blog'
+    | '/docs'
+    | '/faq'
     | '/operator/auth'
     | '/threads/$threadId'
     | '/operator'
@@ -143,6 +187,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
+    | '/blog'
+    | '/docs'
+    | '/faq'
     | '/operator'
     | '/operator/auth'
     | '/s/$uuid'
@@ -157,6 +205,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BlogRoute: typeof BlogRoute
+  DocsRoute: typeof DocsRoute
+  FaqRoute: typeof FaqRoute
   OperatorRoute: typeof OperatorRouteWithChildren
   SUuidRoute: typeof SUuidRouteWithChildren
   ThreadsThreadIdRoute: typeof ThreadsThreadIdRoute
@@ -169,6 +221,34 @@ declare module '@tanstack/react-router' {
       path: '/operator'
       fullPath: '/operator'
       preLoaderRoute: typeof OperatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -278,6 +358,10 @@ const SUuidRouteWithChildren = SUuidRoute._addFileChildren(SUuidRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BlogRoute: BlogRoute,
+  DocsRoute: DocsRoute,
+  FaqRoute: FaqRoute,
   OperatorRoute: OperatorRouteWithChildren,
   SUuidRoute: SUuidRouteWithChildren,
   ThreadsThreadIdRoute: ThreadsThreadIdRoute,

@@ -1,6 +1,6 @@
 # Design System
 
-How to use TokenRip's design tokens and patterns when building new frontend components. Tokens are defined in `apps/frontend/src/app/globals.css` and registered with Tailwind v4 for use as utility classes.
+How to use Tokenrip's design tokens and patterns when building new frontend components. Tokens are defined in `apps/frontend/src/app/globals.css` and registered with Tailwind v4 for use as utility classes.
 
 ## Quick Reference
 

@@ -2,7 +2,7 @@
 
 > Living document. Update when the messaging system changes.
 
-TokenRip is a coordination platform built on two independent, composable primitives: **Assets** (versionable objects with URLs) and **Threads** (flat message lists for coordination). Neither requires the other. Both are richer together.
+Tokenrip is a coordination platform built on two independent, composable primitives: **Assets** (versionable objects with URLs) and **Threads** (flat message lists for coordination). Neither requires the other. Both are richer together.
 
 ## Design Principles
 
