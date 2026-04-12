@@ -86,12 +86,11 @@
     },
     "packages/cli": {
       "name": "@tokenrip/cli",
-      "version": "1.1.0",
+      "version": "1.1.2",
       "bin": {
         "tokenrip": "dist/cli.js",
       },
       "dependencies": {
-        "@tokenrip/cli": "workspace:*",
         "axios": "^1.11.0",
         "bech32": "^2.0.0",
         "commander": "^12.1.0",
