@@ -19,6 +19,8 @@ interface CreateFileDto extends ProvenanceFields {
   file: { buffer: Buffer; originalname: string; mimetype: string };
   title?: string;
   ownerId: string;
+  alias?: string;
+  metadata?: Record<string, unknown>;
 }
 
 interface CreateContentDto extends ProvenanceFields {
@@ -26,6 +28,8 @@ interface CreateContentDto extends ProvenanceFields {
   content: string;
   title?: string;
   ownerId: string;
+  alias?: string;
+  metadata?: Record<string, unknown>;
 }
 
 const CONTENT_MIME_TYPES: Record<string, string> = {
@@ -66,6 +70,8 @@ export class AssetService {
       asset.mimeType = dto.file.mimetype;
       asset.title = dto.title || dto.file.originalname;
       asset.sizeBytes = dto.file.buffer.byteLength;
+      if (dto.alias) asset.alias = dto.alias;
+      if (dto.metadata) asset.metadata = dto.metadata;
       if (dto.parentAssetId) asset.parentAssetId = dto.parentAssetId;
       if (dto.creatorContext) asset.creatorContext = dto.creatorContext;
       if (dto.inputReferences) asset.inputReferences = dto.inputReferences;
@@ -101,6 +107,8 @@ export class AssetService {
       asset.mimeType = CONTENT_MIME_TYPES[dto.type];
       asset.sizeBytes = Buffer.byteLength(dto.content, 'utf-8');
       asset.title = dto.title;
+      if (dto.alias) asset.alias = dto.alias;
+      if (dto.metadata) asset.metadata = dto.metadata;
       if (dto.parentAssetId) asset.parentAssetId = dto.parentAssetId;
       if (dto.creatorContext) asset.creatorContext = dto.creatorContext;
       if (dto.inputReferences) asset.inputReferences = dto.inputReferences;
@@ -119,16 +127,7 @@ export class AssetService {
     });
   }
 
-  async findByPublicId(publicId: string): Promise<Asset> {
-    this.logger.debug(`Looking up asset by publicId ${publicId}`);
-    if (!uuidValidate(publicId)) {
-      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
-    }
-    const asset = await this.assetRepository.findOne({ publicId });
-    if (!asset) {
-      this.logger.debug(`Asset with publicId ${publicId} not found`);
-      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
-    }
+  private throwIfDestroyed(asset: Asset): void {
     if (asset.state === AssetState.DESTROYED) {
       throw new HttpException({
         ok: false,
@@ -142,7 +141,35 @@ export class AssetService {
         },
       }, HttpStatus.GONE);
     }
+  }
+
+  async findByPublicId(publicId: string): Promise<Asset> {
+    this.logger.debug(`Looking up asset by publicId ${publicId}`);
+    if (!uuidValidate(publicId)) {
+      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
+    }
+    const asset = await this.assetRepository.findOne({ publicId });
+    if (!asset) {
+      this.logger.debug(`Asset with publicId ${publicId} not found`);
+      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
+    }
+    this.throwIfDestroyed(asset);
     return asset;
+  }
+
+  async findByAlias(alias: string): Promise<Asset> {
+    this.logger.debug(`Looking up asset by alias ${alias}`);
+    const asset = await this.assetRepository.findOne({ alias });
+    if (!asset) {
+      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
+    }
+    this.throwIfDestroyed(asset);
+    return asset;
+  }
+
+  async findByIdentifier(identifier: string): Promise<Asset> {
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(identifier);
+    return isUuid ? this.findByPublicId(identifier) : this.findByAlias(identifier);
   }
 
   async findByOwner(
@@ -158,9 +185,13 @@ export class AssetService {
 
   async getContent(publicId: string): Promise<{ buffer: Buffer; mimeType: string }> {
     const asset = await this.findByPublicId(publicId);
-    this.logger.debug(`Reading content for asset publicId=${publicId} (key=${asset.storageKey})`);
-    const buffer = await this.storage.read(asset.storageKey);
+    const buffer = await this.readContent(asset);
     return { buffer, mimeType: asset.mimeType || 'application/octet-stream' };
+  }
+
+  async readContent(asset: Asset): Promise<Buffer> {
+    this.logger.debug(`Reading content for asset ${asset.id} (key=${asset.storageKey})`);
+    return this.storage.read(asset.storageKey);
   }
 
   async getStats(ownerId: string): Promise<{
@@ -196,6 +227,79 @@ export class AssetService {
     }
 
     return { assetCount, totalBytes, countsByType, bytesByType };
+  }
+
+  async queryAssets(filters: {
+    metadata?: Record<string, unknown>;
+    tag?: string;
+    sort?: string;
+    limit?: number;
+    offset?: number;
+  }): Promise<{ assets: any[]; total: number }> {
+    const conn = this.em.getConnection();
+
+    const conditions: string[] = [`"state" = '${AssetState.PUBLISHED}'`];
+    const params: any[] = [];
+
+    if (filters.metadata) {
+      conditions.push(`"metadata" @> ?::jsonb`);
+      params.push(JSON.stringify(filters.metadata));
+    }
+
+    if (filters.tag) {
+      conditions.push(`"metadata"->'tags' @> ?::jsonb`);
+      params.push(JSON.stringify([filters.tag]));
+    }
+
+    const whereClause = conditions.join(' AND ');
+
+    // Sort — whitelist: publish_date, created_at
+    const sortField = (filters.sort || '').replace(/^-/, '');
+    const sortDir = filters.sort?.startsWith('-') ? 'DESC' : 'ASC';
+    const orderClause = sortField === 'publish_date'
+      ? `("metadata"->>'publish_date')::timestamptz ${sortDir}`
+      : `"created_at" DESC`;
+
+    const limit = Math.min(filters.limit ?? 20, 100);
+    const offset = filters.offset ?? 0;
+
+    const [countRows, rows] = await Promise.all([
+      conn.execute<[{ count: string }]>(
+        `SELECT COUNT(*) as count FROM "asset" WHERE ${whereClause}`,
+        params,
+      ),
+      conn.execute(
+        `SELECT "public_id", "alias", "type", "state", "metadata", "title", "created_at", "updated_at"
+         FROM "asset"
+         WHERE ${whereClause}
+         ORDER BY ${orderClause}
+         LIMIT ? OFFSET ?`,
+        [...params, limit, offset],
+      ),
+    ]);
+
+    return { assets: rows, total: Number(countRows[0]?.count ?? 0) };
+  }
+
+  async updateAsset(
+    publicId: string,
+    ownerId: string,
+    updates: { alias?: string; metadata?: Record<string, unknown> },
+  ): Promise<Asset> {
+    const asset = await this.findByPublicId(publicId);
+    if (asset.ownerId !== ownerId) {
+      throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only update your own assets' });
+    }
+
+    if (updates.alias !== undefined) {
+      asset.alias = updates.alias || undefined;
+    }
+    if (updates.metadata !== undefined) {
+      asset.metadata = updates.metadata;
+    }
+
+    await this.em.flush();
+    return asset;
   }
 
   /**

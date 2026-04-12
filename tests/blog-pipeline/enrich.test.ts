@@ -1,5 +1,5 @@
 import { describe, test, expect, mock } from 'bun:test';
-import { buildEnrichPrompt, mergeEnrichment, type EnrichmentResult } from '../../apps/blog-engine/src/services/enrich.service';
+import { buildEnrichPrompt, mergeEnrichment, type EnrichmentResult } from '../../apps/blog-pipeline/src/services/enrich.service';
 
 describe('buildEnrichPrompt', () => {
   test('returns system and user messages', () => {

@@ -1,9 +1,9 @@
 import { renderLayout } from './layout';
 import { escapeHtml as esc } from './escape';
-import type { ArticleListItem } from './types';
+import type { BlogPostSummary } from './types';
 
 export function renderIndexPage(
-  articles: ArticleListItem[],
+  posts: BlogPostSummary[],
   baseUrl: string,
 ): string {
   const head = [
@@ -13,23 +13,24 @@ export function renderIndexPage(
     '<meta name="description" content="Latest articles">',
   ].join('\n');
 
-  const list = articles
-    .map((a) => {
-      const date = a.publishedAt
-        ? new Date(a.publishedAt).toLocaleDateString('en-US', {
+  const list = posts
+    .map((p) => {
+      const m = p.metadata;
+      const date = m.publish_date
+        ? new Date(m.publish_date).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
           })
         : '';
-      const tags = a.tags
+      const tags = (m.tags || [])
         .map((t) => `<span class="tag">${esc(t)}</span>`)
         .join(' ');
       return `
       <article>
-        <h2><a href="${baseUrl}/blog/${a.slug}">${esc(a.title)}</a></h2>
-        ${date ? `<time datetime="${a.publishedAt}">${date}</time>` : ''}
-        ${a.description ? `<p>${esc(a.description)}</p>` : ''}
+        <h2><a href="${baseUrl}/blog/${p.alias}">${esc(m.title)}</a></h2>
+        ${date ? `<time datetime="${m.publish_date}">${date}</time>` : ''}
+        ${m.description ? `<p>${esc(m.description)}</p>` : ''}
         ${tags ? `<div class="tags">${tags}</div>` : ''}
       </article>`;
     })

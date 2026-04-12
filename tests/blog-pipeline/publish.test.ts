@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'bun:test';
-import { enrichArticle } from '../../apps/blog-engine/src/services/publish.service';
+import { enrichArticle } from '../../apps/blog-pipeline/src/services/publish.service';
 
 describe('enrichArticle', () => {
   test('generates slug from title', () => {

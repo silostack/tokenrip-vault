@@ -48,6 +48,9 @@ export class Asset {
   @Property()
   storageKey: string;
 
+  @Property({ type: 'varchar', length: 128, nullable: true, unique: true })
+  alias?: string;
+
   @Property({ type: 'json', nullable: true })
   metadata?: Record<string, unknown>;
 

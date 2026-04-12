@@ -37,14 +37,14 @@ export function enrichArticle(raw: string): EnrichResult {
   };
 }
 
-function slugify(text: string): string {
+export function slugify(text: string): string {
   return text
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
 }
 
-function extractExcerpt(content: string, maxLength: number): string {
+export function extractExcerpt(content: string, maxLength: number): string {
   const lines = content
     .split('\n')
     .filter((l) => l.trim() && !l.startsWith('#'));

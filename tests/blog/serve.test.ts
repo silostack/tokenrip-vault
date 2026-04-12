@@ -1,59 +1,58 @@
 import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
-import {
-  startBlogEngine,
-  stopBlogEngine,
-  type TestBlogEngine,
-} from '../blog-engine/setup';
+import { startBackend, stopBackend, type TestBackend } from '../setup/backend';
+import { generateTestDbName, createTestDatabase, dropTestDatabase } from '../setup/database';
+import { createTestAgent, type TestAgent } from '../setup/agent';
 
-let engine: TestBlogEngine;
+let backend: TestBackend;
+let agent: TestAgent;
 let blogServer: any;
 let blogUrl: string;
-
-const SAMPLE_ARTICLE = `---
-title: "Test Article"
-slug: test-article
-description: "A test article."
-publishedAt: 2026-04-09T09:00:00Z
-tags: [test]
-jsonLd:
-  article:
-    type: Article
-    author: { name: "Test", type: Organization }
-  faq:
-    - q: "What is this?"
-      a: "A test article."
-og:
-  type: article
----
-
-# Test Article
-
-Body content here.
-`;
+const dbName = generateTestDbName();
 
 beforeAll(async () => {
-  engine = await startBlogEngine();
+  await createTestDatabase(dbName);
+  backend = await startBackend(dbName);
+  agent = await createTestAgent(backend.url);
 
-  await fetch(`${engine.url}/articles/publish`, {
+  // Publish a blog post via the TokenRip API
+  await fetch(`${backend.url}/v0/assets`, {
     method: 'POST',
-    headers: { 'Content-Type': 'text/markdown' },
-    body: SAMPLE_ARTICLE,
+    headers: {
+      'Authorization': `Bearer ${agent.apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      type: 'markdown',
+      content: '# Test Article\n\nBody content here.',
+      alias: 'test-article',
+      metadata: {
+        post_type: 'blog_post',
+        title: 'Test Article',
+        description: 'A test article.',
+        publish_date: '2026-04-09T09:00:00Z',
+        author: 'Test',
+        tags: ['test'],
+        faq: [
+          { q: 'What is this?', a: 'A test article.' },
+        ],
+      },
+    }),
   });
 
-  process.env.BLOG_ENGINE_URL = engine.url;
+  process.env.TOKENRIP_API_URL = backend.url;
+  process.env.TOKENRIP_API_KEY = agent.apiKey;
   process.env.BLOG_BASE_PATH = '/blog';
   process.env.PORT = '0';
 
-  const { createBlogServer } = await import(
-    '../../apps/blog/src/serve'
-  );
+  const { createBlogServer } = await import('../../apps/blog/src/serve');
   blogServer = createBlogServer();
   blogUrl = `http://localhost:${blogServer.port}`;
 });
 
 afterAll(async () => {
   blogServer?.stop();
-  await stopBlogEngine(engine);
+  await stopBackend(backend);
+  await dropTestDatabase(dbName);
 });
 
 describe('Blog Frontend', () => {
@@ -75,6 +74,13 @@ describe('Blog Frontend', () => {
     expect(html).toContain('FAQPage');
     expect(html).toContain('og:title');
     expect(html).toContain('# Test Article');
+  });
+
+  test('article page has canonical URL', async () => {
+    const res = await fetch(`${blogUrl}/blog/test-article`);
+    const html = await res.text();
+    expect(html).toContain('rel="canonical"');
+    expect(html).toContain('/blog/test-article');
   });
 
   test('Accept: text/markdown returns raw markdown', async () => {

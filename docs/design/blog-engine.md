@@ -1,6 +1,8 @@
-# Blog Engine
+# Blog System (Blog-as-Projection)
 
 > Design rationale for the blog system. Captures *why* decisions were made.
+>
+> **Updated 2026-04-11:** The blog system was refactored from a standalone blog engine (Fastify + SQLite + local files) to a blog-as-projection architecture. Blog posts are now Tokenrip assets with metadata conventions. The standalone blog engine was replaced by a publishing pipeline (`apps/blog-pipeline/`) and the blog frontend (`apps/blog/`) now reads from the Tokenrip API. See `docs/plans/2026-04-11-blog-as-projection-spec.md` for the full architecture specification.
 
 ## Problem
 

@@ -1,6 +1,6 @@
 # Blog Frontend (`apps/blog/`)
 
-Blog frontend serving SSR HTML with client-side markdown rendering. Fetches article data from the blog-engine API, serves an SSR head (meta tags, JSON-LD from frontmatter) with raw markdown in the body, then hydrates with client JS for styled rendering.
+Blog frontend serving SSR HTML with client-side markdown rendering. Fetches data from the Tokenrip API, serves an SSR head (meta tags, JSON-LD, canonical URLs) with raw markdown in the body, then hydrates with client JS for styled rendering.
 
 ## Commands
 
@@ -13,19 +13,35 @@ Blog frontend serving SSR HTML with client-side markdown rendering. Fetches arti
 
 ## Architecture
 
-- **Bun HTTP server** (`src/serve.ts`) — serves HTML pages, fetches article data from blog-engine API
-- **SSR head** — meta tags, Open Graph, JSON-LD injected server-side from frontmatter
+- **Bun HTTP server** (`src/serve.ts`) — serves HTML pages, fetches data from Tokenrip API
+- **SSR head** — meta tags, Open Graph, JSON-LD, canonical URLs injected server-side from asset metadata
 - **Client bundle** — React + react-markdown + remark-gfm + rehype-highlight renders raw markdown into styled HTML
 - **Vite** — builds client bundle from `src/client/entry.tsx` to `dist/client/blog.js`
+- **Caching** — in-memory TTL cache on API responses (5min posts, 2min listings)
+
+## Routes
+
+| Route | What It Renders |
+|---|---|
+| `/blog` | Blog index — paginated list of posts |
+| `/blog/:slug` | Individual blog post |
+| `/blog/tag/:tag` | Posts filtered by tag |
+| `/blog/rss.xml` | RSS 2.0 feed |
+| `/blog/sitemap.xml` | XML sitemap |
+
+## Data Source
+
+All data comes from the Tokenrip API:
+- Individual posts: `GET /v0/assets/:slug` (public, alias lookup)
+- Post listings: `POST /v0/assets/query` (private, needs API key)
+
+Blog posts are Tokenrip assets with `metadata.post_type === "blog_post"`.
 
 ## Environment Variables
 
 See `.env.sample` for configuration:
 - `PORT` — server port (default 3600)
-- `BLOG_ENGINE_URL` — blog-engine API base URL
+- `TOKENRIP_API_URL` — Tokenrip backend URL
+- `TOKENRIP_API_KEY` — API key for listing queries
 - `BLOG_BASE_PATH` — URL path prefix for blog routes
 - `BASE_URL` — public-facing base URL for canonical links
-
-## Design Doc
-
-See `docs/plans/2026-04-09-blog-engine-design.md` for the full system design.

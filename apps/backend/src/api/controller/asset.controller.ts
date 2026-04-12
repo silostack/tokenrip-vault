@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Delete,
   Param,
   Query,
@@ -27,6 +28,7 @@ import { ParticipantService } from '../service/participant.service';
 import { MessageService } from '../service/message.service';
 import { Asset, AssetType } from '../../db/models/Asset';
 import { parseCapSub, parseAndVerifyCapabilityToken } from '../auth/crypto';
+import { validateAlias } from '../validation/alias.validation';
 import { AgentService } from '../service/agent.service';
 import { ShareTokenService } from '../service/share-token.service';
 
@@ -51,13 +53,22 @@ export class AssetController {
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: MAX_FILE_SIZE } }))
   async create(
     @UploadedFile() file: Express.Multer.File | undefined,
-    @Body() body?: { type?: string; content?: string; title?: string; mimeType?: string; parentAssetId?: string; creatorContext?: string; inputReferences?: string[] },
+    @Body() body?: { type?: string; content?: string; title?: string; mimeType?: string; alias?: string; metadata?: Record<string, unknown>; parentAssetId?: string; creatorContext?: string; inputReferences?: string[] },
     @AuthAgent() agent: { id: string },
   ) {
+    if (body?.alias) {
+      const aliasError = validateAlias(body.alias);
+      if (aliasError) {
+        throw new BadRequestException({ ok: false, error: 'INVALID_ALIAS', message: aliasError });
+      }
+    }
+
     if (file) {
       const asset = await this.assetService.createFromFile({
         file: { buffer: file.buffer, originalname: file.originalname, mimetype: file.mimetype },
         title: body?.title,
+        alias: body?.alias,
+        metadata: body?.metadata,
         ownerId: agent.id,
         parentAssetId: body?.parentAssetId,
         creatorContext: body?.creatorContext,
@@ -74,6 +85,8 @@ export class AssetController {
         type: body.type as AssetType,
         content: body.content,
         title: body.title,
+        alias: body.alias,
+        metadata: body.metadata,
         ownerId: agent.id,
         parentAssetId: body.parentAssetId,
         creatorContext: body.creatorContext,
@@ -83,6 +96,75 @@ export class AssetController {
     }
 
     throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'Provide either a file upload or { type, content } JSON body' });
+  }
+
+  @Post('query')
+  @Auth('agent')
+  async queryAssets(
+    @Body() body: {
+      metadata?: Record<string, unknown>;
+      tag?: string;
+      sort?: string;
+      limit?: number;
+      offset?: number;
+    },
+  ) {
+    const { assets, total } = await this.assetService.queryAssets({
+      metadata: body.metadata,
+      tag: body.tag,
+      sort: body.sort,
+      limit: body.limit,
+      offset: body.offset,
+    });
+
+    return {
+      ok: true,
+      assets: assets.map((a: any) => ({
+        publicId: a.public_id,
+        alias: a.alias ?? null,
+        type: a.type,
+        state: a.state,
+        title: a.title ?? null,
+        metadata: a.metadata,
+        createdAt: a.created_at,
+        updatedAt: a.updated_at,
+      })),
+      pagination: {
+        total,
+        limit: Math.min(body.limit ?? 20, 100),
+        offset: body.offset ?? 0,
+      },
+    };
+  }
+
+  @Patch(':publicId')
+  @Auth('agent')
+  async updateAsset(
+    @Param('publicId') publicId: string,
+    @Body() body: { alias?: string; metadata?: Record<string, unknown> },
+    @AuthAgent() agent: { id: string },
+  ) {
+    if (body.alias !== undefined && body.alias !== null && body.alias !== '') {
+      const aliasError = validateAlias(body.alias);
+      if (aliasError) {
+        throw new BadRequestException({ ok: false, error: 'INVALID_ALIAS', message: aliasError });
+      }
+    }
+
+    const asset = await this.assetService.updateAsset(publicId, agent.id, {
+      alias: body.alias,
+      metadata: body.metadata,
+    });
+
+    return {
+      ok: true,
+      data: {
+        id: asset.publicId,
+        alias: asset.alias ?? null,
+        metadata: asset.metadata,
+        updatedAt: asset.updatedAt,
+      },
+    };
   }
 
   private verifyAssetAccess(asset: Asset, auth: RequestAuth, requiredPerm?: string): void {
@@ -130,7 +212,7 @@ export class AssetController {
 
 
   private assetCreatedResponse(asset: Asset) {
-    return { id: asset.publicId, url: `${FRONTEND_URL}/s/${asset.publicId}`, title: asset.title, type: asset.type, mimeType: asset.mimeType };
+    return { id: asset.publicId, alias: asset.alias ?? null, url: `${FRONTEND_URL}/s/${asset.publicId}`, title: asset.title, type: asset.type, mimeType: asset.mimeType };
   }
 
   @Delete(':publicId')
@@ -283,6 +365,7 @@ export class AssetController {
       ok: true,
       data: {
         id: asset.publicId,
+        alias: asset.alias ?? null,
         title: asset.title,
         description: asset.description,
         type: asset.type,
@@ -294,6 +377,7 @@ export class AssetController {
         versionCount: asset.versionCount,
         currentVersionId: asset.currentVersionId,
         createdAt: asset.createdAt,
+        updatedAt: asset.updatedAt,
         creator,
       },
     };
@@ -302,8 +386,9 @@ export class AssetController {
   @Public()
   @Get(':publicId/content')
   async getContent(@Param('publicId') publicId: string, @Res() res: Response) {
-    const { buffer, mimeType } = await this.assetService.getContent(publicId);
-    res.set('Content-Type', mimeType);
+    const asset = await this.assetService.findByIdentifier(publicId);
+    const buffer = await this.assetService.readContent(asset);
+    res.set('Content-Type', asset.mimeType || 'application/octet-stream');
     res.send(buffer);
   }
 

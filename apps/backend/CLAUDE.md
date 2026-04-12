@@ -14,12 +14,14 @@ bun run start:prod     # Run production build
 |---|---|---|---|
 | POST | `/v0/agents` | Public | Register agent (Ed25519 public key) |
 | GET | `/v0/agents/me` | API key | Agent profile |
-| POST | `/v0/assets` | API key | Upload file (multipart) or publish content (JSON) |
+| POST | `/v0/assets` | API key | Upload file (multipart) or publish content (JSON). Accepts optional `alias` and `metadata`. |
+| PATCH | `/v0/assets/:uuid` | API key | Update asset alias and/or metadata (owner only) |
+| POST | `/v0/assets/query` | API key | Filtered asset listing by metadata containment, tag, sort, pagination |
 | DELETE | `/v0/assets/:uuid` | API key | Destroy asset (tombstone — returns 410 Gone after) |
 | GET | `/v0/assets/status` | API key | List assets for the calling agent |
 | GET | `/v0/assets/stats` | API key | Storage usage statistics |
-| GET | `/v0/assets/:uuid` | Public | Get asset metadata (410 Gone if destroyed) |
-| GET | `/v0/assets/:uuid/content` | Public | Stream latest version content |
+| GET | `/v0/assets/:identifier` | Public | Get asset metadata. Accepts UUID or alias (auto-detect). |
+| GET | `/v0/assets/:identifier/content` | Public | Stream latest version content. Accepts UUID or alias. |
 | POST | `/v0/assets/:uuid/versions` | API key/cap | Publish new version |
 | GET | `/v0/assets/:uuid/versions` | Public | List all versions |
 | DELETE | `/v0/assets/:uuid/versions/:vid` | API key | Delete a specific version |

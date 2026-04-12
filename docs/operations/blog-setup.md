@@ -1,12 +1,12 @@
 # Blog System Setup
 
-The blog system consists of two apps: **blog-engine** (Fastify API that stores and indexes articles) and **blog** (Bun HTTP server that renders articles as SSR HTML with client-side hydration). The engine owns article storage and a disposable SQLite index. The frontend fetches from the engine and serves pages.
+The blog system has three components: the **Tokenrip backend** (stores blog posts as assets), the **publishing pipeline** (enriches and publishes markdown), and the **blog frontend** (renders blog pages). The backend must be running before you can publish or view posts.
 
 ## Prerequisites
 
-- **Bun** (latest) — runs the blog frontend and installs monorepo dependencies
-- **Node.js 18+** — runs blog-engine (Fastify + better-sqlite3)
-- **tsx** — dev dependency for blog-engine watch mode (installed via `bun install`)
+- **Bun** (latest) — runs all components
+- **PostgreSQL** — required by the Tokenrip backend
+- **Anthropic API key** (optional) — enables LLM enrichment (FAQ, tags, polished descriptions)
 
 ## Quick Start
 
@@ -14,283 +14,250 @@ The blog system consists of two apps: **blog-engine** (Fastify API that stores a
 # 1. Install all dependencies from monorepo root
 bun install
 
-# 2. Set up blog-engine environment
-cp apps/blog-engine/.env.sample apps/blog-engine/.env
+# 2. Start the Tokenrip backend (port 3434)
+#    Requires PostgreSQL running with a 'tokenrip' database
+cd apps/backend && bun run start:dev
 
-# 3. Create storage and database directories
-mkdir -p apps/blog-engine/articles apps/blog-engine/data
+# 3. Register an agent and get an API key
+#    (needed by the pipeline and blog frontend for queries)
+curl -X POST http://localhost:3434/v0/agents \
+  -H 'Content-Type: application/json' \
+  -d '{"public_key": "<your-ed25519-hex-pubkey>"}'
+# → { "ok": true, "data": { "agent_id": "...", "api_key": "sk_..." } }
 
-# 4. Start the blog-engine API (port 3500)
-cd apps/blog-engine && bun run dev
+# 4. Set up the publishing pipeline
+cp apps/blog-pipeline/.env.sample apps/blog-pipeline/.env
+# Edit .env: set TOKENRIP_API_KEY=sk_... from step 3
 
-# 5. In a new terminal — build the blog frontend client bundle
-cd apps/blog && bun run build:client
+# 5. Publish your first blog post
+bun run apps/blog-pipeline/src/cli.ts path/to/your-post.md
 
-# 6. Set up blog frontend environment
+# 6. Set up the blog frontend
 cp apps/blog/.env.sample apps/blog/.env
+# Edit .env: set TOKENRIP_API_KEY=sk_... from step 3
 
-# 7. Start the blog frontend (port 3600)
-cd apps/blog && bun run dev
+# 7. Build the client bundle and start the blog frontend (port 3600)
+cd apps/blog && bun run build:client && bun run dev
 ```
 
-Verify both are running:
+Verify everything works:
 
 ```bash
-# Blog engine health check
-curl http://localhost:3500/articles
+# Check the published post via API
+curl http://localhost:3434/v0/assets/your-post-slug
 
-# Blog frontend
+# View the blog
 curl http://localhost:3600/blog
+curl http://localhost:3600/blog/your-post-slug
 ```
+
+---
+
+## Publishing Blog Posts
+
+Blog posts are published through the pipeline CLI. Write a markdown file with optional YAML frontmatter:
+
+```markdown
+---
+title: "My First Blog Post"
+description: "A short description for SEO."
+tags: [intro, blog]
+author: Simon
+---
+
+# My First Blog Post
+
+Article content goes here in **markdown**.
+```
+
+Publish it:
+
+```bash
+bun run apps/blog-pipeline/src/cli.ts path/to/my-post.md
+# → Published: my-first-blog-post (abc123-def456-...)
+```
+
+The pipeline:
+1. Parses frontmatter
+2. Generates slug from title if not provided
+3. Generates description from first paragraph if not provided
+4. Calculates reading time
+5. Runs LLM enrichment if `ANTHROPIC_API_KEY` is configured (FAQ, tags, polished description)
+6. Publishes to Tokenrip via `POST /v0/assets` with the slug as `alias` and blog metadata
+
+The post is immediately accessible at `http://localhost:3600/blog/my-first-blog-post`.
+
+### Minimal frontmatter
+
+The only hard requirement is content. If frontmatter is absent, the pipeline extracts the title from the first H1 heading:
+
+```markdown
+# Auto-Titled Post
+
+This post has no frontmatter at all.
+```
+
+### Updating a post
+
+Re-publish the same file. The pipeline detects the slug already exists and creates a new version:
+
+```bash
+# Edit your-post.md, then:
+bun run apps/blog-pipeline/src/cli.ts path/to/your-post.md
+# → Updated: my-first-blog-post (abc123-def456-...)
+```
+
+### Frontmatter reference
+
+| Field | Required | Type | Pipeline behavior if missing |
+|-------|----------|------|------------------------------|
+| `title` | No* | string | Extracted from first H1 |
+| `slug` | No | string | Generated from title |
+| `description` | No | string | Extracted from first paragraph (max 160 chars) |
+| `publish_date` | No | ISO 8601 | Set to current timestamp |
+| `author` | No | string | Falls back to `BLOG_AUTHOR_NAME` env var |
+| `tags` | No | string[] | Empty array (or filled by LLM enrichment) |
+| `og_image` | No | string | Blog frontend uses default |
+| `excerpt` | No | string | Blog frontend generates from first paragraph |
+| `featured` | No | boolean | `false` |
+| `draft` | No | boolean | `false` |
+
+*Either `title` in frontmatter or an H1 heading in content is required.
+
+---
+
+## LLM Enrichment
+
+When `ANTHROPIC_API_KEY` is set in the pipeline's `.env`, each publish triggers a Claude API call that generates:
+
+- **Description:** SEO-optimized summary (max 160 chars)
+- **Tags:** 3-7 lowercase topic tags
+- **FAQ:** 5-10 question/answer pairs for structured data
+- **OG type:** `article`
+
+Enrichment is **additive** — it only fills missing fields. If you set `description` or `tags` in frontmatter, those values are preserved.
+
+### Configure enrichment
+
+```bash
+# In apps/blog-pipeline/.env
+ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
+ANTHROPIC_MODEL=claude-sonnet-4-5-20250514   # optional
+BLOG_AUTHOR_NAME=Tokenrip                    # optional
+BLOG_AUTHOR_TYPE=Organization                # optional
+```
+
+### Publish with enrichment
+
+```bash
+# Publish with just a title — LLM fills in the rest
+bun run apps/blog-pipeline/src/cli.ts post.md
+```
+
+The LLM call takes 5-30 seconds. The enriched metadata is published as part of the asset's metadata blob.
+
+### Skip enrichment
+
+Remove or leave blank `ANTHROPIC_API_KEY` in `.env`. The pipeline publishes with only the basic metadata (slug, description from excerpt, timestamp).
+
+---
 
 ## Environment Variables
 
-### blog-engine (`apps/blog-engine/.env`)
+### Publishing Pipeline (`apps/blog-pipeline/.env`)
 
-| Variable | Default | Description |
-|---|---|---|
-| `PORT` | `3500` | HTTP server port |
-| `NODE_ENV` | `development` | Environment mode |
-| `STORAGE_PROVIDER` | `local` | Storage backend (`local` only — S3 planned) |
-| `STORAGE_PATH` | `./articles` | Directory where markdown article files are stored |
-| `SQLITE_PATH` | `./data/blog.sqlite` | Path to the SQLite index database |
-| `BLOG_ENGINE_URL` | `http://localhost:3500` | Public URL of the blog-engine (used by the blog frontend) |
+| Variable | Default | Required | Description |
+|---|---|---|---|
+| `TOKENRIP_API_URL` | `http://localhost:3434` | Yes | Tokenrip backend URL |
+| `TOKENRIP_API_KEY` | — | Yes | API key for publishing assets |
+| `ANTHROPIC_API_KEY` | — | No | Enables LLM enrichment |
+| `ANTHROPIC_MODEL` | `claude-sonnet-4-5-20250514` | No | Model for enrichment |
+| `BLOG_AUTHOR_NAME` | `Tokenrip` | No | Default author name |
+| `BLOG_AUTHOR_TYPE` | `Organization` | No | `Organization` or `Person` |
 
-### blog (`apps/blog/.env`)
+### Blog Frontend (`apps/blog/.env`)
 
-| Variable | Default | Description |
-|---|---|---|
-| `PORT` | `3600` | HTTP server port |
-| `BLOG_ENGINE_URL` | `http://localhost:3500` | Blog-engine API base URL |
-| `BLOG_BASE_PATH` | `/blog` | URL path prefix for all blog routes |
-| `BASE_URL` | `http://localhost:3600` | Public-facing base URL for canonical links and meta tags |
+| Variable | Default | Required | Description |
+|---|---|---|---|
+| `PORT` | `3600` | No | HTTP server port |
+| `TOKENRIP_API_URL` | `http://localhost:3434` | Yes | Tokenrip backend URL |
+| `TOKENRIP_API_KEY` | — | Yes | API key for listing queries |
+| `BLOG_BASE_PATH` | `/blog` | No | URL path prefix for blog routes |
+| `BASE_URL` | `http://localhost:3600` | No | Public URL for canonical links |
+
+---
+
+## Blog Frontend Routes
+
+| Route | What It Renders |
+|-------|----------------|
+| `/blog` | Blog index — paginated list of posts, most recent first |
+| `/blog/:slug` | Individual blog post with full SSR head |
+| `/blog/tag/:tag` | Posts filtered by tag |
+| `/blog/rss.xml` | RSS 2.0 feed (latest 20 posts) |
+| `/blog/sitemap.xml` | XML sitemap (all posts) |
+
+---
 
 ## Development Workflow
 
-**Blog-engine** uses `tsx watch` for hot reload. File changes in `apps/blog-engine/src/` restart the server automatically:
+Run the backend and blog frontend in separate terminals:
 
 ```bash
-cd apps/blog-engine && bun run dev
-```
+# Terminal 1: Tokenrip backend
+cd apps/backend && bun run start:dev
 
-**Blog frontend** uses `bun run --watch` for hot reload on the server. However, changes to client-side code (`src/client/`) require rebuilding the Vite bundle:
-
-```bash
-# Server-side changes — auto-reload
+# Terminal 2: Blog frontend (auto-reload on server changes)
 cd apps/blog && bun run dev
 
-# Client-side changes — rebuild manually
+# Publish a test post
+bun run apps/blog-pipeline/src/cli.ts test-post.md
+```
+
+Client-side changes (React markdown renderer) require rebuilding the Vite bundle:
+
+```bash
 cd apps/blog && bun run build:client
 ```
 
+---
+
 ## Building for Production
-
-### Blog-engine
-
-```bash
-cd apps/blog-engine
-bun run build          # Compiles TypeScript to dist/
-bun run start          # Runs compiled build: node dist/main.js
-```
 
 ### Blog frontend
 
 ```bash
 cd apps/blog
 bun run build:client   # Vite builds client bundle to dist/client/
-bun run start          # Runs production server: bun run src/serve.ts
+bun run start          # Runs production server
 ```
 
-The blog frontend serves its client assets from `dist/client/` at the path `{BLOG_BASE_PATH}/_assets/`. The Vite build outputs `blog.js` and `blog.css` to that directory.
+The blog frontend serves its client assets from `dist/client/` at `{BLOG_BASE_PATH}/_assets/`.
 
-## Storage Configuration
-
-Articles are stored as markdown files with YAML frontmatter at `{STORAGE_PATH}/{slug}.md`. The storage path is relative to the blog-engine working directory by default.
-
-```
-apps/blog-engine/
-├── articles/          # STORAGE_PATH (default: ./articles)
-│   ├── my-first-post.md
-│   └── another-article.md
-└── data/
-    └── blog.sqlite    # SQLITE_PATH (default: ./data/blog.sqlite)
-```
-
-The SQLite database is a **disposable derived index** — it is rebuilt from the markdown files on disk. You can delete it and reindex at any time without data loss.
-
-For production, set `STORAGE_PATH` to an absolute path outside the app directory:
-
-```bash
-STORAGE_PATH=/var/data/blog/articles
-SQLITE_PATH=/var/data/blog/blog.sqlite
-```
-
-**Future:** S3 storage support is planned. The `STORAGE_PROVIDER` variable exists for this purpose but currently only `local` is implemented.
-
-## Reindexing
-
-The SQLite index can be rebuilt from the markdown files on disk. Do this when:
-
-- The SQLite database is missing or corrupt
-- You've added or modified article files directly on disk (outside the API)
-- You want a clean index
-
-### CLI method
-
-```bash
-cd apps/blog-engine && bun run reindex
-```
-
-### API method
-
-```bash
-curl -X POST http://localhost:3500/articles/reindex
-```
-
-Both methods scan all `.md` files in the storage path, parse frontmatter, and rebuild the index. The response includes the count of indexed articles:
-
-```json
-{"ok": true, "count": 5}
-```
-
-## Publishing Articles
-
-Publish articles by sending markdown with YAML frontmatter to the engine API. The content type must be `text/markdown`.
-
-### Basic publish
-
-```bash
-curl -X POST http://localhost:3500/articles/publish \
-  -H "Content-Type: text/markdown" \
-  -d '---
-title: "My First Post"
-description: "A short description"
-tags: ["blog", "intro"]
 ---
-
-# My First Post
-
-Article content goes here in **markdown**.'
-```
-
-Response:
-
-```json
-{"ok": true, "slug": "my-first-post"}
-```
-
-### Publish from a file
-
-```bash
-curl -X POST http://localhost:3500/articles/publish \
-  -H "Content-Type: text/markdown" \
-  --data-binary @my-article.md
-```
-
-The slug is derived from the title in the frontmatter. The article is immediately available at `http://localhost:3600/blog/{slug}`.
-
-### Delete an article
-
-```bash
-curl -X DELETE http://localhost:3500/articles/my-first-post
-```
-
-## Enrichment Setup
-
-LLM-driven enrichment automatically generates FAQ Q&A pairs, tags, descriptions, and JSON-LD structured data for published articles. It is optional — skip this section if you don't need it.
-
-### Configure the API key
-
-Add your Anthropic API key to `apps/blog-engine/.env`:
-
-```bash
-ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
-ANTHROPIC_MODEL=claude-sonnet-4-5-20250514   # optional, this is the default
-BLOG_AUTHOR_NAME=Tokenrip                    # optional, used in JSON-LD author field
-BLOG_AUTHOR_TYPE=Organization                # optional, "Organization" or "Person"
-```
-
-Restart the blog-engine after setting the key. The background enrichment scanner starts automatically.
-
-### Publish and watch enrichment happen
-
-Publish an article with minimal frontmatter — just a title:
-
-```bash
-curl -X POST http://localhost:3500/articles/publish \
-  -H "Content-Type: text/markdown" \
-  -d '---
-title: "What Are Smart Contracts?"
----
-
-# What Are Smart Contracts?
-
-Smart contracts are self-executing programs on a blockchain...'
-```
-
-The background scanner runs every 30 seconds. Within one tick, the article will be enriched with a description, tags, FAQ pairs, and JSON-LD metadata. Fetch the article to see the result:
-
-```bash
-curl http://localhost:3500/articles/what-are-smart-contracts | jq .frontmatter
-```
-
-### Manual enrichment trigger
-
-Trigger enrichment for a specific article immediately without waiting for the scanner:
-
-```bash
-curl -X POST http://localhost:3500/articles/what-are-smart-contracts/enrich
-```
-
-Response:
-
-```json
-{"ok": true, "enriched": true}
-```
-
-If the article is already enriched (`jsonLd.faq` exists), `enriched` will be `false`.
-
-### Check which articles need enrichment
-
-Articles are considered enriched when they have `jsonLd.faq` in their frontmatter. To find unenriched articles, list all articles and check for the missing field:
-
-```bash
-# List all articles and filter for those without FAQ
-curl -s http://localhost:3500/articles?limit=100 | \
-  jq '.articles[] | select(.slug) | .slug' 
-```
-
-Then fetch each article individually and check for `jsonLd.faq`:
-
-```bash
-curl -s http://localhost:3500/articles/my-article | jq '.frontmatter.jsonLd.faq'
-# null = needs enrichment, array = already enriched
-```
-
-### Enrichment not available
-
-If `ANTHROPIC_API_KEY` is not set, the enrichment endpoint returns 503:
-
-```json
-{"error": "Enrichment not available — ANTHROPIC_API_KEY not configured"}
-```
-
-All other blog-engine functionality works normally without the API key.
 
 ## Nginx Configuration
 
-Example nginx config for routing `/blog/*` requests to the blog frontend while serving the rest of the site from another backend:
+Example nginx config routing `/blog/*` to the blog frontend:
 
 ```nginx
 upstream blog_frontend {
     server 127.0.0.1:3600;
 }
 
+upstream tokenrip_backend {
+    server 127.0.0.1:3434;
+}
+
+upstream tokenrip_frontend {
+    server 127.0.0.1:3333;
+}
+
 server {
     listen 80;
-    server_name example.com;
+    server_name tokenrip.com;
 
-    # Blog routes — proxy to blog frontend
+    # Blog routes
     location /blog {
         proxy_pass http://blog_frontend;
         proxy_set_header Host $host;
@@ -302,18 +269,22 @@ server {
     # Blog static assets
     location /blog/_assets/ {
         proxy_pass http://blog_frontend;
-        proxy_set_header Host $host;
         expires 30d;
         add_header Cache-Control "public, immutable";
     }
 
-    # Everything else — your main app
-    location / {
-        proxy_pass http://127.0.0.1:3333;
+    # API
+    location /v0/ {
+        proxy_pass http://tokenrip_backend;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Main frontend
+    location / {
+        proxy_pass http://tokenrip_frontend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
     }
 }
 ```
@@ -321,45 +292,73 @@ server {
 Set `BASE_URL` in the blog frontend to match your public domain:
 
 ```bash
-BASE_URL=https://example.com
+BASE_URL=https://tokenrip.com
 BLOG_BASE_PATH=/blog
 ```
 
+---
+
+## Verifying the Setup
+
+```bash
+# 1. Backend is running and has the alias/query endpoints
+curl http://localhost:3434/v0/health
+
+# 2. Publish a test post
+bun run apps/blog-pipeline/src/cli.ts test-post.md
+
+# 3. Verify post is accessible via alias
+curl http://localhost:3434/v0/assets/test-post-slug | jq .data.alias
+
+# 4. Verify post metadata
+curl http://localhost:3434/v0/assets/test-post-slug | jq .data.metadata
+
+# 5. Verify blog frontend renders
+curl http://localhost:3600/blog | grep "test-post"
+curl http://localhost:3600/blog/test-post-slug | grep "<title>"
+
+# 6. Verify content negotiation
+curl -H 'Accept: text/markdown' http://localhost:3600/blog/test-post-slug
+
+# 7. Verify RSS feed
+curl http://localhost:3600/blog/rss.xml
+
+# 8. Verify sitemap
+curl http://localhost:3600/blog/sitemap.xml
+```
+
+---
+
 ## Troubleshooting
 
-**Port conflict on 3500 or 3600**
-Another process is using the port. Either stop it or change the `PORT` in the respective `.env` file:
+**"TOKENRIP_API_KEY is required"**
+The pipeline needs an API key to publish. Register an agent via `POST /v0/agents` and set the key in `.env`.
+
+**Blog frontend shows empty index**
+Check that `TOKENRIP_API_KEY` is set in `apps/blog/.env`. The listing query (`POST /v0/assets/query`) requires authentication.
+
+**Post published but not showing on blog**
+Verify the asset has `metadata.post_type = "blog_post"`. Check with:
 ```bash
-lsof -i :3500   # Find what's using the port
+curl http://localhost:3434/v0/assets/your-slug | jq .data.metadata.post_type
 ```
 
-**Empty article index / no articles returned**
-The SQLite index hasn't been built yet, or the storage path has no articles. Reindex:
+**Port conflict on 3434 or 3600**
 ```bash
-cd apps/blog-engine && bun run reindex
+lsof -i :3434   # Find what's using the port
 ```
-
-**Storage path permission errors**
-The blog-engine creates the `STORAGE_PATH` and `SQLITE_PATH` parent directories on startup. If running as a different user in production, ensure the process has write access:
-```bash
-mkdir -p /var/data/blog/articles /var/data/blog
-chown appuser:appuser /var/data/blog
-```
-
-**Blog frontend returns "Not found" for all routes**
-Check that `BLOG_BASE_PATH` matches the URL path you're accessing. The frontend only responds to paths under this prefix (default: `/blog`).
 
 **Blog frontend shows unstyled markdown**
-The client bundle hasn't been built. Run:
+Build the client bundle:
 ```bash
 cd apps/blog && bun run build:client
 ```
 
-**Blog-engine connection refused from blog frontend**
-Check that `BLOG_ENGINE_URL` in the blog frontend `.env` matches the address the engine is actually listening on. If both run on the same host, use `http://localhost:3500`.
+**Blog frontend returns "Not found" for all routes**
+Check that `BLOG_BASE_PATH` matches the URL path (default: `/blog`).
 
-**`tsx: command not found`**
-Install dependencies from the monorepo root:
-```bash
-bun install
-```
+**Pipeline fails with "Failed to publish asset"**
+Check that the backend is running and the API key is valid. Check backend logs for details.
+
+**Alias conflict on publish**
+Two posts can't share the same slug. The backend enforces uniqueness via a partial unique index. Use a different slug or update the existing post.
