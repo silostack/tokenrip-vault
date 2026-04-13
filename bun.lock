@@ -117,6 +117,19 @@
         "vite": "^8.0.0",
       },
     },
+    "apps/intel-engine": {
+      "name": "@tokenrip/intel-engine",
+      "version": "0.0.1",
+      "dependencies": {
+        "@anthropic-ai/sdk": "^0.52.0",
+        "gray-matter": "^4.0.3",
+        "zod": "^3.23.0",
+      },
+      "devDependencies": {
+        "@types/node": "^22.10.7",
+        "typescript": "^5.7.3",
+      },
+    },
     "packages/cli": {
       "name": "@tokenrip/cli",
       "version": "1.1.2",
@@ -790,6 +803,8 @@
     "@tokenizer/token": ["@tokenizer/token@0.3.0", "", {}, "sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A=="],
 
     "@tokenrip/cli": ["@tokenrip/cli@workspace:packages/cli"],
+
+    "@tokenrip/intel-engine": ["@tokenrip/intel-engine@workspace:apps/intel-engine"],
 
     "@tybys/wasm-util": ["@tybys/wasm-util@0.10.1", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg=="],
 

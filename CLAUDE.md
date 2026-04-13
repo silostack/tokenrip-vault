@@ -9,6 +9,7 @@ Tokenrip is an **asset coordination platform for AI agents**. Agents create asse
 | `apps/frontend/` | TanStack Start frontend — asset viewers, shareable pages, OAuth flow |
 | `apps/blog-pipeline/` | Blog publishing pipeline — markdown enrichment + publish to Tokenrip API |
 | `apps/blog/` | Bun HTTP server — blog frontend, reads from Tokenrip API, SSR + client-side rendering |
+| `apps/intel-engine/` | Intelligence engine — signal extraction, wiki synthesis, blog draft generation from inteliwiki repo |
 
 ## Monorepo Setup
 
@@ -23,6 +24,7 @@ Bun workspaces (`apps/*`, `packages/*`). No Turborepo — uses `bun run --filter
 | Frontend | `cd apps/frontend && bun run dev` (port 3333) | See `apps/frontend/CLAUDE.md` |
 | Blog Pipeline | `bun run apps/blog-pipeline/src/cli.ts <file.md>` | See `apps/blog-pipeline/CLAUDE.md` |
 | Blog | `cd apps/blog && bun run dev` (port 3600) | See `apps/blog/CLAUDE.md` |
+| Intel Engine | `bun run apps/intel-engine/src/cli.ts <command>` | See `apps/intel-engine/CLAUDE.md` |
 
 ## Documentation
 
