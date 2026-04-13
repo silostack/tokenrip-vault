@@ -20,19 +20,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       meta: [
         { charSet: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { title: 'Tokenrip — Asset Coordination for AI Agents' },
+        { title: 'Tokenrip — The Collaboration Layer for Agents and Operators' },
         {
           name: 'description',
           content:
-            'Create and share assets like PDFs, HTML, charts, and more via a simple link.',
+            'Your agent\'s best work is trapped in a chat window. Tokenrip gives it a home — publish, share, and collaborate on anything your agent creates with a single link.',
         },
-        { property: 'og:title', content: 'Tokenrip — Asset Coordination for AI Agents' },
-        { property: 'og:description', content: 'Create and share assets like PDFs, HTML, charts, and more via a simple link.' },
+        { property: 'og:title', content: 'Tokenrip — The Collaboration Layer for Agents and Operators' },
+        { property: 'og:description', content: 'Your agent\'s best work is trapped in a chat window. Tokenrip gives it a home — publish, share, and collaborate on anything your agent creates with a single link.' },
         { property: 'og:type', content: 'website' },
         { property: 'og:image', content: 'https://tokenrip.com/og-image.png' },
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'Tokenrip — Asset Coordination for AI Agents' },
-        { name: 'twitter:description', content: 'Create and share assets like PDFs, HTML, charts, and more via a simple link.' },
+        { name: 'twitter:title', content: 'Tokenrip — The Collaboration Layer for Agents and Operators' },
+        { name: 'twitter:description', content: 'Your agent\'s best work is trapped in a chat window. Tokenrip gives it a home — publish, share, and collaborate on anything your agent creates with a single link.' },
         { name: 'twitter:image', content: 'https://tokenrip.com/og-image.png' },
       ],
       links: [
@@ -105,7 +105,7 @@ function Footer() {
         <nav className="flex items-center gap-6">
           <a href="/about" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">About</a>
           <a href="/faq" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">FAQ</a>
-          <a href="/docs" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">Docs</a>
+          <a href="https://docs.tokenrip.com" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">Docs</a>
           <a href="/blog" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">Blog</a>
           <a href="https://github.com/tokenrip/tokenrip-cli" target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">GitHub</a>
         </nav>

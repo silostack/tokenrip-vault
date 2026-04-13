@@ -1,6 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useState, useCallback, useRef } from 'react'
-import { Copy, Check } from 'lucide-react'
 
 const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://tokenrip.com'
 
@@ -13,132 +11,236 @@ export const Route = createFileRoute('/')({
 
 function Home() {
   return (
-    <div className="flex flex-col items-center gap-24 px-6 py-24">
+    <div className="flex flex-col">
       <HeroSection />
-      <TerminalDemo />
-      <AssetMockup />
+      <SoundFamiliarSection />
+      <HowItWorksSection />
+      <WorksWithYourAgentSection />
+      <CtaSection />
     </div>
   )
 }
 
+/* ─── Section 1: Hero ─── */
+
 function HeroSection() {
   return (
-    <section className="flex flex-col items-center gap-6 text-center">
-      <h1 className="font-mono text-4xl font-bold tracking-tight">tokenrip</h1>
-      <p className="text-xl text-foreground/70">
-        Asset coordination for AI agents.
+    <section className="mx-auto max-w-2xl px-6 py-24 text-center">
+      <h1 className="font-mono text-3xl font-bold tracking-tight md:text-4xl">
+        Your agent&rsquo;s best work is trapped in a chat&nbsp;window.
+      </h1>
+      <p className="mx-auto mt-6 max-w-lg text-lg text-foreground/60">
+        Tokenrip gives it a home. Publish, share, and collaborate on anything
+        your agent creates &mdash; with a single link.
       </p>
-      <p className="max-w-md text-foreground/50">
-        Create and share PDFs, HTML, charts, and more — via a simple link.
-      </p>
-      <InstallCommand />
-      <a
-        href="https://github.com/tokenrip/tokenrip-cli"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-sm text-foreground/40 transition-colors hover:text-foreground/60"
-      >
-        GitHub &rarr;
-      </a>
     </section>
   )
 }
 
-function InstallCommand() {
-  const command = 'npm install -g @tokenrip/cli'
-  const [copied, setCopied] = useState(false)
-  const timeout = useRef<ReturnType<typeof setTimeout>>()
+/* ─── Section 2: Sound familiar? ─── */
 
-  const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(command)
-    setCopied(true)
-    clearTimeout(timeout.current)
-    timeout.current = setTimeout(() => setCopied(false), 2000)
-  }, [])
+const scenarios = [
+  'Your agent writes a report. You copy-paste it into a Google Doc and fix the formatting.',
+  'Your agent builds an HTML page. You save it locally and figure out how to host it.',
+  'Your colleague needs to see what your agent made. You screenshot it into Slack.',
+]
 
+function SoundFamiliarSection() {
   return (
-    <div className="mt-2 flex items-center gap-2 rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-2.5">
-      <code className="font-mono text-sm text-foreground/70">{command}</code>
-      <button
-        type="button"
-        onClick={handleCopy}
-        title="Copy install command"
-        className="flex h-7 w-7 cursor-pointer items-center justify-center rounded text-foreground/40 transition-colors hover:text-foreground/70"
-      >
-        {copied ? <Check size={14} className="text-status-success" /> : <Copy size={14} />}
-      </button>
-    </div>
+    <section className="border-t border-foreground/10">
+      <div className="mx-auto max-w-2xl px-6 py-24">
+        <h2 className="mb-10 font-mono text-sm font-semibold uppercase tracking-wider text-foreground/50">
+          Sound familiar?
+        </h2>
+        <div className="space-y-6">
+          {scenarios.map((text, i) => (
+            <p
+              key={i}
+              className="border-l-2 border-foreground/15 pl-5 font-serif text-lg leading-relaxed text-foreground/60"
+            >
+              {text}
+            </p>
+          ))}
+        </div>
+        <p className="mt-12 text-center font-mono text-sm font-semibold text-foreground/80">
+          There&rsquo;s a better way.
+        </p>
+      </div>
+    </section>
   )
 }
 
-function AssetMockup() {
+/* ─── Section 3: How Tokenrip works ─── */
+
+const steps = [
+  {
+    title: 'Your agent creates something',
+    desc: 'A report, a dashboard, a doc, a dataset — whatever it\u2019s been working on.',
+  },
+  {
+    title: 'It publishes to Tokenrip',
+    desc: 'One command. Your agent handles it — you don\u2019t touch a thing.',
+  },
+  {
+    title: 'You get a shareable link',
+    desc: 'Beautiful, rendered, instantly viewable. No login required for viewers.',
+  },
+  {
+    title: 'Collaborate around it',
+    desc: 'Comment, version, revise. Your agent picks up feedback and keeps going. Same URL, new version.',
+  },
+]
+
+function HowItWorksSection() {
   return (
-    <section className="flex w-full max-w-lg flex-col gap-3">
-      <h2 className="text-center text-sm font-medium text-foreground/40">
-        What it looks like
-      </h2>
-      <div className="overflow-hidden rounded-lg border border-foreground/10 bg-background shadow-sm">
-        {/* Mini header */}
-        <div className="flex items-center justify-between border-b border-foreground/10 px-4 py-2.5">
-          <span className="font-mono text-xs font-bold text-foreground/50">tokenrip</span>
-          <span className="h-4 w-4 rounded-full bg-foreground/10" />
-        </div>
-
-        {/* Content area — fake markdown render */}
-        <div className="space-y-3 px-5 py-4">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-sm font-semibold text-foreground/80">Q1 Report</span>
-            <span className="rounded bg-foreground/10 px-1.5 py-0.5 text-[10px] text-foreground/40">
-              html
-            </span>
-          </div>
-          <div className="space-y-2">
-            <div className="h-2 w-3/4 rounded bg-foreground/10" />
-            <div className="h-2 w-full rounded bg-foreground/8" />
-            <div className="h-2 w-5/6 rounded bg-foreground/10" />
-            <div className="h-2 w-2/3 rounded bg-foreground/6" />
-          </div>
-          <div className="space-y-2 pt-1">
-            <div className="h-2 w-full rounded bg-foreground/8" />
-            <div className="h-2 w-4/5 rounded bg-foreground/10" />
-            <div className="h-2 w-3/4 rounded bg-foreground/6" />
-          </div>
-        </div>
-
-        {/* Mini toolbar hint */}
-        <div className="flex justify-center border-t border-foreground/5 py-2.5">
-          <div className="flex gap-3">
-            <span className="h-3.5 w-3.5 rounded-full bg-foreground/10" />
-            <span className="h-3.5 w-3.5 rounded-full bg-foreground/10" />
-            <span className="h-3.5 w-3.5 rounded-full bg-foreground/10" />
-          </div>
+    <section className="border-t border-foreground/10">
+      <div className="mx-auto max-w-2xl px-6 py-24">
+        <h2 className="mb-10 font-mono text-sm font-semibold uppercase tracking-wider text-foreground/50">
+          How Tokenrip works
+        </h2>
+        <ol className="space-y-6">
+          {steps.map((step, i) => (
+            <li key={i} className="flex gap-4">
+              <span className="font-mono text-sm font-bold text-foreground/30">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <span className="font-mono text-sm font-semibold text-foreground/80">
+                  {step.title}
+                </span>
+                <p className="mt-1 font-serif text-foreground/60">
+                  {step.desc}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-12">
+          <AssetMockup />
         </div>
       </div>
     </section>
   )
 }
 
-function TerminalDemo() {
+/* ─── Asset mockup (reused from previous homepage) ─── */
+
+function AssetMockup() {
   return (
-    <section className="flex w-full max-w-lg flex-col gap-3">
-      <h2 className="text-center text-sm font-medium text-foreground/40">
-        How it works
-      </h2>
-      <div className="overflow-hidden rounded-lg border border-foreground/10 bg-foreground/5">
-        <div className="flex items-center gap-1.5 border-b border-foreground/10 px-3 py-2">
-          <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
-          <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
-          <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
+    <div className="mx-auto max-w-lg overflow-hidden rounded-lg border border-foreground/10 bg-background shadow-sm">
+      {/* Mini header */}
+      <div className="flex items-center justify-between border-b border-foreground/10 px-4 py-2.5">
+        <span className="font-mono text-xs font-bold text-foreground/50">tokenrip</span>
+        <span className="h-4 w-4 rounded-full bg-foreground/10" />
+      </div>
+
+      {/* Content area — fake rendered asset */}
+      <div className="space-y-3 px-5 py-4">
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-sm font-semibold text-foreground/80">Q1 Report</span>
+          <span className="rounded bg-foreground/10 px-1.5 py-0.5 text-[10px] text-foreground/40">
+            html
+          </span>
         </div>
-        <pre className="p-4 font-mono text-xs leading-relaxed text-foreground/60">
-          <span className="text-foreground/40">$</span> tokenrip auth create-key{'\n'}
-          <span className="text-status-success">&#10003;</span> API key saved{'\n'}
-          {'\n'}
-          <span className="text-foreground/40">$</span> tokenrip asset publish report.html --type html --title &quot;Q1 Report&quot;{'\n'}
-          <span className="text-status-success">&#10003;</span> https://tokenrip.com/s/abc-123{'\n'}
-          {'\n'}
-          <span className="text-foreground/30"># share the link — anyone can view it</span>
-        </pre>
+        <div className="space-y-2">
+          <div className="h-2 w-3/4 rounded bg-foreground/10" />
+          <div className="h-2 w-full rounded bg-foreground/8" />
+          <div className="h-2 w-5/6 rounded bg-foreground/10" />
+          <div className="h-2 w-2/3 rounded bg-foreground/6" />
+        </div>
+        <div className="space-y-2 pt-1">
+          <div className="h-2 w-full rounded bg-foreground/8" />
+          <div className="h-2 w-4/5 rounded bg-foreground/10" />
+          <div className="h-2 w-3/4 rounded bg-foreground/6" />
+        </div>
+      </div>
+
+      {/* Mini toolbar hint */}
+      <div className="flex justify-center border-t border-foreground/5 py-2.5">
+        <div className="flex gap-3">
+          <span className="h-3.5 w-3.5 rounded-full bg-foreground/10" />
+          <span className="h-3.5 w-3.5 rounded-full bg-foreground/10" />
+          <span className="h-3.5 w-3.5 rounded-full bg-foreground/10" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ─── Section 4: Works with your agent ─── */
+
+function WorksWithYourAgentSection() {
+  return (
+    <section className="border-t border-foreground/10">
+      <div className="mx-auto max-w-2xl px-6 py-24">
+        <h2 className="mb-10 font-mono text-sm font-semibold uppercase tracking-wider text-foreground/50">
+          Works with your agent
+        </h2>
+        <InstallBlock />
+        <p className="mt-4 text-sm text-foreground/50">
+          Or use the API directly &mdash; any agent that can make an HTTP
+          request can publish.
+        </p>
+      </div>
+    </section>
+  )
+}
+
+/* ─── Install commands (terminal-style block) ─── */
+
+function InstallBlock() {
+  return (
+    <div className="overflow-hidden rounded-lg border border-foreground/10 bg-foreground/5">
+      <div className="flex items-center gap-1.5 border-b border-foreground/10 px-3 py-2">
+        <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
+        <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
+        <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
+      </div>
+      <pre className="p-4 font-mono text-xs leading-relaxed text-foreground/60">
+        <span className="text-foreground/30"># Claude Code / Cursor</span>{'\n'}
+        npx skills add tokenrip/cli{'\n'}
+        {'\n'}
+        <span className="text-foreground/30"># OpenClaw</span>{'\n'}
+        npx clawhub@latest install tokenrip/cli{'\n'}
+        {'\n'}
+        <span className="text-foreground/30"># Hermes</span>{'\n'}
+        hermes skills install tokenrip/cli
+      </pre>
+    </div>
+  )
+}
+
+/* ─── Section 5: Closer / CTA ─── */
+
+function CtaSection() {
+  return (
+    <section className="border-t border-foreground/10">
+      <div className="mx-auto max-w-2xl px-6 py-24">
+        <div className="mb-12 space-y-4">
+          <p className="text-foreground/40">
+            <span className="font-mono text-xs font-semibold uppercase tracking-wider">
+              Before Tokenrip:
+            </span>{' '}
+            copy-paste, reformat, re-explain, lose track.
+          </p>
+          <p className="text-foreground/80">
+            <span className="font-mono text-xs font-semibold uppercase tracking-wider">
+              After Tokenrip:
+            </span>{' '}
+            publish, share a link, collaborate, move on.
+          </p>
+        </div>
+        <InstallBlock />
+        <div className="mt-4">
+          <a
+            href="https://github.com/tokenrip/tokenrip-cli"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-sm text-foreground/40 transition-colors hover:text-foreground/60"
+          >
+            GitHub &rarr;
+          </a>
+        </div>
       </div>
     </section>
   )
