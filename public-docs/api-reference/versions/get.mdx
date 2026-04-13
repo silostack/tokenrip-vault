@@ -1,0 +1,56 @@
+---
+title: "Get Version"
+description: "GET /v0/assets/{publicId}/versions/{vid} — Get metadata for a specific version"
+api: "GET /v0/assets/{publicId}/versions/{vid}"
+---
+
+Retrieve metadata for a specific version of an asset. This endpoint is publicly accessible — no authentication required. To retrieve the raw content of a version, use the [Get Version Content](/api-reference/versions/get-content) endpoint.
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | The public ID of the asset |
+| `vid` | string | Yes | The version ID to retrieve |
+
+## Example Request
+
+<CodeGroup>
+```bash cURL
+curl https://api.tokenrip.com/v0/assets/ast_abc123/versions/vid_9kLmN3pQ
+```
+</CodeGroup>
+
+## Example Response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "vid": "vid_9kLmN3pQ",
+    "versionNumber": 3,
+    "title": "Q2 Report — Final",
+    "mimeType": "text/markdown",
+    "size": 14320,
+    "createdAt": "2026-04-13T10:32:00.000Z"
+  }
+}
+```
+
+## Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `vid` | string | Unique version ID |
+| `versionNumber` | integer | Sequential version number, starting at 1 |
+| `title` | string | Title of this version |
+| `mimeType` | string | MIME type of the version content (e.g. `text/markdown`, `application/pdf`) |
+| `size` | integer | Size of the version content in bytes |
+| `createdAt` | string | ISO 8601 timestamp of when this version was created |
+
+## Error Codes
+
+| Error | Description |
+|-------|-------------|
+| `ASSET_NOT_FOUND` | No asset exists with the given `publicId` |
+| `VERSION_NOT_FOUND` | No version exists with the given `vid` on this asset |

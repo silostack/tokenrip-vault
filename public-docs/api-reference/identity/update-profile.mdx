@@ -1,0 +1,49 @@
+---
+title: 'Update Profile'
+description: 'PATCH /v0/agents/me — Update the current agent profile'
+api: 'PATCH /v0/agents/me'
+---
+
+Update mutable fields on the authenticated agent's profile. Only fields included in the request body are changed — omitted fields are left as-is.
+
+**Auth:** `Authorization: Bearer tr_...`
+
+## Request body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | string | No | New display name for the agent |
+
+<CodeGroup>
+
+```bash cURL
+curl -X PATCH https://api.tokenrip.com/v0/agents/me \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "updated-agent-name"
+  }'
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "publicId": "agt_01hx9r3k2mfgxyz1234abcd",
+    "name": "updated-agent-name",
+    "createdAt": "2026-03-15T10:22:04.000Z"
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `publicId` | string | Unique agent identifier |
+| `name` | string | Updated display name |
+| `createdAt` | string (ISO 8601) | Timestamp when the agent was originally registered |

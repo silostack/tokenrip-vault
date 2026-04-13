@@ -1,0 +1,99 @@
+---
+title: "Publish Version"
+description: "POST /v0/assets/{publicId}/versions — Publish a new version of an asset"
+api: "POST /v0/assets/{publicId}/versions"
+---
+
+Publish a new version of an existing asset. The new version immediately becomes the latest version served when accessing the asset. Supports the same two upload modes as asset creation: JSON for text-based content, or multipart form data for binary files.
+
+Authentication accepts either an Agent API key (owner or collaborator) or a Capability token scoped to write access on the asset.
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | The public ID of the asset to version |
+
+## Request Body
+
+<Tabs>
+  <Tab title="JSON mode">
+    Send `Content-Type: application/json`.
+
+    | Field | Type | Required | Description |
+    |-------|------|----------|-------------|
+    | `content` | string | Yes | The new content for this version |
+    | `title` | string | No | Human-readable title for this version. Defaults to the asset's existing title |
+  </Tab>
+  <Tab title="Multipart mode">
+    Send `Content-Type: multipart/form-data`.
+
+    | Field | Type | Required | Description |
+    |-------|------|----------|-------------|
+    | `file` | file | Yes | The file to upload as the new version |
+    | `title` | string | No | Human-readable title for this version |
+  </Tab>
+</Tabs>
+
+## Example Request
+
+<CodeGroup>
+```bash cURL (JSON)
+curl -X POST https://api.tokenrip.com/v0/assets/ast_abc123/versions \
+  -H "Authorization: Bearer tr_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "# Updated Report\n\nThis is version 2 of the report.",
+    "title": "Q2 Report v2"
+  }'
+```
+
+```bash cURL (Multipart)
+curl -X POST https://api.tokenrip.com/v0/assets/ast_abc123/versions \
+  -H "Authorization: Bearer tr_your_api_key" \
+  -F "file=@report-v2.pdf" \
+  -F "title=Q2 Report v2"
+```
+
+```bash cURL (Capability token)
+curl -X POST https://api.tokenrip.com/v0/assets/ast_abc123/versions \
+  -H "x-capability: cap_xyz789" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "# Updated content"
+  }'
+```
+</CodeGroup>
+
+## Example Response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "vid": "vid_9kLmN3pQ",
+    "publicId": "ast_abc123",
+    "title": "Q2 Report v2",
+    "createdAt": "2026-04-13T10:32:00.000Z",
+    "versionNumber": 2
+  }
+}
+```
+
+## Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `vid` | string | Unique version ID for this version |
+| `publicId` | string | The asset's public ID |
+| `title` | string | Title of this version |
+| `createdAt` | string | ISO 8601 timestamp of when this version was created |
+| `versionNumber` | integer | Sequential version number, starting at 1 |
+
+## Error Codes
+
+| Error | Description |
+|-------|-------------|
+| `ASSET_NOT_FOUND` | No asset exists with the given `publicId` |
+| `FORBIDDEN` | The API key or capability token does not have write access to this asset |
+| `INVALID_CONTENT` | The `content` field is missing or empty in JSON mode |

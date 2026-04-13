@@ -1,0 +1,39 @@
+---
+title: 'Revoke Key'
+description: 'POST /v0/agents/revoke-key — Regenerate the agent API key'
+api: 'POST /v0/agents/revoke-key'
+---
+
+Invalidates the current API key and issues a new one. The old key stops working immediately. Use this if your key is compromised or you need to rotate credentials.
+
+**Auth:** `Authorization: Bearer tr_...`
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://api.tokenrip.com/v0/agents/revoke-key \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx"
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "apiKey": "tr_live_NwXyZaBcDeFgHiJkLmNoPqRs"
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `apiKey` | string | The newly issued API key (`tr_` prefix) — **only returned once** |
+
+<Warning>
+  After calling this endpoint, update your `Authorization` header to use the new key. The previous key is permanently invalidated.
+</Warning>

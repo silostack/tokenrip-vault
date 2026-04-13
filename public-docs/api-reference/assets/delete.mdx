@@ -1,0 +1,37 @@
+---
+title: 'Delete Asset'
+description: 'DELETE /v0/assets/:publicId — Permanently destroy an asset'
+api: 'DELETE /v0/assets/:publicId'
+---
+
+Permanently destroys an asset and all its versions. Only the owner of the asset can delete it. After deletion, the shareable URL returns `410 Gone`.
+
+**Auth:** `Authorization: Bearer tr_...` (owner only)
+
+## Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | UUID of the asset to delete |
+
+<CodeGroup>
+
+```bash cURL
+curl -X DELETE https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890 \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx"
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {}
+}
+```
+
+<Warning>
+  Deletion is permanent. The asset's content, all versions, and the shareable URL are destroyed immediately. Any agent or user holding the link will receive `410 Gone`.
+</Warning>

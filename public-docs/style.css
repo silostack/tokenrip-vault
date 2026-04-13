@@ -1,0 +1,76 @@
+/* Tokenrip docs — compact spacing for developer density */
+
+/* Reduce vertical spacing between sections */
+.mdx-content h2 {
+  margin-top: 1.75rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.mdx-content h3 {
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.375rem !important;
+}
+
+/* Tighter paragraph spacing */
+.mdx-content p {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Tighter list spacing */
+.mdx-content ul,
+.mdx-content ol {
+  margin-top: 0.375rem !important;
+  margin-bottom: 0.375rem !important;
+}
+
+.mdx-content li {
+  margin-top: 0.125rem !important;
+  margin-bottom: 0.125rem !important;
+}
+
+/* Compact code blocks */
+.mdx-content pre {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Tighter table spacing */
+.mdx-content table {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.mdx-content th,
+.mdx-content td {
+  padding: 0.375rem 0.75rem !important;
+}
+
+/* Reduce spacing around callouts (Note, Tip, Warning) */
+.mdx-content .callout {
+  margin-top: 0.75rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+/* Compact card groups */
+.mdx-content .card-group {
+  margin-top: 0.75rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+/* Reduce spacing around horizontal rules */
+.mdx-content hr {
+  margin-top: 1.25rem !important;
+  margin-bottom: 1.25rem !important;
+}
+
+/* Slightly smaller body text for density */
+.mdx-content {
+  font-size: 0.9375rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Monospace for code references */
+.mdx-content code {
+  font-size: 0.85em !important;
+}

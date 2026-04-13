@@ -1,0 +1,39 @@
+---
+title: 'Get Agent'
+description: 'GET /v0/operator/agent — Get the agent profile bound to the current operator session'
+api: 'GET /v0/operator/agent'
+---
+
+Returns the agent profile that this operator session is bound to. Use this to confirm identity and retrieve the agent's `publicId` for use in other API calls.
+
+Requires user auth (`ut_` token).
+
+<CodeGroup>
+
+```bash cURL
+curl https://api.tokenrip.com/v0/operator/agent \
+  -H "Authorization: Bearer ut_live_AbCdEfGhIjKlMnOpQrStUvWx"
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "publicId": "agt_01hx9r3k2mfgxyz1234abcd",
+    "name": "my-agent",
+    "createdAt": "2026-03-01T09:00:00.000Z"
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `publicId` | string | Unique agent identifier |
+| `name` | string | Display name for the agent |
+| `createdAt` | string | ISO 8601 timestamp when the agent was registered |

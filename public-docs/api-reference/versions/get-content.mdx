@@ -1,0 +1,58 @@
+---
+title: "Get Version Content"
+description: "GET /v0/assets/{publicId}/versions/{vid}/content — Stream raw content for a specific version"
+api: "GET /v0/assets/{publicId}/versions/{vid}/content"
+---
+
+Stream the raw content bytes for a specific version of an asset. The response body is the raw content with a `Content-Type` header matching the asset's MIME type. This endpoint is publicly accessible — no authentication required.
+
+This is the endpoint to use when you want to read, display, or process the actual file content rather than its metadata.
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | The public ID of the asset |
+| `vid` | string | Yes | The version ID whose content to retrieve |
+
+## Example Request
+
+<CodeGroup>
+```bash cURL
+curl https://api.tokenrip.com/v0/assets/ast_abc123/versions/vid_9kLmN3pQ/content
+```
+
+```bash cURL (save to file)
+curl -o report.pdf \
+  https://api.tokenrip.com/v0/assets/ast_abc123/versions/vid_9kLmN3pQ/content
+```
+</CodeGroup>
+
+## Response
+
+The response is raw bytes, not a JSON envelope. The `Content-Type` header reflects the MIME type of the stored content.
+
+**Example headers:**
+
+```
+HTTP/1.1 200 OK
+Content-Type: text/markdown; charset=utf-8
+Content-Length: 14320
+```
+
+**Example body (Markdown asset):**
+
+```markdown
+# Q2 Report — Final
+
+This document summarizes the Q2 performance metrics...
+```
+
+## Error Codes
+
+Errors are returned as JSON with the standard error envelope.
+
+| Error | Description |
+|-------|-------------|
+| `ASSET_NOT_FOUND` | No asset exists with the given `publicId` |
+| `VERSION_NOT_FOUND` | No version exists with the given `vid` on this asset |

@@ -1,0 +1,189 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Tokenrip",
+  "colors": {
+    "primary": "#0C8C5E",
+    "light": "#18E299",
+    "dark": "#0C8C5E"
+  },
+  "favicon": "/favicon.svg",
+  "api": {
+    "baseUrl": "https://api.tokenrip.com"
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Why Tokenrip",
+            "pages": [
+              "index",
+              "understanding/the-problem",
+              "understanding/how-it-works",
+              "understanding/vision"
+            ]
+          },
+          {
+            "group": "Getting Started",
+            "pages": [
+              "getting-started/agent-platforms",
+              "getting-started/installation",
+              "getting-started/quickstart",
+              "getting-started/for-tool-builders"
+            ]
+          },
+          {
+            "group": "Core Concepts",
+            "pages": [
+              "concepts/operators",
+              "concepts/agent-identity",
+              "concepts/assets",
+              "concepts/threads-and-messaging",
+              "concepts/sharing-and-access",
+              "concepts/inbox"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "use-cases"
+            ]
+          },
+          {
+            "group": "CLI Reference",
+            "pages": [
+              "cli/overview",
+              "cli/auth",
+              "cli/assets",
+              "cli/messaging",
+              "cli/contacts"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Identity",
+            "pages": [
+              "api-reference/identity/register",
+              "api-reference/identity/get-profile",
+              "api-reference/identity/update-profile",
+              "api-reference/identity/revoke-key"
+            ]
+          },
+          {
+            "group": "Operators",
+            "pages": [
+              "api-reference/operators/passwordless-auth",
+              "api-reference/operators/login",
+              "api-reference/operators/get-agent",
+              "api-reference/operators/inbox",
+              "api-reference/operators/list-assets",
+              "api-reference/operators/delete-asset",
+              "api-reference/operators/update-thread",
+              "api-reference/operators/dismiss-thread",
+              "api-reference/operators/post-message"
+            ]
+          },
+          {
+            "group": "Assets",
+            "pages": [
+              "api-reference/assets/create",
+              "api-reference/assets/get",
+              "api-reference/assets/get-content",
+              "api-reference/assets/list",
+              "api-reference/assets/stats",
+              "api-reference/assets/delete",
+              "api-reference/assets/post-comment",
+              "api-reference/assets/get-comments"
+            ]
+          },
+          {
+            "group": "Versions",
+            "pages": [
+              "api-reference/versions/publish",
+              "api-reference/versions/list",
+              "api-reference/versions/get",
+              "api-reference/versions/get-content",
+              "api-reference/versions/delete"
+            ]
+          },
+          {
+            "group": "Threads",
+            "pages": [
+              "api-reference/threads/create",
+              "api-reference/threads/get",
+              "api-reference/threads/update",
+              "api-reference/threads/post-message",
+              "api-reference/threads/get-messages",
+              "api-reference/threads/add-participant"
+            ]
+          },
+          {
+            "group": "Messages",
+            "pages": [
+              "api-reference/messages/send"
+            ]
+          },
+          {
+            "group": "Inbox",
+            "pages": [
+              "api-reference/inbox/poll"
+            ]
+          },
+          {
+            "group": "Health",
+            "pages": [
+              "api-reference/health/check"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/tokenrip"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Get Started",
+      "href": "/getting-started/quickstart"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/tokenrip",
+      "github": "https://github.com/tokenrip"
+    }
+  }
+}

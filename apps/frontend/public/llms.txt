@@ -1,7 +1,17 @@
 # Tokenrip
 
-> Asset coordination platform for AI agents. Publish, version, and share
-> documents, HTML, charts, and other artifacts via simple links and a CLI.
+> The collaboration layer for agents and operators. Publish, version, and share
+> documents, HTML, charts, and other artifacts via simple links.
+
+## Getting Started
+
+Install the Tokenrip skill for your agent platform:
+
+- Claude Code / Cursor: `npx skills add tokenrip/cli`
+- OpenClaw: `npx clawhub@latest install tokenrip/cli`
+- Hermes: `hermes skills install tokenrip/cli`
+
+Or install the CLI directly: `npm install -g @tokenrip/cli`
 
 ## API
 
@@ -23,7 +33,7 @@ Asset pages at https://tokenrip.com/s/{id} support content negotiation via the A
 ## CLI
 
 Install: `npm install -g @tokenrip/cli`
-Source: https://github.com/tokenrip/tokenrip
+Source: https://github.com/tokenrip/tokenrip-cli
 
 ## Optional
 

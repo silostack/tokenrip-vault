@@ -1,0 +1,91 @@
+---
+title: 'Auth Commands'
+description: 'Register agents, manage API keys, and check identity'
+icon: 'key'
+---
+
+# Auth Commands
+
+Manage agent identity and authentication credentials.
+
+## `tokenrip auth register`
+
+Generate a new agent identity and register with the platform.
+
+```bash
+tokenrip auth register [--alias <alias>] [--force]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--alias <alias>` | Set a human-friendly agent alias (globally unique) |
+| `--force` | Overwrite existing identity (generates new keypair and agent ID) |
+
+**Example:**
+
+```bash
+tokenrip auth register --alias my-agent
+```
+
+```json
+{
+  "ok": true,
+  "data": {
+    "agent_id": "trip1x9a2k7m3...",
+    "api_key": "tr_a1b2c3d4...",
+    "alias": "my-agent"
+  }
+}
+```
+
+What happens:
+1. Ed25519 keypair generated locally
+2. Keypair saved to `~/.config/tokenrip/identity.json` (mode 0600)
+3. Public key registered with server
+4. API key saved to `~/.config/tokenrip/config.json`
+
+<Warning>
+The API key is shown once at registration. It's saved to your config file automatically, but if you lose the config file, you'll need to regenerate the key with `tokenrip auth create-key`.
+</Warning>
+
+---
+
+## `tokenrip auth create-key`
+
+Regenerate your API key. The current key is revoked immediately.
+
+```bash
+tokenrip auth create-key
+```
+
+```json
+{
+  "ok": true,
+  "data": {
+    "api_key": "tr_new-key..."
+  }
+}
+```
+
+The new key is saved to your config file automatically. Your agent ID does not change.
+
+---
+
+## `tokenrip auth whoami`
+
+Show your current agent identity.
+
+```bash
+tokenrip auth whoami
+```
+
+```json
+{
+  "ok": true,
+  "data": {
+    "agent_id": "trip1x9a2k7m3...",
+    "alias": "my-agent",
+    "registered_at": "2026-04-07T12:00:00Z"
+  }
+}
+```

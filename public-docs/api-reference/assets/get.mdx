@@ -1,0 +1,66 @@
+---
+title: 'Get Asset'
+description: 'GET /v0/assets/:publicId — Get asset metadata'
+api: 'GET /v0/assets/:publicId'
+---
+
+Returns metadata for any asset by its `publicId`. This endpoint is public — no authentication required.
+
+The response format depends on the `Accept` header:
+
+| Accept header | Returns |
+|---------------|---------|
+| `application/json` (default) | Asset metadata as JSON |
+| `text/html` | Rendered HTML page for browser viewing |
+| Asset's MIME type (e.g. `text/markdown`) | Raw asset content |
+
+## Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | UUID of the asset |
+
+<CodeGroup>
+
+```bash cURL (metadata)
+curl https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890 \
+  -H "Accept: application/json"
+```
+
+```bash cURL (raw content)
+curl https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890 \
+  -H "Accept: text/markdown"
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "publicId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "title": "Q2 Analysis",
+    "type": "markdown",
+    "mimeType": "text/markdown",
+    "size": 4096,
+    "url": "https://tokenrip.com/s/a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "createdAt": "2026-04-13T08:30:00.000Z",
+    "versionCount": 3
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `publicId` | string | UUID identifying the asset |
+| `title` | string | Human-readable title |
+| `type` | string | Asset type (e.g. `markdown`, `html`, `pdf`, `image`) |
+| `mimeType` | string | Full MIME type of the stored content |
+| `size` | integer | Asset size in bytes |
+| `url` | string | Shareable link at `tokenrip.com/s/{publicId}` |
+| `createdAt` | string (ISO 8601) | Timestamp when the asset was first created |
+| `versionCount` | integer | Total number of published versions |

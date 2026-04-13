@@ -19,6 +19,7 @@ import { Route as OperatorIndexRouteImport } from './app/operator/index'
 import { Route as ThreadsThreadIdRouteImport } from './app/threads/$threadId'
 import { Route as SUuidRouteImport } from './app/s/$uuid'
 import { Route as OperatorAuthRouteImport } from './app/operator/auth'
+import { Route as OauthAuthorizeRouteImport } from './app/oauth/authorize'
 import { Route as SUuidIndexRouteImport } from './app/s/$uuid/index'
 import { Route as OperatorAssetsIndexRouteImport } from './app/operator/assets/index'
 import { Route as SUuidVersionIdRouteImport } from './app/s/$uuid/$versionId'
@@ -75,6 +76,11 @@ const OperatorAuthRoute = OperatorAuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => OperatorRoute,
 } as any)
+const OauthAuthorizeRoute = OauthAuthorizeRouteImport.update({
+  id: '/oauth/authorize',
+  path: '/oauth/authorize',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SUuidIndexRoute = SUuidIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/docs': typeof DocsRoute
   '/faq': typeof FaqRoute
   '/operator': typeof OperatorRouteWithChildren
+  '/oauth/authorize': typeof OauthAuthorizeRoute
   '/operator/auth': typeof OperatorAuthRoute
   '/s/$uuid': typeof SUuidRouteWithChildren
   '/threads/$threadId': typeof ThreadsThreadIdRoute
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRoute
   '/docs': typeof DocsRoute
   '/faq': typeof FaqRoute
+  '/oauth/authorize': typeof OauthAuthorizeRoute
   '/operator/auth': typeof OperatorAuthRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/operator': typeof OperatorIndexRoute
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/docs': typeof DocsRoute
   '/faq': typeof FaqRoute
   '/operator': typeof OperatorRouteWithChildren
+  '/oauth/authorize': typeof OauthAuthorizeRoute
   '/operator/auth': typeof OperatorAuthRoute
   '/s/$uuid': typeof SUuidRouteWithChildren
   '/threads/$threadId': typeof ThreadsThreadIdRoute
@@ -160,6 +169,7 @@ export interface FileRouteTypes {
     | '/docs'
     | '/faq'
     | '/operator'
+    | '/oauth/authorize'
     | '/operator/auth'
     | '/s/$uuid'
     | '/threads/$threadId'
@@ -176,6 +186,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/docs'
     | '/faq'
+    | '/oauth/authorize'
     | '/operator/auth'
     | '/threads/$threadId'
     | '/operator'
@@ -192,6 +203,7 @@ export interface FileRouteTypes {
     | '/docs'
     | '/faq'
     | '/operator'
+    | '/oauth/authorize'
     | '/operator/auth'
     | '/s/$uuid'
     | '/threads/$threadId'
@@ -210,6 +222,7 @@ export interface RootRouteChildren {
   DocsRoute: typeof DocsRoute
   FaqRoute: typeof FaqRoute
   OperatorRoute: typeof OperatorRouteWithChildren
+  OauthAuthorizeRoute: typeof OauthAuthorizeRoute
   SUuidRoute: typeof SUuidRouteWithChildren
   ThreadsThreadIdRoute: typeof ThreadsThreadIdRoute
 }
@@ -285,6 +298,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/operator/auth'
       preLoaderRoute: typeof OperatorAuthRouteImport
       parentRoute: typeof OperatorRoute
+    }
+    '/oauth/authorize': {
+      id: '/oauth/authorize'
+      path: '/oauth/authorize'
+      fullPath: '/oauth/authorize'
+      preLoaderRoute: typeof OauthAuthorizeRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/s/$uuid/': {
       id: '/s/$uuid/'
@@ -363,6 +383,7 @@ const rootRouteChildren: RootRouteChildren = {
   DocsRoute: DocsRoute,
   FaqRoute: FaqRoute,
   OperatorRoute: OperatorRouteWithChildren,
+  OauthAuthorizeRoute: OauthAuthorizeRoute,
   SUuidRoute: SUuidRouteWithChildren,
   ThreadsThreadIdRoute: ThreadsThreadIdRoute,
 }

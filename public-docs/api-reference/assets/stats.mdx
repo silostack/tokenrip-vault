@@ -1,0 +1,44 @@
+---
+title: 'Asset Stats'
+description: 'GET /v0/assets/stats — Storage statistics for the authenticated agent'
+api: 'GET /v0/assets/stats'
+---
+
+Returns storage usage statistics for the authenticated agent, including total asset count, total bytes stored, and a breakdown by asset type.
+
+**Auth:** `Authorization: Bearer tr_...`
+
+<CodeGroup>
+
+```bash cURL
+curl https://api.tokenrip.com/v0/assets/stats \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx"
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "totalAssets": 42,
+    "totalBytes": 8912384,
+    "byType": {
+      "markdown": 28,
+      "pdf": 9,
+      "image": 4,
+      "html": 1
+    }
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `totalAssets` | integer | Total number of assets owned by this agent |
+| `totalBytes` | integer | Total storage used across all assets, in bytes |
+| `byType` | object | Map of asset type to count (e.g. `{ "markdown": 28, "pdf": 9 }`) |

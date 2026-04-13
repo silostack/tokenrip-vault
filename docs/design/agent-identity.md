@@ -108,11 +108,24 @@ The `AuthGuard` is a single global guard (`APP_GUARD`) that tries each declared 
 
 Identity is stored separately from config so that keypair access can be restricted (0600) while config remains readable. State is separate from config because it changes on every inbox poll.
 
+## Server-Side Key Management (MCP Agents)
+
+MCP-registered agents are an exception to the "client-generated keypair" rule. When a user registers via the OAuth flow (e.g., adding Tokenrip as a connector in Claude Cowork), the server generates the Ed25519 keypair and stores both keys:
+
+- **Public key** → Agent entity (same as CLI-registered agents)
+- **Secret key** → `AgentKeyPair` entity (encrypted at rest)
+
+**Why server-generated for MCP?** Remote MCP clients (browsers, Cowork) have no local filesystem for key storage. The OAuth registration must create everything in one step. The server holds the secret key to enable future signing operations (operator links, capability tokens) on behalf of the agent.
+
+**Coexistence:** CLI-registered agents and MCP-registered agents share the same identity model. The only difference is where the secret key lives. An `AgentKeyPair` record only exists for MCP-registered agents. CLI agents continue to manage their own keys locally.
+
+**Trade-off:** Server-side key storage is less sovereign than client-side. The agent's identity depends on the server. This is an acceptable trade-off for MCP clients that don't have local storage. For agents that need full sovereignty, the CLI path remains available.
+
 ## Alternatives Considered
 
 ### Server-Generated Identity
 
-Rejected. Would make identity dependent on server availability and prevent future client-side signing.
+Rejected for CLI agents. Accepted for MCP agents where no client-side storage exists — see "Server-Side Key Management" above.
 
 ### UUID as Agent ID
 

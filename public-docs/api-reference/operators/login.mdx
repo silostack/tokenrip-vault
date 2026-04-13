@@ -1,0 +1,50 @@
+---
+title: 'Login'
+description: 'POST /v0/operators/login — Password login for operators who have a password set'
+api: 'POST /v0/operators/login'
+---
+
+Password-based login for operators. This is a fallback for operators who have set a password explicitly. Most operators authenticate via [passwordless auth](/api-reference/operators/passwordless-auth) instead.
+
+## Request body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `email` | string | Yes | The operator's email address |
+| `password` | string | Yes | The operator's password |
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://api.tokenrip.com/v0/operators/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "operator@example.com",
+    "password": "s3cr3t"
+  }'
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "sessionToken": "ut_live_AbCdEfGhIjKlMnOpQrStUvWx",
+    "expiresAt": "2026-04-20T12:00:00.000Z"
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `sessionToken` | string | Bearer token for user auth (`ut_` prefix) — include in `Authorization` header for subsequent requests |
+| `expiresAt` | string | ISO 8601 timestamp when the session expires |
+
+<Warning>
+  Returns `401 INVALID_CREDENTIALS` for both unknown email and wrong password. The response does not distinguish between the two to prevent account enumeration.
+</Warning>

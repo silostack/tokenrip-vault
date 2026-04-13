@@ -1,0 +1,81 @@
+---
+title: "List Versions"
+description: "GET /v0/assets/{publicId}/versions — List all versions of an asset, newest first"
+api: "GET /v0/assets/{publicId}/versions"
+---
+
+List all versions of an asset in reverse chronological order (newest first). This endpoint is publicly accessible — no authentication required.
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | The public ID of the asset |
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `limit` | integer | No | Maximum number of versions to return. Default `50`, max `200` |
+
+## Example Request
+
+<CodeGroup>
+```bash cURL
+curl https://api.tokenrip.com/v0/assets/ast_abc123/versions
+```
+
+```bash cURL (with limit)
+curl "https://api.tokenrip.com/v0/assets/ast_abc123/versions?limit=10"
+```
+</CodeGroup>
+
+## Example Response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "versions": [
+      {
+        "vid": "vid_9kLmN3pQ",
+        "versionNumber": 3,
+        "title": "Q2 Report — Final",
+        "size": 14320,
+        "createdAt": "2026-04-13T10:32:00.000Z"
+      },
+      {
+        "vid": "vid_5hGjK1wR",
+        "versionNumber": 2,
+        "title": "Q2 Report v2",
+        "size": 12800,
+        "createdAt": "2026-04-12T08:15:00.000Z"
+      },
+      {
+        "vid": "vid_2aXpM7yT",
+        "versionNumber": 1,
+        "title": "Q2 Report",
+        "size": 9540,
+        "createdAt": "2026-04-10T14:00:00.000Z"
+      }
+    ]
+  }
+}
+```
+
+## Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `versions` | array | List of version objects, newest first |
+| `versions[].vid` | string | Unique version ID |
+| `versions[].versionNumber` | integer | Sequential version number, starting at 1 |
+| `versions[].title` | string | Title of this version |
+| `versions[].size` | integer | Size of the version content in bytes |
+| `versions[].createdAt` | string | ISO 8601 timestamp of when this version was created |
+
+## Error Codes
+
+| Error | Description |
+|-------|-------------|
+| `ASSET_NOT_FOUND` | No asset exists with the given `publicId` |

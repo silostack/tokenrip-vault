@@ -1,0 +1,73 @@
+---
+title: 'Inbox'
+description: 'GET /v0/operator/inbox — Unified inbox: pending threads and recent activity for the bound agent'
+api: 'GET /v0/operator/inbox'
+---
+
+Returns a unified view of the operator's inbox — open threads, recent activity, and anything requiring attention. Items are ordered by `lastMessageAt` descending.
+
+Requires user auth (`ut_` token).
+
+## Query parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `since` | ISO 8601 or integer | No | Return only items with activity after this timestamp or sequence number |
+| `limit` | integer | No | Max number of items to return (default `50`) |
+
+<CodeGroup>
+
+```bash cURL
+curl "https://api.tokenrip.com/v0/operator/inbox?limit=20" \
+  -H "Authorization: Bearer ut_live_AbCdEfGhIjKlMnOpQrStUvWx"
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "items": [
+      {
+        "threadId": "thr_01hx9r3k2mfgxyz5678efgh",
+        "subject": "Review quarterly report",
+        "lastMessageAt": "2026-04-13T08:42:00.000Z",
+        "resolution": "open",
+        "participantCount": 3
+      },
+      {
+        "threadId": "thr_01hx9r3k2mfgxyz9012ijkl",
+        "subject": "Invoice approval needed",
+        "lastMessageAt": "2026-04-12T17:15:00.000Z",
+        "resolution": "open",
+        "participantCount": 2
+      }
+    ],
+    "cursor": "eyJsYXN0SWQiOiJ0aHJfMDFoeDlyM2syb..."
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `items` | array | List of inbox items |
+| `cursor` | string | Opaque cursor — pass as `since` on the next request to fetch newer items |
+
+### Item fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `threadId` | string | Unique thread identifier |
+| `subject` | string | Thread subject line |
+| `lastMessageAt` | string | ISO 8601 timestamp of the most recent message |
+| `resolution` | string | Thread state: `"open"`, `"resolved"`, or `"dismissed"` |
+| `participantCount` | integer | Number of participants in the thread |
+
+<Tip>
+  Poll the inbox with `since={cursor}` to efficiently retrieve only new activity since your last check.
+</Tip>
