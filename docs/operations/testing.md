@@ -65,7 +65,9 @@ tests/
     ├── inbox.test.ts         # Inbox polling, thread/asset activity aggregation
     ├── alias-resolution.test.ts # Alias resolution in message/thread creation
     ├── config.test.ts        # CLI config functions and env var precedence
-    └── full-flow.test.ts     # End-to-end: register → upload → publish → message
+    ├── full-flow.test.ts     # End-to-end: register → upload → publish → message
+    ├── oauth.test.ts         # OAuth 2.1 registration, login, PKCE token exchange
+    └── mcp.test.ts           # MCP server: session lifecycle, all 14 tools, error handling
 ```
 
 Supporting files outside `tests/`:
@@ -295,6 +297,30 @@ CLI config functions — `loadConfig`, `saveConfig`, `getApiUrl`, `getApiKey`, e
 ### `full-flow.test.ts`
 
 End-to-end: register agent → upload file → publish content → send message → verify.
+
+### `oauth.test.ts` (10 tests)
+
+OAuth 2.1 flow:
+- Discovery endpoint returns valid metadata
+- Registration creates agent + user + binding, returns auth code
+- Missing required fields returns 400
+- Duplicate agent alias returns 409
+- Login with valid/invalid credentials
+- Token exchange with PKCE (valid verifier, wrong verifier, code reuse prevention)
+- Alias availability checking (before/after registration)
+
+### `mcp.test.ts` (18 tests)
+
+MCP Streamable HTTP server:
+- **Session lifecycle**: initialize creates session with ID, missing auth returns 401, invalid session returns 404
+- **Tool discovery**: `tools/list` returns all 14 tools with correct names
+- **Identity**: `whoami` returns authenticated agent profile
+- **Asset lifecycle**: publish → list → update → stats → share → upload → delete (with 410 verification)
+- **Messaging**: thread_create → msg_send (sequence tracking) → msg_list (message ordering)
+- **Inbox**: poll returns recent activity
+- **Error handling**: non-existent asset returns error, ownership enforcement on cross-agent update
+
+Note: MCP tests require the `Accept: application/json, text/event-stream` header and send `notifications/initialized` after the `initialize` handshake — both are required by the MCP Streamable HTTP transport spec.
 
 ## Bun Compatibility Notes
 

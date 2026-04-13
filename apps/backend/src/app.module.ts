@@ -7,6 +7,8 @@ import { ApiModule } from './api/api.module';
 import { StorageModule } from './storage/storage.module';
 import { LoggerModule } from './logger/logger.module';
 import { AuthGuard } from './api/auth/auth.guard';
+import { OAuthModule } from './oauth/oauth.module';
+import { McpModule } from './mcp/mcp.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { AuthGuard } from './api/auth/auth.guard';
     LoggerModule,
     StorageModule,
     ApiModule,
+    OAuthModule,
+    McpModule,
   ],
   providers: [
     {

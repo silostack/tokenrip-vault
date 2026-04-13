@@ -37,6 +37,6 @@ import { AuthService } from './auth/auth.service';
   imports: [MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken])],
   controllers: [AssetController, AgentController, OperatorController, ThreadController, MessageController, InboxController, HealthController, OpenapiController],
   providers: [AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, OperatorAuthService, OperatorBindingService, ShareTokenService, AuthService],
-  exports: [AuthService],
+  exports: [AuthService, AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, ShareTokenService],
 })
 export class ApiModule {}

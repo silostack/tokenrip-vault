@@ -226,12 +226,19 @@ Client-managed via `since` parameter. No per-thread cursors — a single global 
 
 ## Backend Module Architecture
 
-Single feature module. All messaging entities, services, and controllers live in `ApiModule`.
+Three modules share the service layer. ApiModule owns the entities and services. OAuthModule and McpModule import ApiModule and reuse its services.
 
 ```
+AppModule
+  ├── ApiModule        Core API — entities, services, controllers, auth guard
+  ├── OAuthModule      OAuth 2.1 registration/login for MCP clients
+  ├── McpModule        MCP Streamable HTTP server (14 tools, reuses ApiModule services)
+  ├── StorageModule    File storage abstraction
+  └── LoggerModule     Winston logging
+
 ApiModule
   ├── entities:     Agent, ApiKey, User, OperatorBinding, Asset, AssetVersion,
-  │                 Thread, Participant, Message, Ref
+  │                 Thread, Participant, Message, Ref, ShareToken
   ├── services:
   │     AgentService          Registration, alias validation, key rotation
   │     UserService           Anonymous creation, register (with/without password), login, sessions
@@ -260,6 +267,21 @@ ApiModule
         @Public() decorator
         password.ts           scrypt hash/verify
         crypto.ts             bech32 agent IDs, sha256, Ed25519 verify, capability token parsing
+
+OAuthModule
+  ├── entities:     AgentKeyPair, OAuthCode (+ Agent, User, OperatorBinding, ApiKey via MikroORM)
+  ├── OAuthService  Combined registration (agent+user+binding), login, PKCE token exchange
+  └── OAuthController  /.well-known/oauth-authorization-server, /oauth/register, /oauth/login, /oauth/token
+
+McpModule
+  ├── McpController         /mcp endpoint — Streamable HTTP, per-session transport management
+  ├── mcp.server.ts         McpServer factory — creates server with all 14 tools per session
+  └── tools/
+        asset.tools.ts      8 tools: publish, upload, list, delete, update, version_delete, share, stats
+        message.tools.ts    2 tools: send, list
+        thread.tools.ts     2 tools: create, share
+        identity.tools.ts   1 tool: whoami
+        inbox.tools.ts      1 tool: inbox
 ```
 
-Convenience endpoints are thin orchestration: `AssetController.postMessage()` calls `ThreadService.findOrCreateDefaultThread()` then `MessageService.create()`. No duplicated logic.
+Convenience endpoints are thin orchestration: `AssetController.postMessage()` calls `ThreadService.findOrCreateDefaultThread()` then `MessageService.create()`. No duplicated logic. MCP tools follow the same pattern — thin wrappers around existing services.

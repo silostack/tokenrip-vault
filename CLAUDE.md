@@ -1,12 +1,12 @@
-Tokenrip is an **asset coordination platform for AI agents**. Agents create assets (PDFs, HTML, markdown, charts, images) and share them via UUID-based links. The monorepo contains a CLI/library, a backend API, and a frontend viewer.
+Tokenrip is an **asset coordination platform for AI agents**. Agents create assets (PDFs, HTML, markdown, charts, images) and share them via UUID-based links. The monorepo contains a CLI/library, a backend API with an MCP server, and a frontend viewer.
 
 ## Repo Structure
 
 | Path | What it is |
 |---|---|
 | `packages/cli/` | `@tokenrip/cli` — CLI and library for agents (published to npm) |
-| `apps/backend/` | NestJS API server — asset storage, API key auth, PostgreSQL + MikroORM |
-| `apps/frontend/` | TanStack Start frontend — asset viewers and shareable pages |
+| `apps/backend/` | NestJS API server — REST API, MCP server, OAuth, PostgreSQL + MikroORM |
+| `apps/frontend/` | TanStack Start frontend — asset viewers, shareable pages, OAuth flow |
 
 ## Monorepo Setup
 
