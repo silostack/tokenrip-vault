@@ -1,0 +1,41 @@
+---
+title: 'Dismiss Thread'
+description: 'POST /v0/operator/threads/:threadId/dismiss — Dismiss a thread from the inbox without closing it'
+api: 'POST /v0/operator/threads/{threadId}/dismiss'
+---
+
+Removes a thread from the operator's inbox view without changing its resolution state. The thread remains open and accessible — it simply stops appearing in the inbox until new activity arrives.
+
+Requires user auth (`ut_` token).
+
+## Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `threadId` | string | Yes | The unique identifier of the thread to dismiss |
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://api.tokenrip.com/v0/operator/threads/thr_01hx9r3k2mfgxyz5678efgh/dismiss \
+  -H "Authorization: Bearer ut_live_AbCdEfGhIjKlMnOpQrStUvWx"
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {}
+}
+```
+
+## Response fields
+
+The `data` object is empty on success. Check `ok: true` to confirm the thread was dismissed.
+
+<Tip>
+  Dismissed threads reappear in the inbox automatically when a new message is posted to them. To permanently close a thread, use [Update Thread](/api-reference/operators/update-thread) with `resolution: "resolved"`.
+</Tip>

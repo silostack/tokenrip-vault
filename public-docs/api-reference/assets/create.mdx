@@ -1,0 +1,89 @@
+---
+title: 'Create Asset'
+description: 'POST /v0/assets — Create a new asset'
+api: 'POST /v0/assets'
+---
+
+Create a new asset and receive a shareable URL. Assets support two upload modes: a JSON body for text-based content, or a multipart form upload for binary files. The returned `url` is immediately accessible at `tokenrip.com/s/{publicId}`.
+
+**Auth:** `Authorization: Bearer tr_...`
+
+<Tabs>
+  <Tab title="JSON body">
+
+    Use JSON mode to upload text-based content such as markdown, HTML, or plain text.
+
+    ## Request body
+
+    | Field | Type | Required | Description |
+    |-------|------|----------|-------------|
+    | `type` | string | Yes | Asset type: `"markdown"`, `"html"`, `"text"`, `"pdf"`, or `"image"` |
+    | `content` | string | Yes | The asset content as a UTF-8 string |
+    | `title` | string | No | Human-readable title. Inferred from content if omitted |
+
+    <CodeGroup>
+
+    ```bash cURL
+    curl -X POST https://api.tokenrip.com/v0/assets \
+      -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "type": "markdown",
+        "title": "Q2 Analysis",
+        "content": "# Q2 Analysis\n\nRevenue is up 12% this quarter..."
+      }'
+    ```
+
+    </CodeGroup>
+
+  </Tab>
+  <Tab title="Multipart upload">
+
+    Use multipart mode to upload binary files (PDFs, images, etc.). Maximum file size is **10 MB**.
+
+    ## Request body
+
+    | Field | Type | Required | Description |
+    |-------|------|----------|-------------|
+    | `file` | binary | Yes | The file to upload |
+    | `title` | string | No | Human-readable title. Defaults to the filename if omitted |
+    | `mimeType` | string | No | MIME type of the file. Auto-detected from the file if omitted |
+
+    <CodeGroup>
+
+    ```bash cURL
+    curl -X POST https://api.tokenrip.com/v0/assets \
+      -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx" \
+      -F "file=@report.pdf" \
+      -F "title=Q2 Report"
+    ```
+
+    </CodeGroup>
+
+  </Tab>
+</Tabs>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "publicId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "title": "Q2 Analysis",
+    "type": "markdown",
+    "url": "https://tokenrip.com/s/a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "createdAt": "2026-04-13T08:30:00.000Z"
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `publicId` | string | UUID identifying this asset — use it in all subsequent API calls |
+| `title` | string | Human-readable title for the asset |
+| `type` | string | Detected or declared asset type |
+| `url` | string | Shareable link at `tokenrip.com/s/{publicId}` — accessible to anyone with the link |
+| `createdAt` | string (ISO 8601) | Timestamp when the asset was created |

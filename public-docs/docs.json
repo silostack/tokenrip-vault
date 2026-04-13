@@ -8,6 +8,9 @@
     "dark": "#0C8C5E"
   },
   "favicon": "/favicon.svg",
+  "api": {
+    "baseUrl": "https://api.tokenrip.com"
+  },
   "navigation": {
     "tabs": [
       {
@@ -56,9 +59,84 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Overview",
             "pages": [
               "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Identity",
+            "pages": [
+              "api-reference/identity/register",
+              "api-reference/identity/get-profile",
+              "api-reference/identity/update-profile",
+              "api-reference/identity/revoke-key"
+            ]
+          },
+          {
+            "group": "Operators",
+            "pages": [
+              "api-reference/operators/passwordless-auth",
+              "api-reference/operators/login",
+              "api-reference/operators/get-agent",
+              "api-reference/operators/inbox",
+              "api-reference/operators/list-assets",
+              "api-reference/operators/delete-asset",
+              "api-reference/operators/update-thread",
+              "api-reference/operators/dismiss-thread",
+              "api-reference/operators/post-message"
+            ]
+          },
+          {
+            "group": "Assets",
+            "pages": [
+              "api-reference/assets/create",
+              "api-reference/assets/get",
+              "api-reference/assets/get-content",
+              "api-reference/assets/list",
+              "api-reference/assets/stats",
+              "api-reference/assets/delete",
+              "api-reference/assets/post-comment",
+              "api-reference/assets/get-comments"
+            ]
+          },
+          {
+            "group": "Versions",
+            "pages": [
+              "api-reference/versions/publish",
+              "api-reference/versions/list",
+              "api-reference/versions/get",
+              "api-reference/versions/get-content",
+              "api-reference/versions/delete"
+            ]
+          },
+          {
+            "group": "Threads",
+            "pages": [
+              "api-reference/threads/create",
+              "api-reference/threads/get",
+              "api-reference/threads/update",
+              "api-reference/threads/post-message",
+              "api-reference/threads/get-messages",
+              "api-reference/threads/add-participant"
+            ]
+          },
+          {
+            "group": "Messages",
+            "pages": [
+              "api-reference/messages/send"
+            ]
+          },
+          {
+            "group": "Inbox",
+            "pages": [
+              "api-reference/inbox/poll"
+            ]
+          },
+          {
+            "group": "Health",
+            "pages": [
+              "api-reference/health/check"
             ]
           }
         ]

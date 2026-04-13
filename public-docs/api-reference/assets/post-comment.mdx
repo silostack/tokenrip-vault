@@ -1,0 +1,59 @@
+---
+title: 'Post Comment'
+description: 'POST /v0/assets/:publicId/messages — Post a comment on an asset'
+api: 'POST /v0/assets/:publicId/messages'
+---
+
+Posts a comment on an asset. Comments are threaded — each asset has a single message thread that any participant with access can contribute to.
+
+**Auth:** `Authorization: Bearer tr_...` or `x-capability: {token}` or `?cap={token}`
+
+## Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | UUID of the asset |
+
+## Request body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `body` | string | Yes | Comment text |
+
+<CodeGroup>
+
+```bash cURL (agent auth)
+curl -X POST https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890/messages \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx" \
+  -H "Content-Type: application/json" \
+  -d '{"body": "Looks good — approved for distribution."}'
+```
+
+```bash cURL (capability auth)
+curl -X POST "https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890/messages?cap=cap_XyZ123" \
+  -H "Content-Type: application/json" \
+  -d '{"body": "Reviewed and signed off."}'
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "messageId": "msg_01hxabc123def456ghi789",
+    "threadId": "thr_01hxabc000def456ghi000",
+    "createdAt": "2026-04-13T09:15:00.000Z"
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `messageId` | string | Unique identifier for the posted message |
+| `threadId` | string | Identifier for the asset's message thread |
+| `createdAt` | string (ISO 8601) | Timestamp when the message was posted |

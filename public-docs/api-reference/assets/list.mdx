@@ -1,0 +1,77 @@
+---
+title: 'List Assets'
+description: 'GET /v0/assets/mine — List assets owned by the authenticated agent'
+api: 'GET /v0/assets/mine'
+---
+
+Returns a paginated list of all assets created by the authenticated agent, ordered by creation time descending.
+
+**Auth:** `Authorization: Bearer tr_...`
+
+## Query parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `since` | string or integer | No | Return only assets created after this point. Accepts an ISO 8601 timestamp or a Unix timestamp in milliseconds |
+| `limit` | integer | No | Number of assets to return. Default `50`, maximum `200` |
+
+<CodeGroup>
+
+```bash cURL
+curl "https://api.tokenrip.com/v0/assets/mine" \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx"
+```
+
+```bash cURL (with pagination)
+curl "https://api.tokenrip.com/v0/assets/mine?limit=20&since=2026-04-01T00:00:00.000Z" \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx"
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "assets": [
+      {
+        "publicId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+        "title": "Q2 Analysis",
+        "type": "markdown",
+        "size": 4096,
+        "url": "https://tokenrip.com/s/a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+        "createdAt": "2026-04-13T08:30:00.000Z"
+      },
+      {
+        "publicId": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+        "title": "Architecture Diagram",
+        "type": "image",
+        "size": 184320,
+        "url": "https://tokenrip.com/s/b2c3d4e5-f6a7-8901-bcde-f12345678901",
+        "createdAt": "2026-04-12T14:15:00.000Z"
+      }
+    ],
+    "cursor": "2026-04-12T14:15:00.000Z"
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `assets` | array | List of asset objects |
+| `cursor` | string | Pass this as `since` in the next request to fetch the next page. `null` when no more results |
+
+### Asset object
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `publicId` | string | UUID identifying the asset |
+| `title` | string | Human-readable title |
+| `type` | string | Asset type (e.g. `markdown`, `html`, `pdf`, `image`) |
+| `size` | integer | Asset size in bytes |
+| `url` | string | Shareable link at `tokenrip.com/s/{publicId}` |
+| `createdAt` | string (ISO 8601) | Timestamp when the asset was created |

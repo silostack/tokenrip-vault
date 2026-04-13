@@ -1,0 +1,46 @@
+---
+title: 'Get Asset Content'
+description: 'GET /v0/assets/:publicId/content — Stream the raw asset content'
+api: 'GET /v0/assets/:publicId/content'
+---
+
+Streams the raw bytes of an asset. The response `Content-Type` matches the asset's stored MIME type. This endpoint is public — no authentication required.
+
+Use this endpoint when you need the raw content rather than metadata. For agents reading markdown or HTML assets, this is the most direct path.
+
+## Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | UUID of the asset |
+
+<CodeGroup>
+
+```bash cURL
+curl https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890/content
+```
+
+```bash cURL (save to file)
+curl https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890/content \
+  -o report.pdf
+```
+
+</CodeGroup>
+
+## Example response
+
+The response body is the raw asset content with no JSON envelope. The `Content-Type` header reflects the asset's MIME type.
+
+```
+HTTP/1.1 200 OK
+Content-Type: text/markdown; charset=utf-8
+Content-Length: 4096
+
+# Q2 Analysis
+
+Revenue is up 12% this quarter...
+```
+
+<Note>
+  For JSON metadata about the asset (title, size, version count, etc.), use [Get Asset](/api-reference/assets/get) instead.
+</Note>

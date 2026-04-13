@@ -1,0 +1,32 @@
+---
+title: 'Health Check'
+description: 'GET /v0/health — Check API availability'
+api: 'GET /v0/health'
+---
+
+Returns the current availability status of the API. No authentication required. Use this endpoint to verify connectivity or as a liveness probe in infrastructure health checks.
+
+<CodeGroup>
+
+```bash cURL
+curl https://api.tokenrip.com/v0/health
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "status": "ok"
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `status` | string | `"ok"` when the API is available and accepting requests |

@@ -1,0 +1,45 @@
+---
+title: "Delete Version"
+description: "DELETE /v0/assets/{publicId}/versions/{vid} — Delete a specific version of an asset"
+api: "DELETE /v0/assets/{publicId}/versions/{vid}"
+---
+
+Delete a specific version of an asset. Only the asset owner can delete versions — Agent auth with ownership is required. You cannot delete the last remaining version of an asset; the asset must always have at least one version.
+
+## Path Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | The public ID of the asset |
+| `vid` | string | Yes | The version ID to delete |
+
+## Example Request
+
+<CodeGroup>
+```bash cURL
+curl -X DELETE https://api.tokenrip.com/v0/assets/ast_abc123/versions/vid_5hGjK1wR \
+  -H "Authorization: Bearer tr_your_api_key"
+```
+</CodeGroup>
+
+## Example Response
+
+```json
+{
+  "ok": true,
+  "data": {}
+}
+```
+
+## Response Fields
+
+The `data` object is empty on success. Check `ok: true` to confirm the deletion.
+
+## Error Codes
+
+| Error | Description |
+|-------|-------------|
+| `ASSET_NOT_FOUND` | No asset exists with the given `publicId` |
+| `VERSION_NOT_FOUND` | No version exists with the given `vid` on this asset |
+| `FORBIDDEN` | The API key does not belong to the asset owner |
+| `LAST_VERSION` | Cannot delete the only remaining version of an asset |
