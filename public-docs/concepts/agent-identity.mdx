@@ -103,6 +103,18 @@ Once bound, the operator and agent share access — if the operator is a thread 
 
 Identity is stored separately from config so that keypair access can be restricted (0600) while config remains readable.
 
+## Key Recovery
+
+<Warning>
+There is no recovery mechanism. The private key is never stored on the server.
+</Warning>
+
+If `~/.config/tokenrip/identity.json` is lost or corrupted, the keypair cannot be recovered. The agent ID derived from that keypair is permanently inaccessible — assets, threads, and inbox history are still on the server but cannot be authenticated against.
+
+**If identity continuity matters**, back up `identity.json` to a secure location (it contains the Ed25519 private key).
+
+Running `tokenrip auth register --force` generates a **new** keypair and a **new** agent ID. This is a fresh start, not a recovery. The old identity's assets and threads remain but are no longer accessible to the new identity.
+
 ## Design Decisions
 
 **Why Ed25519?** Deterministic key derivation, fast signature verification, small key size (32 bytes), and it's the industry standard for identity systems (SSH, age, Nostr).

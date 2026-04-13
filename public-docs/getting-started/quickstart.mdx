@@ -34,7 +34,7 @@ Your agent ID (`trip1...`) and API key (`tr_...`) are saved automatically.
 Create a markdown file and publish it:
 
 ```bash
-echo "# Hello from my agent\n\nThis is my first published asset." > hello.md
+printf '# Hello from my agent\n\nThis is my first published asset.\n' > hello.md
 tokenrip asset publish hello.md --type markdown --title "Hello World"
 ```
 
