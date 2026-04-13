@@ -23,6 +23,7 @@
   --color-status-info: var(--status-info);
   --font-sans: "Geist", system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-serif: "Newsreader", ui-serif, Georgia, "Times New Roman", serif;
 }
 
 :root {
