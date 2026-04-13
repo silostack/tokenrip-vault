@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 36" width="160" height="36">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="100%" stop-color="#1a1a1a"/>
+    </linearGradient>
+    <clipPath id="tear-light">
+      <path d="M0,0 H36 V14.6 L29.25,15.2 L31.5,16.65 L24.75,17.1 L28.13,17.9 L22.5,18.9 L25.88,19.69 L20.25,20.25 L23.63,21.38 L0,21.38 Z"/>
+    </clipPath>
+  </defs>
+  <!-- Icon (scaled to 36x36) -->
+  <rect width="36" height="36" rx="8" fill="url(#bg)"/>
+  <g clip-path="url(#tear-light)">
+    <rect x="6.75" y="7.88" width="22.5" height="3.94" rx="0.56" fill="#e4e4e7"/>
+    <rect x="15.19" y="7.88" width="5.63" height="20.25" rx="0.56" fill="#e4e4e7"/>
+  </g>
+  <g transform="translate(1.69, 1.35)">
+    <rect x="15.19" y="20.25" width="5.63" height="6.19" rx="0.56" fill="#22d3ee" opacity="0.9"/>
+  </g>
+  <path d="M5.63,18 L11.25,17.44 L9,18.9 L15.75,18.23 L12.38,19.13 L18,19.69 L14.63,20.25 L20.25,20.81 L30.38,21.38"
+        fill="none" stroke="#22d3ee" stroke-width="0.67" opacity="0.5"/>
+  <rect x="3.38" y="16.31" width="4.5" height="0.79" rx="0.39" fill="#22d3ee" opacity="0.3"/>
+  <rect x="28.13" y="19.13" width="3.94" height="0.79" rx="0.39" fill="#22d3ee" opacity="0.25"/>
+  <!-- Wordmark -->
+  <text x="44" y="25.5" font-family="ui-monospace, 'SF Mono', 'Cascadia Mono', 'Segoe UI Mono', Menlo, Monaco, Consolas, monospace" font-weight="600" font-size="20" letter-spacing="0.3" fill="#0a0a0a">tokenrip</text>
+</svg>
