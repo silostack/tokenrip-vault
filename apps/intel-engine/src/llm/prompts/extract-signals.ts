@@ -1,10 +1,8 @@
-export interface ExtractSignalsParams {
+export function buildExtractSignalsPrompt(params: {
   content: string;
   sourcePath: string;
   sourceType: string;
-}
-
-export function buildExtractSignalsPrompt(params: ExtractSignalsParams): { system: string; user: string } {
+}): { system: string; user: string } {
   const system = `You are an intelligence analyst extracting practitioner signals from source material.
 
 A signal is a discrete, practitioner-relevant claim — something someone could act on, learn from, or verify. Each signal has:

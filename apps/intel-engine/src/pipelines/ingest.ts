@@ -18,92 +18,55 @@ import type {
   WikiPage,
 } from '../types';
 
-/**
- * Normalize a frontmatter date value to YYYY-MM-DD string.
- * gray-matter auto-parses YAML dates to JS Date objects.
- */
 function normalizeDate(value: unknown): string | undefined {
   if (!value) return undefined;
   if (value instanceof Date) return value.toISOString().split('T')[0];
   const str = String(value).trim();
-  // Already YYYY-MM-DD format
   if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
-  // Try to parse as date
   const parsed = new Date(str);
-  if (!isNaN(parsed.getTime())) return parsed.toISOString().split('T')[0];
-  return str;
+  return isNaN(parsed.getTime()) ? str : parsed.toISOString().split('T')[0];
 }
 
 export interface IngestParams {
-  sourcePath: string; // relative to inteliwiki repo
-  repoPath: string; // absolute path to inteliwiki repo
-  llm: LLMClient; // injected LLM client (mock in tests)
+  sourcePath: string;
+  repoPath: string;
+  llm: LLMClient;
 }
 
-/**
- * Detect source type from path and frontmatter.
- */
 function detectSourceType(
   sourcePath: string,
   frontmatter: Record<string, unknown>,
 ): SourceType {
-  // Check path for Clippings/
-  if (sourcePath.includes('Clippings/')) {
-    return 'clipping';
-  }
+  if (sourcePath.includes('Clippings/')) return 'clipping';
 
-  // Check frontmatter tags for 'clippings'
   const tags = frontmatter.tags;
   if (Array.isArray(tags) && tags.some((t: unknown) => String(t).toLowerCase() === 'clippings')) {
     return 'clipping';
   }
 
-  // .md files -> markdown
-  if (sourcePath.endsWith('.md')) {
-    return 'markdown';
-  }
-
+  if (sourcePath.endsWith('.md')) return 'markdown';
   return 'article';
 }
 
-/**
- * Ingest pipeline: source -> signals + wiki updates.
- *
- * Orchestrates 10 steps:
- * 1. Parse source
- * 2. Extract signals (LLM)
- * 3. Build Signal objects
- * 4. Corroborate
- * 5. Write new signals
- * 6. Wiki update (LLM)
- * 7. Write wiki updates
- * 8. Rebuild index
- * 9. Log
- * 10. Move source (if inbox)
- */
 export async function ingest(params: IngestParams): Promise<IngestResult> {
   const { sourcePath, repoPath, llm } = params;
   const reader = new RepoReader(repoPath);
   const writer = new RepoWriter(repoPath);
 
-  // 1. Parse source
+  // Parse source
   const raw = await reader.readFile(sourcePath);
   const { data: frontmatter, content } = matter(raw);
   const sourceType = detectSourceType(sourcePath, frontmatter);
 
-  // 2. Extract signals (LLM)
-  const extractPrompt = buildExtractSignalsPrompt({
-    content,
-    sourcePath,
-    sourceType,
-  });
+  // Extract signals via LLM
+  const extractPrompt = buildExtractSignalsPrompt({ content, sourcePath, sourceType });
   const extractedResponse = await llm.complete({
     system: extractPrompt.system,
     user: extractPrompt.user,
     schema: ExtractedSignalsResponseSchema,
   });
 
-  // 3. Build Signal objects
+  // Build Signal objects
   const existingIds = await reader.getAllSignalIds();
   const today = new Date().toISOString().split('T')[0];
   const allIds = [...existingIds];
@@ -113,7 +76,7 @@ export async function ingest(params: IngestParams): Promise<IngestResult> {
     const id = generateSignalId(allIds, today);
     allIds.push(id);
 
-    const signal: Signal = {
+    newSignals.push({
       frontmatter: {
         id,
         type: 'signal',
@@ -130,22 +93,18 @@ export async function ingest(params: IngestParams): Promise<IngestResult> {
         corroboration: { count: 1, supporting: [], contradicting: [] },
       },
       body: extracted.claim,
-      filePath: '', // will be set by writer
-    };
-
-    newSignals.push(signal);
+      filePath: '',
+    });
   }
 
-  // 4. Corroborate
+  // Corroborate against existing signals
   const existingSignals = await reader.readAllSignals();
   for (const newSignal of newSignals) {
     const matches = findCorroborations(newSignal, existingSignals);
     for (const match of matches) {
-      // Update new signal's corroboration
       newSignal.frontmatter.corroboration.count += 1;
       newSignal.frontmatter.corroboration.supporting.push(match.existingSignalId);
 
-      // Update existing signal's corroboration and write it back
       const existingSignal = existingSignals.find(
         (s) => s.frontmatter.id === match.existingSignalId,
       );
@@ -157,19 +116,16 @@ export async function ingest(params: IngestParams): Promise<IngestResult> {
     }
   }
 
-  // 5. Write new signals
+  // Write new signals
   for (const signal of newSignals) {
-    const writtenPath = await writer.writeSignal(signal);
-    signal.filePath = writtenPath;
+    signal.filePath = await writer.writeSignal(signal);
   }
 
-  // 6. Wiki update (LLM)
-  // Collect entities/tags from new signals for affected page detection
+  // Determine affected wiki pages
   const signalEntities = newSignals.flatMap((s) => s.frontmatter.entities);
   const signalConcepts = newSignals.flatMap((s) => s.frontmatter.concepts);
   const allNames = [...new Set([...signalEntities, ...signalConcepts])];
 
-  // Read existing wiki pages and find affected ones
   const existingPages = await reader.readAllWikiPages();
   const affectedPages: Array<{ path: string; content: string }> = [];
   for (const page of existingPages) {
@@ -181,14 +137,10 @@ export async function ingest(params: IngestParams): Promise<IngestResult> {
         titleLower === name.toLowerCase(),
     );
     if (hasOverlap) {
-      affectedPages.push({
-        path: page.filePath,
-        content: page.body,
-      });
+      affectedPages.push({ path: page.filePath, content: page.body });
     }
   }
 
-  // Read current index
   let indexContent = '';
   try {
     indexContent = await reader.readFile('index.md');
@@ -196,6 +148,7 @@ export async function ingest(params: IngestParams): Promise<IngestResult> {
     // no index yet
   }
 
+  // Update wiki via LLM
   const wikiPrompt = buildUpdateWikiPrompt({
     signals: newSignals.map((s) => ({
       id: s.frontmatter.id,
@@ -212,15 +165,13 @@ export async function ingest(params: IngestParams): Promise<IngestResult> {
     schema: WikiUpdatesResponseSchema,
   });
 
-  // 7. Write wiki updates
+  // Write wiki updates
   const wikiUpdates: Array<{ path: string; action: 'create' | 'update' }> = [];
   const allPages = [...existingPages];
+  const signalIds = newSignals.map((s) => s.frontmatter.id);
+  const now = new Date().toISOString().split('T')[0];
 
   for (const update of wikiResponse.updates) {
-    const signalIds = newSignals.map((s) => s.frontmatter.id);
-
-    // Build or merge frontmatter
-    const now = new Date().toISOString().split('T')[0];
     const page: WikiPage = {
       frontmatter: {
         title: update.title,
@@ -236,19 +187,13 @@ export async function ingest(params: IngestParams): Promise<IngestResult> {
       filePath: update.path,
     };
 
-    // If updating an existing page, merge signals into frontmatter
     if (update.action === 'update') {
       const existing = existingPages.find((p) => p.filePath === update.path);
       if (existing) {
         page.frontmatter.created = existing.frontmatter.created;
         page.frontmatter.status = existing.frontmatter.status;
-        page.frontmatter.signals = [
-          ...new Set([...existing.frontmatter.signals, ...signalIds]),
-        ];
-        page.frontmatter.sources = [
-          ...new Set([...existing.frontmatter.sources, sourcePath]),
-        ];
-        // Append body for updates
+        page.frontmatter.signals = [...new Set([...existing.frontmatter.signals, ...signalIds])];
+        page.frontmatter.sources = [...new Set([...existing.frontmatter.sources, sourcePath])];
         page.body = existing.body + '\n\n' + update.body;
       }
     }
@@ -256,7 +201,6 @@ export async function ingest(params: IngestParams): Promise<IngestResult> {
     await writer.writeWikiPage(page);
     wikiUpdates.push({ path: update.path, action: update.action });
 
-    // Track for index rebuild
     const existingIdx = allPages.findIndex((p) => p.filePath === update.path);
     if (existingIdx >= 0) {
       allPages[existingIdx] = page;
@@ -265,19 +209,18 @@ export async function ingest(params: IngestParams): Promise<IngestResult> {
     }
   }
 
-  // 8. Rebuild index
+  // Rebuild index
   await rebuildIndex(repoPath, allPages);
 
-  // 9. Log
-  const pagesAffected = wikiUpdates.map((u) => u.path);
+  // Log
   await writer.appendLog(
     'ingest',
     sourcePath,
     `${newSignals.length} signals extracted, ${wikiUpdates.length} wiki updates`,
-    pagesAffected,
+    wikiUpdates.map((u) => u.path),
   );
 
-  // 10. Move source (if in inbox)
+  // Move source if in inbox
   let sourceMovedTo = sourcePath;
   if (sourcePath.startsWith('sources/inbox/') && !sourcePath.startsWith('sources/inbox/processed/') && !sourcePath.startsWith('sources/inbox/failed/')) {
     await writer.moveToProcessed(sourcePath);
@@ -285,9 +228,5 @@ export async function ingest(params: IngestParams): Promise<IngestResult> {
     sourceMovedTo = `sources/inbox/processed/${filename}`;
   }
 
-  return {
-    signals: newSignals,
-    wikiUpdates,
-    sourceMovedTo,
-  };
+  return { signals: newSignals, wikiUpdates, sourceMovedTo };
 }

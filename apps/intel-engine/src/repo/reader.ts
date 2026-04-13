@@ -1,8 +1,18 @@
 import { readdir, readFile, stat } from 'node:fs/promises';
-import { join, relative } from 'node:path';
+import { join } from 'node:path';
 import { parseSignal } from '../signals/parser';
 import { parseWikiPage } from '../wiki/parser';
 import type { Signal, WikiPage } from '../types';
+
+async function listMdFiles(dir: string, opts?: { recursive?: boolean }): Promise<string[]> {
+  let entries: string[];
+  try {
+    entries = await readdir(dir, { recursive: opts?.recursive }) as unknown as string[];
+  } catch {
+    return [];
+  }
+  return entries.filter((e) => e.endsWith('.md'));
+}
 
 export class RepoReader {
   constructor(private repoPath: string) {}
@@ -13,29 +23,19 @@ export class RepoReader {
 
   async readAllSignals(): Promise<Signal[]> {
     const signals: Signal[] = [];
-    const dirs = ['signals/by-entity', 'signals/by-problem'];
 
-    for (const dir of dirs) {
-      const fullDir = join(this.repoPath, dir);
-      let entries: string[];
-      try {
-        entries = await readdir(fullDir, { recursive: true }) as unknown as string[];
-      } catch {
-        continue; // directory doesn't exist
-      }
-
-      for (const entry of entries) {
-        if (!entry.endsWith('.md')) continue;
+    for (const dir of ['signals/by-entity', 'signals/by-problem']) {
+      const files = await listMdFiles(join(this.repoPath, dir), { recursive: true });
+      for (const entry of files) {
         const basename = entry.split('/').pop() ?? entry;
         if (basename.startsWith('_')) continue;
 
         const filePath = join(dir, entry);
         try {
           const raw = await readFile(join(this.repoPath, filePath), 'utf-8');
-          const signal = parseSignal(raw, filePath);
-          signals.push(signal);
+          signals.push(parseSignal(raw, filePath));
         } catch {
-          // skip unparseable files silently
+          // skip unparseable files
         }
       }
     }
@@ -45,27 +45,18 @@ export class RepoReader {
 
   async readAllWikiPages(): Promise<WikiPage[]> {
     const pages: WikiPage[] = [];
-    const wikiDir = join(this.repoPath, 'wiki');
+    const files = await listMdFiles(join(this.repoPath, 'wiki'), { recursive: true });
 
-    let entries: string[];
-    try {
-      entries = await readdir(wikiDir, { recursive: true }) as unknown as string[];
-    } catch {
-      return pages;
-    }
-
-    for (const entry of entries) {
-      if (!entry.endsWith('.md')) continue;
+    for (const entry of files) {
       const basename = entry.split('/').pop() ?? entry;
       if (basename.startsWith('.') || basename === '.gitkeep') continue;
 
       const filePath = join('wiki', entry);
       try {
         const raw = await readFile(join(this.repoPath, filePath), 'utf-8');
-        const page = parseWikiPage(raw, filePath);
-        pages.push(page);
+        pages.push(parseWikiPage(raw, filePath));
       } catch {
-        // skip unparseable files silently
+        // skip unparseable files
       }
     }
 
@@ -74,23 +65,15 @@ export class RepoReader {
 
   async readInbox(): Promise<string[]> {
     const inboxDir = join(this.repoPath, 'sources/inbox');
-    let entries: string[];
-    try {
-      entries = await readdir(inboxDir) as unknown as string[];
-    } catch {
-      return [];
+    const files = await listMdFiles(inboxDir);
+    const result: string[] = [];
+
+    for (const entry of files) {
+      const s = await stat(join(inboxDir, entry));
+      if (s.isFile()) result.push(join('sources/inbox', entry));
     }
 
-    const files: string[] = [];
-    for (const entry of entries) {
-      if (!entry.endsWith('.md')) continue;
-      const fullPath = join(inboxDir, entry);
-      const s = await stat(fullPath);
-      if (s.isFile()) {
-        files.push(join('sources/inbox', entry));
-      }
-    }
-    return files;
+    return result;
   }
 
   async getAllSignalIds(): Promise<string[]> {

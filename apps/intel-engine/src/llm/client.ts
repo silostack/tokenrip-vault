@@ -10,9 +10,6 @@ export interface LLMClient {
   }): Promise<T>;
 }
 
-/**
- * Strip markdown JSON fencing (```json ... ```) if present.
- */
 function stripJsonFencing(text: string): string {
   const fenced = text.match(/```(?:json)?\s*\n?([\s\S]*?)```/);
   return fenced ? fenced[1].trim() : text.trim();

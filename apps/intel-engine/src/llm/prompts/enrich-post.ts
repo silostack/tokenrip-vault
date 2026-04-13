@@ -1,9 +1,7 @@
-export interface EnrichPostParams {
+export function buildEnrichPostPrompt(params: {
   title: string;
   content: string;
-}
-
-export function buildEnrichPostPrompt(params: EnrichPostParams): { system: string; user: string } {
+}): { system: string; user: string } {
   const system = `You are a content enrichment engine for an operational intelligence publication. Given an article, produce a JSON object with:
 
 - "description": SEO-optimized summary, 1-2 sentences, max 160 characters

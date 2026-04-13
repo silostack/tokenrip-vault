@@ -1,7 +1,5 @@
 import { z } from 'zod';
 
-// --- Signal schemas ---
-
 export const SignalTypeEnum = z.enum([
   'technique',
   'frustration',
@@ -53,8 +51,6 @@ export interface Signal {
   filePath: string;
 }
 
-// --- Wiki schemas ---
-
 export const WikiTypeEnum = z.enum(['entity', 'concept', 'comparison', 'synthesis']);
 export type WikiType = z.infer<typeof WikiTypeEnum>;
 
@@ -77,15 +73,6 @@ export interface WikiPage {
   frontmatter: WikiFrontmatter;
   body: string;
   filePath: string;
-}
-
-// --- Other types ---
-
-export interface ParsedSource {
-  frontmatter: Record<string, unknown>;
-  content: string;
-  filePath: string;
-  sourceType: SourceType;
 }
 
 export interface IngestResult {

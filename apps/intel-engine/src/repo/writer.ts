@@ -1,28 +1,29 @@
-import { mkdir, writeFile, appendFile, rename, access } from 'node:fs/promises';
-import { join, dirname } from 'node:path';
+import { mkdir, writeFile, appendFile, rename, readFile } from 'node:fs/promises';
+import { join, dirname, basename } from 'node:path';
 import { serializeSignal } from '../signals/parser';
 import { serializeWikiPage } from '../wiki/parser';
 import type { Signal, WikiPage } from '../types';
+
+const LOG_HEADER = '# Operations Log\n\n| Timestamp | Operation | Source | Action | Pages Affected |\n|---|---|---|---|---|\n';
 
 export class RepoWriter {
   constructor(private repoPath: string) {}
 
   async writeSignal(signal: Signal): Promise<string> {
+    const { entities, problems, id } = signal.frontmatter;
     let subDir: string;
-    if (signal.frontmatter.entities.length > 0) {
-      subDir = join('signals/by-entity', signal.frontmatter.entities[0]);
-    } else if (signal.frontmatter.problems.length > 0) {
-      subDir = join('signals/by-problem', signal.frontmatter.problems[0]);
+    if (entities.length > 0) {
+      subDir = join('signals/by-entity', entities[0]);
+    } else if (problems.length > 0) {
+      subDir = join('signals/by-problem', problems[0]);
     } else {
-      subDir = join('signals/by-entity', '_untagged');
+      subDir = 'signals/by-entity/_untagged';
     }
 
-    const relativePath = join(subDir, `${signal.frontmatter.id}.md`);
+    const relativePath = join(subDir, `${id}.md`);
     const fullPath = join(this.repoPath, relativePath);
-
     await mkdir(dirname(fullPath), { recursive: true });
     await writeFile(fullPath, serializeSignal(signal), 'utf-8');
-
     return relativePath;
   }
 
@@ -40,38 +41,32 @@ export class RepoWriter {
     notes?: string,
   ): Promise<void> {
     const logPath = join(this.repoPath, 'log.md');
-    const timestamp = new Date().toISOString();
     const pagesStr = pagesAffected.length > 0 ? pagesAffected.join(', ') : 'none';
-    let entry = `| ${timestamp} | ${operation} | ${source} | ${action} | ${pagesStr} |`;
-    if (notes) {
-      entry += ` ${notes} |`;
-    }
+    let entry = `| ${new Date().toISOString()} | ${operation} | ${source} | ${action} | ${pagesStr} |`;
+    if (notes) entry += ` ${notes} |`;
     entry += '\n';
 
-    // Create log file with header if it doesn't exist
-    let exists = true;
+    let existing = '';
     try {
-      await access(logPath);
+      existing = await readFile(logPath, 'utf-8');
     } catch {
-      exists = false;
+      // file doesn't exist yet
     }
 
-    if (!exists) {
-      const header =
-        '# Operations Log\n\n| Timestamp | Operation | Source | Action | Pages Affected |\n|---|---|---|---|---|\n';
-      await writeFile(logPath, header + entry, 'utf-8');
-    } else {
+    if (existing) {
       await appendFile(logPath, entry, 'utf-8');
+    } else {
+      await writeFile(logPath, LOG_HEADER + entry, 'utf-8');
     }
   }
 
   async moveToProcessed(relativePath: string): Promise<void> {
-    const sourcePath = join(this.repoPath, relativePath);
-    const filename = relativePath.split('/').pop()!;
     const destDir = join(this.repoPath, 'sources/inbox/processed');
     await mkdir(destDir, { recursive: true });
-    const destPath = join(destDir, filename);
-    await rename(sourcePath, destPath);
+    await rename(
+      join(this.repoPath, relativePath),
+      join(destDir, basename(relativePath)),
+    );
   }
 
   async writeContent(relativePath: string, content: string): Promise<void> {

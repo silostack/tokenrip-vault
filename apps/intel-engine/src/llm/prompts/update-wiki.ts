@@ -1,10 +1,8 @@
-export interface UpdateWikiParams {
+export function buildUpdateWikiPrompt(params: {
   signals: Array<{ id: string; claim: string; entities: string[] }>;
   existingPages: Array<{ path: string; content: string }>;
   indexContent: string;
-}
-
-export function buildUpdateWikiPrompt(params: UpdateWikiParams): { system: string; user: string } {
+}): { system: string; user: string } {
   const system = `You are a wiki maintainer for an operational intelligence knowledge base.
 
 Your job is to decide which wiki pages need to be created or updated based on new signals. The knowledge base serves practitioners who need to make decisions — every page should answer "How can I use this?"

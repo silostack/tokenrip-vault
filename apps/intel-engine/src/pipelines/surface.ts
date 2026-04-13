@@ -11,38 +11,22 @@ export interface SurfaceParams {
   llm: LLMClient;
 }
 
-interface SignalSummary {
-  entity: string;
-  count: number;
-  topClaims: string[];
-}
-
-/**
- * Surface pipeline: signals + wiki -> editorial brief.
- *
- * Steps:
- * 1. Scan — read all signals and wiki pages
- * 2. Analyze — compute summaries and health metrics
- * 3. Editorial brief — LLM generates story candidates
- * 4. Write — format brief as markdown and write to content/briefs/
- */
 export async function surface(params: SurfaceParams): Promise<SurfaceResult> {
   const { repoPath, llm } = params;
   const reader = new RepoReader(repoPath);
   const writer = new RepoWriter(repoPath);
 
-  // 1. Scan
   const signals = await reader.readAllSignals();
   const wikiPages = await reader.readAllWikiPages();
 
-  // 2. Analyze
   const signalSummaries = computeSignalSummaries(signals);
   const stalePages = findStalePages(wikiPages);
-  const signalStarvedPages = findSignalStarvedPages(wikiPages);
+  const signalStarvedPages = wikiPages.filter(
+    (p) => !p.frontmatter.signals || p.frontmatter.signals.length === 0,
+  );
   const orphanPages = findOrphanPages(wikiPages);
   const coverageGaps = findCoverageGaps(signals, wikiPages);
 
-  // 3. Editorial brief (LLM)
   const prompt = buildEditorialBriefPrompt({
     signalSummaries,
     stalePages: stalePages.map((p) => p.frontmatter.title),
@@ -55,21 +39,18 @@ export async function surface(params: SurfaceParams): Promise<SurfaceResult> {
     schema: EditorialBriefSchema,
   });
 
-  // 4. Write
   const today = new Date().toISOString().split('T')[0];
   const briefPath = `content/briefs/${today}-brief.md`;
-  const briefMarkdown = formatBrief(brief, {
+  const metrics: SurfaceResult['metrics'] = {
     totalSignals: signals.length,
     totalWikiPages: wikiPages.length,
     stalePages: stalePages.length,
     signalStarvedPages: signalStarvedPages.length,
     orphanPages: orphanPages.length,
     coverageGaps: coverageGaps.length,
-  });
+  };
 
-  await writer.writeContent(briefPath, briefMarkdown);
-
-  // Log
+  await writer.writeContent(briefPath, formatBrief(brief, metrics, today));
   await writer.appendLog(
     'surface',
     'all signals + wiki',
@@ -77,113 +58,75 @@ export async function surface(params: SurfaceParams): Promise<SurfaceResult> {
     [briefPath],
   );
 
-  return {
-    briefPath,
-    metrics: {
-      totalSignals: signals.length,
-      totalWikiPages: wikiPages.length,
-      stalePages: stalePages.length,
-      signalStarvedPages: signalStarvedPages.length,
-      orphanPages: orphanPages.length,
-      coverageGaps: coverageGaps.length,
-    },
-  };
+  return { briefPath, metrics };
 }
 
-/**
- * Group signals by entity, count, and extract top claims sorted by corroboration.
- */
-function computeSignalSummaries(signals: Signal[]): SignalSummary[] {
+function computeSignalSummaries(signals: Signal[]): Array<{ entity: string; count: number; topClaims: string[] }> {
   const byEntity = new Map<string, Signal[]>();
-
   for (const signal of signals) {
     for (const entity of signal.frontmatter.entities) {
       const key = entity.toLowerCase();
-      if (!byEntity.has(key)) {
-        byEntity.set(key, []);
+      const group = byEntity.get(key);
+      if (group) {
+        group.push(signal);
+      } else {
+        byEntity.set(key, [signal]);
       }
-      byEntity.get(key)!.push(signal);
     }
   }
 
-  const summaries: SignalSummary[] = [];
-  for (const [entity, entitySignals] of byEntity) {
-    // Sort by corroboration count descending
-    const sorted = [...entitySignals].sort(
-      (a, b) => b.frontmatter.corroboration.count - a.frontmatter.corroboration.count,
-    );
-    const topClaims = sorted.slice(0, 5).map((s) => s.frontmatter.claim);
-
-    summaries.push({
+  return [...byEntity.entries()]
+    .map(([entity, entitySignals]) => ({
       entity,
       count: entitySignals.length,
-      topClaims,
-    });
-  }
-
-  // Sort summaries by signal count descending
-  summaries.sort((a, b) => b.count - a.count);
-
-  return summaries;
+      topClaims: [...entitySignals]
+        .sort((a, b) => b.frontmatter.corroboration.count - a.frontmatter.corroboration.count)
+        .slice(0, 5)
+        .map((s) => s.frontmatter.claim),
+    }))
+    .sort((a, b) => b.count - a.count);
 }
 
-/**
- * Find wiki pages where `updated` is older than 14 days.
- */
 function findStalePages(pages: WikiPage[]): WikiPage[] {
-  const fourteenDaysAgo = new Date();
-  fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 14);
-
-  return pages.filter((page) => {
-    const updated = new Date(page.frontmatter.updated);
-    return updated < fourteenDaysAgo;
-  });
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 14);
+  return pages.filter((p) => new Date(p.frontmatter.updated) < cutoff);
 }
 
-/**
- * Find wiki pages with empty signals array.
- */
-function findSignalStarvedPages(pages: WikiPage[]): WikiPage[] {
-  return pages.filter(
-    (page) => !page.frontmatter.signals || page.frontmatter.signals.length === 0,
-  );
-}
-
-/**
- * Find pages not referenced via [[link]] in any other page's body.
- */
 function findOrphanPages(pages: WikiPage[]): WikiPage[] {
-  // Collect all wiki links from all pages
-  const referencedTitles = new Set<string>();
+  const referencedByOthers = new Map<string, Set<string>>();
   for (const page of pages) {
-    const links = extractWikiLinks(page.body);
-    for (const link of links) {
-      referencedTitles.add(link.toLowerCase());
+    for (const link of extractWikiLinks(page.body)) {
+      const key = link.toLowerCase();
+      const set = referencedByOthers.get(key);
+      if (set) {
+        set.add(page.filePath);
+      } else {
+        referencedByOthers.set(key, new Set([page.filePath]));
+      }
     }
   }
 
-  // A page is orphan if its title is not referenced by any OTHER page
-  // We need to exclude self-references
   return pages.filter((page) => {
     const title = page.frontmatter.title.toLowerCase();
-    // Check if any OTHER page references this page
-    for (const otherPage of pages) {
-      if (otherPage.filePath === page.filePath) continue;
-      const otherLinks = extractWikiLinks(otherPage.body);
-      if (otherLinks.some((link) => link.toLowerCase() === title)) {
-        return false;
-      }
+    const referrers = referencedByOthers.get(title);
+    if (!referrers) return true;
+    // Exclude self-references
+    for (const referrer of referrers) {
+      if (referrer !== page.filePath) return false;
     }
     return true;
   });
 }
 
-/**
- * Find entity names from signals that don't have a matching wiki page.
- * Matches by filename (without extension) or title.
- */
 function findCoverageGaps(signals: Signal[], pages: WikiPage[]): string[] {
-  // Collect all entity names from signals
+  const knownPages = new Set<string>();
+  for (const page of pages) {
+    knownPages.add(page.frontmatter.title.toLowerCase());
+    const filename = page.filePath.split('/').pop()?.replace(/\.md$/, '') ?? '';
+    knownPages.add(filename.toLowerCase());
+  }
+
   const entityNames = new Set<string>();
   for (const signal of signals) {
     for (const entity of signal.frontmatter.entities) {
@@ -191,91 +134,43 @@ function findCoverageGaps(signals: Signal[], pages: WikiPage[]): string[] {
     }
   }
 
-  // Build set of known page identifiers (title and filename slug)
-  const knownPages = new Set<string>();
-  for (const page of pages) {
-    knownPages.add(page.frontmatter.title.toLowerCase());
-    // Extract filename without extension
-    const filename = page.filePath.split('/').pop()?.replace(/\.md$/, '') ?? '';
-    knownPages.add(filename.toLowerCase());
-  }
-
-  // Find entities without a matching page
-  const gaps: string[] = [];
-  for (const entity of entityNames) {
-    if (!knownPages.has(entity)) {
-      gaps.push(entity);
-    }
-  }
-
-  return gaps.sort();
+  return [...entityNames].filter((e) => !knownPages.has(e)).sort();
 }
 
-/**
- * Format the editorial brief as markdown.
- */
 function formatBrief(
   brief: { candidates: Array<{ title: string; angle: string; signal_ids: string[]; entities: string[] }>; trends: string[]; gaps: string[] },
   metrics: SurfaceResult['metrics'],
+  today: string,
 ): string {
-  const today = new Date().toISOString().split('T')[0];
-  const lines: string[] = [];
+  let md = `# Editorial Brief — ${today}\n\n## Story Candidates\n\n`;
 
-  lines.push(`# Editorial Brief — ${today}`);
-  lines.push('');
-
-  // Story Candidates
-  lines.push('## Story Candidates');
-  lines.push('');
-  for (const candidate of brief.candidates) {
-    lines.push(`### ${candidate.title}`);
-    lines.push('');
-    lines.push(`**Angle:** ${candidate.angle}`);
-    lines.push('');
-    if (candidate.entities.length > 0) {
-      lines.push(`**Entities:** ${candidate.entities.join(', ')}`);
-      lines.push('');
-    }
-    lines.push(`**Supporting signals:** ${candidate.signal_ids.join(', ')}`);
-    lines.push('');
+  for (const c of brief.candidates) {
+    md += `### ${c.title}\n\n**Angle:** ${c.angle}\n\n`;
+    if (c.entities.length > 0) md += `**Entities:** ${c.entities.join(', ')}\n\n`;
+    md += `**Supporting signals:** ${c.signal_ids.join(', ')}\n\n`;
   }
 
-  // Trends
-  lines.push('## Trends');
-  lines.push('');
-  if (brief.trends.length > 0) {
-    for (const trend of brief.trends) {
-      lines.push(`- ${trend}`);
-    }
-  } else {
-    lines.push('(none identified)');
-  }
-  lines.push('');
+  md += '## Trends\n\n';
+  md += brief.trends.length > 0
+    ? brief.trends.map((t) => `- ${t}`).join('\n')
+    : '(none identified)';
 
-  // Gaps
-  lines.push('## Gaps');
-  lines.push('');
-  if (brief.gaps.length > 0) {
-    for (const gap of brief.gaps) {
-      lines.push(`- ${gap}`);
-    }
-  } else {
-    lines.push('(none identified)');
-  }
-  lines.push('');
+  md += '\n\n## Gaps\n\n';
+  md += brief.gaps.length > 0
+    ? brief.gaps.map((g) => `- ${g}`).join('\n')
+    : '(none identified)';
 
-  // Wiki Health
-  lines.push('## Wiki Health');
-  lines.push('');
-  lines.push(`| Metric | Count |`);
-  lines.push(`|---|---|`);
-  lines.push(`| Total signals | ${metrics.totalSignals} |`);
-  lines.push(`| Total wiki pages | ${metrics.totalWikiPages} |`);
-  lines.push(`| Stale pages (>14 days) | ${metrics.stalePages} |`);
-  lines.push(`| Signal-starved pages | ${metrics.signalStarvedPages} |`);
-  lines.push(`| Orphan pages | ${metrics.orphanPages} |`);
-  lines.push(`| Coverage gaps | ${metrics.coverageGaps} |`);
-  lines.push('');
+  md += `\n\n## Wiki Health
 
-  return lines.join('\n');
+| Metric | Count |
+|---|---|
+| Total signals | ${metrics.totalSignals} |
+| Total wiki pages | ${metrics.totalWikiPages} |
+| Stale pages (>14 days) | ${metrics.stalePages} |
+| Signal-starved pages | ${metrics.signalStarvedPages} |
+| Orphan pages | ${metrics.orphanPages} |
+| Coverage gaps | ${metrics.coverageGaps} |
+`;
+
+  return md;
 }

@@ -1,10 +1,8 @@
-export interface EditorialBriefParams {
+export function buildEditorialBriefPrompt(params: {
   signalSummaries: Array<{ entity: string; count: number; topClaims: string[] }>;
   stalePages: string[];
   coverageGaps: string[];
-}
-
-export function buildEditorialBriefPrompt(params: EditorialBriefParams): { system: string; user: string } {
+}): { system: string; user: string } {
   const system = `You are an editorial advisor for an operational intelligence publication.
 
 Your job is to review signal activity across the knowledge base and identify 3-5 story candidates that would be valuable to practitioners. Each candidate should have a clear angle backed by signal evidence.

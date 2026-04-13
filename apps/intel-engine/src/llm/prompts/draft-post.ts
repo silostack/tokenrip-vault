@@ -1,10 +1,8 @@
-export interface DraftPostParams {
+export function buildDraftPostPrompt(params: {
   wikiContent: string;
   signals: Array<{ id: string; claim: string }>;
   angle?: string;
-}
-
-export function buildDraftPostPrompt(params: DraftPostParams): { system: string; user: string } {
+}): { system: string; user: string } {
   const system = `You are a writer for an operational intelligence publication.
 
 Your publication is positioned like Wirecutter for the AI/agentic landscape — practical, signal-backed, practitioner-focused. Every claim should reference the signal ID it comes from. Use the "How can I use this?" lens throughout.

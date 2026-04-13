@@ -1,8 +1,6 @@
 import { z } from 'zod';
 import { SignalTypeEnum, ConfidenceEnum, WikiTypeEnum } from '../types';
 
-// --- Extracted Signal (from LLM response) ---
-
 export const ExtractedSignalSchema = z.object({
   claim: z.string(),
   signal_type: SignalTypeEnum,
@@ -17,8 +15,6 @@ export const ExtractedSignalsResponseSchema = z.object({
   signals: z.array(ExtractedSignalSchema),
 });
 export type ExtractedSignalsResponse = z.infer<typeof ExtractedSignalsResponseSchema>;
-
-// --- Wiki Update (from LLM response) ---
 
 export const WikiUpdateSchema = z.object({
   path: z.string(),
@@ -35,8 +31,6 @@ export const WikiUpdatesResponseSchema = z.object({
 });
 export type WikiUpdatesResponse = z.infer<typeof WikiUpdatesResponseSchema>;
 
-// --- Story Candidate & Editorial Brief (from LLM response) ---
-
 export const StoryCandidateSchema = z.object({
   title: z.string(),
   angle: z.string(),
@@ -52,15 +46,11 @@ export const EditorialBriefSchema = z.object({
 });
 export type EditorialBrief = z.infer<typeof EditorialBriefSchema>;
 
-// --- Blog Draft (from LLM response) ---
-
 export const BlogDraftSchema = z.object({
   title: z.string(),
   body: z.string(),
 });
 export type BlogDraft = z.infer<typeof BlogDraftSchema>;
-
-// --- Enrichment (from LLM response) ---
 
 export const EnrichmentSchema = z.object({
   description: z.string(),

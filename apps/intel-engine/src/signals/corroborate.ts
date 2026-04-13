@@ -7,27 +7,19 @@ export interface CorroborationMatch {
   sharedProblems: string[];
 }
 
-function intersect(a: string[], b: string[]): string[] {
-  const setB = new Set(b);
-  return a.filter((item) => setB.has(item));
-}
-
 function tokenize(text: string): Set<string> {
-  const cleaned = text.toLowerCase().replace(/[^a-z0-9\s-]/g, '');
-  const words = cleaned.split(/\s+/).filter((w) => w.length > 2);
-  return new Set(words);
+  return new Set(
+    text.toLowerCase().replace(/[^a-z0-9\s-]/g, '').split(/\s+/).filter((w) => w.length > 2),
+  );
 }
 
-function jaccardSimilarity(setA: Set<string>, setB: Set<string>): number {
-  if (setA.size === 0 && setB.size === 0) return 0;
-
-  let intersectionSize = 0;
-  for (const item of setA) {
-    if (setB.has(item)) intersectionSize++;
+function jaccardSimilarity(a: Set<string>, b: Set<string>): number {
+  let intersection = 0;
+  for (const item of a) {
+    if (b.has(item)) intersection++;
   }
-
-  const unionSize = setA.size + setB.size - intersectionSize;
-  return unionSize === 0 ? 0 : intersectionSize / unionSize;
+  const union = a.size + b.size - intersection;
+  return union === 0 ? 0 : intersection / union;
 }
 
 export function findCorroborations(
@@ -41,20 +33,15 @@ export function findCorroborations(
   for (const existing of existingSignals) {
     if (existing.frontmatter.id === newSignal.frontmatter.id) continue;
 
-    const sharedEntities = intersect(
-      newSignal.frontmatter.entities,
-      existing.frontmatter.entities,
-    );
-    const sharedProblems = intersect(
-      newSignal.frontmatter.problems,
-      existing.frontmatter.problems,
-    );
+    const setExisting = new Set(existing.frontmatter.entities);
+    const sharedEntities = newSignal.frontmatter.entities.filter((e) => setExisting.has(e));
+
+    const setProblems = new Set(existing.frontmatter.problems);
+    const sharedProblems = newSignal.frontmatter.problems.filter((p) => setProblems.has(p));
 
     if (sharedEntities.length === 0 && sharedProblems.length === 0) continue;
 
-    const existingTokens = tokenize(existing.frontmatter.claim);
-    const similarity = jaccardSimilarity(newTokens, existingTokens);
-
+    const similarity = jaccardSimilarity(newTokens, tokenize(existing.frontmatter.claim));
     if (similarity >= similarityThreshold) {
       matches.push({
         existingSignalId: existing.frontmatter.id,
