@@ -35,7 +35,7 @@ Both share pages use `SharePageContent` component. Each child route has an SSR l
 The `/oauth/authorize` page handles the MCP OAuth 2.1 authorization flow. MCP clients (Claude Cowork, etc.) redirect users here to register or log in.
 
 - Accepts OAuth search params: `redirect_uri`, `state`, `code_challenge`, `code_challenge_method`, `response_type`
-- Two tabs: Register (new user) and Login (returning user)
+- Three tabs: Register (new user), Login (returning user), Link agent (existing CLI agent)
 - Registration: display name, password, optional agent alias (.ai), optional user alias
 - Inline alias availability checking via `POST /oauth/check-alias`
 - On success, redirects back to the MCP client with auth code

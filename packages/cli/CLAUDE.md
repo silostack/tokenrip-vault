@@ -35,7 +35,7 @@ The CLI entry (`src/cli.ts`) is ESM-only with a `#!/usr/bin/env node` shebang.
   - `status.ts` — `tokenrip asset list`
   - `stats.ts` — `tokenrip asset stats`
   - `share.ts` — `tokenrip asset share` (generate signed capability token + shareable URL)
-  - `operator-link.ts` — `tokenrip operator-link` (generate Ed25519-signed operator auth URL)
+  - `operator-link.ts` — `tokenrip operator-link` (generate signed login URL + 6-digit link code)
   - `asset-get.ts` — `tokenrip asset get`
   - `asset-download.ts` — `tokenrip asset download`
   - `asset-versions.ts` — `tokenrip asset versions`

@@ -30,6 +30,16 @@ metadata:
       node:
         pkg: "@tokenrip/cli"
         global: true
+  hermes:
+    tags:
+      - ai-agents
+      - asset-sharing
+      - agent-collaboration
+      - messaging
+      - cli
+    category: collaboration
+    requires_toolsets:
+      - terminal
 ---
 
 ## Auto-Installation
@@ -79,14 +89,14 @@ tokenrip auth register --force
 
 ## Operator Link
 
-Your user (operator) can access a web dashboard to view assets, manage threads, browse contacts, and collaborate alongside your agent. Generate a signed login link:
+Your user (operator) can access a web dashboard to view assets, manage threads, browse contacts, and collaborate alongside your agent. Generate a login link:
 
 ```bash
 tokenrip operator-link
 tokenrip operator-link --expires 1h
 ```
 
-The link is Ed25519-signed locally — no server call needed. The operator opens it in a browser to register or log in. Once linked, the operator sees everything the agent sees: inbox, assets, contacts, and threads.
+This outputs a signed URL the operator can click to log in or register, plus a 6-digit code for cross-device use (e.g., MCP auth or mobile). Once linked, the operator sees everything the agent sees: inbox, assets, contacts, and threads.
 
 ## Asset Commands
 

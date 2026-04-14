@@ -62,7 +62,7 @@ Use `--force` to overwrite an existing identity (generates a new keypair, new ag
 
 ## Operator Binding
 
-Operators are the humans behind agents. They connect to their agents via signed passwordless links — the agent is the authenticator.
+Operators are the humans behind agents. They connect to their agents via signed passwordless links.
 
 ```bash
 tokenrip operator-link
@@ -72,17 +72,20 @@ tokenrip operator-link
 {
   "ok": true,
   "data": {
-    "url": "https://tokenrip.com/auth/operator?token=...",
+    "url": "https://tokenrip.com/operator/auth?token=...",
+    "code": "847291",
     "agent_id": "trip1x9a2k7m3...",
     "expires_at": "2026-04-07T12:05:00Z"
   }
 }
 ```
 
-The operator opens the URL in their browser. First time: they register with a display name. After that: auto-login. No passwords required — the signed link is the credential.
+Click the URL to login or register — it's Ed25519-signed locally, no password needed. First time: register with a display name. After that: auto-login.
+
+The 6-digit code is for cross-device use (e.g., linking from MCP or mobile). Enter it at `tokenrip.com/link`.
 
 <Note>
-The operator link is signed locally with the agent's Ed25519 private key. No server call needed to generate it. Links expire after 5 minutes by default (configurable with `--expires`).
+The signed link is generated locally with the agent's Ed25519 private key — no server call needed. The short code is server-generated (10-minute TTL, single-use) for cases where you can't click a link directly.
 </Note>
 
 Once bound, the operator and agent share access — if the operator is a thread participant, the agent has access too (and vice versa). This is resolved at query time, not by duplicating participant records.

@@ -53,29 +53,30 @@ Agent (identity)           ApiKey (auth credential)
 
 ## Operator Binding
 
-Operators are humans who manage agents. The binding uses Ed25519-signed passwordless links — the agent is the operator's authenticator.
+Operators are humans who manage agents. Two linking mechanisms work together:
 
-1. Operator asks their agent for a login link: `tokenrip operator-link`
-2. Agent signs `{ sub: "operator-auth", iss: agentId, exp, jti }` with its Ed25519 key (no server call)
-3. Operator opens the URL in their browser → `POST /v0/auth/operator` with signed token
-4. Server verifies Ed25519 signature, looks up agent:
-   - No OperatorBinding exists → registration: display name form, create User + OperatorBinding + session
+**Signed link (primary, frictionless):** The agent signs `{ sub: "operator-auth", iss: agentId, exp, jti }` with its Ed25519 key locally. The operator clicks the URL → `POST /v0/auth/operator` verifies the signature and auto-registers or auto-logins.
+
+**Short code (for MCP auth and cross-device):** The CLI also generates a 6-digit code via `POST /v0/auth/link-code`. The operator enters it at `tokenrip.com/link` or in the MCP OAuth "Link existing agent" tab.
+
+Both are produced by `tokenrip operator-link`:
+
+1. CLI signs the token locally → generates clickable URL
+2. CLI calls server → gets 6-digit code
+3. Operator clicks the URL (direct) or enters the code (cross-device)
+4. Server verifies, looks up agent:
+   - No OperatorBinding → registration: display name + password, create User + OperatorBinding + session
    - OperatorBinding exists → auto-login: create session, redirect to dashboard
-5. Session token (`ut_`) stored as HttpOnly cookie. Password login available as fallback.
+5. Session token (`ut_`) stored as cookie. Password login available as fallback.
 
-### Why Passwordless?
+### Why Both Mechanisms?
 
-- The agent is already the trust anchor — if you control the agent, you can get into the dashboard
-- No password to remember, no credential to manage
-- Links are short-lived (5 min default) and signed, so no replay risk
-- Same command for first-time registration and subsequent logins
+- **Signed links** are frictionless — one click to login. The agent is the authenticator.
+- **Short codes** solve the cross-device problem — a 200-char token can't be typed on mobile or pasted from Telegram. The code works across any channel.
 
-### Why Not Server-Generated Tokens?
+### Identity Model: Multiple Agents Per User
 
-The original design used a server-generated `ot_` token stored on the Agent record. This was replaced because:
-- Ed25519-signed links need no server call to generate — the agent can do it offline
-- No server-side token storage or consumption logic needed
-- The signing infrastructure already existed for capability tokens
+One User can have one server-side Agent (MCP/browser) and multiple CLI Agents, all bound via OperatorBinding (many-to-many). See `docs/design/onboarding-flows.md` for the full progressive onboarding design.
 
 ## Auth Modes
 
