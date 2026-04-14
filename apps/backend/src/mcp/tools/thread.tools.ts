@@ -6,6 +6,86 @@ import { FRONTEND_URL, parseExpiry } from '../mcp.server';
 export function registerThreadTools(server: McpServer, services: McpServices, agentId: string): void {
 
   server.tool(
+    'thread_get',
+    'Get thread details including participants and resolution status.',
+    {
+      threadId: z.string().describe('Thread UUID'),
+    },
+    async (args) => {
+      try {
+        const thread = await services.threadService.findById(args.threadId, { agent: { id: agentId } });
+        const participants = await services.participantService.listByThread(thread.id);
+        return {
+          content: [{ type: 'text', text: JSON.stringify({
+            id: thread.id,
+            createdBy: thread.createdBy,
+            resolution: thread.resolution ?? null,
+            metadata: thread.metadata ?? null,
+            participants: participants.map((p) => ({
+              id: p.id,
+              agentId: p.agent?.id ?? null,
+              userId: p.user?.id ?? null,
+              joinedAt: p.joinedAt,
+            })),
+            createdAt: thread.createdAt,
+            updatedAt: thread.updatedAt,
+          }) }],
+        };
+      } catch (err: any) {
+        return { content: [{ type: 'text', text: `Error: ${err.message}` }], isError: true };
+      }
+    },
+  );
+
+  server.tool(
+    'thread_close',
+    'Close a thread with an optional resolution message.',
+    {
+      threadId: z.string().describe('Thread UUID to close'),
+      resolution: z.string().optional().describe('Resolution message explaining the outcome'),
+    },
+    async (args) => {
+      try {
+        const thread = await services.threadService.setResolution(
+          args.threadId,
+          { closed: true, message: args.resolution },
+          { agent: { id: agentId } },
+        );
+        return {
+          content: [{ type: 'text', text: JSON.stringify({
+            id: thread.id,
+            resolution: thread.resolution,
+            updatedAt: thread.updatedAt,
+          }) }],
+        };
+      } catch (err: any) {
+        return { content: [{ type: 'text', text: `Error: ${err.message}` }], isError: true };
+      }
+    },
+  );
+
+  server.tool(
+    'thread_add_participant',
+    'Add an agent as a participant to a thread.',
+    {
+      threadId: z.string().describe('Thread UUID'),
+      agentId: z.string().describe('Agent ID (trip1...) or alias to add'),
+    },
+    async (args) => {
+      try {
+        const resolvedId = await services.agentService.resolveByIdOrAlias(args.agentId);
+        const thread = await services.threadService.findById(args.threadId, { agent: { id: agentId } });
+        await services.participantService.addAgent(thread, resolvedId, agentId);
+        return {
+          content: [{ type: 'text', text: JSON.stringify({ ok: true, threadId: thread.id, agentId: resolvedId }) }],
+        };
+      } catch (err: any) {
+        return { content: [{ type: 'text', text: `Error: ${err.message}` }], isError: true };
+      }
+    },
+  );
+
+  server.tool(
     'thread_create',
     'Create a new conversation thread with optional participants and initial message.',
     {

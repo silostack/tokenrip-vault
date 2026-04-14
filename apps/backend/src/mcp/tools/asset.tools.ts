@@ -236,5 +236,100 @@ export function registerAssetTools(server: McpServer, services: McpServices, age
       }
     },
   );
+
+  server.tool(
+    'asset_get',
+    'Get metadata for any asset by its public ID.',
+    {
+      publicId: z.string().describe('Asset UUID'),
+    },
+    async (args) => {
+      try {
+        const a = await services.assetService.findByPublicId(args.publicId);
+        return {
+          content: [{ type: 'text', text: JSON.stringify({
+            id: a.publicId,
+            title: a.title ?? null,
+            type: a.type,
+            mimeType: a.mimeType ?? null,
+            state: a.state,
+            sizeBytes: a.sizeBytes ?? null,
+            versionCount: a.versionCount,
+            ownerId: a.ownerId,
+            parentAssetId: a.parentAssetId ?? null,
+            creatorContext: a.creatorContext ?? null,
+            url: `${FRONTEND_URL}/s/${a.publicId}`,
+            createdAt: a.createdAt,
+            updatedAt: a.updatedAt,
+          }) }],
+        };
+      } catch (err: any) {
+        return { content: [{ type: 'text', text: `Error: ${err.message}` }], isError: true };
+      }
+    },
+  );
+
+  server.tool(
+    'asset_get_content',
+    'Get the content of an asset. Text assets are returned inline; binary assets are returned as base64.',
+    {
+      publicId: z.string().describe('Asset UUID'),
+      versionId: z.string().optional().describe('Specific version UUID (default: latest)'),
+    },
+    async (args) => {
+      try {
+        const { buffer, mimeType } = args.versionId
+          ? await services.assetVersionService.getVersionContent(args.publicId, args.versionId)
+          : await services.assetService.getContent(args.publicId);
+
+        const isText = /^text\/|^application\/(json|xml|javascript|typescript|x-yaml|yaml|csv)/.test(mimeType)
+          || [AssetType.MARKDOWN, AssetType.HTML, AssetType.CODE, AssetType.TEXT, AssetType.JSON, AssetType.CHART].some(
+            (t) => mimeType.includes(t),
+          );
+
+        if (isText) {
+          return { content: [{ type: 'text', text: buffer.toString('utf-8') }] };
+        }
+
+        // Binary — cap at 10 MB to avoid bloating MCP responses
+        if (buffer.length > 10 * 1024 * 1024) {
+          return {
+            content: [{ type: 'text', text: JSON.stringify({ error: 'Content too large for inline transfer', sizeBytes: buffer.length, mimeType }) }],
+            isError: true,
+          };
+        }
+
+        return {
+          content: [{ type: 'text', text: JSON.stringify({ base64: buffer.toString('base64'), mimeType, sizeBytes: buffer.length }) }],
+        };
+      } catch (err: any) {
+        return { content: [{ type: 'text', text: `Error: ${err.message}` }], isError: true };
+      }
+    },
+  );
+
+  server.tool(
+    'asset_versions',
+    'List all versions of an asset.',
+    {
+      publicId: z.string().describe('Asset UUID'),
+    },
+    async (args) => {
+      try {
+        const versions = await services.assetVersionService.listVersions(args.publicId);
+        const data = versions.map((v) => ({
+          id: v.id,
+          version: v.version,
+          label: v.label ?? null,
+          mimeType: v.mimeType ?? null,
+          sizeBytes: v.sizeBytes ?? null,
+          createdAt: v.createdAt,
+        }));
+        return { content: [{ type: 'text', text: JSON.stringify(data) }] };
+      } catch (err: any) {
+        return { content: [{ type: 'text', text: `Error: ${err.message}` }], isError: true };
+      }
+    },
+  );
 }
 

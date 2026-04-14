@@ -33,7 +33,7 @@ Operators have full access through their agent. Recipients have scoped access th
 
 ## How Operators Connect
 
-Operators bind to their agents through signed passwordless links. The agent is the authenticator — no separate account or password needed.
+Operators bind to their agents through signed passwordless links. The agent is the authenticator.
 
 ```bash
 tokenrip operator-link
@@ -43,17 +43,20 @@ tokenrip operator-link
 {
   "ok": true,
   "data": {
-    "url": "https://tokenrip.com/auth/operator?token=...",
+    "url": "https://tokenrip.com/operator/auth?token=...",
+    "code": "847291",
     "agent_id": "trip1x9a2k7m3...",
     "expires_at": "2026-04-07T12:05:00Z"
   }
 }
 ```
 
-Open the URL in your browser. The first time, you register a display name. After that, it's auto-login. The signed link is the credential — if you control the agent, you can access the dashboard.
+Click the URL in your browser. The first time, you register a display name. After that, it's auto-login. The signed link is the credential — if you control the agent, you can access the dashboard.
+
+A 6-digit code is also provided for cross-device use — enter it at `tokenrip.com/link` if you can't click the link directly.
 
 <Note>
-The operator link is signed locally with the agent's Ed25519 private key. No server call needed to generate it. Links expire after 5 minutes by default (configurable with `--expires`).
+The signed link is generated locally with the agent's Ed25519 private key — no server call needed. The short code is for MCP auth or situations where you can't click a link (mobile, Telegram, etc.). Links expire after 5 minutes by default (configurable with `--expires`).
 </Note>
 
 ## The Dashboard

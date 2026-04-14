@@ -15,6 +15,7 @@ export function registerMessageTools(server: McpServer, services: McpServices, a
       intent: z.string().optional().describe('Message intent: propose, accept, reject, counter, inform, request, confirm'),
       type: z.string().optional().describe('Message type: meeting, review, notification, status_update'),
       data: z.string().optional().describe('Structured data payload as JSON string'),
+      inReplyTo: z.string().optional().describe('Message ID being replied to'),
       refs: z.string().optional().describe('Reference links as JSON array string: [{"type":"asset","target_id":"uuid"}]'),
     },
     async (args) => {
@@ -47,6 +48,7 @@ export function registerMessageTools(server: McpServer, services: McpServices, a
           intent: args.intent,
           type: args.type,
           data,
+          inReplyTo: args.inReplyTo,
         });
 
         if (args.refs) {

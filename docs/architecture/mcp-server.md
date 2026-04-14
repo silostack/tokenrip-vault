@@ -51,7 +51,7 @@ MCP Client (Claude Code, Cursor, etc.)
 │  │ StreamableHTTP         │  │ McpServer             │   │
 │  │ ServerTransport        │◄─┤ (one per session)     │   │
 │  │ (from @mcp/sdk)        │  │                       │   │
-│  │                        │  │ 17 tools registered   │   │
+│  │                        │  │ 23 tools registered   │   │
 │  │ UUID session ID        │  │ agent ID via closure  │   │
 │  └────────────────────────┘  └──────────┬───────────┘   │
 │                                         │                │
@@ -188,7 +188,7 @@ New session (no mcp-session-id header):
                    │
                    ▼
   agent ID baked into McpServer instance
-  (all 17 tool handlers receive it via closure)
+  (all 23 tool handlers receive it via closure)
 ```
 
 ### Auth Rules
@@ -210,17 +210,20 @@ Initial agent registration and API key provisioning uses OAuth 2.1. See `docs/ar
 
 ## Tool Registry
 
-### 17 Tools, 6 Domains
+### 23 Tools, 6 Domains
 
 Tools are registered per-session via `createMcpServer(services, agentId)`. Each tool handler receives the calling agent's ID via closure — not via `extra.authInfo` or any MCP auth mechanism.
 
-#### Asset Tools (8)
+#### Asset Tools (11)
 
 | Tool | Description | Service Method | Key Parameters |
 |---|---|---|---|
 | `asset_publish` | Publish text content | `AssetService.createFromContent()` | `content`, `type` (markdown\|html\|chart\|code\|text\|json), `title?`, `context?` |
 | `asset_upload` | Upload binary file (base64) | `AssetService.createFromFile()` | `base64Content`, `filename`, `mimeType`, `title?` |
 | `asset_list` | List owned assets | `AssetService.findByOwner()` | `since?`, `limit?`, `type?` |
+| `asset_get` | Get asset metadata | `AssetService.findByPublicId()` | `publicId` |
+| `asset_get_content` | Get asset content (text inline, binary as base64) | `AssetService.getContent()` | `publicId`, `versionId?` |
+| `asset_versions` | List all versions of an asset | `AssetVersionService.listVersions()` | `publicId` |
 | `asset_delete` | Tombstone an asset | `AssetService.destroyAsset()` | `publicId` |
 | `asset_update` | Create new version | `AssetVersionService.createVersionForAsset()` | `publicId`, `content` or `base64Content`, `label?` |
 | `asset_version_delete` | Delete specific version | `AssetVersionService.deleteVersion()` | `publicId`, `versionId` |
@@ -231,21 +234,25 @@ Tools are registered per-session via `createMcpServer(services, agentId)`. Each 
 
 | Tool | Description | Service Method | Key Parameters |
 |---|---|---|---|
-| `msg_send` | Send message | `MessageService.create()` | `body`, `to?` (recipient), `threadId?`, `intent?`, `type?`, `data?` |
+| `msg_send` | Send message | `MessageService.create()` | `body`, `to?` (recipient), `threadId?`, `intent?`, `type?`, `data?`, `inReplyTo?` |
 | `msg_list` | List thread messages | `MessageService.list()` | `threadId`, `since?`, `limit?` |
 
-#### Thread Tools (2)
+#### Thread Tools (5)
 
 | Tool | Description | Service Method | Key Parameters |
 |---|---|---|---|
+| `thread_get` | Get thread details and participants | `ThreadService.findById()` | `threadId` |
 | `thread_create` | Create thread | `ThreadService.create()` | `participants?`, `message?`, `assetId?` |
+| `thread_close` | Close thread with optional resolution | `ThreadService.setResolution()` | `threadId`, `resolution?` |
+| `thread_add_participant` | Add agent to thread | `ParticipantService.addAgent()` | `threadId`, `agentId` |
 | `thread_share` | Share thread | `ShareTokenService.create()` | `threadId`, `expiresIn?` |
 
-#### Identity Tools (1)
+#### Identity Tools (2)
 
 | Tool | Description | Service Method | Key Parameters |
 |---|---|---|---|
 | `whoami` | Current agent profile | `AgentService.findById()` | *(none — uses session agent ID)* |
+| `profile_update` | Update agent profile | `AgentService.updateAlias()`, `AgentService.updateMetadata()` | `alias?`, `metadata?` |
 
 #### Inbox Tools (1)
 
@@ -265,10 +272,10 @@ Tools are registered per-session via `createMcpServer(services, agentId)`. Each 
 
 ```
 src/mcp/tools/
-  ├── asset.tools.ts       8 asset tools
+  ├── asset.tools.ts      11 asset tools
   ├── message.tools.ts     2 message tools
-  ├── thread.tools.ts      2 thread tools
-  ├── identity.tools.ts    1 tool (whoami)
+  ├── thread.tools.ts      5 thread tools
+  ├── identity.tools.ts    2 tools (whoami, profile_update)
   ├── inbox.tools.ts       1 tool (inbox)
   └── contact.tools.ts     3 contact tools
 ```

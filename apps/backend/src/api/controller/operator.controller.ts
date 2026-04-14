@@ -12,7 +12,7 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { Public } from '../auth/public.decorator';
-import { Auth, AuthUser, ReqAuth } from '../auth/auth.decorator';
+import { Auth, AuthAgent, AuthUser, ReqAuth } from '../auth/auth.decorator';
 import { RequestAuth } from '../auth/auth.guard';
 import { UserService } from '../service/user.service';
 import { OperatorAuthService } from '../service/operator-auth.service';
@@ -25,6 +25,7 @@ import { MessageService } from '../service/message.service';
 import { ShareTokenService } from '../service/share-token.service';
 import { ContactService } from '../service/contact.service';
 import { AgentService } from '../service/agent.service';
+import { LinkCodeService } from '../service/link-code.service';
 
 @Controller('v0')
 export class OperatorController {
@@ -40,6 +41,7 @@ export class OperatorController {
     private readonly shareTokenService: ShareTokenService,
     private readonly contactService: ContactService,
     private readonly agentService: AgentService,
+    private readonly linkCodeService: LinkCodeService,
   ) {}
 
   // --- Auth ---
@@ -65,6 +67,99 @@ export class OperatorController {
         user_id: result.userId,
         auth_token: result.sessionToken,
         is_new_registration: result.isNewRegistration,
+      },
+    };
+  }
+
+  /** Browser-based registration: creates a server-side agent + user + binding. */
+  @Public()
+  @Post('auth/register')
+  @HttpCode(200)
+  async browserRegister(
+    @Body() body: { displayName?: string; password?: string; alias?: string },
+  ) {
+    if (!body?.displayName || !body?.password) {
+      throw new BadRequestException({
+        ok: false,
+        error: 'MISSING_FIELDS',
+        message: 'displayName and password are required',
+      });
+    }
+
+    const result = await this.bindingService.registerWithServerAgent(
+      body.displayName, body.password, body.alias,
+    );
+
+    return {
+      ok: true,
+      data: {
+        user_id: result.userId,
+        auth_token: result.sessionToken,
+        agent_id: result.agentId,
+      },
+    };
+  }
+
+  /** Generate a 6-digit link code for operator linking (called by CLI agent) */
+  @Auth('agent')
+  @Post('auth/link-code')
+  async createLinkCode(@AuthAgent() agent: { id: string }) {
+    const { code, expiresAt } = await this.linkCodeService.create(agent.id);
+    return { ok: true, data: { code, expires_at: expiresAt } };
+  }
+
+  /** Verify a link code (public — called from OAuth page or /link page) */
+  @Public()
+  @Post('auth/link-code/verify')
+  @HttpCode(200)
+  async verifyLinkCode(@Body() body: { code?: string }) {
+    if (!body?.code) {
+      throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'code is required' });
+    }
+    const { agentId, hasBinding } = await this.linkCodeService.peek(body.code);
+    return { ok: true, data: { agent_id: agentId, has_binding: hasBinding } };
+  }
+
+  /** Bind a CLI agent to the logged-in user's account via short code. */
+  @Auth('user')
+  @Post('auth/link-code/bind')
+  @HttpCode(200)
+  async bindLinkCodeAuth(
+    @AuthUser() user: { id: string },
+    @Body() body: { code?: string },
+  ) {
+    if (!body?.code) {
+      throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'code is required' });
+    }
+    const { agentId } = await this.linkCodeService.consume(body.code);
+    await this.bindingService.create(agentId, user.id);
+    return { ok: true, data: { agent_id: agentId } };
+  }
+
+  /** Bind a CLI agent to a new user account via short code (registration). */
+  @Public()
+  @Post('auth/link-code/register')
+  @HttpCode(200)
+  async bindLinkCodeRegister(
+    @Body() body: { code?: string; displayName?: string; password?: string; alias?: string },
+  ) {
+    if (!body?.code || !body?.displayName || !body?.password) {
+      throw new BadRequestException({
+        ok: false,
+        error: 'MISSING_FIELDS',
+        message: 'code, displayName, and password are required',
+      });
+    }
+    const { agentId } = await this.linkCodeService.consume(body.code);
+    const result = await this.bindingService.registerAndBind(
+      agentId, body.displayName, body.password, body.alias,
+    );
+    return {
+      ok: true,
+      data: {
+        user_id: result.userId,
+        auth_token: result.sessionToken,
+        agent_id: agentId,
       },
     };
   }

@@ -4,6 +4,26 @@ import handler from "./dist/server/server.js";
 const clientDir = resolve(import.meta.dir, "dist/client");
 const API_URL = (process.env.API_URL || process.env.VITE_API_URL || "http://localhost:3434").replace(/\/+$/, "");
 
+const SKILL_MD = await Bun.file(resolve(import.meta.dir, "../../packages/cli/SKILL.md")).text();
+
+const INDEX_JSON = JSON.stringify({
+  skills: [
+    {
+      name: "tokenrip",
+      description:
+        "Agentic collaboration platform — publish and share assets, send messages, manage threads, and collaborate with other agents using the tokenrip CLI. Use when: publish an asset, share a file, upload a PDF, send a message to an agent, create a shareable link, share my work, collaborate with another agent.",
+      files: ["SKILL.md"],
+    },
+  ],
+});
+
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Cache-Control": "public, max-age=3600",
+};
+
 // Match /s/{uuid} and optionally /s/{uuid}/{versionId}
 const ASSET_PATH_RE = /^\/s\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))?$/;
 
@@ -20,6 +40,24 @@ Bun.serve({
   port: Number(process.env.PORT) || 3333,
   async fetch(req) {
     const url = new URL(req.url);
+
+    // /.well-known/skills/ — agent skill discovery
+    if (url.pathname.startsWith("/.well-known/skills/")) {
+      if (req.method === "OPTIONS") {
+        return new Response(null, { status: 204, headers: CORS_HEADERS });
+      }
+      if (url.pathname === "/.well-known/skills/index.json" || url.pathname === "/.well-known/skills/") {
+        return new Response(INDEX_JSON, {
+          headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+        });
+      }
+      if (url.pathname === "/.well-known/skills/tokenrip/SKILL.md") {
+        return new Response(SKILL_MD, {
+          headers: { ...CORS_HEADERS, "Content-Type": "text/markdown; charset=utf-8" },
+        });
+      }
+      return new Response("Not found", { status: 404, headers: CORS_HEADERS });
+    }
 
     // Serve /.well-known/llms.txt from the same file as /llms.txt
     if (url.pathname === "/.well-known/llms.txt") {
