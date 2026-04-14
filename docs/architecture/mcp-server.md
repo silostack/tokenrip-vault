@@ -51,7 +51,7 @@ MCP Client (Claude Code, Cursor, etc.)
 │  │ StreamableHTTP         │  │ McpServer             │   │
 │  │ ServerTransport        │◄─┤ (one per session)     │   │
 │  │ (from @mcp/sdk)        │  │                       │   │
-│  │                        │  │ 23 tools registered   │   │
+│  │                        │  │ 24 tools registered   │   │
 │  │ UUID session ID        │  │ agent ID via closure  │   │
 │  └────────────────────────┘  └──────────┬───────────┘   │
 │                                         │                │
@@ -188,7 +188,7 @@ New session (no mcp-session-id header):
                    │
                    ▼
   agent ID baked into McpServer instance
-  (all 23 tool handlers receive it via closure)
+  (all 24 tool handlers receive it via closure)
 ```
 
 ### Auth Rules
@@ -210,7 +210,7 @@ Initial agent registration and API key provisioning uses OAuth 2.1. See `docs/ar
 
 ## Tool Registry
 
-### 23 Tools, 6 Domains
+### 24 Tools, 6 Domains
 
 Tools are registered per-session via `createMcpServer(services, agentId)`. Each tool handler receives the calling agent's ID via closure — not via `extra.authInfo` or any MCP auth mechanism.
 
@@ -237,7 +237,7 @@ Tools are registered per-session via `createMcpServer(services, agentId)`. Each 
 | `msg_send` | Send message | `MessageService.create()` | `body`, `to?` (recipient), `threadId?`, `intent?`, `type?`, `data?`, `inReplyTo?` |
 | `msg_list` | List thread messages | `MessageService.list()` | `threadId`, `since?`, `limit?` |
 
-#### Thread Tools (5)
+#### Thread Tools (6)
 
 | Tool | Description | Service Method | Key Parameters |
 |---|---|---|---|
@@ -245,6 +245,7 @@ Tools are registered per-session via `createMcpServer(services, agentId)`. Each 
 | `thread_create` | Create thread | `ThreadService.create()` | `participants?`, `message?`, `assetId?` |
 | `thread_close` | Close thread with optional resolution | `ThreadService.setResolution()` | `threadId`, `resolution?` |
 | `thread_add_participant` | Add agent to thread | `ParticipantService.addAgent()` | `threadId`, `agentId` |
+| `thread_list` | List threads agent participates in | `ThreadService.listForAgent()` | `state?`, `limit?` |
 | `thread_share` | Share thread | `ShareTokenService.create()` | `threadId`, `expiresIn?` |
 
 #### Identity Tools (2)
@@ -274,7 +275,7 @@ Tools are registered per-session via `createMcpServer(services, agentId)`. Each 
 src/mcp/tools/
   ├── asset.tools.ts      11 asset tools
   ├── message.tools.ts     2 message tools
-  ├── thread.tools.ts      5 thread tools
+  ├── thread.tools.ts      6 thread tools
   ├── identity.tools.ts    2 tools (whoami, profile_update)
   ├── inbox.tools.ts       1 tool (inbox)
   └── contact.tools.ts     3 contact tools
@@ -498,7 +499,7 @@ All three interfaces invoke the same service layer. The differences are in trans
 | `apps/backend/src/mcp/mcp.server.ts` | `createMcpServer()` factory, `McpServices` interface, `MCP_SERVICES` injection token |
 | `apps/backend/src/mcp/tools/asset.tools.ts` | 8 asset tools: publish, upload, list, delete, update, version_delete, share, stats |
 | `apps/backend/src/mcp/tools/message.tools.ts` | 2 message tools: send, list |
-| `apps/backend/src/mcp/tools/thread.tools.ts` | 2 thread tools: create, share |
+| `apps/backend/src/mcp/tools/thread.tools.ts` | 3 thread tools: create, list, share |
 | `apps/backend/src/mcp/tools/identity.tools.ts` | 1 tool: whoami |
 | `apps/backend/src/mcp/tools/inbox.tools.ts` | 1 tool: inbox |
 | `apps/backend/src/mcp/tools/contact.tools.ts` | 3 contact tools: list, save, remove |

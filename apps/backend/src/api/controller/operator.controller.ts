@@ -255,6 +255,119 @@ export class OperatorController {
   }
 
   @Auth('user')
+  @Get('operator/threads')
+  async listThreads(
+    @AuthUser() user: { id: string },
+    @Query('state') state?: string,
+    @Query('limit') limit?: string,
+    @Query('offset') offset?: string,
+  ) {
+    const agent = await this.requireBoundAgent(user.id);
+
+    if (state && state !== 'open' && state !== 'closed') {
+      throw new BadRequestException({
+        ok: false,
+        error: 'INVALID_STATE',
+        message: 'state must be "open" or "closed"',
+      });
+    }
+
+    const result = await this.threadService.listForOperator(agent.id, user.id, {
+      state,
+      limit: limit ? parseInt(limit, 10) : undefined,
+      offset: offset ? parseInt(offset, 10) : undefined,
+    });
+
+    return {
+      ok: true,
+      data: {
+        threads: result.rows.map((r) => ({
+          thread_id: r.thread_id,
+          state: r.state,
+          created_by: r.created_by,
+          owner_id: r.owner_id,
+          participant_count: r.participant_count,
+          last_message_at: r.last_message_at,
+          last_message_preview: r.last_body_preview,
+          metadata: r.metadata,
+          created_at: r.created_at,
+          updated_at: r.updated_at,
+        })),
+        total: result.total,
+      },
+    };
+  }
+
+  @Auth('user')
+  @Get('operator/threads/:threadId')
+  async getThread(
+    @Param('threadId') threadId: string,
+    @AuthUser() user: { id: string },
+    @ReqAuth() auth: RequestAuth,
+  ) {
+    await this.requireBoundAgent(user.id);
+    const thread = await this.threadService.findById(threadId, auth);
+    const participants = await this.participantService.listByThread(thread.id);
+
+    return {
+      ok: true,
+      data: {
+        thread_id: thread.id,
+        state: thread.state,
+        created_by: thread.createdBy,
+        owner_id: thread.ownerId,
+        resolution: thread.resolution ?? null,
+        metadata: thread.metadata ?? null,
+        participants: participants.map((p) => ({
+          id: p.id,
+          agent_id: p.agent?.id ?? null,
+          user_id: p.user?.id ?? null,
+          role: p.role ?? null,
+          joined_at: p.joinedAt,
+        })),
+        created_at: thread.createdAt,
+        updated_at: thread.updatedAt,
+      },
+    };
+  }
+
+  @Auth('user')
+  @Get('operator/threads/:threadId/messages')
+  async listMessages(
+    @Param('threadId') threadId: string,
+    @AuthUser() user: { id: string },
+    @Query('since_sequence') sinceSequence?: string,
+    @Query('limit') limit?: string,
+    @ReqAuth() auth?: RequestAuth,
+  ) {
+    await this.requireBoundAgent(user.id);
+    await this.threadService.findById(threadId, auth!);
+
+    const messages = await this.messageService.list(threadId, {
+      sinceSequence: sinceSequence ? parseInt(sinceSequence, 10) : undefined,
+      limit: limit ? parseInt(limit, 10) : undefined,
+    });
+
+    return {
+      ok: true,
+      data: messages.map((m) => ({
+        id: m.id,
+        sequence: m.sequence,
+        body: m.body,
+        intent: m.intent ?? null,
+        type: m.type ?? null,
+        data: m.data ?? null,
+        in_reply_to: m.inReplyTo ?? null,
+        sender: {
+          agent_id: m.participant?.agent?.id ?? null,
+          user_id: m.participant?.user?.id ?? null,
+        },
+        created_at: m.createdAt,
+      })),
+    };
+  }
+
+  @Auth('user')
   @Patch('operator/threads/:threadId')
   async updateThread(
     @Param('threadId') threadId: string,

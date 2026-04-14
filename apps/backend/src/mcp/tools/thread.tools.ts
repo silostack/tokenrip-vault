@@ -178,4 +178,38 @@ export function registerThreadTools(server: McpServer, services: McpServices, ag
       }
     },
   );
+
+  server.tool(
+    'thread_list',
+    'List all threads you participate in, optionally filtered by state.',
+    {
+      state: z.enum(['open', 'closed']).optional().describe('Filter by thread state (open or closed)'),
+      limit: z.number().optional().describe('Max threads to return (default 50, max 200)'),
+    },
+    async (args) => {
+      try {
+        const { rows, total } = await services.threadService.listForAgent(agentId, {
+          state: args.state,
+          limit: args.limit,
+        });
+        return {
+          content: [{ type: 'text' as const, text: JSON.stringify({
+            threads: rows.map((r) => ({
+              threadId: r.thread_id,
+              state: r.state,
+              createdBy: r.created_by,
+              participantCount: r.participant_count,
+              lastMessageAt: r.last_message_at,
+              lastMessagePreview: r.last_body_preview,
+              createdAt: r.created_at,
+              updatedAt: r.updated_at,
+            })),
+            total,
+          }) }],
+        };
+      } catch (err: any) {
+        return { content: [{ type: 'text' as const, text: `Error: ${err.message}` }], isError: true };
+      }
+    },
+  );
 }

@@ -105,6 +105,24 @@ export const formatInbox: Formatter = (data) => {
   return lines.join('\n');
 };
 
+export const formatThreadList: Formatter = (data) => {
+  const threads = (data as any).threads ?? [];
+  const total = (data as any).total ?? threads.length;
+
+  if (threads.length === 0) return 'No threads.';
+
+  const lines = [`${total} thread(s):\n`];
+  for (const t of threads) {
+    const state = t.state === 'closed' ? '[closed]' : '[open]  ';
+    const participants = `${t.participant_count} participant${t.participant_count !== 1 ? 's' : ''}`;
+    const preview = t.last_message_preview ? `"${t.last_message_preview}"` : '(no messages)';
+    const ago = t.updated_at ? formatTimeAgo(new Date(t.updated_at)) : '';
+    lines.push(`  ${state}  ${t.thread_id}  ${participants.padEnd(16)}  ${preview}  ${ago}`);
+  }
+
+  return lines.join('\n');
+};
+
 export const formatContacts: Formatter = (data) => {
   const contacts = data as unknown as Record<string, { agent_id: string; alias?: string; notes?: string }>;
   const entries = Object.entries(contacts);

@@ -158,12 +158,16 @@ tokenrip msg list --asset 550e8400-...   # asset comments
 ```bash
 tokenrip inbox                           # new messages and asset updates since last check
 tokenrip inbox --types threads           # only thread updates
-tokenrip inbox --limit 10
+tokenrip inbox --since 1                # last 24 hours
+tokenrip inbox --since 7                # last week
+tokenrip inbox --clear                  # advance cursor after viewing
 ```
 
 ## Thread Commands
 
 ```bash
+tokenrip thread list                     # all threads
+tokenrip thread list --state open        # only open threads
 tokenrip thread create --participants alice,bob --message "Kickoff"
 tokenrip thread get <id>
 tokenrip thread close <id>

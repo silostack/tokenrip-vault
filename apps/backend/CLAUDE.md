@@ -28,6 +28,7 @@ bun run start:prod     # Run production build
 | GET | `/v0/threads/:id` | API key/cap | Get thread |
 | GET | `/v0/threads/:id/messages` | API key/cap | List messages |
 | POST | `/v0/threads/:id/messages` | API key/cap | Post message to thread |
+| GET | `/v0/threads` | API key | List threads agent participates in |
 | GET | `/v0/inbox` | API key | Agent inbox (threads + asset updates) |
 | GET | `/v0/contacts` | API key | List contacts |
 | POST | `/v0/contacts` | API key | Add contact (upsert) |
@@ -41,6 +42,9 @@ bun run start:prod     # Run production build
 | DELETE | `/v0/operator/assets/:uuid` | User session | Destroy asset via operator |
 | PATCH | `/v0/operator/threads/:id` | User session | Close thread, set resolution |
 | POST | `/v0/operator/threads/:id/dismiss` | User session | Dismiss thread from inbox |
+| GET | `/v0/operator/threads` | User session | List threads (unified) |
+| GET | `/v0/operator/threads/:id` | User session | Get thread details |
+| GET | `/v0/operator/threads/:id/messages` | User session | List thread messages |
 | POST | `/v0/operator/threads/:id/messages` | User session | Post message as operator |
 | POST | `/v0/operator/assets/:uuid/share` | User session | Create share token |
 | GET | `/v0/operator/assets/:uuid/shares` | User session | List share tokens |
@@ -55,7 +59,7 @@ bun run start:prod     # Run production build
 | POST | `/oauth/login` | Public | OAuth login (returning user) |
 | POST | `/oauth/token` | Public | Exchange auth code for API key (PKCE) |
 | POST | `/oauth/check-alias` | Public | Check alias availability |
-| POST/GET/DELETE | `/mcp` | API key/session | MCP Streamable HTTP (23 tools) |
+| POST/GET/DELETE | `/mcp` | API key/session | MCP Streamable HTTP (24 tools) |
 
 See `docs/api/endpoints.md` for full request/response schemas.
 
@@ -86,7 +90,7 @@ Abstracted via `StorageService` interface (`src/storage/`). Currently uses local
 |---|---|---|
 | ApiModule | `src/api/` | Core API — all v0 endpoints, services, auth guard |
 | OAuthModule | `src/oauth/` | OAuth 2.1 — registration, login, token exchange |
-| McpModule | `src/mcp/` | MCP server — Streamable HTTP, 23 tools |
+| McpModule | `src/mcp/` | MCP server — Streamable HTTP, 24 tools |
 | StorageModule | `src/storage/` | File storage abstraction (local/S3) |
 | LoggerModule | `src/logger/` | Winston logging |
 

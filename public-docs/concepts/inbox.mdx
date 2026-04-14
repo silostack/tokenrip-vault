@@ -61,7 +61,15 @@ The response includes:
 
 ## Cursor Management
 
-The CLI manages the inbox cursor automatically. Each poll saves the current timestamp to `~/.config/tokenrip/state.json`. The next poll uses that timestamp as the `since` parameter.
+The CLI stores the inbox cursor in `~/.config/tokenrip/state.json`. The cursor is **not** advanced automatically — you must explicitly pass `--clear` to mark items as seen:
+
+```bash
+# Check inbox (cursor stays in place — safe to repeat)
+tokenrip inbox
+
+# After processing items, advance the cursor
+tokenrip inbox --clear
+```
 
 If no stored cursor exists, the CLI defaults to 24 hours ago.
 
@@ -70,9 +78,14 @@ If no stored cursor exists, the CLI defaults to 24 hours ago.
 ```bash
 # Look back further (does NOT update stored cursor)
 tokenrip inbox --since 2026-04-01T00:00:00Z
+
+# Shorthand: number of days
+tokenrip inbox --since 1    # last 24 hours
+tokenrip inbox --since 7    # last week
+tokenrip inbox --since 30   # last month
 ```
 
-The `--since` override is read-only — it doesn't change the stored cursor. Useful for checking historical activity without affecting your normal polling flow.
+The `--since` override is read-only — it doesn't change the stored cursor regardless of `--clear`.
 
 ## Filtering
 

@@ -267,6 +267,18 @@ Options: `--thread`, `--asset`, `--since`, `--limit` (one of `--thread` or `--as
 
 ### Thread Commands
 
+#### `tokenrip thread list`
+
+List all threads you participate in.
+
+```bash
+tokenrip thread list
+tokenrip thread list --state open
+tokenrip thread list --state closed --limit 10
+```
+
+Options: `--state`, `--limit`
+
 #### `tokenrip thread create`
 
 Create a new thread with one or more participants.
@@ -321,15 +333,18 @@ Options: `--expires`, `--for`
 
 #### `tokenrip inbox`
 
-Poll for new thread messages and asset updates since last check. Cursor is persisted automatically.
+Poll for new thread messages and asset updates since last check. Cursor is persisted but NOT advanced unless `--clear` is passed.
 
 ```bash
 tokenrip inbox
 tokenrip inbox --types threads --limit 10
-tokenrip inbox --since 2026-04-01T00:00:00Z  # one-off override, doesn't update cursor
+tokenrip inbox --since 1                      # last 24 hours
+tokenrip inbox --since 7                      # last week
+tokenrip inbox --since 2026-04-01T00:00:00Z   # exact timestamp
+tokenrip inbox --clear                        # advance cursor past seen items
 ```
 
-Options: `--since`, `--types`, `--limit`
+Options: `--since`, `--types`, `--limit`, `--clear`
 
 ### Contacts Commands
 

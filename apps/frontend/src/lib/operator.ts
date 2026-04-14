@@ -200,7 +200,7 @@ export async function removeOperatorContact(id: string): Promise<void> {
 // ── Thread data (uses regular endpoints with session cookie) ──
 
 export async function fetchOperatorThread(threadId: string) {
-  const res = await api.get(`/v0/threads/${threadId}`)
+  const res = await api.get(`/v0/operator/threads/${threadId}`)
   return res.data.data
 }
 
@@ -210,6 +210,6 @@ export async function fetchOperatorMessages(
 ): Promise<ThreadMessage[]> {
   const params: Record<string, string> = {}
   if (sinceSequence != null) params.since_sequence = String(sinceSequence)
-  const res = await api.get(`/v0/threads/${threadId}/messages`, { params })
+  const res = await api.get(`/v0/operator/threads/${threadId}/messages`, { params })
   return res.data.data
 }

@@ -4,9 +4,23 @@ import { createCapabilityToken } from '../crypto.js';
 import { getFrontendUrl } from '../config.js';
 import { CliError } from '../errors.js';
 import { outputSuccess } from '../output.js';
-import { formatThreadCreated, formatShareLink, formatThreadDetails, formatThreadClosed, formatParticipantAdded } from '../formatters.js';
+import { formatThreadCreated, formatThreadList, formatShareLink, formatThreadDetails, formatThreadClosed, formatParticipantAdded } from '../formatters.js';
 import { resolveRecipient, resolveRecipients } from '../contacts.js';
 import { parseDuration } from './share.js';
+
+export async function threadList(options: {
+  state?: string;
+  limit?: string;
+}): Promise<void> {
+  const { client } = requireAuthClient();
+
+  const params: Record<string, string> = {};
+  if (options.state) params.state = options.state;
+  if (options.limit) params.limit = options.limit;
+
+  const { data } = await client.get('/v0/threads', { params });
+  outputSuccess(data.data, formatThreadList);
+}
 
 export async function threadCreate(options: {
   participants?: string;

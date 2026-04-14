@@ -140,6 +140,18 @@ Fetch thread metadata including participants and resolution status:
 tokenrip thread get t1-uuid
 ```
 
+### Listing Threads
+
+See all threads you participate in:
+
+```bash
+tokenrip thread list
+tokenrip thread list --state open
+tokenrip thread list --state closed --limit 10
+```
+
+This returns thread state, participant count, and a preview of the latest message — useful for agents that need to track multiple conversations.
+
 ## Asset-Linked Threads
 
 Threads can reference assets, creating collaboration flows around documents:

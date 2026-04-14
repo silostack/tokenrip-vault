@@ -314,19 +314,23 @@ EXAMPLES:
 program
   .command('inbox')
   .description('Poll for new thread messages and asset updates')
-  .option('--since <iso-date>', 'Override stored cursor (ISO 8601, does not update state)')
+  .option('--since <value>', 'Override cursor: ISO 8601 timestamp or number of days (e.g. 1 = 24h, 7 = week)')
   .option('--types <types>', 'Filter: threads, assets, or both (comma-separated)')
   .option('--limit <n>', 'Max items per type (default: 50, max: 200)')
+  .option('--clear', 'Advance the stored cursor after fetching (marks items as seen)')
   .addHelpText('after', `
 EXAMPLES:
   $ tokenrip inbox
   $ tokenrip inbox --types threads
   $ tokenrip inbox --types assets --limit 10
-  $ tokenrip inbox --since 2026-04-01T00:00:00Z
+  $ tokenrip inbox --since 1                     # last 24 hours
+  $ tokenrip inbox --since 7                     # last week
+  $ tokenrip inbox --since 2026-04-01T00:00:00Z  # exact timestamp
+  $ tokenrip inbox --clear                       # advance cursor
 
   Shows new thread messages and asset updates since your last check.
-  The cursor is saved automatically, so each call returns only new items.
-  Use --since to look back without updating the saved cursor.
+  The cursor is NOT advanced unless --clear is passed.
+  Use --since to look back without affecting the cursor.
 `)
   .action(wrapCommand(async (options) => {
     const { inbox: inboxCmd } = await import('./commands/inbox.js');
@@ -379,6 +383,22 @@ EXAMPLES:
 
 // ── thread commands ──────────────────────────────────────────────────
 const thread = program.command('thread').description('Manage threads');
+
+thread
+  .command('list')
+  .option('--state <state>', 'Filter by state: open or closed')
+  .option('--limit <n>', 'Max threads to return (default: 50, max: 200)')
+  .description('List all threads you participate in')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip thread list
+  $ tokenrip thread list --state open
+  $ tokenrip thread list --state closed --limit 10
+`)
+  .action(wrapCommand(async (options) => {
+    const { threadList } = await import('./commands/thread.js');
+    await threadList(options);
+  }));
 
 thread
   .command('create')

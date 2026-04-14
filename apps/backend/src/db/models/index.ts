@@ -29,7 +29,7 @@ export { AssetVersionRepository } from '../repositories/asset-version.repository
 export { AgentRepository } from '../repositories/agent.repository';
 export { UserRepository } from '../repositories/user.repository';
 export { ThreadRepository } from '../repositories/thread.repository';
-export { ParticipantRepository, type ThreadActivityRow } from '../repositories/participant.repository';
+export { ParticipantRepository, type ThreadActivityRow, type ThreadListRow } from '../repositories/participant.repository';
 export { MessageRepository } from '../repositories/message.repository';
 export { ApiKeyRepository } from '../repositories/api-key.repository';
 export { OperatorBindingRepository } from '../repositories/operator-binding.repository';

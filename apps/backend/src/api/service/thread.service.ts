@@ -171,4 +171,24 @@ export class ThreadService {
     if (!threadIds.length) return;
     await this.em.nativeUpdate(Thread, { id: { $in: threadIds } }, { state: ThreadState.CLOSED });
   }
+
+  async listForAgent(agentId: string, opts?: { state?: string; limit?: number; offset?: number }) {
+    const limit = Math.min(Math.max(opts?.limit ?? 50, 1), 200);
+    const offset = Math.max(opts?.offset ?? 0, 0);
+    return this.participantRepo.findAllThreadsForAgent(agentId, {
+      state: opts?.state,
+      limit,
+      offset,
+    });
+  }
+
+  async listForOperator(agentId: string, userId: string, opts?: { state?: string; limit?: number; offset?: number }) {
+    const limit = Math.min(Math.max(opts?.limit ?? 50, 1), 200);
+    const offset = Math.max(opts?.offset ?? 0, 0);
+    return this.participantRepo.findAllThreadsUnified(agentId, userId, {
+      state: opts?.state,
+      limit,
+      offset,
+    });
+  }
 }

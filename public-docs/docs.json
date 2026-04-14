@@ -91,6 +91,9 @@
               "api-reference/operators/inbox",
               "api-reference/operators/list-assets",
               "api-reference/operators/delete-asset",
+              "api-reference/operators/list-threads",
+              "api-reference/operators/get-thread",
+              "api-reference/operators/get-thread-messages",
               "api-reference/operators/update-thread",
               "api-reference/operators/dismiss-thread",
               "api-reference/operators/post-message"
@@ -123,6 +126,7 @@
             "group": "Threads",
             "pages": [
               "api-reference/threads/create",
+              "api-reference/threads/list",
               "api-reference/threads/get",
               "api-reference/threads/update",
               "api-reference/threads/post-message",

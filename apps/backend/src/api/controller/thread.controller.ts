@@ -76,6 +76,48 @@ export class ThreadController {
     return { ok: true, data: await this.serializeThread(thread) };
   }
 
+  @Auth('agent')
+  @Get()
+  async listThreads(
+    @AuthAgent() agent: { id: string },
+    @Query('state') state: string | undefined,
+    @Query('limit') limit: string | undefined,
+    @Query('offset') offset: string | undefined,
+  ) {
+    if (state && state !== 'open' && state !== 'closed') {
+      throw new BadRequestException({
+        ok: false,
+        error: 'INVALID_STATE',
+        message: 'state must be "open" or "closed"',
+      });
+    }
+
+    const result = await this.threadService.listForAgent(agent.id, {
+      state,
+      limit: limit ? parseInt(limit, 10) : undefined,
+      offset: offset ? parseInt(offset, 10) : undefined,
+    });
+
+    return {
+      ok: true,
+      data: {
+        threads: result.rows.map((r) => ({
+          thread_id: r.thread_id,
+          state: r.state,
+          created_by: r.created_by,
+          owner_id: r.owner_id,
+          participant_count: r.participant_count,
+          last_message_at: r.last_message_at,
+          last_message_preview: r.last_body_preview,
+          metadata: r.metadata,
+          created_at: r.created_at,
+          updated_at: r.updated_at,
+        })),
+        total: result.total,
+      },
+    };
+  }
+
   @Auth('agent', 'token')
   @Get(':threadId')
   async getThread(

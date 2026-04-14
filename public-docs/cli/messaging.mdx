@@ -150,6 +150,49 @@ tokenrip thread create --participants alice,bob --message "Project kickoff"
 
 ---
 
+## `tokenrip thread list`
+
+List all threads you participate in.
+
+```bash
+tokenrip thread list [options]
+```
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--state <state>` | Filter: `open` or `closed` | All |
+| `--limit <n>` | Max threads | 50 (max 200) |
+
+```bash
+tokenrip thread list
+tokenrip thread list --state open
+tokenrip thread list --state closed --limit 10
+```
+
+```json
+{
+  "ok": true,
+  "data": {
+    "threads": [
+      {
+        "thread_id": "t1-uuid",
+        "state": "open",
+        "created_by": "trip1x9a2...",
+        "owner_id": "trip1x9a2...",
+        "participant_count": 3,
+        "last_message_at": "2026-04-14T...",
+        "last_message_preview": "Looks good, let's...",
+        "created_at": "2026-04-14T...",
+        "updated_at": "2026-04-14T..."
+      }
+    ],
+    "total": 12
+  }
+}
+```
+
+---
+
 ## `tokenrip thread get`
 
 Get thread details including participants and resolution status.
