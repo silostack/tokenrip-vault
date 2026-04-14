@@ -6,10 +6,12 @@ import { sha256, publicKeyToAgentId } from '../api/auth/crypto';
 import { AgentService } from '../api/service/agent.service';
 import { UserService } from '../api/service/user.service';
 import { AuthService } from '../api/auth/auth.service';
+import { LinkCodeService } from '../api/service/link-code.service';
 import { Agent } from '../db/models/Agent';
 import { AgentKeyPair } from '../db/models/AgentKeyPair';
 import { OAuthCode } from '../db/models/OAuthCode';
 import { OperatorBinding } from '../db/models/OperatorBinding';
+import { User } from '../db/models/User';
 
 export interface OAuthRegistrationInput {
   displayName: string;
@@ -27,6 +29,15 @@ export interface OAuthLoginInput {
   redirectUri: string;
 }
 
+export interface OAuthLinkAgentInput {
+  code: string;
+  displayName?: string;
+  password?: string;
+  userAlias?: string;
+  codeChallenge: string;
+  redirectUri: string;
+}
+
 export interface TokenExchangeInput {
   code: string;
   codeVerifier: string;
@@ -40,6 +51,7 @@ export class OAuthService {
     private readonly agentService: AgentService,
     private readonly userService: UserService,
     private readonly authService: AuthService,
+    private readonly linkCodeService: LinkCodeService,
   ) {}
 
   @Transactional()
@@ -72,8 +84,8 @@ export class OAuthService {
   async login(input: OAuthLoginInput): Promise<{ code: string }> {
     const { user } = await this.userService.login(input.alias, input.password);
 
-    const binding = await this.em.findOne(OperatorBinding, { user }, { populate: ['agent'] });
-    if (!binding) {
+    const bindings = await this.em.find(OperatorBinding, { user }, { populate: ['agent'] });
+    if (bindings.length === 0) {
       throw new UnauthorizedException({
         ok: false,
         error: 'NO_AGENT_BOUND',
@@ -81,8 +93,72 @@ export class OAuthService {
       });
     }
 
-    const code = this.createAuthCode(binding.agent.id, input.codeChallenge, input.redirectUri);
+    const serverAgent = await this.findOrCreateServerAgent(user);
+    const code = this.createAuthCode(serverAgent.id, input.codeChallenge, input.redirectUri);
     return { code };
+  }
+
+  /**
+   * Link an existing agent (identified via short code) to the OAuth flow.
+   * If the agent already has a binding: auto-login the bound user.
+   * If no binding: create a new user and bind both the CLI agent and a new server-side agent.
+   */
+  @Transactional()
+  async linkAgent(input: OAuthLinkAgentInput): Promise<{ code: string }> {
+    const { agentId } = await this.linkCodeService.consume(input.code);
+    const existingBinding = await this.em.findOne(OperatorBinding, { agent: { id: agentId } }, { populate: ['user'] });
+
+    let serverAgent: Agent;
+
+    if (existingBinding) {
+      serverAgent = await this.findOrCreateServerAgent(existingBinding.user);
+    } else {
+      if (!input.displayName || !input.password) {
+        throw new BadRequestException({
+          ok: false,
+          error: 'REGISTRATION_REQUIRED',
+          message: 'displayName and password are required for new account creation',
+        });
+      }
+
+      const { user } = await this.userService.register(input.displayName, input.password, input.userAlias);
+
+      // Bind the CLI agent to the new user
+      const cliAgent = await this.em.findOneOrFail(Agent, { id: agentId });
+      this.em.persist(new OperatorBinding(cliAgent, user));
+
+      serverAgent = await this.createServerAgent(user);
+    }
+
+    const code = this.createAuthCode(serverAgent.id, input.codeChallenge, input.redirectUri);
+    return { code };
+  }
+
+  /** Find an existing server-side agent for a user, or create one. */
+  private async findOrCreateServerAgent(user: { id: string }): Promise<Agent> {
+    const bindings = await this.em.find(OperatorBinding, { user: { id: user.id } }, { populate: ['agent'] });
+    for (const b of bindings) {
+      const kp = await this.em.findOne(AgentKeyPair, { agent: b.agent });
+      if (kp) return b.agent;
+    }
+    return this.createServerAgent(user);
+  }
+
+  /** Create a server-side agent (with server-generated keypair) and bind it to a user. */
+  async createServerAgent(user: { id: string }): Promise<Agent> {
+    const { publicKey, privateKey } = generateKeyPairSync('ed25519');
+    const rawPublicKey = publicKey.export({ type: 'spki', format: 'der' }).subarray(12).toString('hex');
+    const rawSecretKey = privateKey.export({ type: 'pkcs8', format: 'der' }).subarray(16).toString('hex');
+
+    const { agent } = await this.agentService.register(rawPublicKey);
+    const keyPair = new AgentKeyPair(agent, this.encryptSecretKey(rawSecretKey));
+    this.em.persist(keyPair);
+
+    const userEntity = await this.em.findOneOrFail(User, { id: user.id });
+    const binding = new OperatorBinding(agent, userEntity);
+    this.em.persist(binding);
+
+    return agent;
   }
 
   @Transactional()

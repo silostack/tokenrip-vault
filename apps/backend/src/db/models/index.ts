@@ -12,6 +12,7 @@ import { ShareToken } from './ShareToken';
 import { AgentKeyPair } from './AgentKeyPair';
 import { OAuthCode } from './OAuthCode';
 import { Contact } from './Contact';
+import { LinkCode } from './LinkCode';
 
 export { Asset, AssetType, AssetState } from './Asset';
 export { AssetVersion } from './AssetVersion';
@@ -41,5 +42,7 @@ export { OAuthCode } from './OAuthCode';
 export { OAuthCodeRepository } from '../repositories/oauth-code.repository';
 export { Contact } from './Contact';
 export { ContactRepository } from '../repositories/contact.repository';
+export { LinkCode } from './LinkCode';
+export { LinkCodeRepository } from '../repositories/link-code.repository';
 
-export const entities = [Asset, ApiKey, AssetVersion, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, AgentKeyPair, OAuthCode, Contact];
+export const entities = [Asset, ApiKey, AssetVersion, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, AgentKeyPair, OAuthCode, Contact, LinkCode];

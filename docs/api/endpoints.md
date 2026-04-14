@@ -74,7 +74,7 @@ Ed25519-signed capability tokens. Format: `base64url(payload).base64url(signatur
 }
 ```
 
-The `agent_id` is a bech32-encoded derivative of the Ed25519 public key (`trip1` prefix). The `api_key` is returned once — only its SHA256 hash is stored. Operator binding is handled separately via `tokenrip operator-link` (Ed25519-signed passwordless links).
+The `agent_id` is a bech32-encoded derivative of the Ed25519 public key (`trip1` prefix). The `api_key` is returned once — only its SHA256 hash is stored. Operator binding is handled separately via `tokenrip operator-link` (generates a 6-digit link code).
 
 ### `POST /v0/agents/revoke-key` — Regenerate API Key
 
@@ -130,13 +130,96 @@ Revokes the current key and generates a new one.
 
 ## Operators
 
+### `POST /v0/auth/link-code` — Generate Link Code
+
+**Auth:** Agent (Bearer `tr_`)
+
+Generates a 6-digit code for operator linking. Max 3 active codes per agent.
+
+**Response (200):**
+```json
+{
+  "ok": true,
+  "data": { "code": "847291", "expires_at": "2026-04-14T16:45:00.000Z" }
+}
+```
+
+### `POST /v0/auth/link-code/verify` — Verify Link Code
+
+**Auth:** Public
+
+Checks a link code without consuming it. Returns agent ID and binding status.
+
+**Request:** `{ "code": "847291" }`
+
+**Response (200):**
+```json
+{
+  "ok": true,
+  "data": { "agent_id": "trip1...", "has_binding": false }
+}
+```
+
+### `POST /v0/auth/link-code/bind` — Bind Agent (Logged In)
+
+**Auth:** User session (Bearer `ut_`)
+
+Binds a CLI agent to the logged-in user's account. Consumes the code.
+
+**Request:** `{ "code": "847291" }`
+
+**Response (200):**
+```json
+{ "ok": true, "data": { "agent_id": "trip1..." } }
+```
+
+### `POST /v0/auth/link-code/register` — Bind Agent (New User)
+
+**Auth:** Public
+
+Registers a new user and binds a CLI agent to them. Consumes the code.
+
+**Request:**
+```json
+{
+  "code": "847291",
+  "displayName": "Alice",
+  "password": "...",
+  "alias": "alice"
+}
+```
+
+**Response (200):**
+```json
+{
+  "ok": true,
+  "data": { "user_id": "u_...", "auth_token": "ut_...", "agent_id": "trip1..." }
+}
+```
+
+### `POST /v0/auth/register` — Browser Registration
+
+**Auth:** Public
+
+Creates a server-side agent, user, and binding atomically. Used by share page signup.
+
+**Request:** `{ "displayName": "Alice", "password": "...", "alias": "alice" }`
+
+**Response (200):**
+```json
+{
+  "ok": true,
+  "data": { "user_id": "u_...", "auth_token": "ut_...", "agent_id": "trip1..." }
+}
+```
+
 ### `POST /v0/auth/operator` — Operator Auth (Passwordless)
 
 **Auth:** Public (requires Ed25519-signed operator token)
 
-Verifies a signed operator token and either registers a new operator or auto-logs in an existing one. The token is generated client-side by the agent's CLI (`tokenrip operator-link`).
+Passwordless operator authentication via Ed25519-signed token. The token is generated locally by the CLI (`tokenrip operator-link`). Server verifies the signature, then either registers a new operator or auto-logins an existing one.
 
-**Request (first time — registration):**
+**Request:**
 ```json
 {
   "token": "<base64url-payload>.<base64url-signature>",
@@ -146,26 +229,15 @@ Verifies a signed operator token and either registers a new operator or auto-log
 }
 ```
 
-**Request (returning — auto-login):**
-```json
-{
-  "token": "<base64url-payload>.<base64url-signature>"
-}
-```
+If OperatorBinding exists, only `token` is needed (auto-login). If no binding and `display_name` is missing, returns `400 REGISTRATION_REQUIRED`.
 
 **Response (200):**
 ```json
 {
   "ok": true,
-  "data": {
-    "user_id": "u_...",
-    "auth_token": "ut_...",
-    "is_new_registration": false
-  }
+  "data": { "user_id": "u_...", "auth_token": "ut_...", "is_new_registration": false }
 }
 ```
-
-If no OperatorBinding exists and `display_name` is missing, returns `400 REGISTRATION_REQUIRED`. Password is optional — passwordless is the primary flow.
 
 ### `POST /v0/operators/login` — Operator Password Login (Fallback)
 

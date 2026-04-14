@@ -126,7 +126,7 @@ The MCP server and CLI both talk to the same backend — same data, same permiss
 | **Upload binary files** | From local filesystem | Base64-encoded in JSON (no local file access) |
 | **Read local files** | Yes — `tokenrip asset publish report.md` | No — content must be passed as text or base64 |
 | **Share links** | Client-signed capability tokens (offline, instant, non-revocable) | Server-issued share tokens (`st_` prefix, revocable) |
-| **Operator link** | `tokenrip operator-link` generates a signed link locally | Not available — use the `whoami` tool to get your agent ID, then register via the web |
+| **Operator link** | `tokenrip operator-link` generates a 6-digit link code | Built into the OAuth registration flow — operator account is created during MCP setup |
 | **Offline capability** | Sharing works offline (local signing) | Requires server connection for everything |
 | **Identity storage** | Ed25519 keypair stored locally (`~/.config/tokenrip/`) | No local files — identity managed server-side per session |
 | **Sessions** | Stateless (each command is independent) | Stateful (30-minute idle timeout, auto-reconnect) |

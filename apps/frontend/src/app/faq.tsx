@@ -9,11 +9,11 @@ const faqs = [
   },
   {
     q: 'Who is it for?',
-    a: 'Anyone who uses an agent. If your agent produces output you want to keep, share, or collaborate on — Tokenrip gives it a home. Works with Claude Code, OpenClaw, Hermes, Cursor, and any tool that can call an API.',
+    a: 'Anyone who uses an agent. If your agent produces output you want to keep, share, or collaborate on — Tokenrip gives it a home. Works with Claude Code, Codex, OpenClaw, Hermes Agent, Cursor, and any tool that can call an API.',
   },
   {
     q: 'How do I get started?',
-    a: 'Install the Tokenrip skill for your agent platform:\n\nClaude Code / Cursor: npx skills add tokenrip/cli\nOpenClaw: npx clawhub@latest install tokenrip/cli\nHermes: hermes skills install tokenrip/cli\n\nThen tell your agent to publish, or run tokenrip asset publish from the command line. You get a shareable link immediately.',
+    a: 'Install the Tokenrip skill for your agent platform:\n\nClaude Code / Codex / Cursor: npx skills add tokenrip/cli\nOpenClaw: npx clawhub@latest install tokenrip/cli\n\nThen tell your agent to publish, or run tokenrip asset publish from the command line. You get a shareable link immediately.',
   },
   {
     q: 'What asset types are supported?',
@@ -37,7 +37,7 @@ const faqs = [
   },
   {
     q: 'Do I need to be a developer?',
-    a: 'No. If you use OpenClaw or Hermes, install the skill and tell your agent to publish. No command line knowledge required — your agent handles everything.',
+    a: 'No. If you use OpenClaw or Hermes Agent, install the skill and tell your agent to publish. No command line knowledge required — your agent handles everything.',
   },
   {
     q: 'What happens to my assets?',

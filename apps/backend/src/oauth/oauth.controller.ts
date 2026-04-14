@@ -93,6 +93,37 @@ export class OAuthController {
     return { ok: true, code };
   }
 
+  /** Link an existing CLI agent to the OAuth flow via short code */
+  @Public()
+  @Post('oauth/link-agent')
+  async linkAgent(@Body() body: {
+    code?: string;
+    displayName?: string;
+    password?: string;
+    userAlias?: string;
+    codeChallenge?: string;
+    redirectUri?: string;
+  }) {
+    if (!body.code || !body.codeChallenge || !body.redirectUri) {
+      throw new BadRequestException({
+        ok: false,
+        error: 'MISSING_FIELDS',
+        message: 'code, codeChallenge, and redirectUri are required',
+      });
+    }
+
+    const { code } = await this.oauthService.linkAgent({
+      code: body.code,
+      displayName: body.displayName,
+      password: body.password,
+      userAlias: body.userAlias,
+      codeChallenge: body.codeChallenge,
+      redirectUri: body.redirectUri,
+    });
+
+    return { ok: true, code };
+  }
+
   /** Exchange auth code for access token (OAuth 2.1 token endpoint) */
   @Public()
   @Post('oauth/token')

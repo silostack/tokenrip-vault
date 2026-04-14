@@ -12,6 +12,7 @@ import { Message } from '../db/models/Message';
 import { Ref } from '../db/models/Ref';
 import { ShareToken } from '../db/models/ShareToken';
 import { Contact } from '../db/models/Contact';
+import { LinkCode } from '../db/models/LinkCode';
 import { AssetController } from './controller/asset.controller';
 import { AgentController } from './controller/agent.controller';
 import { OperatorController } from './controller/operator.controller';
@@ -34,12 +35,13 @@ import { InboxService } from './service/inbox.service';
 import { OperatorAuthService } from './service/operator-auth.service';
 import { OperatorBindingService } from './service/operator-binding.service';
 import { ShareTokenService } from './service/share-token.service';
+import { LinkCodeService } from './service/link-code.service';
 import { AuthService } from './auth/auth.service';
 
 @Module({
-  imports: [MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, Contact])],
+  imports: [MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, Contact, LinkCode])],
   controllers: [AssetController, AgentController, OperatorController, ThreadController, MessageController, InboxController, ContactController, HealthController, OpenapiController],
-  providers: [AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, OperatorAuthService, OperatorBindingService, ShareTokenService, ContactService, AuthService],
-  exports: [AuthService, AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, ShareTokenService, ContactService],
+  providers: [AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, OperatorAuthService, OperatorBindingService, ShareTokenService, ContactService, LinkCodeService, AuthService],
+  exports: [AuthService, AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, ShareTokenService, ContactService, LinkCodeService],
 })
 export class ApiModule {}

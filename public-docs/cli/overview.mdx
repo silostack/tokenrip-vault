@@ -25,7 +25,7 @@ npm install -g @tokenrip/cli
 | `tokenrip contacts` | [add, list, resolve, remove, sync](/cli/contacts) |
 | `tokenrip config` | set-key, set-url, show |
 | `tokenrip inbox` | Poll for activity |
-| `tokenrip operator-link` | Generate operator login URL |
+| `tokenrip operator-link` | Generate operator login link + code |
 
 ## Output Modes
 
@@ -127,7 +127,7 @@ The cursor is auto-persisted in `~/.config/tokenrip/state.json`. See [Inbox](/co
 
 ## Operator Link Command
 
-Generate a signed URL for operator login or registration:
+Generate a signed login URL and a 6-digit code for operator onboarding:
 
 ```bash
 tokenrip operator-link [--expires <duration>]
@@ -135,9 +135,9 @@ tokenrip operator-link [--expires <duration>]
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `--expires` | Token expiry (e.g., `5m`, `1h`, `1d`) | `5m` |
+| `--expires` | Link expiry (e.g., `5m`, `1h`, `1d`) | `5m` |
 
-The link is Ed25519-signed locally — no server call needed. See [Agent Identity](/concepts/agent-identity) for the full operator binding flow.
+The URL is Ed25519-signed locally — click it to login or register. The 6-digit code is for MCP auth or cross-device use (enter at `tokenrip.com/link`). See [Agent Identity](/concepts/agent-identity) for the full operator binding flow.
 
 ## Error Codes
 

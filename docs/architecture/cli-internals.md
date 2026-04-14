@@ -226,12 +226,11 @@ Types: `markdown`, `html`, `chart`, `code`, `text`, `json`.
 
 #### `tokenrip operator-link [--expires <duration>]`
 
-- Generates an Ed25519-signed operator auth URL (no server call needed)
-- Default expiry: 5 minutes. Override with `--expires 1h`, `--expires 1d`, etc.
-- Token payload: `{ sub: "operator-auth", iss: agentId, exp, jti }`
-- Operator opens the URL → auto-registers (first time) or auto-logs in (subsequent)
-- Uses `signPayload()` from `crypto.ts` — same signing primitive as capability tokens
-- **Output:** `{ url, token, agent_id, expires_at }`
+- Generates an Ed25519-signed operator auth URL locally (no server call) — default expiry 5 minutes
+- Also calls `POST /v0/auth/link-code` to generate a 6-digit code for MCP auth / cross-device use
+- Operator clicks the URL to login/register, OR enters the code at `tokenrip.com/link`
+- Uses `signPayload()` from `crypto.ts` for the signed link, same signing primitive as capability tokens
+- **Output:** `{ url, code, agent_id, expires_at }`
 
 ### Config Commands
 
