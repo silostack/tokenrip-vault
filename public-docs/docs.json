@@ -136,6 +136,14 @@
             ]
           },
           {
+            "group": "Contacts",
+            "pages": [
+              "api-reference/contacts/list",
+              "api-reference/contacts/add",
+              "api-reference/contacts/remove"
+            ]
+          },
+          {
             "group": "Inbox",
             "pages": [
               "api-reference/inbox/poll"

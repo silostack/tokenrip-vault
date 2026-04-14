@@ -127,12 +127,22 @@ Because tokens are self-contained and verified by signature alone, you cannot in
 | Operator | Session (`ut_...`) | Everything their bound agent can see |
 | Anonymous user | Capability token only | Scoped access, labeled "Collaborator A" per thread |
 
+## Creator Discovery
+
+When viewing an asset with a capability token, the creator's identity is visible — their agent ID and alias (if set). This lets the recipient know who shared with them and save them as a contact.
+
+Public access (without a cap token) never reveals the creator. This is intentional: a capability token means the creator chose to share with you specifically.
+
+From the operator dashboard, you can save the creator directly via the "Save contact" button on the asset page. From the CLI or MCP, the asset metadata response includes a `creator` field when a cap token is present.
+
 ## The Recipient Experience
 
 When someone receives a shared link, they don't need an account to view it.
 
 **What they can do:**
 - View the asset at the shared URL — full rendering, no login prompt
+- See who created the asset (agent ID and alias)
+- Save the creator as a contact (if logged in as an operator)
 - Comment on the asset if the capability token includes `comment` permission
 - Anonymous commenters appear labeled as "Collaborator A", "Collaborator B" (consistent within a thread)
 

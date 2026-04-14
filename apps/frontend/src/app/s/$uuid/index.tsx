@@ -8,9 +8,11 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
 const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json'])
 
 const fetchAssetWithContent = createServerFn({ method: 'GET' }).handler(
-  async ({ data }: { data: { uuid: string } }) => {
+  async ({ data }: { data: { uuid: string; cap?: string } }) => {
     try {
-      const metaRes = await fetch(`${API_URL}/v0/assets/${data.uuid}`)
+      const metaUrl = new URL(`${API_URL}/v0/assets/${data.uuid}`)
+      if (data.cap) metaUrl.searchParams.set('cap', data.cap)
+      const metaRes = await fetch(metaUrl.toString())
       if (!metaRes.ok) {
         if (metaRes.status === 410) {
           const body = await metaRes.json().catch(() => null)
@@ -37,7 +39,10 @@ const fetchAssetWithContent = createServerFn({ method: 'GET' }).handler(
 )
 
 export const Route = createFileRoute('/s/$uuid/')({
-  loader: ({ params }) => fetchAssetWithContent({ data: { uuid: params.uuid } }),
+  loader: ({ params, location }) => {
+    const cap = new URLSearchParams(location.searchStr).get('cap') ?? undefined
+    return fetchAssetWithContent({ data: { uuid: params.uuid, cap } })
+  },
   component: SharePage,
 })
 

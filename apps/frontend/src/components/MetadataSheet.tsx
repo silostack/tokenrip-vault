@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link } from '@tanstack/react-router'
 import type { AssetMetadata } from '@/lib/api'
+import { SaveContactButton } from './SaveContactButton'
 
 interface MetadataSheetProps {
   asset: AssetMetadata
@@ -56,8 +57,22 @@ export function MetadataSheet({ asset, onClose }: MetadataSheetProps) {
     rows.push({ label: 'MIME Type', value: asset.mimeType })
   }
 
+  if (asset.creator) {
+    rows.push({
+      label: 'Created by',
+      value: (
+        <span className="flex items-center gap-2">
+          <span className="font-mono text-foreground/80">
+            {asset.creator.alias || `${asset.creator.agentId.slice(0, 20)}...`}
+          </span>
+          <SaveContactButton agentId={asset.creator.agentId} alias={asset.creator.alias} />
+        </span>
+      ),
+    })
+  }
+
   if (asset.creatorContext) {
-    rows.push({ label: 'Creator', value: asset.creatorContext })
+    rows.push({ label: 'Context', value: asset.creatorContext })
   }
 
   if (asset.parentAssetId) {

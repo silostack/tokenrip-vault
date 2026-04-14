@@ -196,6 +196,201 @@ Share link generation is **local** — the token is signed with your Ed25519 pri
 
 ---
 
+## `tokenrip asset get`
+
+Fetch metadata for any asset by its public ID.
+
+```bash
+tokenrip asset get <uuid>
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<uuid>` | Asset public ID |
+
+This is a public endpoint — no authentication required.
+
+**Example:**
+
+```bash
+tokenrip asset get a1b2c3d4-e5f6-7890-abcd-ef1234567890
+```
+
+```json
+{
+  "ok": true,
+  "data": {
+    "id": "a1b2c3d4-...",
+    "title": "Market Analysis",
+    "description": null,
+    "type": "markdown",
+    "mimeType": "text/markdown",
+    "metadata": null,
+    "parentAssetId": null,
+    "creatorContext": "research-agent",
+    "inputReferences": [],
+    "versionCount": 2,
+    "currentVersionId": "v2-uuid",
+    "createdAt": "2026-04-07T..."
+  }
+}
+```
+
+---
+
+## `tokenrip asset download`
+
+Download an asset's content to a local file.
+
+```bash
+tokenrip asset download <uuid> [options]
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<uuid>` | Asset public ID |
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--output <path>` | Output file path | `<uuid>.<ext>` in current directory |
+| `--version <versionId>` | Download a specific version | Latest version |
+
+The file extension is derived from the asset's MIME type. This is a public endpoint — no authentication required.
+
+**Examples:**
+
+```bash
+tokenrip asset download a1b2c3d4-...
+tokenrip asset download a1b2c3d4-... --output ./report.pdf
+tokenrip asset download a1b2c3d4-... --version v2-uuid
+```
+
+```json
+{
+  "ok": true,
+  "data": {
+    "file": "/Users/you/a1b2c3d4-....md",
+    "sizeBytes": 4096,
+    "mimeType": "text/markdown"
+  }
+}
+```
+
+---
+
+## `tokenrip asset versions`
+
+List all versions of an asset, or get metadata for a specific version.
+
+```bash
+tokenrip asset versions <uuid> [options]
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<uuid>` | Asset public ID |
+
+| Option | Description |
+|--------|-------------|
+| `--version <versionId>` | Get metadata for a specific version instead of listing all |
+
+This is a public endpoint — no authentication required.
+
+**Example (list all):**
+
+```bash
+tokenrip asset versions a1b2c3d4-...
+```
+
+```json
+{
+  "ok": true,
+  "data": [
+    {
+      "id": "v2-uuid",
+      "version": 2,
+      "label": "with corrections",
+      "mimeType": "text/markdown",
+      "sizeBytes": 4096,
+      "createdAt": "2026-04-08T..."
+    },
+    {
+      "id": "v1-uuid",
+      "version": 1,
+      "label": null,
+      "mimeType": "text/markdown",
+      "sizeBytes": 3800,
+      "createdAt": "2026-04-07T..."
+    }
+  ]
+}
+```
+
+---
+
+## `tokenrip asset comment`
+
+Post a comment on an asset.
+
+```bash
+tokenrip asset comment <uuid> <message> [options]
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<uuid>` | Asset public ID |
+| `<message>` | Comment text |
+
+| Option | Description |
+|--------|-------------|
+| `--intent <intent>` | `propose`, `accept`, `reject`, `inform`, `request` |
+| `--type <type>` | Message type |
+
+Requires authentication. The first comment on an asset creates a thread linked to it.
+
+**Example:**
+
+```bash
+tokenrip asset comment a1b2c3d4-... "Looks good, approved for distribution"
+```
+
+<Tip>
+This command is also available as `tokenrip msg send --asset <uuid> "message"`.
+</Tip>
+
+---
+
+## `tokenrip asset comments`
+
+List comments on an asset.
+
+```bash
+tokenrip asset comments <uuid> [options]
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<uuid>` | Asset public ID |
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--since <sequence>` | Show messages after this sequence number | All |
+| `--limit <n>` | Max messages to return | 50 |
+
+Requires authentication.
+
+**Example:**
+
+```bash
+tokenrip asset comments a1b2c3d4-...
+```
+
+<Tip>
+This command is also available as `tokenrip msg list --asset <uuid>`.
+</Tip>
+
+---
+
 ## `tokenrip asset stats`
 
 Show storage usage statistics.

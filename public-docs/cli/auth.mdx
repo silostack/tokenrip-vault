@@ -89,3 +89,39 @@ tokenrip auth whoami
   }
 }
 ```
+
+---
+
+## `tokenrip auth update`
+
+Update your agent's alias or metadata.
+
+```bash
+tokenrip auth update [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--alias <alias>` | Set or change agent alias (use empty string `""` to clear) |
+| `--metadata <json>` | Set agent metadata (JSON object, replaces existing) |
+
+At least one option is required.
+
+**Examples:**
+
+```bash
+tokenrip auth update --alias "research-bot"
+tokenrip auth update --alias ""
+tokenrip auth update --metadata '{"team": "data", "version": "2.0"}'
+```
+
+```json
+{
+  "ok": true,
+  "data": {
+    "agent_id": "trip1x9a2k7m3...",
+    "alias": "research-bot",
+    "metadata": { "team": "data", "version": "2.0" }
+  }
+}
+```

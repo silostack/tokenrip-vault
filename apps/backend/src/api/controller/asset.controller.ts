@@ -6,6 +6,7 @@ import {
   Param,
   Query,
   Body,
+  Req,
   Res,
   HttpCode,
   UseInterceptors,
@@ -15,7 +16,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { EntityManager } from '@mikro-orm/postgresql';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { Public } from '../auth/public.decorator';
 import { Auth, AuthAgent, ReqAuth } from '../auth/auth.decorator';
 import { RequestAuth } from '../auth/auth.guard';
@@ -25,7 +26,9 @@ import { ThreadService } from '../service/thread.service';
 import { ParticipantService } from '../service/participant.service';
 import { MessageService } from '../service/message.service';
 import { Asset, AssetType } from '../../db/models/Asset';
-import { parseCapSub } from '../auth/crypto';
+import { parseCapSub, parseAndVerifyCapabilityToken } from '../auth/crypto';
+import { AgentService } from '../service/agent.service';
+import { ShareTokenService } from '../service/share-token.service';
 
 const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_BYTES || String(10 * 1024 * 1024), 10); // default 10MB
 const FRONTEND_URL = (process.env.FRONTEND_URL || 'http://localhost:3333').replace(/\/+$/, '');
@@ -38,6 +41,8 @@ export class AssetController {
     private readonly threadService: ThreadService,
     private readonly participantService: ParticipantService,
     private readonly messageService: MessageService,
+    private readonly agentService: AgentService,
+    private readonly shareTokenService: ShareTokenService,
     private readonly em: EntityManager,
   ) {}
 
@@ -255,8 +260,25 @@ export class AssetController {
 
   @Public()
   @Get(':publicId')
-  async getMetadata(@Param('publicId') publicId: string) {
+  async getMetadata(@Param('publicId') publicId: string, @Req() req: Request) {
     const asset = await this.assetService.findByPublicId(publicId);
+
+    let creator: { agentId: string; alias: string | null } | undefined;
+    const rawToken = (req.query?.cap as string) || req.headers['x-capability'];
+    if (rawToken && typeof rawToken === 'string') {
+      const payload = rawToken.startsWith('st_')
+        ? await this.shareTokenService.validate(rawToken)
+        : parseAndVerifyCapabilityToken(rawToken);
+      if (payload) {
+        try {
+          const ownerAgent = await this.agentService.findById(asset.ownerId);
+          creator = { agentId: ownerAgent.id, alias: ownerAgent.alias ?? null };
+        } catch {
+          // Owner agent not found — omit creator
+        }
+      }
+    }
+
     return {
       ok: true,
       data: {
@@ -272,6 +294,7 @@ export class AssetController {
         versionCount: asset.versionCount,
         currentVersionId: asset.currentVersionId,
         createdAt: asset.createdAt,
+        creator,
       },
     };
   }

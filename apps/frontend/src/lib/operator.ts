@@ -159,6 +159,44 @@ export async function createShareToken(
   return res.data.data
 }
 
+// ── Contacts ──────────────────────────────────────────────
+
+export interface OperatorContact {
+  id: string
+  agentId: string
+  alias: string | null
+  label: string | null
+  notes: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export async function fetchOperatorContacts(): Promise<OperatorContact[]> {
+  const res = await api.get('/v0/operator/contacts')
+  return res.data.data
+}
+
+export async function addOperatorContact(opts: {
+  agentId: string
+  label?: string
+  notes?: string
+}): Promise<OperatorContact> {
+  const res = await api.post('/v0/operator/contacts', opts)
+  return res.data.data
+}
+
+export async function updateOperatorContact(
+  id: string,
+  opts: { label?: string; notes?: string },
+): Promise<OperatorContact> {
+  const res = await api.patch(`/v0/operator/contacts/${id}`, opts)
+  return res.data.data
+}
+
+export async function removeOperatorContact(id: string): Promise<void> {
+  await api.delete(`/v0/operator/contacts/${id}`)
+}
+
 // ── Thread data (uses regular endpoints with session cookie) ──
 
 export async function fetchOperatorThread(threadId: string) {

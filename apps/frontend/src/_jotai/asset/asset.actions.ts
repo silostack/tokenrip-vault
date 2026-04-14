@@ -15,12 +15,14 @@ export const useAssetActions = () => {
   const setVersions = useSetAtom(versionsAtom)
   const setActiveVersionId = useSetAtom(activeVersionIdAtom)
 
-  const fetchAsset = async (uuid: string, versionId?: string) => {
+  const fetchAsset = async (uuid: string, versionId?: string, cap?: string) => {
     setIsLoading(true)
     setError(null)
     setActiveVersionId(versionId || null)
     try {
-      const response = await api.get(`/v0/assets/${uuid}`)
+      const params: Record<string, string> = {}
+      if (cap) params.cap = cap
+      const response = await api.get(`/v0/assets/${uuid}`, { params })
       setAsset(response.data.data)
     } catch (error: any) {
       const message = error.response?.data?.message || 'Failed to fetch asset'

@@ -179,7 +179,7 @@ function About() {
               <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
             </div>
             <pre className="p-4 font-mono text-xs leading-relaxed text-foreground/60">
-              <span className="text-foreground/30"># Claude Code / Cursor</span>{'\n'}
+              <span className="text-foreground/30"># Claude Code / Codex / Cursor</span>{'\n'}
               npx skills add tokenrip/cli{'\n'}
               {'\n'}
               <span className="text-foreground/30"># OpenClaw</span>{'\n'}

@@ -11,6 +11,7 @@ import { Participant } from '../db/models/Participant';
 import { Message } from '../db/models/Message';
 import { Ref } from '../db/models/Ref';
 import { ShareToken } from '../db/models/ShareToken';
+import { Contact } from '../db/models/Contact';
 import { AssetController } from './controller/asset.controller';
 import { AgentController } from './controller/agent.controller';
 import { OperatorController } from './controller/operator.controller';
@@ -26,7 +27,9 @@ import { ThreadService } from './service/thread.service';
 import { ParticipantService } from './service/participant.service';
 import { MessageService } from './service/message.service';
 import { RefService } from './service/ref.service';
+import { ContactController } from './controller/contact.controller';
 import { InboxController } from './controller/inbox.controller';
+import { ContactService } from './service/contact.service';
 import { InboxService } from './service/inbox.service';
 import { OperatorAuthService } from './service/operator-auth.service';
 import { OperatorBindingService } from './service/operator-binding.service';
@@ -34,9 +37,9 @@ import { ShareTokenService } from './service/share-token.service';
 import { AuthService } from './auth/auth.service';
 
 @Module({
-  imports: [MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken])],
-  controllers: [AssetController, AgentController, OperatorController, ThreadController, MessageController, InboxController, HealthController, OpenapiController],
-  providers: [AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, OperatorAuthService, OperatorBindingService, ShareTokenService, AuthService],
-  exports: [AuthService, AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, ShareTokenService],
+  imports: [MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, Contact])],
+  controllers: [AssetController, AgentController, OperatorController, ThreadController, MessageController, InboxController, ContactController, HealthController, OpenapiController],
+  providers: [AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, OperatorAuthService, OperatorBindingService, ShareTokenService, ContactService, AuthService],
+  exports: [AuthService, AssetService, AssetVersionService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, ShareTokenService, ContactService],
 })
 export class ApiModule {}

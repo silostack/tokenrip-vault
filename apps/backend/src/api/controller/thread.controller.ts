@@ -16,6 +16,7 @@ import { ParticipantService } from '../service/participant.service';
 import { MessageService } from '../service/message.service';
 import { RefService } from '../service/ref.service';
 import { AgentService } from '../service/agent.service';
+import { OperatorBindingService } from '../service/operator-binding.service';
 
 @Controller('v0/threads')
 export class ThreadController {
@@ -25,6 +26,7 @@ export class ThreadController {
     private readonly messageService: MessageService,
     private readonly refService: RefService,
     private readonly agentService: AgentService,
+    private readonly bindingService: OperatorBindingService,
   ) {}
 
   private async serializeThread(thread: any) {
@@ -199,20 +201,25 @@ export class ThreadController {
   @Post(':threadId/participants')
   async addParticipant(
     @Param('threadId') threadId: string,
-    @Body() body: { agent_id?: string },
+    @Body() body: { agent_id?: string; alias?: string },
     @AuthAgent() agent: { id: string },
   ) {
-    if (!body?.agent_id) {
+    if (!body?.agent_id && !body?.alias) {
       throw new BadRequestException({
         ok: false,
         error: 'MISSING_FIELD',
-        message: 'agent_id is required',
+        message: 'agent_id or alias is required',
       });
     }
 
     const thread = await this.threadService.findById(threadId, { agent });
-    const agentId = await this.agentService.resolveByIdOrAlias(body.agent_id);
+    const agentId = await this.agentService.resolveByIdOrAlias(body.agent_id || body.alias!);
     const participant = await this.participantService.addAgent(thread, agentId, agent.id);
+
+    const boundUser = await this.bindingService.findBoundUser(agentId);
+    if (boundUser) {
+      await this.participantService.addUser(thread, boundUser.id);
+    }
 
     return {
       ok: true,

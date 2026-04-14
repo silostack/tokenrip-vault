@@ -6,12 +6,23 @@ import { OAuthService } from './oauth.service';
 export class OAuthController {
   constructor(private readonly oauthService: OAuthService) {}
 
+  /** OAuth 2.0 Protected Resource Metadata (RFC 9728) — MCP clients read this first */
+  @Public()
+  @Get('.well-known/oauth-protected-resource')
+  getResourceMetadata() {
+    const apiUrl = (process.env.API_URL || 'https://api.tokenrip.com').replace(/\/+$/, '');
+    return {
+      resource: apiUrl,
+      authorization_servers: [apiUrl],
+    };
+  }
+
   /** OAuth 2.1 Authorization Server Metadata (RFC 8414) */
   @Public()
   @Get('.well-known/oauth-authorization-server')
   getMetadata() {
-    const issuer = process.env.API_URL || 'https://api.tokenrip.com';
-    const frontendUrl = process.env.FRONTEND_URL || 'https://app.tokenrip.com';
+    const issuer = (process.env.API_URL || 'https://api.tokenrip.com').replace(/\/+$/, '');
+    const frontendUrl = (process.env.FRONTEND_URL || 'https://app.tokenrip.com').replace(/\/+$/, '');
 
     return {
       issuer,

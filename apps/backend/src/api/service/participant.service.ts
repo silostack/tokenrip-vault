@@ -7,7 +7,6 @@ import { ParticipantRepository } from '../../db/models';
 import { Thread } from '../../db/models/Thread';
 import { Agent } from '../../db/models/Agent';
 import { User } from '../../db/models/User';
-
 @Injectable()
 export class ParticipantService {
   constructor(

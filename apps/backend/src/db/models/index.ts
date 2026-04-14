@@ -11,6 +11,7 @@ import { Ref } from './Ref';
 import { ShareToken } from './ShareToken';
 import { AgentKeyPair } from './AgentKeyPair';
 import { OAuthCode } from './OAuthCode';
+import { Contact } from './Contact';
 
 export { Asset, AssetType, AssetState } from './Asset';
 export { AssetVersion } from './AssetVersion';
@@ -38,5 +39,7 @@ export { AgentKeyPair } from './AgentKeyPair';
 export { AgentKeyPairRepository } from '../repositories/agent-key-pair.repository';
 export { OAuthCode } from './OAuthCode';
 export { OAuthCodeRepository } from '../repositories/oauth-code.repository';
+export { Contact } from './Contact';
+export { ContactRepository } from '../repositories/contact.repository';
 
-export const entities = [Asset, ApiKey, AssetVersion, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, AgentKeyPair, OAuthCode];
+export const entities = [Asset, ApiKey, AssetVersion, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, AgentKeyPair, OAuthCode, Contact];

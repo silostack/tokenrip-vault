@@ -64,6 +64,11 @@ export class AgentService {
     return agent;
   }
 
+  async findByIds(ids: string[]): Promise<Agent[]> {
+    if (ids.length === 0) return [];
+    return this.agentRepo.find({ id: { $in: ids } });
+  }
+
   async findByAlias(alias: string): Promise<Agent | null> {
     return this.agentRepo.findOne({ alias });
   }

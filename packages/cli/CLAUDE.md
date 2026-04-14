@@ -36,9 +36,13 @@ The CLI entry (`src/cli.ts`) is ESM-only with a `#!/usr/bin/env node` shebang.
   - `stats.ts` — `tokenrip asset stats`
   - `share.ts` — `tokenrip asset share` (generate signed capability token + shareable URL)
   - `operator-link.ts` — `tokenrip operator-link` (generate Ed25519-signed operator auth URL)
-  - `auth.ts` — `tokenrip auth register`, `tokenrip auth create-key`, `tokenrip auth whoami`
-  - `msg.ts` — `tokenrip msg send`, `tokenrip msg list`
-  - `thread.ts` — `tokenrip thread create`, `tokenrip thread share`
+  - `asset-get.ts` — `tokenrip asset get`
+  - `asset-download.ts` — `tokenrip asset download`
+  - `asset-versions.ts` — `tokenrip asset versions`
+  - `asset-comments.ts` — `tokenrip asset comment`, `tokenrip asset comments`
+  - `auth.ts` — `tokenrip auth register`, `tokenrip auth create-key`, `tokenrip auth whoami`, `tokenrip auth update`
+  - `msg.ts` — `tokenrip msg send`, `tokenrip msg list` (both support `--asset` for asset comments)
+  - `thread.ts` — `tokenrip thread create`, `tokenrip thread get`, `tokenrip thread close`, `tokenrip thread add-participant`, `tokenrip thread share`
   - `inbox.ts` — `tokenrip inbox`
   - `contacts.ts` — `tokenrip contacts add/list/resolve/remove`
   - `config.ts` — `tokenrip config set-key`, `tokenrip config set-url`, `tokenrip config show`
