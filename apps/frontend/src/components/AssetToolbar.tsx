@@ -1,20 +1,21 @@
 import { useState, useCallback, useRef } from 'react'
-import { Link as LinkIcon, Check, Copy, Download, Info, MessageCircle } from 'lucide-react'
+import { Link as LinkIcon, Check, Copy, Download, Info, MessageCircle, ExternalLink } from 'lucide-react'
 import type { AssetMetadata } from '@/lib/api'
-import { getAssetContentUrl } from '@/lib/api'
+import { getAssetContentUrl, getVersionContentUrl } from '@/lib/api'
 import { MetadataSheet } from './MetadataSheet'
 
 const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json'])
 
 interface AssetToolbarProps {
   asset: AssetMetadata
+  activeVersionId?: string | null
   cap?: string | null
   commentCount?: number
   commentPanelOpen?: boolean
   onToggleComments?: () => void
 }
 
-export function AssetToolbar({ asset, cap, commentCount, commentPanelOpen, onToggleComments }: AssetToolbarProps) {
+export function AssetToolbar({ asset, activeVersionId, cap, commentCount, commentPanelOpen, onToggleComments }: AssetToolbarProps) {
   const [copied, setCopied] = useState(false)
   const [contentCopied, setContentCopied] = useState(false)
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -59,6 +60,13 @@ export function AssetToolbar({ asset, cap, commentCount, commentPanelOpen, onTog
     URL.revokeObjectURL(objectUrl)
   }, [asset.id, asset.title])
 
+  const handleOpenStandalone = useCallback(() => {
+    const url = activeVersionId
+      ? getVersionContentUrl(asset.id, activeVersionId)
+      : getAssetContentUrl(asset.id)
+    window.open(url, '_blank')
+  }, [asset.id, activeVersionId])
+
   const toggleSheet = useCallback(() => {
     setSheetOpen((prev) => !prev)
   }, [])
@@ -80,6 +88,17 @@ export function AssetToolbar({ asset, cap, commentCount, commentPanelOpen, onTog
 
       {/* Toolbar pill */}
       <div className="flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/10 px-2 py-1.5 shadow-lg backdrop-blur-md sm:gap-1">
+        {asset.type === 'html' && (
+          <button
+            type="button"
+            onClick={handleOpenStandalone}
+            title="Open standalone"
+            className="flex min-h-[44px] min-w-[44px] cursor-pointer items-center justify-center rounded-full transition-colors [-webkit-tap-highlight-color:transparent] hover:bg-foreground/10 active:scale-95 active:bg-foreground/15"
+          >
+            <ExternalLink size={18} className="text-foreground/70" />
+          </button>
+        )}
+
         {TEXT_TYPES.has(asset.type) && (
           <button
             type="button"

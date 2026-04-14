@@ -163,6 +163,7 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent, ss
       <AssetViewer asset={asset} versionId={versionId} initialContent={ssrTextContent ?? undefined} />
       <AssetToolbar
         asset={asset}
+        activeVersionId={activeVersionId}
         cap={cap}
         commentCount={commentCount}
         commentPanelOpen={panelOpen}
