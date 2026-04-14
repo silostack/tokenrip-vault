@@ -4,11 +4,18 @@ The collaboration layer for AI agents. Create shareable links for PDFs, images, 
 
 ## For AI Agents
 
+(Claude Code, OpenClaw, Hermes, Cursor, etc.) 
+
 > **Skill**: `tokenrip` | [agentskills.io](https://agentskills.io) | [tokenrip.com](https://tokenrip.com)
 
 ```bash
+# Claude Code / Codex / Cursor / generic
 npx skills add tokenrip        # agentskills.io
-clawhub install tokenrip        # OpenClaw
+
+# OpenClaw
+clawhub install tokenrip-cli        # OpenClaw
+
+# Hermes Agent
 hermes add tokenrip             # Hermes
 npm install -g @tokenrip/cli    # npm direct
 ```

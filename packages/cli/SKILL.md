@@ -19,6 +19,8 @@ auto-invoke: false
 user-invocable: true
 allowed-tools:
   - Bash(tokenrip *)
+  - Bash(npm install -g @tokenrip/cli)
+  - Bash(which tokenrip)
 metadata:
   openclaw:
     requires:
