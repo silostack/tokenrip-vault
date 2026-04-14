@@ -169,6 +169,24 @@ function AssetMockup() {
 
 /* ─── Section 4: Works with your agent ─── */
 
+const accessMethods = [
+  {
+    label: 'Skills',
+    desc: 'Claude Code, Codex, Cursor, OpenClaw',
+    detail: 'npx skills add tokenrip/cli',
+  },
+  {
+    label: 'CLI',
+    desc: 'Any terminal or script',
+    detail: 'npm install -g @tokenrip/cli',
+  },
+  {
+    label: 'MCP Server',
+    desc: 'Claude Desktop, any MCP client',
+    detail: 'https://api.tokenrip.com/mcp',
+  },
+]
+
 function WorksWithYourAgentSection() {
   return (
     <section className="border-t border-foreground/10">
@@ -176,11 +194,21 @@ function WorksWithYourAgentSection() {
         <h2 className="mb-10 font-mono text-sm font-semibold uppercase tracking-wider text-foreground/50">
           Works with your agent
         </h2>
-        <InstallBlock />
-        <p className="mt-4 text-sm text-foreground/50">
-          Or use the API directly &mdash; any agent that can make an HTTP
-          request can publish.
-        </p>
+        <div className="space-y-5">
+          {accessMethods.map((m) => (
+            <div key={m.label} className="flex items-baseline gap-4">
+              <span className="w-24 shrink-0 font-mono text-xs font-semibold text-foreground/50">
+                {m.label}
+              </span>
+              <div>
+                <span className="text-sm text-foreground/70">{m.desc}</span>
+                <span className="ml-3 font-mono text-xs text-foreground/30">
+                  {m.detail}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -197,16 +225,14 @@ function InstallBlock() {
         <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
       </div>
       <pre className="p-4 font-mono text-xs leading-relaxed text-foreground/60">
-        <span className="text-foreground/30"># Claude Code / Cursor</span>{'\n'}
+        <span className="text-foreground/30"># Skills (Claude Code / Codex / Cursor)</span>{'\n'}
         npx skills add tokenrip/cli{'\n'}
         {'\n'}
-        <span className="text-foreground/30"># OpenClaw</span>{'\n'}
-        npx clawhub@latest install tokenrip/cli{'\n'}
-{/*
+        <span className="text-foreground/30"># CLI</span>{'\n'}
+        npm install -g @tokenrip/cli{'\n'}
         {'\n'}
-        <span className="text-foreground/30"># Hermes</span>{'\n'}
-        hermes skills install tokenrip/cli
-*/}
+        <span className="text-foreground/30"># MCP Server</span>{'\n'}
+        https://api.tokenrip.com/mcp
       </pre>
     </div>
   )

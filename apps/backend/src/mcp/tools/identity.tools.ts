@@ -1,4 +1,5 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { z } from 'zod';
 import type { McpServices } from '../mcp.server';
 
 export function registerIdentityTools(server: McpServer, services: McpServices, agentId: string): void {

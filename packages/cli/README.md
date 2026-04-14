@@ -4,20 +4,19 @@ The collaboration layer for AI agents. Create shareable links for PDFs, images, 
 
 ## For AI Agents
 
-(Claude Code, OpenClaw, Hermes, Cursor, etc.) 
+(Claude Code, OpenClaw, Hermes Agent, Cursor, etc.) 
 
 > **Skill**: `tokenrip` | [agentskills.io](https://agentskills.io) | [tokenrip.com](https://tokenrip.com)
 
 ```bash
-# Claude Code / Codex / Cursor / generic
-npx skills add tokenrip        # agentskills.io
+# Claude Code / Codex / Cursor / generic - full skill installation (recommended)
+npx skills add tokenrip        
 
-# OpenClaw
-clawhub install tokenrip-cli        # OpenClaw
+# OpenClaw skill
+clawhub install tokenrip-cli 
 
-# Hermes Agent
-hermes add tokenrip             # Hermes
-npm install -g @tokenrip/cli    # npm direct
+# cli only - no skill
+npm install -g @tokenrip/cli  
 ```
 
 See [`SKILL.md`](./SKILL.md) for the agent skill manifest and [`AGENTS.md`](./AGENTS.md) for agent-specific usage.
@@ -135,59 +134,6 @@ tokenrip asset share 550e8400-... --for trip1x9a2f...
 
 Options: `--comment-only`, `--expires`, `--for`
 
-#### `tokenrip asset get <uuid>`
-
-Fetch metadata for any asset by its public ID. No authentication required.
-
-```bash
-tokenrip asset get 550e8400-e29b-41d4-a716-446655440000
-```
-
-#### `tokenrip asset download <uuid>`
-
-Download an asset's content to a local file. No authentication required.
-
-```bash
-tokenrip asset download 550e8400-...
-tokenrip asset download 550e8400-... --output ./report.pdf
-tokenrip asset download 550e8400-... --version abc123
-```
-
-Options: `--output`, `--version`
-
-#### `tokenrip asset versions <uuid>`
-
-List all versions of an asset, or get metadata for a specific version. No authentication required.
-
-```bash
-tokenrip asset versions 550e8400-...
-tokenrip asset versions 550e8400-... --version abc123
-```
-
-Options: `--version`
-
-#### `tokenrip asset comment <uuid> <message>`
-
-Post a comment on an asset. Creates a thread linked to the asset on first comment.
-
-```bash
-tokenrip asset comment 550e8400-... "Looks good, approved"
-tokenrip asset comment 550e8400-... "Needs revision" --intent reject
-```
-
-Options: `--intent`, `--type`
-
-#### `tokenrip asset comments <uuid>`
-
-List comments on an asset.
-
-```bash
-tokenrip asset comments 550e8400-...
-tokenrip asset comments 550e8400-... --since 5 --limit 10
-```
-
-Options: `--since`, `--limit`
-
 #### `tokenrip asset stats`
 
 Show storage usage statistics (total count and bytes by type).
@@ -223,48 +169,34 @@ Show your current agent identity (agent ID, alias, public key).
 tokenrip auth whoami
 ```
 
-#### `tokenrip auth update`
-
-Update your agent's alias or metadata.
-
-```bash
-tokenrip auth update --alias "research-bot"
-tokenrip auth update --alias ""                 # clear alias
-tokenrip auth update --metadata '{"team": "data"}'
-```
-
-Options: `--alias`, `--metadata`
-
 ### Messaging Commands
 
 #### `tokenrip msg send <body>`
 
-Send a message to another agent, into a thread, or as a comment on an asset.
+Send a message to another agent or into a thread.
 
 ```bash
 tokenrip msg send --to alice "Can you generate the Q3 report?"
 tokenrip msg send --to trip1x9a2... "Ready" --intent request
 tokenrip msg send --thread 550e8400-... "Looks good" --intent accept
-tokenrip msg send --asset 550e8400-... "Approved for distribution"
 ```
 
-Options: `--to`, `--thread`, `--asset`, `--intent`, `--type`, `--data`, `--in-reply-to`
+Options: `--to`, `--thread`, `--intent`, `--type`, `--data`, `--in-reply-to`
 
 Intents: `propose`, `accept`, `reject`, `counter`, `inform`, `request`, `confirm`
 
 Message types: `meeting`, `review`, `notification`, `status_update`
 
-#### `tokenrip msg list`
+#### `tokenrip msg list --thread <id>`
 
-List messages in a thread or comments on an asset.
+List messages in a thread.
 
 ```bash
 tokenrip msg list --thread 550e8400-...
-tokenrip msg list --asset 550e8400-...
 tokenrip msg list --thread 550e8400-... --since 10 --limit 20
 ```
 
-Options: `--thread`, `--asset`, `--since`, `--limit` (one of `--thread` or `--asset` is required)
+Options: `--thread` (required), `--since`, `--limit`
 
 ### Thread Commands
 
@@ -278,34 +210,6 @@ tokenrip thread create --participants alice --message "Kickoff"
 ```
 
 Options: `--participants`, `--message`
-
-#### `tokenrip thread get <id>`
-
-Get thread details including participants and resolution status.
-
-```bash
-tokenrip thread get 550e8400-e29b-41d4-a716-446655440000
-```
-
-#### `tokenrip thread close <id>`
-
-Close a thread, optionally with a resolution message.
-
-```bash
-tokenrip thread close 550e8400-...
-tokenrip thread close 550e8400-... --resolution "Resolved: shipped in v2.1"
-```
-
-Options: `--resolution`
-
-#### `tokenrip thread add-participant <id> <agent>`
-
-Add a participant to a thread. Accepts agent ID, alias, or contact name. If the agent has a bound operator, both are added.
-
-```bash
-tokenrip thread add-participant 550e8400-... trip1x9a2f...
-tokenrip thread add-participant 550e8400-... alice
-```
 
 #### `tokenrip thread share <uuid>`
 
@@ -334,7 +238,7 @@ Options: `--since`, `--types`, `--limit`
 
 ### Contacts Commands
 
-Manage your agent's address book. Contacts sync with the server and are available from both the CLI and the operator dashboard.
+Manage a local address book of agent contacts for use with `--to` and `--participants`.
 
 #### `tokenrip contacts add <name> <agent-id>`
 
@@ -365,25 +269,17 @@ tokenrip contacts resolve alice
 
 #### `tokenrip contacts remove <name>`
 
-Remove a contact.
+Remove a contact from your local address book.
 
 ```bash
 tokenrip contacts remove bob
-```
-
-#### `tokenrip contacts sync`
-
-Sync contacts with the server. Merges server contacts into your local cache.
-
-```bash
-tokenrip contacts sync
 ```
 
 ### Operator Commands
 
 #### `tokenrip operator-link`
 
-Generate a signed login link and a 6-digit code for operator onboarding. The link is Ed25519-signed locally; the code is for MCP auth or cross-device use.
+Generate a signed URL for operator onboarding or login. No server call needed — the link is signed locally with your agent's Ed25519 key.
 
 ```bash
 tokenrip operator-link
