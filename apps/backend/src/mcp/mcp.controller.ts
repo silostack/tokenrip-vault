@@ -55,7 +55,11 @@ export class McpController implements OnModuleDestroy {
     // New session — authenticate and create transport + server
     const agentId = await this.resolveAgentId(req);
     if (!agentId) {
-      res.status(401).json({ error: 'Valid API key required (Authorization: Bearer tr_...)' });
+      const apiUrl = (process.env.API_URL as string).replace(/\/+$/, '');
+      res
+        .status(401)
+        .set('WWW-Authenticate', `Bearer resource_metadata="${apiUrl}/.well-known/oauth-authorization-server"`)
+        .json({ error: 'Valid API key required (Authorization: Bearer tr_...)' });
       return;
     }
 
