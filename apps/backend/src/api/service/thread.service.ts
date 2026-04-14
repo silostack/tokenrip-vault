@@ -2,6 +2,7 @@ import { Injectable, NotFoundException, ConflictException, ForbiddenException } 
 import { EntityManager } from '@mikro-orm/postgresql';
 import { Transactional } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
+import { validate as uuidValidate } from 'uuid';
 import { Thread, ThreadState } from '../../db/models/Thread';
 import { Participant } from '../../db/models/Participant';
 import { ThreadRepository, ParticipantRepository } from '../../db/models';
@@ -29,6 +30,13 @@ export class ThreadService {
   }
 
   async findById(threadId: string, auth: RequestAuth): Promise<Thread> {
+    if (!uuidValidate(threadId)) {
+      throw new NotFoundException({
+        ok: false,
+        error: 'THREAD_NOT_FOUND',
+        message: 'Thread not found',
+      });
+    }
     const thread = await this.threadRepo.findOne({ id: threadId });
     if (!thread) {
       throw new NotFoundException({
