@@ -55,7 +55,7 @@ bun run start:prod     # Run production build
 | POST | `/oauth/login` | Public | OAuth login (returning user) |
 | POST | `/oauth/token` | Public | Exchange auth code for API key (PKCE) |
 | POST | `/oauth/check-alias` | Public | Check alias availability |
-| POST/GET/DELETE | `/mcp` | API key/session | MCP Streamable HTTP (17 tools) |
+| POST/GET/DELETE | `/mcp` | API key/session | MCP Streamable HTTP (23 tools) |
 
 See `docs/api/endpoints.md` for full request/response schemas.
 
@@ -86,7 +86,7 @@ Abstracted via `StorageService` interface (`src/storage/`). Currently uses local
 |---|---|---|
 | ApiModule | `src/api/` | Core API — all v0 endpoints, services, auth guard |
 | OAuthModule | `src/oauth/` | OAuth 2.1 — registration, login, token exchange |
-| McpModule | `src/mcp/` | MCP server — Streamable HTTP, 14 tools |
+| McpModule | `src/mcp/` | MCP server — Streamable HTTP, 23 tools |
 | StorageModule | `src/storage/` | File storage abstraction (local/S3) |
 | LoggerModule | `src/logger/` | Winston logging |
 

@@ -133,7 +133,7 @@ describe('mcp', () => {
   });
 
   describe('tools/list', () => {
-    test('lists all 17 tools', async () => {
+    test('lists all 23 tools', async () => {
       const res = await mcpRequest('tools/list', {});
       expect(res.status).toBe(200);
       const text = await res.text();
@@ -148,11 +148,13 @@ describe('mcp', () => {
       const toolsResponse = responses.find((r) => r.result?.tools);
       expect(toolsResponse).toBeTruthy();
       const tools = toolsResponse.result.tools;
-      expect(tools.length).toBe(17);
+      expect(tools.length).toBe(23);
 
       const toolNames = tools.map((t: any) => t.name).sort();
       expect(toolNames).toEqual([
         'asset_delete',
+        'asset_get',
+        'asset_get_content',
         'asset_list',
         'asset_publish',
         'asset_share',
@@ -160,13 +162,18 @@ describe('mcp', () => {
         'asset_update',
         'asset_upload',
         'asset_version_delete',
+        'asset_versions',
         'contact_list',
         'contact_remove',
         'contact_save',
         'inbox',
         'msg_list',
         'msg_send',
+        'profile_update',
+        'thread_add_participant',
+        'thread_close',
         'thread_create',
+        'thread_get',
         'thread_share',
         'whoami',
       ]);
