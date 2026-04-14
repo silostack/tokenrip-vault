@@ -313,10 +313,10 @@ describe('version deletion', () => {
     expect(delRes.status).toBe(204);
 
     const metaRes = await fetch(`${backend.url}/v0/assets/${asset.id}`);
-    expect(metaRes.status).toBe(404);
+    expect(metaRes.status).toBe(410);
 
     const versionsAfter = await fetch(`${backend.url}/v0/assets/${asset.id}/versions`);
-    expect(versionsAfter.status).toBe(404);
+    expect(versionsAfter.status).toBe(410);
   });
 });
 

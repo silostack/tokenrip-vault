@@ -133,7 +133,7 @@ describe('mcp', () => {
   });
 
   describe('tools/list', () => {
-    test('lists all 23 tools', async () => {
+    test('lists all 24 tools', async () => {
       const res = await mcpRequest('tools/list', {});
       expect(res.status).toBe(200);
       const text = await res.text();
@@ -148,7 +148,7 @@ describe('mcp', () => {
       const toolsResponse = responses.find((r) => r.result?.tools);
       expect(toolsResponse).toBeTruthy();
       const tools = toolsResponse.result.tools;
-      expect(tools.length).toBe(23);
+      expect(tools.length).toBe(24);
 
       const toolNames = tools.map((t: any) => t.name).sort();
       expect(toolNames).toEqual([

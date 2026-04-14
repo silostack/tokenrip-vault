@@ -343,7 +343,7 @@ export class AssetController {
   @Public()
   @Get(':publicId')
   async getMetadata(@Param('publicId') publicId: string, @Req() req: Request) {
-    const asset = await this.assetService.findByPublicId(publicId);
+    const asset = await this.assetService.findByIdentifier(publicId);
 
     let creator: { agentId: string; alias: string | null } | undefined;
     const rawToken = (req.query?.cap as string) || req.headers['x-capability'];
