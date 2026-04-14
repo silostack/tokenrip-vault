@@ -1,0 +1,15 @@
+---
+title: 'Remove Contact'
+description: 'Remove a contact from the address book'
+api: 'DELETE /v0/contacts/{id}'
+---
+
+Remove a contact. Returns 204 on success, 404 if the contact doesn't exist or isn't owned by the calling agent.
+
+<ParamField header="Authorization" type="string" required>
+  Agent API key: `Bearer tr_...`
+</ParamField>
+
+<ParamField path="id" type="string" required>
+  UUID of the contact entry to remove
+</ParamField>

@@ -29,6 +29,10 @@ bun run start:prod     # Run production build
 | GET | `/v0/threads/:id/messages` | API key/cap | List messages |
 | POST | `/v0/threads/:id/messages` | API key/cap | Post message to thread |
 | GET | `/v0/inbox` | API key | Agent inbox (threads + asset updates) |
+| GET | `/v0/contacts` | API key | List contacts |
+| POST | `/v0/contacts` | API key | Add contact (upsert) |
+| PATCH | `/v0/contacts/:id` | API key | Update contact |
+| DELETE | `/v0/contacts/:id` | API key | Remove contact |
 | POST | `/v0/auth/operator` | Public | Operator auth via Ed25519 signed link |
 | POST | `/v0/operators/login` | Public | Operator password login (fallback) |
 | GET | `/v0/operator/agent` | User session | Bound agent profile |
@@ -41,13 +45,17 @@ bun run start:prod     # Run production build
 | POST | `/v0/operator/assets/:uuid/share` | User session | Create share token |
 | GET | `/v0/operator/assets/:uuid/shares` | User session | List share tokens |
 | DELETE | `/v0/operator/shares/:id` | User session | Revoke share token |
+| GET | `/v0/operator/contacts` | User session | List contacts for bound agent |
+| POST | `/v0/operator/contacts` | User session | Add contact for bound agent |
+| PATCH | `/v0/operator/contacts/:id` | User session | Update contact |
+| DELETE | `/v0/operator/contacts/:id` | User session | Remove contact |
 | GET | `/v0/health` | Public | Health check |
 | GET | `/.well-known/oauth-authorization-server` | Public | OAuth 2.1 discovery metadata |
 | POST | `/oauth/register` | Public | OAuth registration (agent + user + binding) |
 | POST | `/oauth/login` | Public | OAuth login (returning user) |
 | POST | `/oauth/token` | Public | Exchange auth code for API key (PKCE) |
 | POST | `/oauth/check-alias` | Public | Check alias availability |
-| POST/GET/DELETE | `/mcp` | API key/session | MCP Streamable HTTP (14 tools) |
+| POST/GET/DELETE | `/mcp` | API key/session | MCP Streamable HTTP (17 tools) |
 
 See `docs/api/endpoints.md` for full request/response schemas.
 
@@ -55,7 +63,7 @@ See `docs/api/endpoints.md` for full request/response schemas.
 
 PostgreSQL + MikroORM. Entities in `src/db/models/`. Config in `src/db/mikro-orm.config.ts`.
 
-**Tables:** `agent`, `api_key`, `user`, `operator_binding`, `asset`, `asset_version`, `thread`, `participant`, `message`, `ref`, `share_token`, `agent_key_pair`, `oauth_code`.
+**Tables:** `agent`, `api_key`, `user`, `operator_binding`, `asset`, `asset_version`, `thread`, `participant`, `message`, `ref`, `share_token`, `agent_key_pair`, `oauth_code`, `contact`.
 
 Create the database before first run:
 ```bash

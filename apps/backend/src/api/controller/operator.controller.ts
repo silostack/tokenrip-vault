@@ -23,6 +23,8 @@ import { ThreadService } from '../service/thread.service';
 import { ParticipantService } from '../service/participant.service';
 import { MessageService } from '../service/message.service';
 import { ShareTokenService } from '../service/share-token.service';
+import { ContactService } from '../service/contact.service';
+import { AgentService } from '../service/agent.service';
 
 @Controller('v0')
 export class OperatorController {
@@ -36,6 +38,8 @@ export class OperatorController {
     private readonly participantService: ParticipantService,
     private readonly messageService: MessageService,
     private readonly shareTokenService: ShareTokenService,
+    private readonly contactService: ContactService,
+    private readonly agentService: AgentService,
   ) {}
 
   // --- Auth ---
@@ -224,6 +228,69 @@ export class OperatorController {
         created_at: message.createdAt,
       },
     };
+  }
+
+  // --- Contacts ---
+
+  @Auth('user')
+  @Get('operator/contacts')
+  async listContacts(@AuthUser() user: { id: string }) {
+    const agent = await this.requireBoundAgent(user.id);
+    const contacts = await this.contactService.list(agent.id);
+    const aliasMap = await this.contactService.buildAliasMap(contacts);
+    return {
+      ok: true,
+      data: contacts.map((c) => this.contactService.serialize(c, aliasMap.get(c.contactAgentId) ?? null)),
+    };
+  }
+
+  @Auth('user')
+  @Post('operator/contacts')
+  async addContact(
+    @AuthUser() user: { id: string },
+    @Body() body: { agentId: string; label?: string; notes?: string },
+  ) {
+    const agent = await this.requireBoundAgent(user.id);
+    const resolvedId = await this.agentService.resolveByIdOrAlias(body.agentId);
+    const contact = await this.contactService.add(agent.id, resolvedId, {
+      label: body.label,
+      notes: body.notes,
+    });
+    const contactAgent = await this.agentService.findById(contact.contactAgentId);
+    return {
+      ok: true,
+      data: this.contactService.serialize(contact, contactAgent.alias ?? null),
+    };
+  }
+
+  @Auth('user')
+  @Patch('operator/contacts/:id')
+  async updateContact(
+    @AuthUser() user: { id: string },
+    @Param('id') id: string,
+    @Body() body: { label?: string; notes?: string },
+  ) {
+    const agent = await this.requireBoundAgent(user.id);
+    const contact = await this.contactService.update(id, agent.id, {
+      label: body.label,
+      notes: body.notes,
+    });
+    const contactAgent = await this.agentService.findById(contact.contactAgentId);
+    return {
+      ok: true,
+      data: this.contactService.serialize(contact, contactAgent.alias ?? null),
+    };
+  }
+
+  @Auth('user')
+  @Delete('operator/contacts/:id')
+  @HttpCode(204)
+  async removeContact(
+    @AuthUser() user: { id: string },
+    @Param('id') id: string,
+  ) {
+    const agent = await this.requireBoundAgent(user.id);
+    await this.contactService.removeById(id, agent.id);
   }
 
   // --- Share tokens ---

@@ -8,11 +8,13 @@ import { ParticipantService } from '../api/service/participant.service';
 import { InboxService } from '../api/service/inbox.service';
 import { ShareTokenService } from '../api/service/share-token.service';
 import { RefService } from '../api/service/ref.service';
+import { ContactService } from '../api/service/contact.service';
 import { registerAssetTools } from './tools/asset.tools';
 import { registerMessageTools } from './tools/message.tools';
 import { registerThreadTools } from './tools/thread.tools';
 import { registerIdentityTools } from './tools/identity.tools';
 import { registerInboxTools } from './tools/inbox.tools';
+import { registerContactTools } from './tools/contact.tools';
 
 export const MCP_SERVICES = 'MCP_SERVICES';
 export const FRONTEND_URL = (process.env.FRONTEND_URL || 'http://localhost:3333').replace(/\/+$/, '');
@@ -36,6 +38,7 @@ export interface McpServices {
   inboxService: InboxService;
   shareTokenService: ShareTokenService;
   refService: RefService;
+  contactService: ContactService;
 }
 
 export function createMcpServer(services: McpServices, agentId: string): McpServer {
@@ -49,6 +52,7 @@ export function createMcpServer(services: McpServices, agentId: string): McpServ
   registerThreadTools(server, services, agentId);
   registerIdentityTools(server, services, agentId);
   registerInboxTools(server, services, agentId);
+  registerContactTools(server, services, agentId);
 
   return server;
 }

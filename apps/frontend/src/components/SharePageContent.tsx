@@ -69,6 +69,11 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent, ss
   const setActiveVersionId = useSetAtom(activeVersionIdAtom)
   const { fetchAsset, fetchVersions } = useAssetActions()
 
+  const cap = useMemo(
+    () => (typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('cap') : null),
+    [],
+  )
+
   useEffect(() => {
     setMounted(true)
     if (ssrAsset) {
@@ -76,17 +81,12 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent, ss
       setIsLoading(false)
       setActiveVersionId(versionId || null)
     } else {
-      fetchAsset(uuid, versionId)
+      fetchAsset(uuid, versionId, cap ?? undefined)
     }
   }, [uuid, versionId])
 
   const [panelOpen, setPanelOpen] = useState(false)
   const [commentCount, setCommentCount] = useState<number | undefined>(undefined)
-
-  const cap = useMemo(
-    () => (typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('cap') : null),
-    [],
-  )
 
   useEffect(() => {
     if (!cap || !mounted) return
@@ -163,6 +163,7 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent, ss
       <AssetViewer asset={asset} versionId={versionId} initialContent={ssrTextContent ?? undefined} />
       <AssetToolbar
         asset={asset}
+        activeVersionId={activeVersionId}
         cap={cap}
         commentCount={commentCount}
         commentPanelOpen={panelOpen}

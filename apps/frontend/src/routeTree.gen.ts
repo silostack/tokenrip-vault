@@ -18,6 +18,7 @@ import { Route as IndexRouteImport } from './app/index'
 import { Route as OperatorIndexRouteImport } from './app/operator/index'
 import { Route as ThreadsThreadIdRouteImport } from './app/threads/$threadId'
 import { Route as SUuidRouteImport } from './app/s/$uuid'
+import { Route as OperatorContactsRouteImport } from './app/operator/contacts'
 import { Route as OperatorAuthRouteImport } from './app/operator/auth'
 import { Route as OauthAuthorizeRouteImport } from './app/oauth/authorize'
 import { Route as SUuidIndexRouteImport } from './app/s/$uuid/index'
@@ -71,6 +72,11 @@ const SUuidRoute = SUuidRouteImport.update({
   path: '/s/$uuid',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OperatorContactsRoute = OperatorContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
+  getParentRoute: () => OperatorRoute,
+} as any)
 const OperatorAuthRoute = OperatorAuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/operator': typeof OperatorRouteWithChildren
   '/oauth/authorize': typeof OauthAuthorizeRoute
   '/operator/auth': typeof OperatorAuthRoute
+  '/operator/contacts': typeof OperatorContactsRoute
   '/s/$uuid': typeof SUuidRouteWithChildren
   '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/operator/': typeof OperatorIndexRoute
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/oauth/authorize': typeof OauthAuthorizeRoute
   '/operator/auth': typeof OperatorAuthRoute
+  '/operator/contacts': typeof OperatorContactsRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/operator': typeof OperatorIndexRoute
   '/operator/assets/$publicId': typeof OperatorAssetsPublicIdRoute
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/operator': typeof OperatorRouteWithChildren
   '/oauth/authorize': typeof OauthAuthorizeRoute
   '/operator/auth': typeof OperatorAuthRoute
+  '/operator/contacts': typeof OperatorContactsRoute
   '/s/$uuid': typeof SUuidRouteWithChildren
   '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/operator/': typeof OperatorIndexRoute
@@ -171,6 +180,7 @@ export interface FileRouteTypes {
     | '/operator'
     | '/oauth/authorize'
     | '/operator/auth'
+    | '/operator/contacts'
     | '/s/$uuid'
     | '/threads/$threadId'
     | '/operator/'
@@ -188,6 +198,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/oauth/authorize'
     | '/operator/auth'
+    | '/operator/contacts'
     | '/threads/$threadId'
     | '/operator'
     | '/operator/assets/$publicId'
@@ -205,6 +216,7 @@ export interface FileRouteTypes {
     | '/operator'
     | '/oauth/authorize'
     | '/operator/auth'
+    | '/operator/contacts'
     | '/s/$uuid'
     | '/threads/$threadId'
     | '/operator/'
@@ -292,6 +304,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SUuidRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/operator/contacts': {
+      id: '/operator/contacts'
+      path: '/contacts'
+      fullPath: '/operator/contacts'
+      preLoaderRoute: typeof OperatorContactsRouteImport
+      parentRoute: typeof OperatorRoute
+    }
     '/operator/auth': {
       id: '/operator/auth'
       path: '/auth'
@@ -346,6 +365,7 @@ declare module '@tanstack/react-router' {
 
 interface OperatorRouteChildren {
   OperatorAuthRoute: typeof OperatorAuthRoute
+  OperatorContactsRoute: typeof OperatorContactsRoute
   OperatorIndexRoute: typeof OperatorIndexRoute
   OperatorAssetsPublicIdRoute: typeof OperatorAssetsPublicIdRoute
   OperatorThreadsThreadIdRoute: typeof OperatorThreadsThreadIdRoute
@@ -354,6 +374,7 @@ interface OperatorRouteChildren {
 
 const OperatorRouteChildren: OperatorRouteChildren = {
   OperatorAuthRoute: OperatorAuthRoute,
+  OperatorContactsRoute: OperatorContactsRoute,
   OperatorIndexRoute: OperatorIndexRoute,
   OperatorAssetsPublicIdRoute: OperatorAssetsPublicIdRoute,
   OperatorThreadsThreadIdRoute: OperatorThreadsThreadIdRoute,

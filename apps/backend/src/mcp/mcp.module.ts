@@ -11,6 +11,7 @@ import { ParticipantService } from '../api/service/participant.service';
 import { InboxService } from '../api/service/inbox.service';
 import { ShareTokenService } from '../api/service/share-token.service';
 import { RefService } from '../api/service/ref.service';
+import { ContactService } from '../api/service/contact.service';
 import type { McpServices } from './mcp.server';
 
 @Module({
@@ -29,6 +30,7 @@ import type { McpServices } from './mcp.server';
         inboxService: InboxService,
         shareTokenService: ShareTokenService,
         refService: RefService,
+        contactService: ContactService,
       ): McpServices => ({
         assetService,
         assetVersionService,
@@ -39,6 +41,7 @@ import type { McpServices } from './mcp.server';
         inboxService,
         shareTokenService,
         refService,
+        contactService,
       }),
       inject: [
         AssetService,
@@ -50,6 +53,7 @@ import type { McpServices } from './mcp.server';
         InboxService,
         ShareTokenService,
         RefService,
+        ContactService,
       ],
     },
   ],

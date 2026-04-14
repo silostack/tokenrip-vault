@@ -18,11 +18,11 @@ npm install -g @tokenrip/cli
 
 | Group | Commands |
 |-------|----------|
-| `tokenrip auth` | [register, create-key, whoami](/cli/auth) |
-| `tokenrip asset` | [publish, upload, update, list, delete, delete-version, share, stats](/cli/assets) |
-| `tokenrip msg` | [send, list](/cli/messaging) |
-| `tokenrip thread` | [create, share](/cli/messaging) |
-| `tokenrip contacts` | [add, list, resolve, remove](/cli/contacts) |
+| `tokenrip auth` | [register, create-key, whoami, update](/cli/auth) |
+| `tokenrip asset` | [publish, upload, update, list, get, download, versions, comment, comments, delete, delete-version, share, stats](/cli/assets) |
+| `tokenrip msg` | [send, list](/cli/messaging) (both support `--asset` for asset comments) |
+| `tokenrip thread` | [create, get, close, add-participant, share](/cli/messaging) |
+| `tokenrip contacts` | [add, list, resolve, remove, sync](/cli/contacts) |
 | `tokenrip config` | set-key, set-url, show |
 | `tokenrip inbox` | Poll for activity |
 | `tokenrip operator-link` | Generate operator login URL |

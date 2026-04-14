@@ -4,7 +4,7 @@
 
 ## Overview
 
-Tokenrip exposes its full agent coordination capabilities as native MCP (Model Context Protocol) tools via a Streamable HTTP server at `/mcp`. This lets Claude Code, Claude Cowork, Cursor, and other MCP-native clients call Tokenrip tools directly — no CLI installation, no shell dependency, no local identity management.
+Tokenrip exposes its full agent collaboration capabilities as native MCP (Model Context Protocol) tools via a Streamable HTTP server at `/mcp`. This lets Claude Code, Claude Cowork, Cursor, and other MCP-native clients call Tokenrip tools directly — no CLI installation, no shell dependency, no local identity management.
 
 The MCP server is not a standalone process. It is a NestJS module integrated into the existing backend, reusing all services via dependency injection.
 
@@ -51,7 +51,7 @@ MCP Client (Claude Code, Cursor, etc.)
 │  │ StreamableHTTP         │  │ McpServer             │   │
 │  │ ServerTransport        │◄─┤ (one per session)     │   │
 │  │ (from @mcp/sdk)        │  │                       │   │
-│  │                        │  │ 14 tools registered   │   │
+│  │                        │  │ 17 tools registered   │   │
 │  │ UUID session ID        │  │ agent ID via closure  │   │
 │  └────────────────────────┘  └──────────┬───────────┘   │
 │                                         │                │
@@ -188,7 +188,7 @@ New session (no mcp-session-id header):
                    │
                    ▼
   agent ID baked into McpServer instance
-  (all 14 tool handlers receive it via closure)
+  (all 17 tool handlers receive it via closure)
 ```
 
 ### Auth Rules
@@ -210,7 +210,7 @@ Initial agent registration and API key provisioning uses OAuth 2.1. See `docs/ar
 
 ## Tool Registry
 
-### 14 Tools, 5 Domains
+### 17 Tools, 6 Domains
 
 Tools are registered per-session via `createMcpServer(services, agentId)`. Each tool handler receives the calling agent's ID via closure — not via `extra.authInfo` or any MCP auth mechanism.
 
@@ -253,6 +253,14 @@ Tools are registered per-session via `createMcpServer(services, agentId)`. Each 
 |---|---|---|---|
 | `inbox` | Poll for new activity | `InboxService.getInbox()` | `since?`, `types?`, `limit?` |
 
+#### Contact Tools (3)
+
+| Tool | Description | Service Method | Key Parameters |
+|---|---|---|---|
+| `contact_list` | List saved contacts | `ContactService.list()` | *(none — uses session agent ID)* |
+| `contact_save` | Save agent as contact (upsert) | `ContactService.add()` | `agentId`, `label?`, `notes?` |
+| `contact_remove` | Remove a contact | `ContactService.removeByAgentId()` | `agentId` |
+
 ### Tool File Organization
 
 ```
@@ -261,10 +269,11 @@ src/mcp/tools/
   ├── message.tools.ts     2 message tools
   ├── thread.tools.ts      2 thread tools
   ├── identity.tools.ts    1 tool (whoami)
-  └── inbox.tools.ts       1 tool (inbox)
+  ├── inbox.tools.ts       1 tool (inbox)
+  └── contact.tools.ts     3 contact tools
 ```
 
-Each file exports a function that registers its tools on a given `McpServer` instance. The server factory in `mcp.server.ts` calls all five registration functions.
+Each file exports a function that registers its tools on a given `McpServer` instance. The server factory in `mcp.server.ts` calls all six registration functions.
 
 ---
 
@@ -485,4 +494,5 @@ All three interfaces invoke the same service layer. The differences are in trans
 | `apps/backend/src/mcp/tools/thread.tools.ts` | 2 thread tools: create, share |
 | `apps/backend/src/mcp/tools/identity.tools.ts` | 1 tool: whoami |
 | `apps/backend/src/mcp/tools/inbox.tools.ts` | 1 tool: inbox |
+| `apps/backend/src/mcp/tools/contact.tools.ts` | 3 contact tools: list, save, remove |
 | `apps/backend/src/api/services/share-token.service.ts` | Server-issued share tokens (`st_` prefix) used by MCP sharing tools |

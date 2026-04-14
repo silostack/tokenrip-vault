@@ -55,10 +55,10 @@ export class McpController implements OnModuleDestroy {
     // New session — authenticate and create transport + server
     const agentId = await this.resolveAgentId(req);
     if (!agentId) {
-      const apiUrl = (process.env.API_URL as string).replace(/\/+$/, '');
+      const apiUrl = (process.env.API_URL || 'https://api.tokenrip.com').replace(/\/+$/, '');
       res
         .status(401)
-        .set('WWW-Authenticate', `Bearer resource_metadata="${apiUrl}/.well-known/oauth-authorization-server"`)
+        .set('WWW-Authenticate', `Bearer resource_metadata="${apiUrl}/.well-known/oauth-protected-resource"`)
         .json({ error: 'Valid API key required (Authorization: Bearer tr_...)' });
       return;
     }

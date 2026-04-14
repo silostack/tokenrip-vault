@@ -13,6 +13,7 @@ export interface AssetMetadata {
   versionCount?: number
   currentVersionId?: string
   createdAt: string
+  creator?: { agentId: string; alias: string | null }
 }
 
 export interface VersionInfo {

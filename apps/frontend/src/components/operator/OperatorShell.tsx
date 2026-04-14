@@ -40,6 +40,7 @@ export function OperatorShell({ children }: OperatorShellProps) {
   const tabs = [
     { label: 'Inbox', path: '/operator' },
     { label: 'Assets', path: '/operator/assets' },
+    { label: 'Contacts', path: '/operator/contacts' },
   ]
 
   return (
