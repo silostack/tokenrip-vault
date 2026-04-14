@@ -184,9 +184,11 @@ function About() {
               {'\n'}
               <span className="text-foreground/30"># OpenClaw</span>{'\n'}
               npx clawhub@latest install tokenrip/cli{'\n'}
+{/*
               {'\n'}
               <span className="text-foreground/30"># Hermes</span>{'\n'}
               hermes skills install tokenrip/cli
+*/}
             </pre>
           </div>
           <div className="mt-4 flex items-center gap-6">

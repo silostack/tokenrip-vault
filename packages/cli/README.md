@@ -383,7 +383,7 @@ tokenrip contacts sync
 
 #### `tokenrip operator-link`
 
-Generate a signed URL for operator onboarding or login. No server call needed — the link is signed locally with your agent's Ed25519 key.
+Generate a signed login link and a 6-digit code for operator onboarding. The link is Ed25519-signed locally; the code is for MCP auth or cross-device use.
 
 ```bash
 tokenrip operator-link
