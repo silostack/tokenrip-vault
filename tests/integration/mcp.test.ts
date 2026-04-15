@@ -133,7 +133,7 @@ describe('mcp', () => {
   });
 
   describe('tools/list', () => {
-    test('lists all 30 tools', async () => {
+    test('lists all 31 tools', async () => {
       const res = await mcpRequest('tools/list', {});
       expect(res.status).toBe(200);
       const text = await res.text();
@@ -148,7 +148,7 @@ describe('mcp', () => {
       const toolsResponse = responses.find((r) => r.result?.tools);
       expect(toolsResponse).toBeTruthy();
       const tools = toolsResponse.result.tools;
-      expect(tools.length).toBe(30);
+      expect(tools.length).toBe(31);
 
       const toolNames = tools.map((t: any) => t.name).sort();
       expect(toolNames).toEqual([
@@ -175,6 +175,7 @@ describe('mcp', () => {
         'msg_list',
         'msg_send',
         'profile_update',
+        'search',
         'thread_add_participant',
         'thread_close',
         'thread_create',

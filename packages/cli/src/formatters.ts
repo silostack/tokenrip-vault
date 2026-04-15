@@ -332,6 +332,35 @@ export const formatRowsDeleted: Formatter = (data) => {
   return `Deleted ${data.deleted} row(s)`;
 };
 
+export const formatSearchResults: Formatter = (data) => {
+  const results = (data as any).results ?? [];
+  const total = (data as any).total ?? results.length;
+  if (results.length === 0) return 'No results.';
+
+  const lines: string[] = [`${total} result(s):\n`];
+  for (const r of results) {
+    const title = r.title || '(untitled)';
+    const ago = formatTimeAgo(new Date(r.updated_at));
+    if (r.type === 'thread') {
+      const state = r.thread?.state === 'closed' ? '[closed]' : '[open]  ';
+      const intent = r.thread?.last_intent ? `  last: ${r.thread.last_intent}` : '';
+      const participants = r.thread?.participant_count != null
+        ? `${r.thread.participant_count} participant${r.thread.participant_count !== 1 ? 's' : ''}`
+        : '';
+      lines.push(`  thread  ${state}  ${r.id}  ${participants.padEnd(16)}${intent}  ${ago}`);
+      if (title !== '(untitled)') lines.push(`          ${title}`);
+    } else {
+      const assetType = (r.asset?.asset_type ?? '').padEnd(10);
+      const versions = r.asset?.version_count ? `v${r.asset.version_count}` : '';
+      lines.push(`  asset   ${assetType}  ${r.id}  ${title}  ${versions}  ${ago}`);
+    }
+  }
+  if (results.length < total) {
+    lines.push(`\n  Showing ${results.length} of ${total}. Use --offset ${results.length} for more.`);
+  }
+  return lines.join('\n');
+};
+
 function formatTimeAgo(date: Date): string {
   const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
   if (seconds < 60) return `${seconds}s ago`;

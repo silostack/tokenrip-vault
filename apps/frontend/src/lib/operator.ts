@@ -12,12 +12,21 @@ export interface OperatorAgent {
 
 export interface InboxThread {
   thread_id: string
+  state: 'open' | 'closed'
   updated_at: string
   new_message_count: number
   last_sequence: number | null
   last_intent: string | null
   last_body_preview: string | null
   refs: Array<{ type: string; target_id: string; version?: number }>
+}
+
+export interface InboxFetchOpts {
+  since?: string
+  limit?: number
+  type?: 'thread' | 'asset'
+  q?: string
+  state?: 'open' | 'closed'
 }
 
 export interface InboxAsset {
@@ -91,13 +100,13 @@ export async function fetchOperatorAgent(): Promise<OperatorAgent> {
   return res.data.data
 }
 
-export async function fetchInbox(
-  since?: string,
-  limit?: number,
-): Promise<InboxData> {
+export async function fetchInbox(opts?: InboxFetchOpts): Promise<InboxData> {
   const params: Record<string, string | number> = {}
-  if (since) params.since = since
-  if (limit) params.limit = limit
+  if (opts?.since) params.since = opts.since
+  if (opts?.limit) params.limit = opts.limit
+  if (opts?.type) params.type = opts.type
+  if (opts?.q) params.q = opts.q
+  if (opts?.state) params.state = opts.state
   const res = await api.get('/v0/operator/inbox', { params })
   return res.data.data
 }

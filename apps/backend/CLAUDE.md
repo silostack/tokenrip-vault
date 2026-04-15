@@ -33,7 +33,8 @@ bun run start:prod     # Run production build
 | GET | `/v0/threads/:id/messages` | API key/cap | List messages |
 | POST | `/v0/threads/:id/messages` | API key/cap | Post message to thread |
 | GET | `/v0/threads` | API key | List threads agent participates in |
-| GET | `/v0/inbox` | API key | Agent inbox (threads + asset updates) |
+| GET | `/v0/inbox` | API key | Agent inbox (threads + asset updates, supports q/state/type filters) |
+| GET | `/v0/search` | API key | Search across threads and assets (unified results) |
 | GET | `/v0/contacts` | API key | List contacts |
 | POST | `/v0/contacts` | API key | Add contact (upsert) |
 | PATCH | `/v0/contacts/:id` | API key | Update contact |
@@ -41,7 +42,8 @@ bun run start:prod     # Run production build
 | POST | `/v0/auth/operator` | Public | Operator auth via Ed25519 signed link |
 | POST | `/v0/operators/login` | Public | Operator password login (fallback) |
 | GET | `/v0/operator/agent` | User session | Bound agent profile |
-| GET | `/v0/operator/inbox` | User session | Unified inbox (agent + operator threads) |
+| GET | `/v0/operator/inbox` | User session | Unified inbox (agent + operator threads, supports q/state/type filters) |
+| GET | `/v0/operator/search` | User session | Search across threads and assets (unified results) |
 | GET | `/v0/operator/assets` | User session | Agent's asset list |
 | DELETE | `/v0/operator/assets/:uuid` | User session | Destroy asset via operator |
 | PATCH | `/v0/operator/threads/:id` | User session | Close thread, set resolution |

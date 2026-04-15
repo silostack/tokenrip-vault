@@ -194,4 +194,23 @@ describe('inbox', () => {
     const res = await fetch(`${backend.url}/v0/inbox?since=${new Date().toISOString()}`);
     expect(res.status).toBe(401);
   });
+
+  test('thread results include state field', async () => {
+    const since = new Date(Date.now() - 1000).toISOString();
+    const thread = await createThread(agentA.apiKey);
+    await postMessage(thread.data.id, agentA.apiKey, 'state field check');
+
+    const { status, json } = await getInbox(agentA.apiKey, since);
+    expect(status).toBe(200);
+    const t = json.data.threads.find((x: any) => x.thread_id === thread.data.id);
+    expect(t).toBeDefined();
+    expect(t.state).toBe('open');
+  });
+
+  test('since accepts integer (days back)', async () => {
+    const { status, json } = await getInbox(agentA.apiKey, '1');
+    expect(status).toBe(200);
+    expect(json.ok).toBe(true);
+    expect(Array.isArray(json.data.threads)).toBe(true);
+  });
 });

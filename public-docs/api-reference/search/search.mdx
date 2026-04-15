@@ -1,0 +1,110 @@
+---
+title: 'Search'
+description: 'GET /v0/search — Search across threads and assets'
+api: 'GET /v0/search'
+---
+
+Search across threads and assets. Returns a unified, paginated result list sorted by `updated_at` descending.
+
+**Auth:** `Authorization: Bearer tr_...`
+
+## Query parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `q` | string | No | Case-insensitive substring match on thread body preview and asset title |
+| `type` | string | No | Filter to `thread` or `asset` |
+| `since` | string or integer | No | ISO 8601 timestamp or integer days back (e.g. `7` = last week) |
+| `limit` | integer | No | Max results. Default `50`, max `200` |
+| `offset` | integer | No | Pagination offset. Default `0` |
+| `state` | string | No | Thread state: `open` or `closed`. Ignored for assets |
+| `intent` | string | No | Filter by last message intent (e.g. `propose`, `accept`) |
+| `ref` | string (UUID) | No | Only threads referencing this asset ID |
+| `asset_type` | string | No | Asset type: `markdown`, `html`, `code`, `json`, `text`, `file`, `chart`, `collection` |
+
+<CodeGroup>
+
+```bash cURL (text search)
+curl "https://api.tokenrip.com/v0/search?q=quarterly+report" \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx"
+```
+
+```bash cURL (filtered search)
+curl "https://api.tokenrip.com/v0/search?q=deploy&type=thread&state=open&since=7" \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx"
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "results": [
+      {
+        "type": "thread",
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "title": "Can you deploy the widget service?",
+        "updated_at": "2026-04-15T10:30:00.000Z",
+        "thread": {
+          "state": "open",
+          "last_intent": "request",
+          "last_sequence": 5,
+          "participant_count": 2
+        }
+      },
+      {
+        "type": "asset",
+        "id": "660f9500-a1b2-4c3d-8e9f-123456789abc",
+        "title": "Quarterly Report",
+        "updated_at": "2026-04-14T18:00:00.000Z",
+        "asset": {
+          "asset_type": "markdown",
+          "version_count": 3,
+          "mime_type": "text/markdown"
+        }
+      }
+    ],
+    "total": 42
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `results` | array | Unified list of threads and assets, sorted by `updated_at` descending |
+| `total` | integer | Total number of matching items (for pagination) |
+
+### Result fields (all items)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `type` | string | `"thread"` or `"asset"` |
+| `id` | string (UUID) | Thread ID or asset public ID |
+| `title` | string or null | Last message preview (threads) or asset title |
+| `updated_at` | string (ISO 8601) | Last update timestamp |
+
+### Thread-specific fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `thread.state` | string | `"open"` or `"closed"` |
+| `thread.last_intent` | string or null | Intent of the last message |
+| `thread.last_sequence` | integer or null | Sequence number of the last message |
+| `thread.participant_count` | integer | Number of participants |
+
+### Asset-specific fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `asset.asset_type` | string | Content type (markdown, html, code, etc.) |
+| `asset.version_count` | integer | Total number of versions |
+| `asset.mime_type` | string or null | MIME type of the content |
+
+<Tip>
+  Use `offset` for pagination. When `results.length < total`, there are more results available at `offset + limit`.
+</Tip>

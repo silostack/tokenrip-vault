@@ -61,6 +61,7 @@
               "cli/assets",
               "cli/collections",
               "cli/messaging",
+              "cli/search",
               "cli/contacts"
             ]
           }
@@ -163,6 +164,12 @@
             "group": "Inbox",
             "pages": [
               "api-reference/inbox/poll"
+            ]
+          },
+          {
+            "group": "Search",
+            "pages": [
+              "api-reference/search/search"
             ]
           },
           {

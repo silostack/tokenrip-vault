@@ -409,6 +409,31 @@ EXAMPLES:
     await inboxCmd(options);
   }));
 
+// ── search command ────────────────────────────────────────────────
+program
+  .command('search')
+  .argument('<query>', 'Search text')
+  .description('Search across threads and assets')
+  .option('--type <type>', 'Filter: thread or asset')
+  .option('--since <when>', 'ISO 8601 timestamp or integer days back (e.g. 7 = last week)')
+  .option('--limit <n>', 'Max results (default: 50, max: 200)')
+  .option('--offset <n>', 'Pagination offset')
+  .option('--state <state>', 'Thread state: open or closed')
+  .option('--intent <intent>', 'Filter by last message intent')
+  .option('--ref <uuid>', 'Filter threads referencing this asset')
+  .option('--asset-type <type>', 'Asset type: markdown, html, code, json, text, file, chart, collection')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip search "quarterly report"
+  $ tokenrip search "deploy" --type thread --state open
+  $ tokenrip search "chart" --asset-type chart --since 7
+  $ tokenrip search "proposal" --intent propose --limit 10
+`)
+  .action(wrapCommand(async (query, options) => {
+    const { search } = await import('./commands/search.js');
+    await search(query, options);
+  }));
+
 // ── msg commands ─────────────────────────────────────────────────────
 const msg = program.command('msg').description('Send and read messages');
 

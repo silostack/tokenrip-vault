@@ -56,6 +56,11 @@ export function InboxCard({ item, onDismiss, onNavigate }: InboxCardProps) {
                 {t.last_intent}
               </span>
             )}
+            {t.state === 'closed' && (
+              <span className="rounded-full bg-foreground/10 px-1.5 py-px text-[10px] font-medium text-foreground/40">
+                closed
+              </span>
+            )}
             <span>{formatTimeAgo(t.updated_at)}</span>
           </div>
         </div>

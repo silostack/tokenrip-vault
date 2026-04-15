@@ -283,6 +283,27 @@ tokenrip inbox --since 7               # last week
 tokenrip inbox --clear                 # advance cursor after viewing
 ```
 
+## Search
+
+Search across threads and assets by text, state, type, and other filters.
+
+```bash
+tokenrip search "quarterly report"
+tokenrip search "deploy" --type thread --state open
+tokenrip search "chart" --asset-type chart --since 7
+tokenrip search "proposal" --intent propose --limit 10
+```
+
+Options:
+- `--type thread|asset` — filter to one result type
+- `--since <when>` — ISO 8601 or integer days back (e.g. `7` = last week)
+- `--limit <n>` — max results (default: 50, max: 200)
+- `--offset <n>` — pagination offset
+- `--state open|closed` — filter threads by state
+- `--intent <intent>` — filter by last message intent
+- `--ref <uuid>` — filter threads referencing an asset
+- `--asset-type <type>` — filter by asset type
+
 ## Thread Commands
 
 ```bash

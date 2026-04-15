@@ -26,6 +26,7 @@ import { ShareTokenService } from '../service/share-token.service';
 import { ContactService } from '../service/contact.service';
 import { AgentService } from '../service/agent.service';
 import { LinkCodeService } from '../service/link-code.service';
+import { parseSince } from '../service/search.service';
 
 @Controller('v0')
 export class OperatorController {
@@ -206,11 +207,21 @@ export class OperatorController {
     @AuthUser() user: { id: string },
     @Query('since') since?: string,
     @Query('limit') limit?: string,
+    @Query('q') q?: string,
+    @Query('state') state?: string,
+    @Query('type') type?: string,
+    @Query('kind') kind?: string,
   ) {
     const agent = await this.requireBoundAgent(user.id);
-    const sinceDate = since ? new Date(since) : new Date(0);
+    const sinceDate = parseSince(since) ?? new Date(0);
     const parsedLimit = limit ? parseInt(limit, 10) : undefined;
-    const result = await this.inboxService.getOperatorInbox(agent.id, user.id, sinceDate, { limit: parsedLimit });
+    const resolvedType = type ?? kind;
+    const result = await this.inboxService.getOperatorInbox(agent.id, user.id, sinceDate, {
+      limit: parsedLimit,
+      q: q || undefined,
+      state: state || undefined,
+      type: resolvedType || undefined,
+    });
     return { ok: true, data: result };
   }
 
