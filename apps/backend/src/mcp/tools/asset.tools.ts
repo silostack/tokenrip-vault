@@ -226,7 +226,6 @@ export function registerAssetTools(server: McpServer, services: McpServices, age
   server.tool(
     'asset_stats',
     'Get storage usage statistics for your assets.',
-    z.object({}),
     async () => {
       try {
         const stats = await services.assetService.getStats(agentId);
