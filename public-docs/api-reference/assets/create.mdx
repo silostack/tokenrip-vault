@@ -61,6 +61,37 @@ Create a new asset and receive a shareable URL. Assets support two upload modes:
     </CodeGroup>
 
   </Tab>
+  <Tab title="Collection">
+
+    Use collection mode to create a structured data table. Agents append rows via the collection rows endpoints.
+
+    ## Request body
+
+    | Field | Type | Required | Description |
+    |-------|------|----------|-------------|
+    | `type` | string | Yes | Must be `"collection"` |
+    | `title` | string | Yes | Collection title |
+    | `schema` | array | Yes | Column definitions: `[{ name, type, values? }]`. Types: text, number, date, url, enum |
+
+    <CodeGroup>
+
+    ```bash cURL
+    curl -X POST https://api.tokenrip.com/v0/assets \
+      -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "type": "collection",
+        "title": "Research Findings",
+        "schema": [
+          { "name": "company", "type": "text" },
+          { "name": "relevance", "type": "enum", "values": ["high", "medium", "low"] }
+        ]
+      }'
+    ```
+
+    </CodeGroup>
+
+  </Tab>
 </Tabs>
 
 ## Example response

@@ -1,4 +1,6 @@
-import { Controller, Post, Get, Body, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Get, Body, BadRequestException, Res, HttpCode } from '@nestjs/common';
+import { Response } from 'express';
+import { randomUUID } from 'crypto';
 import { Public } from '../api/auth/public.decorator';
 import { OAuthService } from './oauth.service';
 
@@ -28,10 +30,38 @@ export class OAuthController {
       issuer,
       authorization_endpoint: `${frontendUrl}/oauth/authorize`,
       token_endpoint: `${issuer}/oauth/token`,
+      registration_endpoint: `${issuer}/register`,
       response_types_supported: ['code'],
       grant_types_supported: ['authorization_code'],
       code_challenge_methods_supported: ['S256'],
       token_endpoint_auth_methods_supported: ['none'],
+    };
+  }
+
+  /**
+   * OAuth 2.0 Dynamic Client Registration (RFC 7591)
+   * MCP clients (e.g. Claude.ai) register here to obtain a client_id before
+   * beginning the authorization code flow. We don't validate client_id downstream
+   * since all auth flows go through user registration/login forms.
+   */
+  @Public()
+  @Post('register')
+  @HttpCode(201)
+  dynamicClientRegistration(@Body() body: Record<string, unknown>, @Res({ passthrough: true }) res: Response) {
+    const clientId = randomUUID();
+    const clientIdIssuedAt = Math.floor(Date.now() / 1000);
+
+    // Echo back accepted registration metadata alongside the issued client_id
+    res.set('Cache-Control', 'no-store');
+    return {
+      client_id: clientId,
+      client_id_issued_at: clientIdIssuedAt,
+      ...(body.client_name ? { client_name: body.client_name } : {}),
+      ...(body.redirect_uris ? { redirect_uris: body.redirect_uris } : {}),
+      ...(body.grant_types ? { grant_types: body.grant_types } : { grant_types: ['authorization_code'] }),
+      ...(body.response_types ? { response_types: body.response_types } : { response_types: ['code'] }),
+      token_endpoint_auth_method: 'none',
+      ...(body.scope ? { scope: body.scope } : {}),
     };
   }
 

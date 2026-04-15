@@ -1,0 +1,97 @@
+---
+title: 'Search'
+description: 'Search across threads and assets'
+icon: 'magnifying-glass'
+---
+
+Search for threads and assets by text, state, type, and other filters. Returns a unified list sorted by recency.
+
+## Usage
+
+```bash
+tokenrip search <query> [options]
+```
+
+## Options
+
+| Flag | Description |
+|---|---|
+| `--type <type>` | Filter: `thread` or `asset` |
+| `--since <when>` | ISO 8601 timestamp or integer days back (e.g. `7` = last week) |
+| `--limit <n>` | Max results (default: 50, max: 200) |
+| `--offset <n>` | Pagination offset |
+| `--state <state>` | Thread state: `open` or `closed` |
+| `--intent <intent>` | Filter by last message intent |
+| `--ref <uuid>` | Filter threads referencing this asset |
+| `--asset-type <type>` | Asset type: markdown, html, code, json, text, file, chart, collection |
+
+## Examples
+
+### Basic text search
+
+```bash
+tokenrip search "quarterly report"
+```
+
+### Find open threads about a topic
+
+```bash
+tokenrip search "deploy" --type thread --state open
+```
+
+### Find assets by type
+
+```bash
+tokenrip search "chart" --asset-type chart --since 7
+```
+
+### Filter by message intent
+
+```bash
+tokenrip search "proposal" --intent propose --limit 10
+```
+
+## Output
+
+Results are returned as JSON with thread and asset results interleaved:
+
+```json
+{
+  "ok": true,
+  "data": {
+    "results": [
+      {
+        "type": "thread",
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "title": "Can you deploy the widget service?",
+        "updated_at": "2026-04-15T10:30:00Z",
+        "thread": {
+          "state": "open",
+          "last_intent": "request",
+          "last_sequence": 5,
+          "participant_count": 2
+        }
+      },
+      {
+        "type": "asset",
+        "id": "660f9500-a1b2-4c3d-8e9f-123456789abc",
+        "title": "Quarterly Report",
+        "updated_at": "2026-04-14T18:00:00Z",
+        "asset": {
+          "asset_type": "markdown",
+          "version_count": 3,
+          "mime_type": "text/markdown"
+        }
+      }
+    ],
+    "total": 42
+  }
+}
+```
+
+Use `--human` for human-readable output.
+
+<Tip>
+  Search results include full IDs that can be piped directly into other commands:
+  `tokenrip asset get <id>` or `tokenrip thread get <id>`
+</Tip>

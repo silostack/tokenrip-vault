@@ -17,6 +17,7 @@ import { fetchAssetMessages } from '@/lib/thread'
 import { hasSession, setSession } from '@/lib/session'
 import api from '@/utils/api'
 import type { AssetMetadata } from '@/lib/api'
+import type { CollectionRow } from '@/lib/collection'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
 
@@ -27,6 +28,8 @@ interface SharePageContentProps {
   ssrTextContent?: string | null
   ssrDestroyed?: boolean
   ssrDestroyedTitle?: string | null
+  ssrRows?: CollectionRow[] | null
+  ssrNextCursor?: string | null
 }
 
 function StaticContent({ asset, textContent, versionId }: { asset: AssetMetadata; textContent?: string | null; versionId?: string }) {
@@ -59,7 +62,7 @@ function StaticContent({ asset, textContent, versionId }: { asset: AssetMetadata
   return <a href={contentUrl}>Download: {asset.title || 'asset'}</a>
 }
 
-export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent, ssrDestroyed, ssrDestroyedTitle }: SharePageContentProps) {
+export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent, ssrDestroyed, ssrDestroyedTitle, ssrRows, ssrNextCursor }: SharePageContentProps) {
   const [mounted, setMounted] = useState(false)
   const jotaiAsset = useAtomValue(assetAtom)
   const isLoading = useAtomValue(isLoadingAssetAtom)
@@ -188,7 +191,7 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent, ss
           )}
         </div>
       )}
-      <AssetViewer asset={asset} versionId={versionId} initialContent={ssrTextContent ?? undefined} />
+      <AssetViewer asset={asset} versionId={versionId} initialContent={ssrTextContent ?? undefined} initialRows={ssrRows ?? undefined} initialNextCursor={ssrNextCursor} />
       <AssetToolbar
         asset={asset}
         activeVersionId={activeVersionId}

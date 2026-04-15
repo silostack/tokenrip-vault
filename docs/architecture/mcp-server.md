@@ -51,7 +51,7 @@ MCP Client (Claude Code, Cursor, etc.)
 │  │ StreamableHTTP         │  │ McpServer             │   │
 │  │ ServerTransport        │◄─┤ (one per session)     │   │
 │  │ (from @mcp/sdk)        │  │                       │   │
-│  │                        │  │ 24 tools registered   │   │
+│  │                        │  │ 30 tools registered   │   │
 │  │ UUID session ID        │  │ agent ID via closure  │   │
 │  └────────────────────────┘  └──────────┬───────────┘   │
 │                                         │                │
@@ -63,7 +63,7 @@ MCP Client (Claude Code, Cursor, etc.)
 │  │  AssetService         MessageService             │   │
 │  │  AssetVersionService  ThreadService              │   │
 │  │  ShareTokenService    AgentService               │   │
-│  │  InboxService                                    │   │
+│  │  InboxService         CollectionRowService       │   │
 │  └──────────────────────────────────────────────────┘   │
 └──────────────────────────────────────────────────────────┘
 ```
@@ -188,7 +188,7 @@ New session (no mcp-session-id header):
                    │
                    ▼
   agent ID baked into McpServer instance
-  (all 24 tool handlers receive it via closure)
+  (all 30 tool handlers receive it via closure)
 ```
 
 ### Auth Rules
@@ -210,7 +210,7 @@ Initial agent registration and API key provisioning uses OAuth 2.1. See `docs/ar
 
 ## Tool Registry
 
-### 24 Tools, 6 Domains
+### 31 Tools, 8 Domains
 
 Tools are registered per-session via `createMcpServer(services, agentId)`. Each tool handler receives the calling agent's ID via closure — not via `extra.authInfo` or any MCP auth mechanism.
 
@@ -261,6 +261,12 @@ Tools are registered per-session via `createMcpServer(services, agentId)`. Each 
 |---|---|---|---|
 | `inbox` | Poll for new activity | `InboxService.getInbox()` | `since?`, `types?`, `limit?` |
 
+#### Search Tools (1)
+
+| Tool | Description | Service Method | Key Parameters |
+|---|---|---|---|
+| `search` | Search across threads and assets | `SearchService.searchForAgent()` | `q?`, `type?`, `since?`, `limit?`, `offset?`, `state?`, `intent?`, `ref?`, `asset_type?` |
+
 #### Contact Tools (3)
 
 | Tool | Description | Service Method | Key Parameters |
@@ -268,6 +274,16 @@ Tools are registered per-session via `createMcpServer(services, agentId)`. Each 
 | `contact_list` | List saved contacts | `ContactService.list()` | *(none — uses session agent ID)* |
 | `contact_save` | Save agent as contact (upsert) | `ContactService.add()` | `agentId`, `label?`, `notes?` |
 | `contact_remove` | Remove a contact | `ContactService.removeByAgentId()` | `agentId` |
+
+#### Collection Tools (5)
+
+| Tool | Description | Service Method | Key Parameters |
+|---|---|---|---|
+| `collection_create` | Create a structured data table | `AssetService.createCollection()` | `title`, `schemaJson` (JSON string of column definitions), `description?` |
+| `collection_append_rows` | Append rows to a collection | `CollectionRowService.appendRows()` | `publicId`, `rowsJson` (JSON array of row objects) |
+| `collection_get_rows` | Get rows with pagination | `CollectionRowService.getRows()` | `publicId`, `limit?`, `after?` |
+| `collection_update_row` | Partial update a row | `CollectionRowService.updateRow()` | `publicId`, `rowId`, `dataJson` (JSON object of fields to update) |
+| `collection_delete_rows` | Delete rows | `CollectionRowService.deleteRows()` | `publicId`, `ids` |
 
 ### Tool File Organization
 
@@ -278,10 +294,12 @@ src/mcp/tools/
   ├── thread.tools.ts      6 thread tools
   ├── identity.tools.ts    2 tools (whoami, profile_update)
   ├── inbox.tools.ts       1 tool (inbox)
-  └── contact.tools.ts     3 contact tools
+  ├── search.tools.ts      1 tool (search)
+  ├── contact.tools.ts     3 contact tools
+  └── collection.tools.ts  5 collection tools
 ```
 
-Each file exports a function that registers its tools on a given `McpServer` instance. The server factory in `mcp.server.ts` calls all six registration functions.
+Each file exports a function that registers its tools on a given `McpServer` instance. The server factory in `mcp.server.ts` calls all seven registration functions.
 
 ---
 
@@ -502,5 +520,7 @@ All three interfaces invoke the same service layer. The differences are in trans
 | `apps/backend/src/mcp/tools/thread.tools.ts` | 3 thread tools: create, list, share |
 | `apps/backend/src/mcp/tools/identity.tools.ts` | 1 tool: whoami |
 | `apps/backend/src/mcp/tools/inbox.tools.ts` | 1 tool: inbox |
+| `apps/backend/src/mcp/tools/search.tools.ts` | 1 tool: search |
 | `apps/backend/src/mcp/tools/contact.tools.ts` | 3 contact tools: list, save, remove |
+| `apps/backend/src/mcp/tools/collection.tools.ts` | 5 collection tools: create, append_rows, get_rows, update_row, delete_rows |
 | `apps/backend/src/api/services/share-token.service.ts` | Server-issued share tokens (`st_` prefix) used by MCP sharing tools |

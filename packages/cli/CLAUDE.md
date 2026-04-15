@@ -19,7 +19,7 @@ The CLI entry (`src/cli.ts`) is ESM-only with a `#!/usr/bin/env node` shebang.
 
 ## Structure
 
-- `src/cli.ts` — Commander entry point (bin: `tokenrip`), command groups: `asset`, `auth`, `msg`, `thread`, `contacts`, `config`
+- `src/cli.ts` — Commander entry point (bin: `tokenrip`), command groups: `asset`, `auth`, `msg`, `thread`, `contacts`, `config`, plus top-level `inbox`, `search`
 - `src/index.ts` — Library barrel export
 - `src/config.ts` — Config stored at `~/.config/tokenrip/config.json`
 - `src/identity.ts` — Agent identity (Ed25519 keypair) at `~/.config/tokenrip/identity.json`
@@ -44,8 +44,13 @@ The CLI entry (`src/cli.ts`) is ESM-only with a `#!/usr/bin/env node` shebang.
   - `msg.ts` — `tokenrip msg send`, `tokenrip msg list` (both support `--asset` for asset comments)
   - `thread.ts` — `tokenrip thread create`, `tokenrip thread get`, `tokenrip thread close`, `tokenrip thread add-participant`, `tokenrip thread share`
   - `inbox.ts` — `tokenrip inbox`
+  - `search.ts` — `tokenrip search` (unified search across threads and assets)
   - `contacts.ts` — `tokenrip contacts add/list/resolve/remove`
   - `config.ts` — `tokenrip config set-key`, `tokenrip config set-url`, `tokenrip config show`
+
+## Rules
+
+- **Don't truncate returned IDs.** Thread IDs, asset IDs, and all other identifiers must be output in full. Users pipe search results into other commands (`tokenrip asset get <id>`), so truncated IDs break workflows.
 
 ## Publishing
 

@@ -16,9 +16,9 @@ const fetchAssetWithContent = createServerFn({ method: 'GET' }).handler(
       if (!metaRes.ok) {
         if (metaRes.status === 410) {
           const body = await metaRes.json().catch(() => null)
-          return { asset: null, textContent: null, destroyed: true, destroyedTitle: body?.data?.title ?? null }
+          return { asset: null, textContent: null, destroyed: true, destroyedTitle: body?.data?.title ?? null, ssrRows: null, ssrNextCursor: null }
         }
-        return { asset: null, textContent: null, destroyed: false, destroyedTitle: null }
+        return { asset: null, textContent: null, destroyed: false, destroyedTitle: null, ssrRows: null, ssrNextCursor: null }
       }
       const metaJson = await metaRes.json()
       const asset = metaJson.data as AssetMetadata
@@ -31,7 +31,21 @@ const fetchAssetWithContent = createServerFn({ method: 'GET' }).handler(
         }
       }
 
-      return { asset, textContent, destroyed: false, destroyedTitle: null }
+      // SSR collection rows
+      let ssrRows = null
+      let ssrNextCursor = null
+      if (asset.type === 'collection') {
+        try {
+          const rowsRes = await fetch(`${API_URL}/v0/assets/${data.uuid}/rows?limit=100`)
+          if (rowsRes.ok) {
+            const rowsJson = await rowsRes.json()
+            ssrRows = rowsJson.data.rows
+            ssrNextCursor = rowsJson.data.nextCursor
+          }
+        } catch {}
+      }
+
+      return { asset, textContent, destroyed: false, destroyedTitle: null, ssrRows, ssrNextCursor }
     } catch {
       return { asset: null, textContent: null, destroyed: false, destroyedTitle: null }
     }
@@ -48,6 +62,6 @@ export const Route = createFileRoute('/s/$uuid/')({
 
 function SharePage() {
   const { uuid } = Route.useParams()
-  const { asset, textContent, destroyed, destroyedTitle } = Route.useLoaderData()
-  return <SharePageContent uuid={uuid} ssrAsset={asset} ssrTextContent={textContent} ssrDestroyed={destroyed} ssrDestroyedTitle={destroyedTitle} />
+  const { asset, textContent, destroyed, destroyedTitle, ssrRows, ssrNextCursor } = Route.useLoaderData()
+  return <SharePageContent uuid={uuid} ssrAsset={asset} ssrTextContent={textContent} ssrDestroyed={destroyed} ssrDestroyedTitle={destroyedTitle} ssrRows={ssrRows} ssrNextCursor={ssrNextCursor} />
 }

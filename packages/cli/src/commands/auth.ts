@@ -2,25 +2,22 @@ import { loadConfig, getApiUrl, saveConfig } from '../config.js';
 import { createHttpClient } from '../client.js';
 import { CliError } from '../errors.js';
 import { outputSuccess } from '../output.js';
-import { formatAuthKey, formatProfileUpdated } from '../formatters.js';
+import { formatAuthKey, formatProfileUpdated, formatWhoami } from '../formatters.js';
 import { generateKeypair, publicKeyToAgentId } from '../crypto.js';
 import { loadIdentity, saveIdentity } from '../identity.js';
 import { requireAuthClient } from '../auth-client.js';
 
 export async function authRegister(options: { alias?: string; force?: boolean }): Promise<void> {
   const existing = loadIdentity();
-  if (existing && !options.force) {
-    throw new CliError('IDENTITY_EXISTS', [
-      `Already registered as ${existing.agentId}`,
-      'To re-register with a new identity, use --force',
-    ].join('\n'));
-  }
 
   const config = loadConfig();
   const apiUrl = getApiUrl(config);
   const client = createHttpClient({ baseUrl: apiUrl });
 
-  const keypair = generateKeypair();
+  // Reuse existing identity unless --force creates a fresh one
+  const keypair = existing && !options.force
+    ? { publicKeyHex: existing.publicKey, secretKeyHex: existing.secretKey }
+    : generateKeypair();
   const agentId = publicKeyToAgentId(keypair.publicKeyHex);
 
   const body: Record<string, string> = { public_key: keypair.publicKeyHex };
@@ -30,23 +27,31 @@ export async function authRegister(options: { alias?: string; force?: boolean })
     const { data } = await client.post('/v0/agents', body);
     const apiKey = data.data.api_key;
 
-    saveIdentity({
-      agentId,
-      publicKey: keypair.publicKeyHex,
-      secretKey: keypair.secretKeyHex,
-    });
+    // Only write identity if it's new or forced
+    if (!existing || options.force) {
+      saveIdentity({
+        agentId,
+        publicKey: keypair.publicKeyHex,
+        secretKey: keypair.secretKeyHex,
+      });
+    }
 
     config.apiKey = apiKey;
     saveConfig(config);
 
-    outputSuccess({
+    const result: Record<string, unknown> = {
       agentId,
       alias: data.data.alias ?? null,
       apiKey,
-      message: 'Agent registered',
+      message: existing && !options.force ? 'Registered existing identity with server' : 'Agent registered',
       identity_file: '~/.config/tokenrip/identity.json',
       config_file: '~/.config/tokenrip/config.json',
-    }, formatAuthKey);
+    };
+    if (existing && options.force) {
+      result.previous_identity_backup = '~/.config/tokenrip/identity.json.bak';
+      result.previous_agent_id = existing.agentId;
+    }
+    outputSuccess(result, formatAuthKey);
   } catch (error) {
     if (error instanceof CliError) throw error;
     throw new CliError('REGISTRATION_FAILED', 'Failed to register agent. Is the server running?');
@@ -84,7 +89,7 @@ export async function authWhoami(): Promise<void> {
       agent_id: data.data.agent_id,
       alias: data.data.alias,
       registered_at: data.data.registered_at,
-    });
+    }, formatWhoami);
   } catch (error) {
     if (error instanceof CliError) throw error;
     throw new CliError('WHOAMI_FAILED', 'Failed to fetch agent profile.');

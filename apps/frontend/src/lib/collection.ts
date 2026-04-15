@@ -1,0 +1,49 @@
+import api from '@/utils/api'
+
+export interface CollectionSchema {
+  name: string
+  type: 'text' | 'number' | 'date' | 'url' | 'enum'
+  position: number
+  values?: string[]
+}
+
+export interface CollectionRow {
+  id: string
+  data: Record<string, unknown>
+  createdBy: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface CollectionRowsResponse {
+  rows: CollectionRow[]
+  nextCursor: string | null
+}
+
+export async function fetchCollectionRows(
+  publicId: string,
+  opts?: { limit?: number; after?: string },
+): Promise<CollectionRowsResponse> {
+  const params: Record<string, string> = {}
+  if (opts?.limit) params.limit = String(opts.limit)
+  if (opts?.after) params.after = opts.after
+
+  const { data } = await api.get(`/v0/assets/${publicId}/rows`, { params })
+  return data.data
+}
+
+export async function updateCollectionRow(
+  publicId: string,
+  rowId: string,
+  cellData: Record<string, unknown>,
+): Promise<CollectionRow> {
+  const { data } = await api.put(`/v0/assets/${publicId}/rows/${rowId}`, { data: cellData })
+  return data.data
+}
+
+export async function deleteCollectionRows(
+  publicId: string,
+  ids: string[],
+): Promise<void> {
+  await api.delete(`/v0/assets/${publicId}/rows`, { data: { row_ids: ids } })
+}

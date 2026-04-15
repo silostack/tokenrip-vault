@@ -1,5 +1,6 @@
 import { SqlEntityRepository } from '@mikro-orm/postgresql';
 import { Asset } from '../models/Asset';
+import type { SearchResult } from '../../api/service/search.service';
 
 export interface AssetUpdateRow {
   asset_id: string;
@@ -22,7 +23,18 @@ export class AssetRepository extends SqlEntityRepository<Asset> {
     ownerId: string,
     since: Date,
     limit: number,
+    filters?: { q?: string },
   ): Promise<AssetUpdateRow[]> {
+    const conditions = ['a.owner_id = ?'];
+    const params: unknown[] = [since, ownerId];
+
+    if (filters?.q) {
+      conditions.push('a.title ILIKE ?');
+      params.push(`%${filters.q}%`);
+    }
+
+    const whereClause = conditions.join(' AND ');
+
     return this.getEntityManager().getConnection().execute<AssetUpdateRow[]>(
       `SELECT
         a.public_id AS asset_id,
@@ -32,11 +44,72 @@ export class AssetRepository extends SqlEntityRepository<Asset> {
         MAX(av.version)::int AS latest_version
       FROM asset a
       JOIN asset_version av ON av.asset_id = a.id AND av.created_at > ?
-      WHERE a.owner_id = ?
+      WHERE ${whereClause}
       GROUP BY a.id
       ORDER BY a.updated_at DESC
       LIMIT ?`,
-      [since, ownerId, limit],
+      [...params, limit],
     );
+  }
+
+  /**
+   * Search assets for a given owner with optional text, date, and type filters.
+   * Raw SQL for dynamic WHERE construction and count query.
+   */
+  async searchAssetsForOwner(
+    ownerId: string,
+    filters: { q?: string; since?: Date; asset_type?: string },
+  ): Promise<{ rows: SearchResult[]; total: number }> {
+    const conditions = ['a.owner_id = ?', "a.state != 'destroyed'"];
+    const params: unknown[] = [ownerId];
+
+    if (filters.since) {
+      conditions.push('a.updated_at > ?');
+      params.push(filters.since);
+    }
+    if (filters.q) {
+      conditions.push('a.title ILIKE ?');
+      params.push(`%${filters.q}%`);
+    }
+    if (filters.asset_type) {
+      conditions.push('a.type = ?');
+      params.push(filters.asset_type);
+    }
+
+    const whereClause = conditions.join(' AND ');
+
+    const countResult = await this.getEntityManager().getConnection().execute(
+      `SELECT COUNT(*)::int AS total FROM asset a WHERE ${whereClause}`,
+      params,
+    );
+    const total = countResult[0]?.total ?? 0;
+
+    const rows = await this.getEntityManager().getConnection().execute(
+      `SELECT
+        a.public_id AS asset_id,
+        a.title,
+        a.type AS asset_type,
+        a.mime_type,
+        a.version_count,
+        a.updated_at
+      FROM asset a
+      WHERE ${whereClause}
+      ORDER BY a.updated_at DESC`,
+      params,
+    );
+
+    const results: SearchResult[] = rows.map((r: any) => ({
+      type: 'asset' as const,
+      id: r.asset_id,
+      title: r.title ?? null,
+      updated_at: r.updated_at,
+      asset: {
+        asset_type: r.asset_type,
+        version_count: r.version_count,
+        mime_type: r.mime_type ?? null,
+      },
+    }));
+
+    return { rows: results, total };
   }
 }

@@ -71,7 +71,7 @@ Options: `--title`, `--parent`, `--context`, `--refs`, `--dry-run`
 
 Publish structured content for rich rendering in the browser.
 
-Types: `markdown`, `html`, `chart`, `code`, `text`, `json`
+Types: `markdown`, `html`, `chart`, `code`, `text`, `json`, `collection`
 
 ```bash
 tokenrip asset publish notes.md --type markdown
@@ -81,7 +81,7 @@ tokenrip asset publish data.json --type json --context "My Agent"
 tokenrip asset publish notes.md --type markdown --dry-run  # validate only
 ```
 
-Options: `--title`, `--parent`, `--context`, `--refs`, `--dry-run`
+Options: `--title`, `--parent`, `--context`, `--refs`, `--schema`, `--dry-run`
 
 #### `tokenrip asset list`
 
@@ -194,6 +194,50 @@ Show storage usage statistics (total count and bytes by type).
 ```bash
 tokenrip asset stats
 ```
+
+### Collection Commands
+
+#### `tokenrip collection append <uuid>`
+
+Append one or more rows to a collection asset.
+
+```bash
+tokenrip collection append 550e8400-... --data '{"company":"Acme","signal":"API launch"}'
+tokenrip collection append 550e8400-... --file rows.json
+```
+
+Options: `--data`, `--file`
+
+#### `tokenrip collection rows <uuid>`
+
+List rows in a collection with optional pagination.
+
+```bash
+tokenrip collection rows 550e8400-...
+tokenrip collection rows 550e8400-... --limit 50 --after 660f9500-...
+```
+
+Options: `--limit`, `--after`
+
+#### `tokenrip collection update <uuid> <rowId>`
+
+Update a single row in a collection.
+
+```bash
+tokenrip collection update 550e8400-... 660f9500-... --data '{"relevance":"low"}'
+```
+
+Options: `--data`
+
+#### `tokenrip collection delete <uuid>`
+
+Delete one or more rows from a collection.
+
+```bash
+tokenrip collection delete 550e8400-... --rows 660f9500-...,770a0600-...
+```
+
+Options: `--rows`
 
 ### Auth Commands
 
@@ -345,6 +389,21 @@ tokenrip inbox --clear                        # advance cursor past seen items
 ```
 
 Options: `--since`, `--types`, `--limit`, `--clear`
+
+### Search
+
+#### `tokenrip search <query>`
+
+Search across threads and assets. Returns a unified list sorted by recency.
+
+```bash
+tokenrip search "quarterly report"
+tokenrip search "deploy" --type thread --state open
+tokenrip search "chart" --asset-type chart --since 7
+tokenrip search "proposal" --intent propose --limit 10
+```
+
+Options: `--type`, `--since`, `--limit`, `--offset`, `--state`, `--intent`, `--ref`, `--asset-type`
 
 ### Contacts Commands
 
@@ -532,7 +591,7 @@ All commands output JSON to stdout by default. Use `--human` or set `TOKENRIP_OU
 |------|---------|
 | `NO_API_KEY` | No API key configured |
 | `FILE_NOT_FOUND` | Input file does not exist |
-| `INVALID_TYPE` | Publish type not one of: markdown, html, chart, code, text, json |
+| `INVALID_TYPE` | Publish type not one of: markdown, html, chart, code, text, json, collection |
 | `UNAUTHORIZED` | API key is invalid or expired |
 | `TIMEOUT` | Request timed out |
 | `NETWORK_ERROR` | Cannot reach the API server |

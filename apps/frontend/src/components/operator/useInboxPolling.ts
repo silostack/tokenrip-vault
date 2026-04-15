@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback, useState } from 'react'
 import { useSetAtom, useAtomValue } from 'jotai'
-import { inboxItemsAtom, inboxLoadingAtom } from '@/_jotai/operator/operator.atoms'
-import { fetchInbox, mergeInboxItems, type InboxItem } from '@/lib/operator'
+import { inboxItemsAtom, inboxLoadingAtom, inboxSearchAtom, inboxStateFilterAtom } from '@/_jotai/operator/operator.atoms'
+import { fetchInbox, mergeInboxItems, type InboxItem, type InboxFetchOpts } from '@/lib/operator'
 
 function getItemId(item: InboxItem): string {
   return item.kind === 'thread' ? item.data.thread_id : item.data.asset_id
@@ -11,6 +11,8 @@ export function useInboxPolling() {
   const setItems = useSetAtom(inboxItemsAtom)
   const setLoading = useSetAtom(inboxLoadingAtom)
   const loading = useAtomValue(inboxLoadingAtom)
+  const search = useAtomValue(inboxSearchAtom)
+  const stateFilter = useAtomValue(inboxStateFilterAtom)
   const pollAfterRef = useRef(30)
   const intervalRef = useRef<ReturnType<typeof setInterval>>()
   const lastFetchRef = useRef<string | null>(null)
@@ -19,7 +21,14 @@ export function useInboxPolling() {
   const doFetch = useCallback(
     async (since?: string) => {
       try {
-        const data = await fetchInbox(since, 50)
+        const opts: InboxFetchOpts = { limit: 50 }
+        if (search) opts.q = search
+        if (stateFilter !== 'all') {
+          opts.state = stateFilter
+          opts.type = 'thread'
+        }
+        if (since) opts.since = since
+        const data = await fetchInbox(opts)
         const merged = mergeInboxItems(data)
         if (since) {
           setItems((prev) => {
@@ -42,11 +51,12 @@ export function useInboxPolling() {
         // silent poll failure
       }
     },
-    [setItems],
+    [setItems, search, stateFilter],
   )
 
-  // Initial fetch
+  // Initial fetch + re-fetch when filters change
   useEffect(() => {
+    lastFetchRef.current = null
     setLoading(true)
     doFetch().finally(() => {
       setLoading(false)

@@ -1,0 +1,60 @@
+---
+title: 'Update Row'
+description: 'PUT /v0/assets/{publicId}/rows/{rowId} — Update a collection row'
+api: 'PUT /v0/assets/{publicId}/rows/{rowId}'
+---
+
+Update a single row in a collection asset. Only the fields included in `data` are modified — omitted fields remain unchanged.
+
+**Auth:** `Authorization: Bearer tr_...`
+
+## Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | The asset's public UUID |
+| `rowId` | string | Yes | The row UUID to update |
+
+## Request body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `data` | object | Yes | Key-value pairs to update. Only specified fields are changed |
+
+<CodeGroup>
+
+```bash cURL
+curl -X PUT https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890/rows/row-uuid-1 \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "data": { "revenue": 55000, "priority": "high" }
+  }'
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "id": "row-uuid-1",
+    "data": {
+      "company": "Acme Corp",
+      "revenue": 55000,
+      "priority": "high"
+    },
+    "updatedAt": "2026-04-14T09:30:00.000Z"
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | The row UUID |
+| `data` | object | The full row data after the update |
+| `updatedAt` | string (ISO 8601) | When the row was last modified |

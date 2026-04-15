@@ -132,24 +132,42 @@ export class ThreadController {
   @Patch(':threadId')
   async updateThread(
     @Param('threadId') threadId: string,
-    @Body() body: { resolution?: Record<string, unknown> },
+    @Body() body: { state?: string; resolution?: Record<string, unknown> },
     @ReqAuth() auth: RequestAuth,
   ) {
-    if (!body.resolution) {
+    if (!body.state && !body.resolution) {
       throw new BadRequestException({
         ok: false,
         error: 'MISSING_FIELD',
-        message: 'resolution is required',
+        message: 'state or resolution is required',
       });
     }
 
-    const thread = await this.threadService.setResolution(threadId, body.resolution, auth);
+    if (body.state && body.state !== 'open' && body.state !== 'closed') {
+      throw new BadRequestException({
+        ok: false,
+        error: 'INVALID_FIELD',
+        message: 'state must be "open" or "closed"',
+      });
+    }
+
+    let thread;
+    if (body.state === 'closed') {
+      thread = await this.threadService.close(threadId, auth);
+    }
+    if (body.resolution) {
+      thread = await this.threadService.setResolution(threadId, body.resolution, auth);
+    }
+    if (!thread) {
+      thread = await this.threadService.findById(threadId, auth);
+    }
 
     return {
       ok: true,
       data: {
         id: thread.id,
-        resolution: thread.resolution,
+        state: thread.state,
+        resolution: thread.resolution ?? null,
         updated_at: thread.updatedAt,
       },
     };
