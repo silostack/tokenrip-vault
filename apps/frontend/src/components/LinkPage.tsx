@@ -41,7 +41,7 @@ export function LinkPage() {
     } catch (err: any) {
       setError(
         err.response?.data?.message ||
-          'Invalid or expired code. Run `tokenrip operator-link` again.',
+          'Invalid or expired code. Run `tokenrip operator-link --human` again.',
       )
     } finally {
       setSubmitting(false)
