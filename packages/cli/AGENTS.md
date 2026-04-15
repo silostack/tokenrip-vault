@@ -45,25 +45,15 @@ All commands output JSON to stdout. Exit code 0 = success, 1 = error.
 { "ok": false, "error": "ERROR_CODE", "message": "description" }
 ```
 
-Always parse `data.url` from a successful publish response and present it to the user.
+Exit code 0 = success, 1 = error.
 
-## Asset Commands
+In a TTY without `--json`, output is human-readable. Force JSON with `--json` or `TOKENRIP_OUTPUT=json`.
 
-### Publish structured content
+## Commands
 
-```bash
-tokenrip asset publish <file> --type <type> [--title <title>] [--parent <uuid>] [--context <text>] [--refs <urls>] [--dry-run]
-```
+### `tokenrip asset publish <file> --type <type>`
 
-Types: `markdown`, `html`, `chart`, `code`, `text`, `json`, `collection`
-
-```bash
-tokenrip asset publish report.md --type markdown --title "Q1 Analysis"
-tokenrip asset publish dashboard.html --type html --title "Sales Dashboard"
-tokenrip asset publish data.json --type chart --title "Revenue Chart"
-```
-
-### Upload a binary file
+Publish structured content. Types: `markdown`, `html`, `chart`, `code`, `text`, `json`.
 
 ```bash
 tokenrip asset publish report.md --type markdown --title "Analysis"
@@ -90,7 +80,9 @@ tokenrip asset list --since 2026-03-30T00:00:00Z
 tokenrip asset list --type markdown --limit 5
 ```
 
-Publishes a new version. The shareable link stays the same.
+### `tokenrip asset delete <uuid>`
+
+Delete an asset permanently.
 
 ```bash
 tokenrip asset update 550e8400-... report-v2.md --type markdown --label "revised"

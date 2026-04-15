@@ -240,7 +240,8 @@ function InstallBlock() {
         {'\n'}
         <span className="text-foreground/30"># Hermes</span>{'\n'}
         hermes skills install tokenrip/cli
-        */}
+        */
+        }
       </pre>
     </div>
   )
