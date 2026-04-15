@@ -12,6 +12,7 @@ import { Message } from '../db/models/Message';
 import { Ref } from '../db/models/Ref';
 import { ShareToken } from '../db/models/ShareToken';
 import { Contact } from '../db/models/Contact';
+import { LinkCode } from '../db/models/LinkCode';
 import { AssetController } from './controller/asset.controller';
 import { CollectionRowController } from './controller/collection-row.controller';
 import { AgentController } from './controller/agent.controller';
