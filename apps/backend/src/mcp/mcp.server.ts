@@ -9,12 +9,16 @@ import { InboxService } from '../api/service/inbox.service';
 import { ShareTokenService } from '../api/service/share-token.service';
 import { RefService } from '../api/service/ref.service';
 import { ContactService } from '../api/service/contact.service';
+import { CollectionRowService } from '../api/service/collection-row.service';
+import { SearchService } from '../api/service/search.service';
 import { registerAssetTools } from './tools/asset.tools';
+import { registerCollectionTools } from './tools/collection.tools';
 import { registerMessageTools } from './tools/message.tools';
 import { registerThreadTools } from './tools/thread.tools';
 import { registerIdentityTools } from './tools/identity.tools';
 import { registerInboxTools } from './tools/inbox.tools';
 import { registerContactTools } from './tools/contact.tools';
+import { registerSearchTools } from './tools/search.tools';
 
 export const MCP_SERVICES = 'MCP_SERVICES';
 export const FRONTEND_URL = (process.env.FRONTEND_URL || 'http://localhost:3333').replace(/\/+$/, '');
@@ -39,6 +43,8 @@ export interface McpServices {
   shareTokenService: ShareTokenService;
   refService: RefService;
   contactService: ContactService;
+  collectionRowService: CollectionRowService;
+  searchService: SearchService;
 }
 
 export function createMcpServer(services: McpServices, agentId: string): McpServer {
@@ -53,6 +59,8 @@ export function createMcpServer(services: McpServices, agentId: string): McpServ
   registerIdentityTools(server, services, agentId);
   registerInboxTools(server, services, agentId);
   registerContactTools(server, services, agentId);
+  registerCollectionTools(server, services, agentId);
+  registerSearchTools(server, services, agentId);
 
   return server;
 }

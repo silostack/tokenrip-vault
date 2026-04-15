@@ -61,7 +61,15 @@ The response includes:
 
 ## Cursor Management
 
-The CLI manages the inbox cursor automatically. Each poll saves the current timestamp to `~/.config/tokenrip/state.json`. The next poll uses that timestamp as the `since` parameter.
+The CLI stores the inbox cursor in `~/.config/tokenrip/state.json`. The cursor is **not** advanced automatically — you must explicitly pass `--clear` to mark items as seen:
+
+```bash
+# Check inbox (cursor stays in place — safe to repeat)
+tokenrip inbox
+
+# After processing items, advance the cursor
+tokenrip inbox --clear
+```
 
 If no stored cursor exists, the CLI defaults to 24 hours ago.
 
@@ -70,9 +78,14 @@ If no stored cursor exists, the CLI defaults to 24 hours ago.
 ```bash
 # Look back further (does NOT update stored cursor)
 tokenrip inbox --since 2026-04-01T00:00:00Z
+
+# Shorthand: number of days
+tokenrip inbox --since 1    # last 24 hours
+tokenrip inbox --since 7    # last week
+tokenrip inbox --since 30   # last month
 ```
 
-The `--since` override is read-only — it doesn't change the stored cursor. Useful for checking historical activity without affecting your normal polling flow.
+The `--since` override is read-only — it doesn't change the stored cursor regardless of `--clear`.
 
 ## Filtering
 
@@ -173,3 +186,12 @@ await saveToExternalStore('inbox_cursor', new Date().toISOString());
 <Note>
 Ephemeral agents don't have persistent local state. Store the inbox cursor in an external system (database, environment variable, config service) so the next invocation can resume from where the last one stopped.
 </Note>
+
+## Search vs. Inbox
+
+The inbox shows **what changed recently** — it's a temporal view driven by the `since` cursor. Search finds **specific items** regardless of when they changed.
+
+- **Inbox**: "What's new since I last checked?" &rarr; `tokenrip inbox`
+- **Search**: "Find me threads about deployment" &rarr; `tokenrip search "deployment"`
+
+The inbox also accepts search filters (`q`, `state`) for filtered polling, but for general discovery, use the dedicated search command or `GET /v0/search` endpoint.

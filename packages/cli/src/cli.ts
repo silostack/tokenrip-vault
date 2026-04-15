@@ -71,11 +71,12 @@ EXAMPLES:
 asset
   .command('publish')
   .argument('<file>', 'File containing the content to publish')
-  .requiredOption('--type <type>', 'Content type: markdown, html, chart, code, text, or json')
+  .requiredOption('--type <type>', 'Content type: markdown, html, chart, code, text, json, or collection')
   .option('--title <title>', 'Display title for the asset')
   .option('--parent <uuid>', 'Parent asset ID for lineage tracking')
   .option('--context <text>', 'Creator context (your agent name, task, etc.)')
   .option('--refs <urls>', 'Comma-separated input reference URLs')
+  .option('--schema <json>', 'Column schema JSON (for collections)')
   .option('--dry-run', 'Validate inputs without publishing')
   .description('Publish structured content with rich rendering support')
   .addHelpText('after', `
@@ -86,11 +87,15 @@ CONTENT TYPES:
   code       - Code snippets with syntax highlighting
   text       - Plain text
   json       - Interactive JSON viewer with collapse/expand
+  collection - Structured data table (requires --schema or schema file)
 
 EXAMPLES:
   $ tokenrip asset publish analysis.md --type markdown --title "Summary"
   $ tokenrip asset publish data.json --type chart \\
     --context "Data viz agent" --refs "https://api.example.com"
+  $ tokenrip asset publish schema.json --type collection --title "Research"
+  $ tokenrip asset publish _ --type collection --title "Research" \\
+    --schema '[{"name":"company","type":"text"},{"name":"signal","type":"text"}]'
 `)
   .action(wrapCommand(publish));
 
@@ -244,6 +249,77 @@ EXAMPLES:
 `)
   .action(wrapCommand(assetComments));
 
+// ── collection commands ─────────────────────────────────────────────
+const collection = program
+  .command('collection')
+  .description('Manage collection rows (append, list, update, delete)');
+
+collection
+  .command('append')
+  .argument('<uuid>', 'Collection asset public ID')
+  .option('--data <json>', 'Row data as inline JSON (single object or array)')
+  .option('--file <path>', 'Path to JSON file with row data (object or array)')
+  .description('Append one or more rows to a collection')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip collection append 550e8400-... --data '{"company":"Acme","signal":"API launch"}'
+  $ tokenrip collection append 550e8400-... --file rows.json
+`)
+  .action(wrapCommand(async (uuid, options) => {
+    const { collectionAppend } = await import('./commands/collection.js');
+    await collectionAppend(uuid, options);
+  }));
+
+collection
+  .command('rows')
+  .argument('<uuid>', 'Collection asset public ID')
+  .option('--limit <n>', 'Max rows to return (default: 100, max: 500)')
+  .option('--after <rowId>', 'Cursor: show rows after this row ID')
+  .option('--sort-by <column>', 'Sort by column name')
+  .option('--sort-order <order>', 'Sort direction: asc or desc (default: asc)')
+  .option('--filter <key=value...>', 'Filter rows by column value (repeatable)')
+  .description('List rows in a collection')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip collection rows 550e8400-...
+  $ tokenrip collection rows 550e8400-... --limit 50
+  $ tokenrip collection rows 550e8400-... --sort-by discovered_at --sort-order desc
+  $ tokenrip collection rows 550e8400-... --filter ignored=false --filter action=engage
+`)
+  .action(wrapCommand(async (uuid, options) => {
+    const { collectionRows } = await import('./commands/collection.js');
+    await collectionRows(uuid, options);
+  }));
+
+collection
+  .command('update')
+  .argument('<uuid>', 'Collection asset public ID')
+  .argument('<rowId>', 'Row ID to update')
+  .requiredOption('--data <json>', 'Fields to update as JSON (partial merge)')
+  .description('Update a single row in a collection')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip collection update 550e8400-... 660f9500-... --data '{"relevance":"low"}'
+`)
+  .action(wrapCommand(async (uuid, rowId, options) => {
+    const { collectionUpdate } = await import('./commands/collection.js');
+    await collectionUpdate(uuid, rowId, options);
+  }));
+
+collection
+  .command('delete')
+  .argument('<uuid>', 'Collection asset public ID')
+  .requiredOption('--rows <ids>', 'Comma-separated row IDs to delete')
+  .description('Delete rows from a collection')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip collection delete 550e8400-... --rows uuid1,uuid2
+`)
+  .action(wrapCommand(async (uuid, options) => {
+    const { collectionDelete } = await import('./commands/collection.js');
+    await collectionDelete(uuid, options);
+  }));
+
 // ── auth commands ───────────────────────────────────────────────────
 const auth = program.command('auth').description('Agent identity and authentication');
 
@@ -260,7 +336,10 @@ EXAMPLES:
   Generates an Ed25519 keypair, registers with the server, and saves
   your identity and API key locally. This is the first command to run.
 
-  Use --force to replace an existing identity with a new one.
+  If your agent is already registered (e.g. you lost your API key),
+  re-running this command will recover a new key automatically.
+
+  Use --force to replace your identity entirely with a new one.
 `)
   .action(wrapCommand(async (options) => {
     const { authRegister } = await import('./commands/auth.js');
@@ -314,23 +393,52 @@ EXAMPLES:
 program
   .command('inbox')
   .description('Poll for new thread messages and asset updates')
-  .option('--since <iso-date>', 'Override stored cursor (ISO 8601, does not update state)')
+  .option('--since <value>', 'Override cursor: ISO 8601 timestamp or number of days (e.g. 1 = 24h, 7 = week)')
   .option('--types <types>', 'Filter: threads, assets, or both (comma-separated)')
   .option('--limit <n>', 'Max items per type (default: 50, max: 200)')
+  .option('--clear', 'Advance the stored cursor after fetching (marks items as seen)')
   .addHelpText('after', `
 EXAMPLES:
   $ tokenrip inbox
   $ tokenrip inbox --types threads
   $ tokenrip inbox --types assets --limit 10
-  $ tokenrip inbox --since 2026-04-01T00:00:00Z
+  $ tokenrip inbox --since 1                     # last 24 hours
+  $ tokenrip inbox --since 7                     # last week
+  $ tokenrip inbox --since 2026-04-01T00:00:00Z  # exact timestamp
+  $ tokenrip inbox --clear                       # advance cursor
 
   Shows new thread messages and asset updates since your last check.
-  The cursor is saved automatically, so each call returns only new items.
-  Use --since to look back without updating the saved cursor.
+  The cursor is NOT advanced unless --clear is passed.
+  Use --since to look back without affecting the cursor.
 `)
   .action(wrapCommand(async (options) => {
     const { inbox: inboxCmd } = await import('./commands/inbox.js');
     await inboxCmd(options);
+  }));
+
+// ── search command ────────────────────────────────────────────────
+program
+  .command('search')
+  .argument('<query>', 'Search text')
+  .description('Search across threads and assets')
+  .option('--type <type>', 'Filter: thread or asset')
+  .option('--since <when>', 'ISO 8601 timestamp or integer days back (e.g. 7 = last week)')
+  .option('--limit <n>', 'Max results (default: 50, max: 200)')
+  .option('--offset <n>', 'Pagination offset')
+  .option('--state <state>', 'Thread state: open or closed')
+  .option('--intent <intent>', 'Filter by last message intent')
+  .option('--ref <uuid>', 'Filter threads referencing this asset')
+  .option('--asset-type <type>', 'Asset type: markdown, html, code, json, text, file, chart, collection')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip search "quarterly report"
+  $ tokenrip search "deploy" --type thread --state open
+  $ tokenrip search "chart" --asset-type chart --since 7
+  $ tokenrip search "proposal" --intent propose --limit 10
+`)
+  .action(wrapCommand(async (query, options) => {
+    const { search } = await import('./commands/search.js');
+    await search(query, options);
   }));
 
 // ── msg commands ─────────────────────────────────────────────────────
@@ -381,14 +489,32 @@ EXAMPLES:
 const thread = program.command('thread').description('Manage threads');
 
 thread
+  .command('list')
+  .option('--state <state>', 'Filter by state: open or closed')
+  .option('--limit <n>', 'Max threads to return (default: 50, max: 200)')
+  .description('List all threads you participate in')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip thread list
+  $ tokenrip thread list --state open
+  $ tokenrip thread list --state closed --limit 10
+`)
+  .action(wrapCommand(async (options) => {
+    const { threadList } = await import('./commands/thread.js');
+    await threadList(options);
+  }));
+
+thread
   .command('create')
   .option('--participants <agents>', 'Comma-separated agent IDs, contact names, or aliases')
   .option('--message <text>', 'Initial message body')
+  .option('--refs <refs>', 'Comma-separated asset IDs or URLs to link')
   .description('Create a new thread')
   .addHelpText('after', `
 EXAMPLES:
   $ tokenrip thread create --participants alice,bob
   $ tokenrip thread create --participants alice --message "Kickoff"
+  $ tokenrip thread create --participants alice --refs 550e8400-...,https://figma.com/file/xyz
 `)
   .action(wrapCommand(async (options) => {
     const { threadCreate } = await import('./commands/thread.js');
@@ -436,6 +562,36 @@ EXAMPLES:
   .action(wrapCommand(async (id, agent) => {
     const { threadAddParticipant } = await import('./commands/thread.js');
     await threadAddParticipant(id, agent);
+  }));
+
+thread
+  .command('add-refs')
+  .argument('<id>', 'Thread ID')
+  .argument('<refs>', 'Comma-separated asset IDs or URLs to link')
+  .description('Add linked resources (assets or URLs) to a thread')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip thread add-refs 550e8400-... aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+  $ tokenrip thread add-refs 550e8400-... https://figma.com/file/abc,https://docs.google.com/xyz
+  $ tokenrip thread add-refs 550e8400-... aaaaaaaa-...,https://figma.com/file/abc
+`)
+  .action(wrapCommand(async (id, refs) => {
+    const { threadAddRefs } = await import('./commands/thread.js');
+    await threadAddRefs(id, refs);
+  }));
+
+thread
+  .command('remove-ref')
+  .argument('<id>', 'Thread ID')
+  .argument('<refId>', 'Ref ID to remove (from thread get output)')
+  .description('Remove a linked resource from a thread')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip thread remove-ref 550e8400-... ffffffff-1111-2222-3333-444444444444
+`)
+  .action(wrapCommand(async (id, refId) => {
+    const { threadRemoveRef } = await import('./commands/thread.js');
+    await threadRemoveRef(id, refId);
   }));
 
 thread
@@ -553,18 +709,9 @@ config
   .argument('<key>', 'Your API key')
   .description('Save your API key for authentication')
   .addHelpText('after', `
-HOW TO GET AN API KEY:
-  The easiest way is to register:
-    $ tokenrip auth register
-
-  To regenerate your key:
-    $ tokenrip auth create-key
-
-  Then save the key (if not auto-saved):
-    $ tokenrip config set-key <key>
-
-  ENVIRONMENT VARIABLE:
-    You can also set TOKENRIP_API_KEY instead of using this command.
+NOTE:
+  In most cases you won't need this — \`tokenrip auth register\` saves your key automatically.
+  Use this only if you need to manually paste in a key from another source.
 `)
   .action(wrapCommand(configSetKey));
 
@@ -577,11 +724,8 @@ EXAMPLES:
   Local development:
     tokenrip config set-url http://localhost:3434
 
-  Production:
+  Production (default):
     tokenrip config set-url https://api.tokenrip.com
-
-  ENVIRONMENT VARIABLE:
-    You can also set TOKENRIP_API_URL instead of using this command.
 `)
   .action(wrapCommand(configSetUrl));
 

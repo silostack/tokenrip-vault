@@ -21,10 +21,11 @@ npm install -g @tokenrip/cli
 | `tokenrip auth` | [register, create-key, whoami, update](/cli/auth) |
 | `tokenrip asset` | [publish, upload, update, list, get, download, versions, comment, comments, delete, delete-version, share, stats](/cli/assets) |
 | `tokenrip msg` | [send, list](/cli/messaging) (both support `--asset` for asset comments) |
-| `tokenrip thread` | [create, get, close, add-participant, share](/cli/messaging) |
+| `tokenrip thread` | [list, create, get, close, add-participant, share](/cli/messaging) |
 | `tokenrip contacts` | [add, list, resolve, remove, sync](/cli/contacts) |
 | `tokenrip config` | set-key, set-url, show |
 | `tokenrip inbox` | Poll for activity |
+| `tokenrip search` | [Search across threads and assets](/cli/search) |
 | `tokenrip operator-link` | Generate operator login link + code |
 
 ## Output Modes
@@ -114,16 +115,17 @@ Environment variables override config file values:
 Poll for new activity across your threads and assets:
 
 ```bash
-tokenrip inbox [--since <iso-date>] [--types <types>] [--limit <n>]
+tokenrip inbox [--since <value>] [--types <types>] [--limit <n>] [--clear]
 ```
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `--since` | Override stored cursor (ISO 8601). Does not update state. | Stored cursor or 24h ago |
+| `--since` | ISO 8601 timestamp or number of days (e.g. `1` = 24h, `7` = week) | Stored cursor or 24h ago |
 | `--types` | Filter: `threads`, `assets`, or both (comma-separated) | Both |
 | `--limit` | Max items per type | 50 (max 200) |
+| `--clear` | Advance the stored cursor after fetching | Off |
 
-The cursor is auto-persisted in `~/.config/tokenrip/state.json`. See [Inbox](/concepts/inbox) for details.
+The cursor is persisted in `~/.config/tokenrip/state.json` but only advances when `--clear` is passed. See [Inbox](/concepts/inbox) for details.
 
 ## Operator Link Command
 

@@ -13,8 +13,11 @@ import { AgentKeyPair } from './AgentKeyPair';
 import { OAuthCode } from './OAuthCode';
 import { Contact } from './Contact';
 import { LinkCode } from './LinkCode';
+import { CollectionRow } from './CollectionRow';
 
 export { Asset, AssetType, AssetState } from './Asset';
+export { CollectionRow } from './CollectionRow';
+export { CollectionRowRepository } from '../repositories/collection-row.repository';
 export { AssetVersion } from './AssetVersion';
 export { ApiKey } from './ApiKey';
 export { Agent } from './Agent';
@@ -29,7 +32,7 @@ export { AssetVersionRepository } from '../repositories/asset-version.repository
 export { AgentRepository } from '../repositories/agent.repository';
 export { UserRepository } from '../repositories/user.repository';
 export { ThreadRepository } from '../repositories/thread.repository';
-export { ParticipantRepository, type ThreadActivityRow } from '../repositories/participant.repository';
+export { ParticipantRepository, type ThreadActivityRow, type ThreadListRow } from '../repositories/participant.repository';
 export { MessageRepository } from '../repositories/message.repository';
 export { ApiKeyRepository } from '../repositories/api-key.repository';
 export { OperatorBindingRepository } from '../repositories/operator-binding.repository';
@@ -45,4 +48,4 @@ export { ContactRepository } from '../repositories/contact.repository';
 export { LinkCode } from './LinkCode';
 export { LinkCodeRepository } from '../repositories/link-code.repository';
 
-export const entities = [Asset, ApiKey, AssetVersion, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, AgentKeyPair, OAuthCode, Contact, LinkCode];
+export const entities = [Asset, ApiKey, AssetVersion, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, AgentKeyPair, OAuthCode, Contact, LinkCode, CollectionRow];

@@ -10,6 +10,7 @@ export enum AssetType {
   CODE = 'code',
   TEXT = 'text',
   JSON = 'json',
+  COLLECTION = 'collection',
 }
 
 export enum AssetState {
@@ -45,8 +46,8 @@ export class Asset {
   @Property({ nullable: true })
   mimeType?: string;
 
-  @Property()
-  storageKey: string;
+  @Property({ nullable: true })
+  storageKey?: string;
 
   @Property({ type: 'varchar', length: 128, nullable: true, unique: true })
   alias?: string;
@@ -81,9 +82,9 @@ export class Asset {
   @Property({ onUpdate: () => new Date() })
   updatedAt: Date = new Date();
 
-  constructor(type: AssetType, storageKey: string, ownerId: string) {
+  constructor(type: AssetType, storageKey: string | undefined, ownerId: string) {
     this.type = type;
-    this.storageKey = storageKey;
+    if (storageKey) this.storageKey = storageKey;
     this.ownerId = ownerId;
   }
 }

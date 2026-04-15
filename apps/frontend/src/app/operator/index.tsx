@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { InboxFeed } from '@/components/operator/InboxFeed'
+import { InboxFilters } from '@/components/operator/InboxFilters'
 import { useInboxPolling } from '@/components/operator/useInboxPolling'
 
 export const Route = createFileRoute('/operator/')({
@@ -9,5 +10,10 @@ export const Route = createFileRoute('/operator/')({
 function OperatorInboxPage() {
   useInboxPolling()
 
-  return <InboxFeed />
+  return (
+    <>
+      <InboxFilters />
+      <InboxFeed />
+    </>
+  )
 }

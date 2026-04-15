@@ -50,7 +50,8 @@ Thread                      Flat message list for coordination
   └── Message (append-only, sequenced — rejected when thread is closed)
 
 Ref                         Normalized reference table (polymorphic)
-  └── owner_type ('thread' | 'message') -> target_type ('asset' | 'thread' | 'external')
+  ├── owner_type ('thread' | 'message') -> type ('asset' | 'url')
+  └── target_id: asset UUID (for type 'asset') or full URL (for type 'url')
 ```
 
 ### Entity Relationships
@@ -160,10 +161,15 @@ References are stored in a normalized `Ref` table with polymorphic ownership, ra
 Ref
   owner_type:  'thread' | 'message'
   owner_id:    UUID (Thread.id or Message.id)
-  type:        'asset' | 'thread' | 'external'
-  target_id:   string
-  version?:    int
+  type:        'asset' | 'url'
+  target_id:   string (asset UUID or external URL)
 ```
+
+Two ref types: **asset** (links to a tokenrip asset by UUID) and **url** (links to an external resource like a Figma file, Google Doc, or GitHub PR).
+
+**URL normalization**: `RefService` detects tokenrip URLs (e.g. `https://app.tokenrip.com/s/<uuid>`) and automatically stores them as `asset` refs with the extracted UUID as `target_id`. Callers can pass either an asset ID or a tokenrip URL — the result is the same canonical ref.
+
+**Server-side aggregation**: `RefService.findAllForThread()` returns the deduplicated union of thread-level refs and message-level refs across all messages in the thread. Thread detail endpoints (`GET /v0/threads/:id`, `GET /v0/operator/threads/:id`) include this aggregated `refs` array in the response.
 
 **Why a separate table?** Enables reverse lookups ("what threads reference this asset?") without scanning all threads. Indexed on `(owner_type, owner_id)` for forward lookup and `(type, target_id)` for reverse lookup.
 
@@ -232,7 +238,7 @@ Three modules share the service layer. ApiModule owns the entities and services.
 AppModule
   ├── ApiModule        Core API — entities, services, controllers, auth guard
   ├── OAuthModule      OAuth 2.1 registration/login for MCP clients
-  ├── McpModule        MCP Streamable HTTP server (14 tools, reuses ApiModule services)
+  ├── McpModule        MCP Streamable HTTP server (16 tools, reuses ApiModule services)
   ├── StorageModule    File storage abstraction
   └── LoggerModule     Winston logging
 
@@ -279,7 +285,7 @@ McpModule
   └── tools/
         asset.tools.ts      8 tools: publish, upload, list, delete, update, version_delete, share, stats
         message.tools.ts    2 tools: send, list
-        thread.tools.ts     2 tools: create, share
+        thread.tools.ts     4 tools: create, share, add_refs, remove_ref
         identity.tools.ts   1 tool: whoami
         inbox.tools.ts      1 tool: inbox
 ```

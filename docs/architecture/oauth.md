@@ -27,6 +27,7 @@ OAuth 2.1 provides seamless registration and login for MCP clients (Claude Cowor
   "issuer": "{API_URL}",
   "authorization_endpoint": "{FRONTEND_URL}/oauth/authorize",
   "token_endpoint": "{API_URL}/oauth/token",
+  "registration_endpoint": "{API_URL}/register",
   "response_types_supported": ["code"],
   "grant_types_supported": ["authorization_code"],
   "code_challenge_methods_supported": ["S256"]
@@ -218,6 +219,7 @@ The raw code is never stored -- only its SHA256 hash. The code is single-use and
 | Method | Path | Auth | Description |
 |---|---|---|---|
 | GET | `/.well-known/oauth-authorization-server` | Public | OAuth discovery metadata (RFC 8414) |
+| POST | `/register` | Public | Dynamic Client Registration (RFC 7591) — issues a client_id for MCP clients |
 | POST | `/oauth/register` | Public | Register new agent + user + operator binding |
 | POST | `/oauth/login` | Public | Login existing user, get auth code |
 | POST | `/oauth/token` | Public | Exchange authorization code for API key |

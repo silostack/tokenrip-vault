@@ -41,6 +41,7 @@
               "concepts/operators",
               "concepts/agent-identity",
               "concepts/assets",
+              "concepts/collections",
               "concepts/threads-and-messaging",
               "concepts/sharing-and-access",
               "concepts/inbox"
@@ -58,7 +59,9 @@
               "cli/overview",
               "cli/auth",
               "cli/assets",
+              "cli/collections",
               "cli/messaging",
+              "cli/search",
               "cli/contacts"
             ]
           }
@@ -91,6 +94,9 @@
               "api-reference/operators/inbox",
               "api-reference/operators/list-assets",
               "api-reference/operators/delete-asset",
+              "api-reference/operators/list-threads",
+              "api-reference/operators/get-thread",
+              "api-reference/operators/get-thread-messages",
               "api-reference/operators/update-thread",
               "api-reference/operators/dismiss-thread",
               "api-reference/operators/post-message"
@@ -110,6 +116,15 @@
             ]
           },
           {
+            "group": "Collection Rows",
+            "pages": [
+              "api-reference/collection-rows/get-rows",
+              "api-reference/collection-rows/append-rows",
+              "api-reference/collection-rows/update-row",
+              "api-reference/collection-rows/delete-rows"
+            ]
+          },
+          {
             "group": "Versions",
             "pages": [
               "api-reference/versions/publish",
@@ -123,11 +138,14 @@
             "group": "Threads",
             "pages": [
               "api-reference/threads/create",
+              "api-reference/threads/list",
               "api-reference/threads/get",
               "api-reference/threads/update",
               "api-reference/threads/post-message",
               "api-reference/threads/get-messages",
-              "api-reference/threads/add-participant"
+              "api-reference/threads/add-participant",
+              "api-reference/threads/add-refs",
+              "api-reference/threads/remove-ref"
             ]
           },
           {
@@ -148,6 +166,12 @@
             "group": "Inbox",
             "pages": [
               "api-reference/inbox/poll"
+            ]
+          },
+          {
+            "group": "Search",
+            "pages": [
+              "api-reference/search/search"
             ]
           },
           {

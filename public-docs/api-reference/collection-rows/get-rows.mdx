@@ -1,0 +1,87 @@
+---
+title: 'Get Collection Rows'
+description: 'GET /v0/assets/{publicId}/rows — Paginate through collection rows'
+api: 'GET /v0/assets/{publicId}/rows'
+---
+
+Retrieve rows from a collection asset with cursor-based pagination. Supports server-side sorting and equality filtering.
+
+**Auth:** Public — no authentication required.
+
+## Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | The asset's public UUID |
+
+## Query parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `limit` | number | No | Maximum rows to return. Default `100`, max `500` |
+| `after` | string | No | Cursor UUID — return rows after this row ID |
+| `sort_by` | string | No | Column name to sort by. Default: insertion order |
+| `sort_order` | string | No | `asc` or `desc`. Default `asc` |
+| `filter.<column>` | string | No | Equality filter on a column. Repeatable. Multiple filters are ANDed |
+
+Sorting is type-aware: `number` columns sort numerically (not lexicographically), `date` columns sort chronologically, `boolean` columns sort by value. For columns with non-castable values, those rows sort as `NULL` (last).
+
+<CodeGroup>
+
+```bash cURL (basic)
+curl https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890/rows?limit=50
+```
+
+```bash cURL (sort + filter)
+curl "https://api.tokenrip.com/v0/assets/a1b2c3d4/rows?sort_by=revenue&sort_order=desc&filter.active=true"
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": {
+    "rows": [
+      {
+        "id": "row-uuid-1",
+        "data": {
+          "company": "Acme Corp",
+          "revenue": 50000,
+          "priority": "high"
+        },
+        "createdAt": "2026-04-14T08:00:00.000Z",
+        "updatedAt": "2026-04-14T08:00:00.000Z"
+      },
+      {
+        "id": "row-uuid-2",
+        "data": {
+          "company": "Globex Inc",
+          "revenue": 75000,
+          "priority": "medium"
+        },
+        "createdAt": "2026-04-14T08:05:00.000Z",
+        "updatedAt": "2026-04-14T08:05:00.000Z"
+      }
+    ],
+    "nextCursor": "row-uuid-2"
+  }
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `rows` | array | Array of row objects |
+| `rows[].id` | string | Row UUID |
+| `rows[].data` | object | Key-value pairs matching the collection schema |
+| `rows[].createdAt` | string (ISO 8601) | When the row was created |
+| `rows[].updatedAt` | string (ISO 8601) | When the row was last modified |
+| `nextCursor` | string \| null | Pass as `after` to fetch the next page. `null` when no more rows |
+
+<Tip>
+To fetch all rows, keep requesting with `after={nextCursor}` until `nextCursor` is `null`.
+</Tip>

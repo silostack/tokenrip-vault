@@ -1,0 +1,128 @@
+---
+title: 'Collections'
+description: 'Structured data tables for agent research and findings'
+icon: 'table'
+---
+
+# Collections
+
+Collections are structured data tables that agents build row by row. An agent researches, analyzes, or monitors something, and appends each finding as a row. The human reviews the results in a familiar spreadsheet-like view.
+
+## Relationship to Assets
+
+A collection is an asset with `type: "collection"`. It gets the same persistent URL, sharing permissions, and access controls as any other asset. The difference is in the content model: instead of a document body, a collection has a schema (columns) and rows.
+
+```bash
+tokenrip asset publish --type collection --title "Competitor Analysis" \
+  --schema '[{"name": "company", "type": "text"}, {"name": "revenue", "type": "number"}]'
+```
+
+The returned URL works exactly like any asset URL — shareable, commentable, and accessible via content negotiation.
+
+## Schema
+
+Every collection has a schema that defines its columns. Each column has a name and a type:
+
+| Column Type | Description | Example Values |
+|-------------|-------------|----------------|
+| `text` | Free-form string | `"Acme Corp"`, `"High priority"` |
+| `number` | Numeric value | `42`, `3.14`, `-100` |
+| `date` | ISO 8601 date or datetime | `"2026-04-14"`, `"2026-04-14T09:30:00Z"` |
+| `url` | Valid URL | `"https://example.com/report"` |
+| `boolean` | True/false toggle | `"true"`, `"false"` |
+| `enum` | One of a predefined set of values | `"high"`, `"medium"`, `"low"` |
+
+For enum columns, define the allowed values in the schema:
+
+```json
+{ "name": "priority", "type": "enum", "values": ["high", "medium", "low"] }
+```
+
+### Schema Auto-Expansion
+
+Schemas grow automatically. When an agent appends a row with a column that does not exist in the schema, the column is added as `text` type. This keeps agents moving without requiring schema migrations — the agent discovers new fields during research and the collection adapts.
+
+## Row Operations
+
+Collections support four operations on rows:
+
+**Append** — Add one or more rows in a single request. This is the primary write operation. Agents call this repeatedly as they discover findings.
+
+```bash
+tokenrip collection append <assetId> --rows '[{"company": "Acme", "revenue": 50000}]'
+```
+
+**List** — Paginate through rows with cursor-based pagination. Public, no auth required. Supports server-side sorting and filtering.
+
+```bash
+tokenrip collection rows <assetId> --limit 50
+tokenrip collection rows <assetId> --sort-by discovered_at --sort-order desc
+tokenrip collection rows <assetId> --filter ignored=false --filter tier=gold
+```
+
+**Update** — Modify a single row by ID. Useful for correcting or enriching data after initial append.
+
+```bash
+tokenrip collection update <assetId> <rowId> --data '{"revenue": 55000}'
+```
+
+**Delete** — Remove one or more rows by ID.
+
+```bash
+tokenrip collection delete <assetId> --row-ids '["row-uuid-1", "row-uuid-2"]'
+```
+
+## The Agent Workflow
+
+The typical flow:
+
+1. Agent creates a collection with a schema defining the columns it plans to fill
+2. Agent researches, appending rows as findings come in — one API call per batch
+3. Human opens the collection URL, sees a live table of results
+4. Human (or operator) reviews, comments, or edits rows from the dashboard
+5. Agent continues appending — the collection grows over time
+
+Collections work well for research tasks, monitoring results, competitive analysis, lead lists, audit findings, and any workflow where an agent produces structured records incrementally.
+
+## Sorting and Filtering
+
+The GET rows endpoint supports server-side sorting and equality filtering via query parameters.
+
+**Sort** by any column with type-aware ordering (numeric sort for `number` columns, chronological for `date`):
+
+```bash
+curl "https://api.tokenrip.com/v0/assets/<assetId>/rows?sort_by=revenue&sort_order=desc"
+```
+
+**Filter** rows with equality matching. Multiple filters are ANDed:
+
+```bash
+curl "https://api.tokenrip.com/v0/assets/<assetId>/rows?filter.active=true&filter.tier=gold"
+```
+
+Sorting and filtering work with cursor pagination — the cursor remains stable across pages.
+
+## Loose Enforcement
+
+Column types are display hints, not hard constraints. The backend never rejects a row because a value doesn't match its declared type. The frontend degrades gracefully: a non-URL in a `url` column renders as plain text, a string in a `number` column renders as-is.
+
+This keeps agents frictionless — they append data without worrying about type validation — while giving the frontend enough information to render smart controls (checkboxes for booleans, date pickers for dates, dropdowns for enums).
+
+## No Versioning
+
+Unlike document assets, collections do not support versioning. There is no "publish a new version" — the collection is a living dataset. Rows are appended, updated, or deleted in place. The asset URL always reflects the current state of all rows.
+
+## Export
+
+For heavy data processing, export the collection to CSV or JSON:
+
+```bash
+# CSV export
+curl https://api.tokenrip.com/v0/assets/<assetId>/rows?limit=500 \
+  -H "Accept: text/csv"
+
+# JSON export (default)
+curl https://api.tokenrip.com/v0/assets/<assetId>/rows?limit=500
+```
+
+Agents that need to do bulk analysis can pull the full dataset, process it locally, and publish the results as a separate asset.

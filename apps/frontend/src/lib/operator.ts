@@ -12,12 +12,21 @@ export interface OperatorAgent {
 
 export interface InboxThread {
   thread_id: string
+  state: 'open' | 'closed'
   updated_at: string
   new_message_count: number
   last_sequence: number | null
   last_intent: string | null
   last_body_preview: string | null
   refs: Array<{ type: string; target_id: string; version?: number }>
+}
+
+export interface InboxFetchOpts {
+  since?: string
+  limit?: number
+  type?: 'thread' | 'asset'
+  q?: string
+  state?: 'open' | 'closed'
 }
 
 export interface InboxAsset {
@@ -73,6 +82,13 @@ export function mergeInboxItems(inbox: InboxData): InboxItem[] {
   return items
 }
 
+export interface ThreadRef {
+  id: string
+  type: string
+  target_id: string
+  version?: number
+}
+
 // ── Auth ───────────────────────────────────────────────
 
 export async function authenticateOperator(params: {
@@ -91,13 +107,13 @@ export async function fetchOperatorAgent(): Promise<OperatorAgent> {
   return res.data.data
 }
 
-export async function fetchInbox(
-  since?: string,
-  limit?: number,
-): Promise<InboxData> {
+export async function fetchInbox(opts?: InboxFetchOpts): Promise<InboxData> {
   const params: Record<string, string | number> = {}
-  if (since) params.since = since
-  if (limit) params.limit = limit
+  if (opts?.since) params.since = opts.since
+  if (opts?.limit) params.limit = opts.limit
+  if (opts?.type) params.type = opts.type
+  if (opts?.q) params.q = opts.q
+  if (opts?.state) params.state = opts.state
   const res = await api.get('/v0/operator/inbox', { params })
   return res.data.data
 }
@@ -197,10 +213,24 @@ export async function removeOperatorContact(id: string): Promise<void> {
   await api.delete(`/v0/operator/contacts/${id}`)
 }
 
+// ── Thread refs ───────────────────────────────────────────
+
+export async function addThreadRefs(
+  threadId: string,
+  refs: Array<{ type: string; target_id: string }>,
+): Promise<ThreadRef[]> {
+  const res = await api.post(`/v0/operator/threads/${threadId}/refs`, { refs })
+  return res.data.data
+}
+
+export async function removeThreadRef(threadId: string, refId: string): Promise<void> {
+  await api.delete(`/v0/operator/threads/${threadId}/refs/${refId}`)
+}
+
 // ── Thread data (uses regular endpoints with session cookie) ──
 
 export async function fetchOperatorThread(threadId: string) {
-  const res = await api.get(`/v0/threads/${threadId}`)
+  const res = await api.get(`/v0/operator/threads/${threadId}`)
   return res.data.data
 }
 
@@ -210,6 +240,6 @@ export async function fetchOperatorMessages(
 ): Promise<ThreadMessage[]> {
   const params: Record<string, string> = {}
   if (sinceSequence != null) params.since_sequence = String(sinceSequence)
-  const res = await api.get(`/v0/threads/${threadId}/messages`, { params })
+  const res = await api.get(`/v0/operator/threads/${threadId}/messages`, { params })
   return res.data.data
 }

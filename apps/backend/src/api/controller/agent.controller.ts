@@ -47,6 +47,17 @@ export class AgentController {
     };
   }
 
+  /** Recover API key via Ed25519 signed token (for lost/expired key recovery). */
+  @Public()
+  @Post('recover-key')
+  async recoverKey(@Body() body: { token?: string }) {
+    if (!body?.token) {
+      throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'token is required' });
+    }
+    const apiKey = await this.agentService.recoverKey(body.token);
+    return { ok: true, data: { api_key: apiKey } };
+  }
+
   @Auth('agent')
   @Get('me')
   async getProfile(@AuthAgent() agent: { id: string }) {

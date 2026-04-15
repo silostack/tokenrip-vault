@@ -3,6 +3,7 @@ import {
   Post,
   Get,
   Patch,
+  Delete,
   Param,
   Body,
   Query,
@@ -14,7 +15,7 @@ import { RequestAuth } from '../auth/auth.guard';
 import { ThreadService } from '../service/thread.service';
 import { ParticipantService } from '../service/participant.service';
 import { MessageService } from '../service/message.service';
-import { RefService } from '../service/ref.service';
+import { RefService, serializeRef } from '../service/ref.service';
 import { AgentService } from '../service/agent.service';
 import { OperatorBindingService } from '../service/operator-binding.service';
 
@@ -30,7 +31,10 @@ export class ThreadController {
   ) {}
 
   private async serializeThread(thread: any) {
-    const participants = await this.participantService.listByThread(thread.id);
+    const [participants, refs] = await Promise.all([
+      this.participantService.listByThread(thread.id),
+      this.refService.findAllForThread(thread.id),
+    ]);
     return {
       id: thread.id,
       created_by: thread.createdBy,
@@ -43,6 +47,7 @@ export class ThreadController {
         role: p.role ?? null,
         joined_at: p.joinedAt,
       })),
+      refs: refs.map(serializeRef),
       created_at: thread.createdAt,
       updated_at: thread.updatedAt,
     };
@@ -53,7 +58,7 @@ export class ThreadController {
   @Transactional()
   async create(
     @AuthAgent() agent: { id: string },
-    @Body() body: { participants?: string[]; metadata?: Record<string, unknown>; message?: { body: string; intent?: string; type?: string } },
+    @Body() body: { participants?: string[]; metadata?: Record<string, unknown>; message?: { body: string; intent?: string; type?: string }; refs?: Array<{ type: string; target_id: string; version?: number }> },
   ) {
     const thread = await this.threadService.create(agent.id, { metadata: body.metadata });
 
@@ -66,6 +71,10 @@ export class ThreadController {
       }
     }
 
+    if (body.refs?.length) {
+      await this.refService.addRefs('thread', thread.id, body.refs);
+    }
+
     if (body.message) {
       await this.messageService.create(thread, creatorParticipant, body.message.body, {
         intent: body.message.intent,
@@ -74,6 +83,48 @@ export class ThreadController {
     }
 
     return { ok: true, data: await this.serializeThread(thread) };
+  }
+
+  @Auth('agent')
+  @Get()
+  async listThreads(
+    @AuthAgent() agent: { id: string },
+    @Query('state') state: string | undefined,
+    @Query('limit') limit: string | undefined,
+    @Query('offset') offset: string | undefined,
+  ) {
+    if (state && state !== 'open' && state !== 'closed') {
+      throw new BadRequestException({
+        ok: false,
+        error: 'INVALID_STATE',
+        message: 'state must be "open" or "closed"',
+      });
+    }
+
+    const result = await this.threadService.listForAgent(agent.id, {
+      state,
+      limit: limit ? parseInt(limit, 10) : undefined,
+      offset: offset ? parseInt(offset, 10) : undefined,
+    });
+
+    return {
+      ok: true,
+      data: {
+        threads: result.rows.map((r) => ({
+          thread_id: r.thread_id,
+          state: r.state,
+          created_by: r.created_by,
+          owner_id: r.owner_id,
+          participant_count: r.participant_count,
+          last_message_at: r.last_message_at,
+          last_message_preview: r.last_body_preview,
+          metadata: r.metadata,
+          created_at: r.created_at,
+          updated_at: r.updated_at,
+        })),
+        total: result.total,
+      },
+    };
   }
 
   @Auth('agent', 'token')
@@ -90,24 +141,42 @@ export class ThreadController {
   @Patch(':threadId')
   async updateThread(
     @Param('threadId') threadId: string,
-    @Body() body: { resolution?: Record<string, unknown> },
+    @Body() body: { state?: string; resolution?: Record<string, unknown> },
     @ReqAuth() auth: RequestAuth,
   ) {
-    if (!body.resolution) {
+    if (!body.state && !body.resolution) {
       throw new BadRequestException({
         ok: false,
         error: 'MISSING_FIELD',
-        message: 'resolution is required',
+        message: 'state or resolution is required',
       });
     }
 
-    const thread = await this.threadService.setResolution(threadId, body.resolution, auth);
+    if (body.state && body.state !== 'open' && body.state !== 'closed') {
+      throw new BadRequestException({
+        ok: false,
+        error: 'INVALID_FIELD',
+        message: 'state must be "open" or "closed"',
+      });
+    }
+
+    let thread;
+    if (body.state === 'closed') {
+      thread = await this.threadService.close(threadId, auth);
+    }
+    if (body.resolution) {
+      thread = await this.threadService.setResolution(threadId, body.resolution, auth);
+    }
+    if (!thread) {
+      thread = await this.threadService.findById(threadId, auth);
+    }
 
     return {
       ok: true,
       data: {
         id: thread.id,
-        resolution: thread.resolution,
+        state: thread.state,
+        resolution: thread.resolution ?? null,
         updated_at: thread.updatedAt,
       },
     };
@@ -230,5 +299,38 @@ export class ThreadController {
         joined_at: participant.joinedAt,
       },
     };
+  }
+
+  @Auth('agent', 'token')
+  @Post(':threadId/refs')
+  async addRefs(
+    @Param('threadId') threadId: string,
+    @Body() body: { refs?: Array<{ type: string; target_id: string; version?: number }> },
+    @ReqAuth() auth: RequestAuth,
+  ) {
+    if (!body?.refs?.length) {
+      throw new BadRequestException({
+        ok: false,
+        error: 'MISSING_FIELD',
+        message: 'refs array is required',
+      });
+    }
+
+    await this.threadService.findById(threadId, auth);
+    const refs = await this.refService.addRefs('thread', threadId, body.refs);
+
+    return { ok: true, data: refs.map(serializeRef) };
+  }
+
+  @Auth('agent', 'token')
+  @Delete(':threadId/refs/:refId')
+  async removeRef(
+    @Param('threadId') threadId: string,
+    @Param('refId') refId: string,
+    @ReqAuth() auth: RequestAuth,
+  ) {
+    await this.threadService.findById(threadId, auth);
+    await this.refService.removeRef(refId);
+    return { ok: true };
   }
 }

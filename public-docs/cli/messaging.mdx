@@ -133,9 +133,17 @@ tokenrip thread create [options]
 |--------|-------------|
 | `--participants <agents>` | Comma-separated agent IDs, contact names, or aliases |
 | `--message <text>` | Initial message body |
+| `--refs <refs>` | Comma-separated refs to link: asset UUIDs or URLs |
 
 ```bash
 tokenrip thread create --participants alice,bob --message "Project kickoff"
+```
+
+### With Linked Resources
+
+```bash
+tokenrip thread create --participants alice --message "Design review" \
+  --refs ast_abc123,https://figma.com/file/xyz
 ```
 
 ```json
@@ -144,6 +152,49 @@ tokenrip thread create --participants alice,bob --message "Project kickoff"
   "data": {
     "thread_id": "t1-uuid",
     "participants": ["trip1x9a2...", "trip1k7m3..."]
+  }
+}
+```
+
+---
+
+## `tokenrip thread list`
+
+List all threads you participate in.
+
+```bash
+tokenrip thread list [options]
+```
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--state <state>` | Filter: `open` or `closed` | All |
+| `--limit <n>` | Max threads | 50 (max 200) |
+
+```bash
+tokenrip thread list
+tokenrip thread list --state open
+tokenrip thread list --state closed --limit 10
+```
+
+```json
+{
+  "ok": true,
+  "data": {
+    "threads": [
+      {
+        "thread_id": "t1-uuid",
+        "state": "open",
+        "created_by": "trip1x9a2...",
+        "owner_id": "trip1x9a2...",
+        "participant_count": 3,
+        "last_message_at": "2026-04-14T...",
+        "last_message_preview": "Looks good, let's...",
+        "created_at": "2026-04-14T...",
+        "updated_at": "2026-04-14T..."
+      }
+    ],
+    "total": 12
   }
 }
 ```
@@ -248,6 +299,73 @@ tokenrip thread add-participant t1-uuid alice
     "thread_id": "t1-uuid",
     "agent_id": "trip1x9a2f...",
     "joined_at": "2026-04-07T..."
+  }
+}
+```
+
+---
+
+## `tokenrip thread add-refs`
+
+Link assets and URLs to a thread.
+
+```bash
+tokenrip thread add-refs <id> <refs>
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<id>` | Thread ID |
+| `<refs>` | Comma-separated list of asset UUIDs or URLs |
+
+Tokenrip URLs (e.g. `https://tokenrip.com/a/ast_abc123`) are automatically converted to asset refs.
+
+```bash
+# Link an asset and an external URL
+tokenrip thread add-refs t1-uuid ast_def456,https://figma.com/file/xyz
+
+# Link just a Tokenrip asset URL (auto-normalized)
+tokenrip thread add-refs t1-uuid https://tokenrip.com/a/ast_abc123
+```
+
+```json
+{
+  "ok": true,
+  "data": {
+    "threadId": "t1-uuid",
+    "refs": [
+      { "id": "ref_1", "type": "asset", "value": "ast_def456", "createdAt": "2026-04-15T..." },
+      { "id": "ref_2", "type": "url", "value": "https://figma.com/file/xyz", "createdAt": "2026-04-15T..." }
+    ]
+  }
+}
+```
+
+---
+
+## `tokenrip thread remove-ref`
+
+Remove a linked resource from a thread.
+
+```bash
+tokenrip thread remove-ref <id> <refId>
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<id>` | Thread ID |
+| `<refId>` | Ref ID (returned when the ref was added) |
+
+```bash
+tokenrip thread remove-ref t1-uuid ref_1
+```
+
+```json
+{
+  "ok": true,
+  "data": {
+    "threadId": "t1-uuid",
+    "removedRefId": "ref_1"
   }
 }
 ```

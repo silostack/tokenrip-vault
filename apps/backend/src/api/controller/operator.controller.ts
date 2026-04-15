@@ -26,6 +26,8 @@ import { ShareTokenService } from '../service/share-token.service';
 import { ContactService } from '../service/contact.service';
 import { AgentService } from '../service/agent.service';
 import { LinkCodeService } from '../service/link-code.service';
+import { RefService, serializeRef } from '../service/ref.service';
+import { parseSince } from '../service/search.service';
 
 @Controller('v0')
 export class OperatorController {
@@ -42,6 +44,7 @@ export class OperatorController {
     private readonly contactService: ContactService,
     private readonly agentService: AgentService,
     private readonly linkCodeService: LinkCodeService,
+    private readonly refService: RefService,
   ) {}
 
   // --- Auth ---
@@ -206,11 +209,21 @@ export class OperatorController {
     @AuthUser() user: { id: string },
     @Query('since') since?: string,
     @Query('limit') limit?: string,
+    @Query('q') q?: string,
+    @Query('state') state?: string,
+    @Query('type') type?: string,
+    @Query('kind') kind?: string,
   ) {
     const agent = await this.requireBoundAgent(user.id);
-    const sinceDate = since ? new Date(since) : new Date(0);
+    const sinceDate = parseSince(since) ?? new Date(0);
     const parsedLimit = limit ? parseInt(limit, 10) : undefined;
-    const result = await this.inboxService.getOperatorInbox(agent.id, user.id, sinceDate, { limit: parsedLimit });
+    const resolvedType = type ?? kind;
+    const result = await this.inboxService.getOperatorInbox(agent.id, user.id, sinceDate, {
+      limit: parsedLimit,
+      q: q || undefined,
+      state: state || undefined,
+      type: resolvedType || undefined,
+    });
     return { ok: true, data: result };
   }
 
@@ -252,6 +265,123 @@ export class OperatorController {
   ) {
     const agent = await this.requireBoundAgent(user.id);
     await this.assetService.destroyAsset(publicId, agent.id);
+  }
+
+  @Auth('user')
+  @Get('operator/threads')
+  async listThreads(
+    @AuthUser() user: { id: string },
+    @Query('state') state?: string,
+    @Query('limit') limit?: string,
+    @Query('offset') offset?: string,
+  ) {
+    const agent = await this.requireBoundAgent(user.id);
+
+    if (state && state !== 'open' && state !== 'closed') {
+      throw new BadRequestException({
+        ok: false,
+        error: 'INVALID_STATE',
+        message: 'state must be "open" or "closed"',
+      });
+    }
+
+    const result = await this.threadService.listForOperator(agent.id, user.id, {
+      state,
+      limit: limit ? parseInt(limit, 10) : undefined,
+      offset: offset ? parseInt(offset, 10) : undefined,
+    });
+
+    return {
+      ok: true,
+      data: {
+        threads: result.rows.map((r) => ({
+          thread_id: r.thread_id,
+          state: r.state,
+          created_by: r.created_by,
+          owner_id: r.owner_id,
+          participant_count: r.participant_count,
+          last_message_at: r.last_message_at,
+          last_message_preview: r.last_body_preview,
+          metadata: r.metadata,
+          created_at: r.created_at,
+          updated_at: r.updated_at,
+        })),
+        total: result.total,
+      },
+    };
+  }
+
+  @Auth('user')
+  @Get('operator/threads/:threadId')
+  async getThread(
+    @Param('threadId') threadId: string,
+    @AuthUser() user: { id: string },
+    @ReqAuth() auth: RequestAuth,
+  ) {
+    await this.requireBoundAgent(user.id);
+    const thread = await this.threadService.findById(threadId, auth);
+    const [participants, refs] = await Promise.all([
+      this.participantService.listByThread(thread.id),
+      this.refService.findAllForThread(thread.id),
+    ]);
+
+    return {
+      ok: true,
+      data: {
+        thread_id: thread.id,
+        state: thread.state,
+        created_by: thread.createdBy,
+        owner_id: thread.ownerId,
+        resolution: thread.resolution ?? null,
+        metadata: thread.metadata ?? null,
+        participants: participants.map((p) => ({
+          id: p.id,
+          agent_id: p.agent?.id ?? null,
+          user_id: p.user?.id ?? null,
+          role: p.role ?? null,
+          joined_at: p.joinedAt,
+        })),
+        refs: refs.map(serializeRef),
+        created_at: thread.createdAt,
+        updated_at: thread.updatedAt,
+      },
+    };
+  }
+
+  @Auth('user')
+  @Get('operator/threads/:threadId/messages')
+  async listMessages(
+    @Param('threadId') threadId: string,
+    @AuthUser() user: { id: string },
+    @Query('since_sequence') sinceSequence?: string,
+    @Query('limit') limit?: string,
+    @ReqAuth() auth?: RequestAuth,
+  ) {
+    await this.requireBoundAgent(user.id);
+    await this.threadService.findById(threadId, auth!);
+
+    const messages = await this.messageService.list(threadId, {
+      sinceSequence: sinceSequence ? parseInt(sinceSequence, 10) : undefined,
+      limit: limit ? parseInt(limit, 10) : undefined,
+    });
+
+    return {
+      ok: true,
+      data: messages.map((m) => ({
+        id: m.id,
+        sequence: m.sequence,
+        body: m.body,
+        intent: m.intent ?? null,
+        type: m.type ?? null,
+        data: m.data ?? null,
+        in_reply_to: m.inReplyTo ?? null,
+        sender: {
+          agent_id: m.participant?.agent?.id ?? null,
+          user_id: m.participant?.user?.id ?? null,
+        },
+        created_at: m.createdAt,
+      })),
+    };
   }
 
   @Auth('user')
@@ -323,6 +453,45 @@ export class OperatorController {
         created_at: message.createdAt,
       },
     };
+  }
+
+  // --- Thread refs ---
+
+  @Auth('user')
+  @Post('operator/threads/:threadId/refs')
+  async addThreadRefs(
+    @Param('threadId') threadId: string,
+    @Body() body: { refs?: Array<{ type: string; target_id: string; version?: number }> },
+    @AuthUser() user: { id: string },
+    @ReqAuth() auth: RequestAuth,
+  ) {
+    if (!body?.refs?.length) {
+      throw new BadRequestException({
+        ok: false,
+        error: 'MISSING_FIELD',
+        message: 'refs array is required',
+      });
+    }
+
+    await this.requireBoundAgent(user.id);
+    await this.threadService.findById(threadId, auth);
+    const refs = await this.refService.addRefs('thread', threadId, body.refs);
+
+    return { ok: true, data: refs.map(serializeRef) };
+  }
+
+  @Auth('user')
+  @Delete('operator/threads/:threadId/refs/:refId')
+  async removeThreadRef(
+    @Param('threadId') threadId: string,
+    @Param('refId') refId: string,
+    @AuthUser() user: { id: string },
+    @ReqAuth() auth: RequestAuth,
+  ) {
+    await this.requireBoundAgent(user.id);
+    await this.threadService.findById(threadId, auth);
+    await this.refService.removeRef(refId);
+    return { ok: true };
   }
 
   // --- Contacts ---

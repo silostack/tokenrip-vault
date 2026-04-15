@@ -7,6 +7,7 @@ import { ParticipantRepository, type ThreadActivityRow, AssetRepository, type As
 
 interface InboxThread {
   thread_id: string;
+  state: string;
   last_sequence: number | null;
   new_message_count: number;
   last_intent: string | null;
@@ -40,18 +41,22 @@ export class InboxService {
   async getInbox(
     agentId: string,
     since: Date,
-    opts?: { types?: string[]; limit?: number },
+    opts?: { types?: string[]; limit?: number; q?: string; state?: string; type?: string },
   ): Promise<InboxResult> {
     const types = opts?.types ?? ['threads', 'assets'];
     const limit = Math.min(opts?.limit ?? 50, 200);
+    const threadFilters = { state: opts?.state, q: opts?.q };
 
-    // Start thread query first so refs can run in parallel with assets
-    const threadRowsPromise = types.includes('threads')
-      ? this.participantRepo.findThreadActivityForAgent(agentId, since, limit)
+    // type filter: 'thread' skips assets, 'asset' skips threads
+    const includeThreads = opts?.type !== 'asset' && types.includes('threads');
+    const includeAssets = opts?.type !== 'thread' && types.includes('assets');
+
+    const threadRowsPromise = includeThreads
+      ? this.participantRepo.findThreadActivityForAgent(agentId, since, limit, threadFilters)
       : Promise.resolve([] as ThreadActivityRow[]);
 
-    const assetRowsPromise = types.includes('assets')
-      ? this.assetRepo.findAssetUpdatesForOwner(agentId, since, limit)
+    const assetRowsPromise = includeAssets
+      ? this.assetRepo.findAssetUpdatesForOwner(agentId, since, limit, { q: opts?.q })
       : Promise.resolve([] as AssetUpdateRow[]);
 
     return this.assembleResult(threadRowsPromise, assetRowsPromise);
@@ -61,12 +66,21 @@ export class InboxService {
     agentId: string,
     userId: string,
     since: Date,
-    opts?: { limit?: number },
+    opts?: { limit?: number; q?: string; state?: string; type?: string },
   ): Promise<InboxResult> {
     const limit = Math.min(opts?.limit ?? 50, 200);
+    const threadFilters = { state: opts?.state, q: opts?.q };
 
-    const threadRowsPromise = this.participantRepo.findUnifiedThreadActivity(agentId, userId, since, limit);
-    const assetRowsPromise = this.assetRepo.findAssetUpdatesForOwner(agentId, since, limit);
+    const includeThreads = opts?.type !== 'asset';
+    const includeAssets = opts?.type !== 'thread';
+
+    const threadRowsPromise = includeThreads
+      ? this.participantRepo.findUnifiedThreadActivity(agentId, userId, since, limit, threadFilters)
+      : Promise.resolve([] as ThreadActivityRow[]);
+
+    const assetRowsPromise = includeAssets
+      ? this.assetRepo.findAssetUpdatesForOwner(agentId, since, limit, { q: opts?.q })
+      : Promise.resolve([] as AssetUpdateRow[]);
 
     return this.assembleResult(threadRowsPromise, assetRowsPromise);
   }
@@ -93,6 +107,7 @@ export class InboxService {
 
     const threads: InboxThread[] = threadRows.map((r) => ({
       thread_id: r.thread_id,
+      state: r.state,
       last_sequence: r.last_sequence ?? null,
       new_message_count: r.new_message_count,
       last_intent: r.last_intent ?? null,

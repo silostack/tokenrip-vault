@@ -141,6 +141,159 @@ body {
 }
 
 /* ========================================
+   Message Prose — compact markdown for chat
+   ======================================== */
+
+.message-prose {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--foreground) 85%, transparent);
+}
+
+.message-prose > :first-child { margin-top: 0; }
+.message-prose > :last-child  { margin-bottom: 0; }
+
+.message-prose p {
+  margin: 0.35em 0;
+}
+
+.message-prose strong { font-weight: 600; }
+.message-prose em     { font-style: italic; }
+
+.message-prose a {
+  color: var(--signal-strong);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+.message-prose a:hover {
+  color: var(--signal);
+}
+
+/* --- Inline code --- */
+.message-prose :not(pre) > code {
+  background: var(--md-inline-code-bg);
+  color: var(--md-inline-code-color);
+  font-size: 0.8125rem;
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+  font-family: "Geist Mono", ui-monospace, monospace;
+}
+
+/* --- Code blocks --- */
+.message-prose pre {
+  background: var(--md-code-bg);
+  border: 1px solid var(--md-code-border);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+  overflow-x: auto;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.message-prose pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+  font-family: "Geist Mono", ui-monospace, monospace;
+}
+
+/* --- Lists --- */
+.message-prose ul,
+.message-prose ol {
+  padding-left: 1.25rem;
+  margin: 0.35em 0;
+}
+
+.message-prose ul { list-style-type: disc; }
+.message-prose ol { list-style-type: decimal; }
+
+.message-prose li {
+  margin: 0.15em 0;
+}
+
+.message-prose li > ul,
+.message-prose li > ol {
+  margin: 0.1em 0;
+}
+
+/* --- Blockquotes --- */
+.message-prose blockquote {
+  border-left: 3px solid var(--md-blockquote-border);
+  background: var(--md-blockquote-bg);
+  padding: 0.4rem 0.75rem;
+  margin: 0.4rem 0;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.message-prose blockquote p {
+  margin: 0.15em 0;
+}
+
+/* --- Headings — rarely used in messages, degrade gracefully --- */
+.message-prose h1,
+.message-prose h2,
+.message-prose h3,
+.message-prose h4 {
+  font-weight: 600;
+  margin: 0.5em 0 0.25em;
+  line-height: 1.35;
+}
+
+.message-prose h1 { font-size: 1.1rem; }
+.message-prose h2 { font-size: 1rem; }
+.message-prose h3 { font-size: 0.9375rem; }
+.message-prose h4 { font-size: 0.875rem; }
+
+/* --- Horizontal rules --- */
+.message-prose hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, var(--md-hr-from), var(--md-hr-mid), var(--md-hr-from));
+  margin: 0.75rem 0;
+}
+
+/* --- Tables --- */
+.message-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  margin: 0.5rem 0;
+}
+
+.message-prose th,
+.message-prose td {
+  border: 1px solid var(--md-table-border);
+  padding: 0.3rem 0.5rem;
+  text-align: left;
+}
+
+.message-prose th {
+  font-weight: 600;
+  background: var(--md-table-stripe);
+}
+
+.message-prose tr:nth-child(even) {
+  background: var(--md-table-stripe);
+}
+
+/* --- Images --- */
+.message-prose img {
+  max-width: 100%;
+  border-radius: 0.375rem;
+  margin: 0.4rem 0;
+}
+
+/* --- Task lists (GFM) --- */
+.message-prose input[type="checkbox"] {
+  margin-right: 0.35em;
+  vertical-align: middle;
+}
+
+/* ========================================
    Inbox Cards
    ======================================== */
 
@@ -437,50 +590,85 @@ body {
    Syntax Highlighting — Tokyo Night
    ======================================== */
 
-.markdown-body .hljs { color: #c0caf5; }
+.markdown-body .hljs,
+.message-prose .hljs { color: #c0caf5; }
 
 .markdown-body .hljs-comment,
-.markdown-body .hljs-quote { color: #565f89; font-style: italic; }
+.markdown-body .hljs-quote,
+.message-prose .hljs-comment,
+.message-prose .hljs-quote { color: #565f89; font-style: italic; }
 
 .markdown-body .hljs-keyword,
-.markdown-body .hljs-selector-tag { color: #bb9af7; }
+.markdown-body .hljs-selector-tag,
+.message-prose .hljs-keyword,
+.message-prose .hljs-selector-tag { color: #bb9af7; }
 
 .markdown-body .hljs-string,
 .markdown-body .hljs-doctag,
-.markdown-body .hljs-addition { color: #9ece6a; }
+.markdown-body .hljs-addition,
+.message-prose .hljs-string,
+.message-prose .hljs-doctag,
+.message-prose .hljs-addition { color: #9ece6a; }
 
 .markdown-body .hljs-number,
 .markdown-body .hljs-literal,
-.markdown-body .hljs-regexp { color: #ff9e64; }
+.markdown-body .hljs-regexp,
+.message-prose .hljs-number,
+.message-prose .hljs-literal,
+.message-prose .hljs-regexp { color: #ff9e64; }
 
 .markdown-body .hljs-built_in,
 .markdown-body .hljs-type,
-.markdown-body .hljs-template-tag { color: #2ac3de; }
+.markdown-body .hljs-template-tag,
+.message-prose .hljs-built_in,
+.message-prose .hljs-type,
+.message-prose .hljs-template-tag { color: #2ac3de; }
 
 .markdown-body .hljs-title,
 .markdown-body .hljs-section,
-.markdown-body .hljs-name { color: #7aa2f7; }
+.markdown-body .hljs-name,
+.message-prose .hljs-title,
+.message-prose .hljs-section,
+.message-prose .hljs-name { color: #7aa2f7; }
 
 .markdown-body .hljs-attr,
 .markdown-body .hljs-attribute,
-.markdown-body .hljs-params { color: #e0af68; }
+.markdown-body .hljs-params,
+.message-prose .hljs-attr,
+.message-prose .hljs-attribute,
+.message-prose .hljs-params { color: #e0af68; }
 
 .markdown-body .hljs-variable,
 .markdown-body .hljs-template-variable,
-.markdown-body .hljs-subst { color: #c0caf5; }
+.markdown-body .hljs-subst,
+.message-prose .hljs-variable,
+.message-prose .hljs-template-variable,
+.message-prose .hljs-subst { color: #c0caf5; }
 
 .markdown-body .hljs-deletion,
-.markdown-body .hljs-tag { color: #f7768e; }
+.markdown-body .hljs-tag,
+.message-prose .hljs-deletion,
+.message-prose .hljs-tag { color: #f7768e; }
 
 .markdown-body .hljs-symbol,
 .markdown-body .hljs-bullet,
 .markdown-body .hljs-link,
-.markdown-body .hljs-property { color: #73daca; }
+.markdown-body .hljs-property,
+.message-prose .hljs-symbol,
+.message-prose .hljs-bullet,
+.message-prose .hljs-link,
+.message-prose .hljs-property { color: #73daca; }
 
 .markdown-body .hljs-meta,
 .markdown-body .hljs-selector-class,
-.markdown-body .hljs-selector-id { color: #565f89; }
+.markdown-body .hljs-selector-id,
+.message-prose .hljs-meta,
+.message-prose .hljs-selector-class,
+.message-prose .hljs-selector-id { color: #565f89; }
 
-.markdown-body .hljs-emphasis { font-style: italic; }
-.markdown-body .hljs-strong { font-weight: bold; }
-.markdown-body .hljs-punctuation { color: #89ddff; }
+.markdown-body .hljs-emphasis,
+.message-prose .hljs-emphasis { font-style: italic; }
+.markdown-body .hljs-strong,
+.message-prose .hljs-strong { font-weight: bold; }
+.markdown-body .hljs-punctuation,
+.message-prose .hljs-punctuation { color: #89ddff; }

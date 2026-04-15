@@ -461,7 +461,7 @@ export function OAuthAuthorizePage({
                 In your terminal, run:
               </p>
               <code className="mt-1 block font-mono text-sm text-foreground">
-                tokenrip operator-link
+                tokenrip operator-link --human
               </code>
             </div>
 

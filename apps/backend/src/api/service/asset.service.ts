@@ -1,4 +1,4 @@
-import { Injectable, Inject, NotFoundException, ForbiddenException, HttpException, HttpStatus, Logger } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException, ForbiddenException, BadRequestException, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { v4, validate as uuidValidate } from 'uuid';
@@ -30,6 +30,17 @@ interface CreateContentDto extends ProvenanceFields {
   ownerId: string;
   alias?: string;
   metadata?: Record<string, unknown>;
+}
+
+interface CreateCollectionDto extends ProvenanceFields {
+  title?: string;
+  description?: string;
+  schema: Array<{
+    name: string;
+    type: 'text' | 'number' | 'date' | 'url' | 'enum';
+    values?: string[];
+  }>;
+  ownerId: string;
 }
 
 const CONTENT_MIME_TYPES: Record<string, string> = {
@@ -127,6 +138,24 @@ export class AssetService {
     });
   }
 
+  async createCollection(dto: CreateCollectionDto): Promise<Asset> {
+    return await this.em.transactional(async () => {
+      const schema = dto.schema.map((col, i) => ({ ...col, position: i }));
+      const asset = new Asset(AssetType.COLLECTION, undefined, dto.ownerId);
+      asset.title = dto.title;
+      asset.description = dto.description;
+      asset.metadata = { schema };
+      asset.versionCount = 0;
+      if (dto.parentAssetId) asset.parentAssetId = dto.parentAssetId;
+      if (dto.creatorContext) asset.creatorContext = dto.creatorContext;
+      if (dto.inputReferences) asset.inputReferences = dto.inputReferences;
+
+      this.em.persist(asset);
+      this.logger.debug(`Created collection asset ${asset.id}`);
+      return asset;
+    });
+  }
+
   private throwIfDestroyed(asset: Asset): void {
     if (asset.state === AssetState.DESTROYED) {
       throw new HttpException({
@@ -185,7 +214,15 @@ export class AssetService {
 
   async getContent(publicId: string): Promise<{ buffer: Buffer; mimeType: string }> {
     const asset = await this.findByPublicId(publicId);
-    const buffer = await this.readContent(asset);
+    if (asset.type === AssetType.COLLECTION) {
+      throw new BadRequestException({
+        ok: false,
+        error: 'NO_CONTENT',
+        message: 'Collections do not have file content. Use the rows endpoint instead.',
+      });
+    }
+    this.logger.debug(`Reading content for asset publicId=${publicId} (key=${asset.storageKey})`);
+    const buffer = await this.storage.read(asset.storageKey!);
     return { buffer, mimeType: asset.mimeType || 'application/octet-stream' };
   }
 
