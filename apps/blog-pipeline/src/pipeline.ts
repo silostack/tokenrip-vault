@@ -21,8 +21,19 @@ export async function publishBlogPost(
   markdownContent: string,
   config: PipelineConfig,
 ): Promise<PipelineResult> {
+  const log = (step: string, data?: unknown) => {
+    console.log(`\n[${'pipeline'}] ${step}`);
+    if (data !== undefined) console.log(JSON.stringify(data, null, 2));
+  };
+
   // 1. Parse frontmatter
   const { data: frontmatter, content } = matter(markdownContent);
+  log('1. Parsed frontmatter', {
+    keys: Object.keys(frontmatter),
+    frontmatter,
+    contentLength: content.length,
+    contentPreview: content.slice(0, 200),
+  });
 
   // 2. Basic enrichment — slug, description, publish_date
   const title = frontmatter.title || extractTitleFromContent(content);
@@ -32,16 +43,22 @@ export async function publishBlogPost(
   const author = frontmatter.author || config.author.authorName;
   const tags = frontmatter.tags || [];
 
+  log('2. Basic enrichment', { title, slug, description, publishDate, author, tags });
+
   // 3. LLM enrichment (if API key configured) — additive, only fills missing fields
   let enrichedDescription = description;
   let enrichedTags = tags;
   let faq: Array<{ q: string; a: string }> = [];
 
   if (config.anthropicApiKey) {
+    log('3. LLM enrichment — calling Claude...', { model: config.anthropicModel });
     const enrichment = await enrichContent(title, content, config.anthropicApiKey, config.anthropicModel);
+    log('3. LLM enrichment — result', enrichment);
     if (!description) enrichedDescription = enrichment.description;
     if (tags.length === 0) enrichedTags = enrichment.tags;
     faq = enrichment.faq;
+  } else {
+    log('3. LLM enrichment — skipped (no ANTHROPIC_API_KEY)');
   }
 
   // 4. Build final metadata blob
@@ -64,23 +81,29 @@ export async function publishBlogPost(
   if (frontmatter.series) metadata.series = frontmatter.series;
   if (frontmatter.series_order) metadata.series_order = frontmatter.series_order;
 
+  log('4. Final metadata', metadata);
+
   // 5. Validate
   if (!title) throw new Error('Title is required');
   if (!slug) throw new Error('Slug is required');
   if (!content.trim()) throw new Error('Content is empty');
+
+  log('5. Validation passed');
 
   // 6. Check if slug already exists (update vs create)
   const client = new TokenripClient(config.tokenripUrl, config.tokenripApiKey);
   const existing = await client.getByAlias(slug);
 
   if (existing) {
-    // Update: new version + metadata update
+    log('6. Slug exists — updating', { publicId: existing.id });
     await client.createVersion(existing.id, content);
     await client.updateAsset(existing.id, { metadata });
+    log('6. Updated successfully');
     return { slug, publicId: existing.id, updated: true };
   } else {
-    // Create new
+    log('6. New slug — publishing', { slug });
     const result = await client.publishAsset(content, slug, metadata);
+    log('6. Published successfully', { publicId: result.publicId });
     return { slug, publicId: result.publicId, updated: false };
   }
 }

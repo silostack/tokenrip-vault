@@ -110,15 +110,6 @@ The publishing pipeline is an agent. The agent writes markdown, calls `POST /art
 
 Every CMS feature we don't build is a feature we don't maintain, don't secure, and don't debug. If editorial workflows become necessary, they belong in the agentic pipeline (agent reviews agent's work), not in a traditional CMS layer.
 
-## Alternatives Considered
-
-| Alternative | Why rejected |
-|---|---|
-| **Strapi** | Headless CMS with content types, roles, admin panel, plugin ecosystem. Massive overhead for a system that just needs to serve markdown files. The admin panel alone is more code than our entire blog engine. |
-| **Ghost** | Polished blogging platform but opinionated about its editor, membership, and email features. Self-hosting adds Node process management. We'd use 10% of its capabilities and fight the rest. |
-| **Custom NestJS app** | Would work, but NestJS's module system is overhead for five routes. We'd be importing the DI container, lifecycle hooks, and decorator system to serve files from disk. |
-| **Static site generator (Hugo/Astro)** | Pre-builds HTML at deploy time. Good for static content, but our publishing pipeline is dynamic — agents publish articles via API at runtime. A static generator requires a rebuild + redeploy cycle on every publish. |
-
 ## Future
 
 - **LLM-driven enrichment** — The publishing pipeline already has hooks for description generation and FAQ extraction. Future additions: automatic humanizer pass, related article linking, key takeaway extraction.

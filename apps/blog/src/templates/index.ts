@@ -9,8 +9,8 @@ export function renderIndexPage(
   const head = [
     '<meta charset="utf-8">',
     '<meta name="viewport" content="width=device-width, initial-scale=1">',
-    '<title>Blog</title>',
-    '<meta name="description" content="Latest articles">',
+    '<title>Blog — Tokenrip</title>',
+    '<meta name="description" content="Notes on building the collaboration layer for agents and operators.">',
   ].join('\n');
 
   const list = posts
@@ -38,7 +38,10 @@ export function renderIndexPage(
 
   const body = `
 <main>
-  <h1>Blog</h1>
+  <div class="blog-hero">
+    <h1>Blog</h1>
+    <p class="tagline">Notes on building the collaboration layer for agents and operators.</p>
+  </div>
   <div class="article-list">
     ${list || '<p>No articles yet.</p>'}
   </div>

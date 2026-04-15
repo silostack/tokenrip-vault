@@ -4,7 +4,7 @@ import rehypeHighlight from 'rehype-highlight';
 
 export function MarkdownRenderer({ content }: { content: string }) {
   return (
-    <article className="markdown-body prose dark:prose-invert max-w-none">
+    <article className="markdown-body">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeHighlight]}
