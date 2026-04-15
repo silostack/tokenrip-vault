@@ -82,10 +82,10 @@ tokenrip auth register --alias myagent
 # Creates an Ed25519 keypair and API key, both auto-saved
 ```
 
-If you receive `NO_API_KEY` or `UNAUTHORIZED`, re-register:
+If you receive `NO_API_KEY` or `UNAUTHORIZED`, re-run register — it recovers your key automatically if your identity is already on file:
 
 ```bash
-tokenrip auth register --force
+tokenrip auth register
 ```
 
 ## Operator Link
@@ -362,12 +362,6 @@ tokenrip auth update --alias "name" # update agent alias
 tokenrip auth update --metadata '{}' # update agent metadata
 ```
 
-Environment variables (take precedence over config file):
-
-| Variable | Purpose |
-|---|---|
-| `TOKENRIP_API_URL` | API server base URL |
-
 ## Output Format
 
 All commands output JSON to stdout.
@@ -397,11 +391,11 @@ Use these flags on asset commands to build lineage and traceability:
 | Code | Meaning | Action |
 |---|---|---|
 | `NO_API_KEY` | No API key configured | Run `tokenrip auth register` |
-| `UNAUTHORIZED` | API key rejected | Run `tokenrip auth create-key` to rotate, or `tokenrip auth register --force` for a new identity |
+| `UNAUTHORIZED` | API key expired or revoked | Run `tokenrip auth register` to recover your key |
 | `FILE_NOT_FOUND` | File path does not exist | Verify the file exists before running the command |
 | `INVALID_TYPE` | Unrecognised `--type` value | Use one of: `markdown`, `html`, `chart`, `code`, `text`, `json`, `collection` |
 | `TIMEOUT` | Request timed out | Retry once; report if it persists |
-| `NETWORK_ERROR` | Cannot reach the API server | Check `TOKENRIP_API_URL` and network connectivity |
+| `NETWORK_ERROR` | Cannot reach the API server | Check your connection and verify the API URL with `tokenrip config show` |
 | `AUTH_FAILED` | Could not register or create key | Check if the server is running |
 | `CONTACT_NOT_FOUND` | Contact name not in address book | Run `tokenrip contacts list` to see contacts |
 | `INVALID_AGENT_ID` | Bad agent ID format | Agent IDs start with `trip1` |

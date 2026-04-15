@@ -50,10 +50,10 @@ export function wrapCommand<T extends (...args: any[]) => Promise<void>>(fn: T):
 }
 
 const ERROR_HINTS: Record<string, string> = {
-  NO_API_KEY: 'Run `tokenrip auth create-key` or set TOKENRIP_API_KEY.',
-  UNAUTHORIZED: 'Your API key may be expired or invalid. Run `tokenrip auth create-key`.',
-  NETWORK_ERROR: 'Is the Tokenrip server running? Check TOKENRIP_API_URL.',
-  TIMEOUT: 'The server did not respond in time. Try again or check server status.',
+  NO_API_KEY: 'Run `tokenrip auth register` to set up your agent.',
+  UNAUTHORIZED: 'Your API key has expired or been revoked. Run `tokenrip auth register` to recover it.',
+  NETWORK_ERROR: 'Check your connection. Run `tokenrip config show` to verify the API URL.',
+  TIMEOUT: 'The server did not respond in time. Try again or check your connection.',
   FILE_NOT_FOUND: 'Check the file path and try again.',
   INVALID_TYPE: 'Valid types: markdown, html, chart, code, text.',
   AUTH_FAILED: 'Could not create API key. Is the server running?',

@@ -1,11 +1,11 @@
-import { Injectable, BadRequestException, ConflictException, NotFoundException } from '@nestjs/common';
+import { Injectable, BadRequestException, ConflictException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { Transactional } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Agent } from '../../db/models/Agent';
 import { AgentRepository } from '../../db/models';
 import { AuthService } from '../auth/auth.service';
-import { publicKeyToAgentId } from '../auth/crypto';
+import { publicKeyToAgentId, verifyEd25519 } from '../auth/crypto';
 
 @Injectable()
 export class AgentService {
@@ -113,6 +113,53 @@ export class AgentService {
     const agent = await this.findById(agentId);
     return this.em.transactional(async () => {
       await this.authService.revokeAllKeys(agentId);
+      return this.authService.createKey(agent, 'default');
+    });
+  }
+
+  /**
+   * Recover API key via Ed25519 signed token.
+   * Token format: base64url(payload).base64url(signature)
+   * Payload: { sub: "key-recovery", iss: "trip1...", exp: unix, jti: nonce }
+   */
+  async recoverKey(token: string): Promise<string> {
+    const dot = token.indexOf('.');
+    if (dot === -1) {
+      throw new UnauthorizedException({ ok: false, error: 'INVALID_TOKEN', message: 'Malformed recovery token' });
+    }
+
+    const payloadB64 = token.slice(0, dot);
+    const signatureB64 = token.slice(dot + 1);
+
+    let payload: { sub: string; iss: string; exp: number; jti: string };
+    try {
+      payload = JSON.parse(Buffer.from(payloadB64, 'base64url').toString());
+    } catch {
+      throw new UnauthorizedException({ ok: false, error: 'INVALID_TOKEN', message: 'Malformed recovery token' });
+    }
+
+    if (payload.sub !== 'key-recovery' || !payload.iss || !payload.exp || !payload.jti) {
+      throw new UnauthorizedException({ ok: false, error: 'INVALID_TOKEN', message: 'Invalid recovery token payload' });
+    }
+
+    if (payload.exp < Math.floor(Date.now() / 1000)) {
+      throw new UnauthorizedException({ ok: false, error: 'TOKEN_EXPIRED', message: 'Recovery token has expired' });
+    }
+
+    const agent = await this.agentRepo.findOne({ id: payload.iss });
+    if (!agent) {
+      throw new UnauthorizedException({ ok: false, error: 'AGENT_NOT_FOUND', message: 'Issuing agent not found' });
+    }
+
+    const publicKey = Buffer.from(agent.publicKey, 'hex');
+    const signature = Buffer.from(signatureB64, 'base64url');
+    const valid = verifyEd25519(Buffer.from(payloadB64), signature, publicKey);
+    if (!valid) {
+      throw new UnauthorizedException({ ok: false, error: 'INVALID_TOKEN', message: 'Signature verification failed' });
+    }
+
+    return this.em.transactional(async () => {
+      await this.authService.revokeAllKeys(agent.id);
       return this.authService.createKey(agent, 'default');
     });
   }

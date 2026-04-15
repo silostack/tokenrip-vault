@@ -3,7 +3,7 @@ import { createHttpClient } from '../client.js';
 import { CliError } from '../errors.js';
 import { outputSuccess } from '../output.js';
 import { formatAuthKey, formatProfileUpdated, formatWhoami } from '../formatters.js';
-import { generateKeypair, publicKeyToAgentId } from '../crypto.js';
+import { generateKeypair, publicKeyToAgentId, signPayload } from '../crypto.js';
 import { loadIdentity, saveIdentity } from '../identity.js';
 import { requireAuthClient } from '../auth-client.js';
 
@@ -53,9 +53,38 @@ export async function authRegister(options: { alias?: string; force?: boolean })
     }
     outputSuccess(result, formatAuthKey);
   } catch (error) {
+    // If this identity is already registered, recover the API key via signed token
+    if (error instanceof CliError && error.code === 'AGENT_EXISTS' && existing && !options.force) {
+      await recoverApiKey(existing, config, apiUrl);
+      return;
+    }
     if (error instanceof CliError) throw error;
     throw new CliError('REGISTRATION_FAILED', 'Failed to register agent. Is the server running?');
   }
+}
+
+async function recoverApiKey(
+  identity: { agentId: string; secretKey: string },
+  config: ReturnType<typeof loadConfig>,
+  apiUrl: string,
+): Promise<void> {
+  const exp = Math.floor(Date.now() / 1000) + 300; // 5 minutes
+  const token = signPayload(
+    { sub: 'key-recovery', iss: identity.agentId, exp, jti: Math.random().toString(36).slice(2) },
+    identity.secretKey,
+  );
+
+  const client = createHttpClient({ baseUrl: apiUrl });
+  const { data } = await client.post('/v0/agents/recover-key', { token });
+  const apiKey = data.data.api_key;
+
+  config.apiKey = apiKey;
+  saveConfig(config);
+
+  outputSuccess(
+    { agentId: identity.agentId, apiKey, message: 'API key recovered and saved' },
+    formatAuthKey,
+  );
 }
 
 export async function authCreateKey(): Promise<void> {

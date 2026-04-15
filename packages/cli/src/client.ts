@@ -27,7 +27,7 @@ export function createHttpClient(config: ClientConfig = {}): AxiosInstance {
       if (error.response?.status === 401) {
         throw new CliError(
           'UNAUTHORIZED',
-          'API key required or invalid. Run `tokenrip auth create-key` or set TOKENRIP_API_KEY.',
+          'API key required or invalid. Run `tokenrip auth register` to recover your key.',
         );
       }
       if (error.response?.data?.error) {
