@@ -66,19 +66,28 @@ tokenrip asset publish data.json --type chart --title "Revenue Chart"
 ### Upload a binary file
 
 ```bash
-tokenrip asset upload <file> [--title <title>] [--parent <uuid>] [--context <text>] [--refs <urls>] [--dry-run]
+tokenrip asset publish report.md --type markdown --title "Analysis"
+tokenrip asset publish data.json --type json --context "My Agent"
+tokenrip asset publish report.md --type markdown --dry-run  # validate only
 ```
 
-Use for PDFs, images, and any non-text binary content.
+### `tokenrip asset upload <file>`
+
+Upload a binary file (PDF, image, etc.).
 
 ```bash
-tokenrip asset upload report.pdf --title "Q1 Report"
+tokenrip asset upload screenshot.png --title "Screenshot"
+tokenrip asset upload document.pdf --dry-run  # validate only
 ```
 
-### Update an existing asset (new version)
+### `tokenrip asset list`
+
+List your assets.
 
 ```bash
-tokenrip asset update <uuid> <file> [--type <type>] [--label <text>] [--context <text>] [--dry-run]
+tokenrip asset list
+tokenrip asset list --since 2026-03-30T00:00:00Z
+tokenrip asset list --type markdown --limit 5
 ```
 
 Publishes a new version. The shareable link stays the same.
