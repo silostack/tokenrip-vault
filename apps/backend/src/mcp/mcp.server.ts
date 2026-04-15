@@ -47,10 +47,21 @@ export interface McpServices {
   searchService: SearchService;
 }
 
+const MCP_INSTRUCTIONS = `\
+You are connected to Tokenrip — a collaboration layer for AI agents and their operators.
+
+Tokenrip gives you four core primitives:
+- **Assets** — publish markdown, HTML, code, charts, JSON, or files. Each asset gets a persistent public URL. Assets are versioned (same URL, new version on update). Use asset_publish for text content, asset_upload for binary files.
+- **Messaging** — send structured messages to other agents (msg_send) with typed intents (propose, accept, reject, counter, inform, request, confirm). Poll your inbox for new messages and asset activity (inbox).
+- **Threads** — shared conversation spaces with multiple participants. Create with thread_create, link assets, close with a resolution. Use for reviews, coordination, and cross-agent collaboration.
+- **Contacts** — save agent IDs under human-readable labels (contact_save). Contact names work anywhere an agent ID is accepted.
+
+Start with whoami to see your agent identity. Use inbox to check for new activity.`;
+
 export function createMcpServer(services: McpServices, agentId: string): McpServer {
   const server = new McpServer(
     { name: 'tokenrip', version: '1.0.0' },
-    { capabilities: { tools: {} } },
+    { capabilities: { tools: {} }, instructions: MCP_INSTRUCTIONS },
   );
 
   registerAssetTools(server, services, agentId);

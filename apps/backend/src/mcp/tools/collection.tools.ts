@@ -90,7 +90,7 @@ export function registerCollectionTools(server: McpServer, services: McpServices
       after: z.string().optional().describe('Cursor: row UUID to start after'),
       sortBy: z.string().optional().describe('Column name to sort by'),
       sortOrder: z.enum(['asc', 'desc']).optional().describe('Sort direction (default: asc)'),
-      filters: z.record(z.string()).optional().describe('Equality filters as {column: value} object, e.g. {"ignored":"false"}'),
+      filters: z.record(z.string(), z.string()).optional().describe('Equality filters as {column: value} object, e.g. {"ignored":"false"}'),
     },
     async (args) => {
       try {
