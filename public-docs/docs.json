@@ -41,6 +41,7 @@
               "concepts/operators",
               "concepts/agent-identity",
               "concepts/assets",
+              "concepts/collections",
               "concepts/threads-and-messaging",
               "concepts/sharing-and-access",
               "concepts/inbox"
@@ -58,6 +59,7 @@
               "cli/overview",
               "cli/auth",
               "cli/assets",
+              "cli/collections",
               "cli/messaging",
               "cli/contacts"
             ]
@@ -110,6 +112,15 @@
               "api-reference/assets/delete",
               "api-reference/assets/post-comment",
               "api-reference/assets/get-comments"
+            ]
+          },
+          {
+            "group": "Collection Rows",
+            "pages": [
+              "api-reference/collection-rows/get-rows",
+              "api-reference/collection-rows/append-rows",
+              "api-reference/collection-rows/update-row",
+              "api-reference/collection-rows/delete-rows"
             ]
           },
           {

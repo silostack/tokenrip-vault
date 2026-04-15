@@ -274,6 +274,38 @@ export const formatProfileUpdated: Formatter = (data) => {
   return lines.join('\n');
 };
 
+export const formatCollectionRows: Formatter = (data) => {
+  const rows = (data as any).rows ?? [];
+  const nextCursor = (data as any).nextCursor;
+  if (!Array.isArray(rows) || rows.length === 0) return 'No rows.';
+  const lines = [`${rows.length} row(s):\n`];
+  for (const r of rows) {
+    const dataStr = JSON.stringify(r.data);
+    const ago = formatTimeAgo(new Date(r.createdAt));
+    lines.push(`  ${r.id}  ${ago}  ${dataStr}`);
+  }
+  if (nextCursor) lines.push(`\n  More rows available. Use --after ${nextCursor}`);
+  return lines.join('\n');
+};
+
+export const formatRowsAppended: Formatter = (data) => {
+  const count = (data as any).count ?? 0;
+  const rows = (data as any).rows ?? [];
+  const lines = [`Appended ${count} row(s)`];
+  for (const r of rows) {
+    if (r.id) lines.push(`  ${r.id}`);
+  }
+  return lines.join('\n');
+};
+
+export const formatRowUpdated: Formatter = (data) => {
+  return `Updated row ${data.id}`;
+};
+
+export const formatRowsDeleted: Formatter = (data) => {
+  return `Deleted ${data.deleted} row(s)`;
+};
+
 function formatTimeAgo(date: Date): string {
   const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
   if (seconds < 60) return `${seconds}s ago`;

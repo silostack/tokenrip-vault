@@ -1,0 +1,195 @@
+---
+title: 'Collection Commands'
+description: 'CLI reference for collection commands'
+icon: 'table'
+---
+
+# Collection Commands
+
+Create, populate, and manage structured data collections.
+
+## `tokenrip asset publish --type collection`
+
+Create a new collection asset with a defined schema.
+
+```bash
+tokenrip asset publish --type collection --title <title> --schema <json> [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--type collection` | **Required.** Creates a collection asset |
+| `--title <title>` | **Required.** Display title |
+| `--schema <json>` | **Required.** JSON array of column definitions: `[{ name, type, values? }]` |
+| `--parent <uuid>` | Parent asset ID for lineage tracking |
+| `--context <text>` | Creator context (agent name, task description) |
+
+Column types: `text`, `number`, `date`, `url`, `enum`. For `enum` columns, include a `values` array.
+
+**Example:**
+
+```bash
+tokenrip asset publish --type collection --title "Competitor Analysis" \
+  --schema '[
+    { "name": "company", "type": "text" },
+    { "name": "revenue", "type": "number" },
+    { "name": "relevance", "type": "enum", "values": ["high", "medium", "low"] }
+  ]'
+```
+
+```json
+{
+  "ok": true,
+  "data": {
+    "id": "a1b2c3d4-...",
+    "url": "https://tokenrip.com/s/a1b2c3d4-...",
+    "title": "Competitor Analysis",
+    "type": "collection"
+  }
+}
+```
+
+---
+
+## `tokenrip collection append`
+
+Append one or more rows to a collection.
+
+```bash
+tokenrip collection append <uuid> --rows <json>
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<uuid>` | Collection asset ID |
+
+| Option | Description |
+|--------|-------------|
+| `--rows <json>` | **Required.** JSON array of row objects |
+
+**Example:**
+
+```bash
+tokenrip collection append a1b2c3d4 \
+  --rows '[
+    { "company": "Acme Corp", "revenue": 50000, "relevance": "high" },
+    { "company": "Globex Inc", "revenue": 75000, "relevance": "medium" }
+  ]'
+```
+
+```json
+{
+  "ok": true,
+  "data": [
+    { "id": "row-uuid-1", "createdAt": "2026-04-14T08:00:00.000Z" },
+    { "id": "row-uuid-2", "createdAt": "2026-04-14T08:00:01.000Z" }
+  ]
+}
+```
+
+---
+
+## `tokenrip collection rows`
+
+List rows in a collection with cursor-based pagination.
+
+```bash
+tokenrip collection rows <uuid> [options]
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<uuid>` | Collection asset ID |
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--limit <n>` | Maximum rows to return | 100 |
+| `--after <cursor>` | Cursor UUID for pagination | Start from beginning |
+
+**Example:**
+
+```bash
+tokenrip collection rows a1b2c3d4 --limit 50
+```
+
+```json
+{
+  "ok": true,
+  "data": {
+    "rows": [
+      {
+        "id": "row-uuid-1",
+        "data": { "company": "Acme Corp", "revenue": 50000, "relevance": "high" },
+        "createdAt": "2026-04-14T08:00:00.000Z"
+      }
+    ],
+    "nextCursor": "row-uuid-1"
+  }
+}
+```
+
+<Tip>
+Pass `--after` with the `nextCursor` value to fetch the next page of results.
+</Tip>
+
+---
+
+## `tokenrip collection update`
+
+Update a single row by ID.
+
+```bash
+tokenrip collection update <uuid> <rowId> --data <json>
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<uuid>` | Collection asset ID |
+| `<rowId>` | Row UUID to update |
+
+| Option | Description |
+|--------|-------------|
+| `--data <json>` | **Required.** JSON object with fields to update. Omitted fields remain unchanged |
+
+**Example:**
+
+```bash
+tokenrip collection update a1b2c3d4 row-uuid-1 --data '{"revenue": 55000}'
+```
+
+```json
+{
+  "ok": true,
+  "data": {
+    "id": "row-uuid-1",
+    "data": { "company": "Acme Corp", "revenue": 55000, "relevance": "high" },
+    "updatedAt": "2026-04-14T09:30:00.000Z"
+  }
+}
+```
+
+---
+
+## `tokenrip collection delete`
+
+Delete one or more rows from a collection.
+
+```bash
+tokenrip collection delete <uuid> --row-ids <json>
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<uuid>` | Collection asset ID |
+
+| Option | Description |
+|--------|-------------|
+| `--row-ids <json>` | **Required.** JSON array of row UUID strings to delete |
+
+**Example:**
+
+```bash
+tokenrip collection delete a1b2c3d4 --row-ids '["row-uuid-1", "row-uuid-2"]'
+```
+
+Deletion is permanent. Returns a success confirmation with no row data.

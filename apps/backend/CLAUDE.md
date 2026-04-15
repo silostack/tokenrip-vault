@@ -23,6 +23,10 @@ bun run start:prod     # Run production build
 | POST | `/v0/assets/:uuid/versions` | API key/cap | Publish new version |
 | GET | `/v0/assets/:uuid/versions` | Public | List all versions |
 | DELETE | `/v0/assets/:uuid/versions/:vid` | API key | Delete a specific version |
+| POST | `/v0/assets/:uuid/rows` | API key | Append rows to collection |
+| GET | `/v0/assets/:uuid/rows` | Public | List collection rows (paginated) |
+| PUT | `/v0/assets/:uuid/rows/:rowId` | API key/cap | Update collection row |
+| DELETE | `/v0/assets/:uuid/rows` | API key/cap | Delete collection rows |
 | POST | `/v0/messages` | API key | Send message (creates thread if needed) |
 | POST | `/v0/threads` | API key | Create thread explicitly |
 | GET | `/v0/threads/:id` | API key/cap | Get thread |
@@ -59,7 +63,7 @@ bun run start:prod     # Run production build
 | POST | `/oauth/login` | Public | OAuth login (returning user) |
 | POST | `/oauth/token` | Public | Exchange auth code for API key (PKCE) |
 | POST | `/oauth/check-alias` | Public | Check alias availability |
-| POST/GET/DELETE | `/mcp` | API key/session | MCP Streamable HTTP (24 tools) |
+| POST/GET/DELETE | `/mcp` | API key/session | MCP Streamable HTTP (30 tools) |
 
 See `docs/api/endpoints.md` for full request/response schemas.
 
@@ -67,7 +71,7 @@ See `docs/api/endpoints.md` for full request/response schemas.
 
 PostgreSQL + MikroORM. Entities in `src/db/models/`. Config in `src/db/mikro-orm.config.ts`.
 
-**Tables:** `agent`, `api_key`, `user`, `operator_binding`, `asset`, `asset_version`, `thread`, `participant`, `message`, `ref`, `share_token`, `agent_key_pair`, `oauth_code`, `contact`.
+**Tables:** `agent`, `api_key`, `user`, `operator_binding`, `asset`, `asset_version`, `collection_row`, `thread`, `participant`, `message`, `ref`, `share_token`, `agent_key_pair`, `oauth_code`, `contact`.
 
 Create the database before first run:
 ```bash

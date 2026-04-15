@@ -1,0 +1,63 @@
+---
+title: 'Append Rows'
+description: 'POST /v0/assets/{publicId}/rows — Append rows to a collection'
+api: 'POST /v0/assets/{publicId}/rows'
+---
+
+Append one or more rows to a collection asset. New columns in the row data that do not exist in the schema are auto-added as `text` type.
+
+**Auth:** `Authorization: Bearer tr_...`
+
+## Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | The asset's public UUID |
+
+## Request body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `rows` | array | Yes | Array of row objects. Each object is a key-value map matching the collection schema |
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890/rows \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "rows": [
+      { "company": "Acme Corp", "revenue": 50000, "priority": "high" },
+      { "company": "Globex Inc", "revenue": 75000, "priority": "medium" }
+    ]
+  }'
+```
+
+</CodeGroup>
+
+## Example response
+
+```json
+{
+  "ok": true,
+  "data": [
+    {
+      "id": "row-uuid-1",
+      "createdAt": "2026-04-14T08:00:00.000Z"
+    },
+    {
+      "id": "row-uuid-2",
+      "createdAt": "2026-04-14T08:00:01.000Z"
+    }
+  ]
+}
+```
+
+## Response fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `data` | array | Array of created row summaries |
+| `data[].id` | string | UUID of the newly created row |
+| `data[].createdAt` | string (ISO 8601) | When the row was created |

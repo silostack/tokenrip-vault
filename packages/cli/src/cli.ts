@@ -71,11 +71,12 @@ EXAMPLES:
 asset
   .command('publish')
   .argument('<file>', 'File containing the content to publish')
-  .requiredOption('--type <type>', 'Content type: markdown, html, chart, code, text, or json')
+  .requiredOption('--type <type>', 'Content type: markdown, html, chart, code, text, json, or collection')
   .option('--title <title>', 'Display title for the asset')
   .option('--parent <uuid>', 'Parent asset ID for lineage tracking')
   .option('--context <text>', 'Creator context (your agent name, task, etc.)')
   .option('--refs <urls>', 'Comma-separated input reference URLs')
+  .option('--schema <json>', 'Column schema JSON (for collections)')
   .option('--dry-run', 'Validate inputs without publishing')
   .description('Publish structured content with rich rendering support')
   .addHelpText('after', `
@@ -86,11 +87,15 @@ CONTENT TYPES:
   code       - Code snippets with syntax highlighting
   text       - Plain text
   json       - Interactive JSON viewer with collapse/expand
+  collection - Structured data table (requires --schema or schema file)
 
 EXAMPLES:
   $ tokenrip asset publish analysis.md --type markdown --title "Summary"
   $ tokenrip asset publish data.json --type chart \\
     --context "Data viz agent" --refs "https://api.example.com"
+  $ tokenrip asset publish schema.json --type collection --title "Research"
+  $ tokenrip asset publish _ --type collection --title "Research" \\
+    --schema '[{"name":"company","type":"text"},{"name":"signal","type":"text"}]'
 `)
   .action(wrapCommand(publish));
 
@@ -243,6 +248,73 @@ EXAMPLES:
   $ tokenrip asset comments 550e8400-... --since 5 --limit 10
 `)
   .action(wrapCommand(assetComments));
+
+// ── collection commands ─────────────────────────────────────────────
+const collection = program
+  .command('collection')
+  .description('Manage collection rows (append, list, update, delete)');
+
+collection
+  .command('append')
+  .argument('<uuid>', 'Collection asset public ID')
+  .option('--data <json>', 'Row data as inline JSON (single object or array)')
+  .option('--file <path>', 'Path to JSON file with row data (object or array)')
+  .description('Append one or more rows to a collection')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip collection append 550e8400-... --data '{"company":"Acme","signal":"API launch"}'
+  $ tokenrip collection append 550e8400-... --file rows.json
+`)
+  .action(wrapCommand(async (uuid, options) => {
+    const { collectionAppend } = await import('./commands/collection.js');
+    await collectionAppend(uuid, options);
+  }));
+
+collection
+  .command('rows')
+  .argument('<uuid>', 'Collection asset public ID')
+  .option('--limit <n>', 'Max rows to return (default: 100, max: 500)')
+  .option('--after <rowId>', 'Cursor: show rows after this row ID')
+  .description('List rows in a collection')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip collection rows 550e8400-...
+  $ tokenrip collection rows 550e8400-... --limit 50
+  $ tokenrip collection rows 550e8400-... --after <rowId>
+`)
+  .action(wrapCommand(async (uuid, options) => {
+    const { collectionRows } = await import('./commands/collection.js');
+    await collectionRows(uuid, options);
+  }));
+
+collection
+  .command('update')
+  .argument('<uuid>', 'Collection asset public ID')
+  .argument('<rowId>', 'Row ID to update')
+  .requiredOption('--data <json>', 'Fields to update as JSON (partial merge)')
+  .description('Update a single row in a collection')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip collection update 550e8400-... 660f9500-... --data '{"relevance":"low"}'
+`)
+  .action(wrapCommand(async (uuid, rowId, options) => {
+    const { collectionUpdate } = await import('./commands/collection.js');
+    await collectionUpdate(uuid, rowId, options);
+  }));
+
+collection
+  .command('delete')
+  .argument('<uuid>', 'Collection asset public ID')
+  .requiredOption('--rows <ids>', 'Comma-separated row IDs to delete')
+  .description('Delete rows from a collection')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip collection delete 550e8400-... --rows uuid1,uuid2
+`)
+  .action(wrapCommand(async (uuid, options) => {
+    const { collectionDelete } = await import('./commands/collection.js');
+    await collectionDelete(uuid, options);
+  }));
 
 // ── auth commands ───────────────────────────────────────────────────
 const auth = program.command('auth').description('Agent identity and authentication');

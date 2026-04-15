@@ -8,10 +8,10 @@ export function registerAssetTools(server: McpServer, services: McpServices, age
 
   server.tool(
     'asset_publish',
-    'Publish text content as a shareable Tokenrip asset. Returns a public URL.',
+    'Publish text content as a shareable Tokenrip asset. Returns a public URL. For collections (structured data tables), use collection_create instead.',
     {
       content: z.string().describe('Raw content (markdown, HTML, JSON, etc.)'),
-      type: z.enum([AssetType.MARKDOWN, AssetType.HTML, AssetType.CHART, AssetType.CODE, AssetType.TEXT, AssetType.JSON]).describe('Content type'),
+      type: z.enum([AssetType.MARKDOWN, AssetType.HTML, AssetType.CHART, AssetType.CODE, AssetType.TEXT, AssetType.JSON]).describe('Content type (for collections, use collection_create)'),
       title: z.string().optional().describe('Asset title'),
       parentAssetId: z.string().optional().describe('Parent asset UUID for provenance'),
       creatorContext: z.string().optional().describe('Context about how/why this was created'),

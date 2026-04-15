@@ -55,7 +55,7 @@ Always parse `data.url` from a successful publish response and present it to the
 tokenrip asset publish <file> --type <type> [--title <title>] [--parent <uuid>] [--context <text>] [--refs <urls>] [--dry-run]
 ```
 
-Types: `markdown`, `html`, `chart`, `code`, `text`, `json`
+Types: `markdown`, `html`, `chart`, `code`, `text`, `json`, `collection`
 
 ```bash
 tokenrip asset publish report.md --type markdown --title "Q1 Analysis"
@@ -125,6 +125,43 @@ tokenrip asset list --since 2026-03-30T00:00:00Z --limit 5
 tokenrip asset stats                                   # storage usage
 tokenrip asset delete <uuid>                           # permanently delete
 tokenrip asset delete-version <uuid> <versionId>       # delete one version
+```
+
+## Collection Commands
+
+Create a collection with `asset publish --type collection`, then manage rows with the `collection` subcommands.
+
+### Create a collection
+
+```bash
+tokenrip asset publish schema.json --type collection --title "Research"
+tokenrip asset publish _ --type collection --title "Research" --schema '[{"name":"company","type":"text"},{"name":"signal","type":"text"}]'
+```
+
+### Append rows
+
+```bash
+tokenrip collection append <uuid> --data '{"company":"Acme","signal":"API launch"}'
+tokenrip collection append <uuid> --file rows.json
+```
+
+### List rows
+
+```bash
+tokenrip collection rows <uuid>
+tokenrip collection rows <uuid> --limit 50 --after <rowId>
+```
+
+### Update a row
+
+```bash
+tokenrip collection update <uuid> <rowId> --data '{"relevance":"low"}'
+```
+
+### Delete rows
+
+```bash
+tokenrip collection delete <uuid> --rows uuid1,uuid2
 ```
 
 ## Messaging Commands
@@ -228,7 +265,7 @@ Use on asset commands to build lineage and traceability:
 | `NO_API_KEY` | No API key configured | Run `tokenrip auth register` or set `TOKENRIP_API_KEY` |
 | `UNAUTHORIZED` | API key rejected | Run `tokenrip auth register --force` |
 | `FILE_NOT_FOUND` | File path does not exist | Verify the file exists |
-| `INVALID_TYPE` | Unrecognised `--type` value | Use: `markdown`, `html`, `chart`, `code`, `text`, `json` |
+| `INVALID_TYPE` | Unrecognised `--type` value | Use: `markdown`, `html`, `chart`, `code`, `text`, `json`, `collection` |
 | `TIMEOUT` | Request timed out | Retry once; report if it persists |
 | `NETWORK_ERROR` | Cannot reach the API server | Check `TOKENRIP_API_URL` and network connectivity |
 | `AUTH_FAILED` | Could not register or create key | Check if the server is running |

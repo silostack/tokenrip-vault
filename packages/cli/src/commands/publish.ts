@@ -5,15 +5,47 @@ import { CliError } from '../errors.js';
 import { outputSuccess } from '../output.js';
 import { formatAssetCreated } from '../formatters.js';
 
-const VALID_TYPES = ['markdown', 'html', 'chart', 'code', 'text', 'json'] as const;
+const VALID_TYPES = ['markdown', 'html', 'chart', 'code', 'text', 'json', 'collection'] as const;
 type ContentType = (typeof VALID_TYPES)[number];
 
 export async function publish(
   filePath: string,
-  options: { type: string; title?: string; parent?: string; context?: string; refs?: string; dryRun?: boolean },
+  options: { type: string; title?: string; parent?: string; context?: string; refs?: string; schema?: string; dryRun?: boolean },
 ): Promise<void> {
   if (!VALID_TYPES.includes(options.type as ContentType)) {
     throw new CliError('INVALID_TYPE', `Type must be one of: ${VALID_TYPES.join(', ')}`);
+  }
+
+  if (options.type === 'collection') {
+    // Collection creation: file is optional (schema can come from --schema flag)
+    let schema: unknown;
+    if (options.schema) {
+      schema = JSON.parse(options.schema);
+    } else {
+      const absPath = path.resolve(filePath);
+      if (!fs.existsSync(absPath)) {
+        throw new CliError('FILE_NOT_FOUND', `File not found: ${absPath}`);
+      }
+      schema = JSON.parse(fs.readFileSync(absPath, 'utf-8'));
+    }
+
+    const title = options.title || 'Untitled Collection';
+
+    if (options.dryRun) {
+      outputSuccess({ dryRun: true, action: 'would create collection', title, schema }, formatAssetCreated);
+      return;
+    }
+
+    const { client } = requireAuthClient();
+    const body: Record<string, unknown> = { type: 'collection', title, schema };
+    if (options.parent) body.parentAssetId = options.parent;
+    if (options.context) body.creatorContext = options.context;
+    if (options.refs) body.inputReferences = options.refs.split(',').map((r) => r.trim());
+
+    const { data } = await client.post('/v0/assets', body);
+    const url = data.data.url || `https://tokenrip.com/s/${data.data.id}`;
+    outputSuccess({ id: data.data.id, url, title: data.data.title, type: data.data.type }, formatAssetCreated);
+    return;
   }
 
   const absPath = path.resolve(filePath);
