@@ -7,7 +7,6 @@ export function registerIdentityTools(server: McpServer, services: McpServices, 
   server.tool(
     'whoami',
     'Get the current authenticated agent profile.',
-    z.object({}),
     async () => {
       try {
         const agent = await services.agentService.findById(agentId);

@@ -7,7 +7,6 @@ export function registerContactTools(server: McpServer, services: McpServices, a
   server.tool(
     'contact_list',
     'List your saved contacts.',
-    z.object({}),
     async () => {
       try {
         const contacts = await services.contactService.list(agentId);
