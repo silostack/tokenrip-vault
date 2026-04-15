@@ -141,6 +141,25 @@ export const formatContactResolved: Formatter = (data) => {
   return `${data.name}: ${data.agent_id}`;
 };
 
+export const formatContactSaved: Formatter = (data) => {
+  const lines = [`Contact "${data.name}" saved`];
+  if (data.agent_id) lines.push(`  Agent: ${data.agent_id}`);
+  if (data.alias) lines.push(`  Alias: ${data.alias}`);
+  return lines.join('\n');
+};
+
+export const formatContactRemoved: Formatter = (data) => {
+  return data.message as string || `Contact "${data.name}" removed`;
+};
+
+export const formatConfigShow: Formatter = (data) => {
+  const lines = ['Configuration:'];
+  if (data.apiUrl) lines.push(`  API URL:     ${data.apiUrl}`);
+  if (data.apiKey) lines.push(`  API Key:     ${data.apiKey}`);
+  if (data.configFile) lines.push(`  Config file: ${data.configFile}`);
+  return lines.join('\n');
+};
+
 export const formatMessageSent: Formatter = (data) => {
   const lines: string[] = [];
   if (data.thread_id) lines.push(`Thread: ${data.thread_id}`);
@@ -263,6 +282,13 @@ export const formatParticipantAdded: Formatter = (data) => {
   const lines = ['Participant added'];
   if (data.thread_id) lines.push(`  Thread:  ${data.thread_id}`);
   if (data.agent_id) lines.push(`  Agent:   ${data.agent_id}`);
+  return lines.join('\n');
+};
+
+export const formatWhoami: Formatter = (data) => {
+  const lines = [String(data.agent_id)];
+  if (data.alias) lines.push(`  Alias:       ${data.alias}`);
+  if (data.registered_at) lines.push(`  Registered:  ${data.registered_at}`);
   return lines.join('\n');
 };
 
