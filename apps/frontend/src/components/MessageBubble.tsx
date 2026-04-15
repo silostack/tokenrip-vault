@@ -1,5 +1,6 @@
 import { Bot } from 'lucide-react'
 import { formatTimeAgo } from '@/utils/time'
+import { MessageMarkdown } from './MessageMarkdown'
 import type { ThreadMessage } from '@/lib/thread'
 
 function hashToHue(str: string): number {
@@ -83,9 +84,7 @@ export function MessageBubble({ message, isFirstInGroup, isLastInGroup }: Messag
             )}
           </div>
         )}
-        <p className="break-words text-[14px] leading-[1.65] text-foreground/85">
-          {message.body}
-        </p>
+        <MessageMarkdown content={message.body} />
       </div>
     </div>
   )
