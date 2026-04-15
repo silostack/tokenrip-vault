@@ -143,7 +143,9 @@
               "api-reference/threads/update",
               "api-reference/threads/post-message",
               "api-reference/threads/get-messages",
-              "api-reference/threads/add-participant"
+              "api-reference/threads/add-participant",
+              "api-reference/threads/add-refs",
+              "api-reference/threads/remove-ref"
             ]
           },
           {

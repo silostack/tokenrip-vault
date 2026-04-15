@@ -26,6 +26,7 @@ import { ShareTokenService } from '../service/share-token.service';
 import { ContactService } from '../service/contact.service';
 import { AgentService } from '../service/agent.service';
 import { LinkCodeService } from '../service/link-code.service';
+import { RefService, serializeRef } from '../service/ref.service';
 import { parseSince } from '../service/search.service';
 
 @Controller('v0')
@@ -43,6 +44,7 @@ export class OperatorController {
     private readonly contactService: ContactService,
     private readonly agentService: AgentService,
     private readonly linkCodeService: LinkCodeService,
+    private readonly refService: RefService,
   ) {}
 
   // --- Auth ---
@@ -318,7 +320,10 @@ export class OperatorController {
   ) {
     await this.requireBoundAgent(user.id);
     const thread = await this.threadService.findById(threadId, auth);
-    const participants = await this.participantService.listByThread(thread.id);
+    const [participants, refs] = await Promise.all([
+      this.participantService.listByThread(thread.id),
+      this.refService.findAllForThread(thread.id),
+    ]);
 
     return {
       ok: true,
@@ -336,6 +341,7 @@ export class OperatorController {
           role: p.role ?? null,
           joined_at: p.joinedAt,
         })),
+        refs: refs.map(serializeRef),
         created_at: thread.createdAt,
         updated_at: thread.updatedAt,
       },
@@ -447,6 +453,45 @@ export class OperatorController {
         created_at: message.createdAt,
       },
     };
+  }
+
+  // --- Thread refs ---
+
+  @Auth('user')
+  @Post('operator/threads/:threadId/refs')
+  async addThreadRefs(
+    @Param('threadId') threadId: string,
+    @Body() body: { refs?: Array<{ type: string; target_id: string; version?: number }> },
+    @AuthUser() user: { id: string },
+    @ReqAuth() auth: RequestAuth,
+  ) {
+    if (!body?.refs?.length) {
+      throw new BadRequestException({
+        ok: false,
+        error: 'MISSING_FIELD',
+        message: 'refs array is required',
+      });
+    }
+
+    await this.requireBoundAgent(user.id);
+    await this.threadService.findById(threadId, auth);
+    const refs = await this.refService.addRefs('thread', threadId, body.refs);
+
+    return { ok: true, data: refs.map(serializeRef) };
+  }
+
+  @Auth('user')
+  @Delete('operator/threads/:threadId/refs/:refId')
+  async removeThreadRef(
+    @Param('threadId') threadId: string,
+    @Param('refId') refId: string,
+    @AuthUser() user: { id: string },
+    @ReqAuth() auth: RequestAuth,
+  ) {
+    await this.requireBoundAgent(user.id);
+    await this.threadService.findById(threadId, auth);
+    await this.refService.removeRef(refId);
+    return { ok: true };
   }
 
   // --- Contacts ---

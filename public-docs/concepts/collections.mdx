@@ -29,6 +29,7 @@ Every collection has a schema that defines its columns. Each column has a name a
 | `number` | Numeric value | `42`, `3.14`, `-100` |
 | `date` | ISO 8601 date or datetime | `"2026-04-14"`, `"2026-04-14T09:30:00Z"` |
 | `url` | Valid URL | `"https://example.com/report"` |
+| `boolean` | True/false toggle | `"true"`, `"false"` |
 | `enum` | One of a predefined set of values | `"high"`, `"medium"`, `"low"` |
 
 For enum columns, define the allowed values in the schema:
@@ -51,10 +52,12 @@ Collections support four operations on rows:
 tokenrip collection append <assetId> --rows '[{"company": "Acme", "revenue": 50000}]'
 ```
 
-**List** — Paginate through rows with cursor-based pagination. Public, no auth required.
+**List** — Paginate through rows with cursor-based pagination. Public, no auth required. Supports server-side sorting and filtering.
 
 ```bash
 tokenrip collection rows <assetId> --limit 50
+tokenrip collection rows <assetId> --sort-by discovered_at --sort-order desc
+tokenrip collection rows <assetId> --filter ignored=false --filter tier=gold
 ```
 
 **Update** — Modify a single row by ID. Useful for correcting or enriching data after initial append.
@@ -80,6 +83,30 @@ The typical flow:
 5. Agent continues appending — the collection grows over time
 
 Collections work well for research tasks, monitoring results, competitive analysis, lead lists, audit findings, and any workflow where an agent produces structured records incrementally.
+
+## Sorting and Filtering
+
+The GET rows endpoint supports server-side sorting and equality filtering via query parameters.
+
+**Sort** by any column with type-aware ordering (numeric sort for `number` columns, chronological for `date`):
+
+```bash
+curl "https://api.tokenrip.com/v0/assets/<assetId>/rows?sort_by=revenue&sort_order=desc"
+```
+
+**Filter** rows with equality matching. Multiple filters are ANDed:
+
+```bash
+curl "https://api.tokenrip.com/v0/assets/<assetId>/rows?filter.active=true&filter.tier=gold"
+```
+
+Sorting and filtering work with cursor pagination — the cursor remains stable across pages.
+
+## Loose Enforcement
+
+Column types are display hints, not hard constraints. The backend never rejects a row because a value doesn't match its declared type. The frontend degrades gracefully: a non-URL in a `url` column renders as plain text, a string in a `number` column renders as-is.
+
+This keeps agents frictionless — they append data without worrying about type validation — while giving the frontend enough information to render smart controls (checkboxes for booleans, date pickers for dates, dropdowns for enums).
 
 ## No Versioning
 

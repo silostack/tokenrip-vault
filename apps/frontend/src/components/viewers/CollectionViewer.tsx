@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import {
   useReactTable,
   getCoreRowModel,
@@ -37,6 +37,12 @@ export function CollectionViewer({ asset, initialRows, initialNextCursor }: Prop
   const [editingCell, setEditingCell] = useState<{ rowId: string; colName: string } | null>(null)
   const [editValue, setEditValue] = useState('')
 
+  // Server-side sort/filter state — used when data is paginated
+  const [serverSort, setServerSort] = useState<{ id: string; desc: boolean } | null>(null)
+  const [serverFilters, setServerFilters] = useState<Record<string, string>>({})
+  const [allDataLoaded, setAllDataLoaded] = useState(!initialNextCursor)
+  const useServerSide = !allDataLoaded
+
   const isOperator = useMemo(() => hasSession(), [])
 
   // Initial load if no SSR data
@@ -45,26 +51,54 @@ export function CollectionViewer({ asset, initialRows, initialNextCursor }: Prop
     fetchCollectionRows(asset.id, { limit: 100 }).then((res) => {
       setRows(res.rows)
       setNextCursor(res.nextCursor)
+      setAllDataLoaded(!res.nextCursor)
       setLoading(false)
     })
+  }, [asset.id])
+
+  // Server-side sort/filter refetch
+  const refetchWithParams = useCallback(async (
+    sort: { id: string; desc: boolean } | null,
+    filters: Record<string, string>,
+  ) => {
+    setLoading(true)
+    const res = await fetchCollectionRows(asset.id, {
+      limit: 100,
+      sortBy: sort?.id,
+      sortOrder: sort ? (sort.desc ? 'desc' : 'asc') : undefined,
+      filters: Object.keys(filters).length > 0 ? filters : undefined,
+    })
+    setRows(res.rows)
+    setNextCursor(res.nextCursor)
+    setLoading(false)
   }, [asset.id])
 
   const loadMore = useCallback(async () => {
     if (!nextCursor || loadingMore) return
     setLoadingMore(true)
-    const res = await fetchCollectionRows(asset.id, { limit: 100, after: nextCursor })
+    const res = await fetchCollectionRows(asset.id, {
+      limit: 100,
+      after: nextCursor,
+      sortBy: serverSort?.id,
+      sortOrder: serverSort ? (serverSort.desc ? 'desc' : 'asc') : undefined,
+      filters: Object.keys(serverFilters).length > 0 ? serverFilters : undefined,
+    })
     setRows((prev) => [...prev, ...res.rows])
     setNextCursor(res.nextCursor)
+    if (!res.nextCursor) setAllDataLoaded(true)
     setLoadingMore(false)
-  }, [asset.id, nextCursor, loadingMore])
+  }, [asset.id, nextCursor, loadingMore, serverSort, serverFilters])
+
+  const rowsRef = useRef(rows)
+  rowsRef.current = rows
 
   const handleCellSave = useCallback(async (rowId: string, colName: string, value: string) => {
     setEditingCell(null)
-    const row = rows.find((r) => r.id === rowId)
+    const row = rowsRef.current.find((r) => r.id === rowId)
     if (!row || String(row.data[colName] ?? '') === value) return
     const updated = await updateCollectionRow(asset.id, rowId, { [colName]: value })
     setRows((prev) => prev.map((r) => (r.id === rowId ? { ...r, data: updated.data, updatedAt: updated.updatedAt } : r)))
-  }, [asset.id, rows])
+  }, [asset.id])
 
   const getSelectedIds = useCallback((): string[] => {
     return Object.keys(rowSelection).filter((k) => rowSelection[k]).map((idx) => rows[Number(idx)]?.id).filter(Boolean)
@@ -127,6 +161,22 @@ export function CollectionViewer({ asset, initialRows, initialNextCursor }: Prop
         header: col.name,
         cell: ({ row, getValue }) => {
           const value = getValue()
+          const display = value == null ? '' : String(value)
+
+          // Boolean — always a checkbox, no edit mode flow
+          if (col.type === 'boolean') {
+            const checked = isTruthy(value)
+            return (
+              <input
+                type="checkbox"
+                checked={checked}
+                disabled={!isOperator}
+                onChange={() => handleCellSave(row.original.id, col.name, String(!checked))}
+                className="accent-signal"
+              />
+            )
+          }
+
           const isEditing = editingCell?.rowId === row.original.id && editingCell?.colName === col.name
 
           if (isEditing && isOperator) {
@@ -135,12 +185,25 @@ export function CollectionViewer({ asset, initialRows, initialNextCursor }: Prop
                 <select
                   autoFocus
                   value={editValue}
-                  onChange={(e) => setEditValue(e.target.value)}
-                  onBlur={() => handleCellSave(row.original.id, col.name, editValue)}
+                  onChange={(e) => handleCellSave(row.original.id, col.name, e.target.value)}
+                  onBlur={() => setEditingCell(null)}
                   className="w-full bg-transparent border-none outline-none text-sm"
                 >
                   {col.values.map((v) => <option key={v} value={v}>{v}</option>)}
                 </select>
+              )
+            }
+            if (col.type === 'date') {
+              return (
+                <input
+                  autoFocus
+                  type="date"
+                  value={editValue}
+                  onChange={(e) => setEditValue(e.target.value)}
+                  onBlur={() => handleCellSave(row.original.id, col.name, editValue)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') handleCellSave(row.original.id, col.name, editValue) }}
+                  className="w-full bg-transparent border-none outline-none text-sm"
+                />
               )
             }
             return (
@@ -156,12 +219,15 @@ export function CollectionViewer({ asset, initialRows, initialNextCursor }: Prop
             )
           }
 
-          const display = value == null ? '' : String(value)
+          // Display mode — graceful fallbacks for type mismatches
+          const isUrl = col.type === 'url' && display && /^https?:\/\//.test(display)
+          const formattedDate = col.type === 'date' && display ? formatDate(display) : null
 
           if (!isOperator) {
-            if (col.type === 'url' && display) {
+            if (isUrl) {
               return <a href={display} target="_blank" rel="noopener noreferrer" className="text-signal underline">{display}</a>
             }
+            if (formattedDate) return <span>{formattedDate}</span>
             return <span>{display}</span>
           }
 
@@ -170,38 +236,91 @@ export function CollectionViewer({ asset, initialRows, initialNextCursor }: Prop
               className="cursor-text block w-full"
               onClick={() => {
                 setEditingCell({ rowId: row.original.id, colName: col.name })
-                setEditValue(display)
+                // For date, convert to YYYY-MM-DD for native picker
+                if (col.type === 'date' && display) {
+                  const d = new Date(display)
+                  setEditValue(!isNaN(d.getTime()) ? d.toISOString().slice(0, 10) : display)
+                } else {
+                  setEditValue(display)
+                }
               }}
             >
-              {col.type === 'url' && display ? (
+              {isUrl ? (
                 <a href={display} target="_blank" rel="noopener noreferrer" className="text-signal underline" onClick={(e) => e.stopPropagation()}>
                   {display}
                 </a>
+              ) : formattedDate ? (
+                formattedDate
               ) : (
                 display || <span className="text-text-ghost">&mdash;</span>
               )}
             </span>
           )
         },
-        filterFn: col.type === 'enum' ? 'equals' : 'includesString',
+        filterFn: col.type === 'enum' || col.type === 'boolean' ? 'equals' : 'includesString',
       }))
     }
 
     return cols
   }, [schema, editingCell, editValue, isOperator, handleCellSave])
 
+  // Server-side sorting handler — refetch instead of client-side sort
+  const handleSortingChange = useCallback((updater: any) => {
+    const next = typeof updater === 'function' ? updater(sorting) : updater
+    setSorting(next)
+    if (useServerSide && next.length > 0) {
+      const s = { id: next[0].id, desc: next[0].desc }
+      setServerSort(s)
+      refetchWithParams(s, serverFilters)
+    } else if (useServerSide && next.length === 0) {
+      setServerSort(null)
+      refetchWithParams(null, serverFilters)
+    }
+  }, [sorting, useServerSide, serverFilters, refetchWithParams])
+
+  // Server-side filter handler — debounced refetch
+  const filterTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  useEffect(() => () => { if (filterTimeoutRef.current) clearTimeout(filterTimeoutRef.current) }, [])
+
+  const handleColumnFiltersChange = useCallback((updater: any) => {
+    const next = typeof updater === 'function' ? updater(columnFilters) : updater
+    setColumnFilters(next)
+    if (useServerSide) {
+      const filters: Record<string, string> = {}
+      for (const f of next) {
+        if (f.value != null && f.value !== '') filters[f.id] = String(f.value)
+      }
+      setServerFilters(filters)
+      if (filterTimeoutRef.current) clearTimeout(filterTimeoutRef.current)
+      filterTimeoutRef.current = setTimeout(() => refetchWithParams(serverSort, filters), 300)
+    }
+  }, [columnFilters, useServerSide, serverSort, refetchWithParams])
+
   const table = useReactTable({
     data: rows,
     columns,
     state: { sorting, columnFilters, rowSelection },
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    onSortingChange: handleSortingChange,
+    onColumnFiltersChange: handleColumnFiltersChange,
     onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: useServerSide ? undefined : getSortedRowModel(),
+    getFilteredRowModel: useServerSide ? undefined : getFilteredRowModel(),
+    manualSorting: useServerSide,
+    manualFiltering: useServerSide,
     enableRowSelection: isOperator,
   })
+
+  // Mobile sticky column helpers
+  const firstDataColId = schema[0]?.name
+  const stickyClass = useCallback((colId: string) => {
+    if (colId === 'select') return 'sticky left-0 z-10 bg-inherit md:static md:z-auto'
+    if (colId === firstDataColId) {
+      const left = isOperator ? 'left-[32px]' : 'left-0'
+      return `sticky ${left} z-10 bg-inherit md:static md:z-auto shadow-[2px_0_4px_-2px_rgba(0,0,0,0.1)] md:shadow-none`
+    }
+    return ''
+  }, [firstDataColId, isOperator])
 
   const selectedCount = Object.values(rowSelection).filter(Boolean).length
 
@@ -255,7 +374,7 @@ export function CollectionViewer({ asset, initialRows, initialNextCursor }: Prop
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id} className="border-b border-surface-1">
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id} className="text-left font-medium text-text-secondary px-3 py-2 text-xs whitespace-nowrap" style={{ width: header.getSize() }}>
+                  <th key={header.id} className={`text-left font-medium text-text-secondary px-3 py-2 text-xs whitespace-nowrap ${stickyClass(header.id)}`} style={{ width: header.getSize() }}>
                     {header.isPlaceholder ? null : (
                       <div>
                         <button
@@ -275,10 +394,10 @@ export function CollectionViewer({ asset, initialRows, initialNextCursor }: Prop
             <tr className="border-b border-surface-1 bg-surface-0">
               {table.getHeaderGroups()[0]?.headers.map((header) => {
                 const col = schema.find((c) => c.name === header.id)
-                if (!col) return <th key={header.id} className="px-3 py-1" />
+                if (!col) return <th key={header.id} className={`px-3 py-1 ${stickyClass(header.id)}`} />
                 if (col.type === 'enum' && col.values) {
                   return (
-                    <th key={header.id} className="px-3 py-1">
+                    <th key={header.id} className={`px-3 py-1 ${stickyClass(header.id)}`}>
                       <select
                         value={(header.column.getFilterValue() as string) ?? ''}
                         onChange={(e) => header.column.setFilterValue(e.target.value || undefined)}
@@ -290,8 +409,23 @@ export function CollectionViewer({ asset, initialRows, initialNextCursor }: Prop
                     </th>
                   )
                 }
+                if (col.type === 'boolean') {
+                  return (
+                    <th key={header.id} className={`px-3 py-1 ${stickyClass(header.id)}`}>
+                      <select
+                        value={(header.column.getFilterValue() as string) ?? ''}
+                        onChange={(e) => header.column.setFilterValue(e.target.value || undefined)}
+                        className="w-full bg-transparent border border-surface-2 rounded px-1.5 py-0.5 text-xs text-text-primary outline-none"
+                      >
+                        <option value="">All</option>
+                        <option value="true">true</option>
+                        <option value="false">false</option>
+                      </select>
+                    </th>
+                  )
+                }
                 return (
-                  <th key={header.id} className="px-3 py-1">
+                  <th key={header.id} className={`px-3 py-1 ${stickyClass(header.id)}`}>
                     <input
                       type="text"
                       placeholder="Filter..."
@@ -308,7 +442,7 @@ export function CollectionViewer({ asset, initialRows, initialNextCursor }: Prop
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id} className="border-b border-surface-0 hover:bg-surface-0/50">
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="px-3 py-1.5 text-text-primary text-sm">
+                  <td key={cell.id} className={`px-3 py-1.5 text-text-primary text-sm ${stickyClass(cell.column.id)}`}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
@@ -339,6 +473,19 @@ function SortIcon({ sorted, headerId }: { sorted: false | 'asc' | 'desc'; header
   if (sorted === 'desc') return <ArrowDown size={12} />
   if (headerId !== 'select') return <ArrowUpDown size={12} className="text-text-ghost" />
   return null
+}
+
+function isTruthy(value: unknown): boolean {
+  if (typeof value === 'boolean') return value
+  if (typeof value === 'number') return value === 1
+  const s = String(value ?? '').toLowerCase()
+  return s === 'true' || s === '1' || s === 'yes'
+}
+
+function formatDate(value: string): string | null {
+  const d = new Date(value)
+  if (isNaN(d.getTime())) return null
+  return d.toLocaleDateString()
 }
 
 function csvEscape(str: string): string {

@@ -228,11 +228,19 @@ function InstallBlock() {
         <span className="text-foreground/30"># Skills (Claude Code / Codex / Cursor)</span>{'\n'}
         npx skills add tokenrip/cli{'\n'}
         {'\n'}
+        <span className="text-foreground/30"># OpenClaw</span>{'\n'}
+        npx clawhub@latest install tokenrip/cli{'\n'}
+        {'\n'}
         <span className="text-foreground/30"># CLI</span>{'\n'}
         npm install -g @tokenrip/cli{'\n'}
         {'\n'}
         <span className="text-foreground/30"># MCP Server</span>{'\n'}
         https://api.tokenrip.com/mcp
+        {/*
+        {'\n'}
+        <span className="text-foreground/30"># Hermes</span>{'\n'}
+        hermes skills install tokenrip/cli
+        */}
       </pre>
     </div>
   )

@@ -3,6 +3,7 @@ import {
   Post,
   Get,
   Patch,
+  Delete,
   Param,
   Body,
   Query,
@@ -14,7 +15,7 @@ import { RequestAuth } from '../auth/auth.guard';
 import { ThreadService } from '../service/thread.service';
 import { ParticipantService } from '../service/participant.service';
 import { MessageService } from '../service/message.service';
-import { RefService } from '../service/ref.service';
+import { RefService, serializeRef } from '../service/ref.service';
 import { AgentService } from '../service/agent.service';
 import { OperatorBindingService } from '../service/operator-binding.service';
 
@@ -30,7 +31,10 @@ export class ThreadController {
   ) {}
 
   private async serializeThread(thread: any) {
-    const participants = await this.participantService.listByThread(thread.id);
+    const [participants, refs] = await Promise.all([
+      this.participantService.listByThread(thread.id),
+      this.refService.findAllForThread(thread.id),
+    ]);
     return {
       id: thread.id,
       created_by: thread.createdBy,
@@ -43,6 +47,7 @@ export class ThreadController {
         role: p.role ?? null,
         joined_at: p.joinedAt,
       })),
+      refs: refs.map(serializeRef),
       created_at: thread.createdAt,
       updated_at: thread.updatedAt,
     };
@@ -53,7 +58,7 @@ export class ThreadController {
   @Transactional()
   async create(
     @AuthAgent() agent: { id: string },
-    @Body() body: { participants?: string[]; metadata?: Record<string, unknown>; message?: { body: string; intent?: string; type?: string } },
+    @Body() body: { participants?: string[]; metadata?: Record<string, unknown>; message?: { body: string; intent?: string; type?: string }; refs?: Array<{ type: string; target_id: string; version?: number }> },
   ) {
     const thread = await this.threadService.create(agent.id, { metadata: body.metadata });
 
@@ -64,6 +69,10 @@ export class ThreadController {
         const agentId = await this.agentService.resolveByIdOrAlias(entry);
         await this.participantService.addAgent(thread, agentId);
       }
+    }
+
+    if (body.refs?.length) {
+      await this.refService.addRefs('thread', thread.id, body.refs);
     }
 
     if (body.message) {
@@ -290,5 +299,38 @@ export class ThreadController {
         joined_at: participant.joinedAt,
       },
     };
+  }
+
+  @Auth('agent', 'token')
+  @Post(':threadId/refs')
+  async addRefs(
+    @Param('threadId') threadId: string,
+    @Body() body: { refs?: Array<{ type: string; target_id: string; version?: number }> },
+    @ReqAuth() auth: RequestAuth,
+  ) {
+    if (!body?.refs?.length) {
+      throw new BadRequestException({
+        ok: false,
+        error: 'MISSING_FIELD',
+        message: 'refs array is required',
+      });
+    }
+
+    await this.threadService.findById(threadId, auth);
+    const refs = await this.refService.addRefs('thread', threadId, body.refs);
+
+    return { ok: true, data: refs.map(serializeRef) };
+  }
+
+  @Auth('agent', 'token')
+  @Delete(':threadId/refs/:refId')
+  async removeRef(
+    @Param('threadId') threadId: string,
+    @Param('refId') refId: string,
+    @ReqAuth() auth: RequestAuth,
+  ) {
+    await this.threadService.findById(threadId, auth);
+    await this.refService.removeRef(refId);
+    return { ok: true };
   }
 }

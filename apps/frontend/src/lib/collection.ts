@@ -2,7 +2,7 @@ import api from '@/utils/api'
 
 export interface CollectionSchema {
   name: string
-  type: 'text' | 'number' | 'date' | 'url' | 'enum'
+  type: 'text' | 'number' | 'date' | 'url' | 'enum' | 'boolean'
   position: number
   values?: string[]
 }
@@ -22,11 +22,24 @@ export interface CollectionRowsResponse {
 
 export async function fetchCollectionRows(
   publicId: string,
-  opts?: { limit?: number; after?: string },
+  opts?: {
+    limit?: number
+    after?: string
+    sortBy?: string
+    sortOrder?: 'asc' | 'desc'
+    filters?: Record<string, string>
+  },
 ): Promise<CollectionRowsResponse> {
   const params: Record<string, string> = {}
   if (opts?.limit) params.limit = String(opts.limit)
   if (opts?.after) params.after = opts.after
+  if (opts?.sortBy) params.sort_by = opts.sortBy
+  if (opts?.sortOrder) params.sort_order = opts.sortOrder
+  if (opts?.filters) {
+    for (const [k, v] of Object.entries(opts.filters)) {
+      params[`filter.${k}`] = v
+    }
+  }
 
   const { data } = await api.get(`/v0/assets/${publicId}/rows`, { params })
   return data.data

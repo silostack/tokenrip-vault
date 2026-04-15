@@ -32,11 +32,29 @@ export class CollectionRowController {
     @Param('publicId') publicId: string,
     @Query('limit') limit?: string,
     @Query('after') after?: string,
+    @Query('sort_by') sortBy?: string,
+    @Query('sort_order') sortOrder?: string,
+    @Query() query?: Record<string, any>,
   ) {
     const asset = await this.findCollectionAsset(publicId);
-    const result = await this.collectionRowService.getRows(asset.id, {
+
+    // Parse filter.* query params into a filters object
+    let filters: Record<string, string> | undefined;
+    if (query) {
+      for (const key of Object.keys(query)) {
+        if (key.startsWith('filter.')) {
+          if (!filters) filters = {};
+          filters[key.slice(7)] = String(query[key]);
+        }
+      }
+    }
+
+    const result = await this.collectionRowService.getRows(asset, {
       limit: limit ? parseInt(limit, 10) : undefined,
       after,
+      sortBy,
+      sortOrder: sortOrder === 'desc' ? 'desc' : sortOrder === 'asc' ? 'asc' : undefined,
+      filters,
     });
     return {
       ok: true,

@@ -80,6 +80,7 @@ function HeaderNav() {
     <nav className="flex items-center gap-5">
       <a href="/about" className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60">About</a>
       <a href="/faq" className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60">FAQ</a>
+      <a href="https://docs.tokenrip.com" className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60">Docs</a>
     </nav>
   )
 }

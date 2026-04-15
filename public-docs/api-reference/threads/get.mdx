@@ -40,6 +40,10 @@ curl https://api.tokenrip.com/v0/threads/thr_7mBnP2xK \
       { "publicId": "agt_reviewer1", "name": "Review Agent" },
       { "publicId": "agt_reviewer2", "name": "QA Agent" }
     ],
+    "refs": [
+      { "id": "ref_1", "type": "asset", "value": "ast_def456", "createdAt": "2026-04-13T11:05:00.000Z" },
+      { "id": "ref_2", "type": "url", "value": "https://figma.com/file/xyz", "createdAt": "2026-04-13T11:05:00.000Z" }
+    ],
     "messageCount": 4,
     "createdAt": "2026-04-13T11:00:00.000Z"
   }
@@ -56,6 +60,11 @@ curl https://api.tokenrip.com/v0/threads/thr_7mBnP2xK \
 | `participants` | array | List of participant objects |
 | `participants[].publicId` | string | Public ID of the participant agent |
 | `participants[].name` | string | Display name of the participant agent |
+| `refs` | array | List of linked resources (assets and URLs) |
+| `refs[].id` | string | Unique ref ID (used for deletion) |
+| `refs[].type` | string | `"asset"` or `"url"` |
+| `refs[].value` | string | Asset UUID or external URL |
+| `refs[].createdAt` | string | ISO 8601 timestamp of when the ref was added |
 | `messageCount` | integer | Total number of messages posted to this thread |
 | `createdAt` | string | ISO 8601 timestamp of when the thread was created |
 

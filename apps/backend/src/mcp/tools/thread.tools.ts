@@ -96,6 +96,7 @@ export function registerThreadTools(server: McpServer, services: McpServices, ag
         type: z.string().optional(),
       }).optional().describe('Initial message to post in the thread'),
       metadata: z.string().optional().describe('Thread metadata as JSON string'),
+      refs: z.string().optional().describe('JSON array of refs to link: [{"type":"asset","target_id":"uuid"}]'),
     },
     async (args) => {
       try {
@@ -111,6 +112,13 @@ export function registerThreadTools(server: McpServer, services: McpServices, ag
           await Promise.all(
             resolvedIds.map((id) => services.participantService.addAgent(thread, id)),
           );
+        }
+
+        if (args.refs) {
+          const refs = JSON.parse(args.refs);
+          if (Array.isArray(refs) && refs.length) {
+            await services.refService.addRefs('thread', thread.id, refs);
+          }
         }
 
         if (args.message) {
@@ -209,6 +217,47 @@ export function registerThreadTools(server: McpServer, services: McpServices, ag
         };
       } catch (err: any) {
         return { content: [{ type: 'text' as const, text: `Error: ${err.message}` }], isError: true };
+      }
+    },
+  );
+
+  server.tool(
+    'thread_add_refs',
+    'Add reference links (assets or URLs) to a thread.',
+    {
+      threadId: z.string().describe('Thread UUID'),
+      refs: z.string().describe('JSON array of refs: [{"type":"asset","target_id":"uuid"}, {"type":"url","target_id":"https://..."}]'),
+    },
+    async (args) => {
+      try {
+        const thread = await services.threadService.findById(args.threadId, { agent: { id: agentId } });
+        const refs = JSON.parse(args.refs);
+        if (!Array.isArray(refs) || !refs.length) {
+          return { content: [{ type: 'text', text: 'Error: refs must be a non-empty JSON array' }], isError: true };
+        }
+        const created = await services.refService.addRefs('thread', thread.id, refs);
+        const data = created.map((r) => ({ id: r.id, type: r.type, target_id: r.targetId }));
+        return { content: [{ type: 'text', text: JSON.stringify({ ok: true, refs: data }) }] };
+      } catch (err: any) {
+        return { content: [{ type: 'text', text: `Error: ${err.message}` }], isError: true };
+      }
+    },
+  );
+
+  server.tool(
+    'thread_remove_ref',
+    'Remove a reference link from a thread.',
+    {
+      threadId: z.string().describe('Thread UUID'),
+      refId: z.string().describe('Ref UUID to remove'),
+    },
+    async (args) => {
+      try {
+        await services.threadService.findById(args.threadId, { agent: { id: agentId } });
+        await services.refService.removeRef(args.refId);
+        return { content: [{ type: 'text', text: JSON.stringify({ ok: true }) }] };
+      } catch (err: any) {
+        return { content: [{ type: 'text', text: `Error: ${err.message}` }], isError: true };
       }
     },
   );

@@ -22,7 +22,7 @@ export function registerCollectionTools(server: McpServer, services: McpServices
     'Create a new collection (structured data table). Returns a shareable URL. Agents append rows via collection_append_rows.',
     {
       title: z.string().describe('Collection title'),
-      schemaJson: z.string().describe('JSON array of column definitions, e.g. [{"name":"company","type":"text"},{"name":"relevance","type":"enum","values":["high","medium","low"]}]. Types: text, number, date, url, enum'),
+      schemaJson: z.string().describe('JSON array of column definitions, e.g. [{"name":"company","type":"text"},{"name":"relevance","type":"enum","values":["high","medium","low"]}]. Types: text, number, date, url, enum, boolean'),
       description: z.string().optional().describe('Collection description'),
       parentAssetId: z.string().optional().describe('Parent asset UUID for provenance'),
       creatorContext: z.string().optional().describe('Context about how/why this was created'),
@@ -83,11 +83,14 @@ export function registerCollectionTools(server: McpServer, services: McpServices
 
   server.tool(
     'collection_get_rows',
-    'Get rows from a collection with optional pagination.',
+    'Get rows from a collection with optional pagination, sorting, and filtering.',
     {
       publicId: z.string().describe('Collection asset UUID'),
       limit: z.number().optional().describe('Max rows to return (default 100, max 500)'),
       after: z.string().optional().describe('Cursor: row UUID to start after'),
+      sortBy: z.string().optional().describe('Column name to sort by'),
+      sortOrder: z.enum(['asc', 'desc']).optional().describe('Sort direction (default: asc)'),
+      filters: z.record(z.string()).optional().describe('Equality filters as {column: value} object, e.g. {"ignored":"false"}'),
     },
     async (args) => {
       try {
@@ -95,9 +98,12 @@ export function registerCollectionTools(server: McpServer, services: McpServices
         if (asset.type !== AssetType.COLLECTION) {
           throw new Error('Asset is not a collection');
         }
-        const result = await services.collectionRowService.getRows(asset.id, {
+        const result = await services.collectionRowService.getRows(asset, {
           limit: args.limit,
           after: args.after,
+          sortBy: args.sortBy,
+          sortOrder: args.sortOrder,
+          filters: args.filters,
         });
         return {
           content: [{ type: 'text', text: JSON.stringify({

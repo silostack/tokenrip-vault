@@ -193,6 +193,101 @@ describe('collections', () => {
     });
   });
 
+  describe('sort and filter', () => {
+    let sortCollectionId: string;
+
+    beforeAll(async () => {
+      const schema = [
+        { name: 'company', type: 'text' },
+        { name: 'revenue', type: 'number' },
+        { name: 'discovered', type: 'date' },
+        { name: 'active', type: 'boolean' },
+        { name: 'tier', type: 'enum', values: ['gold', 'silver', 'bronze'] },
+      ];
+      const { body } = await createCollection(schema, 'Sort Test');
+      sortCollectionId = body.data.id;
+
+      await appendRows(sortCollectionId, [
+        { company: 'Alpha', revenue: '100', discovered: '2025-01-15', active: 'true', tier: 'gold' },
+        { company: 'Charlie', revenue: '50', discovered: '2025-03-01', active: 'false', tier: 'bronze' },
+        { company: 'Bravo', revenue: '200', discovered: '2025-02-10', active: 'true', tier: 'silver' },
+        { company: 'Delta', revenue: '10', discovered: '2025-04-05', active: 'false', tier: 'gold' },
+        { company: 'Echo', revenue: '75', discovered: '2025-01-30', active: 'true', tier: 'bronze' },
+      ]);
+    });
+
+    test('sort by text column ascending', async () => {
+      const { body } = await getRows(sortCollectionId, { sort_by: 'company', sort_order: 'asc' });
+      const names = body.data.rows.map((r: any) => r.data.company);
+      expect(names).toEqual(['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo']);
+    });
+
+    test('sort by text column descending', async () => {
+      const { body } = await getRows(sortCollectionId, { sort_by: 'company', sort_order: 'desc' });
+      const names = body.data.rows.map((r: any) => r.data.company);
+      expect(names).toEqual(['Echo', 'Delta', 'Charlie', 'Bravo', 'Alpha']);
+    });
+
+    test('sort by number column (numeric, not lexicographic)', async () => {
+      const { body } = await getRows(sortCollectionId, { sort_by: 'revenue', sort_order: 'asc' });
+      const revenues = body.data.rows.map((r: any) => r.data.revenue);
+      expect(revenues).toEqual(['10', '50', '75', '100', '200']);
+    });
+
+    test('sort by date column (chronological)', async () => {
+      const { body } = await getRows(sortCollectionId, { sort_by: 'discovered', sort_order: 'asc' });
+      const dates = body.data.rows.map((r: any) => r.data.discovered);
+      expect(dates).toEqual(['2025-01-15', '2025-01-30', '2025-02-10', '2025-03-01', '2025-04-05']);
+    });
+
+    test('filter by equality', async () => {
+      const { body } = await getRows(sortCollectionId, { 'filter.tier': 'gold' });
+      expect(body.data.rows).toHaveLength(2);
+      for (const row of body.data.rows) {
+        expect(row.data.tier).toBe('gold');
+      }
+    });
+
+    test('multiple filters ANDed', async () => {
+      const { body } = await getRows(sortCollectionId, { 'filter.tier': 'gold', 'filter.active': 'true' });
+      expect(body.data.rows).toHaveLength(1);
+      expect(body.data.rows[0].data.company).toBe('Alpha');
+    });
+
+    test('filter + sort combined', async () => {
+      const { body } = await getRows(sortCollectionId, { 'filter.active': 'true', sort_by: 'company', sort_order: 'desc' });
+      const names = body.data.rows.map((r: any) => r.data.company);
+      expect(names).toEqual(['Echo', 'Bravo', 'Alpha']);
+    });
+
+    test('pagination with custom sort', async () => {
+      const page1 = await getRows(sortCollectionId, { sort_by: 'company', sort_order: 'asc', limit: '3' });
+      expect(page1.body.data.rows).toHaveLength(3);
+      const names1 = page1.body.data.rows.map((r: any) => r.data.company);
+      expect(names1).toEqual(['Alpha', 'Bravo', 'Charlie']);
+      expect(page1.body.data.nextCursor).toBeTruthy();
+
+      const page2 = await getRows(sortCollectionId, { sort_by: 'company', sort_order: 'asc', limit: '3', after: page1.body.data.nextCursor });
+      expect(page2.body.data.rows).toHaveLength(2);
+      const names2 = page2.body.data.rows.map((r: any) => r.data.company);
+      expect(names2).toEqual(['Delta', 'Echo']);
+    });
+
+    test('filter with no matches returns empty', async () => {
+      const { body } = await getRows(sortCollectionId, { 'filter.company': 'NonExistent' });
+      expect(body.data.rows).toHaveLength(0);
+      expect(body.data.nextCursor).toBeNull();
+    });
+
+    test('boolean filter', async () => {
+      const { body } = await getRows(sortCollectionId, { 'filter.active': 'false' });
+      expect(body.data.rows).toHaveLength(2);
+      for (const row of body.data.rows) {
+        expect(row.data.active).toBe('false');
+      }
+    });
+  });
+
   describe('update row', () => {
     let rowId: string;
 
