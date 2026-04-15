@@ -51,7 +51,7 @@ export class AssetController {
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: MAX_FILE_SIZE } }))
   async create(
     @UploadedFile() file: Express.Multer.File | undefined,
-    @Body() body?: { type?: string; content?: string; title?: string; mimeType?: string; parentAssetId?: string; creatorContext?: string; inputReferences?: string[] },
+    @Body() body?: { type?: string; content?: string; title?: string; mimeType?: string; parentAssetId?: string; creatorContext?: string; inputReferences?: string[]; schema?: Array<{ name: string; type: string; values?: string[] }> },
     @AuthAgent() agent: { id: string },
   ) {
     if (file) {
@@ -66,8 +66,23 @@ export class AssetController {
       return { ok: true, data: this.assetCreatedResponse(asset) };
     }
 
+    if (body?.type === 'collection') {
+      if (!body.schema || !Array.isArray(body.schema)) {
+        throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'schema is required for collections' });
+      }
+      const asset = await this.assetService.createCollection({
+        schema: body.schema,
+        title: body.title,
+        ownerId: agent.id,
+        parentAssetId: body.parentAssetId,
+        creatorContext: body.creatorContext,
+        inputReferences: body.inputReferences,
+      });
+      return { ok: true, data: this.assetCreatedResponse(asset) };
+    }
+
     if (body?.content && body?.type) {
-      if (!Object.values(AssetType).includes(body.type as AssetType) || body.type === AssetType.FILE) {
+      if (!Object.values(AssetType).includes(body.type as AssetType) || body.type === AssetType.FILE || body.type === AssetType.COLLECTION) {
         throw new BadRequestException({ ok: false, error: 'INVALID_TYPE', message: 'type must be: markdown, html, chart, code, text, or json' });
       }
       const asset = await this.assetService.createFromContent({

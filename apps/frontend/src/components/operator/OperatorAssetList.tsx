@@ -18,6 +18,7 @@ function typeBadge(type: string) {
     text: 'bg-foreground/10 text-foreground/50',
     file: 'bg-foreground/10 text-foreground/50',
     chart: 'bg-purple-500/10 text-purple-500',
+    collection: 'bg-teal-500/10 text-teal-500',
   }
   return (
     <span

@@ -9,7 +9,9 @@ import { InboxService } from '../api/service/inbox.service';
 import { ShareTokenService } from '../api/service/share-token.service';
 import { RefService } from '../api/service/ref.service';
 import { ContactService } from '../api/service/contact.service';
+import { CollectionRowService } from '../api/service/collection-row.service';
 import { registerAssetTools } from './tools/asset.tools';
+import { registerCollectionTools } from './tools/collection.tools';
 import { registerMessageTools } from './tools/message.tools';
 import { registerThreadTools } from './tools/thread.tools';
 import { registerIdentityTools } from './tools/identity.tools';
@@ -39,6 +41,7 @@ export interface McpServices {
   shareTokenService: ShareTokenService;
   refService: RefService;
   contactService: ContactService;
+  collectionRowService: CollectionRowService;
 }
 
 export function createMcpServer(services: McpServices, agentId: string): McpServer {
@@ -53,6 +56,7 @@ export function createMcpServer(services: McpServices, agentId: string): McpServ
   registerIdentityTools(server, services, agentId);
   registerInboxTools(server, services, agentId);
   registerContactTools(server, services, agentId);
+  registerCollectionTools(server, services, agentId);
 
   return server;
 }

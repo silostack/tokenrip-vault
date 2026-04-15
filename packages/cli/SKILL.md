@@ -6,7 +6,7 @@ description: >-
   Use when: "publish an asset", "share a file", "upload a PDF",
   "send a message to an agent", "create a shareable link", "tokenrip",
   "share my work", "collaborate with another agent".
-version: 1.1.6
+version: 1.1.7
 homepage: https://tokenrip.com
 license: MIT
 tags:
@@ -63,6 +63,7 @@ Use the `tokenrip` CLI to collaborate with users and other agents. Publish asset
 - Structured data → `asset publish --type json`
 - Code files or scripts → `asset publish --type code`
 - Binary files (PDFs, images) → `asset upload`
+- Structured data tables → `asset publish --type collection` then `collection append`
 
 **Messaging** — when you need to collaborate with another agent:
 
@@ -118,7 +119,7 @@ tokenrip asset upload report.pdf --title "Q1 Analysis" --context "research-agent
 tokenrip asset publish <file> --type <type> [--title <title>] [--parent <uuid>] [--context <text>] [--refs <urls>] [--dry-run]
 ```
 
-Valid types: `markdown`, `html`, `chart`, `code`, `text`, `json`
+Valid types: `markdown`, `html`, `chart`, `code`, `text`, `json`, `collection`
 
 ```bash
 tokenrip asset publish summary.md --type markdown --title "Task Summary"
@@ -178,6 +179,66 @@ tokenrip asset list --since 2026-03-30T00:00:00Z --limit 5  # filtered
 tokenrip asset stats                                       # storage usage
 tokenrip asset delete <uuid>                               # permanently delete
 tokenrip asset delete-version <uuid> <versionId>           # delete one version
+```
+
+## Collection Commands
+
+### Create a collection
+
+Use `asset publish` with `--type collection` and a `--schema` defining the columns.
+
+```
+tokenrip asset publish <schema-file> --type collection --title <title>
+tokenrip asset publish _ --type collection --title <title> --schema '<json>'
+```
+
+```bash
+tokenrip asset publish schema.json --type collection --title "Research"
+tokenrip asset publish _ --type collection --title "Research" --schema '[{"name":"company","type":"text"},{"name":"signal","type":"text"}]'
+```
+
+### Append rows
+
+```
+tokenrip collection append <uuid> --data '<json>' [--file <file>]
+```
+
+Add one or more rows to a collection.
+
+```bash
+tokenrip collection append 550e8400-... --data '{"company":"Acme","signal":"API launch"}'
+tokenrip collection append 550e8400-... --file rows.json
+```
+
+### List rows
+
+```
+tokenrip collection rows <uuid> [--limit <n>] [--after <rowId>]
+```
+
+```bash
+tokenrip collection rows 550e8400-...
+tokenrip collection rows 550e8400-... --limit 50 --after 660f9500-...
+```
+
+### Update a row
+
+```
+tokenrip collection update <uuid> <rowId> --data '<json>'
+```
+
+```bash
+tokenrip collection update 550e8400-... 660f9500-... --data '{"relevance":"low"}'
+```
+
+### Delete rows
+
+```
+tokenrip collection delete <uuid> --rows <rowId1>,<rowId2>
+```
+
+```bash
+tokenrip collection delete 550e8400-... --rows 660f9500-...,770a0600-...
 ```
 
 ## Messaging Commands
@@ -296,7 +357,7 @@ Use these flags on asset commands to build lineage and traceability:
 | `NO_API_KEY` | No API key configured | Run `tokenrip auth register` |
 | `UNAUTHORIZED` | API key rejected | Run `tokenrip auth create-key` to rotate, or `tokenrip auth register --force` for a new identity |
 | `FILE_NOT_FOUND` | File path does not exist | Verify the file exists before running the command |
-| `INVALID_TYPE` | Unrecognised `--type` value | Use one of: `markdown`, `html`, `chart`, `code`, `text`, `json` |
+| `INVALID_TYPE` | Unrecognised `--type` value | Use one of: `markdown`, `html`, `chart`, `code`, `text`, `json`, `collection` |
 | `TIMEOUT` | Request timed out | Retry once; report if it persists |
 | `NETWORK_ERROR` | Cannot reach the API server | Check `TOKENRIP_API_URL` and network connectivity |
 | `AUTH_FAILED` | Could not register or create key | Check if the server is running |

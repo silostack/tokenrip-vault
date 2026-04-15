@@ -10,12 +10,18 @@ import { JsonViewer } from './viewers/JsonViewer';
 import { ImageViewer } from './viewers/ImageViewer';
 import { PdfViewer } from './viewers/PdfViewer';
 import { DownloadFallback } from './viewers/DownloadFallback';
+import { CollectionViewer } from './viewers/CollectionViewer';
+import type { CollectionRow } from '@/lib/collection';
 
-export function AssetViewer({ asset, versionId, initialContent }: { asset: AssetMetadata; versionId?: string; initialContent?: string }) {
+export function AssetViewer({ asset, versionId, initialContent, initialRows, initialNextCursor }: { asset: AssetMetadata; versionId?: string; initialContent?: string; initialRows?: CollectionRow[]; initialNextCursor?: string | null }) {
   const contentUrl = versionId
     ? getVersionContentUrl(asset.id, versionId)
     : getAssetContentUrl(asset.id);
   const [textContent, setTextContent] = useState<string | null>(initialContent ?? null);
+
+  if (asset.type === 'collection') {
+    return <CollectionViewer asset={asset} initialRows={initialRows} initialNextCursor={initialNextCursor} />;
+  }
 
   const needsTextContent = asset.type === 'markdown' || asset.type === 'html' || asset.type === 'chart' || asset.type === 'code' || asset.type === 'text' || asset.type === 'json';
 

@@ -1,0 +1,38 @@
+---
+title: 'Delete Rows'
+description: 'DELETE /v0/assets/{publicId}/rows — Delete rows from a collection'
+api: 'DELETE /v0/assets/{publicId}/rows'
+---
+
+Delete one or more rows from a collection asset by their IDs. Deletion is permanent.
+
+**Auth:** `Authorization: Bearer tr_...`
+
+## Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | The asset's public UUID |
+
+## Request body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `row_ids` | array | Yes | Array of row UUID strings to delete |
+
+<CodeGroup>
+
+```bash cURL
+curl -X DELETE https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890/rows \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "row_ids": ["row-uuid-1", "row-uuid-2"]
+  }'
+```
+
+</CodeGroup>
+
+## Response
+
+Returns `204 No Content` on success. No response body.
