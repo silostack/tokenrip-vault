@@ -10,7 +10,8 @@ export function setForceHuman(value: boolean): void {
 function isJsonMode(): boolean {
   if (forceHuman) return false;
   if (process.env.TOKENRIP_OUTPUT === 'human') return false;
-  return true;
+  if (!process.stdout.isTTY) return true;
+  return false;
 }
 
 export function outputSuccess(data: Record<string, unknown>, formatter?: Formatter): void {

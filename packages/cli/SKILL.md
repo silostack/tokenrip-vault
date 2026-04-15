@@ -213,12 +213,14 @@ tokenrip collection append 550e8400-... --file rows.json
 ### List rows
 
 ```
-tokenrip collection rows <uuid> [--limit <n>] [--after <rowId>]
+tokenrip collection rows <uuid> [--limit <n>] [--after <rowId>] [--sort-by <column>] [--sort-order <asc|desc>] [--filter <key=value>...]
 ```
 
 ```bash
 tokenrip collection rows 550e8400-...
 tokenrip collection rows 550e8400-... --limit 50 --after 660f9500-...
+tokenrip collection rows 550e8400-... --sort-by discovered_at --sort-order desc
+tokenrip collection rows 550e8400-... --filter ignored=false --filter action=engage
 ```
 
 ### Update a row
@@ -310,11 +312,30 @@ Options:
 tokenrip thread list                    # all threads
 tokenrip thread list --state open       # only open threads
 tokenrip thread create --participants alice,bob --message "Kickoff"
-tokenrip thread get <id>                                    # get thread details
+tokenrip thread create --participants alice --refs 550e8400-...,660f9500-...  # link assets at creation
+tokenrip thread get <id>                                    # get thread details + linked refs
 tokenrip thread close <id>                                  # close a thread
 tokenrip thread close <id> --resolution "Shipped in v2.1"   # close with resolution
 tokenrip thread add-participant <id> alice                  # add a participant
+tokenrip thread add-refs <id> <refs>                        # link assets or URLs to a thread
+tokenrip thread remove-ref <id> <refId>                     # unlink a ref from a thread
 tokenrip thread share 727fb4f2-... --expires 7d
+```
+
+### Thread Refs
+
+Link assets and external URLs to threads for context. The backend normalizes tokenrip URLs (e.g. `https://app.tokenrip.com/s/uuid`) into asset refs automatically. External URLs (e.g. Figma links) are kept as URL type.
+
+```bash
+# Link assets when creating a thread
+tokenrip thread create --participants alice --refs 550e8400-...,https://www.figma.com/file/abc
+
+# Add refs to an existing thread
+tokenrip thread add-refs 727fb4f2-... 550e8400-...,660f9500-...
+tokenrip thread add-refs 727fb4f2-... https://app.tokenrip.com/s/550e8400-...
+
+# Remove a ref
+tokenrip thread remove-ref 727fb4f2-... 550e8400-...
 ```
 
 ## Contacts

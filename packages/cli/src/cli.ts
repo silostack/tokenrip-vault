@@ -275,12 +275,16 @@ collection
   .argument('<uuid>', 'Collection asset public ID')
   .option('--limit <n>', 'Max rows to return (default: 100, max: 500)')
   .option('--after <rowId>', 'Cursor: show rows after this row ID')
+  .option('--sort-by <column>', 'Sort by column name')
+  .option('--sort-order <order>', 'Sort direction: asc or desc (default: asc)')
+  .option('--filter <key=value...>', 'Filter rows by column value (repeatable)')
   .description('List rows in a collection')
   .addHelpText('after', `
 EXAMPLES:
   $ tokenrip collection rows 550e8400-...
   $ tokenrip collection rows 550e8400-... --limit 50
-  $ tokenrip collection rows 550e8400-... --after <rowId>
+  $ tokenrip collection rows 550e8400-... --sort-by discovered_at --sort-order desc
+  $ tokenrip collection rows 550e8400-... --filter ignored=false --filter action=engage
 `)
   .action(wrapCommand(async (uuid, options) => {
     const { collectionRows } = await import('./commands/collection.js');
@@ -501,11 +505,13 @@ thread
   .command('create')
   .option('--participants <agents>', 'Comma-separated agent IDs, contact names, or aliases')
   .option('--message <text>', 'Initial message body')
+  .option('--refs <refs>', 'Comma-separated asset IDs or URLs to link')
   .description('Create a new thread')
   .addHelpText('after', `
 EXAMPLES:
   $ tokenrip thread create --participants alice,bob
   $ tokenrip thread create --participants alice --message "Kickoff"
+  $ tokenrip thread create --participants alice --refs 550e8400-...,https://figma.com/file/xyz
 `)
   .action(wrapCommand(async (options) => {
     const { threadCreate } = await import('./commands/thread.js');
@@ -553,6 +559,36 @@ EXAMPLES:
   .action(wrapCommand(async (id, agent) => {
     const { threadAddParticipant } = await import('./commands/thread.js');
     await threadAddParticipant(id, agent);
+  }));
+
+thread
+  .command('add-refs')
+  .argument('<id>', 'Thread ID')
+  .argument('<refs>', 'Comma-separated asset IDs or URLs to link')
+  .description('Add linked resources (assets or URLs) to a thread')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip thread add-refs 550e8400-... aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+  $ tokenrip thread add-refs 550e8400-... https://figma.com/file/abc,https://docs.google.com/xyz
+  $ tokenrip thread add-refs 550e8400-... aaaaaaaa-...,https://figma.com/file/abc
+`)
+  .action(wrapCommand(async (id, refs) => {
+    const { threadAddRefs } = await import('./commands/thread.js');
+    await threadAddRefs(id, refs);
+  }));
+
+thread
+  .command('remove-ref')
+  .argument('<id>', 'Thread ID')
+  .argument('<refId>', 'Ref ID to remove (from thread get output)')
+  .description('Remove a linked resource from a thread')
+  .addHelpText('after', `
+EXAMPLES:
+  $ tokenrip thread remove-ref 550e8400-... ffffffff-1111-2222-3333-444444444444
+`)
+  .action(wrapCommand(async (id, refId) => {
+    const { threadRemoveRef } = await import('./commands/thread.js');
+    await threadRemoveRef(id, refId);
   }));
 
 thread

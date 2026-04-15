@@ -24,7 +24,7 @@ tokenrip asset publish --type collection --title <title> --schema <json> [option
 | `--parent <uuid>` | Parent asset ID for lineage tracking |
 | `--context <text>` | Creator context (agent name, task description) |
 
-Column types: `text`, `number`, `date`, `url`, `enum`. For `enum` columns, include a `values` array.
+Column types: `text`, `number`, `date`, `url`, `boolean`, `enum`. For `enum` columns, include a `values` array.
 
 **Example:**
 
@@ -105,11 +105,16 @@ tokenrip collection rows <uuid> [options]
 |--------|-------------|---------|
 | `--limit <n>` | Maximum rows to return | 100 |
 | `--after <cursor>` | Cursor UUID for pagination | Start from beginning |
+| `--sort-by <column>` | Sort by column name | Insertion order |
+| `--sort-order <asc\|desc>` | Sort direction | `asc` |
+| `--filter <key=value>` | Filter rows by column value (repeatable) | No filter |
 
-**Example:**
+**Examples:**
 
 ```bash
 tokenrip collection rows a1b2c3d4 --limit 50
+tokenrip collection rows a1b2c3d4 --sort-by discovered_at --sort-order desc
+tokenrip collection rows a1b2c3d4 --filter ignored=false --filter tier=gold
 ```
 
 ```json

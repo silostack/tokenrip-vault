@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import { ThreadView } from '@/components/ThreadView'
 import { OperatorToolbar, type ToolbarAction } from '@/components/operator/OperatorToolbar'
 import { ConfirmDialog } from '@/components/operator/ConfirmDialog'
+import { LinkedResources } from '@/components/operator/LinkedResources'
 import { operatorAgentAtom } from '@/_jotai/operator/operator.atoms'
 import {
   fetchOperatorThread,
@@ -14,6 +15,9 @@ import {
   postOperatorMessage,
   updateThread,
   dismissThread,
+  addThreadRefs,
+  removeThreadRef,
+  type ThreadRef,
 } from '@/lib/operator'
 import type { ThreadMessage } from '@/lib/thread'
 
@@ -28,6 +32,7 @@ interface ThreadMeta {
   created_at: string
   participants: Array<{ id: string; agent_id?: string; user_id?: string }>
   resolution: Record<string, unknown> | null
+  refs: ThreadRef[]
 }
 
 function OperatorThreadDetailPage() {
@@ -45,7 +50,7 @@ function OperatorThreadDetailPage() {
     fetchOperatorThread(threadId)
       .then((data: ThreadMeta) => {
         if (cancelled) return
-        setThread(data)
+        setThread({ ...data, refs: data.refs ?? [] })
         setLoading(false)
       })
       .catch(() => {
@@ -108,6 +113,25 @@ function OperatorThreadDetailPage() {
     [threadId],
   )
 
+  const handleAddRef = useCallback(
+    async (ref: { type: string; target_id: string }) => {
+      await addThreadRefs(threadId, [ref])
+      const updated = await fetchOperatorThread(threadId)
+      setThread((prev) => (prev ? { ...prev, refs: updated.refs ?? [] } : null))
+    },
+    [threadId],
+  )
+
+  const handleRemoveRef = useCallback(
+    async (refId: string) => {
+      await removeThreadRef(threadId, refId)
+      setThread((prev) =>
+        prev ? { ...prev, refs: prev.refs.filter((r) => r.id !== refId) } : null,
+      )
+    },
+    [threadId],
+  )
+
   const actions: ToolbarAction[] = [
     {
       label: 'Dismiss',
@@ -153,6 +177,14 @@ function OperatorThreadDetailPage() {
         <div className="border-b border-foreground/10 bg-foreground/[0.03] px-4 py-2.5 text-center text-xs text-foreground/40">
           This thread is closed. No new messages can be posted.
         </div>
+      )}
+      {thread && (thread.refs.length > 0 || !isClosed) && (
+        <LinkedResources
+          refs={thread.refs}
+          onAdd={handleAddRef}
+          onRemove={handleRemoveRef}
+          disabled={isClosed}
+        />
       )}
       <div className="flex h-[calc(100vh-12rem)] flex-col">
         <div className="flex-1 overflow-hidden">

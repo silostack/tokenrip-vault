@@ -4,7 +4,7 @@ description: 'GET /v0/assets/{publicId}/rows — Paginate through collection row
 api: 'GET /v0/assets/{publicId}/rows'
 ---
 
-Retrieve rows from a collection asset with cursor-based pagination. Returns rows in insertion order.
+Retrieve rows from a collection asset with cursor-based pagination. Supports server-side sorting and equality filtering.
 
 **Auth:** Public — no authentication required.
 
@@ -20,11 +20,20 @@ Retrieve rows from a collection asset with cursor-based pagination. Returns rows
 |-----------|------|----------|-------------|
 | `limit` | number | No | Maximum rows to return. Default `100`, max `500` |
 | `after` | string | No | Cursor UUID — return rows after this row ID |
+| `sort_by` | string | No | Column name to sort by. Default: insertion order |
+| `sort_order` | string | No | `asc` or `desc`. Default `asc` |
+| `filter.<column>` | string | No | Equality filter on a column. Repeatable. Multiple filters are ANDed |
+
+Sorting is type-aware: `number` columns sort numerically (not lexicographically), `date` columns sort chronologically, `boolean` columns sort by value. For columns with non-castable values, those rows sort as `NULL` (last).
 
 <CodeGroup>
 
-```bash cURL
+```bash cURL (basic)
 curl https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890/rows?limit=50
+```
+
+```bash cURL (sort + filter)
+curl "https://api.tokenrip.com/v0/assets/a1b2c3d4/rows?sort_by=revenue&sort_order=desc&filter.active=true"
 ```
 
 </CodeGroup>

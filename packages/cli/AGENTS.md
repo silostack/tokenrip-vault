@@ -150,6 +150,8 @@ tokenrip collection append <uuid> --file rows.json
 ```bash
 tokenrip collection rows <uuid>
 tokenrip collection rows <uuid> --limit 50 --after <rowId>
+tokenrip collection rows <uuid> --sort-by discovered_at --sort-order desc
+tokenrip collection rows <uuid> --filter ignored=false --filter action=engage
 ```
 
 ### Update a row

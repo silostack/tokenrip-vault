@@ -82,6 +82,13 @@ export function mergeInboxItems(inbox: InboxData): InboxItem[] {
   return items
 }
 
+export interface ThreadRef {
+  id: string
+  type: string
+  target_id: string
+  version?: number
+}
+
 // ── Auth ───────────────────────────────────────────────
 
 export async function authenticateOperator(params: {
@@ -204,6 +211,20 @@ export async function updateOperatorContact(
 
 export async function removeOperatorContact(id: string): Promise<void> {
   await api.delete(`/v0/operator/contacts/${id}`)
+}
+
+// ── Thread refs ───────────────────────────────────────────
+
+export async function addThreadRefs(
+  threadId: string,
+  refs: Array<{ type: string; target_id: string }>,
+): Promise<ThreadRef[]> {
+  const res = await api.post(`/v0/operator/threads/${threadId}/refs`, { refs })
+  return res.data.data
+}
+
+export async function removeThreadRef(threadId: string, refId: string): Promise<void> {
+  await api.delete(`/v0/operator/threads/${threadId}/refs/${refId}`)
 }
 
 // ── Thread data (uses regular endpoints with session cookie) ──

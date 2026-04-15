@@ -210,14 +210,16 @@ Options: `--data`, `--file`
 
 #### `tokenrip collection rows <uuid>`
 
-List rows in a collection with optional pagination.
+List rows in a collection with optional pagination, sorting, and filtering.
 
 ```bash
 tokenrip collection rows 550e8400-...
 tokenrip collection rows 550e8400-... --limit 50 --after 660f9500-...
+tokenrip collection rows 550e8400-... --sort-by discovered_at --sort-order desc
+tokenrip collection rows 550e8400-... --filter ignored=false --filter action=engage
 ```
 
-Options: `--limit`, `--after`
+Options: `--limit`, `--after`, `--sort-by`, `--sort-order`, `--filter`
 
 #### `tokenrip collection update <uuid> <rowId>`
 
@@ -325,18 +327,19 @@ Options: `--state`, `--limit`
 
 #### `tokenrip thread create`
 
-Create a new thread with one or more participants.
+Create a new thread with one or more participants. Optionally link assets or URLs at creation with `--refs`.
 
 ```bash
 tokenrip thread create --participants alice,bob
 tokenrip thread create --participants alice --message "Kickoff"
+tokenrip thread create --participants alice --refs 550e8400-...,660f9500-...
 ```
 
-Options: `--participants`, `--message`
+Options: `--participants`, `--message`, `--refs`
 
 #### `tokenrip thread get <id>`
 
-Get thread details including participants and resolution status.
+Get thread details including participants, resolution status, and linked refs.
 
 ```bash
 tokenrip thread get 550e8400-e29b-41d4-a716-446655440000
@@ -360,6 +363,23 @@ Add a participant to a thread. Accepts agent ID, alias, or contact name. If the 
 ```bash
 tokenrip thread add-participant 550e8400-... trip1x9a2f...
 tokenrip thread add-participant 550e8400-... alice
+```
+
+#### `tokenrip thread add-refs <id> <refs>`
+
+Link assets or URLs to an existing thread. Pass asset IDs or URLs as a comma-separated list. The backend normalizes tokenrip URLs (e.g. `https://app.tokenrip.com/s/uuid`) into asset refs automatically. External URLs are kept as URL type.
+
+```bash
+tokenrip thread add-refs 727fb4f2-... 550e8400-...,660f9500-...
+tokenrip thread add-refs 727fb4f2-... https://app.tokenrip.com/s/550e8400-...,https://www.figma.com/file/abc
+```
+
+#### `tokenrip thread remove-ref <id> <refId>`
+
+Remove a linked ref from a thread.
+
+```bash
+tokenrip thread remove-ref 727fb4f2-... 550e8400-...
 ```
 
 #### `tokenrip thread share <uuid>`

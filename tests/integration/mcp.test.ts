@@ -148,7 +148,7 @@ describe('mcp', () => {
       const toolsResponse = responses.find((r) => r.result?.tools);
       expect(toolsResponse).toBeTruthy();
       const tools = toolsResponse.result.tools;
-      expect(tools.length).toBe(31);
+      expect(tools.length).toBe(33);
 
       const toolNames = tools.map((t: any) => t.name).sort();
       expect(toolNames).toEqual([
@@ -177,10 +177,12 @@ describe('mcp', () => {
         'profile_update',
         'search',
         'thread_add_participant',
+        'thread_add_refs',
         'thread_close',
         'thread_create',
         'thread_get',
         'thread_list',
+        'thread_remove_ref',
         'thread_share',
         'whoami',
       ]);

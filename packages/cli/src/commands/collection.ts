@@ -32,12 +32,20 @@ export async function collectionAppend(
 
 export async function collectionRows(
   uuid: string,
-  options: { limit?: string; after?: string },
+  options: { limit?: string; after?: string; sortBy?: string; sortOrder?: string; filter?: string[] },
 ): Promise<void> {
   const { client } = requireAuthClient();
   const params: Record<string, string> = {};
   if (options.limit) params.limit = options.limit;
   if (options.after) params.after = options.after;
+  if (options.sortBy) params.sort_by = options.sortBy;
+  if (options.sortOrder) params.sort_order = options.sortOrder;
+  if (options.filter) {
+    for (const f of options.filter) {
+      const eq = f.indexOf('=');
+      if (eq > 0) params[`filter.${f.slice(0, eq)}`] = f.slice(eq + 1);
+    }
+  }
 
   const { data } = await client.get(`/v0/assets/${uuid}/rows`, { params });
   outputSuccess(data.data, formatCollectionRows);

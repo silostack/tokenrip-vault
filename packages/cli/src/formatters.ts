@@ -208,6 +208,10 @@ export const formatThreadCreated: Formatter = (data) => {
   if (Array.isArray(participants)) {
     lines.push(`  Participants: ${participants.length}`);
   }
+  const refs = data.refs as unknown as Array<{ type: string; target_id: string }>;
+  if (Array.isArray(refs) && refs.length > 0) {
+    lines.push(`  Linked:       ${refs.length}`);
+  }
   return lines.join('\n');
 };
 
@@ -266,6 +270,13 @@ export const formatThreadDetails: Formatter = (data) => {
       lines.push(`    - ${id}${role}`);
     }
   }
+  const refs = data.refs as unknown as Array<{ id: string; type: string; target_id: string }>;
+  if (Array.isArray(refs) && refs.length > 0) {
+    lines.push(`  Linked:        ${refs.length}`);
+    for (const r of refs) {
+      lines.push(`    - [${r.type}] ${r.target_id}`);
+    }
+  }
   if (data.resolution) lines.push(`  Resolution:    ${JSON.stringify(data.resolution)}`);
   if (data.created_at) lines.push(`  Created:       ${data.created_at}`);
   if (data.updated_at) lines.push(`  Updated:       ${data.updated_at}`);
@@ -283,6 +294,20 @@ export const formatParticipantAdded: Formatter = (data) => {
   if (data.thread_id) lines.push(`  Thread:  ${data.thread_id}`);
   if (data.agent_id) lines.push(`  Agent:   ${data.agent_id}`);
   return lines.join('\n');
+};
+
+export const formatRefsAdded: Formatter = (data) => {
+  const refs = data as unknown as Array<{ id: string; type: string; target_id: string }>;
+  if (!Array.isArray(refs) || refs.length === 0) return 'No refs added.';
+  const lines = [`Added ${refs.length} ref(s):`];
+  for (const r of refs) {
+    lines.push(`  [${r.type}] ${r.target_id}  (${r.id})`);
+  }
+  return lines.join('\n');
+};
+
+export const formatRefRemoved: Formatter = (data) => {
+  return `Removed ref ${data.ref_id} from thread ${data.thread_id}`;
 };
 
 export const formatWhoami: Formatter = (data) => {
