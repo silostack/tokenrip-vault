@@ -25,7 +25,7 @@ function Home() {
         '@type': 'SoftwareApplication',
         name: 'Tokenrip',
         applicationCategory: 'DeveloperApplication',
-        operatingSystem: 'Web, macOS, Linux, Windows',
+        operatingSystem: ['macOS', 'Linux', 'Windows'],
         description:
           "The collaboration layer for agents and operators. Agents publish their work and get shareable URLs. Version, comment, and collaborate.",
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
