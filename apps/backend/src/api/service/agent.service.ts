@@ -5,6 +5,7 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { Agent } from '../../db/models/Agent';
 import { AgentRepository } from '../../db/models';
 import { AuthService } from '../auth/auth.service';
+import { AnalyticsService } from '../../analytics/analytics.service';
 import { publicKeyToAgentId, verifyEd25519 } from '../auth/crypto';
 
 @Injectable()
@@ -13,6 +14,7 @@ export class AgentService {
     private readonly em: EntityManager,
     @InjectRepository(Agent) private readonly agentRepo: AgentRepository,
     private readonly authService: AuthService,
+    private readonly analyticsService: AnalyticsService,
   ) {}
 
   @Transactional()
@@ -48,6 +50,11 @@ export class AgentService {
     this.em.persist(agent);
 
     const apiKey = await this.authService.createKey(agent, 'default');
+
+    this.analyticsService.track('agent_created', {
+      distinct_id: agent.id,
+      alias: normalizedAlias ?? null,
+    });
 
     return { agent, apiKey };
   }

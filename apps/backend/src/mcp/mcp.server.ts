@@ -11,6 +11,7 @@ import { RefService } from '../api/service/ref.service';
 import { ContactService } from '../api/service/contact.service';
 import { CollectionRowService } from '../api/service/collection-row.service';
 import { SearchService } from '../api/service/search.service';
+import { AnalyticsService } from '../analytics/analytics.service';
 import { registerAssetTools } from './tools/asset.tools';
 import { registerCollectionTools } from './tools/collection.tools';
 import { registerMessageTools } from './tools/message.tools';
@@ -45,6 +46,21 @@ export interface McpServices {
   contactService: ContactService;
   collectionRowService: CollectionRowService;
   searchService: SearchService;
+  analyticsService: AnalyticsService;
+}
+
+const SANITIZE_KEYS = new Set(['body', 'content', 'base64Content', 'data', 'message']);
+
+function sanitizeParams(params: Record<string, unknown>): Record<string, unknown> {
+  const sanitized: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(params)) {
+    if (SANITIZE_KEYS.has(key)) {
+      sanitized[key] = typeof value === 'string' ? `[${value.length} chars]` : '[redacted]';
+    } else {
+      sanitized[key] = value;
+    }
+  }
+  return sanitized;
 }
 
 const MCP_INSTRUCTIONS = `\
@@ -63,6 +79,42 @@ export function createMcpServer(services: McpServices, agentId: string): McpServ
     { name: 'tokenrip', version: '1.0.0' },
     { capabilities: { tools: {} }, instructions: MCP_INSTRUCTIONS },
   );
+
+  // Wrap server.tool() to add analytics tracking to every tool handler
+  const originalTool = server.tool.bind(server);
+  server.tool = function (...toolArgs: any[]) {
+    const toolName = toolArgs[0];
+    const handlerIdx = toolArgs.length - 1;
+    const handler = toolArgs[handlerIdx];
+
+    if (typeof handler === 'function') {
+      toolArgs[handlerIdx] = async function (args: any, ...rest: any[]) {
+        const start = Date.now();
+        try {
+          const result = await handler(args, ...rest);
+          services.analyticsService.track('mcp_tool_call', {
+            distinct_id: agentId,
+            tool_name: toolName,
+            params: sanitizeParams(args ?? {}),
+            success: !result?.isError,
+            latency_ms: Date.now() - start,
+          });
+          return result;
+        } catch (err) {
+          services.analyticsService.track('mcp_tool_call', {
+            distinct_id: agentId,
+            tool_name: toolName,
+            params: sanitizeParams(args ?? {}),
+            success: false,
+            latency_ms: Date.now() - start,
+          });
+          throw err;
+        }
+      };
+    }
+
+    return originalTool(...toolArgs);
+  } as typeof server.tool;
 
   registerAssetTools(server, services, agentId);
   registerMessageTools(server, services, agentId);

@@ -1,7 +1,8 @@
 import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
+import { randomUUID } from 'node:crypto';
 import { startBackend, stopBackend, type TestBackend } from '../setup/backend';
 import { generateTestDbName, createTestDatabase, dropTestDatabase } from '../setup/database';
-import { generateKeypair } from '../../packages/cli/src/crypto';
+import { generateKeypair, publicKeyToAgentId, signPayload } from '../../packages/cli/src/crypto';
 
 let backend: TestBackend;
 const dbName = generateTestDbName();
@@ -16,8 +17,14 @@ afterAll(async () => {
   await dropTestDatabase(dbName);
 });
 
-async function registerAgent(alias?: string) {
-  const { publicKeyHex } = generateKeypair();
+interface AgentRegistration {
+  agentId: string;
+  apiKey: string;
+  secretKeyHex: string;
+}
+
+async function registerAgent(alias?: string): Promise<AgentRegistration> {
+  const { publicKeyHex, secretKeyHex } = generateKeypair();
   const body: Record<string, string> = { public_key: publicKeyHex };
   if (alias) body.alias = alias;
   const res = await fetch(`${backend.url}/v0/agents`, {
@@ -25,83 +32,78 @@ async function registerAgent(alias?: string) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-  return res.json() as Promise<{
-    ok: boolean;
-    data: { agent_id: string; api_key: string; operator_registration_url: string };
-  }>;
+  const json = (await res.json()) as { ok: boolean; data: { agent_id: string; api_key: string } };
+  return { agentId: json.data.agent_id, apiKey: json.data.api_key, secretKeyHex };
+}
+
+function createOperatorToken(agentId: string, secretKeyHex: string): string {
+  const exp = Math.floor(Date.now() / 1000) + 300; // 5 minutes
+  return signPayload(
+    { sub: 'operator-auth', iss: agentId, exp, jti: randomUUID() },
+    secretKeyHex,
+  );
 }
 
 describe('operator flow', () => {
-  test('agent registration returns operator_registration_url', async () => {
-    const json = await registerAgent();
-    expect(json.ok).toBe(true);
-    expect(json.data.operator_registration_url).toBeDefined();
-    expect(json.data.operator_registration_url).toContain('token=ot_');
-  });
+  test('register operator via signed token', async () => {
+    const { agentId, secretKeyHex } = await registerAgent();
+    const token = createOperatorToken(agentId, secretKeyHex);
 
-  test('register operator via operator token', async () => {
-    const agentJson = await registerAgent();
-    const url = new URL(agentJson.data.operator_registration_url);
-    const operatorToken = url.searchParams.get('token')!;
-
-    const res = await fetch(`${backend.url}/v0/operators/register`, {
+    const res = await fetch(`${backend.url}/v0/auth/operator`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        token,
         display_name: 'Test Operator',
         password: 'secure-password-123',
         alias: 'testop',
-        operator_token: operatorToken,
       }),
     });
-    const json = (await res.json()) as { ok: boolean; data: { user_id: string; auth_token: string } };
+    const json = (await res.json()) as { ok: boolean; data: { user_id: string; auth_token: string; is_new_registration: boolean } };
     expect(res.status).toBe(201);
     expect(json.ok).toBe(true);
     expect(json.data.user_id).toMatch(/^u_/);
     expect(json.data.auth_token).toMatch(/^ut_/);
+    expect(json.data.is_new_registration).toBe(true);
   });
 
-  test('operator token is one-time use', async () => {
-    const agentJson = await registerAgent();
-    const url = new URL(agentJson.data.operator_registration_url);
-    const operatorToken = url.searchParams.get('token')!;
+  test('auto-login with existing binding', async () => {
+    const { agentId, secretKeyHex } = await registerAgent();
 
-    const res1 = await fetch(`${backend.url}/v0/operators/register`, {
+    // First call: register
+    const token1 = createOperatorToken(agentId, secretKeyHex);
+    const res1 = await fetch(`${backend.url}/v0/auth/operator`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        display_name: 'Op1',
-        password: 'pass1',
-        operator_token: operatorToken,
-      }),
+      body: JSON.stringify({ token: token1, display_name: 'Returning Op', password: 'pass' }),
     });
     expect(res1.status).toBe(201);
 
-    const res2 = await fetch(`${backend.url}/v0/operators/register`, {
+    // Second call: auto-login (no registration needed)
+    const token2 = createOperatorToken(agentId, secretKeyHex);
+    const res2 = await fetch(`${backend.url}/v0/auth/operator`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        display_name: 'Op2',
-        password: 'pass2',
-        operator_token: operatorToken,
-      }),
+      body: JSON.stringify({ token: token2 }),
     });
-    expect(res2.status).toBe(401);
+    const json2 = (await res2.json()) as { ok: boolean; data: { is_new_registration: boolean; auth_token: string } };
+    expect(res2.status).toBe(201);
+    expect(json2.data.is_new_registration).toBe(false);
+    expect(json2.data.auth_token).toMatch(/^ut_/);
   });
 
   test('login with alias and password', async () => {
-    const agentJson = await registerAgent();
-    const url = new URL(agentJson.data.operator_registration_url);
-    const operatorToken = url.searchParams.get('token')!;
+    const { agentId, secretKeyHex } = await registerAgent();
+    const token = createOperatorToken(agentId, secretKeyHex);
 
-    await fetch(`${backend.url}/v0/operators/register`, {
+    await fetch(`${backend.url}/v0/auth/operator`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        token,
         display_name: 'Login Test',
         password: 'my-password',
         alias: 'logintest',
-        operator_token: operatorToken,
       }),
     });
 
@@ -117,25 +119,45 @@ describe('operator flow', () => {
   });
 
   test('login with wrong password fails', async () => {
-    const agentJson = await registerAgent();
-    const url = new URL(agentJson.data.operator_registration_url);
-    const operatorToken = url.searchParams.get('token')!;
+    const { agentId, secretKeyHex } = await registerAgent();
+    const token = createOperatorToken(agentId, secretKeyHex);
 
-    await fetch(`${backend.url}/v0/operators/register`, {
+    await fetch(`${backend.url}/v0/auth/operator`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        token,
         display_name: 'Wrong Pass',
         password: 'correct-password',
-        alias: 'wrongpass',
-        operator_token: operatorToken,
+        alias: 'wrongpasstest',
       }),
     });
 
     const res = await fetch(`${backend.url}/v0/operators/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ alias: 'wrongpass', password: 'wrong-password' }),
+      body: JSON.stringify({ alias: 'wrongpasstest', password: 'wrong-password' }),
+    });
+    expect(res.status).toBe(401);
+  });
+
+  test('registration requires display_name when no binding exists', async () => {
+    const { agentId, secretKeyHex } = await registerAgent();
+    const token = createOperatorToken(agentId, secretKeyHex);
+
+    const res = await fetch(`${backend.url}/v0/auth/operator`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token }), // no display_name
+    });
+    expect(res.status).toBe(400);
+  });
+
+  test('invalid token is rejected', async () => {
+    const res = await fetch(`${backend.url}/v0/auth/operator`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: 'invalid.token', display_name: 'Test' }),
     });
     expect(res.status).toBe(401);
   });

@@ -42,9 +42,9 @@ describe('delete endpoint', () => {
     });
     expect(res.status).toBe(204);
 
-    // Asset should no longer be accessible
+    // Asset returns 410 Gone (tombstoned) after deletion
     const metaRes = await fetch(`${backend.url}/v0/assets/${assetId}`);
-    expect(metaRes.status).toBe(404);
+    expect(metaRes.status).toBe(410);
   });
 
   test('returns 404 for non-existent asset', async () => {
@@ -84,9 +84,9 @@ describe('delete endpoint', () => {
       headers: { Authorization: `Bearer ${apiKey}` },
     });
 
-    // Content should be gone (asset not found → 404)
+    // Content returns 410 Gone (tombstoned) after deletion
     const contentAfter = await fetch(`${backend.url}/v0/assets/${assetId}/content`);
-    expect(contentAfter.status).toBe(404);
+    expect(contentAfter.status).toBe(410);
   });
 
   test('deleted asset disappears from status', async () => {
