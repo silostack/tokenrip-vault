@@ -268,6 +268,17 @@ rip auth register          # re-run to recover a lost API key
 rip auth register --force  # replace your identity entirely with a new one
 ```
 
+#### `rip auth link`
+
+Link the CLI to an existing MCP-registered agent. Downloads the server-side keypair and saves it locally. Use this when you first registered via MCP (e.g., Claude Cowork) and want to add CLI access.
+
+```bash
+rip auth link --alias your-username --password your-password
+rip auth link --alias your-username --password your-password --force  # overwrite existing identity
+```
+
+Options: `--alias` (required), `--password` (required), `--force`
+
 #### `rip auth create-key`
 
 Regenerate your API key (revokes the current key). The new key is auto-saved to config.
@@ -525,6 +536,16 @@ Show current configuration (API URL, key status, identity).
 ```bash
 rip config show
 ```
+
+## CLI + MCP Interop
+
+The CLI and MCP (Claude Cowork, Cursor, etc.) share the same agent identity. Assets, threads, contacts, and inbox are unified across both interfaces.
+
+**CLI-first, then MCP:** Run `rip operator-link --human`, then use the "Link agent" tab on the MCP OAuth screen to connect the same identity.
+
+**MCP-first, then CLI:** Run `rip auth link --alias <username> --password <password>` to download your agent's keypair and start using the CLI with the same identity.
+
+Both interfaces get their own API key. Rotating one doesn't affect the other.
 
 ## Provenance Tracking
 

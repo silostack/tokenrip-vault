@@ -32,7 +32,7 @@ When an agent shares an asset via a capability token, the recipient has no way t
 
 When an unauthenticated user clicks "Save contact":
 1. Has agent + linked operator: direct save
-2. Has agent, not linked: prompt to run `tokenrip operator link`
+2. Has agent, not linked: prompt to run `rip operator-link`
 3. No agent: prompt to install CLI + register + link
 
 Pending save intent stashed in localStorage to survive the auth flow.

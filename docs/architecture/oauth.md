@@ -14,7 +14,8 @@ OAuth 2.1 provides seamless registration and login for MCP clients (Claude Cowor
 | PKCE-only | All flows require Proof Key for Code Exchange (S256) -- no client secrets |
 | Server-side keys | MCP-registered agents get server-generated Ed25519 keypairs (unlike CLI agents) |
 | Standard discovery | `/.well-known/oauth-authorization-server` metadata for automatic client configuration |
-| Stateless tokens | Access tokens are regular `tr_` API keys -- no OAuth-specific token storage |
+| Stateless tokens | Access tokens are regular `tr_` API keys (named `mcp-oauth`) -- no OAuth-specific token storage |
+| Unified identity | Login and link-agent flows reuse the existing agent -- no duplicate agents created |
 
 ---
 
@@ -89,10 +90,13 @@ MCP Client                   Browser / Frontend              Backend
     │                              │                            │
     │                              │  9. Verify PKCE (S256)     │
     │                              │     Mark code used         │
-    │                              │     Create new API key     │
+    │                              │     Revoke prior mcp-oauth │
+    │                              │     keys, issue new one    │
+    │                              │     (preserves CLI keys)   │
     │                              │                            │
     │  10. { access_token: "tr_...",                            │
-    │       token_type: "bearer" } <────────────────────────────
+    │       token_type: "bearer",                               │
+    │       expires_in: 31536000 } <────────────────────────────
     │                              │                            │
 ```
 
@@ -114,8 +118,8 @@ MCP Client                   Browser / Frontend              Backend
     │                  3. POST /oauth/login ────────────────────>
     │                              │                            │
     │                              │  4. Verify credentials     │
-    │                              │     Find OperatorBinding   │
-    │                              │     -> Agent               │
+    │                              │     findBoundAgent(user)   │
+    │                              │     -> existing Agent      │
     │                              │     Create OAuthCode       │
     │                              │                            │
     │                              │  5. { ok: true, code }     │
@@ -224,8 +228,21 @@ The raw code is never stored -- only its SHA256 hash. The code is single-use and
 | POST | `/oauth/login` | Public | Login existing user, get auth code |
 | POST | `/oauth/token` | Public | Exchange authorization code for API key |
 | POST | `/oauth/check-alias` | Public | Check alias availability (agent or user) |
+| POST | `/oauth/cli-link` | Public | Download server-side keypair + API key for CLI (alias+password auth) |
 
 All endpoints are public -- authentication happens within the flow itself (password verification for login, PKCE for token exchange).
+
+---
+
+## Unified Identity: Login and Link-Agent
+
+The `login()` and `linkAgent()` flows use `findBoundAgent(user)` to find the user's existing agent — preferring agents with server-side keypairs (`AgentKeyPair`), falling back to any bound agent. **No duplicate agents are created.**
+
+The `exchangeCode()` method issues an `mcp-oauth`-named API key via `authService.createKey()` instead of revoking all keys. This preserves the CLI's `default` key and any other existing keys. Only prior `mcp-oauth` keys are revoked (cleanup).
+
+### CLI-Link Flow (MCP-first → CLI)
+
+`POST /oauth/cli-link` authenticates via alias+password, finds the bound agent, and returns the server-side keypair + a new `cli`-named API key. The CLI saves the keypair locally for full signing capability. Only works for agents with `AgentKeyPair` (server-managed keypairs).
 
 ---
 
@@ -235,9 +252,12 @@ All endpoints are public -- authentication happens within the flow itself (passw
 
 **Features:**
 
-- Register / Login tab toggle (register is default)
-- Display name, password, agent alias, user alias fields
+- Register / Login / Link agent tabs (register is default)
+- Register: username (required), password, display name, agent alias (optional)
+- Login: username, password
+- Link agent: 6-digit code from `rip operator-link --human`, then username + password + display name
 - Inline alias availability checking (debounced POST to `/oauth/check-alias`)
+- Explanatory text on each tab explaining what happens
 - Error display for validation failures
 - OAuth query params (`client_id`, `redirect_uri`, `state`, `code_challenge`, `code_challenge_method`) preserved through the flow
 - Redirect handling on success -- appends `code` and `state` to the `redirect_uri`

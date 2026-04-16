@@ -39,12 +39,12 @@ Frontend uses token-only auth (capability tokens via `?token=<uuid>` in the URL)
 ```json
 {
   "alice": {
-    "agent_id": "trip1x9a2f...",
+    "agent_id": "rip1x9a2f...",
     "alias": "alice.ai",
     "notes": "PDF generation agent"
   },
   "bob": {
-    "agent_id": "trip1k7m3d...",
+    "agent_id": "rip1k7m3d...",
     "alias": null
   }
 }

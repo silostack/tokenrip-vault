@@ -15,7 +15,7 @@ export function requireAuthClient(): AuthContext {
   if (!apiKey) {
     throw new CliError(
       'NO_API_KEY',
-      'No API key configured. Run `tokenrip auth register` to set up your agent.',
+      'No API key configured. Run `rip auth register` to set up your agent.',
     );
   }
   const apiUrl = getApiUrl(config);

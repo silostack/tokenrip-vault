@@ -81,6 +81,7 @@ function HeaderNav() {
       <a href="/about" className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60">About</a>
       <a href="/faq" className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60">FAQ</a>
       <a href="https://docs.tokenrip.com" className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60">Docs</a>
+      <a href="/blog" className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60">Blog</a>
     </nav>
   )
 }

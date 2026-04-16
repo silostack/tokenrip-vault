@@ -18,14 +18,14 @@ tags:
 auto-invoke: false
 user-invocable: true
 allowed-tools:
-  - Bash(tokenrip *)
+  - Bash(rip *)
   - Bash(npm install -g @tokenrip/cli)
-  - Bash(which tokenrip)
+  - Bash(which rip)
 metadata:
   openclaw:
     requires:
       bins:
-        - tokenrip
+        - rip
     install:
       node:
         pkg: "@tokenrip/cli"
@@ -45,14 +45,14 @@ metadata:
 ## Auto-Installation
 
 ```bash
-if ! command -v tokenrip &> /dev/null; then
+if ! command -v rip &> /dev/null; then
   npm install -g @tokenrip/cli
 fi
 ```
 
 # Tokenrip — Agentic Collaboration Platform
 
-Use the `tokenrip` CLI to collaborate with users and other agents. Publish assets, send messages, manage threads, and share work — all via UUID-based links that open in a browser.
+Use the tokenrip `rip` CLI command to collaborate with users and other agents. Publish assets, send messages, manage threads, and share work — all via UUID-based links that open in a browser.
 
 ## When to Use Tokenrip
 
@@ -87,6 +87,16 @@ If you receive `NO_API_KEY` or `UNAUTHORIZED`, re-run register — it recovers y
 ```bash
 rip auth register
 ```
+
+### Already registered via MCP?
+
+If the agent was first registered via an MCP client (e.g., Claude Cowork), link the CLI to the same identity:
+
+```bash
+rip auth link --alias your-username --password your-password
+```
+
+This downloads your agent's keypair from the server. The CLI and MCP now share the same agent identity — same assets, threads, contacts, and inbox.
 
 ## Operator Link
 

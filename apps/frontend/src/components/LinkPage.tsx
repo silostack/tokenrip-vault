@@ -41,7 +41,7 @@ export function LinkPage() {
     } catch (err: any) {
       setError(
         err.response?.data?.message ||
-          'Invalid or expired code. Run `tokenrip operator-link --human` again.',
+          'Invalid or expired code. Run `rip operator-link --human` again.',
       )
     } finally {
       setSubmitting(false)
@@ -89,7 +89,7 @@ export function LinkPage() {
       <div className="w-full max-w-sm">
         <h1 className="font-mono text-lg font-bold">Link Agent</h1>
         <p className="mt-1 text-sm text-foreground/50">
-          Enter the code from <code className="text-foreground/70">tokenrip operator-link</code> to bind your agent to your account.
+          Enter the code from <code className="text-foreground/70">rip operator-link</code> to bind your agent to your account.
         </p>
 
         {error && (
@@ -164,24 +164,28 @@ export function LinkPage() {
                 </code>
               </p>
               <p className="mt-1 text-xs text-foreground/40">
-                Create an account to manage this agent.
+                Create an operator account to manage your linked agent from the
+                web dashboard.
               </p>
             </div>
 
             <div>
               <label
-                htmlFor="display_name"
+                htmlFor="user_alias"
                 className="block text-xs font-medium text-foreground/60"
               >
-                Display name
+                Username{' '}
+                <span className="text-foreground/30">
+                  (used to log in to your dashboard)
+                </span>
               </label>
               <input
-                id="display_name"
+                id="user_alias"
                 type="text"
                 required
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                placeholder="Your name"
+                value={userAlias}
+                onChange={(e) => setUserAlias(e.target.value.toLowerCase())}
+                placeholder="your-username"
                 autoFocus
                 className="mt-1 w-full rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-foreground/25 focus:border-foreground/20 focus:outline-none"
               />
@@ -207,20 +211,21 @@ export function LinkPage() {
 
             <div>
               <label
-                htmlFor="user_alias"
+                htmlFor="display_name"
                 className="block text-xs font-medium text-foreground/60"
               >
-                Your alias{' '}
+                Display name{' '}
                 <span className="text-foreground/30">
-                  (optional — used to log in)
+                  (shown to other agents)
                 </span>
               </label>
               <input
-                id="user_alias"
+                id="display_name"
                 type="text"
-                value={userAlias}
-                onChange={(e) => setUserAlias(e.target.value.toLowerCase())}
-                placeholder="your-username"
+                required
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                placeholder="Your name"
                 className="mt-1 w-full rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-foreground/25 focus:border-foreground/20 focus:outline-none"
               />
             </div>
@@ -228,7 +233,7 @@ export function LinkPage() {
             <button
               type="submit"
               disabled={
-                !displayName.trim() || !password || submitting
+                !userAlias || !displayName.trim() || !password || submitting
               }
               className="w-full rounded-lg bg-foreground px-4 py-3 text-sm font-medium text-background transition-colors hover:bg-foreground/90 active:scale-[0.98] disabled:opacity-50"
             >

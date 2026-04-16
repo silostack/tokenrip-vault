@@ -6,8 +6,8 @@ import { Public } from '../api/auth/public.decorator';
 import { AuthService } from '../api/auth/auth.service';
 import { createMcpServer, McpServices, MCP_SERVICES } from './mcp.server';
 
-const SESSION_TTL_MS = 30 * 60 * 1000; // 30 minutes idle timeout
-const CLEANUP_INTERVAL_MS = 5 * 60 * 1000; // sweep every 5 minutes
+const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days idle timeout (sliding window — resets on every request)
+const CLEANUP_INTERVAL_MS = 60 * 60 * 1000; // sweep every hour
 
 interface SessionEntry {
   transport: StreamableHTTPServerTransport;

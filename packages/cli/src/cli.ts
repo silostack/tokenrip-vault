@@ -209,7 +209,7 @@ asset
   .description('Show storage usage statistics')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip asset stats
+  $ rip asset stats
 
 Shows total asset count and storage bytes broken down by type.
 `)
@@ -291,8 +291,8 @@ collection
   .description('Append one or more rows to a collection')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip collection append 550e8400-... --data '{"company":"Acme","signal":"API launch"}'
-  $ tokenrip collection append 550e8400-... --file rows.json
+  $ rip collection append 550e8400-... --data '{"company":"Acme","signal":"API launch"}'
+  $ rip collection append 550e8400-... --file rows.json
 `)
   .action(wrapCommand(async (uuid, options) => {
     const { collectionAppend } = await import('./commands/collection.js');
@@ -310,10 +310,10 @@ collection
   .description('List rows in a collection')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip collection rows 550e8400-...
-  $ tokenrip collection rows 550e8400-... --limit 50
-  $ tokenrip collection rows 550e8400-... --sort-by discovered_at --sort-order desc
-  $ tokenrip collection rows 550e8400-... --filter ignored=false --filter action=engage
+  $ rip collection rows 550e8400-...
+  $ rip collection rows 550e8400-... --limit 50
+  $ rip collection rows 550e8400-... --sort-by discovered_at --sort-order desc
+  $ rip collection rows 550e8400-... --filter ignored=false --filter action=engage
 `)
   .action(wrapCommand(async (uuid, options) => {
     const { collectionRows } = await import('./commands/collection.js');
@@ -328,7 +328,7 @@ collection
   .description('Update a single row in a collection')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip collection update 550e8400-... 660f9500-... --data '{"relevance":"low"}'
+  $ rip collection update 550e8400-... 660f9500-... --data '{"relevance":"low"}'
 `)
   .action(wrapCommand(async (uuid, rowId, options) => {
     const { collectionUpdate } = await import('./commands/collection.js');
@@ -342,7 +342,7 @@ collection
   .description('Delete rows from a collection')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip collection delete 550e8400-... --rows uuid1,uuid2
+  $ rip collection delete 550e8400-... --rows uuid1,uuid2
 `)
   .action(wrapCommand(async (uuid, options) => {
     const { collectionDelete } = await import('./commands/collection.js');
@@ -416,6 +416,25 @@ EXAMPLES:
   .action(wrapCommand(async (options) => {
     const { authUpdate } = await import('./commands/auth.js');
     await authUpdate(options);
+  }));
+
+auth
+  .command('link')
+  .description('Link CLI to an existing MCP-registered agent')
+  .requiredOption('--alias <alias>', 'Your operator username')
+  .requiredOption('--password <password>', 'Your operator password')
+  .option('--force', 'Overwrite existing local identity')
+  .addHelpText('after', `
+EXAMPLES:
+  $ rip auth link --alias myname --password mypass
+
+  Downloads your agent's keypair from the server and saves it locally.
+  This is for agents registered via MCP (Claude Cowork, etc.) that want
+  to add CLI access. Only works for agents with server-managed keypairs.
+`)
+  .action(wrapCommand(async (options) => {
+    const { link } = await import('./commands/link.js');
+    await link(options);
   }));
 
 // ── inbox command ──────────────────────────────────────────────────
@@ -528,9 +547,9 @@ thread
   .description('List all threads you participate in')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip thread list
-  $ tokenrip thread list --state open
-  $ tokenrip thread list --state closed --limit 10
+  $ rip thread list
+  $ rip thread list --state open
+  $ rip thread list --state closed --limit 10
 `)
   .action(wrapCommand(async (options) => {
     const { threadList } = await import('./commands/thread.js');
@@ -604,9 +623,9 @@ thread
   .description('Add linked resources (assets or URLs) to a thread')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip thread add-refs 550e8400-... aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
-  $ tokenrip thread add-refs 550e8400-... https://figma.com/file/abc,https://docs.google.com/xyz
-  $ tokenrip thread add-refs 550e8400-... aaaaaaaa-...,https://figma.com/file/abc
+  $ rip thread add-refs 550e8400-... aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+  $ rip thread add-refs 550e8400-... https://figma.com/file/abc,https://docs.google.com/xyz
+  $ rip thread add-refs 550e8400-... aaaaaaaa-...,https://figma.com/file/abc
 `)
   .action(wrapCommand(async (id, refs) => {
     const { threadAddRefs } = await import('./commands/thread.js');
@@ -620,7 +639,7 @@ thread
   .description('Remove a linked resource from a thread')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip thread remove-ref 550e8400-... ffffffff-1111-2222-3333-444444444444
+  $ rip thread remove-ref 550e8400-... ffffffff-1111-2222-3333-444444444444
 `)
   .action(wrapCommand(async (id, refId) => {
     const { threadRemoveRef } = await import('./commands/thread.js');
@@ -635,8 +654,8 @@ thread
   .description('Generate a shareable link to view a thread')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip thread share 727fb4f2-29a5-4afc-840e-f606a783fade
-  $ tokenrip thread share 727fb4f2-... --expires 7d
+  $ rip thread share 727fb4f2-29a5-4afc-840e-f606a783fade
+  $ rip thread share 727fb4f2-... --expires 7d
 `)
   .action(wrapCommand(async (uuid, options) => {
     const { threadShare } = await import('./commands/thread.js');
@@ -706,7 +725,7 @@ contacts
   .description('Sync contacts with the server (requires API key)')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip contacts sync
+  $ rip contacts sync
 
   Pulls your contacts from the server and merges with local contacts.
 `)
@@ -722,8 +741,8 @@ program
   .option('--expires <duration>', 'Link expiry (default: 5m). E.g. 5m, 1h, 1d')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip operator-link
-  $ tokenrip operator-link --expires 1h
+  $ rip operator-link
+  $ rip operator-link --expires 1h
 
 Generates a signed URL (click to login/register) and a 6-digit code (for MCP auth
 or cross-device use). The URL is signed locally with your Ed25519 key. The code is
@@ -743,7 +762,7 @@ config
   .description('Save your API key for authentication')
   .addHelpText('after', `
 NOTE:
-  In most cases you won't need this — \`tokenrip auth register\` saves your key automatically.
+  In most cases you won't need this — \`rip auth register\` saves your key automatically.
   Use this only if you need to manually paste in a key from another source.
 `)
   .action(wrapCommand(configSetKey));
@@ -755,10 +774,10 @@ config
   .addHelpText('after', `
 EXAMPLES:
   Local development:
-    tokenrip config set-url http://localhost:3434
+    rip config set-url http://localhost:3434
 
   Production (default):
-    tokenrip config set-url https://api.tokenrip.com
+    rip config set-url https://api.tokenrip.com
 `)
   .action(wrapCommand(configSetUrl));
 

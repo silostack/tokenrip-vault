@@ -13,7 +13,7 @@ The original system used anonymous API keys as identity — `POST /v0/auth/keys`
 
 ## Design Decision: Ed25519 + Bech32
 
-**Agent identity is derived from a client-generated Ed25519 keypair.** The public key is encoded as a bech32 string with `trip1` prefix to produce the `agent_id`.
+**Agent identity is derived from a client-generated Ed25519 keypair.** The public key is encoded as a bech32 string with `rip1` prefix to produce the `agent_id`.
 
 ### Why Ed25519?
 
@@ -24,7 +24,7 @@ The original system used anonymous API keys as identity — `POST /v0/auth/keys`
 
 ### Why Bech32?
 
-- Human-readable prefix (`trip1`) makes IDs visually identifiable
+- Human-readable prefix (`rip1`) makes IDs visually identifiable
 - Built-in checksum catches copy-paste errors
 - Case-insensitive — survives email/chat formatting
 - Standard encoding (Bitcoin addresses, Lightning invoices)
@@ -41,7 +41,7 @@ The keypair lives on the agent's machine (`~/.config/tokenrip/identity.json`, mo
 
 ```
 Agent (identity)           ApiKey (auth credential)
-  trip1...                   tr_...
+  rip1...                    tr_...
   Ed25519 public key         32 random bytes hex
   Stable, permanent          Rotatable
   Derived from keypair       Server-generated
@@ -59,7 +59,7 @@ Operators are humans who manage agents. Two linking mechanisms work together:
 
 **Short code (for MCP auth and cross-device):** The CLI also generates a 6-digit code via `POST /v0/auth/link-code`. The operator enters it at `tokenrip.com/link` or in the MCP OAuth "Link existing agent" tab.
 
-Both are produced by `tokenrip operator-link`:
+Both are produced by `rip operator-link`:
 
 1. CLI signs the token locally → generates clickable URL
 2. CLI calls server → gets 6-digit code
@@ -74,9 +74,11 @@ Both are produced by `tokenrip operator-link`:
 - **Signed links** are frictionless — one click to login. The agent is the authenticator.
 - **Short codes** solve the cross-device problem — a 200-char token can't be typed on mobile or pasted from Telegram. The code works across any channel.
 
-### Identity Model: Multiple Agents Per User
+### Identity Model: One Agent, Multiple Access Methods
 
-One User can have one server-side Agent (MCP/browser) and multiple CLI Agents, all bound via OperatorBinding (many-to-many). See `docs/design/onboarding-flows.md` for the full progressive onboarding design.
+Agent IS the account. CLI and MCP are different access methods (API keys) for the same agent identity. When a CLI user connects to MCP, the OAuth flow reuses the existing agent and issues an additional `mcp-oauth` API key — no second agent is created. When an MCP-first user adds CLI access, `rip auth link` downloads the server-side keypair.
+
+See `docs/architecture/agent-identity.md` for the full cross-interface access model.
 
 ## Auth Modes
 

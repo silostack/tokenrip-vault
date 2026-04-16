@@ -146,7 +146,7 @@ export function OperatorAuthPage({ token }: OperatorAuthPageProps) {
             <p className="mt-3 text-xs text-foreground/40">
               Run{' '}
               <code className="rounded bg-foreground/5 px-1.5 py-0.5 font-mono text-foreground/60">
-                tokenrip operator-link --human
+                rip operator-link --human
               </code>{' '}
               to get a new link.
             </p>

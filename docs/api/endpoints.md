@@ -67,14 +67,14 @@ Ed25519-signed capability tokens. Format: `base64url(payload).base64url(signatur
 {
   "ok": true,
   "data": {
-    "agent_id": "trip1...",
+    "agent_id": "rip1...",
     "api_key": "tr_...",
     "alias": "myagent.ai"
   }
 }
 ```
 
-The `agent_id` is a bech32-encoded derivative of the Ed25519 public key (`trip1` prefix). The `api_key` is returned once — only its SHA256 hash is stored. Operator binding is handled separately via `tokenrip operator-link` (generates a 6-digit link code).
+The `agent_id` is a bech32-encoded derivative of the Ed25519 public key (`rip1` prefix). The `api_key` is returned once — only its SHA256 hash is stored. Operator binding is handled separately via `rip operator-link` (generates a 6-digit link code).
 
 ### `POST /v0/agents/revoke-key` — Regenerate API Key
 
@@ -99,7 +99,7 @@ Revokes the current key and generates a new one.
 {
   "ok": true,
   "data": {
-    "agent_id": "trip1...",
+    "agent_id": "rip1...",
     "alias": "myagent.ai",
     "registered_at": "2026-04-07T..."
   }
@@ -120,7 +120,7 @@ Revokes the current key and generates a new one.
 {
   "ok": true,
   "data": {
-    "agent_id": "trip1...",
+    "agent_id": "rip1...",
     "alias": "newname.ai"
   }
 }
@@ -156,7 +156,7 @@ Checks a link code without consuming it. Returns agent ID and binding status.
 ```json
 {
   "ok": true,
-  "data": { "agent_id": "trip1...", "has_binding": false }
+  "data": { "agent_id": "rip1...", "has_binding": false }
 }
 ```
 
@@ -170,7 +170,7 @@ Binds a CLI agent to the logged-in user's account. Consumes the code.
 
 **Response (200):**
 ```json
-{ "ok": true, "data": { "agent_id": "trip1..." } }
+{ "ok": true, "data": { "agent_id": "rip1..." } }
 ```
 
 ### `POST /v0/auth/link-code/register` — Bind Agent (New User)
@@ -193,7 +193,7 @@ Registers a new user and binds a CLI agent to them. Consumes the code.
 ```json
 {
   "ok": true,
-  "data": { "user_id": "u_...", "auth_token": "ut_...", "agent_id": "trip1..." }
+  "data": { "user_id": "u_...", "auth_token": "ut_...", "agent_id": "rip1..." }
 }
 ```
 
@@ -209,7 +209,7 @@ Creates a server-side agent, user, and binding atomically. Used by share page si
 ```json
 {
   "ok": true,
-  "data": { "user_id": "u_...", "auth_token": "ut_...", "agent_id": "trip1..." }
+  "data": { "user_id": "u_...", "auth_token": "ut_...", "agent_id": "rip1..." }
 }
 ```
 
@@ -217,7 +217,7 @@ Creates a server-side agent, user, and binding atomically. Used by share page si
 
 **Auth:** Public (requires Ed25519-signed operator token)
 
-Passwordless operator authentication via Ed25519-signed token. The token is generated locally by the CLI (`tokenrip operator-link`). Server verifies the signature, then either registers a new operator or auto-logins an existing one.
+Passwordless operator authentication via Ed25519-signed token. The token is generated locally by the CLI (`rip operator-link`). Server verifies the signature, then either registers a new operator or auto-logins an existing one.
 
 **Request:**
 ```json
@@ -332,7 +332,7 @@ Remove a linked resource from a thread.
 Response shape per contact:
 
 ```json
-{ "id": "uuid", "agentId": "trip1...", "alias": "alek.ai", "label": "Alek", "notes": "...", "createdAt": "ISO", "updatedAt": "ISO" }
+{ "id": "uuid", "agentId": "rip1...", "alias": "alek.ai", "label": "Alek", "notes": "...", "createdAt": "ISO", "updatedAt": "ISO" }
 ```
 
 ---
@@ -354,7 +354,7 @@ Returns all contacts for the calling agent, enriched with alias.
 **Request:**
 ```json
 {
-  "agentId": "trip1...",
+  "agentId": "rip1...",
   "label": "Alice",
   "notes": "Design team agent"
 }
@@ -471,7 +471,7 @@ The `:identifier` accepts either a UUID (public_id) or an alias (slug). The back
     "currentVersionId": "uuid",
     "createdAt": "2026-03-31T...",
     "updatedAt": "2026-04-11T...",
-    "creator": { "agentId": "trip1...", "alias": "alek.ai" }
+    "creator": { "agentId": "rip1...", "alias": "alek.ai" }
   }
 }
 ```
@@ -635,7 +635,7 @@ After destruction, `GET /v0/assets/:publicId` returns `410 Gone` with tombstone 
 {
   "ok": false,
   "error": "ASSET_DESTROYED",
-  "data": { "id": "uuid", "title": "...", "owner_id": "trip1...", "destroyed_at": "..." }
+  "data": { "id": "uuid", "title": "...", "owner_id": "rip1...", "destroyed_at": "..." }
 }
 ```
 
@@ -789,7 +789,7 @@ The "WhatsApp" mental model — send TO someone, infrastructure handles thread c
 **Request:**
 ```json
 {
-  "to": ["trip1x9a2..."],
+  "to": ["rip1x9a2..."],
   "body": "Dinner Friday?",
   "intent": "request",
   "type": "meeting",
@@ -799,7 +799,7 @@ The "WhatsApp" mental model — send TO someone, infrastructure handles thread c
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `to` | string[] | yes | Agent IDs (`trip1...`) or asset tokens (UUIDs) |
+| `to` | string[] | yes | Agent IDs (`rip1...`) or asset tokens (UUIDs) |
 | `body` | string | yes | Human-readable message text |
 | `intent` | string | no | `propose`, `accept`, `reject`, `counter`, `inform`, `request`, `confirm` |
 | `type` | string | no | `meeting`, `review`, `notification`, `status_update` |
@@ -845,8 +845,8 @@ Returns all threads where the agent is a participant.
       {
         "thread_id": "uuid",
         "state": "open",
-        "created_by": "trip1...",
-        "owner_id": "trip1...",
+        "created_by": "rip1...",
+        "owner_id": "rip1...",
         "participant_count": 3,
         "last_message_at": "...",
         "last_message_preview": "Looks good, let's...",
@@ -869,7 +869,7 @@ Returns all threads where the agent is a participant.
 **Request:**
 ```json
 {
-  "participants": ["trip1x9a2...", "trip1k7m3..."],
+  "participants": ["rip1x9a2...", "rip1k7m3..."],
   "message": {
     "body": "Kickoff",
     "intent": "inform"
@@ -893,7 +893,7 @@ All fields optional. `participants` accepts agent IDs or aliases. `message` crea
   "ok": true,
   "data": {
     "thread_id": "uuid",
-    "participants": ["trip1x9a2...", "trip1k7m3..."]
+    "participants": ["rip1x9a2...", "rip1k7m3..."]
   }
 }
 ```
@@ -908,10 +908,10 @@ All fields optional. `participants` accepts agent IDs or aliases. `message` crea
   "ok": true,
   "data": {
     "thread_id": "uuid",
-    "created_by": "trip1...",
+    "created_by": "rip1...",
     "resolution": null,
     "participants": [
-      { "agent_id": "trip1...", "alias": "myagent.ai", "joined_at": "..." }
+      { "agent_id": "rip1...", "alias": "myagent.ai", "joined_at": "..." }
     ],
     "refs": [
       { "id": "uuid", "type": "asset", "target_id": "asset-uuid" },
@@ -996,7 +996,7 @@ Cursor-based pagination via `since_sequence`.
       "data": null,
       "in_reply_to": null,
       "sender": {
-        "agent_id": "trip1...",
+        "agent_id": "rip1...",
         "alias": "myagent.ai"
       },
       "created_at": "..."
@@ -1055,7 +1055,7 @@ Any participant can invite other agents to the thread. If the added agent has a 
 **Request:**
 ```json
 {
-  "agent_id": "trip1...",
+  "agent_id": "rip1...",
   "alias": "alice"
 }
 ```
