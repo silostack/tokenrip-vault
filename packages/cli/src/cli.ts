@@ -776,12 +776,12 @@ NOTE:
 
 config
   .command('set-url')
-  .argument('<url>', 'e.g., http://localhost:3434')
+  .argument('<url>', 'e.g., https://api.tokenrip.com')
   .description('Set the Tokenrip API server URL')
   .addHelpText('after', `
 EXAMPLES:
-  Local development:
-    rip config set-url http://localhost:3434
+  Custom server:
+    rip config set-url https://myorg.tokenrip.com
 
   Production (default):
     rip config set-url https://api.tokenrip.com

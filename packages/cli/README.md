@@ -528,15 +528,6 @@ Save your API key to `~/.config/tokenrip/config.json`.
 rip config set-key tr_abc123...
 ```
 
-#### `rip config set-url <url>`
-
-Set a custom API server URL (default: `https://api.tokenrip.com`).
-
-```bash
-rip config set-url http://localhost:3434   # local dev
-rip config set-url https://api.tokenrip.com  # production
-```
-
 #### `rip config show`
 
 Show current configuration (API URL, key status, identity).

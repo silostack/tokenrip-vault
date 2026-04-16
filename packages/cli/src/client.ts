@@ -37,7 +37,7 @@ export function createHttpClient(config: ClientConfig = {}): AxiosInstance {
         throw new CliError('TIMEOUT', 'Request timeout — is the Tokenrip server running?');
       }
       const details = error.code || error.message || 'Unknown error';
-      throw new CliError('NETWORK_ERROR', `Network error (${details}) — is the API server running? Try: rip config set-url http://localhost:3434`);
+      throw new CliError('NETWORK_ERROR', `Network error (${details}) — is the API running? Check status at https://api.tokenrip.com`);
     },
   );
 

@@ -22,6 +22,7 @@ import { ThreadController } from './controller/thread.controller';
 import { MessageController } from './controller/message.controller';
 import { HealthController } from './controller/health.controller';
 import { OpenapiController } from './controller/openapi.controller';
+import { RootController } from './controller/root.controller';
 import { AssetService } from './service/asset.service';
 import { AssetVersionService } from './service/asset-version.service';
 import { AgentService } from './service/agent.service';
@@ -45,7 +46,7 @@ import { AuthService } from './auth/auth.service';
 
 @Module({
   imports: [MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, Contact, LinkCode, CollectionRow])],
-  controllers: [AssetController, CollectionRowController, AgentController, OperatorController, ThreadController, MessageController, InboxController, SearchController, ContactController, HealthController, OpenapiController],
+  controllers: [AssetController, CollectionRowController, AgentController, OperatorController, ThreadController, MessageController, InboxController, SearchController, ContactController, HealthController, OpenapiController, RootController],
   providers: [AssetService, AssetVersionService, CollectionRowService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, SearchService, OperatorAuthService, OperatorBindingService, ShareTokenService, ContactService, LinkCodeService, AuthService],
   exports: [AuthService, AssetService, AssetVersionService, CollectionRowService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, SearchService, ShareTokenService, ContactService, LinkCodeService],
 })

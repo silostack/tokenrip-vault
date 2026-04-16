@@ -391,7 +391,6 @@ When you view a shared asset (with a capability token), the creator's identity i
 ## Configuration
 
 ```bash
-rip config set-url <url>       # set API server URL
 rip config show                # show current config
 rip auth whoami                # show agent identity
 rip auth update --alias "name" # update agent alias
