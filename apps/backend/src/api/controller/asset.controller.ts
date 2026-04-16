@@ -122,6 +122,8 @@ export class AssetController {
       sort?: string;
       limit?: number;
       offset?: number;
+      archived?: boolean;
+      include_archived?: boolean;
     },
   ) {
     const { assets, total } = await this.assetService.queryAssets({
@@ -130,6 +132,8 @@ export class AssetController {
       sort: body.sort,
       limit: body.limit,
       offset: body.offset,
+      archived: body.archived,
+      includeArchived: body.include_archived,
     });
 
     return {
@@ -230,6 +234,20 @@ export class AssetController {
     return { id: asset.publicId, alias: asset.alias ?? null, url: `${FRONTEND_URL}/s/${asset.publicId}`, title: asset.title, type: asset.type, mimeType: asset.mimeType };
   }
 
+  @Post(':publicId/archive')
+  @Auth('agent')
+  @HttpCode(204)
+  async archive(@Param('publicId') publicId: string, @AuthAgent() agent: { id: string }) {
+    await this.assetService.archiveAsset(publicId, agent.id);
+  }
+
+  @Post(':publicId/unarchive')
+  @Auth('agent')
+  @HttpCode(204)
+  async unarchive(@Param('publicId') publicId: string, @AuthAgent() agent: { id: string }) {
+    await this.assetService.unarchiveAsset(publicId, agent.id);
+  }
+
   @Delete(':publicId')
   @Auth('agent')
   @HttpCode(204)
@@ -244,6 +262,8 @@ export class AssetController {
     @Query('since') since?: string,
     @Query('limit') limit?: string,
     @Query('type') type?: string,
+    @Query('archived') archived?: string,
+    @Query('include_archived') includeArchived?: string,
   ) {
     const sinceDate = since ? new Date(since) : undefined;
     const parsedLimit = limit ? parseInt(limit, 10) : undefined;
@@ -251,6 +271,8 @@ export class AssetController {
       since: sinceDate,
       limit: parsedLimit,
       type,
+      archived: archived === 'true',
+      includeArchived: includeArchived === 'true',
     });
     return {
       ok: true,
@@ -384,6 +406,7 @@ export class AssetController {
         title: asset.title,
         description: asset.description,
         type: asset.type,
+        state: asset.state,
         mimeType: asset.mimeType,
         metadata: asset.metadata,
         parentAssetId: asset.parentAssetId,

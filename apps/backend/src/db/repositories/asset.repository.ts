@@ -1,5 +1,5 @@
 import { SqlEntityRepository } from '@mikro-orm/postgresql';
-import { Asset } from '../models/Asset';
+import { Asset, AssetState } from '../models/Asset';
 import type { SearchResult } from '../../api/service/search.service';
 
 export interface AssetUpdateRow {
@@ -25,7 +25,7 @@ export class AssetRepository extends SqlEntityRepository<Asset> {
     limit: number,
     filters?: { q?: string },
   ): Promise<AssetUpdateRow[]> {
-    const conditions = ['a.owner_id = ?'];
+    const conditions = ['a.owner_id = ?', `a.state NOT IN ('${AssetState.DESTROYED}', '${AssetState.ARCHIVED}')`];
     const params: unknown[] = [since, ownerId];
 
     if (filters?.q) {
@@ -58,9 +58,14 @@ export class AssetRepository extends SqlEntityRepository<Asset> {
    */
   async searchAssetsForOwner(
     ownerId: string,
-    filters: { q?: string; since?: Date; asset_type?: string },
+    filters: { q?: string; since?: Date; asset_type?: string; archived?: boolean; includeArchived?: boolean },
   ): Promise<{ rows: SearchResult[]; total: number }> {
-    const conditions = ['a.owner_id = ?', "a.state != 'destroyed'"];
+    const stateCondition = filters.archived
+      ? `a.state = '${AssetState.ARCHIVED}'`
+      : filters.includeArchived
+        ? `a.state != '${AssetState.DESTROYED}'`
+        : `a.state NOT IN ('${AssetState.DESTROYED}', '${AssetState.ARCHIVED}')`;
+    const conditions = ['a.owner_id = ?', stateCondition];
     const params: unknown[] = [ownerId];
 
     if (filters.since) {

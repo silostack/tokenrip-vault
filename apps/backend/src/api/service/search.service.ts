@@ -14,6 +14,8 @@ export interface SearchFilters {
   intent?: string;
   ref?: string;
   asset_type?: string;
+  archived?: boolean;
+  includeArchived?: boolean;
 }
 
 export interface SearchResult {

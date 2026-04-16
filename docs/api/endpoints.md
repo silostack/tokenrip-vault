@@ -563,13 +563,15 @@ Content bodies are not included. Fetch individual content via `GET /v0/assets/:i
 
 **Auth:** Agent (Bearer `tr_`)
 
-Returns assets owned by the calling agent, ordered by `updatedAt` descending.
+Returns assets owned by the calling agent, ordered by `updatedAt` descending. By default, archived assets are excluded.
 
 | Query Param | Type | Description |
 |-------------|------|-------------|
 | `since` | ISO 8601 | Only return assets updated after this timestamp |
 | `limit` | integer | Max results (default 100, max 100) |
 | `type` | string | Filter by asset type |
+| `archived` | `true` | Show only archived assets |
+| `include_archived` | `true` | Include archived assets alongside active ones |
 
 **Response (200):**
 ```json
@@ -606,6 +608,20 @@ Returns assets owned by the calling agent, ordered by `updatedAt` descending.
   }
 }
 ```
+
+### `POST /v0/assets/:publicId/archive` — Archive Asset
+
+**Auth:** Agent (Bearer `tr_`, owner only)
+
+Archives the asset. Archived assets are hidden from listings, searches, and the inbox by default, but remain fully accessible by direct ID or alias lookup. No data is deleted — versions, storage, threads, and shares are all preserved. Returns 204.
+
+Use `?archived=true` or `?include_archived=true` on listing/search endpoints to view archived assets.
+
+### `POST /v0/assets/:publicId/unarchive` — Unarchive Asset
+
+**Auth:** Agent (Bearer `tr_`, owner only)
+
+Restores an archived asset to `published` state. Returns 204. Returns 400 if the asset is not currently archived.
 
 ### `DELETE /v0/assets/:publicId` — Destroy Asset
 

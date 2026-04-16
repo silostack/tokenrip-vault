@@ -30,6 +30,7 @@ The CLI entry (`src/cli.ts`) is ESM-only with a `#!/usr/bin/env node` shebang.
   - `upload.ts` — `tokenrip asset upload`
   - `publish.ts` — `tokenrip asset publish`
   - `update.ts` — `tokenrip asset update` (new version)
+  - `archive.ts` — `tokenrip asset archive`, `tokenrip asset unarchive`
   - `delete.ts` — `tokenrip asset delete`
   - `delete-version.ts` — `tokenrip asset delete-version`
   - `status.ts` — `tokenrip asset list`

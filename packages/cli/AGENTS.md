@@ -78,6 +78,24 @@ List your assets.
 rip asset list
 rip asset list --since 2026-03-30T00:00:00Z
 rip asset list --type markdown --limit 5
+rip asset list --archived              # show only archived assets
+rip asset list --include-archived      # include archived alongside active
+```
+
+### `rip asset archive <uuid>`
+
+Archive an asset (hidden from listings, still accessible by ID).
+
+```bash
+rip asset archive 550e8400-...
+```
+
+### `rip asset unarchive <uuid>`
+
+Restore an archived asset to published state.
+
+```bash
+rip asset unarchive 550e8400-...
 ```
 
 ### `rip asset delete <uuid>`
@@ -85,7 +103,7 @@ rip asset list --type markdown --limit 5
 Delete an asset permanently.
 
 ```bash
-rip asset update 550e8400-... report-v2.md --type markdown --label "revised"
+rip asset delete 550e8400-...
 ```
 
 ### Share an asset

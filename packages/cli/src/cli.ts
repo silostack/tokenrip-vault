@@ -6,6 +6,7 @@ import { upload } from './commands/upload.js';
 import { publish } from './commands/publish.js';
 import { status } from './commands/status.js';
 import { deleteAsset } from './commands/delete.js';
+import { archiveAsset, unarchiveAsset } from './commands/archive.js';
 import { update } from './commands/update.js';
 import { deleteVersion } from './commands/delete-version.js';
 import { stats } from './commands/stats.js';
@@ -105,12 +106,16 @@ asset
   .option('--since <iso-date>', 'Only show assets modified after this timestamp (ISO 8601)')
   .option('--limit <n>', 'Maximum number of assets to return (default: 20)', '20')
   .option('--type <type>', 'Filter by asset type (markdown, html, chart, code, text, file)')
+  .option('--archived', 'Show only archived assets')
+  .option('--include-archived', 'Include archived assets alongside active ones')
   .description('List your published assets and their metadata')
   .addHelpText('after', `
 EXAMPLES:
   $ rip asset list
   $ rip asset list --since 2026-03-30T00:00:00Z
   $ rip asset list --type markdown --limit 5
+  $ rip asset list --archived
+  $ rip asset list --include-archived
 `)
   .action(wrapCommand(status));
 
@@ -128,6 +133,29 @@ CAUTION:
   This action cannot be undone.
 `)
   .action(wrapCommand(deleteAsset));
+
+asset
+  .command('archive')
+  .argument('<uuid>', 'Asset public ID')
+  .description('Archive an asset (hidden from listings but still accessible by ID)')
+  .addHelpText('after', `
+EXAMPLES:
+  $ rip asset archive 550e8400-e29b-41d4-a716-446655440000
+
+  Archived assets are hidden from listings and searches by default,
+  but remain accessible by ID and can be unarchived at any time.
+`)
+  .action(wrapCommand(archiveAsset));
+
+asset
+  .command('unarchive')
+  .argument('<uuid>', 'Asset public ID')
+  .description('Unarchive an asset, restoring it to published state')
+  .addHelpText('after', `
+EXAMPLES:
+  $ rip asset unarchive 550e8400-e29b-41d4-a716-446655440000
+`)
+  .action(wrapCommand(unarchiveAsset));
 
 asset
   .command('update')
@@ -430,12 +458,16 @@ program
   .option('--intent <intent>', 'Filter by last message intent')
   .option('--ref <uuid>', 'Filter threads referencing this asset')
   .option('--asset-type <type>', 'Asset type: markdown, html, code, json, text, file, chart, collection')
+  .option('--archived', 'Search only archived assets')
+  .option('--include-archived', 'Include archived assets in search results')
   .addHelpText('after', `
 EXAMPLES:
   $ rip search "quarterly report"
   $ rip search "deploy" --type thread --state open
   $ rip search "chart" --asset-type chart --since 7
   $ rip search "proposal" --intent propose --limit 10
+  $ rip search "old report" --archived
+  $ rip search "report" --include-archived
 `)
   .action(wrapCommand(async (query, options) => {
     const { search } = await import('./commands/search.js');

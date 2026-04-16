@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { useAtomValue, useSetAtom } from 'jotai'
 import { Package, RefreshCw } from 'lucide-react'
@@ -29,24 +29,31 @@ function typeBadge(type: string) {
   )
 }
 
+type AssetFilter = 'active' | 'archived' | 'all'
+
 export function OperatorAssetList() {
   const assets = useAtomValue(operatorAssetsAtom)
   const loading = useAtomValue(operatorAssetsLoadingAtom)
   const setAssets = useSetAtom(operatorAssetsAtom)
   const setLoading = useSetAtom(operatorAssetsLoadingAtom)
   const navigate = useNavigate()
+  const [filter, setFilter] = useState<AssetFilter>('active')
 
   const load = useCallback(async () => {
+    setAssets([])
     setLoading(true)
     try {
-      const data = await fetchOperatorAssets({ limit: 50 })
+      const params: Parameters<typeof fetchOperatorAssets>[0] = { limit: 50 }
+      if (filter === 'archived') params.archived = true
+      else if (filter === 'all') params.include_archived = true
+      const data = await fetchOperatorAssets(params)
       setAssets(data)
     } catch {
       // silent
     } finally {
       setLoading(false)
     }
-  }, [setAssets, setLoading])
+  }, [setAssets, setLoading, filter])
 
   useEffect(() => {
     load()
@@ -79,7 +86,23 @@ export function OperatorAssetList() {
 
   return (
     <div>
-      <div className="flex items-center justify-end px-4 py-2">
+      <div className="flex items-center justify-between px-4 py-2">
+        <div className="flex gap-1">
+          {(['active', 'archived', 'all'] as const).map((f) => (
+            <button
+              key={f}
+              type="button"
+              onClick={() => setFilter(f)}
+              className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors ${
+                filter === f
+                  ? 'bg-foreground/10 text-foreground/70'
+                  : 'text-foreground/30 hover:text-foreground/50'
+              }`}
+            >
+              {f.charAt(0).toUpperCase() + f.slice(1)}
+            </button>
+          ))}
+        </div>
         <button
           type="button"
           onClick={load}
@@ -104,7 +127,7 @@ export function OperatorAssetList() {
             className="flex w-full items-center gap-3 border-b border-foreground/5 px-4 py-3 text-left transition-colors hover:bg-foreground/[0.03] active:bg-foreground/5"
           >
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-foreground/80">
+              <p className={`truncate text-sm font-medium ${asset.state === 'archived' ? 'text-foreground/40' : 'text-foreground/80'}`}>
                 {asset.title || asset.id.slice(0, 8)}
               </p>
               <p className="mt-0.5 text-xs text-foreground/35">
@@ -113,6 +136,11 @@ export function OperatorAssetList() {
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-2">
+              {asset.state === 'archived' && (
+                <span className="rounded bg-foreground/5 px-1.5 py-0.5 text-[10px] font-medium text-foreground/30">
+                  Archived
+                </span>
+              )}
               <span className="text-xs text-foreground/30">
                 v{asset.versionCount}
               </span>

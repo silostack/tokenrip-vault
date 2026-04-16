@@ -130,6 +130,38 @@ rip asset list [options]
 | `--since <iso-date>` | Only show assets modified after this timestamp | All |
 | `--limit <n>` | Maximum number of assets | 20 |
 | `--type <type>` | Filter by asset type | All types |
+| `--archived` | Show only archived assets | Off |
+| `--include-archived` | Include archived assets alongside active ones | Off |
+
+---
+
+## `rip asset archive`
+
+Archive an asset. Hidden from listings and searches but still accessible by ID.
+
+```bash
+rip asset archive <uuid>
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<uuid>` | Asset public ID |
+
+Archived assets are hidden from `rip asset list`, `rip search`, and the inbox by default. Use `--archived` or `--include-archived` flags on those commands to see them. Nothing is deleted — the URL still works, and the asset can be unarchived at any time.
+
+---
+
+## `rip asset unarchive`
+
+Restore an archived asset to published state.
+
+```bash
+rip asset unarchive <uuid>
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<uuid>` | Asset public ID |
 
 ---
 

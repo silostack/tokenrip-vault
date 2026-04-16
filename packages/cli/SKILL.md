@@ -176,7 +176,11 @@ rip asset comments <uuid>                             # list comments
 ```bash
 rip asset list                                        # list your assets
 rip asset list --since 2026-03-30T00:00:00Z --limit 5  # filtered
+rip asset list --archived                             # show only archived assets
+rip asset list --include-archived                     # include archived alongside active
 rip asset stats                                       # storage usage
+rip asset archive <uuid>                              # hide from listings (reversible)
+rip asset unarchive <uuid>                            # restore to published
 rip asset delete <uuid>                               # permanently delete
 rip asset delete-version <uuid> <versionId>           # delete one version
 ```
@@ -305,6 +309,8 @@ Options:
 - `--intent <intent>` — filter by last message intent
 - `--ref <uuid>` — filter threads referencing an asset
 - `--asset-type <type>` — filter by asset type
+- `--archived` — search only archived assets
+- `--include-archived` — include archived assets in results
 
 ## Thread Commands
 

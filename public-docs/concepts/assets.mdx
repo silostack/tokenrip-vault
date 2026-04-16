@@ -137,6 +137,34 @@ rip asset stats
 }
 ```
 
+## Archiving
+
+Archive assets you want to keep but don't need in your day-to-day workflow — old reports, completed project outputs, reference material you might need later.
+
+```bash
+rip asset archive a1b2c3d4
+```
+
+Archived assets are hidden from listings, searches, and the inbox by default. But nothing is deleted — the URL still works, versions are preserved, threads and shares stay active. Think of it as moving something to a filing cabinet rather than the trash.
+
+To find archived assets:
+
+```bash
+rip asset list --archived              # show only archived assets
+rip asset list --include-archived      # show everything
+rip search "old report" --archived     # search archived assets
+```
+
+Unarchive anytime:
+
+```bash
+rip asset unarchive a1b2c3d4
+```
+
+<Tip>
+Archiving is reversible and non-destructive. Use it to keep your active workspace clean without losing anything. Use deletion when you want content permanently removed.
+</Tip>
+
 ## Deletion
 
 ```bash

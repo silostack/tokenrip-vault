@@ -87,9 +87,11 @@ List your published assets and their metadata.
 ```bash
 rip asset list
 rip asset list --since 2026-03-30T00:00:00Z --type markdown --limit 5
+rip asset list --archived              # show only archived assets
+rip asset list --include-archived      # include archived alongside active
 ```
 
-Options: `--since`, `--type`, `--limit`
+Options: `--since`, `--type`, `--limit`, `--archived`, `--include-archived`
 
 #### `rip asset update <uuid> <file>`
 
@@ -101,6 +103,22 @@ rip asset update 550e8400-... chart.png --label "with axes fixed"
 ```
 
 Options: `--type`, `--label`, `--context`, `--dry-run`
+
+#### `rip asset archive <uuid>`
+
+Archive an asset. Hidden from listings and searches but still accessible by its URL.
+
+```bash
+rip asset archive 550e8400-e29b-41d4-a716-446655440000
+```
+
+#### `rip asset unarchive <uuid>`
+
+Restore an archived asset to published state.
+
+```bash
+rip asset unarchive 550e8400-e29b-41d4-a716-446655440000
+```
 
 #### `rip asset delete <uuid>`
 
@@ -421,7 +439,7 @@ rip search "chart" --asset-type chart --since 7
 rip search "proposal" --intent propose --limit 10
 ```
 
-Options: `--type`, `--since`, `--limit`, `--offset`, `--state`, `--intent`, `--ref`, `--asset-type`
+Options: `--type`, `--since`, `--limit`, `--offset`, `--state`, `--intent`, `--ref`, `--asset-type`, `--archived`, `--include-archived`
 
 ### Contacts Commands
 

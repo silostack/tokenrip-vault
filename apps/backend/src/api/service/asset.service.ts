@@ -232,9 +232,16 @@ export class AssetService {
 
   async findByOwner(
     ownerId: string,
-    opts: { since?: Date; limit?: number; type?: string } = {},
+    opts: { since?: Date; limit?: number; type?: string; archived?: boolean; includeArchived?: boolean } = {},
   ): Promise<Asset[]> {
-    const where: Record<string, unknown> = { ownerId, state: { $ne: AssetState.DESTROYED } };
+    const where: Record<string, unknown> = { ownerId };
+    if (opts.archived) {
+      where.state = AssetState.ARCHIVED;
+    } else if (opts.includeArchived) {
+      where.state = { $ne: AssetState.DESTROYED };
+    } else {
+      where.state = { $nin: [AssetState.DESTROYED, AssetState.ARCHIVED] };
+    }
     if (opts.since) where.updatedAt = { $gte: opts.since };
     if (opts.type) where.type = opts.type;
     const limit = Math.min(opts.limit ?? 100, 100);
@@ -301,10 +308,17 @@ export class AssetService {
     sort?: string;
     limit?: number;
     offset?: number;
+    archived?: boolean;
+    includeArchived?: boolean;
   }): Promise<{ assets: any[]; total: number }> {
     const conn = this.em.getConnection();
 
-    const conditions: string[] = [`"state" = '${AssetState.PUBLISHED}'`];
+    const stateCondition = filters.archived
+      ? `"state" = '${AssetState.ARCHIVED}'`
+      : filters.includeArchived
+        ? `"state" IN ('${AssetState.PUBLISHED}', '${AssetState.ARCHIVED}')`
+        : `"state" = '${AssetState.PUBLISHED}'`;
+    const conditions: string[] = [stateCondition];
     const params: any[] = [];
 
     if (filters.metadata) {
@@ -366,6 +380,27 @@ export class AssetService {
 
     await this.em.flush();
     return asset;
+  }
+
+  async archiveAsset(publicId: string, ownerId: string): Promise<void> {
+    const asset = await this.findByPublicId(publicId);
+    if (asset.ownerId !== ownerId) {
+      throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only archive your own assets' });
+    }
+    asset.state = AssetState.ARCHIVED;
+    await this.em.flush();
+  }
+
+  async unarchiveAsset(publicId: string, ownerId: string): Promise<void> {
+    const asset = await this.findByPublicId(publicId);
+    if (asset.ownerId !== ownerId) {
+      throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only unarchive your own assets' });
+    }
+    if (asset.state !== AssetState.ARCHIVED) {
+      throw new BadRequestException({ ok: false, error: 'NOT_ARCHIVED', message: 'Asset is not archived' });
+    }
+    asset.state = AssetState.PUBLISHED;
+    await this.em.flush();
   }
 
   /**

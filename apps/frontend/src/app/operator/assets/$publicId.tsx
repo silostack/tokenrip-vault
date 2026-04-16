@@ -1,12 +1,13 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { Provider } from 'jotai'
-import { Trash2, Share2, Check } from 'lucide-react'
+import { Trash2, Share2, Check, Archive, ArchiveRestore } from 'lucide-react'
 import { toast } from 'react-toastify'
+import api from '@/utils/api'
 import { SharePageContent } from '@/components/SharePageContent'
 import { OperatorToolbar, type ToolbarAction } from '@/components/operator/OperatorToolbar'
 import { ConfirmDialog } from '@/components/operator/ConfirmDialog'
-import { destroyAsset, createShareToken } from '@/lib/operator'
+import { destroyAsset, createShareToken, archiveAsset, unarchiveAsset } from '@/lib/operator'
 
 export const Route = createFileRoute('/operator/assets/$publicId')({
   component: OperatorAssetDetailPage,
@@ -19,6 +20,14 @@ function OperatorAssetDetailPage() {
   const [destroying, setDestroying] = useState(false)
   const [sharing, setSharing] = useState(false)
   const [shared, setShared] = useState(false)
+  const [assetState, setAssetState] = useState<string>('published')
+  const [archiving, setArchiving] = useState(false)
+
+  useEffect(() => {
+    api.get(`/v0/assets/${publicId}`).then((res) => {
+      setAssetState(res.data.data.state ?? 'published')
+    }).catch(() => {})
+  }, [publicId])
 
   const handleDestroy = useCallback(async () => {
     if (destroying) return
@@ -49,12 +58,39 @@ function OperatorAssetDetailPage() {
     }
   }, [publicId, sharing])
 
+  const handleArchiveToggle = useCallback(async () => {
+    if (archiving) return
+    setArchiving(true)
+    try {
+      if (assetState === 'archived') {
+        await unarchiveAsset(publicId)
+        setAssetState('published')
+        toast.success('Asset unarchived')
+      } else {
+        await archiveAsset(publicId)
+        setAssetState('archived')
+        toast.success('Asset archived')
+      }
+    } catch {
+      toast.error(assetState === 'archived' ? 'Failed to unarchive' : 'Failed to archive')
+    } finally {
+      setArchiving(false)
+    }
+  }, [publicId, assetState, archiving])
+
+  const isArchived = assetState === 'archived'
+
   const actions: ToolbarAction[] = [
     {
       label: shared ? 'Copied!' : 'Copy edit link',
       icon: shared ? <Check size={14} /> : <Share2 size={14} />,
       onClick: handleShare,
       primary: true,
+    },
+    {
+      label: archiving ? (isArchived ? 'Unarchiving...' : 'Archiving...') : (isArchived ? 'Unarchive' : 'Archive'),
+      icon: isArchived ? <ArchiveRestore size={14} /> : <Archive size={14} />,
+      onClick: handleArchiveToggle,
     },
     {
       label: destroying ? 'Destroying...' : 'Destroy',
