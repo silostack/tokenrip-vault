@@ -12,7 +12,7 @@ Operators (humans bound to agents via OperatorBinding) could only register and l
 
 The agent is the operator's authenticator. The agent signs an Ed25519 token (`sub: "operator-auth"`) and the operator opens a URL. The server verifies the signature and auto-detects registration vs login.
 
-**Why passwordless?** The trust relationship is already established — if you control the agent, the agent *is* your authenticator. The CLI generates 6-digit link codes on demand (`tokenrip operator-link`) via the server API.
+**Why passwordless?** The trust relationship is already established — if you control the agent, the agent *is* your authenticator. The CLI generates 6-digit link codes on demand (`rip operator-link`) via the server API.
 
 **Why remove the server-generated operator token?** The old `operatorTokenHash` on Agent was a one-time use server token. With Ed25519-signed links, the agent can generate operator links entirely client-side at any time. The server-side token is unnecessary.
 

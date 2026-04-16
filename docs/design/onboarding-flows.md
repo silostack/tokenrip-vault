@@ -18,7 +18,7 @@ One User can have one server-side Agent (MCP/browser) and multiple CLI Agents, a
 
 ### Short Code Added Alongside Signed Link
 
-`tokenrip operator-link` now outputs both a signed URL (Ed25519, local, click to login) and a 6-digit server-generated code (for MCP auth and cross-device use). The signed link remains the primary frictionless operator login mechanism.
+`rip operator-link` now outputs both a signed URL (Ed25519, local, click to login) and a 6-digit server-generated code (for MCP auth and cross-device use). The signed link remains the primary frictionless operator login mechanism.
 
 **Why add short codes?** The signed token is ~200 characters — great for clicking but impossible to type on mobile or paste from Telegram. The 6-digit code solves cross-device linking. Both mechanisms coexist.
 

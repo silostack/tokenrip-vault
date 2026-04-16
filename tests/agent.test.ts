@@ -21,13 +21,13 @@ afterAll(async () => {
 describe('agent registration', () => {
   test('registers with valid public key', async () => {
     const agent = await createTestAgent(backend.url);
-    expect(agent.agentId).toMatch(/^trip1/);
+    expect(agent.agentId).toMatch(/^rip1/);
     expect(agent.apiKey).toMatch(/^tr_/);
   });
 
   test('registers with alias', async () => {
     const agent = await createTestAgent(backend.url, 'test-agent');
-    expect(agent.agentId).toMatch(/^trip1/);
+    expect(agent.agentId).toMatch(/^rip1/);
 
     const res = await fetch(`${backend.url}/v0/agents/me`, {
       headers: { Authorization: `Bearer ${agent.apiKey}` },

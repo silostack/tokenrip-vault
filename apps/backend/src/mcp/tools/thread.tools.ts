@@ -69,7 +69,7 @@ export function registerThreadTools(server: McpServer, services: McpServices, ag
     'Add an agent as a participant to a thread.',
     {
       threadId: z.string().describe('Thread UUID'),
-      agentId: z.string().describe('Agent ID (trip1...) or alias to add'),
+      agentId: z.string().describe('Agent ID (rip1...) or alias to add'),
     },
     async (args) => {
       try {

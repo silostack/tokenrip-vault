@@ -22,6 +22,7 @@ Two publishing modes:
 | `chart` | `application/json` | Interactive chart |
 | `text` | `text/plain` | Plain text, whitespace preserved |
 | `json` | `application/json` | Pretty-printed, collapsible |
+| `csv` | `text/csv` | Rendered as a table, versioned |
 
 **Binary files** (via `asset upload`):
 
@@ -31,10 +32,10 @@ Images, PDFs, documents — any binary file up to 10 MB. MIME type is auto-detec
 
 ```bash
 # Structured content
-tokenrip asset publish report.md --type markdown --title "Q1 Analysis"
+rip asset publish report.md --type markdown --title "Q1 Analysis"
 
 # Binary file
-tokenrip asset upload diagram.png --title "Architecture Diagram"
+rip asset upload diagram.png --title "Architecture Diagram"
 ```
 
 Both return a URL:
@@ -85,7 +86,7 @@ For agents, the raw content and metadata responses are the most useful — no HT
 Assets are versioned. When an agent revises content, it publishes a new version — same URL, new content, full history preserved.
 
 ```bash
-tokenrip asset update a1b2c3d4 revised-report.md --type markdown --label "with corrections"
+rip asset update a1b2c3d4 revised-report.md --type markdown --label "with corrections"
 ```
 
 ### URL Scheme
@@ -110,19 +111,19 @@ Collaborators with a capability token that includes `version:create` permission 
 ## Listing Assets
 
 ```bash
-tokenrip asset list
+rip asset list
 ```
 
 Filter by type or recency:
 
 ```bash
-tokenrip asset list --type markdown --since 2026-04-01T00:00:00Z --limit 10
+rip asset list --type markdown --since 2026-04-01T00:00:00Z --limit 10
 ```
 
 ## Storage Stats
 
 ```bash
-tokenrip asset stats
+rip asset stats
 ```
 
 ```json
@@ -137,10 +138,38 @@ tokenrip asset stats
 }
 ```
 
+## Archiving
+
+Archive assets you want to keep but don't need in your day-to-day workflow — old reports, completed project outputs, reference material you might need later.
+
+```bash
+rip asset archive a1b2c3d4
+```
+
+Archived assets are hidden from listings, searches, and the inbox by default. But nothing is deleted — the URL still works, versions are preserved, threads and shares stay active. Think of it as moving something to a filing cabinet rather than the trash.
+
+To find archived assets:
+
+```bash
+rip asset list --archived              # show only archived assets
+rip asset list --include-archived      # show everything
+rip search "old report" --archived     # search archived assets
+```
+
+Unarchive anytime:
+
+```bash
+rip asset unarchive a1b2c3d4
+```
+
+<Tip>
+Archiving is reversible and non-destructive. Use it to keep your active workspace clean without losing anything. Use deletion when you want content permanently removed.
+</Tip>
+
 ## Deletion
 
 ```bash
-tokenrip asset delete a1b2c3d4
+rip asset delete a1b2c3d4
 ```
 
 Deletion is permanent for content — storage files are removed. But a tombstone record is kept with metadata (title, owner, timestamps). The URL returns `410 Gone` with the tombstone data. All threads referencing the asset are cascade-closed.
@@ -148,9 +177,14 @@ Deletion is permanent for content — storage files are removed. But a tombstone
 Individual versions can be deleted too, as long as at least one version remains:
 
 ```bash
-tokenrip asset delete-version a1b2c3d4 v1-uuid
+rip asset delete-version a1b2c3d4 v1-uuid
 ```
 
-## Collections
+## Tabular Data: Collections and CSVs
 
-For structured, tabular data, see [Collections](/concepts/collections). A collection is an asset with `type: "collection"` — same URL scheme, sharing, and permissions, but with rows and columns instead of document content.
+Tokenrip has two primitives for tabular data, each optimized for a different workflow:
+
+- **[Collections](/concepts/collections)** — a *living* table. Agents append rows over time, rows can be updated and deleted individually via API. No versioning. Best when data is being produced incrementally (research findings, monitoring results, incoming leads).
+- **[CSV assets](/concepts/csv)** — a *versioned snapshot*. Publish a CSV, get a shareable URL that renders as a table, re-publish to create a new version. No row-level API. Best when you already have tabular data as a file and want to share, preserve, and version it.
+
+One command bridges them: `rip asset publish data.csv --type collection --from-csv` parses the CSV server-side and returns a fully-populated collection.

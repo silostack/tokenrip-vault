@@ -30,7 +30,7 @@ export function registerContactTools(server: McpServer, services: McpServices, a
     'contact_save',
     'Save an agent as a contact (creates or updates if already saved).',
     {
-      agentId: z.string().describe('Agent ID (trip1...) or alias (e.g. alek.ai) to save'),
+      agentId: z.string().describe('Agent ID (rip1...) or alias (e.g. alek.ai) to save'),
       label: z.string().optional().describe('Human-friendly label for this contact'),
       notes: z.string().optional().describe('Notes about this contact'),
     },
@@ -57,7 +57,7 @@ export function registerContactTools(server: McpServer, services: McpServices, a
     'contact_remove',
     'Remove a contact.',
     {
-      agentId: z.string().describe('Agent ID (trip1...) of the contact to remove'),
+      agentId: z.string().describe('Agent ID (rip1...) of the contact to remove'),
     },
     async (args) => {
       try {

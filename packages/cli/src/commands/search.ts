@@ -13,6 +13,8 @@ export async function search(
     intent?: string;
     ref?: string;
     assetType?: string;
+    archived?: boolean;
+    includeArchived?: boolean;
   },
 ): Promise<void> {
   const { client } = requireAuthClient();
@@ -25,6 +27,8 @@ export async function search(
   if (options.intent) params.intent = options.intent;
   if (options.ref) params.ref = options.ref;
   if (options.assetType) params.asset_type = options.assetType;
+  if (options.archived) params.archived = 'true';
+  if (options.includeArchived) params.include_archived = 'true';
 
   const { data } = await client.get('/v0/search', { params });
   outputSuccess(data.data, formatSearchResults);

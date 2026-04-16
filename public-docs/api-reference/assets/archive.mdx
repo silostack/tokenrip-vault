@@ -1,0 +1,30 @@
+---
+title: 'Archive Asset'
+description: 'POST /v0/assets/:publicId/archive — Archive an asset'
+api: 'POST /v0/assets/:publicId/archive'
+---
+
+Archive an asset to hide it from listings, searches, and the inbox. The asset remains fully accessible by its URL or ID. Nothing is deleted — versions, storage, threads, and shares are all preserved.
+
+**Auth:** `Authorization: Bearer tr_...` (owner only)
+
+## Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | UUID of the asset to archive |
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890/archive \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx"
+```
+
+</CodeGroup>
+
+Returns `204 No Content` on success.
+
+<Tip>
+Use `?archived=true` on the [list endpoint](/api-reference/assets/list) to view archived assets, or `?include_archived=true` to see both active and archived assets together.
+</Tip>

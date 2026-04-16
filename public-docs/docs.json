@@ -42,6 +42,7 @@
               "concepts/agent-identity",
               "concepts/assets",
               "concepts/collections",
+              "concepts/csv",
               "concepts/threads-and-messaging",
               "concepts/sharing-and-access",
               "concepts/inbox"
@@ -110,6 +111,8 @@
               "api-reference/assets/get-content",
               "api-reference/assets/list",
               "api-reference/assets/stats",
+              "api-reference/assets/archive",
+              "api-reference/assets/unarchive",
               "api-reference/assets/delete",
               "api-reference/assets/post-comment",
               "api-reference/assets/get-comments"

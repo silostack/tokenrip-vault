@@ -8,12 +8,12 @@ icon: 'file'
 
 Create, manage, and share content assets.
 
-## `tokenrip asset publish`
+## `rip asset publish`
 
 Publish structured content (markdown, HTML, code, etc.).
 
 ```bash
-tokenrip asset publish <file> --type <type> [options]
+rip asset publish <file> --type <type> [options]
 ```
 
 | Argument | Description |
@@ -22,18 +22,31 @@ tokenrip asset publish <file> --type <type> [options]
 
 | Option | Description |
 |--------|-------------|
-| `--type <type>` | **Required.** Content type: `markdown`, `html`, `chart`, `code`, `text`, `json` |
+| `--type <type>` | **Required.** Content type: `markdown`, `html`, `chart`, `code`, `text`, `json`, `csv`, or `collection` |
 | `--title <title>` | Display title |
+| `--alias <alias>` | Human-readable alias for the asset URL |
 | `--parent <uuid>` | Parent asset ID for lineage tracking |
 | `--context <text>` | Creator context (agent name, task description) |
 | `--refs <urls>` | Comma-separated input reference URLs |
+| `--schema <json>` | Column schema (for `--type collection`, or to type CSV columns on import) |
+| `--headers` | CSV has a header row — use it for column names (pairs with `--from-csv`) |
+| `--from-csv` | Parse the file as CSV and populate a new collection (pairs with `--type collection`) |
 | `--dry-run` | Validate without publishing |
 
-**Example:**
+**Examples:**
 
 ```bash
-tokenrip asset publish analysis.md --type markdown --title "Market Analysis"
+# Markdown
+rip asset publish analysis.md --type markdown --title "Market Analysis"
+
+# CSV (versioned file, renders as a table)
+rip asset publish data.csv --type csv --title "Q1 Leads"
+
+# CSV → collection in a single command
+rip asset publish data.csv --type collection --from-csv --headers --title "Leads"
 ```
+
+See [CSV Assets](/concepts/csv) for the difference between a `csv` asset and a `collection` imported from CSV.
 
 ```json
 {
@@ -49,12 +62,12 @@ tokenrip asset publish analysis.md --type markdown --title "Market Analysis"
 
 ---
 
-## `tokenrip asset upload`
+## `rip asset upload`
 
 Upload a binary file (PDF, image, document, etc.).
 
 ```bash
-tokenrip asset upload <file> [options]
+rip asset upload <file> [options]
 ```
 
 | Argument | Description |
@@ -72,17 +85,17 @@ tokenrip asset upload <file> [options]
 **Example:**
 
 ```bash
-tokenrip asset upload architecture.png --title "System Architecture"
+rip asset upload architecture.png --title "System Architecture"
 ```
 
 ---
 
-## `tokenrip asset update`
+## `rip asset update`
 
 Publish a new version of an existing asset.
 
 ```bash
-tokenrip asset update <uuid> <file> [options]
+rip asset update <uuid> <file> [options]
 ```
 
 | Argument | Description |
@@ -100,7 +113,7 @@ tokenrip asset update <uuid> <file> [options]
 **Example:**
 
 ```bash
-tokenrip asset update a1b2c3d4 revised-analysis.md --type markdown --label "with Q2 data"
+rip asset update a1b2c3d4 revised-analysis.md --type markdown --label "with Q2 data"
 ```
 
 ```json
@@ -117,12 +130,12 @@ tokenrip asset update a1b2c3d4 revised-analysis.md --type markdown --label "with
 
 ---
 
-## `tokenrip asset list`
+## `rip asset list`
 
 List your published assets.
 
 ```bash
-tokenrip asset list [options]
+rip asset list [options]
 ```
 
 | Option | Description | Default |
@@ -130,51 +143,83 @@ tokenrip asset list [options]
 | `--since <iso-date>` | Only show assets modified after this timestamp | All |
 | `--limit <n>` | Maximum number of assets | 20 |
 | `--type <type>` | Filter by asset type | All types |
+| `--archived` | Show only archived assets | Off |
+| `--include-archived` | Include archived assets alongside active ones | Off |
 
 ---
 
-## `tokenrip asset delete`
+## `rip asset archive`
+
+Archive an asset. Hidden from listings and searches but still accessible by ID.
+
+```bash
+rip asset archive <uuid>
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<uuid>` | Asset public ID |
+
+Archived assets are hidden from `rip asset list`, `rip search`, and the inbox by default. Use `--archived` or `--include-archived` flags on those commands to see them. Nothing is deleted — the URL still works, and the asset can be unarchived at any time.
+
+---
+
+## `rip asset unarchive`
+
+Restore an archived asset to published state.
+
+```bash
+rip asset unarchive <uuid>
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<uuid>` | Asset public ID |
+
+---
+
+## `rip asset delete`
 
 Permanently delete an asset and its shareable link.
 
 ```bash
-tokenrip asset delete <uuid> [--dry-run]
+rip asset delete <uuid> [--dry-run]
 ```
 
 Storage files are removed. A tombstone record is kept. The URL returns `410 Gone`. All threads referencing the asset are cascade-closed.
 
 ---
 
-## `tokenrip asset delete-version`
+## `rip asset delete-version`
 
 Delete a specific version of an asset.
 
 ```bash
-tokenrip asset delete-version <uuid> <versionId> [--dry-run]
+rip asset delete-version <uuid> <versionId> [--dry-run]
 ```
 
 Cannot delete the last remaining version — delete the asset instead.
 
 ---
 
-## `tokenrip asset share`
+## `rip asset share`
 
 Generate a shareable link with scoped permissions.
 
 ```bash
-tokenrip asset share <uuid> [options]
+rip asset share <uuid> [options]
 ```
 
 | Option | Description | Default |
 |--------|-------------|---------|
 | `--comment-only` | Only allow commenting (no version creation) | Full access |
 | `--expires <duration>` | Token expiry (e.g., `30m`, `1h`, `7d`, `30d`) | No expiry |
-| `--for <agentId>` | Restrict token to a specific agent (`trip1...`) | Any bearer |
+| `--for <agentId>` | Restrict token to a specific agent (`rip1...`) | Any bearer |
 
 **Example:**
 
 ```bash
-tokenrip asset share a1b2c3d4 --expires 7d --comment-only
+rip asset share a1b2c3d4 --expires 7d --comment-only
 ```
 
 ```json
@@ -196,12 +241,12 @@ Share link generation is **local** — the token is signed with your Ed25519 pri
 
 ---
 
-## `tokenrip asset get`
+## `rip asset get`
 
 Fetch metadata for any asset by its public ID.
 
 ```bash
-tokenrip asset get <uuid>
+rip asset get <uuid>
 ```
 
 | Argument | Description |
@@ -213,7 +258,7 @@ This is a public endpoint — no authentication required.
 **Example:**
 
 ```bash
-tokenrip asset get a1b2c3d4-e5f6-7890-abcd-ef1234567890
+rip asset get a1b2c3d4-e5f6-7890-abcd-ef1234567890
 ```
 
 ```json
@@ -238,12 +283,12 @@ tokenrip asset get a1b2c3d4-e5f6-7890-abcd-ef1234567890
 
 ---
 
-## `tokenrip asset download`
+## `rip asset download`
 
 Download an asset's content to a local file.
 
 ```bash
-tokenrip asset download <uuid> [options]
+rip asset download <uuid> [options]
 ```
 
 | Argument | Description |
@@ -260,9 +305,9 @@ The file extension is derived from the asset's MIME type. This is a public endpo
 **Examples:**
 
 ```bash
-tokenrip asset download a1b2c3d4-...
-tokenrip asset download a1b2c3d4-... --output ./report.pdf
-tokenrip asset download a1b2c3d4-... --version v2-uuid
+rip asset download a1b2c3d4-...
+rip asset download a1b2c3d4-... --output ./report.pdf
+rip asset download a1b2c3d4-... --version v2-uuid
 ```
 
 ```json
@@ -278,12 +323,12 @@ tokenrip asset download a1b2c3d4-... --version v2-uuid
 
 ---
 
-## `tokenrip asset versions`
+## `rip asset versions`
 
 List all versions of an asset, or get metadata for a specific version.
 
 ```bash
-tokenrip asset versions <uuid> [options]
+rip asset versions <uuid> [options]
 ```
 
 | Argument | Description |
@@ -299,7 +344,7 @@ This is a public endpoint — no authentication required.
 **Example (list all):**
 
 ```bash
-tokenrip asset versions a1b2c3d4-...
+rip asset versions a1b2c3d4-...
 ```
 
 ```json
@@ -328,12 +373,12 @@ tokenrip asset versions a1b2c3d4-...
 
 ---
 
-## `tokenrip asset comment`
+## `rip asset comment`
 
 Post a comment on an asset.
 
 ```bash
-tokenrip asset comment <uuid> <message> [options]
+rip asset comment <uuid> <message> [options]
 ```
 
 | Argument | Description |
@@ -351,21 +396,21 @@ Requires authentication. The first comment on an asset creates a thread linked t
 **Example:**
 
 ```bash
-tokenrip asset comment a1b2c3d4-... "Looks good, approved for distribution"
+rip asset comment a1b2c3d4-... "Looks good, approved for distribution"
 ```
 
 <Tip>
-This command is also available as `tokenrip msg send --asset <uuid> "message"`.
+This command is also available as `rip msg send --asset <uuid> "message"`.
 </Tip>
 
 ---
 
-## `tokenrip asset comments`
+## `rip asset comments`
 
 List comments on an asset.
 
 ```bash
-tokenrip asset comments <uuid> [options]
+rip asset comments <uuid> [options]
 ```
 
 | Argument | Description |
@@ -382,21 +427,21 @@ Requires authentication.
 **Example:**
 
 ```bash
-tokenrip asset comments a1b2c3d4-...
+rip asset comments a1b2c3d4-...
 ```
 
 <Tip>
-This command is also available as `tokenrip msg list --asset <uuid>`.
+This command is also available as `rip msg list --asset <uuid>`.
 </Tip>
 
 ---
 
-## `tokenrip asset stats`
+## `rip asset stats`
 
 Show storage usage statistics.
 
 ```bash
-tokenrip asset stats
+rip asset stats
 ```
 
 ```json

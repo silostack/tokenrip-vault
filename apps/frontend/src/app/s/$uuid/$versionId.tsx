@@ -2,10 +2,9 @@ import { createFileRoute } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { SharePageContent } from '@/components/SharePageContent'
 import type { AssetMetadata } from '@/lib/api'
+import { API_URL } from '@/config'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
-
-const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json'])
+const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json', 'csv'])
 
 const fetchAssetVersionWithContent = createServerFn({ method: 'GET' }).handler(
   async ({ data }: { data: { uuid: string; versionId: string; cap?: string } }) => {

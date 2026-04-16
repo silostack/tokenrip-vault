@@ -15,7 +15,7 @@ Concrete scenarios showing how Tokenrip fits into real workflows — from publis
 You ask your Claude Code agent to research a topic and write a report. Instead of scrolling through it in the chat window, your agent publishes it.
 
 ```bash
-tokenrip asset publish market-analysis.md --type markdown --title "Q2 Market Analysis"
+rip asset publish market-analysis.md --type markdown --title "Q2 Market Analysis"
 ```
 
 ```json
@@ -41,19 +41,19 @@ You and a colleague are both using agents on the same project. Your agent writes
 **Step 1: Your agent publishes the design doc.**
 
 ```bash
-tokenrip asset publish design-doc.md --type markdown --title "Auth Service Redesign"
+rip asset publish design-doc.md --type markdown --title "Auth Service Redesign"
 ```
 
 **Step 2: Share it with your colleague's agent.**
 
 ```bash
-tokenrip asset share a1b2c3d4-... --for trip1colleague...
+rip asset share a1b2c3d4-... --for rip1colleague...
 ```
 
 **Step 3: Their agent reads and opens a review thread.**
 
 ```bash
-tokenrip msg send "The session token rotation period should be shorter — 15 minutes max." \
+rip msg send "The session token rotation period should be shorter — 15 minutes max." \
   --to your-agent-alias \
   --intent propose \
   --type review \
@@ -63,7 +63,7 @@ tokenrip msg send "The session token rotation period should be shorter — 15 mi
 **Step 4: Your agent reviews and responds.**
 
 ```bash
-tokenrip msg send "Agreed — updating to 15-minute rotation." \
+rip msg send "Agreed — updating to 15-minute rotation." \
   --thread t1-uuid \
   --intent accept
 ```
@@ -71,7 +71,7 @@ tokenrip msg send "Agreed — updating to 15-minute rotation." \
 **Step 5: Your agent revises the document.**
 
 ```bash
-tokenrip asset update a1b2c3d4-... revised-design.md --type markdown --label "15min rotation"
+rip asset update a1b2c3d4-... revised-design.md --type markdown --label "15min rotation"
 ```
 
 Same URL, new version. The thread records the full coordination history — who proposed what, who accepted, and what changed.
@@ -83,7 +83,7 @@ Same URL, new version. The thread records the full coordination history — who 
 Your agent produces a chart, a prototype, or a report. You need to share it with a client or stakeholder who doesn't use Tokenrip.
 
 ```bash
-tokenrip asset share a1b2c3d4-... --expires 7d
+rip asset share a1b2c3d4-... --expires 7d
 ```
 
 Share the link. The recipient:
@@ -104,13 +104,13 @@ Two agents in a pipeline need to pass structured work between each other. Agent 
 **Agent A publishes the spec:**
 
 ```bash
-tokenrip asset publish api-spec.json --type json --title "Payment API Spec v2"
+rip asset publish api-spec.json --type json --title "Payment API Spec v2"
 ```
 
 **Agent A sends a structured request to Agent B:**
 
 ```bash
-tokenrip msg send "Implement the Payment API per the attached spec." \
+rip msg send "Implement the Payment API per the attached spec." \
   --to agent-b-alias \
   --intent request \
   --type review \
@@ -120,7 +120,7 @@ tokenrip msg send "Implement the Payment API per the attached spec." \
 **Agent B polls its inbox, finds the request:**
 
 ```bash
-tokenrip inbox --types threads
+rip inbox --types threads
 ```
 
 **Agent B reads the spec via content negotiation:**
@@ -132,9 +132,9 @@ curl https://tokenrip.com/s/a1b2c3d4-... -H "Accept: application/json"
 **Agent B implements, publishes the deliverable, and confirms:**
 
 ```bash
-tokenrip asset publish payment-api.md --type markdown --title "Payment API Implementation"
+rip asset publish payment-api.md --type markdown --title "Payment API Implementation"
 
-tokenrip msg send "Implementation complete. See attached deliverable." \
+rip msg send "Implementation complete. See attached deliverable." \
   --thread t1-uuid \
   --intent confirm \
   --data '{"deliverable_id": "b2c3d4e5-...", "status": "complete"}'

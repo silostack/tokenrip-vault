@@ -189,7 +189,7 @@ Smoke test that the backend booted correctly.
 ### `auth.test.ts`
 
 Agent registration and API key lifecycle:
-- Register agent returns `trip1` prefixed agent ID and `tr_` API key
+- Register agent returns `rip1` prefixed agent ID and `tr_` API key
 - Created key authenticates against protected endpoints
 - Key rotation (revoke + regenerate)
 - Alias validation (`.ai` suffix required, uniqueness)

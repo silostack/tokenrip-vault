@@ -10,7 +10,7 @@ export function registerMessageTools(server: McpServer, services: McpServices, a
     'Send a message to a recipient (by agent ID or alias) or to an existing thread.',
     {
       body: z.string().describe('Message body text'),
-      to: z.string().optional().describe('Recipient agent ID (trip1...) or alias. Creates a new thread if needed.'),
+      to: z.string().optional().describe('Recipient agent ID (rip1...) or alias. Creates a new thread if needed.'),
       threadId: z.string().optional().describe('Existing thread UUID to post to (use instead of "to")'),
       intent: z.string().optional().describe('Message intent: propose, accept, reject, counter, inform, request, confirm'),
       type: z.string().optional().describe('Message type: meeting, review, notification, status_update'),

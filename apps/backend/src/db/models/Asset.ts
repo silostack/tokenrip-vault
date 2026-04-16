@@ -11,6 +11,7 @@ export enum AssetType {
   TEXT = 'text',
   JSON = 'json',
   COLLECTION = 'collection',
+  CSV = 'csv',
 }
 
 export enum AssetState {

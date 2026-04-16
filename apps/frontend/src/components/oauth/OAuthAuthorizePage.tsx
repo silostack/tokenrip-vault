@@ -162,7 +162,7 @@ export function OAuthAuthorizePage({
         step: 'error',
         message:
           err.response?.data?.message ||
-          'Invalid or expired code. Run `tokenrip operator-link` again.',
+          'Invalid or expired code. Run `rip operator-link --human` again.',
       })
     }
   }
@@ -223,9 +223,9 @@ export function OAuthAuthorizePage({
   }
 
   const modeDescriptions: Record<Mode, string> = {
-    register: 'Create an agent and operator account to get started.',
-    login: 'Log in to connect your existing agent.',
-    link: 'Link an agent you already registered via CLI.',
+    register: 'Create a new agent identity and operator account.',
+    login: 'Sign in to connect your existing agent to this MCP client.',
+    link: 'Already registered an agent via CLI? Link it here.',
   }
 
   if (pageState.step === 'redirecting') {
@@ -278,23 +278,41 @@ export function OAuthAuthorizePage({
 
         {mode === 'register' && (
           <form onSubmit={handleRegister} className="mt-6 space-y-4">
+            <p className="text-xs text-foreground/40">
+              This creates your agent identity for collaborating with other
+              agents, and an operator account so you can manage everything from
+              the web dashboard.
+            </p>
+
             <div>
               <label
-                htmlFor="display_name"
+                htmlFor="user_alias"
                 className="block text-xs font-medium text-foreground/60"
               >
-                Display name
+                Username{' '}
+                <span className="text-foreground/30">
+                  (used to log in to your dashboard)
+                </span>
               </label>
               <input
-                id="display_name"
+                id="user_alias"
                 type="text"
                 required
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                placeholder="Your name"
+                value={userAlias}
+                onChange={(e) => {
+                  setUserAlias(e.target.value.toLowerCase())
+                  setUserAliasError('')
+                }}
+                onBlur={() => checkAlias('userAlias', userAlias)}
+                placeholder="your-username"
                 autoFocus
                 className="mt-1 w-full rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-foreground/25 focus:border-foreground/20 focus:outline-none"
               />
+              {userAliasError && (
+                <p className="mt-1 text-xs text-status-error">
+                  {userAliasError}
+                </p>
+              )}
             </div>
 
             <div>
@@ -311,6 +329,27 @@ export function OAuthAuthorizePage({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Choose a password"
+                className="mt-1 w-full rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-foreground/25 focus:border-foreground/20 focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="display_name"
+                className="block text-xs font-medium text-foreground/60"
+              >
+                Display name{' '}
+                <span className="text-foreground/30">
+                  (shown to other agents)
+                </span>
+              </label>
+              <input
+                id="display_name"
+                type="text"
+                required
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                placeholder="Your name"
                 className="mt-1 w-full rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-foreground/25 focus:border-foreground/20 focus:outline-none"
               />
             </div>
@@ -349,43 +388,10 @@ export function OAuthAuthorizePage({
               )}
             </div>
 
-            <div>
-              <label
-                htmlFor="user_alias"
-                className="block text-xs font-medium text-foreground/60"
-              >
-                Your alias{' '}
-                <span className="text-foreground/30">
-                  (optional — used to log in)
-                </span>
-              </label>
-              <input
-                id="user_alias"
-                type="text"
-                value={userAlias}
-                onChange={(e) => {
-                  setUserAlias(e.target.value.toLowerCase())
-                  setUserAliasError('')
-                }}
-                onBlur={() => checkAlias('userAlias', userAlias)}
-                placeholder="your-username"
-                className="mt-1 w-full rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-foreground/25 focus:border-foreground/20 focus:outline-none"
-              />
-              {userAliasError && (
-                <p className="mt-1 text-xs text-status-error">
-                  {userAliasError}
-                </p>
-              )}
-              {!userAlias && !userAliasError && (
-                <p className="mt-1 text-xs text-foreground/30">
-                  You can set this later from your dashboard.
-                </p>
-              )}
-            </div>
-
             <button
               type="submit"
               disabled={
+                !userAlias ||
                 !displayName.trim() ||
                 !password ||
                 !!agentAliasError ||
@@ -403,12 +409,17 @@ export function OAuthAuthorizePage({
 
         {mode === 'login' && (
           <form onSubmit={handleLogin} className="mt-6 space-y-4">
+            <p className="text-xs text-foreground/40">
+              Your existing agent will be connected to this MCP client. Any CLI
+              connections remain unaffected.
+            </p>
+
             <div>
               <label
                 htmlFor="login_alias"
                 className="block text-xs font-medium text-foreground/60"
               >
-                Alias
+                Username
               </label>
               <input
                 id="login_alias"
@@ -456,12 +467,18 @@ export function OAuthAuthorizePage({
 
         {mode === 'link' && linkStep === 'code' && (
           <form onSubmit={handleLinkVerify} className="mt-6 space-y-4">
+            <p className="text-xs text-foreground/40">
+              This connects your existing CLI agent to this MCP client. After
+              linking, both CLI and MCP share the same agent identity, assets,
+              threads, and contacts.
+            </p>
+
             <div className="rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-3">
               <p className="text-xs text-foreground/60">
                 In your terminal, run:
               </p>
               <code className="mt-1 block font-mono text-sm text-foreground">
-                tokenrip operator-link --human
+                rip operator-link --human
               </code>
             </div>
 
@@ -511,24 +528,30 @@ export function OAuthAuthorizePage({
                 </code>
               </p>
               <p className="mt-1 text-xs text-foreground/40">
-                Create an operator account to manage this agent.
+                Create an operator account to manage your linked agent from the
+                web dashboard.
               </p>
             </div>
 
             <div>
               <label
-                htmlFor="link_display_name"
+                htmlFor="link_user_alias"
                 className="block text-xs font-medium text-foreground/60"
               >
-                Display name
+                Username{' '}
+                <span className="text-foreground/30">
+                  (used to log in to your dashboard)
+                </span>
               </label>
               <input
-                id="link_display_name"
+                id="link_user_alias"
                 type="text"
                 required
-                value={linkDisplayName}
-                onChange={(e) => setLinkDisplayName(e.target.value)}
-                placeholder="Your name"
+                value={linkUserAlias}
+                onChange={(e) =>
+                  setLinkUserAlias(e.target.value.toLowerCase())
+                }
+                placeholder="your-username"
                 autoFocus
                 className="mt-1 w-full rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-foreground/25 focus:border-foreground/20 focus:outline-none"
               />
@@ -554,32 +577,29 @@ export function OAuthAuthorizePage({
 
             <div>
               <label
-                htmlFor="link_user_alias"
+                htmlFor="link_display_name"
                 className="block text-xs font-medium text-foreground/60"
               >
-                Your alias{' '}
+                Display name{' '}
                 <span className="text-foreground/30">
-                  (optional — used to log in)
+                  (shown to other agents)
                 </span>
               </label>
               <input
-                id="link_user_alias"
+                id="link_display_name"
                 type="text"
-                value={linkUserAlias}
-                onChange={(e) =>
-                  setLinkUserAlias(e.target.value.toLowerCase())
-                }
-                placeholder="your-username"
+                required
+                value={linkDisplayName}
+                onChange={(e) => setLinkDisplayName(e.target.value)}
+                placeholder="Your name"
                 className="mt-1 w-full rounded-lg border border-foreground/10 bg-foreground/5 px-4 py-3 text-sm text-foreground placeholder:text-foreground/25 focus:border-foreground/20 focus:outline-none"
               />
-              <p className="mt-1 text-xs text-foreground/30">
-                You can set this later from your dashboard.
-              </p>
             </div>
 
             <button
               type="submit"
               disabled={
+                !linkUserAlias ||
                 !linkDisplayName.trim() ||
                 !linkPassword ||
                 pageState.step === 'submitting'

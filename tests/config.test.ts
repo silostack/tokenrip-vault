@@ -10,10 +10,10 @@ describe('identity management', () => {
     expect(kp.secretKeyHex).toMatch(/^[0-9a-f]{64}$/);
   });
 
-  test('publicKeyToAgentId produces trip1 prefix', () => {
+  test('publicKeyToAgentId produces rip1 prefix', () => {
     const kp = generateKeypair();
     const id = publicKeyToAgentId(kp.publicKeyHex);
-    expect(id).toMatch(/^trip1/);
+    expect(id).toMatch(/^rip1/);
   });
 
   test('saveIdentity + loadIdentity roundtrips', () => {

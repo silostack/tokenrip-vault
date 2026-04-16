@@ -8,10 +8,10 @@ export function registerAssetTools(server: McpServer, services: McpServices, age
 
   server.tool(
     'asset_publish',
-    'Publish text content as a shareable Tokenrip asset. Returns a public URL. For collections (structured data tables), use collection_create instead.',
+    'Publish text content as a shareable Tokenrip asset. Returns a public URL. Supports markdown, html, chart, code, text, json, and csv types. For collections, use collection_create or collection_create_from_csv.',
     {
-      content: z.string().describe('Raw content (markdown, HTML, JSON, etc.)'),
-      type: z.enum([AssetType.MARKDOWN, AssetType.HTML, AssetType.CHART, AssetType.CODE, AssetType.TEXT, AssetType.JSON]).describe('Content type (for collections, use collection_create)'),
+      content: z.string().describe('Raw content (markdown, HTML, JSON, CSV text, etc.)'),
+      type: z.enum([AssetType.MARKDOWN, AssetType.HTML, AssetType.CHART, AssetType.CODE, AssetType.TEXT, AssetType.JSON, AssetType.CSV]).describe('Content type. csv = versioned CSV file (rendered as a table). For a living row-backed collection, use collection_create or collection_create_from_csv.'),
       title: z.string().optional().describe('Asset title'),
       parentAssetId: z.string().optional().describe('Parent asset UUID for provenance'),
       creatorContext: z.string().optional().describe('Context about how/why this was created'),
@@ -71,11 +71,13 @@ export function registerAssetTools(server: McpServer, services: McpServices, age
 
   server.tool(
     'asset_list',
-    'List your published assets with optional filtering.',
+    'List your assets with optional filtering. By default excludes archived assets.',
     {
       since: z.string().optional().describe('ISO 8601 timestamp — only return assets created/updated after this'),
       limit: z.number().optional().describe('Maximum number of assets to return'),
       type: z.nativeEnum(AssetType).optional().describe('Filter by asset type'),
+      archived: z.boolean().optional().describe('If true, show only archived assets'),
+      include_archived: z.boolean().optional().describe('If true, include archived assets alongside active ones'),
     },
     async (args) => {
       try {
@@ -83,6 +85,8 @@ export function registerAssetTools(server: McpServer, services: McpServices, age
           since: args.since ? new Date(args.since) : undefined,
           limit: args.limit,
           type: args.type,
+          archived: args.archived,
+          includeArchived: args.include_archived,
         });
         const data = assets.map((a) => ({
           id: a.publicId,
@@ -112,6 +116,38 @@ export function registerAssetTools(server: McpServer, services: McpServices, age
       try {
         await services.assetService.destroyAsset(args.publicId, agentId);
         return { content: [{ type: 'text', text: JSON.stringify({ ok: true, deleted: args.publicId }) }] };
+      } catch (err: any) {
+        return { content: [{ type: 'text', text: `Error: ${err.message}` }], isError: true };
+      }
+    },
+  );
+
+  server.tool(
+    'asset_archive',
+    'Archive an asset. It will be hidden from listings and searches but remains accessible by ID.',
+    {
+      asset_id: z.string().describe('Asset UUID to archive'),
+    },
+    async (args) => {
+      try {
+        await services.assetService.archiveAsset(args.asset_id, agentId);
+        return { content: [{ type: 'text', text: JSON.stringify({ ok: true, archived: args.asset_id }) }] };
+      } catch (err: any) {
+        return { content: [{ type: 'text', text: `Error: ${err.message}` }], isError: true };
+      }
+    },
+  );
+
+  server.tool(
+    'asset_unarchive',
+    'Unarchive an asset, restoring it to published state.',
+    {
+      asset_id: z.string().describe('Asset UUID to unarchive'),
+    },
+    async (args) => {
+      try {
+        await services.assetService.unarchiveAsset(args.asset_id, agentId);
+        return { content: [{ type: 'text', text: JSON.stringify({ ok: true, unarchived: args.asset_id }) }] };
       } catch (err: any) {
         return { content: [{ type: 'text', text: `Error: ${err.message}` }], isError: true };
       }

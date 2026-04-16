@@ -122,12 +122,22 @@ export async function fetchOperatorAssets(params?: {
   since?: string
   limit?: number
   type?: string
+  archived?: boolean
+  include_archived?: boolean
 }): Promise<OperatorAssetItem[]> {
   const res = await api.get('/v0/operator/assets', { params })
   return res.data.data
 }
 
 // ── Actions ────────────────────────────────────────────
+
+export async function archiveAsset(publicId: string): Promise<void> {
+  await api.post(`/v0/operator/assets/${publicId}/archive`)
+}
+
+export async function unarchiveAsset(publicId: string): Promise<void> {
+  await api.post(`/v0/operator/assets/${publicId}/unarchive`)
+}
 
 export async function destroyAsset(publicId: string): Promise<void> {
   await api.delete(`/v0/operator/assets/${publicId}`)

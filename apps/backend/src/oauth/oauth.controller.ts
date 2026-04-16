@@ -188,6 +188,35 @@ export class OAuthController {
     return {
       access_token: result.accessToken,
       token_type: result.tokenType,
+      expires_in: 31536000,
+    };
+  }
+
+  /** Link CLI to an existing MCP-registered agent (downloads server-side keypair) */
+  @Public()
+  @Post('oauth/cli-link')
+  async cliLink(@Body() body: {
+    alias?: string;
+    password?: string;
+  }) {
+    if (!body.alias || !body.password) {
+      throw new BadRequestException({
+        ok: false,
+        error: 'MISSING_FIELDS',
+        message: 'alias and password are required',
+      });
+    }
+
+    const result = await this.oauthService.cliLink(body.alias, body.password);
+
+    return {
+      ok: true,
+      data: {
+        agent_id: result.agentId,
+        public_key: result.publicKey,
+        secret_key: result.secretKey,
+        api_key: result.apiKey,
+      },
     };
   }
 

@@ -26,6 +26,7 @@ import { AssetVersionService } from '../service/asset-version.service';
 import { ThreadService } from '../service/thread.service';
 import { ParticipantService } from '../service/participant.service';
 import { MessageService } from '../service/message.service';
+import { OperatorBindingService } from '../service/operator-binding.service';
 import { Asset, AssetType } from '../../db/models/Asset';
 import { parseCapSub, parseAndVerifyCapabilityToken } from '../auth/crypto';
 import { validateAlias } from '../validation/alias.validation';
@@ -34,6 +35,42 @@ import { ShareTokenService } from '../service/share-token.service';
 
 const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_BYTES || String(10 * 1024 * 1024), 10); // default 10MB
 const FRONTEND_URL = (process.env.FRONTEND_URL || 'http://localhost:3333').replace(/\/+$/, '');
+
+const MIME_TO_EXT: Record<string, string> = {
+  'text/csv': 'csv',
+  'text/markdown': 'md',
+  'text/html': 'html',
+  'text/plain': 'txt',
+  'application/json': 'json',
+  'application/pdf': 'pdf',
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
+  'image/gif': 'gif',
+  'image/webp': 'webp',
+  'image/svg+xml': 'svg',
+};
+
+/**
+ * Pick a download filename for an asset. Prefers the original upload's basename
+ * (e.g., "leads.csv"); for content assets whose storage key is just `{uuid}/content`,
+ * synthesizes one from the asset title + mime-derived extension.
+ */
+function downloadFilename(asset: { title?: string | null; mimeType?: string | null; storageKey?: string | null; publicId: string }): string {
+  const basename = asset.storageKey ? asset.storageKey.split('/').pop() : '';
+  if (basename && basename !== 'content' && basename.includes('.')) return basename;
+
+  const ext = MIME_TO_EXT[asset.mimeType ?? ''] ?? (asset.mimeType?.split('/')[1]?.replace(/[^a-z0-9]/gi, '') || 'bin');
+  const base = (asset.title ?? asset.publicId).trim().replace(/[\\/:*?"<>|\x00-\x1f]+/g, '_').replace(/^\.+|\.+$/g, '').slice(0, 200) || asset.publicId;
+
+  return `${base}.${ext}`;
+}
+
+/** RFC 5987 filename* encoding for non-ASCII names. */
+function contentDispositionInline(filename: string): string {
+  const asciiSafe = filename.replace(/[^\x20-\x7e]/g, '_').replace(/"/g, '');
+  const encoded = encodeURIComponent(filename);
+  return `inline; filename="${asciiSafe}"; filename*=UTF-8''${encoded}`;
+}
 
 @Controller('v0/assets')
 export class AssetController {
@@ -45,6 +82,7 @@ export class AssetController {
     private readonly messageService: MessageService,
     private readonly agentService: AgentService,
     private readonly shareTokenService: ShareTokenService,
+    private readonly bindingService: OperatorBindingService,
     private readonly em: EntityManager,
   ) {}
 
@@ -53,7 +91,7 @@ export class AssetController {
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: MAX_FILE_SIZE } }))
   async create(
     @UploadedFile() file: Express.Multer.File | undefined,
-    @Body() body?: { type?: string; content?: string; title?: string; mimeType?: string; parentAssetId?: string; creatorContext?: string; inputReferences?: string[]; schema?: Array<{ name: string; type: string; values?: string[] }> },
+    @Body() body: any,
     @AuthAgent() agent: { id: string },
   ) {
     if (body?.alias) {
@@ -63,49 +101,82 @@ export class AssetController {
       }
     }
 
+    const type: string | undefined = body?.type;
+    const fromCsv = isTruthyFlag(body?.from_csv) || isTruthyFlag(body?.fromCsv);
+    const headers = isTruthyFlag(body?.headers);
+    const schema = parseJsonField(body?.schema, 'schema');
+    const textContent = file ? file.buffer.toString('utf-8') : (typeof body?.content === 'string' ? body.content : undefined);
+    const provenance = provenanceFrom(body, agent.id);
+
+    // Collection: either schema-only or CSV import (opt-in via from_csv)
+    if (type === 'collection') {
+      if (fromCsv) {
+        if (!textContent) {
+          throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'CSV content is required (upload a file or provide `content`)' });
+        }
+        const asset = await this.assetService.createCollectionFromCsv({
+          ...provenance,
+          content: textContent,
+          headers,
+          schema,
+          title: body?.title,
+          alias: body?.alias,
+          description: body?.description,
+        });
+        return { ok: true, data: this.assetCreatedResponse(asset) };
+      }
+
+      if (!Array.isArray(schema)) {
+        throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'schema is required for collections (or upload a CSV with from_csv=true)' });
+      }
+      const asset = await this.assetService.createCollection({
+        ...provenance,
+        schema,
+        title: body?.title,
+      });
+      return { ok: true, data: this.assetCreatedResponse(asset) };
+    }
+
+    // CSV: content asset backed by text storage (file upload or inline content)
+    if (type === 'csv') {
+      if (!textContent) {
+        throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'CSV content is required (upload a file or provide `content`)' });
+      }
+      const asset = await this.assetService.createFromContent({
+        ...provenance,
+        type: AssetType.CSV,
+        content: textContent,
+        title: body?.title,
+        alias: body?.alias,
+        metadata: body?.metadata,
+      });
+      return { ok: true, data: this.assetCreatedResponse(asset) };
+    }
+
+    // Binary file upload (no special type) → FILE asset
     if (file) {
       const asset = await this.assetService.createFromFile({
+        ...provenance,
         file: { buffer: file.buffer, originalname: file.originalname, mimetype: file.mimetype },
         title: body?.title,
         alias: body?.alias,
         metadata: body?.metadata,
-        ownerId: agent.id,
-        parentAssetId: body?.parentAssetId,
-        creatorContext: body?.creatorContext,
-        inputReferences: body?.inputReferences,
       });
       return { ok: true, data: this.assetCreatedResponse(asset) };
     }
 
-    if (body?.type === 'collection') {
-      if (!body.schema || !Array.isArray(body.schema)) {
-        throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'schema is required for collections' });
-      }
-      const asset = await this.assetService.createCollection({
-        schema: body.schema,
-        title: body.title,
-        ownerId: agent.id,
-        parentAssetId: body.parentAssetId,
-        creatorContext: body.creatorContext,
-        inputReferences: body.inputReferences,
-      });
-      return { ok: true, data: this.assetCreatedResponse(asset) };
-    }
-
-    if (body?.content && body?.type) {
-      if (!Object.values(AssetType).includes(body.type as AssetType) || body.type === AssetType.FILE || body.type === AssetType.COLLECTION) {
-        throw new BadRequestException({ ok: false, error: 'INVALID_TYPE', message: 'type must be: markdown, html, chart, code, text, or json' });
+    // Structured text content (markdown, html, chart, code, text, json)
+    if (body?.content && type) {
+      if (!Object.values(AssetType).includes(type as AssetType) || type === AssetType.FILE || type === AssetType.COLLECTION) {
+        throw new BadRequestException({ ok: false, error: 'INVALID_TYPE', message: 'type must be: markdown, html, chart, code, text, json, csv, or collection' });
       }
       const asset = await this.assetService.createFromContent({
-        type: body.type as AssetType,
+        ...provenance,
+        type: type as AssetType,
         content: body.content,
         title: body.title,
         alias: body.alias,
         metadata: body.metadata,
-        ownerId: agent.id,
-        parentAssetId: body.parentAssetId,
-        creatorContext: body.creatorContext,
-        inputReferences: body.inputReferences,
       });
       return { ok: true, data: this.assetCreatedResponse(asset) };
     }
@@ -122,6 +193,8 @@ export class AssetController {
       sort?: string;
       limit?: number;
       offset?: number;
+      archived?: boolean;
+      include_archived?: boolean;
     },
   ) {
     const { assets, total } = await this.assetService.queryAssets({
@@ -130,6 +203,8 @@ export class AssetController {
       sort: body.sort,
       limit: body.limit,
       offset: body.offset,
+      archived: body.archived,
+      includeArchived: body.include_archived,
     });
 
     return {
@@ -182,7 +257,7 @@ export class AssetController {
     };
   }
 
-  private verifyAssetAccess(asset: Asset, auth: RequestAuth, requiredPerm?: string): void {
+  private async verifyAssetAccess(asset: Asset, auth: RequestAuth, requiredPerm?: string): Promise<void> {
     if (auth.capability) {
       const cap = parseCapSub(auth.capability.sub);
       if (!cap || cap.type !== 'asset' || cap.id !== asset.publicId) {
@@ -218,6 +293,11 @@ export class AssetController {
       }
       return;
     }
+    if (auth.user) {
+      // Operator can act on assets owned by the agent they're bound to.
+      const boundAgent = await this.bindingService.findBoundAgent(auth.user.id);
+      if (boundAgent && boundAgent.id === asset.ownerId) return;
+    }
     throw new ForbiddenException({
       ok: false,
       error: 'ACCESS_DENIED',
@@ -228,6 +308,20 @@ export class AssetController {
 
   private assetCreatedResponse(asset: Asset) {
     return { id: asset.publicId, alias: asset.alias ?? null, url: `${FRONTEND_URL}/s/${asset.publicId}`, title: asset.title, type: asset.type, mimeType: asset.mimeType };
+  }
+
+  @Post(':publicId/archive')
+  @Auth('agent')
+  @HttpCode(204)
+  async archive(@Param('publicId') publicId: string, @AuthAgent() agent: { id: string }) {
+    await this.assetService.archiveAsset(publicId, agent.id);
+  }
+
+  @Post(':publicId/unarchive')
+  @Auth('agent')
+  @HttpCode(204)
+  async unarchive(@Param('publicId') publicId: string, @AuthAgent() agent: { id: string }) {
+    await this.assetService.unarchiveAsset(publicId, agent.id);
   }
 
   @Delete(':publicId')
@@ -244,6 +338,8 @@ export class AssetController {
     @Query('since') since?: string,
     @Query('limit') limit?: string,
     @Query('type') type?: string,
+    @Query('archived') archived?: string,
+    @Query('include_archived') includeArchived?: string,
   ) {
     const sinceDate = since ? new Date(since) : undefined;
     const parsedLimit = limit ? parseInt(limit, 10) : undefined;
@@ -251,6 +347,8 @@ export class AssetController {
       since: sinceDate,
       limit: parsedLimit,
       type,
+      archived: archived === 'true',
+      includeArchived: includeArchived === 'true',
     });
     return {
       ok: true,
@@ -274,7 +372,7 @@ export class AssetController {
     return { ok: true, data: stats };
   }
 
-  @Auth('agent', 'token')
+  @Auth('agent', 'user', 'token')
   @Post(':publicId/messages')
   async postAssetMessage(
     @Param('publicId') publicId: string,
@@ -290,7 +388,7 @@ export class AssetController {
     }
 
     const asset = await this.assetService.findByPublicId(publicId);
-    this.verifyAssetAccess(asset, auth, 'comment');
+    await this.verifyAssetAccess(asset, auth, 'comment');
     const thread = await this.threadService.findOrCreateAssetThread(asset.publicId, asset.ownerId, asset.ownerId);
     const participant = await this.participantService.getOrCreateForAuth(thread, auth);
 
@@ -317,7 +415,7 @@ export class AssetController {
     };
   }
 
-  @Auth('agent', 'token')
+  @Auth('agent', 'user', 'token')
   @Get(':publicId/messages')
   async getAssetMessages(
     @Param('publicId') publicId: string,
@@ -326,7 +424,7 @@ export class AssetController {
     @ReqAuth() auth: RequestAuth,
   ) {
     const asset = await this.assetService.findByPublicId(publicId);
-    this.verifyAssetAccess(asset, auth, 'comment');
+    await this.verifyAssetAccess(asset, auth, 'comment');
 
     const thread = await this.threadService.findAssetThread(asset.publicId);
     if (!thread) {
@@ -384,6 +482,7 @@ export class AssetController {
         title: asset.title,
         description: asset.description,
         type: asset.type,
+        state: asset.state,
         mimeType: asset.mimeType,
         metadata: asset.metadata,
         parentAssetId: asset.parentAssetId,
@@ -407,11 +506,12 @@ export class AssetController {
     }
     const buffer = await this.assetService.readContent(asset);
     res.set('Content-Type', asset.mimeType || 'application/octet-stream');
+    res.set('Content-Disposition', contentDispositionInline(downloadFilename(asset)));
     res.send(buffer);
   }
 
   @Post(':publicId/versions')
-  @Auth('agent', 'token')
+  @Auth('agent', 'user', 'token')
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: MAX_FILE_SIZE } }))
   async createVersion(
     @Param('publicId') publicId: string,
@@ -420,7 +520,7 @@ export class AssetController {
     @ReqAuth() auth: RequestAuth,
   ) {
     const asset = await this.assetService.findByPublicId(publicId);
-    this.verifyAssetAccess(asset, auth, 'version:create');
+    await this.verifyAssetAccess(asset, auth, 'version:create');
 
     if (file) {
       const version = await this.assetVersionService.createVersionForAsset(asset, {
@@ -469,8 +569,13 @@ export class AssetController {
     @Param('versionId') versionId: string,
     @Res() res: Response,
   ) {
+    const asset = await this.assetService.findByIdentifier(publicId);
+    const version = await this.assetVersionService.findVersion(publicId, versionId);
     const { buffer, mimeType } = await this.assetVersionService.getVersionContent(publicId, versionId);
     res.set('Content-Type', mimeType);
+    res.set('Content-Disposition', contentDispositionInline(
+      downloadFilename({ title: asset.title, mimeType, storageKey: version.storageKey, publicId: asset.publicId }),
+    ));
     res.send(buffer);
   }
 
@@ -505,4 +610,27 @@ export class AssetController {
   ) {
     await this.assetVersionService.deleteVersion(publicId, versionId, agent.id);
   }
+}
+
+// Multipart form fields arrive as strings; JSON bodies preserve booleans.
+// Accept both shapes for flag-style inputs.
+function isTruthyFlag(v: unknown): boolean {
+  return v === true || v === 'true';
+}
+
+function parseJsonField(value: unknown, fieldName: string): any {
+  if (typeof value !== 'string') return value;
+  try { return JSON.parse(value); }
+  catch {
+    throw new BadRequestException({ ok: false, error: 'INVALID_JSON', message: `${fieldName} must be valid JSON` });
+  }
+}
+
+function provenanceFrom(body: any, ownerId: string) {
+  return {
+    ownerId,
+    parentAssetId: body?.parentAssetId,
+    creatorContext: body?.creatorContext,
+    inputReferences: body?.inputReferences,
+  };
 }

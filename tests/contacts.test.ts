@@ -23,23 +23,23 @@ describe('contacts', () => {
   });
 
   test('addContact stores contact with metadata', () => {
-    addContact('alice', 'trip1abc123def456', { alias: 'alice', notes: 'PDF agent' });
+    addContact('alice', 'rip1abc123def456', { alias: 'alice', notes: 'PDF agent' });
     const contacts = loadContacts();
     expect(contacts.alice).toEqual({
-      agent_id: 'trip1abc123def456',
+      agent_id: 'rip1abc123def456',
       alias: 'alice',
       notes: 'PDF agent',
     });
   });
 
   test('addContact overwrites existing entry', () => {
-    addContact('alice', 'trip1old');
-    addContact('alice', 'trip1new', { alias: 'alice' });
-    expect(loadContacts().alice.agent_id).toBe('trip1new');
+    addContact('alice', 'rip1old');
+    addContact('alice', 'rip1new', { alias: 'alice' });
+    expect(loadContacts().alice.agent_id).toBe('rip1new');
   });
 
   test('removeContact deletes entry', () => {
-    addContact('alice', 'trip1abc');
+    addContact('alice', 'rip1abc');
     removeContact('alice');
     expect(loadContacts().alice).toBeUndefined();
   });
@@ -48,13 +48,13 @@ describe('contacts', () => {
     expect(() => removeContact('ghost')).toThrow();
   });
 
-  test('resolveRecipient with trip1 ID returns as-is', () => {
-    expect(resolveRecipient('trip1abc123')).toBe('trip1abc123');
+  test('resolveRecipient with rip1 ID returns as-is', () => {
+    expect(resolveRecipient('rip1abc123')).toBe('rip1abc123');
   });
 
   test('resolveRecipient with contact name returns agent_id', () => {
-    addContact('alice', 'trip1resolved');
-    expect(resolveRecipient('alice')).toBe('trip1resolved');
+    addContact('alice', 'rip1resolved');
+    expect(resolveRecipient('alice')).toBe('rip1resolved');
   });
 
   test('resolveRecipient with unknown name passes through', () => {

@@ -19,7 +19,7 @@ function OperatorAuthRoute() {
           <p className="mt-2 text-xs text-foreground/30">
             Run{' '}
             <code className="rounded bg-foreground/5 px-1.5 py-0.5 font-mono text-foreground/60">
-              tokenrip operator-link
+              rip operator-link --human
             </code>{' '}
             to get a login link.
           </p>

@@ -24,7 +24,7 @@ Nine entities, one relationship table.
 ### Core Entities
 
 ```
-Agent (trip1...)            Identity — Ed25519 public key, bech32-encoded
+Agent (rip1...)            Identity — Ed25519 public key, bech32-encoded
   ├── ApiKey (tr_...)       Auth credential (many-to-one with Agent)
   ├── owns Assets
   ├── creates Threads
@@ -182,8 +182,8 @@ Two ref types: **asset** (links to a tokenrip asset by UUID) and **url** (links 
 Ed25519-signed capability tokens grant scoped access to entities. The `sub` field is typed as `type:id` to support multiple entity types:
 
 ```json
-{ "sub": "asset:public-uuid", "iss": "trip1ownerAgentId", "perm": ["comment", "version:create"] }
-{ "sub": "thread:thread-uuid", "iss": "trip1participantId", "perm": ["comment"] }
+{ "sub": "asset:public-uuid", "iss": "rip1ownerAgentId", "perm": ["comment", "version:create"] }
+{ "sub": "thread:thread-uuid", "iss": "rip1participantId", "perm": ["comment"] }
 ```
 
 Optional fields: `exp` (unix timestamp expiry), `aud` (restrict to specific agent).

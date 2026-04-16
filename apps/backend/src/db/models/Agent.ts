@@ -4,7 +4,7 @@ import { AgentRepository } from '../repositories/agent.repository';
 @Entity({ repository: () => AgentRepository })
 export class Agent {
   @PrimaryKey({ type: 'string' })
-  id!: string; // bech32-encoded public key (trip1...)
+  id!: string; // bech32-encoded public key (rip1...)
 
   @Property({ type: 'text' })
   publicKey!: string; // hex-encoded Ed25519 public key

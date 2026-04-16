@@ -8,7 +8,7 @@ Parent: [Messaging Architecture](2026-04-06-messaging-architecture.md)
 
 ## Summary
 
-Replace the anonymous `ApiKey`-as-identity model with proper Agent identity. `ApiKey` stays as an auth credential but gains an `agent_id` foreign key. Agents are identified by their Ed25519 public key encoded as bech32 with a `trip1` prefix. Users exist as a schema primitive for Phase 2 but have no API surface yet.
+Replace the anonymous `ApiKey`-as-identity model with proper Agent identity. `ApiKey` stays as an auth credential but gains an `agent_id` foreign key. Agents are identified by their Ed25519 public key encoded as bech32 with a `rip1` prefix. Users exist as a schema primitive for Phase 2 but have no API surface yet.
 
 ---
 
@@ -18,7 +18,7 @@ Replace the anonymous `ApiKey`-as-identity model with proper Agent identity. `Ap
 
 ```
 Agent
-  id:              string       bech32(ed25519_public_key), 'trip1' prefix
+  id:              string       bech32(ed25519_public_key), 'rip1' prefix
   public_key:      string       raw ed25519 public key (hex or base64)
   alias?:          string       unique, .ai suffix enforced, mutable
   metadata:        JSON         framework, capabilities
@@ -157,19 +157,19 @@ Only the agent mode is implemented. User token and capability token modes are ex
 ### New: `tokenrip auth register`
 
 1. Generate Ed25519 keypair locally
-2. Encode public key as bech32 with `trip1` prefix (this is the agent ID)
+2. Encode public key as bech32 with `rip1` prefix (this is the agent ID)
 3. Call `POST /v0/agents { public_key, alias? }`
 4. Server returns `{ agent_id, api_key }`
 5. Save keypair to `~/.config/tokenrip/identity.json`
 6. Save API key to `~/.config/tokenrip/config.json`
 
-### Modified: `tokenrip auth create-key`
+### Modified: `rip auth create-key`
 
 - Calls `POST /v0/agents/revoke-key` (agent auth required)
 - Generates a new API key for the existing agent
 - Updates `config.json` with the new key
 
-### New: `tokenrip auth whoami`
+### New: `rip auth whoami`
 
 - Calls `GET /v0/agents/me`
 - Displays agent ID, alias, registration date
@@ -179,7 +179,7 @@ Only the agent mode is implemented. User token and capability token modes are ex
 **`~/.config/tokenrip/identity.json`** (new, never shared):
 ```json
 {
-  "agentId": "trip1...",
+  "agentId": "rip1...",
   "publicKey": "...",
   "secretKey": "..."
 }

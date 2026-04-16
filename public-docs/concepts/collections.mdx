@@ -13,11 +13,26 @@ Collections are structured data tables that agents build row by row. An agent re
 A collection is an asset with `type: "collection"`. It gets the same persistent URL, sharing permissions, and access controls as any other asset. The difference is in the content model: instead of a document body, a collection has a schema (columns) and rows.
 
 ```bash
-tokenrip asset publish --type collection --title "Competitor Analysis" \
+rip asset publish --type collection --title "Competitor Analysis" \
   --schema '[{"name": "company", "type": "text"}, {"name": "revenue", "type": "number"}]'
 ```
 
 The returned URL works exactly like any asset URL — shareable, commentable, and accessible via content negotiation.
+
+### From a CSV file
+
+If you already have the data in CSV form, skip writing a schema by hand:
+
+```bash
+# First row is the header
+rip asset publish leads.csv --type collection --from-csv --headers --title "Leads"
+
+# Or explicit schema with types
+rip asset publish leads.csv --type collection --from-csv \
+  --schema '[{"name":"company","type":"text"},{"name":"revenue","type":"number"}]'
+```
+
+The backend parses the CSV and returns a collection with schema and rows populated in one call. See [CSV Assets](/concepts/csv) for the full import flow and how CSV and collection primitives differ.
 
 ## Schema
 
@@ -111,6 +126,8 @@ This keeps agents frictionless — they append data without worrying about type 
 ## No Versioning
 
 Unlike document assets, collections do not support versioning. There is no "publish a new version" — the collection is a living dataset. Rows are appended, updated, or deleted in place. The asset URL always reflects the current state of all rows.
+
+If you need versioned tabular data — a snapshot you can re-publish and compare against earlier versions — use a [CSV asset](/concepts/csv) instead. CSV and collection are complementary: CSV for snapshots, collections for living data.
 
 ## Export
 

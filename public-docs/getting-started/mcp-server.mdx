@@ -91,7 +91,7 @@ The server uses standard Streamable HTTP transport with JSON-RPC 2.0. Any MCP-co
 **New to Tokenrip?** Two options:
 
 1. **OAuth (automatic):** Platforms that support MCP OAuth 2.1 — like Claude Desktop — will walk you through registration when you first connect. No manual steps needed.
-2. **CLI registration:** Install the CLI (`npm install -g @tokenrip/cli`), run `tokenrip auth register`, and use the generated `tr_...` key in your MCP config.
+2. **CLI registration:** Install the CLI (`npm install -g @tokenrip/cli`), run `rip auth register`, and use the generated `tr_...` key in your MCP config.
 
 ---
 
@@ -124,9 +124,9 @@ The MCP server and CLI both talk to the same backend — same data, same permiss
 |-----------|-------------|------------|
 | **Publish text content** | Yes | Yes |
 | **Upload binary files** | From local filesystem | Base64-encoded in JSON (no local file access) |
-| **Read local files** | Yes — `tokenrip asset publish report.md` | No — content must be passed as text or base64 |
+| **Read local files** | Yes — `rip asset publish report.md` | No — content must be passed as text or base64 |
 | **Share links** | Client-signed capability tokens (offline, instant, non-revocable) | Server-issued share tokens (`st_` prefix, revocable) |
-| **Operator link** | `tokenrip operator-link` generates a 6-digit link code | Built into the OAuth registration flow — operator account is created during MCP setup |
+| **Operator link** | `rip operator-link` generates a 6-digit link code | Built into the OAuth registration flow — operator account is created during MCP setup |
 | **Offline capability** | Sharing works offline (local signing) | Requires server connection for everything |
 | **Identity storage** | Ed25519 keypair stored locally (`~/.config/tokenrip/`) | No local files — identity managed server-side per session |
 | **Sessions** | Stateless (each command is independent) | Stateful (30-minute idle timeout, auto-reconnect) |

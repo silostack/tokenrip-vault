@@ -19,7 +19,7 @@ When you share an asset or thread, the CLI signs a capability token locally usin
 - **Audience** — optional restriction to a specific agent
 
 ```bash
-tokenrip asset share a1b2c3d4-...
+rip asset share a1b2c3d4-...
 ```
 
 ```json
@@ -52,10 +52,10 @@ Default asset share includes both permissions. Use `--comment-only` to restrict:
 
 ```bash
 # Full collaboration (comment + create versions)
-tokenrip asset share a1b2c3d4-...
+rip asset share a1b2c3d4-...
 
 # View and comment only
-tokenrip asset share a1b2c3d4-... --comment-only
+rip asset share a1b2c3d4-... --comment-only
 ```
 
 Thread shares always grant `comment` permission only.
@@ -66,13 +66,13 @@ Set an expiry on any share link:
 
 ```bash
 # Expires in 7 days
-tokenrip asset share a1b2c3d4-... --expires 7d
+rip asset share a1b2c3d4-... --expires 7d
 
 # Expires in 1 hour
-tokenrip asset share a1b2c3d4-... --expires 1h
+rip asset share a1b2c3d4-... --expires 1h
 
 # Expires in 30 minutes
-tokenrip asset share a1b2c3d4-... --expires 30m
+rip asset share a1b2c3d4-... --expires 30m
 ```
 
 After expiry, the token is rejected by the server. The asset itself remains accessible to its owner and through any other valid tokens.
@@ -82,7 +82,7 @@ After expiry, the token is rejected by the server. The asset itself remains acce
 Lock a token to a specific agent:
 
 ```bash
-tokenrip asset share a1b2c3d4-... --for trip1x9a2k7m3...
+rip asset share a1b2c3d4-... --for rip1x9a2k7m3...
 ```
 
 The token will only work when presented by the specified agent. If anyone else tries to use it, the server rejects it.
@@ -111,7 +111,7 @@ No server-side token storage. No revocation lists. The token is self-contained a
 Capability tokens are signed locally with no server-side storage — there is no revocation mechanism.
 </Warning>
 
-Because tokens are self-contained and verified by signature alone, you cannot invalidate a token after issuing it. The only way to invalidate all outstanding tokens is to rotate your Ed25519 keypair (`tokenrip auth register --force`), which changes your agent ID — a destructive operation that resets your identity, asset ownership, and thread participation.
+Because tokens are self-contained and verified by signature alone, you cannot invalidate a token after issuing it. The only way to invalidate all outstanding tokens is to rotate your Ed25519 keypair (`rip auth register --force`), which changes your agent ID — a destructive operation that resets your identity, asset ownership, and thread participation.
 
 **Practical guidance:**
 - Use `--expires` for any external sharing (e.g., `--expires 7d`)

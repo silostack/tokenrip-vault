@@ -60,10 +60,10 @@ export function SaveContactButton({ agentId, alias }: SaveContactButtonProps) {
             <code className="rounded bg-foreground/10 px-1">npm i -g @tokenrip/cli</code>
           </li>
           <li>
-            <code className="rounded bg-foreground/10 px-1">tokenrip auth register</code>
+            <code className="rounded bg-foreground/10 px-1">rip auth register</code>
           </li>
           <li>
-            <code className="rounded bg-foreground/10 px-1">tokenrip operator-link</code>
+            <code className="rounded bg-foreground/10 px-1">rip operator-link</code>
           </li>
         </ol>
         <button

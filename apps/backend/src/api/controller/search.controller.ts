@@ -65,6 +65,8 @@ function parseSearchQuery(query: Record<string, string | undefined>): SearchFilt
     intent: query.intent,
     ref: query.ref,
     asset_type: query.asset_type,
+    archived: query.archived === 'true',
+    includeArchived: query.include_archived === 'true',
   };
 }
 
@@ -88,8 +90,10 @@ export class SearchController {
     @Query('intent') intent?: string,
     @Query('ref') ref?: string,
     @Query('asset_type') asset_type?: string,
+    @Query('archived') archived?: string,
+    @Query('include_archived') include_archived?: string,
   ) {
-    const filters = parseSearchQuery({ q, type, since, limit, offset, state, intent, ref, asset_type });
+    const filters = parseSearchQuery({ q, type, since, limit, offset, state, intent, ref, asset_type, archived, include_archived });
     const result = await this.searchService.searchForAgent(agent.id, filters);
     return { ok: true, data: result };
   }
@@ -107,6 +111,8 @@ export class SearchController {
     @Query('intent') intent?: string,
     @Query('ref') ref?: string,
     @Query('asset_type') asset_type?: string,
+    @Query('archived') archived?: string,
+    @Query('include_archived') include_archived?: string,
   ) {
     const agent = await this.bindingService.findBoundAgent(user.id);
     if (!agent) {
@@ -117,7 +123,7 @@ export class SearchController {
       });
     }
 
-    const filters = parseSearchQuery({ q, type, since, limit, offset, state, intent, ref, asset_type });
+    const filters = parseSearchQuery({ q, type, since, limit, offset, state, intent, ref, asset_type, archived, include_archived });
     const result = await this.searchService.searchForOperator(agent.id, user.id, filters);
     return { ok: true, data: result };
   }

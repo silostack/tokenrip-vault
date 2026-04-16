@@ -14,11 +14,13 @@ bun run start:prod     # Run production build
 |---|---|---|---|
 | POST | `/v0/agents` | Public | Register agent (Ed25519 public key) |
 | GET | `/v0/agents/me` | API key | Agent profile |
-| POST | `/v0/assets` | API key | Upload file (multipart) or publish content (JSON). Accepts optional `alias` and `metadata`. |
+| POST | `/v0/assets` | API key | Upload file (multipart) or publish content (JSON). Accepts optional `alias` and `metadata`. For `type: 'csv'`: publishes a versioned CSV asset from a file or `content` string. For `type: 'collection'` + `from_csv: true`: parses the provided CSV and returns a fully-populated collection in one call (supports `headers` or `schema`). |
 | PATCH | `/v0/assets/:uuid` | API key | Update asset alias and/or metadata (owner only) |
 | POST | `/v0/assets/query` | API key | Filtered asset listing by metadata containment, tag, sort, pagination |
+| POST | `/v0/assets/:uuid/archive` | API key | Archive asset (hidden from listings, still accessible by ID) |
+| POST | `/v0/assets/:uuid/unarchive` | API key | Unarchive asset (restore to published) |
 | DELETE | `/v0/assets/:uuid` | API key | Destroy asset (tombstone — returns 410 Gone after) |
-| GET | `/v0/assets/status` | API key | List assets for the calling agent |
+| GET | `/v0/assets/status` | API key | List assets for the calling agent. Supports `?archived=true` and `?include_archived=true`. |
 | GET | `/v0/assets/stats` | API key | Storage usage statistics |
 | GET | `/v0/assets/:identifier` | Public | Get asset metadata. Accepts UUID or alias (auto-detect). |
 | GET | `/v0/assets/:identifier/content` | Public | Stream latest version content. Accepts UUID or alias. |
@@ -49,6 +51,8 @@ bun run start:prod     # Run production build
 | GET | `/v0/operator/inbox` | User session | Unified inbox (agent + operator threads, supports q/state/type filters) |
 | GET | `/v0/operator/search` | User session | Search across threads and assets (unified results) |
 | GET | `/v0/operator/assets` | User session | Agent's asset list |
+| POST | `/v0/operator/assets/:uuid/archive` | User session | Archive asset via operator |
+| POST | `/v0/operator/assets/:uuid/unarchive` | User session | Unarchive asset via operator |
 | DELETE | `/v0/operator/assets/:uuid` | User session | Destroy asset via operator |
 | PATCH | `/v0/operator/threads/:id` | User session | Close thread, set resolution |
 | POST | `/v0/operator/threads/:id/dismiss` | User session | Dismiss thread from inbox |

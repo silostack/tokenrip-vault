@@ -1,5 +1,5 @@
 import { SqlEntityRepository } from '@mikro-orm/postgresql';
-import { Asset } from '../models/Asset';
+import { Asset, AssetState } from '../models/Asset';
 import type { SearchResult } from '../../api/service/search.service';
 
 export interface AssetUpdateRow {
@@ -17,6 +17,8 @@ export class AssetRepository extends SqlEntityRepository<Asset> {
 
   /**
    * Aggregation query: assets with new versions since a timestamp for a given owner.
+   * Excludes version 1 (the creation version) so owners don't see their own freshly
+   * published assets as "new activity" in their inbox.
    * Raw SQL because MikroORM lacks cross-table aggregation (JOIN + COUNT + GROUP BY).
    */
   async findAssetUpdatesForOwner(
@@ -25,7 +27,7 @@ export class AssetRepository extends SqlEntityRepository<Asset> {
     limit: number,
     filters?: { q?: string },
   ): Promise<AssetUpdateRow[]> {
-    const conditions = ['a.owner_id = ?'];
+    const conditions = ['a.owner_id = ?', `a.state NOT IN ('${AssetState.DESTROYED}', '${AssetState.ARCHIVED}')`];
     const params: unknown[] = [since, ownerId];
 
     if (filters?.q) {
@@ -43,7 +45,7 @@ export class AssetRepository extends SqlEntityRepository<Asset> {
         COUNT(av.id)::int AS new_version_count,
         MAX(av.version)::int AS latest_version
       FROM asset a
-      JOIN asset_version av ON av.asset_id = a.id AND av.created_at > ?
+      JOIN asset_version av ON av.asset_id = a.id AND av.created_at > ? AND av.version > 1
       WHERE ${whereClause}
       GROUP BY a.id
       ORDER BY a.updated_at DESC
@@ -58,9 +60,14 @@ export class AssetRepository extends SqlEntityRepository<Asset> {
    */
   async searchAssetsForOwner(
     ownerId: string,
-    filters: { q?: string; since?: Date; asset_type?: string },
+    filters: { q?: string; since?: Date; asset_type?: string; archived?: boolean; includeArchived?: boolean },
   ): Promise<{ rows: SearchResult[]; total: number }> {
-    const conditions = ['a.owner_id = ?', "a.state != 'destroyed'"];
+    const stateCondition = filters.archived
+      ? `a.state = '${AssetState.ARCHIVED}'`
+      : filters.includeArchived
+        ? `a.state != '${AssetState.DESTROYED}'`
+        : `a.state NOT IN ('${AssetState.DESTROYED}', '${AssetState.ARCHIVED}')`;
+    const conditions = ['a.owner_id = ?', stateCondition];
     const params: unknown[] = [ownerId];
 
     if (filters.since) {

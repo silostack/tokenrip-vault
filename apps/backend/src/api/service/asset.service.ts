@@ -4,11 +4,13 @@ import { EntityManager } from '@mikro-orm/postgresql';
 import { v4, validate as uuidValidate } from 'uuid';
 import { Asset, AssetType, AssetState } from '../../db/models/Asset';
 import { AssetVersion } from '../../db/models/AssetVersion';
+import { CollectionRow } from '../../db/models/CollectionRow';
 import { AssetRepository } from '../../db/repositories/asset.repository';
 import { STORAGE_SERVICE, StorageService } from '../../storage/storage.interface';
 import { RefService } from './ref.service';
 import { ThreadService } from './thread.service';
 import { AnalyticsService } from '../../analytics/analytics.service';
+import { parseCsv } from './csv-parser';
 
 interface ProvenanceFields {
   parentAssetId?: string;
@@ -44,6 +46,20 @@ interface CreateCollectionDto extends ProvenanceFields {
   ownerId: string;
 }
 
+interface CreateCollectionFromCsvDto extends ProvenanceFields {
+  content: string;
+  headers?: boolean;
+  schema?: Array<{
+    name: string;
+    type: 'text' | 'number' | 'date' | 'url' | 'enum' | 'boolean';
+    values?: string[];
+  }>;
+  title?: string;
+  description?: string;
+  alias?: string;
+  ownerId: string;
+}
+
 const CONTENT_MIME_TYPES: Record<string, string> = {
   [AssetType.MARKDOWN]: 'text/markdown',
   [AssetType.HTML]: 'text/html',
@@ -51,6 +67,7 @@ const CONTENT_MIME_TYPES: Record<string, string> = {
   [AssetType.CODE]: 'text/plain',
   [AssetType.TEXT]: 'text/plain',
   [AssetType.JSON]: 'application/json',
+  [AssetType.CSV]: 'text/csv',
 };
 
 @Injectable()
@@ -185,6 +202,58 @@ export class AssetService {
     return asset;
   }
 
+  /**
+   * One-shot: parse a CSV and create a fully-populated collection asset (schema + rows)
+   * in a single transaction. No intermediate CSV asset is created.
+   */
+  async createCollectionFromCsv(dto: CreateCollectionFromCsvDto): Promise<Asset> {
+    const { schema, rows } = parseCsv({
+      content: dto.content,
+      headers: dto.headers,
+      schema: dto.schema,
+    });
+
+    const asset = await this.em.transactional(async (em) => {
+      const asset = new Asset(AssetType.COLLECTION, undefined, dto.ownerId);
+      asset.title = dto.title;
+      asset.description = dto.description;
+      asset.metadata = { schema };
+      asset.versionCount = 0;
+      if (dto.alias) asset.alias = dto.alias;
+      if (dto.parentAssetId) asset.parentAssetId = dto.parentAssetId;
+      if (dto.creatorContext) asset.creatorContext = dto.creatorContext;
+      if (dto.inputReferences) asset.inputReferences = dto.inputReferences;
+
+      em.persist(asset);
+
+      // Stagger createdAt by 1ms per row so GET /rows preserves CSV order.
+      // The row endpoint sorts by created_at ASC, id ASC; identical timestamps
+      // fall back to UUID order, which is effectively random.
+      const baseTime = Date.now();
+      for (let i = 0; i < rows.length; i++) {
+        const row = new CollectionRow(asset, rows[i], dto.ownerId);
+        const ts = new Date(baseTime + i);
+        row.createdAt = ts;
+        row.updatedAt = ts;
+        em.persist(row);
+      }
+
+      this.logger.debug('Created collection from CSV: id=%s rows=%d cols=%d', asset.id, rows.length, schema.length);
+      return asset;
+    });
+
+    this.analyticsService.track('asset_created', {
+      distinct_id: dto.ownerId,
+      content_type: 'collection',
+      size_bytes: Buffer.byteLength(dto.content, 'utf-8'),
+      asset_type: 'collection',
+      source: 'csv',
+      row_count: rows.length,
+    });
+
+    return asset;
+  }
+
   private throwIfDestroyed(asset: Asset): void {
     if (asset.state === AssetState.DESTROYED) {
       throw new HttpException({
@@ -232,9 +301,16 @@ export class AssetService {
 
   async findByOwner(
     ownerId: string,
-    opts: { since?: Date; limit?: number; type?: string } = {},
+    opts: { since?: Date; limit?: number; type?: string; archived?: boolean; includeArchived?: boolean } = {},
   ): Promise<Asset[]> {
-    const where: Record<string, unknown> = { ownerId, state: { $ne: AssetState.DESTROYED } };
+    const where: Record<string, unknown> = { ownerId };
+    if (opts.archived) {
+      where.state = AssetState.ARCHIVED;
+    } else if (opts.includeArchived) {
+      where.state = { $ne: AssetState.DESTROYED };
+    } else {
+      where.state = { $nin: [AssetState.DESTROYED, AssetState.ARCHIVED] };
+    }
     if (opts.since) where.updatedAt = { $gte: opts.since };
     if (opts.type) where.type = opts.type;
     const limit = Math.min(opts.limit ?? 100, 100);
@@ -301,10 +377,17 @@ export class AssetService {
     sort?: string;
     limit?: number;
     offset?: number;
+    archived?: boolean;
+    includeArchived?: boolean;
   }): Promise<{ assets: any[]; total: number }> {
     const conn = this.em.getConnection();
 
-    const conditions: string[] = [`"state" = '${AssetState.PUBLISHED}'`];
+    const stateCondition = filters.archived
+      ? `"state" = '${AssetState.ARCHIVED}'`
+      : filters.includeArchived
+        ? `"state" IN ('${AssetState.PUBLISHED}', '${AssetState.ARCHIVED}')`
+        : `"state" = '${AssetState.PUBLISHED}'`;
+    const conditions: string[] = [stateCondition];
     const params: any[] = [];
 
     if (filters.metadata) {
@@ -366,6 +449,27 @@ export class AssetService {
 
     await this.em.flush();
     return asset;
+  }
+
+  async archiveAsset(publicId: string, ownerId: string): Promise<void> {
+    const asset = await this.findByPublicId(publicId);
+    if (asset.ownerId !== ownerId) {
+      throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only archive your own assets' });
+    }
+    asset.state = AssetState.ARCHIVED;
+    await this.em.flush();
+  }
+
+  async unarchiveAsset(publicId: string, ownerId: string): Promise<void> {
+    const asset = await this.findByPublicId(publicId);
+    if (asset.ownerId !== ownerId) {
+      throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only unarchive your own assets' });
+    }
+    if (asset.state !== AssetState.ARCHIVED) {
+      throw new BadRequestException({ ok: false, error: 'NOT_ARCHIVED', message: 'Asset is not archived' });
+    }
+    asset.state = AssetState.PUBLISHED;
+    await this.em.flush();
   }
 
   /**

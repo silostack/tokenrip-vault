@@ -18,6 +18,8 @@ export function registerSearchTools(server: McpServer, services: McpServices, ag
       intent: z.string().optional().describe('Filter by last message intent: propose, accept, reject, counter, inform, request, confirm'),
       ref: z.string().optional().describe('Filter threads referencing this asset ID (UUID)'),
       asset_type: z.string().optional().describe('Filter by asset type: markdown, html, code, json, text, file, chart, collection'),
+      archived: z.boolean().optional().describe('If true, search only archived assets'),
+      include_archived: z.boolean().optional().describe('If true, include archived assets in search results'),
     },
     async (args) => {
       try {
@@ -33,6 +35,8 @@ export function registerSearchTools(server: McpServer, services: McpServices, ag
           intent: args.intent,
           ref: args.ref,
           asset_type: args.asset_type,
+          archived: args.archived,
+          includeArchived: args.include_archived,
         });
 
         return { content: [{ type: 'text' as const, text: JSON.stringify(result) }] };

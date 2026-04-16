@@ -234,12 +234,16 @@ export class OperatorController {
     @Query('since') since?: string,
     @Query('limit') limit?: string,
     @Query('type') type?: string,
+    @Query('archived') archived?: string,
+    @Query('include_archived') includeArchived?: string,
   ) {
     const agent = await this.requireBoundAgent(user.id);
     const assets = await this.assetService.findByOwner(agent.id, {
       since: since ? new Date(since) : undefined,
       limit: limit ? parseInt(limit, 10) : undefined,
       type,
+      archived: archived === 'true',
+      includeArchived: includeArchived === 'true',
     });
     return {
       ok: true,
@@ -254,6 +258,28 @@ export class OperatorController {
         updatedAt: a.updatedAt,
       })),
     };
+  }
+
+  @Auth('user')
+  @Post('operator/assets/:publicId/archive')
+  @HttpCode(204)
+  async archiveAsset(
+    @AuthUser() user: { id: string },
+    @Param('publicId') publicId: string,
+  ) {
+    const agent = await this.requireBoundAgent(user.id);
+    await this.assetService.archiveAsset(publicId, agent.id);
+  }
+
+  @Auth('user')
+  @Post('operator/assets/:publicId/unarchive')
+  @HttpCode(204)
+  async unarchiveAsset(
+    @AuthUser() user: { id: string },
+    @Param('publicId') publicId: string,
+  ) {
+    const agent = await this.requireBoundAgent(user.id);
+    await this.assetService.unarchiveAsset(publicId, agent.id);
   }
 
   @Auth('user')

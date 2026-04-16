@@ -19,7 +19,7 @@ The CLI entry (`src/cli.ts`) is ESM-only with a `#!/usr/bin/env node` shebang.
 
 ## Structure
 
-- `src/cli.ts` — Commander entry point (bin: `tokenrip`), command groups: `asset`, `auth`, `msg`, `thread`, `contacts`, `config`, plus top-level `inbox`, `search`
+- `src/cli.ts` — Commander entry point (bin: `rip`), command groups: `asset`, `auth`, `msg`, `thread`, `contacts`, `config`, plus top-level `inbox`, `search`
 - `src/index.ts` — Library barrel export
 - `src/config.ts` — Config stored at `~/.config/tokenrip/config.json`
 - `src/identity.ts` — Agent identity (Ed25519 keypair) at `~/.config/tokenrip/identity.json`
@@ -27,30 +27,31 @@ The CLI entry (`src/cli.ts`) is ESM-only with a `#!/usr/bin/env node` shebang.
 - `src/client.ts` — Axios HTTP client with auth header
 - `src/formatters.ts` — Human-readable output formatters
 - `src/commands/` — Command implementations:
-  - `upload.ts` — `tokenrip asset upload`
-  - `publish.ts` — `tokenrip asset publish`
-  - `update.ts` — `tokenrip asset update` (new version)
-  - `delete.ts` — `tokenrip asset delete`
-  - `delete-version.ts` — `tokenrip asset delete-version`
-  - `status.ts` — `tokenrip asset list`
-  - `stats.ts` — `tokenrip asset stats`
-  - `share.ts` — `tokenrip asset share` (generate signed capability token + shareable URL)
-  - `operator-link.ts` — `tokenrip operator-link` (generate signed login URL + 6-digit link code)
-  - `asset-get.ts` — `tokenrip asset get`
-  - `asset-download.ts` — `tokenrip asset download`
-  - `asset-versions.ts` — `tokenrip asset versions`
-  - `asset-comments.ts` — `tokenrip asset comment`, `tokenrip asset comments`
-  - `auth.ts` — `tokenrip auth register`, `tokenrip auth create-key`, `tokenrip auth whoami`, `tokenrip auth update`
-  - `msg.ts` — `tokenrip msg send`, `tokenrip msg list` (both support `--asset` for asset comments)
-  - `thread.ts` — `tokenrip thread create`, `tokenrip thread get`, `tokenrip thread close`, `tokenrip thread add-participant`, `tokenrip thread share`
-  - `inbox.ts` — `tokenrip inbox`
-  - `search.ts` — `tokenrip search` (unified search across threads and assets)
-  - `contacts.ts` — `tokenrip contacts add/list/resolve/remove`
-  - `config.ts` — `tokenrip config set-key`, `tokenrip config set-url`, `tokenrip config show`
+  - `upload.ts` — `rip asset upload`
+  - `publish.ts` — `rip asset publish`
+  - `update.ts` — `rip asset update` (new version)
+  - `archive.ts` — `rip asset archive`, `rip asset unarchive`
+  - `delete.ts` — `rip asset delete`
+  - `delete-version.ts` — `rip asset delete-version`
+  - `status.ts` — `rip asset list`
+  - `stats.ts` — `rip asset stats`
+  - `share.ts` — `rip asset share` (generate signed capability token + shareable URL)
+  - `operator-link.ts` — `rip operator-link` (generate signed login URL + 6-digit link code)
+  - `asset-get.ts` — `rip asset get`
+  - `asset-download.ts` — `rip asset download`
+  - `asset-versions.ts` — `rip asset versions`
+  - `asset-comments.ts` — `rip asset comment`, `rip asset comments`
+  - `auth.ts` — `rip auth register`, `rip auth create-key`, `rip auth whoami`, `rip auth update`
+  - `msg.ts` — `rip msg send`, `rip msg list` (both support `--asset` for asset comments)
+  - `thread.ts` — `rip thread create`, `rip thread get`, `rip thread close`, `rip thread add-participant`, `rip thread share`
+  - `inbox.ts` — `rip inbox`
+  - `search.ts` — `rip search` (unified search across threads and assets)
+  - `contacts.ts` — `rip contacts add/list/resolve/remove`
+  - `config.ts` — `rip config set-key`, `rip config set-url`, `rip config show`
 
 ## Rules
 
-- **Don't truncate returned IDs.** Thread IDs, asset IDs, and all other identifiers must be output in full. Users pipe search results into other commands (`tokenrip asset get <id>`), so truncated IDs break workflows.
+- **Don't truncate returned IDs.** Thread IDs, asset IDs, and all other identifiers must be output in full. Users pipe search results into other commands (`rip asset get <id>`), so truncated IDs break workflows.
 
 ## Publishing
 

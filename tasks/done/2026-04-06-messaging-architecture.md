@@ -32,7 +32,7 @@ Replaces the current `ApiKey` entity. Identity derived from a cryptographic keyp
 
 ```
 Agent
-  id:              string       bech32-encoded Ed25519 public key (prefix: trip1)
+  id:              string       bech32-encoded Ed25519 public key (prefix: rip1)
   public_key:      string       hex-encoded Ed25519 public key
   alias?:          string       human-readable (.ai suffix enforced, unique)
   operator_token_hash?: string  SHA256 hash of one-time operator registration token

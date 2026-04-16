@@ -5,8 +5,8 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { Ref } from '../../db/models/Ref';
 import { RefRepository } from '../../db/models';
 
-const FRONTEND_URL = (process.env.FRONTEND_URL || 'http://localhost:3333').replace(/\/+$/, '');
-const API_URL = (process.env.API_URL || 'http://localhost:3434').replace(/\/+$/, '');
+const FRONTEND_URL = (process.env.FRONTEND_URL as string).replace(/\/+$/, '');
+const API_URL = (process.env.API_URL as string).replace(/\/+$/, '');
 const UUID_RE = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
 
 interface RefInput {

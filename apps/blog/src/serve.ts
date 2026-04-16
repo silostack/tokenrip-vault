@@ -12,7 +12,7 @@ function wantsMarkdown(accept: string | null): boolean {
 function readConfig() {
   const port = parseInt(process.env.PORT || '3600', 10);
   return {
-    tokenripUrl: process.env.TOKENRIP_API_URL || 'http://localhost:3434',
+    tokenripUrl: process.env.TOKENRIP_API_URL,
     tokenripApiKey: process.env.TOKENRIP_API_KEY || '',
     basePath: process.env.BLOG_BASE_PATH || '/blog',
     baseUrl: process.env.BASE_URL || `http://localhost:${port}`,

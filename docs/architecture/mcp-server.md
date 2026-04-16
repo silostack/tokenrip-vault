@@ -162,10 +162,11 @@ Map<string, StreamableHTTPServerTransport>
 
 | Scenario | Behavior |
 |---|---|
-| Process restart | All sessions lost. Clients re-initialize automatically. |
+| Process restart | All sessions lost. Clients re-initialize automatically (API key is still valid). |
 | Horizontal scaling | Sessions pinned to the instance that created them. Would need Redis or sticky sessions. |
 | Client disconnect | Transport `onclose` callback removes session from map. |
-| No TTL | Sessions persist until explicit DELETE or server restart. |
+| Idle timeout | 7-day sliding window. Every request resets the timer. Cleanup sweep runs hourly. |
+| Session expiry | Client gets 404. Re-initializes with same API key — no OAuth re-auth needed. |
 
 ---
 
@@ -339,13 +340,13 @@ StreamableHTTPServerTransport
   ▼
 McpServer → asset_publish handler
   │
-  ├─ Agent ID available via closure (e.g. "trip1x9a...")
+  ├─ Agent ID available via closure (e.g. "rip1x9a...")
   ├─ Validate input (Zod schema)
   ├─ Call AssetService.createFromContent({
   │     content: "# Hello",
   │     type: "markdown",
   │     title: "Greeting",
-  │     ownerId: "trip1x9a..."
+  │     ownerId: "rip1x9a..."
   │  })
   │
   ▼

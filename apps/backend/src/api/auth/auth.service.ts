@@ -42,6 +42,17 @@ export class AuthService {
     }
   }
 
+  async revokeKeysByName(agentId: string, name: string): Promise<void> {
+    const keys = await this.em.find(ApiKey, {
+      agent: { id: agentId },
+      name,
+      revokedAt: null,
+    });
+    for (const key of keys) {
+      key.revokedAt = new Date();
+    }
+  }
+
   async validateSessionToken(rawToken: string): Promise<{ userId: string } | null> {
     const hash = sha256(rawToken);
     const user = await this.em.findOne(User, { sessionTokenHash: hash });

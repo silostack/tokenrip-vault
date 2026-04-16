@@ -2,7 +2,7 @@ import { resolve } from "path";
 import handler from "./dist/server/server.js";
 
 const clientDir = resolve(import.meta.dir, "dist/client");
-const API_URL = (process.env.API_URL || process.env.VITE_API_URL || "http://localhost:3434").replace(/\/+$/, "");
+const API_URL = (process.env.API_URL || process.env.VITE_API_URL as string).replace(/\/+$/, "");
 
 const SKILL_MD = await Bun.file(resolve(import.meta.dir, "../../packages/cli/SKILL.md")).text();
 

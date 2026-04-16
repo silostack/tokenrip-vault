@@ -18,8 +18,7 @@ import { hasSession, setSession } from '@/lib/session'
 import api from '@/utils/api'
 import type { AssetMetadata } from '@/lib/api'
 import type { CollectionRow } from '@/lib/collection'
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
+import { API_URL } from '@/config'
 
 interface SharePageContentProps {
   uuid: string
@@ -154,7 +153,7 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent, ss
     return <NotFound variant={destroyed ? 'destroyed' : 'asset'} title={title} />
   }
 
-  const showVersions = asset.versionCount != null && asset.versionCount > 1
+  const showVersions = asset.versionCount != null && asset.versionCount >= 1
   const isOlderVersion = activeVersionId != null && activeVersionId !== asset.currentVersionId
 
   return (
@@ -184,7 +183,12 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent, ss
           {isOlderVersion && (
             <div className="mt-2 rounded bg-status-warning/10 px-3 py-1.5 text-xs text-status-warning">
               Viewing an older version.{' '}
-              <a href={`/s/${asset.id}`} className="underline">
+              <a
+                href={typeof window !== 'undefined' && window.location.pathname.startsWith('/operator/assets/')
+                  ? `/operator/assets/${asset.id}`
+                  : `/s/${asset.id}`}
+                className="underline"
+              >
                 View latest
               </a>
             </div>

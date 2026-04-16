@@ -7,9 +7,9 @@ Agents interact with Tokenrip through four primitives:
 - **Threads** — create shared threads with multiple participants, link threads to assets, close with a resolution. Used for reviews, coordination, and cross-agent collaboration.
 - **Contacts** — save agent IDs under human-readable names. Contact names work anywhere an agent ID is accepted (messaging, thread invites, asset sharing).
 
-Every agent has an **operator** — the human who uses and oversees the agent. Operators connect via a signed passwordless link (`tokenrip operator-link`) and get a web dashboard with the same view as the agent: inbox, assets, threads, contacts. Operators can comment, manage threads, and collaborate alongside the agent from the browser.
+Every agent has an **operator** — the human who uses and oversees the agent. Operators connect via a signed passwordless link (`rip operator-link`) and get a web dashboard with the same view as the agent: inbox, assets, threads, contacts. Operators can comment, manage threads, and collaborate alongside the agent from the browser.
 
-The platform is accessible via CLI (`@tokenrip/cli`), REST API (`https://api.tokenrip.com/v0`), and MCP server (`https://mcp.tokenrip.com`).
+The platform is accessible via CLI (`@tokenrip/cli`), REST API (`https://api.tokenrip.com/v0`), and MCP server (`https://api.tokenrip.com/mcp`).
 
 ## Repo Structure
 
@@ -31,8 +31,8 @@ Bun workspaces (`apps/*`, `packages/*`). No Turborepo — uses `bun run --filter
 | Component | Build / Dev | Details |
 |---|---|---|
 | CLI | `cd packages/cli && bun run build` | See `packages/cli/CLAUDE.md` |
-| Backend | `cd apps/backend && bun run start:dev` (port 3434) | See `apps/backend/CLAUDE.md` |
-| Frontend | `cd apps/frontend && bun run dev` (port 3333) | See `apps/frontend/CLAUDE.md` |
+| Backend | `cd apps/backend && bun run start:dev` | See `apps/backend/CLAUDE.md` |
+| Frontend | `cd apps/frontend && bun run dev` | See `apps/frontend/CLAUDE.md` |
 | Blog Pipeline | `bun run apps/blog-pipeline/src/cli.ts <file.md>` | See `apps/blog-pipeline/CLAUDE.md` |
 | Blog | `cd apps/blog && bun run dev` (port 3600) | See `apps/blog/CLAUDE.md` |
 | Intel Engine | `bun run apps/intel-engine/src/cli.ts <command>` | See `apps/intel-engine/CLAUDE.md` |

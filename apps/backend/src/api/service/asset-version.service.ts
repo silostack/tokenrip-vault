@@ -24,6 +24,7 @@ const CONTENT_MIME_TYPES: Record<string, string> = {
   [AssetType.CODE]: 'text/plain',
   [AssetType.TEXT]: 'text/plain',
   [AssetType.JSON]: 'application/json',
+  [AssetType.CSV]: 'text/csv',
 };
 
 interface CreateVersionFromFileOpts {

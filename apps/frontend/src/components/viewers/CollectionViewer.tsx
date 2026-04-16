@@ -43,7 +43,9 @@ export function CollectionViewer({ asset, initialRows, initialNextCursor }: Prop
   const [allDataLoaded, setAllDataLoaded] = useState(!initialNextCursor)
   const useServerSide = !allDataLoaded
 
-  const isOperator = useMemo(() => hasSession(), [])
+  // Starts false to match SSR (localStorage not available server-side), flips after hydration.
+  const [isOperator, setIsOperator] = useState(false)
+  useEffect(() => { setIsOperator(hasSession()) }, [])
 
   // Initial load if no SSR data
   useEffect(() => {

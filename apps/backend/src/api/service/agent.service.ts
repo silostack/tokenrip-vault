@@ -81,7 +81,7 @@ export class AgentService {
   }
 
   async resolveByIdOrAlias(target: string): Promise<string> {
-    if (target.startsWith('trip1')) return target;
+    if (target.startsWith('rip1')) return target;
     const normalized = target.endsWith('.ai') ? target : `${target}.ai`;
     const agent = await this.findByAlias(normalized);
     if (!agent) {
@@ -127,7 +127,7 @@ export class AgentService {
   /**
    * Recover API key via Ed25519 signed token.
    * Token format: base64url(payload).base64url(signature)
-   * Payload: { sub: "key-recovery", iss: "trip1...", exp: unix, jti: nonce }
+   * Payload: { sub: "key-recovery", iss: "rip1...", exp: unix, jti: nonce }
    */
   async recoverKey(token: string): Promise<string> {
     const dot = token.indexOf('.');

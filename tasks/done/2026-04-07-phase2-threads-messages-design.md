@@ -215,7 +215,7 @@ POST /                        @Auth('agent')           Top-level send
 Request body:
 ```json
 {
-  "to": ["trip1..."],
+  "to": ["rip1..."],
   "body": "message text",
   "intent": "request",
   "type": "meeting",

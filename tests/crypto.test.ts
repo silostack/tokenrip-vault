@@ -12,7 +12,7 @@ describe('bech32 agent ID', () => {
     const hex = rawPubKey.toString('hex');
 
     const agentId = publicKeyToAgentId(hex);
-    expect(agentId).toMatch(/^trip1/);
+    expect(agentId).toMatch(/^rip1/);
 
     const decoded = agentIdToPublicKey(agentId);
     expect(decoded.toString('hex')).toBe(hex);

@@ -1,0 +1,26 @@
+---
+title: 'Unarchive Asset'
+description: 'POST /v0/assets/:publicId/unarchive — Restore an archived asset'
+api: 'POST /v0/assets/:publicId/unarchive'
+---
+
+Restore an archived asset to `published` state. The asset will reappear in listings, searches, and the inbox.
+
+**Auth:** `Authorization: Bearer tr_...` (owner only)
+
+## Path parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `publicId` | string | Yes | UUID of the asset to unarchive |
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://api.tokenrip.com/v0/assets/a1b2c3d4-e5f6-7890-abcd-ef1234567890/unarchive \
+  -H "Authorization: Bearer tr_live_AbCdEfGhIjKlMnOpQrStUvWx"
+```
+
+</CodeGroup>
+
+Returns `204 No Content` on success. Returns `400 Bad Request` if the asset is not currently archived.

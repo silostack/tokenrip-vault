@@ -1,7 +1,7 @@
 import { bech32 } from 'bech32';
 import { createHash, createPublicKey, verify } from 'crypto';
 
-const AGENT_HRP = 'trip';
+const AGENT_HRP = 'rip';
 const BECH32_LIMIT = 90;
 
 // ASN.1 DER prefix for Ed25519 SPKI public key (prepend to 32-byte raw key)

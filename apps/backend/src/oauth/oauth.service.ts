@@ -84,8 +84,8 @@ export class OAuthService {
   async login(input: OAuthLoginInput): Promise<{ code: string }> {
     const { user } = await this.userService.login(input.alias, input.password);
 
-    const bindings = await this.em.find(OperatorBinding, { user }, { populate: ['agent'] });
-    if (bindings.length === 0) {
+    const agent = await this.findBoundAgent(user);
+    if (!agent) {
       throw new UnauthorizedException({
         ok: false,
         error: 'NO_AGENT_BOUND',
@@ -93,26 +93,22 @@ export class OAuthService {
       });
     }
 
-    const serverAgent = await this.findOrCreateServerAgent(user);
-    const code = this.createAuthCode(serverAgent.id, input.codeChallenge, input.redirectUri);
+    const code = this.createAuthCode(agent.id, input.codeChallenge, input.redirectUri);
     return { code };
   }
 
   /**
    * Link an existing agent (identified via short code) to the OAuth flow.
-   * If the agent already has a binding: auto-login the bound user.
-   * If no binding: create a new user and bind both the CLI agent and a new server-side agent.
+   * If the agent already has a binding: use the CLI agent directly.
+   * If no binding: create a new user and bind the CLI agent.
+   * In both cases, the CLI agent's identity is preserved — no duplicate agent created.
    */
   @Transactional()
   async linkAgent(input: OAuthLinkAgentInput): Promise<{ code: string }> {
     const { agentId } = await this.linkCodeService.consume(input.code);
     const existingBinding = await this.em.findOne(OperatorBinding, { agent: { id: agentId } }, { populate: ['user'] });
 
-    let serverAgent: Agent;
-
-    if (existingBinding) {
-      serverAgent = await this.findOrCreateServerAgent(existingBinding.user);
-    } else {
+    if (!existingBinding) {
       if (!input.displayName || !input.password) {
         throw new BadRequestException({
           ok: false,
@@ -126,22 +122,21 @@ export class OAuthService {
       // Bind the CLI agent to the new user
       const cliAgent = await this.em.findOneOrFail(Agent, { id: agentId });
       this.em.persist(new OperatorBinding(cliAgent, user));
-
-      serverAgent = await this.createServerAgent(user);
     }
 
-    const code = this.createAuthCode(serverAgent.id, input.codeChallenge, input.redirectUri);
+    // Use the CLI agent's identity for the auth code — no second agent created
+    const code = this.createAuthCode(agentId, input.codeChallenge, input.redirectUri);
     return { code };
   }
 
-  /** Find an existing server-side agent for a user, or create one. */
-  private async findOrCreateServerAgent(user: { id: string }): Promise<Agent> {
+  /** Find a bound agent for a user. Prefers agents with server-side keypairs, falls back to any. */
+  private async findBoundAgent(user: { id: string }): Promise<Agent | null> {
     const bindings = await this.em.find(OperatorBinding, { user: { id: user.id } }, { populate: ['agent'] });
     for (const b of bindings) {
       const kp = await this.em.findOne(AgentKeyPair, { agent: b.agent });
       if (kp) return b.agent;
     }
-    return this.createServerAgent(user);
+    return bindings.length > 0 ? bindings[0].agent : null;
   }
 
   /** Create a server-side agent (with server-generated keypair) and bind it to a user. */
@@ -197,9 +192,42 @@ export class OAuthService {
 
     record.used = true;
 
-    // Revoke existing MCP OAuth keys and issue a fresh one
-    const apiKey = await this.agentService.revokeAndRegenerateKey(record.agentId);
+    // Revoke only prior MCP OAuth keys (preserves CLI 'default' key and other keys)
+    await this.authService.revokeKeysByName(record.agentId, 'mcp-oauth');
+    const agent = await this.agentService.findById(record.agentId);
+    const apiKey = await this.authService.createKey(agent, 'mcp-oauth');
     return { accessToken: apiKey, tokenType: 'bearer' };
+  }
+
+  @Transactional()
+  async cliLink(alias: string, password: string): Promise<{ agentId: string; publicKey: string; secretKey: string; apiKey: string }> {
+    const { user } = await this.userService.login(alias, password);
+
+    const agent = await this.findBoundAgent(user);
+    if (!agent) {
+      throw new UnauthorizedException({
+        ok: false,
+        error: 'NO_AGENT_BOUND',
+        message: 'No agent is bound to this user account',
+      });
+    }
+
+    const keyPair = await this.em.findOne(AgentKeyPair, { agent });
+    if (!keyPair) {
+      throw new BadRequestException({
+        ok: false,
+        error: 'NO_SERVER_KEYPAIR',
+        message: 'This agent was registered via CLI — use your local identity instead',
+      });
+    }
+
+    const apiKey = await this.authService.createKey(agent, 'cli');
+    return {
+      agentId: agent.id,
+      publicKey: agent.publicKey,
+      secretKey: this.decryptSecretKey(keyPair.encryptedSecretKey),
+      apiKey,
+    };
   }
 
   async checkAgentAliasAvailable(alias: string): Promise<boolean> {
@@ -232,5 +260,10 @@ export class OAuthService {
   private encryptSecretKey(secretKeyHex: string): string {
     // TODO: Implement AES-256-GCM encryption with key from SECRET_KEY_ENCRYPTION_KEY env
     return secretKeyHex;
+  }
+
+  private decryptSecretKey(encryptedSecretKey: string): string {
+    // TODO: Implement AES-256-GCM decryption with key from SECRET_KEY_ENCRYPTION_KEY env
+    return encryptedSecretKey;
   }
 }
