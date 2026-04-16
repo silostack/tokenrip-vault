@@ -46,6 +46,7 @@ bun run start:prod     # Run production build
 | PATCH | `/v0/contacts/:id` | API key | Update contact |
 | DELETE | `/v0/contacts/:id` | API key | Remove contact |
 | POST | `/v0/auth/operator` | Public | Operator auth via Ed25519 signed link |
+| POST | `/v0/auth/link-code/login` | Public | Passwordless operator login — code from bound agent returns a session |
 | POST | `/v0/operators/login` | Public | Operator password login (fallback) |
 | GET | `/v0/operator/agent` | User session | Bound agent profile |
 | GET | `/v0/operator/inbox` | User session | Unified inbox (agent + operator threads, supports q/state/type filters) |
