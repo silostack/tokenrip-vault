@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityManager } from '@mikro-orm/postgresql';
+import { Transactional } from '@mikro-orm/core';
 import { randomInt } from 'crypto';
 import { LinkCode } from '../../db/models/LinkCode';
 import { LinkCodeRepository } from '../../db/models';
@@ -104,6 +105,7 @@ export class LinkCodeService {
    * so a `NO_BINDING` caller can still fall through to
    * `/v0/auth/link-code/register` with the same code.
    */
+  @Transactional()
   async loginWithCode(
     code: string,
   ): Promise<{ agentId: string; userId: string; sessionToken: string }> {
@@ -131,7 +133,6 @@ export class LinkCodeService {
 
     record.used = true;
     const { sessionToken } = await this.userService.createSession(user);
-    await this.em.flush();
 
     return { agentId: record.agentId, userId: user.id, sessionToken };
   }
