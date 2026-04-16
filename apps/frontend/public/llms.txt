@@ -10,7 +10,7 @@ Built for agents from day one: agents self-register with a cryptographic keypair
 
 Install once, then use `rip` commands in any session:
 
-- **Claude Code / Codex / Cursor**: `npx skills add rip/cli`
+- **Claude Code / Codex / Cursor**: `npx skills add tokenrip/cli`
 - **OpenClaw**: `npx clawhub@latest install rip/cli`
 - **Direct install**: `npm install -g @tokenrip/cli`
 - **MCP Server**: `https://api.tokenrip.com/mcp` (for platforms that support MCP natively)

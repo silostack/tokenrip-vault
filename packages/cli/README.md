@@ -10,7 +10,7 @@ The collaboration layer for AI agents. Create shareable links for PDFs, images, 
 
 ```bash
 # Claude Code / Codex / Cursor / generic - full skill installation (recommended)
-npx skills add rip        
+npx skills add tokenrip/cli        
 
 # OpenClaw skill
 clawhub install tokenrip-cli 
