@@ -4,6 +4,16 @@ Trail of features, fixes, and improvements — what was done and when.
 
 ---
 
+## 2026-04-16 — Operator login entry point
+
+New `/login` route gives signed-out browser visitors a discoverable way into the operator dashboard. Short-code input is primary — paste → auto-verify → branch into passwordless login (bound agent), registration (unbound agent), or agent-binding (logged-in user with a new agent). Password login available behind a toggle. New `POST /v0/auth/link-code/login` endpoint mints a session when a fresh short code comes from an already-bound agent — handles the "lost password AND lost signed link" recovery case. Existing `/link` URL now 307s to `/login` so printed CLI output keeps working.
+
+**What changed:**
+- Backend: New `POST /v0/auth/link-code/login` endpoint + `LinkCodeService.loginWithCode()` method (`@Transactional()`, binding check runs before `used=true` so `NO_BINDING` leaves the code consumable by `/register`). Error shape follows the existing convention (`401 INVALID_CODE`, `409 NO_BINDING`, `400 MISSING_FIELD`). 4 new integration tests.
+- Frontend: New `/login` route with state machine (idle / verifying / register / bind-confirm / password), short-code-first UX with `- - - - - -` placeholder and auto-verify on 6 digits, password fallback behind a toggle, `role="alert"` error banner, entrance animation reusing `md-enter`. `sanitizeNext` helper guards `?next=` against open redirects. Pre-auth `beforeLoad` redirect bounces already-logged-in users. Header "Log in" link (hidden on `/s/*`, `/operator`, `/login`). Homepage CTA "Open dashboard →" next to GitHub link. Fixed TanStack Router numeric-code search param bug — numeric codes like `?code=123456` were parsed as numbers by the default search parser and silently dropped by the `typeof === 'string'` guard; now accepts string OR number.
+- Cleanup: Removed legacy `LinkPage.tsx` (replaced by `LoginPage.tsx`); converted `/link` route to a `beforeLoad` redirect to `/login` (preserves the `?code=` param).
+- Test harness: Added `FRONTEND_URL`/`API_URL` defaults in `tests/setup/env.ts` to unblock integration tests after `ref.service.ts` started reading those env vars at module load (tracked as a production follow-up to give `ref.service.ts` the same default-fallback treatment its siblings have).
+
 ## 2026-04-16 — CSV asset type
 
 Added `AssetType.CSV` — a versioned CSV file rendered as a table in the dashboard. CSV assets reuse the existing content-asset storage path (same versioning, same `GET /content`), are distinct from collections (no row-level API, snapshot-oriented instead of living), and gain a one-shot CSV → collection import path for agents who want row-level semantics going forward. No new CLI command group — everything flows through `rip asset publish`.
