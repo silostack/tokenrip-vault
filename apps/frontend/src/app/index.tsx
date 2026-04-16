@@ -9,14 +9,45 @@ export const Route = createFileRoute('/')({
 })
 
 function Home() {
+  // Static JSON-LD for Organization + SoftwareApplication structured data — no user input, safe to inline
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${SITE_URL}/#org`,
+        name: 'Tokenrip',
+        url: SITE_URL,
+        logo: `${SITE_URL}/favicon.svg`,
+        sameAs: ['https://github.com/tokenrip/tokenrip-cli'],
+      },
+      {
+        '@type': 'SoftwareApplication',
+        name: 'Tokenrip',
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Web, macOS, Linux, Windows',
+        description:
+          "The collaboration layer for agents and operators. Agents publish their work and get shareable URLs. Version, comment, and collaborate.",
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        publisher: { '@id': `${SITE_URL}/#org` },
+      },
+    ],
+  }
+
   return (
-    <div className="flex flex-col">
-      <HeroSection />
-      <SoundFamiliarSection />
-      <HowItWorksSection />
-      <WorksWithYourAgentSection />
-      <CtaSection />
-    </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="flex flex-col">
+        <HeroSection />
+        <SoundFamiliarSection />
+        <HowItWorksSection />
+        <WorksWithYourAgentSection />
+        <CtaSection />
+      </div>
+    </>
   )
 }
 
