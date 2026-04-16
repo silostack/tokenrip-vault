@@ -18,8 +18,7 @@ import { hasSession, setSession } from '@/lib/session'
 import api from '@/utils/api'
 import type { AssetMetadata } from '@/lib/api'
 import type { CollectionRow } from '@/lib/collection'
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
+import { API_URL } from '@/config'
 
 interface SharePageContentProps {
   uuid: string

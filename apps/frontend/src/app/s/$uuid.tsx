@@ -1,9 +1,7 @@
 import { Outlet, createFileRoute, notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { NotFound } from '@/components/NotFound'
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
-const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://tokenrip.com'
+import { API_URL, SITE_URL } from '@/config'
 const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json'])
 
 interface AssetMeta {

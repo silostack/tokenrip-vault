@@ -9,8 +9,7 @@ import {
   postMessage as postMessageApi,
   type ThreadMeta,
 } from '@/lib/thread'
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
+import { API_URL } from '@/config'
 
 const fetchThreadSSR = createServerFn({ method: 'GET' }).handler(
   async ({ data }: { data: { threadId: string; token: string } }) => {

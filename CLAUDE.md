@@ -31,8 +31,8 @@ Bun workspaces (`apps/*`, `packages/*`). No Turborepo — uses `bun run --filter
 | Component | Build / Dev | Details |
 |---|---|---|
 | CLI | `cd packages/cli && bun run build` | See `packages/cli/CLAUDE.md` |
-| Backend | `cd apps/backend && bun run start:dev` (port 3434) | See `apps/backend/CLAUDE.md` |
-| Frontend | `cd apps/frontend && bun run dev` (port 3333) | See `apps/frontend/CLAUDE.md` |
+| Backend | `cd apps/backend && bun run start:dev` | See `apps/backend/CLAUDE.md` |
+| Frontend | `cd apps/frontend && bun run dev` | See `apps/frontend/CLAUDE.md` |
 | Blog Pipeline | `bun run apps/blog-pipeline/src/cli.ts <file.md>` | See `apps/blog-pipeline/CLAUDE.md` |
 | Blog | `cd apps/blog && bun run dev` (port 3600) | See `apps/blog/CLAUDE.md` |
 | Intel Engine | `bun run apps/intel-engine/src/cli.ts <command>` | See `apps/intel-engine/CLAUDE.md` |

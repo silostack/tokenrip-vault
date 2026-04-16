@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-
-const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://tokenrip.com'
+import { SITE_URL } from '@/config'
 
 export const Route = createFileRoute('/')({
   head: () => ({

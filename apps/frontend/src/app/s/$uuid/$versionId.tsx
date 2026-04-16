@@ -2,8 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { SharePageContent } from '@/components/SharePageContent'
 import type { AssetMetadata } from '@/lib/api'
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3434'
+import { API_URL } from '@/config'
 
 const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json'])
 
