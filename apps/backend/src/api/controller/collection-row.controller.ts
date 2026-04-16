@@ -16,6 +16,7 @@ import { Auth, ReqAuth } from '../auth/auth.decorator';
 import { RequestAuth } from '../auth/auth.guard';
 import { AssetService } from '../service/asset.service';
 import { CollectionRowService } from '../service/collection-row.service';
+import { OperatorBindingService } from '../service/operator-binding.service';
 import { Asset, AssetType } from '../../db/models/Asset';
 import { parseCapSub } from '../auth/crypto';
 
@@ -24,6 +25,7 @@ export class CollectionRowController {
   constructor(
     private readonly assetService: AssetService,
     private readonly collectionRowService: CollectionRowService,
+    private readonly bindingService: OperatorBindingService,
   ) {}
 
   @Public()
@@ -72,7 +74,7 @@ export class CollectionRowController {
   }
 
   @Post(':publicId/rows')
-  @Auth('agent', 'token')
+  @Auth('agent', 'user', 'token')
   async appendRows(
     @Param('publicId') publicId: string,
     @Body() body: { rows?: Array<Record<string, unknown>> },
@@ -83,7 +85,7 @@ export class CollectionRowController {
     }
 
     const asset = await this.findCollectionAsset(publicId);
-    this.verifyAccess(asset, auth, 'rows:append');
+    await this.verifyAccess(asset, auth, 'rows:append');
 
     const createdBy = auth.agent?.id ?? auth.user?.id ?? 'unknown';
     const created = await this.collectionRowService.appendRows(
@@ -99,7 +101,7 @@ export class CollectionRowController {
   }
 
   @Put(':publicId/rows/:rowId')
-  @Auth('agent', 'token')
+  @Auth('agent', 'user', 'token')
   async updateRow(
     @Param('publicId') publicId: string,
     @Param('rowId') rowId: string,
@@ -111,7 +113,7 @@ export class CollectionRowController {
     }
 
     const asset = await this.findCollectionAsset(publicId);
-    this.verifyAccess(asset, auth, 'rows:update');
+    await this.verifyAccess(asset, auth, 'rows:update');
 
     const row = await this.collectionRowService.updateRow(asset.id, rowId, body.data);
     return {
@@ -125,7 +127,7 @@ export class CollectionRowController {
   }
 
   @Delete(':publicId/rows')
-  @Auth('agent', 'token')
+  @Auth('agent', 'user', 'token')
   @HttpCode(204)
   async deleteRows(
     @Param('publicId') publicId: string,
@@ -137,7 +139,7 @@ export class CollectionRowController {
     }
 
     const asset = await this.findCollectionAsset(publicId);
-    this.verifyAccess(asset, auth, 'rows:delete');
+    await this.verifyAccess(asset, auth, 'rows:delete');
 
     await this.collectionRowService.deleteRows(asset.id, body.row_ids);
   }
@@ -154,7 +156,7 @@ export class CollectionRowController {
     return asset;
   }
 
-  private verifyAccess(asset: Asset, auth: RequestAuth, requiredPerm?: string): void {
+  private async verifyAccess(asset: Asset, auth: RequestAuth, requiredPerm?: string): Promise<void> {
     if (auth.capability) {
       const cap = parseCapSub(auth.capability.sub);
       if (!cap || cap.type !== 'asset' || cap.id !== asset.publicId) {
@@ -169,7 +171,11 @@ export class CollectionRowController {
       return;
     }
     if (auth.agent && auth.agent.id === asset.ownerId) return;
-    if (auth.user) return; // operators can manage rows
+    if (auth.user) {
+      // Operator can manage rows on assets owned by the agent they're bound to.
+      const boundAgent = await this.bindingService.findBoundAgent(auth.user.id);
+      if (boundAgent && boundAgent.id === asset.ownerId) return;
+    }
     throw new ForbiddenException({ ok: false, error: 'ACCESS_DENIED', message: 'Access denied' });
   }
 }

@@ -4,7 +4,7 @@ import type { AssetMetadata } from '@/lib/api'
 import { getAssetContentUrl, getVersionContentUrl } from '@/lib/api'
 import { MetadataSheet } from './MetadataSheet'
 
-const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json'])
+const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json', 'csv'])
 
 interface AssetToolbarProps {
   asset: AssetMetadata

@@ -11,6 +11,7 @@ import { ImageViewer } from './viewers/ImageViewer';
 import { PdfViewer } from './viewers/PdfViewer';
 import { DownloadFallback } from './viewers/DownloadFallback';
 import { CollectionViewer } from './viewers/CollectionViewer';
+import { CsvViewer } from './viewers/CsvViewer';
 import type { CollectionRow } from '@/lib/collection';
 
 export function AssetViewer({ asset, versionId, initialContent, initialRows, initialNextCursor }: { asset: AssetMetadata; versionId?: string; initialContent?: string; initialRows?: CollectionRow[]; initialNextCursor?: string | null }) {
@@ -23,7 +24,7 @@ export function AssetViewer({ asset, versionId, initialContent, initialRows, ini
     return <CollectionViewer asset={asset} initialRows={initialRows} initialNextCursor={initialNextCursor} />;
   }
 
-  const needsTextContent = asset.type === 'markdown' || asset.type === 'html' || asset.type === 'chart' || asset.type === 'code' || asset.type === 'text' || asset.type === 'json';
+  const needsTextContent = asset.type === 'markdown' || asset.type === 'html' || asset.type === 'chart' || asset.type === 'code' || asset.type === 'text' || asset.type === 'json' || asset.type === 'csv';
 
   useEffect(() => {
     if (!needsTextContent || initialContent != null) return;
@@ -53,6 +54,10 @@ export function AssetViewer({ asset, versionId, initialContent, initialRows, ini
 
   if (asset.type === 'json') {
     return <JsonViewer content={textContent!} />;
+  }
+
+  if (asset.type === 'csv') {
+    return <CsvViewer assetId={asset.id} content={textContent!} downloadUrl={contentUrl} downloadFilename={asset.title ? `${asset.title}.csv` : undefined} />;
   }
 
   if (asset.type === 'chart') {

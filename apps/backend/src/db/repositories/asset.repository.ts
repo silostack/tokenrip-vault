@@ -17,6 +17,8 @@ export class AssetRepository extends SqlEntityRepository<Asset> {
 
   /**
    * Aggregation query: assets with new versions since a timestamp for a given owner.
+   * Excludes version 1 (the creation version) so owners don't see their own freshly
+   * published assets as "new activity" in their inbox.
    * Raw SQL because MikroORM lacks cross-table aggregation (JOIN + COUNT + GROUP BY).
    */
   async findAssetUpdatesForOwner(
@@ -43,7 +45,7 @@ export class AssetRepository extends SqlEntityRepository<Asset> {
         COUNT(av.id)::int AS new_version_count,
         MAX(av.version)::int AS latest_version
       FROM asset a
-      JOIN asset_version av ON av.asset_id = a.id AND av.created_at > ?
+      JOIN asset_version av ON av.asset_id = a.id AND av.created_at > ? AND av.version > 1
       WHERE ${whereClause}
       GROUP BY a.id
       ORDER BY a.updated_at DESC

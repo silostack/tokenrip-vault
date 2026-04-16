@@ -2,7 +2,7 @@ import { Outlet, createFileRoute, notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { NotFound } from '@/components/NotFound'
 import { API_URL, SITE_URL } from '@/config'
-const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json'])
+const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json', 'csv'])
 
 interface AssetMeta {
   id: string

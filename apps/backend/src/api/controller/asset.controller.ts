@@ -26,6 +26,7 @@ import { AssetVersionService } from '../service/asset-version.service';
 import { ThreadService } from '../service/thread.service';
 import { ParticipantService } from '../service/participant.service';
 import { MessageService } from '../service/message.service';
+import { OperatorBindingService } from '../service/operator-binding.service';
 import { Asset, AssetType } from '../../db/models/Asset';
 import { parseCapSub, parseAndVerifyCapabilityToken } from '../auth/crypto';
 import { validateAlias } from '../validation/alias.validation';
@@ -34,6 +35,42 @@ import { ShareTokenService } from '../service/share-token.service';
 
 const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_BYTES || String(10 * 1024 * 1024), 10); // default 10MB
 const FRONTEND_URL = (process.env.FRONTEND_URL || 'http://localhost:3333').replace(/\/+$/, '');
+
+const MIME_TO_EXT: Record<string, string> = {
+  'text/csv': 'csv',
+  'text/markdown': 'md',
+  'text/html': 'html',
+  'text/plain': 'txt',
+  'application/json': 'json',
+  'application/pdf': 'pdf',
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
+  'image/gif': 'gif',
+  'image/webp': 'webp',
+  'image/svg+xml': 'svg',
+};
+
+/**
+ * Pick a download filename for an asset. Prefers the original upload's basename
+ * (e.g., "leads.csv"); for content assets whose storage key is just `{uuid}/content`,
+ * synthesizes one from the asset title + mime-derived extension.
+ */
+function downloadFilename(asset: { title?: string | null; mimeType?: string | null; storageKey?: string | null; publicId: string }): string {
+  const basename = asset.storageKey ? asset.storageKey.split('/').pop() : '';
+  if (basename && basename !== 'content' && basename.includes('.')) return basename;
+
+  const ext = MIME_TO_EXT[asset.mimeType ?? ''] ?? (asset.mimeType?.split('/')[1]?.replace(/[^a-z0-9]/gi, '') || 'bin');
+  const base = (asset.title ?? asset.publicId).trim().replace(/[\\/:*?"<>|\x00-\x1f]+/g, '_').replace(/^\.+|\.+$/g, '').slice(0, 200) || asset.publicId;
+
+  return `${base}.${ext}`;
+}
+
+/** RFC 5987 filename* encoding for non-ASCII names. */
+function contentDispositionInline(filename: string): string {
+  const asciiSafe = filename.replace(/[^\x20-\x7e]/g, '_').replace(/"/g, '');
+  const encoded = encodeURIComponent(filename);
+  return `inline; filename="${asciiSafe}"; filename*=UTF-8''${encoded}`;
+}
 
 @Controller('v0/assets')
 export class AssetController {
@@ -45,6 +82,7 @@ export class AssetController {
     private readonly messageService: MessageService,
     private readonly agentService: AgentService,
     private readonly shareTokenService: ShareTokenService,
+    private readonly bindingService: OperatorBindingService,
     private readonly em: EntityManager,
   ) {}
 
@@ -219,7 +257,7 @@ export class AssetController {
     };
   }
 
-  private verifyAssetAccess(asset: Asset, auth: RequestAuth, requiredPerm?: string): void {
+  private async verifyAssetAccess(asset: Asset, auth: RequestAuth, requiredPerm?: string): Promise<void> {
     if (auth.capability) {
       const cap = parseCapSub(auth.capability.sub);
       if (!cap || cap.type !== 'asset' || cap.id !== asset.publicId) {
@@ -254,6 +292,11 @@ export class AssetController {
         });
       }
       return;
+    }
+    if (auth.user) {
+      // Operator can act on assets owned by the agent they're bound to.
+      const boundAgent = await this.bindingService.findBoundAgent(auth.user.id);
+      if (boundAgent && boundAgent.id === asset.ownerId) return;
     }
     throw new ForbiddenException({
       ok: false,
@@ -329,7 +372,7 @@ export class AssetController {
     return { ok: true, data: stats };
   }
 
-  @Auth('agent', 'token')
+  @Auth('agent', 'user', 'token')
   @Post(':publicId/messages')
   async postAssetMessage(
     @Param('publicId') publicId: string,
@@ -345,7 +388,7 @@ export class AssetController {
     }
 
     const asset = await this.assetService.findByPublicId(publicId);
-    this.verifyAssetAccess(asset, auth, 'comment');
+    await this.verifyAssetAccess(asset, auth, 'comment');
     const thread = await this.threadService.findOrCreateAssetThread(asset.publicId, asset.ownerId, asset.ownerId);
     const participant = await this.participantService.getOrCreateForAuth(thread, auth);
 
@@ -372,7 +415,7 @@ export class AssetController {
     };
   }
 
-  @Auth('agent', 'token')
+  @Auth('agent', 'user', 'token')
   @Get(':publicId/messages')
   async getAssetMessages(
     @Param('publicId') publicId: string,
@@ -381,7 +424,7 @@ export class AssetController {
     @ReqAuth() auth: RequestAuth,
   ) {
     const asset = await this.assetService.findByPublicId(publicId);
-    this.verifyAssetAccess(asset, auth, 'comment');
+    await this.verifyAssetAccess(asset, auth, 'comment');
 
     const thread = await this.threadService.findAssetThread(asset.publicId);
     if (!thread) {
@@ -463,11 +506,12 @@ export class AssetController {
     }
     const buffer = await this.assetService.readContent(asset);
     res.set('Content-Type', asset.mimeType || 'application/octet-stream');
+    res.set('Content-Disposition', contentDispositionInline(downloadFilename(asset)));
     res.send(buffer);
   }
 
   @Post(':publicId/versions')
-  @Auth('agent', 'token')
+  @Auth('agent', 'user', 'token')
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: MAX_FILE_SIZE } }))
   async createVersion(
     @Param('publicId') publicId: string,
@@ -476,7 +520,7 @@ export class AssetController {
     @ReqAuth() auth: RequestAuth,
   ) {
     const asset = await this.assetService.findByPublicId(publicId);
-    this.verifyAssetAccess(asset, auth, 'version:create');
+    await this.verifyAssetAccess(asset, auth, 'version:create');
 
     if (file) {
       const version = await this.assetVersionService.createVersionForAsset(asset, {
@@ -525,8 +569,13 @@ export class AssetController {
     @Param('versionId') versionId: string,
     @Res() res: Response,
   ) {
+    const asset = await this.assetService.findByIdentifier(publicId);
+    const version = await this.assetVersionService.findVersion(publicId, versionId);
     const { buffer, mimeType } = await this.assetVersionService.getVersionContent(publicId, versionId);
     res.set('Content-Type', mimeType);
+    res.set('Content-Disposition', contentDispositionInline(
+      downloadFilename({ title: asset.title, mimeType, storageKey: version.storageKey, publicId: asset.publicId }),
+    ));
     res.send(buffer);
   }
 

@@ -4,7 +4,7 @@ import { SharePageContent } from '@/components/SharePageContent'
 import type { AssetMetadata } from '@/lib/api'
 import { API_URL } from '@/config'
 
-const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json'])
+const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json', 'csv'])
 
 const fetchAssetWithContent = createServerFn({ method: 'GET' }).handler(
   async ({ data }: { data: { uuid: string; cap?: string } }) => {

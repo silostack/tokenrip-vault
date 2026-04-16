@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate, useLocation } from '@tanstack/react-router'
 import { ChevronDown } from 'lucide-react'
 import { formatTimeAgo } from '@/utils/time'
 import type { VersionInfo } from '@/lib/api'
@@ -25,6 +25,20 @@ export function VersionDropdown({
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
+  const location = useLocation()
+
+  // Keep version navigation inside whichever surface we're currently viewing
+  // (public share page vs operator dashboard).
+  const inOperatorDashboard = location.pathname.startsWith('/operator/assets/')
+
+  const goToLatest = () => {
+    if (inOperatorDashboard) navigate({ to: '/operator/assets/$publicId', params: { publicId: uuid } })
+    else navigate({ to: '/s/$uuid', params: { uuid } })
+  }
+  const goToVersion = (versionId: string) => {
+    if (inOperatorDashboard) navigate({ to: '/operator/assets/$publicId/$versionId', params: { publicId: uuid, versionId } })
+    else navigate({ to: '/s/$uuid/$versionId', params: { uuid, versionId } })
+  }
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -62,7 +76,7 @@ export function VersionDropdown({
           <button
             type="button"
             onClick={() => {
-              navigate({ to: '/s/$uuid', params: { uuid } })
+              goToLatest()
               setOpen(false)
             }}
             className={`flex w-full items-center justify-between px-3 py-2 text-left text-xs transition-colors hover:bg-foreground/5 ${isLatest ? 'text-foreground font-medium' : 'text-foreground/60'}`}
@@ -79,7 +93,7 @@ export function VersionDropdown({
                 key={v.id}
                 type="button"
                 onClick={() => {
-                  navigate({ to: '/s/$uuid/$versionId', params: { uuid, versionId: v.id } })
+                  goToVersion(v.id)
                   setOpen(false)
                 }}
                 className={`flex w-full items-center justify-between px-3 py-2 text-left text-xs transition-colors hover:bg-foreground/5 ${isActive ? 'text-foreground font-medium' : 'text-foreground/60'}`}
