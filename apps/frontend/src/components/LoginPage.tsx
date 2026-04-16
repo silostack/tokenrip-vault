@@ -9,8 +9,7 @@ type Phase =
   | { kind: 'verifying' }
   | { kind: 'register'; agentId: string }
   | { kind: 'bind-confirm'; agentId: string }
-  | { kind: 'password' }
-  | { kind: 'done' };
+  | { kind: 'password' };
 
 interface LoginPageProps {
   initialCode?: string;
@@ -156,7 +155,7 @@ export function LoginPage({ initialCode, next }: LoginPageProps) {
         </div>
 
         {error && (
-          <div className="rounded-lg border border-status-error/20 bg-status-error/5 px-4 py-3">
+          <div role="alert" className="rounded-lg border border-status-error/20 bg-status-error/5 px-4 py-3">
             <p className="text-sm text-status-error">{error}</p>
           </div>
         )}
@@ -277,7 +276,11 @@ export function LoginPage({ initialCode, next }: LoginPageProps) {
             </p>
             <button
               type="button"
-              onClick={() => setPhase({ kind: 'idle' })}
+              onClick={() => {
+                setPwPassword('');
+                verifyingRef.current = null;
+                setPhase({ kind: 'idle' });
+              }}
               className="text-xs text-foreground/50 hover:text-foreground/80"
             >
               ← Back to code login
