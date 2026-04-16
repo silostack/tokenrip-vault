@@ -5,6 +5,7 @@ import { Message } from '../../db/models/Message';
 import { MessageRepository } from '../../db/models';
 import { Thread, ThreadState } from '../../db/models/Thread';
 import { Participant } from '../../db/models/Participant';
+import { AnalyticsService } from '../../analytics/analytics.service';
 
 interface CreateMessageOpts {
   intent?: string;
@@ -18,6 +19,7 @@ export class MessageService {
   constructor(
     private readonly em: EntityManager,
     @InjectRepository(Message) private readonly messageRepo: MessageRepository,
+    private readonly analyticsService: AnalyticsService,
   ) {}
 
   async create(
@@ -26,7 +28,7 @@ export class MessageService {
     body: string,
     opts?: CreateMessageOpts,
   ): Promise<Message> {
-    return this.em.transactional(async (em) => {
+    const message = await this.em.transactional(async (em) => {
       const lockedThread = await em.findOneOrFail(Thread, { id: thread.id }, { lockMode: LockMode.PESSIMISTIC_WRITE });
 
       if (lockedThread.state === ThreadState.CLOSED) {
@@ -61,6 +63,17 @@ export class MessageService {
 
       return message;
     });
+
+    const agentId = participant.agent?.id;
+    if (agentId) {
+      this.analyticsService.track('message_sent', {
+        distinct_id: agentId,
+        intent: opts?.intent ?? null,
+        thread_id: thread.id,
+      });
+    }
+
+    return message;
   }
 
   async list(

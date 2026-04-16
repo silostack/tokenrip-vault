@@ -133,21 +133,12 @@ describe('mcp', () => {
   });
 
   describe('tools/list', () => {
-    test('lists all 31 tools', async () => {
+    test('lists all 33 tools', async () => {
       const res = await mcpRequest('tools/list', {});
       expect(res.status).toBe(200);
-      const text = await res.text();
-      // Parse all JSON-RPC responses from SSE stream
-      const responses: any[] = [];
-      for (const line of text.split('\n')) {
-        if (line.startsWith('data: ')) {
-          try { responses.push(JSON.parse(line.slice(6))); } catch {}
-        }
-      }
-      // Find the response that contains tools
-      const toolsResponse = responses.find((r) => r.result?.tools);
-      expect(toolsResponse).toBeTruthy();
-      const tools = toolsResponse.result.tools;
+      const json = await parseSSEResponse(res);
+      expect(json.result?.tools).toBeTruthy();
+      const tools = json.result.tools;
       expect(tools.length).toBe(33);
 
       const toolNames = tools.map((t: any) => t.name).sort();

@@ -402,6 +402,9 @@ export class AssetController {
   @Get(':publicId/content')
   async getContent(@Param('publicId') publicId: string, @Res() res: Response) {
     const asset = await this.assetService.findByIdentifier(publicId);
+    if (asset.type === 'collection') {
+      throw new BadRequestException({ ok: false, error: 'INVALID_TYPE', message: 'Collections do not have content' });
+    }
     const buffer = await this.assetService.readContent(asset);
     res.set('Content-Type', asset.mimeType || 'application/octet-stream');
     res.send(buffer);

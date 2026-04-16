@@ -8,6 +8,7 @@ import { AssetRepository } from '../../db/repositories/asset.repository';
 import { STORAGE_SERVICE, StorageService } from '../../storage/storage.interface';
 import { RefService } from './ref.service';
 import { ThreadService } from './thread.service';
+import { AnalyticsService } from '../../analytics/analytics.service';
 
 interface ProvenanceFields {
   parentAssetId?: string;
@@ -62,6 +63,7 @@ export class AssetService {
     @Inject(STORAGE_SERVICE) private readonly storage: StorageService,
     private readonly refService: RefService,
     private readonly threadService: ThreadService,
+    private readonly analyticsService: AnalyticsService,
   ) {}
 
   /**
@@ -76,7 +78,7 @@ export class AssetService {
     await this.storage.save(storageKey, dto.file.buffer);
 
     // 2. Tight transaction for DB write only
-    return await this.em.transactional(async () => {
+    const asset = await this.em.transactional(async () => {
       const asset = new Asset(AssetType.FILE, storageKey, dto.ownerId);
       asset.mimeType = dto.file.mimetype;
       asset.title = dto.title || dto.file.originalname;
@@ -99,6 +101,15 @@ export class AssetService {
       this.logger.debug(`Created file asset ${asset.id} (key=${storageKey})`);
       return asset;
     });
+
+    this.analyticsService.track('asset_created', {
+      distinct_id: dto.ownerId,
+      content_type: dto.file.mimetype,
+      size_bytes: dto.file.buffer.byteLength,
+      asset_type: 'file',
+    });
+
+    return asset;
   }
 
   /**
@@ -113,7 +124,7 @@ export class AssetService {
     await this.storage.save(storageKey, Buffer.from(dto.content, 'utf-8'));
 
     // 2. Tight transaction for DB write only
-    return await this.em.transactional(async () => {
+    const asset = await this.em.transactional(async () => {
       const asset = new Asset(dto.type, storageKey, dto.ownerId);
       asset.mimeType = CONTENT_MIME_TYPES[dto.type];
       asset.sizeBytes = Buffer.byteLength(dto.content, 'utf-8');
@@ -136,10 +147,19 @@ export class AssetService {
       this.logger.debug(`Created ${dto.type} asset ${asset.id} (key=${storageKey})`);
       return asset;
     });
+
+    this.analyticsService.track('asset_created', {
+      distinct_id: dto.ownerId,
+      content_type: CONTENT_MIME_TYPES[dto.type],
+      size_bytes: Buffer.byteLength(dto.content, 'utf-8'),
+      asset_type: dto.type,
+    });
+
+    return asset;
   }
 
   async createCollection(dto: CreateCollectionDto): Promise<Asset> {
-    return await this.em.transactional(async () => {
+    const asset = await this.em.transactional(async () => {
       const schema = dto.schema.map((col, i) => ({ ...col, position: i }));
       const asset = new Asset(AssetType.COLLECTION, undefined, dto.ownerId);
       asset.title = dto.title;
@@ -154,6 +174,15 @@ export class AssetService {
       this.logger.debug(`Created collection asset ${asset.id}`);
       return asset;
     });
+
+    this.analyticsService.track('asset_created', {
+      distinct_id: dto.ownerId,
+      content_type: 'collection',
+      size_bytes: 0,
+      asset_type: 'collection',
+    });
+
+    return asset;
   }
 
   private throwIfDestroyed(asset: Asset): void {
@@ -358,6 +387,11 @@ export class AssetService {
       for (const v of versions) {
         this.em.remove(v);
       }
+    });
+
+    this.analyticsService.track('asset_deleted', {
+      distinct_id: ownerId,
+      asset_id: publicId,
     });
 
     // Storage deletes and thread cascade are independent — run concurrently
