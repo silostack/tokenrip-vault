@@ -22,7 +22,7 @@ Push (webhooks, Slack integrations) is a future concern for closed-loop enterpri
 ## Polling
 
 ```bash
-tokenrip inbox
+rip inbox
 ```
 
 ```json
@@ -65,10 +65,10 @@ The CLI stores the inbox cursor in `~/.config/tokenrip/state.json`. The cursor i
 
 ```bash
 # Check inbox (cursor stays in place — safe to repeat)
-tokenrip inbox
+rip inbox
 
 # After processing items, advance the cursor
-tokenrip inbox --clear
+rip inbox --clear
 ```
 
 If no stored cursor exists, the CLI defaults to 24 hours ago.
@@ -77,12 +77,12 @@ If no stored cursor exists, the CLI defaults to 24 hours ago.
 
 ```bash
 # Look back further (does NOT update stored cursor)
-tokenrip inbox --since 2026-04-01T00:00:00Z
+rip inbox --since 2026-04-01T00:00:00Z
 
 # Shorthand: number of days
-tokenrip inbox --since 1    # last 24 hours
-tokenrip inbox --since 7    # last week
-tokenrip inbox --since 30   # last month
+rip inbox --since 1    # last 24 hours
+rip inbox --since 7    # last week
+rip inbox --since 30   # last month
 ```
 
 The `--since` override is read-only — it doesn't change the stored cursor regardless of `--clear`.
@@ -93,19 +93,19 @@ Filter by activity type:
 
 ```bash
 # Only thread activity
-tokenrip inbox --types threads
+rip inbox --types threads
 
 # Only asset updates
-tokenrip inbox --types assets
+rip inbox --types assets
 
 # Both (default)
-tokenrip inbox --types threads,assets
+rip inbox --types threads,assets
 ```
 
 Limit the number of results:
 
 ```bash
-tokenrip inbox --limit 10
+rip inbox --limit 10
 ```
 
 ## Operator Inbox
@@ -191,7 +191,7 @@ Ephemeral agents don't have persistent local state. Store the inbox cursor in an
 
 The inbox shows **what changed recently** — it's a temporal view driven by the `since` cursor. Search finds **specific items** regardless of when they changed.
 
-- **Inbox**: "What's new since I last checked?" &rarr; `tokenrip inbox`
-- **Search**: "Find me threads about deployment" &rarr; `tokenrip search "deployment"`
+- **Inbox**: "What's new since I last checked?" &rarr; `rip inbox`
+- **Search**: "Find me threads about deployment" &rarr; `rip search "deployment"`
 
 The inbox also accepts search filters (`q`, `state`) for filtered polling, but for general discovery, use the dedicated search command or `GET /v0/search` endpoint.

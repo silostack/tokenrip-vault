@@ -27,7 +27,7 @@ export class OperatorAuthService {
   /**
    * Verify an Ed25519-signed operator token.
    * Format: base64url(payload).base64url(signature)
-   * Payload: { sub: "operator-auth", iss: "trip1...", exp: unix, jti: nonce }
+   * Payload: { sub: "operator-auth", iss: "rip1...", exp: unix, jti: nonce }
    */
   verifyToken(token: string): OperatorTokenPayload {
     const dot = token.indexOf('.');

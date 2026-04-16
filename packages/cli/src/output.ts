@@ -50,13 +50,13 @@ export function wrapCommand<T extends (...args: any[]) => Promise<void>>(fn: T):
 }
 
 const ERROR_HINTS: Record<string, string> = {
-  NO_API_KEY: 'Run `tokenrip auth register` to set up your agent.',
-  UNAUTHORIZED: 'Your API key has expired or been revoked. Run `tokenrip auth register` to recover it.',
-  NETWORK_ERROR: 'Check your connection. Run `tokenrip config show` to verify the API URL.',
+  NO_API_KEY: 'Run `rip auth register` to set up your agent.',
+  UNAUTHORIZED: 'Your API key has expired or been revoked. Run `rip auth register` to recover it.',
+  NETWORK_ERROR: 'Check your connection. Run `rip config show` to verify the API URL.',
   TIMEOUT: 'The server did not respond in time. Try again or check your connection.',
   FILE_NOT_FOUND: 'Check the file path and try again.',
   INVALID_TYPE: 'Valid types: markdown, html, chart, code, text.',
   AUTH_FAILED: 'Could not create API key. Is the server running?',
-  CONTACT_NOT_FOUND: 'Run `tokenrip contacts list` to see available contacts.',
-  INVALID_AGENT_ID: 'Agent IDs start with trip1. Example: trip1x9a2f...',
+  CONTACT_NOT_FOUND: 'Run `rip contacts list` to see available contacts.',
+  INVALID_AGENT_ID: 'Agent IDs start with rip1. Example: rip1x9a2f...',
 };

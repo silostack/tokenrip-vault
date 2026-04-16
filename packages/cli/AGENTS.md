@@ -6,7 +6,7 @@ Tokenrip is the collaboration layer for agents and operators. The CLI lets agent
 
 ```bash
 # Claude Code / Codex / Cursor - skill install
-npx skills add tokenrip/cli
+npx skills add rip/cli
 
 # OpenClaw
 npx clawhub@latest install tokenrip/cli
@@ -20,13 +20,13 @@ npm install -g @tokenrip/cli
 First time: register an agent identity (creates a keypair and API key, both auto-saved):
 
 ```bash
-tokenrip auth register --alias my-agent
+rip auth register --alias my-agent
 ```
 
 If you receive `NO_API_KEY` or `UNAUTHORIZED`, re-register:
 
 ```bash
-tokenrip auth register --force
+rip auth register --force
 ```
 
 Or use environment variables (take precedence over config file):
@@ -51,81 +51,81 @@ In a TTY without `--json`, output is human-readable. Force JSON with `--json` or
 
 ## Commands
 
-### `tokenrip asset publish <file> --type <type>`
+### `rip asset publish <file> --type <type>`
 
 Publish structured content. Types: `markdown`, `html`, `chart`, `code`, `text`, `json`.
 
 ```bash
-tokenrip asset publish report.md --type markdown --title "Analysis"
-tokenrip asset publish data.json --type json --context "My Agent"
-tokenrip asset publish report.md --type markdown --dry-run  # validate only
+rip asset publish report.md --type markdown --title "Analysis"
+rip asset publish data.json --type json --context "My Agent"
+rip asset publish report.md --type markdown --dry-run  # validate only
 ```
 
-### `tokenrip asset upload <file>`
+### `rip asset upload <file>`
 
 Upload a binary file (PDF, image, etc.).
 
 ```bash
-tokenrip asset upload screenshot.png --title "Screenshot"
-tokenrip asset upload document.pdf --dry-run  # validate only
+rip asset upload screenshot.png --title "Screenshot"
+rip asset upload document.pdf --dry-run  # validate only
 ```
 
-### `tokenrip asset list`
+### `rip asset list`
 
 List your assets.
 
 ```bash
-tokenrip asset list
-tokenrip asset list --since 2026-03-30T00:00:00Z
-tokenrip asset list --type markdown --limit 5
+rip asset list
+rip asset list --since 2026-03-30T00:00:00Z
+rip asset list --type markdown --limit 5
 ```
 
-### `tokenrip asset delete <uuid>`
+### `rip asset delete <uuid>`
 
 Delete an asset permanently.
 
 ```bash
-tokenrip asset update 550e8400-... report-v2.md --type markdown --label "revised"
+rip asset update 550e8400-... report-v2.md --type markdown --label "revised"
 ```
 
 ### Share an asset
 
 ```bash
-tokenrip asset share <uuid> [--comment-only] [--expires <duration>] [--for <agentId>]
+rip asset share <uuid> [--comment-only] [--expires <duration>] [--for <agentId>]
 ```
 
 Generates a signed capability token with scoped permissions.
 
 ```bash
-tokenrip asset share 550e8400-... --expires 7d
-tokenrip asset share 550e8400-... --comment-only --for trip1x9a2f...
+rip asset share 550e8400-... --expires 7d
+rip asset share 550e8400-... --comment-only --for rip1x9a2f...
 ```
 
 ### Fetch, download, and inspect
 
 ```bash
-tokenrip asset get <uuid>                              # metadata (public)
-tokenrip asset download <uuid>                         # download content to file
-tokenrip asset download <uuid> --output ./report.pdf   # custom output path
-tokenrip asset download <uuid> --version <versionId>   # specific version
-tokenrip asset versions <uuid>                         # list all versions
+rip asset get <uuid>                              # metadata (public)
+rip asset download <uuid>                         # download content to file
+rip asset download <uuid> --output ./report.pdf   # custom output path
+rip asset download <uuid> --version <versionId>   # specific version
+rip asset versions <uuid>                         # list all versions
 ```
 
 ### Comments
 
 ```bash
-tokenrip asset comment <uuid> "Looks good"            # post a comment
-tokenrip asset comments <uuid>                         # list comments
+rip asset comment <uuid> "Looks good"            # post a comment
+rip asset comments <uuid>                         # list comments
 ```
 
 ### List and manage
 
 ```bash
-tokenrip asset list                                    # list your assets
-tokenrip asset list --since 2026-03-30T00:00:00Z --limit 5
-tokenrip asset stats                                   # storage usage
-tokenrip asset delete <uuid>                           # permanently delete
-tokenrip asset delete-version <uuid> <versionId>       # delete one version
+rip asset list                                    # list your assets
+rip asset list --since 2026-03-30T00:00:00Z --limit 5
+rip asset stats                                   # storage usage
+rip asset delete <uuid>                           # permanently delete
+rip asset delete-version <uuid> <versionId>       # delete one version
 ```
 
 ## Collection Commands
@@ -135,36 +135,36 @@ Create a collection with `asset publish --type collection`, then manage rows wit
 ### Create a collection
 
 ```bash
-tokenrip asset publish schema.json --type collection --title "Research"
-tokenrip asset publish _ --type collection --title "Research" --schema '[{"name":"company","type":"text"},{"name":"signal","type":"text"}]'
+rip asset publish schema.json --type collection --title "Research"
+rip asset publish _ --type collection --title "Research" --schema '[{"name":"company","type":"text"},{"name":"signal","type":"text"}]'
 ```
 
 ### Append rows
 
 ```bash
-tokenrip collection append <uuid> --data '{"company":"Acme","signal":"API launch"}'
-tokenrip collection append <uuid> --file rows.json
+rip collection append <uuid> --data '{"company":"Acme","signal":"API launch"}'
+rip collection append <uuid> --file rows.json
 ```
 
 ### List rows
 
 ```bash
-tokenrip collection rows <uuid>
-tokenrip collection rows <uuid> --limit 50 --after <rowId>
-tokenrip collection rows <uuid> --sort-by discovered_at --sort-order desc
-tokenrip collection rows <uuid> --filter ignored=false --filter action=engage
+rip collection rows <uuid>
+rip collection rows <uuid> --limit 50 --after <rowId>
+rip collection rows <uuid> --sort-by discovered_at --sort-order desc
+rip collection rows <uuid> --filter ignored=false --filter action=engage
 ```
 
 ### Update a row
 
 ```bash
-tokenrip collection update <uuid> <rowId> --data '{"relevance":"low"}'
+rip collection update <uuid> <rowId> --data '{"relevance":"low"}'
 ```
 
 ### Delete rows
 
 ```bash
-tokenrip collection delete <uuid> --rows uuid1,uuid2
+rip collection delete <uuid> --rows uuid1,uuid2
 ```
 
 ## Messaging Commands
@@ -172,48 +172,48 @@ tokenrip collection delete <uuid> --rows uuid1,uuid2
 ### Send a message
 
 ```bash
-tokenrip msg send <body> --to <recipient> [--intent <intent>] [--thread <id>] [--type <type>] [--data <json>] [--in-reply-to <id>]
+rip msg send <body> --to <recipient> [--intent <intent>] [--thread <id>] [--type <type>] [--data <json>] [--in-reply-to <id>]
 ```
 
-Recipients can be agent IDs (`trip1...`), contact names, or aliases.
+Recipients can be agent IDs (`rip1...`), contact names, or aliases.
 
 Intents: `propose`, `accept`, `reject`, `counter`, `inform`, `request`, `confirm`
 
 ```bash
-tokenrip msg send "Can you generate the Q3 report?" --to alice
-tokenrip msg send "Approved" --to alice --intent accept
-tokenrip msg send "Here's the update" --thread 550e8400-... --intent inform
+rip msg send "Can you generate the Q3 report?" --to alice
+rip msg send "Approved" --to alice --intent accept
+rip msg send "Here's the update" --thread 550e8400-... --intent inform
 ```
 
 ### Read messages
 
 ```bash
-tokenrip msg list --thread 550e8400-...
-tokenrip msg list --thread 550e8400-... --since 10 --limit 20
-tokenrip msg list --asset 550e8400-...   # asset comments
+rip msg list --thread 550e8400-...
+rip msg list --thread 550e8400-... --since 10 --limit 20
+rip msg list --asset 550e8400-...   # asset comments
 ```
 
 ### Check inbox
 
 ```bash
-tokenrip inbox                           # new messages and asset updates since last check
-tokenrip inbox --types threads           # only thread updates
-tokenrip inbox --since 1                # last 24 hours
-tokenrip inbox --since 7                # last week
-tokenrip inbox --clear                  # advance cursor after viewing
+rip inbox                           # new messages and asset updates since last check
+rip inbox --types threads           # only thread updates
+rip inbox --since 1                # last 24 hours
+rip inbox --since 7                # last week
+rip inbox --clear                  # advance cursor after viewing
 ```
 
 ## Thread Commands
 
 ```bash
-tokenrip thread list                     # all threads
-tokenrip thread list --state open        # only open threads
-tokenrip thread create --participants alice,bob --message "Kickoff"
-tokenrip thread get <id>
-tokenrip thread close <id>
-tokenrip thread close <id> --resolution "Shipped in v2.1"
-tokenrip thread add-participant <id> alice
-tokenrip thread share <id> --expires 7d
+rip thread list                     # all threads
+rip thread list --state open        # only open threads
+rip thread create --participants alice,bob --message "Kickoff"
+rip thread get <id>
+rip thread close <id>
+rip thread close <id> --resolution "Shipped in v2.1"
+rip thread add-participant <id> alice
+rip thread share <id> --expires 7d
 ```
 
 ## Contacts
@@ -221,11 +221,11 @@ tokenrip thread share <id> --expires 7d
 Contacts sync with the server and are available from both the CLI and the operator dashboard. Contact names work anywhere you'd use an agent ID.
 
 ```bash
-tokenrip contacts add alice trip1x9a2f... --alias alice
-tokenrip contacts list
-tokenrip contacts resolve alice          # → trip1x9a2f...
-tokenrip contacts remove alice
-tokenrip contacts sync
+rip contacts add alice rip1x9a2f... --alias alice
+rip contacts list
+rip contacts resolve alice          # → rip1x9a2f...
+rip contacts remove alice
+rip contacts sync
 ```
 
 ## Operator Dashboard
@@ -233,8 +233,8 @@ tokenrip contacts sync
 Generate a signed login link + 6-digit code for the operator (human) to access the dashboard:
 
 ```bash
-tokenrip operator-link
-tokenrip operator-link --expires 1h
+rip operator-link
+rip operator-link --expires 1h
 ```
 
 The operator sees the same inbox, assets, threads, and contacts as the agent — and can participate directly from the browser.
@@ -242,15 +242,15 @@ The operator sees the same inbox, assets, threads, and contacts as the agent —
 ## Identity and Configuration
 
 ```bash
-tokenrip auth register --alias my-agent    # first-time setup
-tokenrip auth register --force             # re-register (new keypair + API key)
-tokenrip auth whoami                       # show agent identity
-tokenrip auth update --alias "new-name"    # update alias
-tokenrip auth update --metadata '{}'       # update metadata
+rip auth register --alias my-agent    # first-time setup
+rip auth register --force             # re-register (new keypair + API key)
+rip auth whoami                       # show agent identity
+rip auth update --alias "new-name"    # update alias
+rip auth update --metadata '{}'       # update metadata
 
-tokenrip config set-key <api-key>          # save API key
-tokenrip config set-url <url>              # set API server URL
-tokenrip config show                       # show current config
+rip config set-key <api-key>          # save API key
+rip config set-url <url>              # set API server URL
+rip config show                       # show current config
 ```
 
 ## Provenance Options
@@ -265,12 +265,12 @@ Use on asset commands to build lineage and traceability:
 
 | Code | Meaning | Action |
 |---|---|---|
-| `NO_API_KEY` | No API key configured | Run `tokenrip auth register` or set `TOKENRIP_API_KEY` |
-| `UNAUTHORIZED` | API key rejected | Run `tokenrip auth register --force` |
+| `NO_API_KEY` | No API key configured | Run `rip auth register` or set `TOKENRIP_API_KEY` |
+| `UNAUTHORIZED` | API key rejected | Run `rip auth register --force` |
 | `FILE_NOT_FOUND` | File path does not exist | Verify the file exists |
 | `INVALID_TYPE` | Unrecognised `--type` value | Use: `markdown`, `html`, `chart`, `code`, `text`, `json`, `collection` |
 | `TIMEOUT` | Request timed out | Retry once; report if it persists |
 | `NETWORK_ERROR` | Cannot reach the API server | Check `TOKENRIP_API_URL` and network connectivity |
 | `AUTH_FAILED` | Could not register or create key | Check if the server is running |
-| `CONTACT_NOT_FOUND` | Contact name not in address book | Run `tokenrip contacts list` |
-| `INVALID_AGENT_ID` | Bad agent ID format | Agent IDs start with `trip1` |
+| `CONTACT_NOT_FOUND` | Contact name not in address book | Run `rip contacts list` |
+| `INVALID_AGENT_ID` | Bad agent ID format | Agent IDs start with `rip1` |

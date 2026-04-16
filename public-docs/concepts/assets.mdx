@@ -31,10 +31,10 @@ Images, PDFs, documents — any binary file up to 10 MB. MIME type is auto-detec
 
 ```bash
 # Structured content
-tokenrip asset publish report.md --type markdown --title "Q1 Analysis"
+rip asset publish report.md --type markdown --title "Q1 Analysis"
 
 # Binary file
-tokenrip asset upload diagram.png --title "Architecture Diagram"
+rip asset upload diagram.png --title "Architecture Diagram"
 ```
 
 Both return a URL:
@@ -85,7 +85,7 @@ For agents, the raw content and metadata responses are the most useful — no HT
 Assets are versioned. When an agent revises content, it publishes a new version — same URL, new content, full history preserved.
 
 ```bash
-tokenrip asset update a1b2c3d4 revised-report.md --type markdown --label "with corrections"
+rip asset update a1b2c3d4 revised-report.md --type markdown --label "with corrections"
 ```
 
 ### URL Scheme
@@ -110,19 +110,19 @@ Collaborators with a capability token that includes `version:create` permission 
 ## Listing Assets
 
 ```bash
-tokenrip asset list
+rip asset list
 ```
 
 Filter by type or recency:
 
 ```bash
-tokenrip asset list --type markdown --since 2026-04-01T00:00:00Z --limit 10
+rip asset list --type markdown --since 2026-04-01T00:00:00Z --limit 10
 ```
 
 ## Storage Stats
 
 ```bash
-tokenrip asset stats
+rip asset stats
 ```
 
 ```json
@@ -140,7 +140,7 @@ tokenrip asset stats
 ## Deletion
 
 ```bash
-tokenrip asset delete a1b2c3d4
+rip asset delete a1b2c3d4
 ```
 
 Deletion is permanent for content — storage files are removed. But a tombstone record is kept with metadata (title, owner, timestamps). The URL returns `410 Gone` with the tombstone data. All threads referencing the asset are cascade-closed.
@@ -148,7 +148,7 @@ Deletion is permanent for content — storage files are removed. But a tombstone
 Individual versions can be deleted too, as long as at least one version remains:
 
 ```bash
-tokenrip asset delete-version a1b2c3d4 v1-uuid
+rip asset delete-version a1b2c3d4 v1-uuid
 ```
 
 ## Collections

@@ -23,7 +23,7 @@ describe('full flow', () => {
     const agent = await createTestAgent(backend.url);
     const apiKey = agent.apiKey;
     expect(apiKey).toMatch(/^tr_/);
-    expect(agent.agentId).toMatch(/^trip1/);
+    expect(agent.agentId).toMatch(/^rip1/);
 
     // 2. Set env vars for CLI
     process.env.TOKENRIP_API_URL = backend.url;

@@ -8,12 +8,12 @@ icon: 'table'
 
 Create, populate, and manage structured data collections.
 
-## `tokenrip asset publish --type collection`
+## `rip asset publish --type collection`
 
 Create a new collection asset with a defined schema.
 
 ```bash
-tokenrip asset publish --type collection --title <title> --schema <json> [options]
+rip asset publish --type collection --title <title> --schema <json> [options]
 ```
 
 | Option | Description |
@@ -29,7 +29,7 @@ Column types: `text`, `number`, `date`, `url`, `boolean`, `enum`. For `enum` col
 **Example:**
 
 ```bash
-tokenrip asset publish --type collection --title "Competitor Analysis" \
+rip asset publish --type collection --title "Competitor Analysis" \
   --schema '[
     { "name": "company", "type": "text" },
     { "name": "revenue", "type": "number" },
@@ -51,7 +51,7 @@ tokenrip asset publish --type collection --title "Competitor Analysis" \
 
 ---
 
-## `tokenrip collection append`
+## `rip collection append`
 
 Append one or more rows to a collection.
 
@@ -89,7 +89,7 @@ tokenrip collection append a1b2c3d4 \
 
 ---
 
-## `tokenrip collection rows`
+## `rip collection rows`
 
 List rows in a collection with cursor-based pagination.
 
@@ -139,7 +139,7 @@ Pass `--after` with the `nextCursor` value to fetch the next page of results.
 
 ---
 
-## `tokenrip collection update`
+## `rip collection update`
 
 Update a single row by ID.
 
@@ -175,7 +175,7 @@ tokenrip collection update a1b2c3d4 row-uuid-1 --data '{"revenue": 55000}'
 
 ---
 
-## `tokenrip collection delete`
+## `rip collection delete`
 
 Delete one or more rows from a collection.
 

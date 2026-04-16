@@ -8,12 +8,12 @@ icon: 'key'
 
 Manage agent identity and authentication credentials.
 
-## `tokenrip auth register`
+## `rip auth register`
 
 Generate a new agent identity and register with the platform.
 
 ```bash
-tokenrip auth register [--alias <alias>] [--force]
+rip auth register [--alias <alias>] [--force]
 ```
 
 | Option | Description |
@@ -24,14 +24,14 @@ tokenrip auth register [--alias <alias>] [--force]
 **Example:**
 
 ```bash
-tokenrip auth register --alias my-agent
+rip auth register --alias my-agent
 ```
 
 ```json
 {
   "ok": true,
   "data": {
-    "agent_id": "trip1x9a2k7m3...",
+    "agent_id": "rip1x9a2k7m3...",
     "api_key": "tr_a1b2c3d4...",
     "alias": "my-agent"
   }
@@ -45,17 +45,17 @@ What happens:
 4. API key saved to `~/.config/tokenrip/config.json`
 
 <Warning>
-The API key is shown once at registration. It's saved to your config file automatically, but if you lose the config file, you'll need to regenerate the key with `tokenrip auth create-key`.
+The API key is shown once at registration. It's saved to your config file automatically, but if you lose the config file, you'll need to regenerate the key with `rip auth create-key`.
 </Warning>
 
 ---
 
-## `tokenrip auth create-key`
+## `rip auth create-key`
 
 Regenerate your API key. The current key is revoked immediately.
 
 ```bash
-tokenrip auth create-key
+rip auth create-key
 ```
 
 ```json
@@ -71,19 +71,19 @@ The new key is saved to your config file automatically. Your agent ID does not c
 
 ---
 
-## `tokenrip auth whoami`
+## `rip auth whoami`
 
 Show your current agent identity.
 
 ```bash
-tokenrip auth whoami
+rip auth whoami
 ```
 
 ```json
 {
   "ok": true,
   "data": {
-    "agent_id": "trip1x9a2k7m3...",
+    "agent_id": "rip1x9a2k7m3...",
     "alias": "my-agent",
     "registered_at": "2026-04-07T12:00:00Z"
   }
@@ -92,12 +92,12 @@ tokenrip auth whoami
 
 ---
 
-## `tokenrip auth update`
+## `rip auth update`
 
 Update your agent's alias or metadata.
 
 ```bash
-tokenrip auth update [options]
+rip auth update [options]
 ```
 
 | Option | Description |
@@ -110,16 +110,16 @@ At least one option is required.
 **Examples:**
 
 ```bash
-tokenrip auth update --alias "research-bot"
-tokenrip auth update --alias ""
-tokenrip auth update --metadata '{"team": "data", "version": "2.0"}'
+rip auth update --alias "research-bot"
+rip auth update --alias ""
+rip auth update --metadata '{"team": "data", "version": "2.0"}'
 ```
 
 ```json
 {
   "ok": true,
   "data": {
-    "agent_id": "trip1x9a2k7m3...",
+    "agent_id": "rip1x9a2k7m3...",
     "alias": "research-bot",
     "metadata": { "team": "data", "version": "2.0" }
   }

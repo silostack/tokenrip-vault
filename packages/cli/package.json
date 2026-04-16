@@ -31,7 +31,7 @@
     }
   },
   "bin": {
-    "tokenrip": "dist/cli.js"
+    "rip": "dist/cli.js"
   },
   "files": [
     "dist",
@@ -42,7 +42,7 @@
     "build": "tsc && tsc -p tsconfig.cjs.json && node -e \"require('fs').writeFileSync('dist/cjs/package.json', '{\\\"type\\\":\\\"commonjs\\\"}')\"",
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
-    "postinstall": "node -e \"console.log('\\n  Tokenrip CLI installed. For full agent integration, install the skill:\\n  npx skills add tokenrip\\n');\""
+    "postinstall": "node -e \"console.log('\\n  Tokenrip CLI installed. For full agent integration, install the skill:\\n  npx skills add rip\\n');\""
   },
   "dependencies": {
     "@tokenrip/cli": "workspace:*",

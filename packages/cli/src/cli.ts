@@ -15,13 +15,14 @@ import { assetDownload } from './commands/asset-download.js';
 import { assetVersions } from './commands/asset-versions.js';
 import { assetComment, assetComments } from './commands/asset-comments.js';
 import { wrapCommand, setForceHuman } from './output.js';
+import { runMigrations } from './migrations.js';
 
 const require = createRequire(import.meta.url);
 const { version } = require('../package.json');
 
 const program = new Command();
 program
-  .name('tokenrip')
+  .name('rip')
   .description('Tokenrip — The collaboration layer for agents and operators')
   .version(version)
   .option('--human', 'Use human-readable output instead of JSON')
@@ -31,19 +32,19 @@ program
   .addHelpText('after', `
 QUICK START:
   1. Register your agent:
-     $ tokenrip auth register
+     $ rip auth register
 
   2. Publish an asset:
-     $ tokenrip asset publish report.md --type markdown
+     $ rip asset publish report.md --type markdown
 
   3. Upload a file:
-     $ tokenrip asset upload screenshot.png --title "Screenshot"
+     $ rip asset upload screenshot.png --title "Screenshot"
 
   4. Check your assets:
-     $ tokenrip asset list
+     $ rip asset list
 
   5. (Optional) Link your operator for web dashboard access:
-     $ tokenrip operator-link
+     $ rip operator-link
 `);
 
 // ── asset commands ──────────────────────────────────────────────────
@@ -62,8 +63,8 @@ asset
   .description('Upload a file and get a shareable link')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip asset upload report.pdf --title "Agent Analysis"
-  $ tokenrip asset upload chart.png --context "Claude Agent 1" \\
+  $ rip asset upload report.pdf --title "Agent Analysis"
+  $ rip asset upload chart.png --context "Claude Agent 1" \\
     --refs "https://source.example.com,https://another.com"
 `)
   .action(wrapCommand(upload));
@@ -90,11 +91,11 @@ CONTENT TYPES:
   collection - Structured data table (requires --schema or schema file)
 
 EXAMPLES:
-  $ tokenrip asset publish analysis.md --type markdown --title "Summary"
-  $ tokenrip asset publish data.json --type chart \\
+  $ rip asset publish analysis.md --type markdown --title "Summary"
+  $ rip asset publish data.json --type chart \\
     --context "Data viz agent" --refs "https://api.example.com"
-  $ tokenrip asset publish schema.json --type collection --title "Research"
-  $ tokenrip asset publish _ --type collection --title "Research" \\
+  $ rip asset publish schema.json --type collection --title "Research"
+  $ rip asset publish _ --type collection --title "Research" \\
     --schema '[{"name":"company","type":"text"},{"name":"signal","type":"text"}]'
 `)
   .action(wrapCommand(publish));
@@ -107,9 +108,9 @@ asset
   .description('List your published assets and their metadata')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip asset list
-  $ tokenrip asset list --since 2026-03-30T00:00:00Z
-  $ tokenrip asset list --type markdown --limit 5
+  $ rip asset list
+  $ rip asset list --since 2026-03-30T00:00:00Z
+  $ rip asset list --type markdown --limit 5
 `)
   .action(wrapCommand(status));
 
@@ -120,7 +121,7 @@ asset
   .description('Permanently delete an asset and its shareable link')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip asset delete 550e8400-e29b-41d4-a716-446655440000
+  $ rip asset delete 550e8400-e29b-41d4-a716-446655440000
 
 CAUTION:
   This permanently removes the asset and its shareable link.
@@ -139,8 +140,8 @@ asset
   .description('Publish a new version of an existing asset')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip asset update 550e8400-... report-v2.md --type markdown
-  $ tokenrip asset update 550e8400-... chart.png --label "with axes fixed"
+  $ rip asset update 550e8400-... report-v2.md --type markdown
+  $ rip asset update 550e8400-... chart.png --label "with axes fixed"
 `)
   .action(wrapCommand(update));
 
@@ -152,7 +153,7 @@ asset
   .description('Delete a specific version of an asset')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip asset delete-version 550e8400-... 660f9500-...
+  $ rip asset delete-version 550e8400-... 660f9500-...
 
 CAUTION:
   This permanently removes the version content.
@@ -165,13 +166,13 @@ asset
   .argument('<uuid>', 'Asset public ID to generate a share link for')
   .option('--comment-only', 'Only allow commenting (no version creation)')
   .option('--expires <duration>', 'Token expiry: 30m, 1h, 7d, 30d, etc.')
-  .option('--for <agentId>', 'Restrict token to a specific agent (trip1...)')
+  .option('--for <agentId>', 'Restrict token to a specific agent (rip1...)')
   .description('Generate a shareable link with scoped permissions')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip asset share 550e8400-e29b-41d4-a716-446655440000
-  $ tokenrip asset share 550e8400-... --comment-only --expires 7d
-  $ tokenrip asset share 550e8400-... --for trip1x9a2f...
+  $ rip asset share 550e8400-e29b-41d4-a716-446655440000
+  $ rip asset share 550e8400-... --comment-only --expires 7d
+  $ rip asset share 550e8400-... --for rip1x9a2f...
 `)
   .action(wrapCommand(share));
 
@@ -192,7 +193,7 @@ asset
   .description('View details about any asset')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip asset get 550e8400-e29b-41d4-a716-446655440000
+  $ rip asset get 550e8400-e29b-41d4-a716-446655440000
 `)
   .action(wrapCommand(assetGet));
 
@@ -204,9 +205,9 @@ asset
   .description('Download asset content to a local file')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip asset download 550e8400-e29b-41d4-a716-446655440000
-  $ tokenrip asset download 550e8400-... --output ./report.pdf
-  $ tokenrip asset download 550e8400-... --version abc123
+  $ rip asset download 550e8400-e29b-41d4-a716-446655440000
+  $ rip asset download 550e8400-... --output ./report.pdf
+  $ rip asset download 550e8400-... --version abc123
 `)
   .action(wrapCommand(assetDownload));
 
@@ -217,8 +218,8 @@ asset
   .description('List versions of an asset')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip asset versions 550e8400-e29b-41d4-a716-446655440000
-  $ tokenrip asset versions 550e8400-... --version abc123
+  $ rip asset versions 550e8400-e29b-41d4-a716-446655440000
+  $ rip asset versions 550e8400-... --version abc123
 `)
   .action(wrapCommand(assetVersions));
 
@@ -231,8 +232,8 @@ asset
   .description('Post a comment on an asset')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip asset comment 550e8400-... "Looks good, approved"
-  $ tokenrip asset comment 550e8400-... "Needs revision" --intent reject
+  $ rip asset comment 550e8400-... "Looks good, approved"
+  $ rip asset comment 550e8400-... "Needs revision" --intent reject
 `)
   .action(wrapCommand(assetComment));
 
@@ -244,8 +245,8 @@ asset
   .description('List comments on an asset')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip asset comments 550e8400-e29b-41d4-a716-446655440000
-  $ tokenrip asset comments 550e8400-... --since 5 --limit 10
+  $ rip asset comments 550e8400-e29b-41d4-a716-446655440000
+  $ rip asset comments 550e8400-... --since 5 --limit 10
 `)
   .action(wrapCommand(assetComments));
 
@@ -330,8 +331,8 @@ auth
   .option('--force', 'Overwrite existing identity')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip auth register
-  $ tokenrip auth register --alias research-bot
+  $ rip auth register
+  $ rip auth register --alias research-bot
 
   Generates an Ed25519 keypair, registers with the server, and saves
   your identity and API key locally. This is the first command to run.
@@ -351,7 +352,7 @@ auth
   .description('Regenerate API key (revokes current key)')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip auth create-key
+  $ rip auth create-key
 
   Generates a new API key and revokes the previous one.
   The new key is saved automatically.
@@ -366,7 +367,7 @@ auth
   .description('Show current agent identity')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip auth whoami
+  $ rip auth whoami
 `)
   .action(wrapCommand(async () => {
     const { authWhoami } = await import('./commands/auth.js');
@@ -380,9 +381,9 @@ auth
   .description('Update agent profile')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip auth update --alias "research-bot"
-  $ tokenrip auth update --alias ""
-  $ tokenrip auth update --metadata '{"team": "data", "version": "2.0"}'
+  $ rip auth update --alias "research-bot"
+  $ rip auth update --alias ""
+  $ rip auth update --metadata '{"team": "data", "version": "2.0"}'
 `)
   .action(wrapCommand(async (options) => {
     const { authUpdate } = await import('./commands/auth.js');
@@ -399,13 +400,13 @@ program
   .option('--clear', 'Advance the stored cursor after fetching (marks items as seen)')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip inbox
-  $ tokenrip inbox --types threads
-  $ tokenrip inbox --types assets --limit 10
-  $ tokenrip inbox --since 1                     # last 24 hours
-  $ tokenrip inbox --since 7                     # last week
-  $ tokenrip inbox --since 2026-04-01T00:00:00Z  # exact timestamp
-  $ tokenrip inbox --clear                       # advance cursor
+  $ rip inbox
+  $ rip inbox --types threads
+  $ rip inbox --types assets --limit 10
+  $ rip inbox --since 1                     # last 24 hours
+  $ rip inbox --since 7                     # last week
+  $ rip inbox --since 2026-04-01T00:00:00Z  # exact timestamp
+  $ rip inbox --clear                       # advance cursor
 
   Shows new thread messages and asset updates since your last check.
   The cursor is NOT advanced unless --clear is passed.
@@ -431,10 +432,10 @@ program
   .option('--asset-type <type>', 'Asset type: markdown, html, code, json, text, file, chart, collection')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip search "quarterly report"
-  $ tokenrip search "deploy" --type thread --state open
-  $ tokenrip search "chart" --asset-type chart --since 7
-  $ tokenrip search "proposal" --intent propose --limit 10
+  $ rip search "quarterly report"
+  $ rip search "deploy" --type thread --state open
+  $ rip search "chart" --asset-type chart --since 7
+  $ rip search "proposal" --intent propose --limit 10
 `)
   .action(wrapCommand(async (query, options) => {
     const { search } = await import('./commands/search.js');
@@ -457,10 +458,10 @@ msg
   .description('Send a message to an agent, thread, or asset')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip msg send --to alice "Can you generate the Q3 report?"
-  $ tokenrip msg send --to trip1x9a2... "Ready" --intent request
-  $ tokenrip msg send --thread 550e8400-... "Looks good" --intent accept
-  $ tokenrip msg send --asset 550e8400-... "Approved for distribution"
+  $ rip msg send --to alice "Can you generate the Q3 report?"
+  $ rip msg send --to rip1x9a2... "Ready" --intent request
+  $ rip msg send --thread 550e8400-... "Looks good" --intent accept
+  $ rip msg send --asset 550e8400-... "Approved for distribution"
 `)
   .action(wrapCommand(async (body, options) => {
     const { msgSend } = await import('./commands/msg.js');
@@ -476,9 +477,9 @@ msg
   .description('List messages in a thread or comments on an asset')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip msg list --thread 550e8400-...
-  $ tokenrip msg list --asset 550e8400-...
-  $ tokenrip msg list --thread 550e8400-... --since 10 --limit 20
+  $ rip msg list --thread 550e8400-...
+  $ rip msg list --asset 550e8400-...
+  $ rip msg list --thread 550e8400-... --since 10 --limit 20
 `)
   .action(wrapCommand(async (options) => {
     const { msgList } = await import('./commands/msg.js');
@@ -512,9 +513,9 @@ thread
   .description('Create a new thread')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip thread create --participants alice,bob
-  $ tokenrip thread create --participants alice --message "Kickoff"
-  $ tokenrip thread create --participants alice --refs 550e8400-...,https://figma.com/file/xyz
+  $ rip thread create --participants alice,bob
+  $ rip thread create --participants alice --message "Kickoff"
+  $ rip thread create --participants alice --refs 550e8400-...,https://figma.com/file/xyz
 `)
   .action(wrapCommand(async (options) => {
     const { threadCreate } = await import('./commands/thread.js');
@@ -527,7 +528,7 @@ thread
   .description('View thread details and participants')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip thread get 550e8400-e29b-41d4-a716-446655440000
+  $ rip thread get 550e8400-e29b-41d4-a716-446655440000
 `)
   .action(wrapCommand(async (id) => {
     const { threadGet } = await import('./commands/thread.js');
@@ -541,8 +542,8 @@ thread
   .description('Close a thread with an optional resolution')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip thread close 550e8400-...
-  $ tokenrip thread close 550e8400-... --resolution "Resolved: shipped in v2.1"
+  $ rip thread close 550e8400-...
+  $ rip thread close 550e8400-... --resolution "Resolved: shipped in v2.1"
 `)
   .action(wrapCommand(async (id, options) => {
     const { threadClose } = await import('./commands/thread.js');
@@ -556,8 +557,8 @@ thread
   .description('Add a participant to a thread')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip thread add-participant 550e8400-... trip1x9a2f...
-  $ tokenrip thread add-participant 550e8400-... alice
+  $ rip thread add-participant 550e8400-... rip1x9a2f...
+  $ rip thread add-participant 550e8400-... alice
 `)
   .action(wrapCommand(async (id, agent) => {
     const { threadAddParticipant } = await import('./commands/thread.js');
@@ -598,7 +599,7 @@ thread
   .command('share')
   .argument('<id>', 'Thread ID to generate a share link for')
   .option('--expires <duration>', 'Token expiry: 30m, 1h, 7d, 30d, etc.')
-  .option('--for <agentId>', 'Restrict token to a specific agent (trip1...)')
+  .option('--for <agentId>', 'Restrict token to a specific agent (rip1...)')
   .description('Generate a shareable link to view a thread')
   .addHelpText('after', `
 EXAMPLES:
@@ -616,14 +617,14 @@ const contacts = program.command('contacts').description('Manage agent contacts 
 contacts
   .command('add')
   .argument('<name>', 'Short name for this contact')
-  .argument('<agent-id>', 'Agent ID (starts with trip1)')
+  .argument('<agent-id>', 'Agent ID (starts with rip1)')
   .option('--alias <alias>', 'Agent alias (e.g. alice)')
   .option('--notes <text>', 'Notes about this contact')
   .description('Add or update a contact')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip contacts add alice trip1x9a2f... --alias alice
-  $ tokenrip contacts add bob trip1k7m3d... --notes "Report generator"
+  $ rip contacts add alice rip1x9a2f... --alias alice
+  $ rip contacts add bob rip1k7m3d... --notes "Report generator"
 `)
   .action(wrapCommand(async (name, agentId, options) => {
     const { contactsAdd } = await import('./commands/contacts.js');
@@ -635,7 +636,7 @@ contacts
   .description('List all contacts')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip contacts list
+  $ rip contacts list
 `)
   .action(wrapCommand(async () => {
     const { contactsList } = await import('./commands/contacts.js');
@@ -648,7 +649,7 @@ contacts
   .description('Resolve a contact name to an agent ID')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip contacts resolve alice
+  $ rip contacts resolve alice
 `)
   .action(wrapCommand(async (name) => {
     const { contactsResolve } = await import('./commands/contacts.js');
@@ -661,7 +662,7 @@ contacts
   .description('Remove a contact')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip contacts remove alice
+  $ rip contacts remove alice
 `)
   .action(wrapCommand(async (name) => {
     const { contactsRemove } = await import('./commands/contacts.js');
@@ -734,10 +735,11 @@ config
   .description('Show current configuration')
   .addHelpText('after', `
 EXAMPLES:
-  $ tokenrip config show
+  $ rip config show
 
   Displays your API URL, whether an API key is set, and config file paths.
 `)
   .action(wrapCommand(configShow));
 
+runMigrations();
 program.parse();

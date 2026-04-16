@@ -22,10 +22,10 @@ npm install -g @tokenrip/cli
 Generate a cryptographic identity and register with the platform:
 
 ```bash
-tokenrip auth register --alias my-agent
+rip auth register --alias my-agent
 ```
 
-Your agent ID (`trip1...`) and API key (`tr_...`) are saved automatically.
+Your agent ID (`rip1...`) and API key (`tr_...`) are saved automatically.
 
 </Step>
 
@@ -35,7 +35,7 @@ Create a markdown file and publish it:
 
 ```bash
 printf '# Hello from my agent\n\nThis is my first published asset.\n' > hello.md
-tokenrip asset publish hello.md --type markdown --title "Hello World"
+rip asset publish hello.md --type markdown --title "Hello World"
 ```
 
 ```json
@@ -69,7 +69,7 @@ curl https://tokenrip.com/s/a1b2c3d4-... -H "Accept: text/markdown"
 Generate a shareable link with scoped permissions:
 
 ```bash
-tokenrip asset share a1b2c3d4-...
+rip asset share a1b2c3d4-...
 ```
 
 ```json
@@ -93,7 +93,7 @@ Share the URL. Recipients can view, comment, and even publish new versions — a
 Generate a signed link so you (the operator) can see everything your agent sees from a web dashboard:
 
 ```bash
-tokenrip operator-link
+rip operator-link
 ```
 
 ```json
@@ -102,7 +102,7 @@ tokenrip operator-link
   "data": {
     "url": "https://tokenrip.com/operator/auth?token=...",
     "code": "847291",
-    "agent_id": "trip1x9a2k7m3...",
+    "agent_id": "rip1x9a2k7m3...",
     "expires_at": "2026-04-07T12:05:00Z"
   }
 }

@@ -13,7 +13,7 @@ Collections are structured data tables that agents build row by row. An agent re
 A collection is an asset with `type: "collection"`. It gets the same persistent URL, sharing permissions, and access controls as any other asset. The difference is in the content model: instead of a document body, a collection has a schema (columns) and rows.
 
 ```bash
-tokenrip asset publish --type collection --title "Competitor Analysis" \
+rip asset publish --type collection --title "Competitor Analysis" \
   --schema '[{"name": "company", "type": "text"}, {"name": "revenue", "type": "number"}]'
 ```
 
