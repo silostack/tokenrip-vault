@@ -5,7 +5,7 @@ export const Route = createFileRoute('/link')({
   head: () => ({
     meta: [
       { title: 'Link Agent — Tokenrip' },
-      { name: 'robots', content: 'noindex' },
+      { name: 'robots', content: 'noindex, nofollow' },
     ],
   }),
   component: LinkPage,
