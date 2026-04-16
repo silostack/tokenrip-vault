@@ -8,6 +8,7 @@ import { Participant } from '../../db/models/Participant';
 import { ThreadRepository, ParticipantRepository } from '../../db/models';
 import { RefService } from './ref.service';
 import { OperatorBindingService } from './operator-binding.service';
+import { AnalyticsService } from '../../analytics/analytics.service';
 import { RequestAuth } from '../auth/auth.guard';
 import { parseCapSub } from '../auth/crypto';
 
@@ -19,6 +20,7 @@ export class ThreadService {
     @InjectRepository(Participant) private readonly participantRepo: ParticipantRepository,
     private readonly refService: RefService,
     private readonly bindingService: OperatorBindingService,
+    private readonly analyticsService: AnalyticsService,
   ) {}
 
   @Transactional()
@@ -26,6 +28,12 @@ export class ThreadService {
     const thread = new Thread(agentId, opts?.ownerId);
     if (opts?.metadata) thread.metadata = opts.metadata;
     this.em.persist(thread);
+
+    this.analyticsService.track('thread_created', {
+      distinct_id: agentId,
+      thread_id: thread.id,
+    });
+
     return thread;
   }
 
@@ -160,6 +168,15 @@ export class ThreadService {
     if (thread.state === ThreadState.CLOSED) return thread;
     await this.verifyOwnership(thread, auth);
     thread.state = ThreadState.CLOSED;
+
+    const agentId = auth.agent?.id ?? auth.user?.id;
+    if (agentId) {
+      this.analyticsService.track('thread_closed', {
+        distinct_id: agentId,
+        thread_id: threadId,
+      });
+    }
+
     return thread;
   }
 

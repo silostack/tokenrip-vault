@@ -9,6 +9,7 @@ import { LoggerModule } from './logger/logger.module';
 import { AuthGuard } from './api/auth/auth.guard';
 import { OAuthModule } from './oauth/oauth.module';
 import { McpModule } from './mcp/mcp.module';
+import { AnalyticsModule } from './analytics/analytics.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { McpModule } from './mcp/mcp.module';
     MikroOrmModule.forRoot(ormConfig),
     LoggerModule,
     StorageModule,
+    AnalyticsModule,
     ApiModule,
     OAuthModule,
     McpModule,

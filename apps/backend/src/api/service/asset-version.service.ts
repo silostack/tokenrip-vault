@@ -4,12 +4,14 @@ import {
   NotFoundException,
   ForbiddenException,
   BadRequestException,
+  HttpException,
+  HttpStatus,
   Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { v4, validate as uuidValidate } from 'uuid';
-import { Asset, AssetType } from '../../db/models/Asset';
+import { Asset, AssetType, AssetState } from '../../db/models/Asset';
 import { AssetVersion } from '../../db/models/AssetVersion';
 import { AssetRepository } from '../../db/repositories/asset.repository';
 import { AssetVersionRepository } from '../../db/repositories/asset-version.repository';
@@ -95,6 +97,9 @@ export class AssetVersionService {
     const asset = await this.assetRepo.findOne({ publicId });
     if (!asset) {
       throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
+    }
+    if (asset.state === AssetState.DESTROYED) {
+      throw new HttpException({ ok: false, error: 'ASSET_DESTROYED', message: 'Asset has been deleted' }, HttpStatus.GONE);
     }
     return this.versionRepo.find(
       { asset: { id: asset.id } },

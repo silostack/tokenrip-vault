@@ -8,10 +8,12 @@ const TEXT_TYPES = new Set(['markdown', 'html', 'code', 'text', 'json'])
 
 interface AssetMeta {
   id: string
+  alias?: string
   title?: string
   description?: string
   type: string
   mimeType?: string
+  metadata?: Record<string, unknown>
   versionCount?: number
   createdAt?: string
   contentSnippet?: string
@@ -53,10 +55,12 @@ const fetchAssetMeta = createServerFn({ method: 'GET' }).handler(
 
       return {
         id: d.id,
+        alias: (json.data as any).alias || undefined,
         title: d.title,
         description: d.description,
         type: d.type,
         mimeType: d.mimeType,
+        metadata: (json.data as any).metadata || undefined,
         versionCount: d.versionCount,
         createdAt: d.createdAt,
         contentSnippet,
@@ -83,10 +87,14 @@ export const Route = createFileRoute('/s/$uuid')({
     const id = loaderData?.id
     const mimeType = loaderData?.mimeType || 'text/plain'
     const pageUrl = id ? `${SITE_URL}/s/${id}` : undefined
+    const isBlogPost = loaderData?.metadata?.post_type === 'blog_post'
+    const blogAlias = loaderData?.alias
     return {
       meta: [
         { title: `${title} — Tokenrip` },
         { name: 'description', content: description },
+        // Blog posts defer SEO to /blog/:slug — noindex the asset view
+        ...(isBlogPost ? [{ name: 'robots', content: 'noindex, follow' }] : []),
         { property: 'og:title', content: title },
         { property: 'og:description', content: description },
         { property: 'og:type', content: 'article' },
@@ -107,6 +115,10 @@ export const Route = createFileRoute('/s/$uuid')({
         ] : []),
       ],
       links: [
+        // Blog posts: canonical points to /blog/:slug
+        ...(isBlogPost && blogAlias
+          ? [{ rel: 'canonical', href: `${SITE_URL}/blog/${blogAlias}` }]
+          : []),
         ...(id ? [
           { rel: 'alternate', type: 'application/json', href: `${API_URL}/v0/assets/${id}` },
           { rel: 'alternate', type: mimeType, href: `${API_URL}/v0/assets/${id}/content` },

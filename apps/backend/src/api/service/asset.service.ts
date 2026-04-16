@@ -8,6 +8,7 @@ import { AssetRepository } from '../../db/repositories/asset.repository';
 import { STORAGE_SERVICE, StorageService } from '../../storage/storage.interface';
 import { RefService } from './ref.service';
 import { ThreadService } from './thread.service';
+import { AnalyticsService } from '../../analytics/analytics.service';
 
 interface ProvenanceFields {
   parentAssetId?: string;
@@ -19,6 +20,8 @@ interface CreateFileDto extends ProvenanceFields {
   file: { buffer: Buffer; originalname: string; mimetype: string };
   title?: string;
   ownerId: string;
+  alias?: string;
+  metadata?: Record<string, unknown>;
 }
 
 interface CreateContentDto extends ProvenanceFields {
@@ -26,6 +29,8 @@ interface CreateContentDto extends ProvenanceFields {
   content: string;
   title?: string;
   ownerId: string;
+  alias?: string;
+  metadata?: Record<string, unknown>;
 }
 
 interface CreateCollectionDto extends ProvenanceFields {
@@ -58,6 +63,7 @@ export class AssetService {
     @Inject(STORAGE_SERVICE) private readonly storage: StorageService,
     private readonly refService: RefService,
     private readonly threadService: ThreadService,
+    private readonly analyticsService: AnalyticsService,
   ) {}
 
   /**
@@ -72,11 +78,13 @@ export class AssetService {
     await this.storage.save(storageKey, dto.file.buffer);
 
     // 2. Tight transaction for DB write only
-    return await this.em.transactional(async () => {
+    const asset = await this.em.transactional(async () => {
       const asset = new Asset(AssetType.FILE, storageKey, dto.ownerId);
       asset.mimeType = dto.file.mimetype;
       asset.title = dto.title || dto.file.originalname;
       asset.sizeBytes = dto.file.buffer.byteLength;
+      if (dto.alias) asset.alias = dto.alias;
+      if (dto.metadata) asset.metadata = dto.metadata;
       if (dto.parentAssetId) asset.parentAssetId = dto.parentAssetId;
       if (dto.creatorContext) asset.creatorContext = dto.creatorContext;
       if (dto.inputReferences) asset.inputReferences = dto.inputReferences;
@@ -93,6 +101,15 @@ export class AssetService {
       this.logger.debug(`Created file asset ${asset.id} (key=${storageKey})`);
       return asset;
     });
+
+    this.analyticsService.track('asset_created', {
+      distinct_id: dto.ownerId,
+      content_type: dto.file.mimetype,
+      size_bytes: dto.file.buffer.byteLength,
+      asset_type: 'file',
+    });
+
+    return asset;
   }
 
   /**
@@ -107,11 +124,13 @@ export class AssetService {
     await this.storage.save(storageKey, Buffer.from(dto.content, 'utf-8'));
 
     // 2. Tight transaction for DB write only
-    return await this.em.transactional(async () => {
+    const asset = await this.em.transactional(async () => {
       const asset = new Asset(dto.type, storageKey, dto.ownerId);
       asset.mimeType = CONTENT_MIME_TYPES[dto.type];
       asset.sizeBytes = Buffer.byteLength(dto.content, 'utf-8');
       asset.title = dto.title;
+      if (dto.alias) asset.alias = dto.alias;
+      if (dto.metadata) asset.metadata = dto.metadata;
       if (dto.parentAssetId) asset.parentAssetId = dto.parentAssetId;
       if (dto.creatorContext) asset.creatorContext = dto.creatorContext;
       if (dto.inputReferences) asset.inputReferences = dto.inputReferences;
@@ -128,10 +147,19 @@ export class AssetService {
       this.logger.debug(`Created ${dto.type} asset ${asset.id} (key=${storageKey})`);
       return asset;
     });
+
+    this.analyticsService.track('asset_created', {
+      distinct_id: dto.ownerId,
+      content_type: CONTENT_MIME_TYPES[dto.type],
+      size_bytes: Buffer.byteLength(dto.content, 'utf-8'),
+      asset_type: dto.type,
+    });
+
+    return asset;
   }
 
   async createCollection(dto: CreateCollectionDto): Promise<Asset> {
-    return await this.em.transactional(async () => {
+    const asset = await this.em.transactional(async () => {
       const schema = dto.schema.map((col, i) => ({ ...col, position: i }));
       const asset = new Asset(AssetType.COLLECTION, undefined, dto.ownerId);
       asset.title = dto.title;
@@ -146,18 +174,18 @@ export class AssetService {
       this.logger.debug(`Created collection asset ${asset.id}`);
       return asset;
     });
+
+    this.analyticsService.track('asset_created', {
+      distinct_id: dto.ownerId,
+      content_type: 'collection',
+      size_bytes: 0,
+      asset_type: 'collection',
+    });
+
+    return asset;
   }
 
-  async findByPublicId(publicId: string): Promise<Asset> {
-    this.logger.debug(`Looking up asset by publicId ${publicId}`);
-    if (!uuidValidate(publicId)) {
-      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
-    }
-    const asset = await this.assetRepository.findOne({ publicId });
-    if (!asset) {
-      this.logger.debug(`Asset with publicId ${publicId} not found`);
-      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
-    }
+  private throwIfDestroyed(asset: Asset): void {
     if (asset.state === AssetState.DESTROYED) {
       throw new HttpException({
         ok: false,
@@ -171,7 +199,35 @@ export class AssetService {
         },
       }, HttpStatus.GONE);
     }
+  }
+
+  async findByPublicId(publicId: string): Promise<Asset> {
+    this.logger.debug(`Looking up asset by publicId ${publicId}`);
+    if (!uuidValidate(publicId)) {
+      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
+    }
+    const asset = await this.assetRepository.findOne({ publicId });
+    if (!asset) {
+      this.logger.debug(`Asset with publicId ${publicId} not found`);
+      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
+    }
+    this.throwIfDestroyed(asset);
     return asset;
+  }
+
+  async findByAlias(alias: string): Promise<Asset> {
+    this.logger.debug(`Looking up asset by alias ${alias}`);
+    const asset = await this.assetRepository.findOne({ alias });
+    if (!asset) {
+      throw new NotFoundException({ ok: false, error: 'NOT_FOUND', message: 'Asset not found' });
+    }
+    this.throwIfDestroyed(asset);
+    return asset;
+  }
+
+  async findByIdentifier(identifier: string): Promise<Asset> {
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(identifier);
+    return isUuid ? this.findByPublicId(identifier) : this.findByAlias(identifier);
   }
 
   async findByOwner(
@@ -197,6 +253,11 @@ export class AssetService {
     this.logger.debug(`Reading content for asset publicId=${publicId} (key=${asset.storageKey})`);
     const buffer = await this.storage.read(asset.storageKey!);
     return { buffer, mimeType: asset.mimeType || 'application/octet-stream' };
+  }
+
+  async readContent(asset: Asset): Promise<Buffer> {
+    this.logger.debug(`Reading content for asset ${asset.id} (key=${asset.storageKey})`);
+    return this.storage.read(asset.storageKey);
   }
 
   async getStats(ownerId: string): Promise<{
@@ -234,6 +295,79 @@ export class AssetService {
     return { assetCount, totalBytes, countsByType, bytesByType };
   }
 
+  async queryAssets(filters: {
+    metadata?: Record<string, unknown>;
+    tag?: string;
+    sort?: string;
+    limit?: number;
+    offset?: number;
+  }): Promise<{ assets: any[]; total: number }> {
+    const conn = this.em.getConnection();
+
+    const conditions: string[] = [`"state" = '${AssetState.PUBLISHED}'`];
+    const params: any[] = [];
+
+    if (filters.metadata) {
+      conditions.push(`"metadata" @> ?::jsonb`);
+      params.push(JSON.stringify(filters.metadata));
+    }
+
+    if (filters.tag) {
+      conditions.push(`"metadata"->'tags' @> ?::jsonb`);
+      params.push(JSON.stringify([filters.tag]));
+    }
+
+    const whereClause = conditions.join(' AND ');
+
+    // Sort — whitelist: publish_date, created_at
+    const sortField = (filters.sort || '').replace(/^-/, '');
+    const sortDir = filters.sort?.startsWith('-') ? 'DESC' : 'ASC';
+    const orderClause = sortField === 'publish_date'
+      ? `("metadata"->>'publish_date')::timestamptz ${sortDir}`
+      : `"created_at" DESC`;
+
+    const limit = Math.min(filters.limit ?? 20, 100);
+    const offset = filters.offset ?? 0;
+
+    const [countRows, rows] = await Promise.all([
+      conn.execute<[{ count: string }]>(
+        `SELECT COUNT(*) as count FROM "asset" WHERE ${whereClause}`,
+        params,
+      ),
+      conn.execute(
+        `SELECT "public_id", "alias", "type", "state", "metadata", "title", "created_at", "updated_at"
+         FROM "asset"
+         WHERE ${whereClause}
+         ORDER BY ${orderClause}
+         LIMIT ? OFFSET ?`,
+        [...params, limit, offset],
+      ),
+    ]);
+
+    return { assets: rows, total: Number(countRows[0]?.count ?? 0) };
+  }
+
+  async updateAsset(
+    publicId: string,
+    ownerId: string,
+    updates: { alias?: string; metadata?: Record<string, unknown> },
+  ): Promise<Asset> {
+    const asset = await this.findByPublicId(publicId);
+    if (asset.ownerId !== ownerId) {
+      throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only update your own assets' });
+    }
+
+    if (updates.alias !== undefined) {
+      asset.alias = updates.alias || undefined;
+    }
+    if (updates.metadata !== undefined) {
+      asset.metadata = updates.metadata;
+    }
+
+    await this.em.flush();
+    return asset;
+  }
+
   /**
    * Destroy an asset: delete storage, tombstone the row, cascade-close referencing threads.
    */
@@ -253,6 +387,11 @@ export class AssetService {
       for (const v of versions) {
         this.em.remove(v);
       }
+    });
+
+    this.analyticsService.track('asset_deleted', {
+      distinct_id: ownerId,
+      asset_id: publicId,
     });
 
     // Storage deletes and thread cascade are independent — run concurrently

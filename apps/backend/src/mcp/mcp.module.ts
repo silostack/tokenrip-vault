@@ -14,6 +14,7 @@ import { RefService } from '../api/service/ref.service';
 import { ContactService } from '../api/service/contact.service';
 import { CollectionRowService } from '../api/service/collection-row.service';
 import { SearchService } from '../api/service/search.service';
+import { AnalyticsService } from '../analytics/analytics.service';
 import type { McpServices } from './mcp.server';
 
 @Module({
@@ -35,6 +36,7 @@ import type { McpServices } from './mcp.server';
         contactService: ContactService,
         collectionRowService: CollectionRowService,
         searchService: SearchService,
+        analyticsService: AnalyticsService,
       ): McpServices => ({
         assetService,
         assetVersionService,
@@ -48,6 +50,7 @@ import type { McpServices } from './mcp.server';
         contactService,
         collectionRowService,
         searchService,
+        analyticsService,
       }),
       inject: [
         AssetService,
@@ -62,6 +65,7 @@ import type { McpServices } from './mcp.server';
         ContactService,
         CollectionRowService,
         SearchService,
+        AnalyticsService,
       ],
     },
   ],
