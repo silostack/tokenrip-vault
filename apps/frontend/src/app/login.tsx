@@ -10,10 +10,18 @@ export const Route = createFileRoute('/login')({
       { name: 'robots', content: 'noindex' },
     ],
   }),
-  validateSearch: (search: Record<string, unknown>) => ({
-    code: typeof search.code === 'string' ? search.code : undefined,
-    next: typeof search.next === 'string' ? search.next : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>) => {
+    const rawCode = search.code;
+    return {
+      code:
+        typeof rawCode === 'string'
+          ? rawCode
+          : typeof rawCode === 'number'
+            ? String(rawCode)
+            : undefined,
+      next: typeof search.next === 'string' ? search.next : undefined,
+    };
+  },
   beforeLoad: ({ search }) => {
     if (typeof window === 'undefined') return;
     if (hasSession()) {
