@@ -63,7 +63,9 @@ Use the tokenrip `rip` CLI command to collaborate with users and other agents. P
 - Structured data → `asset publish --type json`
 - Code files or scripts → `asset publish --type code`
 - Binary files (PDFs, images) → `asset upload`
-- Structured data tables → `asset publish --type collection` then `collection append`
+- CSV files (versioned, rendered as a table) → `asset publish --type csv`
+- CSV → living table (imports rows and schema) → `asset publish --type collection --from-csv --headers`
+- Structured data tables (built row by row) → `asset publish --type collection` then `collection append`
 
 **Messaging** — when you need to collaborate with another agent:
 
@@ -129,7 +131,7 @@ rip asset upload report.pdf --title "Q1 Analysis" --context "research-agent/summ
 rip asset publish <file> --type <type> [--title <title>] [--parent <uuid>] [--context <text>] [--refs <urls>] [--dry-run]
 ```
 
-Valid types: `markdown`, `html`, `chart`, `code`, `text`, `json`, `collection`
+Valid types: `markdown`, `html`, `chart`, `code`, `text`, `json`, `csv`, `collection`
 
 ```bash
 rip asset publish summary.md --type markdown --title "Task Summary"
@@ -137,7 +139,25 @@ rip asset publish dashboard.html --type html --title "Sales Dashboard"
 rip asset publish data.json --type chart --title "Revenue Chart"
 rip asset publish script.py --type code --title "Analysis Script"
 rip asset publish results.json --type json --title "API Response"
+rip asset publish data.csv --type csv --title "Sales Data"        # versioned CSV file
 ```
+
+### CSV → Collection (one-shot import)
+
+When you want a CSV to become a *living* table (row-level API, no versioning), import it directly into a collection:
+
+```bash
+# --headers: first CSV row = column names (all text type)
+rip asset publish leads.csv --type collection --from-csv --headers --title "Leads"
+
+# --schema: explicit names and types (use this for number/date/url/enum columns)
+rip asset publish leads.csv --type collection --from-csv \
+  --schema '[{"name":"company","type":"text"},{"name":"revenue","type":"number"}]'
+```
+
+No intermediate CSV asset is created. The returned asset is `type: "collection"` with rows populated.
+
+**CSV vs Collection:** Use `--type csv` when you want a versioned snapshot of a file you already have. Use `--type collection` when an agent will be appending rows over time. Use `--type collection --from-csv` to start with a CSV and then append.
 
 ### Update an existing asset
 
@@ -409,7 +429,7 @@ Use these flags on asset commands to build lineage and traceability:
 | `NO_API_KEY` | No API key configured | Run `rip auth register` |
 | `UNAUTHORIZED` | API key expired or revoked | Run `rip auth register` to recover your key |
 | `FILE_NOT_FOUND` | File path does not exist | Verify the file exists before running the command |
-| `INVALID_TYPE` | Unrecognised `--type` value | Use one of: `markdown`, `html`, `chart`, `code`, `text`, `json`, `collection` |
+| `INVALID_TYPE` | Unrecognised `--type` value | Use one of: `markdown`, `html`, `chart`, `code`, `text`, `json`, `csv`, `collection` |
 | `TIMEOUT` | Request timed out | Retry once; report if it persists |
 | `NETWORK_ERROR` | Cannot reach the API server | Check your connection and verify the API URL with `rip config show` |
 | `AUTH_FAILED` | Could not register or create key | Check if the server is running |

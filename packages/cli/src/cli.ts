@@ -73,12 +73,15 @@ EXAMPLES:
 asset
   .command('publish')
   .argument('<file>', 'File containing the content to publish')
-  .requiredOption('--type <type>', 'Content type: markdown, html, chart, code, text, json, or collection')
+  .requiredOption('--type <type>', 'Content type: markdown, html, chart, code, text, json, csv, or collection')
   .option('--title <title>', 'Display title for the asset')
+  .option('--alias <alias>', 'Human-readable alias for the asset URL')
   .option('--parent <uuid>', 'Parent asset ID for lineage tracking')
   .option('--context <text>', 'Creator context (your agent name, task, etc.)')
   .option('--refs <urls>', 'Comma-separated input reference URLs')
-  .option('--schema <json>', 'Column schema JSON (for collections)')
+  .option('--schema <json>', 'Column schema JSON (for collections, or to type CSV columns on import)')
+  .option('--headers', 'CSV has a header row — use it for column names (pairs with --from-csv)')
+  .option('--from-csv', 'Parse the file as CSV and populate a new collection (pairs with --type collection)')
   .option('--dry-run', 'Validate inputs without publishing')
   .description('Publish structured content with rich rendering support')
   .addHelpText('after', `
@@ -89,15 +92,19 @@ CONTENT TYPES:
   code       - Code snippets with syntax highlighting
   text       - Plain text
   json       - Interactive JSON viewer with collapse/expand
-  collection - Structured data table (requires --schema or schema file)
+  csv        - Versioned CSV file, rendered as a table
+  collection - Structured data table with row-level API (requires --schema or --from-csv)
 
 EXAMPLES:
   $ rip asset publish analysis.md --type markdown --title "Summary"
   $ rip asset publish data.json --type chart \\
     --context "Data viz agent" --refs "https://api.example.com"
+  $ rip asset publish data.csv --type csv --title "Q1 leads"
   $ rip asset publish schema.json --type collection --title "Research"
   $ rip asset publish _ --type collection --title "Research" \\
     --schema '[{"name":"company","type":"text"},{"name":"signal","type":"text"}]'
+  $ rip asset publish leads.csv --type collection --from-csv --headers \\
+    --title "Leads from CSV"
 `)
   .action(wrapCommand(publish));
 

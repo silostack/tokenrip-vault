@@ -14,7 +14,7 @@ bun run start:prod     # Run production build
 |---|---|---|---|
 | POST | `/v0/agents` | Public | Register agent (Ed25519 public key) |
 | GET | `/v0/agents/me` | API key | Agent profile |
-| POST | `/v0/assets` | API key | Upload file (multipart) or publish content (JSON). Accepts optional `alias` and `metadata`. |
+| POST | `/v0/assets` | API key | Upload file (multipart) or publish content (JSON). Accepts optional `alias` and `metadata`. For `type: 'csv'`: publishes a versioned CSV asset from a file or `content` string. For `type: 'collection'` + `from_csv: true`: parses the provided CSV and returns a fully-populated collection in one call (supports `headers` or `schema`). |
 | PATCH | `/v0/assets/:uuid` | API key | Update asset alias and/or metadata (owner only) |
 | POST | `/v0/assets/query` | API key | Filtered asset listing by metadata containment, tag, sort, pagination |
 | POST | `/v0/assets/:uuid/archive` | API key | Archive asset (hidden from listings, still accessible by ID) |

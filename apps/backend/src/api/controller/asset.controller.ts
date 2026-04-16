@@ -53,7 +53,7 @@ export class AssetController {
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: MAX_FILE_SIZE } }))
   async create(
     @UploadedFile() file: Express.Multer.File | undefined,
-    @Body() body?: { type?: string; content?: string; title?: string; mimeType?: string; parentAssetId?: string; creatorContext?: string; inputReferences?: string[]; schema?: Array<{ name: string; type: string; values?: string[] }> },
+    @Body() body: any,
     @AuthAgent() agent: { id: string },
   ) {
     if (body?.alias) {
@@ -63,49 +63,82 @@ export class AssetController {
       }
     }
 
+    const type: string | undefined = body?.type;
+    const fromCsv = isTruthyFlag(body?.from_csv) || isTruthyFlag(body?.fromCsv);
+    const headers = isTruthyFlag(body?.headers);
+    const schema = parseJsonField(body?.schema, 'schema');
+    const textContent = file ? file.buffer.toString('utf-8') : (typeof body?.content === 'string' ? body.content : undefined);
+    const provenance = provenanceFrom(body, agent.id);
+
+    // Collection: either schema-only or CSV import (opt-in via from_csv)
+    if (type === 'collection') {
+      if (fromCsv) {
+        if (!textContent) {
+          throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'CSV content is required (upload a file or provide `content`)' });
+        }
+        const asset = await this.assetService.createCollectionFromCsv({
+          ...provenance,
+          content: textContent,
+          headers,
+          schema,
+          title: body?.title,
+          alias: body?.alias,
+          description: body?.description,
+        });
+        return { ok: true, data: this.assetCreatedResponse(asset) };
+      }
+
+      if (!Array.isArray(schema)) {
+        throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'schema is required for collections (or upload a CSV with from_csv=true)' });
+      }
+      const asset = await this.assetService.createCollection({
+        ...provenance,
+        schema,
+        title: body?.title,
+      });
+      return { ok: true, data: this.assetCreatedResponse(asset) };
+    }
+
+    // CSV: content asset backed by text storage (file upload or inline content)
+    if (type === 'csv') {
+      if (!textContent) {
+        throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'CSV content is required (upload a file or provide `content`)' });
+      }
+      const asset = await this.assetService.createFromContent({
+        ...provenance,
+        type: AssetType.CSV,
+        content: textContent,
+        title: body?.title,
+        alias: body?.alias,
+        metadata: body?.metadata,
+      });
+      return { ok: true, data: this.assetCreatedResponse(asset) };
+    }
+
+    // Binary file upload (no special type) → FILE asset
     if (file) {
       const asset = await this.assetService.createFromFile({
+        ...provenance,
         file: { buffer: file.buffer, originalname: file.originalname, mimetype: file.mimetype },
         title: body?.title,
         alias: body?.alias,
         metadata: body?.metadata,
-        ownerId: agent.id,
-        parentAssetId: body?.parentAssetId,
-        creatorContext: body?.creatorContext,
-        inputReferences: body?.inputReferences,
       });
       return { ok: true, data: this.assetCreatedResponse(asset) };
     }
 
-    if (body?.type === 'collection') {
-      if (!body.schema || !Array.isArray(body.schema)) {
-        throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'schema is required for collections' });
-      }
-      const asset = await this.assetService.createCollection({
-        schema: body.schema,
-        title: body.title,
-        ownerId: agent.id,
-        parentAssetId: body.parentAssetId,
-        creatorContext: body.creatorContext,
-        inputReferences: body.inputReferences,
-      });
-      return { ok: true, data: this.assetCreatedResponse(asset) };
-    }
-
-    if (body?.content && body?.type) {
-      if (!Object.values(AssetType).includes(body.type as AssetType) || body.type === AssetType.FILE || body.type === AssetType.COLLECTION) {
-        throw new BadRequestException({ ok: false, error: 'INVALID_TYPE', message: 'type must be: markdown, html, chart, code, text, or json' });
+    // Structured text content (markdown, html, chart, code, text, json)
+    if (body?.content && type) {
+      if (!Object.values(AssetType).includes(type as AssetType) || type === AssetType.FILE || type === AssetType.COLLECTION) {
+        throw new BadRequestException({ ok: false, error: 'INVALID_TYPE', message: 'type must be: markdown, html, chart, code, text, json, csv, or collection' });
       }
       const asset = await this.assetService.createFromContent({
-        type: body.type as AssetType,
+        ...provenance,
+        type: type as AssetType,
         content: body.content,
         title: body.title,
         alias: body.alias,
         metadata: body.metadata,
-        ownerId: agent.id,
-        parentAssetId: body.parentAssetId,
-        creatorContext: body.creatorContext,
-        inputReferences: body.inputReferences,
       });
       return { ok: true, data: this.assetCreatedResponse(asset) };
     }
@@ -528,4 +561,27 @@ export class AssetController {
   ) {
     await this.assetVersionService.deleteVersion(publicId, versionId, agent.id);
   }
+}
+
+// Multipart form fields arrive as strings; JSON bodies preserve booleans.
+// Accept both shapes for flag-style inputs.
+function isTruthyFlag(v: unknown): boolean {
+  return v === true || v === 'true';
+}
+
+function parseJsonField(value: unknown, fieldName: string): any {
+  if (typeof value !== 'string') return value;
+  try { return JSON.parse(value); }
+  catch {
+    throw new BadRequestException({ ok: false, error: 'INVALID_JSON', message: `${fieldName} must be valid JSON` });
+  }
+}
+
+function provenanceFrom(body: any, ownerId: string) {
+  return {
+    ownerId,
+    parentAssetId: body?.parentAssetId,
+    creatorContext: body?.creatorContext,
+    inputReferences: body?.inputReferences,
+  };
 }

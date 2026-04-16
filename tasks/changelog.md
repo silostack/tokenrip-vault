@@ -4,6 +4,18 @@ Trail of features, fixes, and improvements — what was done and when.
 
 ---
 
+## 2026-04-16 — CSV asset type
+
+Added `AssetType.CSV` — a versioned CSV file rendered as a table in the dashboard. CSV assets reuse the existing content-asset storage path (same versioning, same `GET /content`), are distinct from collections (no row-level API, snapshot-oriented instead of living), and gain a one-shot CSV → collection import path for agents who want row-level semantics going forward. No new CLI command group — everything flows through `rip asset publish`.
+
+**What changed:**
+- Backend: Added `AssetType.CSV = 'csv'` with `text/csv` mime. New `AssetService.createCollectionFromCsv()` parses CSV and creates a populated collection (schema + rows) in one transaction. Row staggering by 1ms preserves CSV row order in `GET /rows`. New `csv-parser.ts` — inline RFC-4180-ish parser (quoted fields, embedded newlines, CRLF). Migration drops any stale `asset_type_check` constraint.
+- API: `POST /v0/assets` now accepts `type: 'csv'` (content or multipart file). Same endpoint accepts `type: 'collection'` + `from_csv: true` + CSV payload to one-shot an import, with `headers` or `schema` for column names. Schema-source rules: `--schema` OR `--headers` (both is `SCHEMA_AND_HEADERS_CONFLICT`). All other CSV ops (update, download, versions) flow through existing generic asset endpoints unchanged. Controller refactored with `isTruthyFlag`, `parseJsonField`, `provenanceFrom` helpers.
+- MCP: `asset_publish` tool accepts `csv` in its type enum. New `collection_create_from_csv` tool for the one-shot import.
+- CLI: `rip asset publish` gained `--headers` and `--from-csv` flags (and `--alias`). Type help text and README type list now include `csv`. `rip collection` commands stay collection-only — CSV assets have no rows.
+- Tests: New `tests/backend/csv-parser.test.ts` (11 unit tests covering quoted fields, CRLF, embedded newlines, schema/headers/conflict). New `tests/integration/csv.test.ts` (11 integration tests — JSON publish, multipart upload, versioning, row-op rejection, CSV → collection with all schema modes, provenance, backwards compat). 52 existing tests still green.
+- Docs: New `docs/design/csv-assets.md` (design rationale, why CSV and Collection stay separate). Updated `apps/backend/CLAUDE.md` endpoint row. New public `public-docs/concepts/csv.mdx` with CSV-vs-collection comparison table, added to `docs.json` nav. Updated `public-docs/concepts/assets.mdx`, `public-docs/concepts/collections.mdx`, `public-docs/cli/assets.mdx`, `public-docs/cli/collections.mdx`. Updated `packages/cli/README.md`, `SKILL.md`, `AGENTS.md` with CSV type, `--from-csv` examples, and when-to-pick guidance.
+
 ## 2026-04-16 — Unified agent identity (CLI + MCP)
 
 Fixed the OAuth duplicate agent bug and established a unified identity model: Agent IS the account. CLI and MCP are different access methods (API keys) for the same agent identity. When a CLI user connects to MCP, the OAuth flow now reuses the existing agent instead of creating a second one. Added `rip auth link` for MCP-first users to add CLI access. Redesigned the OAuth authorize page for clarity.

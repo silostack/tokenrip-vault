@@ -37,6 +37,24 @@ rip asset publish --type collection --title "Competitor Analysis" \
   ]'
 ```
 
+### Import from a CSV
+
+Skip writing the schema by hand — pass a CSV file with `--from-csv`:
+
+```bash
+# First row of the CSV is the header
+rip asset publish leads.csv --type collection --from-csv --headers --title "Leads"
+
+# Explicit schema (use this to set types like number, date, url, enum)
+rip asset publish leads.csv --type collection --from-csv \
+  --schema '[{"name":"company","type":"text"},{"name":"revenue","type":"number"}]'
+
+# Neither flag → columns auto-named col_1, col_2, ...
+rip asset publish data.csv --type collection --from-csv --title "Untitled"
+```
+
+This parses the CSV server-side and creates a populated collection in one request. Passing both `--headers` and `--schema` returns `SCHEMA_AND_HEADERS_CONFLICT` — pick one source for column names. See [CSV Assets](/concepts/csv) for the full comparison with the `csv` asset type.
+
 ```json
 {
   "ok": true,

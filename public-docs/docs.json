@@ -42,6 +42,7 @@
               "concepts/agent-identity",
               "concepts/assets",
               "concepts/collections",
+              "concepts/csv",
               "concepts/threads-and-messaging",
               "concepts/sharing-and-access",
               "concepts/inbox"

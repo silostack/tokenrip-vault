@@ -1,0 +1,117 @@
+---
+title: 'CSV Assets'
+description: 'Versioned CSV files rendered as tables — share, preserve, and edit'
+icon: 'file-csv'
+---
+
+# CSV Assets
+
+A CSV asset is a versioned CSV file with a shareable URL. The dashboard renders it as a table. Publishing a new version preserves the old one — full history, same URL.
+
+CSV and [Collection](/concepts/collections) are the two tabular primitives in Tokenrip. They answer different questions:
+
+|  | CSV | Collection |
+|---|---|---|
+| **Shape** | A file you share | A table you grow |
+| **Versioning** | ✅ Each publish creates a new version | ❌ Rows change in place |
+| **Row API** | ❌ Edit the whole CSV, re-publish | ✅ Append, update, delete rows individually |
+| **Mutation pattern** | Snapshot — re-publish to change | Living — rows change as data arrives |
+| **Dashboard view** | Table, parsed client-side | Table, server-backed with filter/sort |
+| **Download** | Returns the published CSV text | Export rows via the rows endpoint |
+| **Best for** | Exports, reports, reference data you want to preserve | Incremental research, monitoring, agent-built datasets |
+
+<Tip>
+**If in doubt, ask: do I need row-level API access?** If yes → collection. If you just want to share a file and preserve history → CSV.
+</Tip>
+
+## Publishing a CSV
+
+```bash
+rip asset publish data.csv --type csv --title "Q1 Leads"
+```
+
+Returns a URL:
+
+```json
+{
+  "ok": true,
+  "data": {
+    "id": "a1b2c3d4-...",
+    "url": "https://tokenrip.com/s/a1b2c3d4-...",
+    "title": "Q1 Leads",
+    "type": "csv"
+  }
+}
+```
+
+The dashboard renders the CSV as a table. Agents and other tools can download the raw bytes:
+
+```bash
+rip asset download <asset-id>
+curl https://api.tokenrip.com/v0/assets/<asset-id>/content
+```
+
+## Publishing a New Version
+
+CSV assets use the same versioning as markdown or any other content asset. Each update creates a new version; the URL stays the same.
+
+```bash
+rip asset update <asset-id> updated-data.csv
+rip asset versions <asset-id>   # list all versions
+```
+
+## One-Shot: CSV → Collection
+
+If you want your CSV to become a *living* table that agents can append to, import it directly into a collection:
+
+```bash
+# First row has the column names
+rip asset publish leads.csv --type collection --from-csv --headers --title "Leads"
+
+# Or supply an explicit schema with column types
+rip asset publish leads.csv --type collection --from-csv \
+  --schema '[{"name":"company","type":"text"},{"name":"revenue","type":"number"}]'
+```
+
+This parses the CSV server-side and creates a new `collection` asset with the schema and rows populated in a single request. **No CSV asset is created along the way** — it's a direct import.
+
+Column names come from one of:
+
+| Flag | Effect |
+|---|---|
+| `--headers` | First row of the CSV becomes the column names (all `text` type) |
+| `--schema '<json>'` | Explicit schema with names + types; all CSV rows are data |
+| Neither | Columns auto-named `col_1, col_2, …`; all CSV rows are data |
+
+Passing both `--headers` and `--schema` is an error (`SCHEMA_AND_HEADERS_CONFLICT`) — pick one source for column names.
+
+## When to Use Each
+
+**Reach for a CSV asset when:**
+- You have CSV data from somewhere else (a CRM export, a report, a data dump)
+- You want to preserve the original file bytes and version history
+- The primary consumer is a human browsing the URL, or another system downloading the file
+- You won't be editing it row-by-row from API or dashboard
+
+**Reach for a collection when:**
+- An agent builds the table over time, appending rows as findings arrive
+- Humans or other agents update individual rows (status changes, enrichments, corrections)
+- You want server-side filtering, sorting, and pagination
+- You want the dashboard's full editing UI (click cells, toggle booleans, pick enums)
+
+**Reach for the CSV → collection import when:**
+- You have a CSV to start from but want collection semantics going forward
+- You want the fastest path from "here's a spreadsheet" to "here's a live table"
+
+## Dashboard Behavior
+
+- **CSV assets** render as tables parsed in the browser. Edits in the dashboard serialize back to CSV and publish a new version — each save is a version bump.
+- **Collections** render with the row-level editing UI. Each cell edit is a single PUT to the row endpoint; no version is created.
+
+## What CSV Assets Don't Do
+
+- No row-level API. `POST /rows`, `PUT /rows/:id`, `DELETE /rows` all reject CSV assets with `NOT_COLLECTION`.
+- No server-side filter or sort. The dashboard parses the CSV client-side.
+- No automatic conversion between CSV and collection — use the explicit `--from-csv` import.
+
+For any of those, use a collection.

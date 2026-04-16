@@ -22,18 +22,31 @@ rip asset publish <file> --type <type> [options]
 
 | Option | Description |
 |--------|-------------|
-| `--type <type>` | **Required.** Content type: `markdown`, `html`, `chart`, `code`, `text`, `json` |
+| `--type <type>` | **Required.** Content type: `markdown`, `html`, `chart`, `code`, `text`, `json`, `csv`, or `collection` |
 | `--title <title>` | Display title |
+| `--alias <alias>` | Human-readable alias for the asset URL |
 | `--parent <uuid>` | Parent asset ID for lineage tracking |
 | `--context <text>` | Creator context (agent name, task description) |
 | `--refs <urls>` | Comma-separated input reference URLs |
+| `--schema <json>` | Column schema (for `--type collection`, or to type CSV columns on import) |
+| `--headers` | CSV has a header row — use it for column names (pairs with `--from-csv`) |
+| `--from-csv` | Parse the file as CSV and populate a new collection (pairs with `--type collection`) |
 | `--dry-run` | Validate without publishing |
 
-**Example:**
+**Examples:**
 
 ```bash
+# Markdown
 rip asset publish analysis.md --type markdown --title "Market Analysis"
+
+# CSV (versioned file, renders as a table)
+rip asset publish data.csv --type csv --title "Q1 Leads"
+
+# CSV → collection in a single command
+rip asset publish data.csv --type collection --from-csv --headers --title "Leads"
 ```
+
+See [CSV Assets](/concepts/csv) for the difference between a `csv` asset and a `collection` imported from CSV.
 
 ```json
 {

@@ -54,6 +54,50 @@ export function registerCollectionTools(server: McpServer, services: McpServices
   );
 
   server.tool(
+    'collection_create_from_csv',
+    'Parse CSV text and create a new collection with schema + rows populated in one call. Use `headers: true` if the first CSV row is the header row. Or pass `schemaJson` to set explicit column names + types (all rows are then data). If neither is set, columns are auto-named col_1, col_2, etc.',
+    {
+      csvContent: z.string().describe('Raw CSV text'),
+      headers: z.boolean().optional().describe('If true, first CSV row provides column names (all text type). Mutually exclusive with schemaJson.'),
+      schemaJson: z.string().optional().describe('JSON array of column definitions (e.g. [{"name":"company","type":"text"},{"name":"revenue","type":"number"}]). Types: text, number, date, url, enum, boolean. Mutually exclusive with headers.'),
+      title: z.string().optional().describe('Collection title'),
+      description: z.string().optional().describe('Collection description'),
+      parentAssetId: z.string().optional().describe('Parent asset UUID for provenance'),
+      creatorContext: z.string().optional().describe('Context about how/why this was created'),
+      inputReferences: z.array(z.string()).optional().describe('URLs or IDs of input sources'),
+    },
+    async (args) => {
+      try {
+        let schema: any = undefined;
+        if (args.schemaJson) {
+          schema = JSON.parse(args.schemaJson);
+          if (!Array.isArray(schema)) {
+            return { content: [{ type: 'text', text: 'Error: schemaJson must be a JSON array' }], isError: true };
+          }
+        }
+        const asset = await services.assetService.createCollectionFromCsv({
+          content: args.csvContent,
+          headers: args.headers,
+          schema,
+          title: args.title,
+          description: args.description,
+          ownerId: agentId,
+          parentAssetId: args.parentAssetId,
+          creatorContext: args.creatorContext,
+          inputReferences: args.inputReferences,
+        });
+        const url = `${FRONTEND_URL}/s/${asset.publicId}`;
+        const resolvedSchema = (asset.metadata as any)?.schema ?? [];
+        return {
+          content: [{ type: 'text', text: JSON.stringify({ id: asset.publicId, url, title: asset.title, type: asset.type, schema: resolvedSchema, rowCount: (asset.metadata as any)?.rowCount ?? undefined }) }],
+        };
+      } catch (err: any) {
+        return { content: [{ type: 'text', text: `Error: ${err.message}` }], isError: true };
+      }
+    },
+  );
+
+  server.tool(
     'collection_append_rows',
     'Append one or more rows to a collection. Rows are key-value objects matching the collection schema. Unknown keys auto-expand the schema.',
     {

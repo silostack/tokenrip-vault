@@ -53,13 +53,21 @@ In a TTY without `--json`, output is human-readable. Force JSON with `--json` or
 
 ### `rip asset publish <file> --type <type>`
 
-Publish structured content. Types: `markdown`, `html`, `chart`, `code`, `text`, `json`.
+Publish structured content. Types: `markdown`, `html`, `chart`, `code`, `text`, `json`, `csv`, `collection`.
 
 ```bash
 rip asset publish report.md --type markdown --title "Analysis"
 rip asset publish data.json --type json --context "My Agent"
-rip asset publish report.md --type markdown --dry-run  # validate only
+rip asset publish data.csv --type csv --title "Leads"           # versioned CSV file
+rip asset publish report.md --type markdown --dry-run           # validate only
+
+# CSV → collection in a single command (no intermediate CSV asset)
+rip asset publish leads.csv --type collection --from-csv --headers --title "Leads"
 ```
+
+**When to pick which tabular type:**
+- `--type csv` — versioned file, renders as a table, no row-level API. Good for exports/snapshots.
+- `--type collection` (with `--schema` or `--from-csv`) — living table with row-level API, no versioning. Good for agent-built data that grows over time.
 
 ### `rip asset upload <file>`
 
@@ -155,6 +163,9 @@ Create a collection with `asset publish --type collection`, then manage rows wit
 ```bash
 rip asset publish schema.json --type collection --title "Research"
 rip asset publish _ --type collection --title "Research" --schema '[{"name":"company","type":"text"},{"name":"signal","type":"text"}]'
+
+# Import from a CSV file (one command, CSV → populated collection)
+rip asset publish leads.csv --type collection --from-csv --headers --title "Leads"
 ```
 
 ### Append rows
@@ -291,7 +302,7 @@ Use on asset commands to build lineage and traceability:
 | `NO_API_KEY` | No API key configured | Run `rip auth register` or set `TOKENRIP_API_KEY` |
 | `UNAUTHORIZED` | API key rejected | Run `rip auth register --force` |
 | `FILE_NOT_FOUND` | File path does not exist | Verify the file exists |
-| `INVALID_TYPE` | Unrecognised `--type` value | Use: `markdown`, `html`, `chart`, `code`, `text`, `json`, `collection` |
+| `INVALID_TYPE` | Unrecognised `--type` value | Use: `markdown`, `html`, `chart`, `code`, `text`, `json`, `csv`, `collection` |
 | `TIMEOUT` | Request timed out | Retry once; report if it persists |
 | `NETWORK_ERROR` | Cannot reach the API server | Check `TOKENRIP_API_URL` and network connectivity |
 | `AUTH_FAILED` | Could not register or create key | Check if the server is running |

@@ -22,6 +22,7 @@ Two publishing modes:
 | `chart` | `application/json` | Interactive chart |
 | `text` | `text/plain` | Plain text, whitespace preserved |
 | `json` | `application/json` | Pretty-printed, collapsible |
+| `csv` | `text/csv` | Rendered as a table, versioned |
 
 **Binary files** (via `asset upload`):
 
@@ -179,6 +180,11 @@ Individual versions can be deleted too, as long as at least one version remains:
 rip asset delete-version a1b2c3d4 v1-uuid
 ```
 
-## Collections
+## Tabular Data: Collections and CSVs
 
-For structured, tabular data, see [Collections](/concepts/collections). A collection is an asset with `type: "collection"` — same URL scheme, sharing, and permissions, but with rows and columns instead of document content.
+Tokenrip has two primitives for tabular data, each optimized for a different workflow:
+
+- **[Collections](/concepts/collections)** — a *living* table. Agents append rows over time, rows can be updated and deleted individually via API. No versioning. Best when data is being produced incrementally (research findings, monitoring results, incoming leads).
+- **[CSV assets](/concepts/csv)** — a *versioned snapshot*. Publish a CSV, get a shareable URL that renders as a table, re-publish to create a new version. No row-level API. Best when you already have tabular data as a file and want to share, preserve, and version it.
+
+One command bridges them: `rip asset publish data.csv --type collection --from-csv` parses the CSV server-side and returns a fully-populated collection.

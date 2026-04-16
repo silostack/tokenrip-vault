@@ -8,10 +8,10 @@ export function registerAssetTools(server: McpServer, services: McpServices, age
 
   server.tool(
     'asset_publish',
-    'Publish text content as a shareable Tokenrip asset. Returns a public URL. For collections (structured data tables), use collection_create instead.',
+    'Publish text content as a shareable Tokenrip asset. Returns a public URL. Supports markdown, html, chart, code, text, json, and csv types. For collections, use collection_create or collection_create_from_csv.',
     {
-      content: z.string().describe('Raw content (markdown, HTML, JSON, etc.)'),
-      type: z.enum([AssetType.MARKDOWN, AssetType.HTML, AssetType.CHART, AssetType.CODE, AssetType.TEXT, AssetType.JSON]).describe('Content type (for collections, use collection_create)'),
+      content: z.string().describe('Raw content (markdown, HTML, JSON, CSV text, etc.)'),
+      type: z.enum([AssetType.MARKDOWN, AssetType.HTML, AssetType.CHART, AssetType.CODE, AssetType.TEXT, AssetType.JSON, AssetType.CSV]).describe('Content type. csv = versioned CSV file (rendered as a table). For a living row-backed collection, use collection_create or collection_create_from_csv.'),
       title: z.string().optional().describe('Asset title'),
       parentAssetId: z.string().optional().describe('Parent asset UUID for provenance'),
       creatorContext: z.string().optional().describe('Context about how/why this was created'),

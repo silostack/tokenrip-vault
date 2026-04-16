@@ -4,11 +4,13 @@ import { EntityManager } from '@mikro-orm/postgresql';
 import { v4, validate as uuidValidate } from 'uuid';
 import { Asset, AssetType, AssetState } from '../../db/models/Asset';
 import { AssetVersion } from '../../db/models/AssetVersion';
+import { CollectionRow } from '../../db/models/CollectionRow';
 import { AssetRepository } from '../../db/repositories/asset.repository';
 import { STORAGE_SERVICE, StorageService } from '../../storage/storage.interface';
 import { RefService } from './ref.service';
 import { ThreadService } from './thread.service';
 import { AnalyticsService } from '../../analytics/analytics.service';
+import { parseCsv } from './csv-parser';
 
 interface ProvenanceFields {
   parentAssetId?: string;
@@ -44,6 +46,20 @@ interface CreateCollectionDto extends ProvenanceFields {
   ownerId: string;
 }
 
+interface CreateCollectionFromCsvDto extends ProvenanceFields {
+  content: string;
+  headers?: boolean;
+  schema?: Array<{
+    name: string;
+    type: 'text' | 'number' | 'date' | 'url' | 'enum' | 'boolean';
+    values?: string[];
+  }>;
+  title?: string;
+  description?: string;
+  alias?: string;
+  ownerId: string;
+}
+
 const CONTENT_MIME_TYPES: Record<string, string> = {
   [AssetType.MARKDOWN]: 'text/markdown',
   [AssetType.HTML]: 'text/html',
@@ -51,6 +67,7 @@ const CONTENT_MIME_TYPES: Record<string, string> = {
   [AssetType.CODE]: 'text/plain',
   [AssetType.TEXT]: 'text/plain',
   [AssetType.JSON]: 'application/json',
+  [AssetType.CSV]: 'text/csv',
 };
 
 @Injectable()
@@ -180,6 +197,58 @@ export class AssetService {
       content_type: 'collection',
       size_bytes: 0,
       asset_type: 'collection',
+    });
+
+    return asset;
+  }
+
+  /**
+   * One-shot: parse a CSV and create a fully-populated collection asset (schema + rows)
+   * in a single transaction. No intermediate CSV asset is created.
+   */
+  async createCollectionFromCsv(dto: CreateCollectionFromCsvDto): Promise<Asset> {
+    const { schema, rows } = parseCsv({
+      content: dto.content,
+      headers: dto.headers,
+      schema: dto.schema,
+    });
+
+    const asset = await this.em.transactional(async (em) => {
+      const asset = new Asset(AssetType.COLLECTION, undefined, dto.ownerId);
+      asset.title = dto.title;
+      asset.description = dto.description;
+      asset.metadata = { schema };
+      asset.versionCount = 0;
+      if (dto.alias) asset.alias = dto.alias;
+      if (dto.parentAssetId) asset.parentAssetId = dto.parentAssetId;
+      if (dto.creatorContext) asset.creatorContext = dto.creatorContext;
+      if (dto.inputReferences) asset.inputReferences = dto.inputReferences;
+
+      em.persist(asset);
+
+      // Stagger createdAt by 1ms per row so GET /rows preserves CSV order.
+      // The row endpoint sorts by created_at ASC, id ASC; identical timestamps
+      // fall back to UUID order, which is effectively random.
+      const baseTime = Date.now();
+      for (let i = 0; i < rows.length; i++) {
+        const row = new CollectionRow(asset, rows[i], dto.ownerId);
+        const ts = new Date(baseTime + i);
+        row.createdAt = ts;
+        row.updatedAt = ts;
+        em.persist(row);
+      }
+
+      this.logger.debug('Created collection from CSV: id=%s rows=%d cols=%d', asset.id, rows.length, schema.length);
+      return asset;
+    });
+
+    this.analyticsService.track('asset_created', {
+      distinct_id: dto.ownerId,
+      content_type: 'collection',
+      size_bytes: Buffer.byteLength(dto.content, 'utf-8'),
+      asset_type: 'collection',
+      source: 'csv',
+      row_count: rows.length,
     });
 
     return asset;

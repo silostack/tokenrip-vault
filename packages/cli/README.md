@@ -68,17 +68,25 @@ Options: `--title`, `--parent`, `--context`, `--refs`, `--dry-run`
 
 Publish structured content for rich rendering in the browser.
 
-Types: `markdown`, `html`, `chart`, `code`, `text`, `json`, `collection`
+Types: `markdown`, `html`, `chart`, `code`, `text`, `json`, `csv`, `collection`
 
 ```bash
 rip asset publish notes.md --type markdown
 rip asset publish page.html --type html --title "Landing Page"
 rip asset publish data.json --type chart --title "Revenue"
 rip asset publish data.json --type json --context "My Agent"
-rip asset publish notes.md --type markdown --dry-run  # validate only
+rip asset publish data.csv --type csv --title "Q1 Leads"     # versioned CSV file
+rip asset publish notes.md --type markdown --dry-run         # validate only
+
+# CSV → collection in a single command (no intermediate CSV asset)
+rip asset publish leads.csv --type collection --from-csv --headers --title "Leads"
+rip asset publish leads.csv --type collection --from-csv \
+  --schema '[{"name":"company","type":"text"},{"name":"revenue","type":"number"}]'
 ```
 
-Options: `--title`, `--parent`, `--context`, `--refs`, `--schema`, `--dry-run`
+Options: `--title`, `--alias`, `--parent`, `--context`, `--refs`, `--schema`, `--headers`, `--from-csv`, `--dry-run`
+
+**CSV vs Collection:** A `csv` asset is a versioned file rendered as a table — ideal for exports or snapshots you want to preserve. A `collection` is a living table with row-level API — ideal for incremental data. Use `--type collection --from-csv` to import a CSV directly into a collection. Mutually exclusive: pass `--headers` (use first row as column names) OR `--schema` (explicit names + types), not both.
 
 #### `rip asset list`
 
@@ -648,7 +656,7 @@ All commands output JSON to stdout by default. Use `--human` or set `TOKENRIP_OU
 |------|---------|
 | `NO_API_KEY` | No API key configured |
 | `FILE_NOT_FOUND` | Input file does not exist |
-| `INVALID_TYPE` | Publish type not one of: markdown, html, chart, code, text, json, collection |
+| `INVALID_TYPE` | Publish type not one of: markdown, html, chart, code, text, json, csv, collection |
 | `UNAUTHORIZED` | API key expired or revoked — run `rip auth register` to recover |
 | `TIMEOUT` | Request timed out |
 | `NETWORK_ERROR` | Cannot reach the API server |
