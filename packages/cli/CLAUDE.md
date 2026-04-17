@@ -49,6 +49,29 @@ The CLI entry (`src/cli.ts`) is ESM-only with a `#!/usr/bin/env node` shebang.
   - `contacts.ts` — `rip contacts add/list/resolve/remove`
   - `config.ts` — `rip config set-key`, `rip config set-url`, `rip config show`
 
+## Config file
+
+Stored at `~/.config/tokenrip/config.json` (override dir with `TOKENRIP_CONFIG_DIR`). Created on first `rip config set-*` call; missing file or missing fields fall back to defaults.
+
+| Field | Purpose | Env override | Default |
+|---|---|---|---|
+| `apiKey` | Bearer token for API auth | `TOKENRIP_API_KEY` | _(none — required)_ |
+| `apiUrl` | Backend API base URL | `TOKENRIP_API_URL` | `https://api.tokenrip.com` |
+| `frontendUrl` | Frontend origin for printed share links (`/s/<id>`, `/operator/auth`, `/link`) | `TOKENRIP_FRONTEND_URL` | Derived from `apiUrl` — strips leading `api.` from host (e.g. `api.staging.tokenrip.com` → `https://staging.tokenrip.com`), else `https://tokenrip.com` |
+
+Resolution order for each value: env var → config file → default. See `getApiUrl`, `getApiKey`, `getFrontendUrl` in `src/config.ts`.
+
+**`frontendUrl` is intentionally not settable via `rip config`** — it's an internal/debugging knob. Users who need to override it should set the env var or edit `config.json` directly. Example config:
+
+```json
+{
+  "apiUrl": "https://api.staging.tokenrip.com",
+  "frontendUrl": "https://staging.tokenrip.com",
+  "apiKey": "...",
+  "preferences": {}
+}
+```
+
 ## Rules
 
 - **Don't truncate returned IDs.** Thread IDs, asset IDs, and all other identifiers must be output in full. Users pipe search results into other commands (`rip asset get <id>`), so truncated IDs break workflows.

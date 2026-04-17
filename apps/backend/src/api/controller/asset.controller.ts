@@ -631,6 +631,6 @@ function provenanceFrom(body: any, ownerId: string) {
     ownerId,
     parentAssetId: body?.parentAssetId,
     creatorContext: body?.creatorContext,
-    inputReferences: body?.inputReferences,
+    inputReferences: parseJsonField(body?.inputReferences, 'inputReferences'),
   };
 }

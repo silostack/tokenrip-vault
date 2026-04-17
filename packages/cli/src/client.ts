@@ -10,13 +10,14 @@ export interface ClientConfig {
 }
 
 export function createHttpClient(config: ClientConfig = {}): AxiosInstance {
+  const baseUrl = config.baseUrl || 'https://api.tokenrip.com';
   const headers: Record<string, string> = {};
   if (config.apiKey) {
     headers['Authorization'] = `Bearer ${config.apiKey}`;
   }
 
   const client = axios.create({
-    baseURL: config.baseUrl || 'https://api.tokenrip.com',
+    baseURL: baseUrl,
     timeout: config.timeout || DEFAULT_TIMEOUT,
     headers,
   });
@@ -34,10 +35,10 @@ export function createHttpClient(config: ClientConfig = {}): AxiosInstance {
         throw new CliError(error.response.data.error, error.response.data.message || 'Unknown API error');
       }
       if (error.code === 'ECONNABORTED') {
-        throw new CliError('TIMEOUT', 'Request timeout — is the Tokenrip server running?');
+        throw new CliError('TIMEOUT', `Request timeout while contacting ${baseUrl}`);
       }
       const details = error.code || error.message || 'Unknown error';
-      throw new CliError('NETWORK_ERROR', `Network error (${details}) — is the API running? Check status at https://api.tokenrip.com`);
+      throw new CliError('NETWORK_ERROR', `Network error (${details}) while contacting ${baseUrl}`);
     },
   );
 
