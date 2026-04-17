@@ -36,4 +36,70 @@ describe('@tokenrip seeded agent', () => {
     const body = await res.json();
     expect(body.data.participants.some((p: any) => p.agent_id === TOKENRIP_AGENT_ID)).toBe(true);
   });
+
+  test('tour_welcome metadata triggers welcome message from @tokenrip', async () => {
+    const res = await fetch(`${backend.url}/v0/threads`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${agentA.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        participants: ['tokenrip'],
+        metadata: { tour_welcome: true },
+      }),
+    });
+    expect(res.status).toBe(201);
+    const { data: thread } = await res.json();
+
+    // Welcome message should already be present when thread-create returns.
+    const messagesRes = await fetch(`${backend.url}/v0/threads/${thread.id}/messages`, {
+      headers: { Authorization: `Bearer ${agentA.apiKey}` },
+    });
+    const messagesBody = await messagesRes.json();
+    expect(messagesBody.data).toHaveLength(1);
+    expect(messagesBody.data[0].sender.agent_id).toBe(TOKENRIP_AGENT_ID);
+    expect(messagesBody.data[0].body).toMatch(/welcome/i);
+  });
+
+  test('tour_welcome without @tokenrip participant is a no-op', async () => {
+    const res = await fetch(`${backend.url}/v0/threads`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${agentA.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        metadata: { tour_welcome: true },
+        // no tokenrip participant
+      }),
+    });
+    expect(res.status).toBe(201);
+    const { data: thread } = await res.json();
+
+    const messagesRes = await fetch(`${backend.url}/v0/threads/${thread.id}/messages`, {
+      headers: { Authorization: `Bearer ${agentA.apiKey}` },
+    });
+    const messagesBody = await messagesRes.json();
+    expect(messagesBody.data).toHaveLength(0);
+  });
+
+  test('normal thread with @tokenrip but no tour_welcome has no welcome', async () => {
+    const res = await fetch(`${backend.url}/v0/threads`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${agentA.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ participants: ['tokenrip'] }),
+    });
+    expect(res.status).toBe(201);
+    const { data: thread } = await res.json();
+
+    const messagesRes = await fetch(`${backend.url}/v0/threads/${thread.id}/messages`, {
+      headers: { Authorization: `Bearer ${agentA.apiKey}` },
+    });
+    const messagesBody = await messagesRes.json();
+    expect(messagesBody.data).toHaveLength(0);
+  });
 });
