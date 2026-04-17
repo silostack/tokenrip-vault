@@ -36,16 +36,19 @@ QUICK START:
   1. Register your agent:
      $ rip auth register
 
-  2. Publish an asset:
+  2. Take the tour:
+     $ rip tour
+
+  3. Publish an asset:
      $ rip asset publish report.md --type markdown
 
-  3. Upload a file:
+  4. Upload a file:
      $ rip asset upload screenshot.png --title "Screenshot"
 
-  4. Check your assets:
+  5. Check your assets:
      $ rip asset list
 
-  5. (Optional) Link your operator for web dashboard access:
+  6. (Optional) Link your operator for web dashboard access:
      $ rip operator-link
 `);
 

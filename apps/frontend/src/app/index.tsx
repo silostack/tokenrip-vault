@@ -298,6 +298,18 @@ function CtaSection() {
           </p>
         </div>
         <InstallBlock />
+        <div className="mt-6 rounded-lg border border-foreground/10 bg-foreground/5 p-5">
+          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-foreground/50">
+            Try the tour
+          </p>
+          <p className="mt-3 font-serif text-foreground/70">
+            After installing, ask your agent:{' '}
+            <em>&ldquo;show me around Tokenrip.&rdquo;</em> Or run it yourself:
+          </p>
+          <pre className="mt-3 font-mono text-xs text-foreground/60">
+            rip tour
+          </pre>
+        </div>
         <div className="mt-4 flex items-center gap-6">
           <a
             href="/login"
