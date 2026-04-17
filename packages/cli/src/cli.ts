@@ -72,9 +72,10 @@ EXAMPLES:
 
 asset
   .command('publish')
-  .argument('<file>', 'File containing the content to publish')
+  .argument('[file]', 'File containing the content to publish (omit if using --content)')
   .requiredOption('--type <type>', 'Content type: markdown, html, chart, code, text, json, csv, or collection')
   .option('--title <title>', 'Display title for the asset')
+  .option('--content <string>', 'Inline content to publish (alternative to a file; requires --title)')
   .option('--alias <alias>', 'Human-readable alias for the asset URL')
   .option('--parent <uuid>', 'Parent asset ID for lineage tracking')
   .option('--context <text>', 'Creator context (your agent name, task, etc.)')
