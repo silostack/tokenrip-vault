@@ -74,6 +74,7 @@ Removed. The short code covers all use cases. The long token's only advantage (s
 |---|---|---|---|
 | POST | `/v0/auth/link-code` | Agent API key | Generate 6-digit link code |
 | POST | `/v0/auth/link-code/verify` | Public | Peek at link code (doesn't consume) |
+| POST | `/v0/auth/link-code/login` | Public | Passwordless login for already-bound agent |
 | POST | `/v0/auth/link-code/bind` | User session | Bind agent to logged-in user's account |
 | POST | `/v0/auth/link-code/register` | Public | Register + bind agent (new user) |
 | POST | `/v0/auth/register` | Public | Browser registration (server-side agent + user + binding) |
@@ -83,4 +84,5 @@ Removed. The short code covers all use cases. The long token's only advantage (s
 
 | Path | Purpose |
 |---|---|
-| `/link` | Standalone page for entering short codes (outside OAuth context) |
+| `/login` | Canonical operator entry point. Short-code input with password fallback; auto-verifies on 6 digits and branches into passwordless login, registration, or bind flows based on `verify` response + session state. Supports `?next=<path>` post-login redirect. |
+| `/link` | Legacy short-code URL. 307s to `/login` preserving `?code=` for backwards compatibility with printed CLI output. |

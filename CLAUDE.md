@@ -63,6 +63,7 @@ See `docs/operations/testing.md` for the full testing guide — test infrastruct
 * If something goes sideways, STOP and re-plan immediately – don't keep pushing
 * Use plan mode for verification steps, not just building
 * Write detailed specs upfront to reduce ambiguity
+* **Before writing the plan, read `docs/guides/coding-patterns.md` and — if DB work is involved — `docs/architecture/mikroorm-transactions.md`.** The plan should reflect the conventions there (module/service creation bar, transaction boundaries, repository usage).
 
 ### 2. Subagent Strategy
 

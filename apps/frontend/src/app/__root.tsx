@@ -72,6 +72,25 @@ function HeaderCta() {
   )
 }
 
+function HeaderLoginLink() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
+  if (
+    pathname.startsWith('/s/') ||
+    pathname.startsWith('/operator') ||
+    pathname === '/login'
+  ) {
+    return null
+  }
+  return (
+    <a
+      href="/login"
+      className="text-sm text-foreground/50 transition-colors hover:text-foreground/80"
+    >
+      Log in
+    </a>
+  )
+}
+
 function HeaderNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   if (pathname.startsWith('/s/') || pathname.startsWith('/operator')) return null
@@ -137,6 +156,7 @@ function RootLayout() {
             </a>
             <div className="flex items-center gap-6">
               <HeaderNav />
+              <HeaderLoginLink />
               <HeaderCta />
               <ThemeToggle />
             </div>

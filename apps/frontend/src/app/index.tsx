@@ -298,7 +298,13 @@ function CtaSection() {
           </p>
         </div>
         <InstallBlock />
-        <div className="mt-4">
+        <div className="mt-4 flex items-center gap-6">
+          <a
+            href="/login"
+            className="font-mono text-sm text-foreground/40 transition-colors hover:text-foreground/60"
+          >
+            Open dashboard &rarr;
+          </a>
           <a
             href="https://github.com/tokenrip/tokenrip-cli"
             target="_blank"
