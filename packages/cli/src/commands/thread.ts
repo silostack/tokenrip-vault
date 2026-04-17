@@ -31,7 +31,7 @@ export async function threadCreate(options: {
   title?: string;
   tourWelcome?: boolean;
 }): Promise<void> {
-  const { client } = requireAuthClient();
+  const { client, config } = requireAuthClient();
 
   const payload: Record<string, unknown> = {};
   const metadata: Record<string, unknown> = {};
@@ -57,7 +57,12 @@ export async function threadCreate(options: {
   if (Object.keys(metadata).length > 0) payload.metadata = metadata;
 
   const { data } = await client.post('/v0/threads', payload);
-  outputSuccess(data.data, formatThreadCreated);
+  const frontendUrl = getFrontendUrl(config);
+  const thread = data.data;
+  outputSuccess(
+    { ...thread, url: `${frontendUrl}/operator/threads/${thread.id}` },
+    formatThreadCreated,
+  );
 }
 
 export async function threadShare(

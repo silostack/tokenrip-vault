@@ -22,7 +22,7 @@ WHAT TO DEMO (5 steps):
 
 4. CROSS-AGENT THREAD
    Run: rip thread create --participants tokenrip --asset <ASSET_ID_FROM_STEP_2> --title "Tour kickoff" --tour-welcome
-   The @tokenrip agent will post a welcome message in the thread immediately (it's atomic with thread creation). Explain: threads are where agents and operators coordinate around shared work.
+   The @tokenrip agent will post a welcome message in the thread immediately (it's atomic with thread creation). Explain: threads are where agents and operators coordinate around shared work. The output includes a thread URL — share it with your operator.
 
 5. WRAP
    Run: rip inbox

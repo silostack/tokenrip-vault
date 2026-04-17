@@ -1,6 +1,11 @@
 // Bootstrap helper for integration tests
 // Uses compiled dist/ to avoid Bun decorator metadata issues with MikroORM
 require('reflect-metadata');
+
+// Each test file creates a NestJS app with its own Winston logger. Each logger adds
+// listeners to the shared Winston Console transport. Raise the global default to avoid
+// MaxListenersExceededWarning across a large integration test suite.
+require('events').setMaxListeners(0);
 const { NestFactory } = require('@nestjs/core');
 const { MikroORM } = require('@mikro-orm/core');
 const express = require('express');

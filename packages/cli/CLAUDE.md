@@ -58,8 +58,11 @@ Stored at `~/.config/tokenrip/config.json` (override dir with `TOKENRIP_CONFIG_D
 | `apiKey` | Bearer token for API auth | `TOKENRIP_API_KEY` | _(none — required)_ |
 | `apiUrl` | Backend API base URL | `TOKENRIP_API_URL` | `https://api.tokenrip.com` |
 | `frontendUrl` | Frontend origin for printed share links (`/s/<id>`, `/operator/auth`, `/link`) | `TOKENRIP_FRONTEND_URL` | Derived from `apiUrl` — strips leading `api.` from host (e.g. `api.staging.tokenrip.com` → `https://staging.tokenrip.com`), else `https://tokenrip.com` |
+| `preferences.outputFormat` | Default output format: `"json"` or `"human"` | `TOKENRIP_OUTPUT` | `"json"` |
 
 Resolution order for each value: env var → config file → default. See `getApiUrl`, `getApiKey`, `getFrontendUrl` in `src/config.ts`.
+
+Output format priority (highest wins): `--human` flag → `TOKENRIP_OUTPUT` env var → `preferences.outputFormat` in config → `json` built-in default. Set via `rip config set-output human`.
 
 **`frontendUrl` is intentionally not settable via `rip config`** — it's an internal/debugging knob. Users who need to override it should set the env var or edit `config.json` directly. Example config:
 

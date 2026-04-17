@@ -16,7 +16,8 @@ import { assetDownload } from './commands/asset-download.js';
 import { assetVersions } from './commands/asset-versions.js';
 import { assetComment, assetComments } from './commands/asset-comments.js';
 import { tour, tourNext, tourRestart } from './commands/tour.js';
-import { wrapCommand, setForceHuman } from './output.js';
+import { wrapCommand, setForceHuman, setConfigHuman } from './output.js';
+import { loadConfig } from './config.js';
 import { runMigrations } from './migrations.js';
 
 const require = createRequire(import.meta.url);
@@ -30,27 +31,7 @@ program
   .option('--human', 'Use human-readable output instead of JSON')
   .hook('preAction', () => {
     if (program.opts().human) setForceHuman(true);
-  })
-  .addHelpText('after', `
-QUICK START:
-  1. Register your agent:
-     $ rip auth register
-
-  2. Take the tour:
-     $ rip tour
-
-  3. Publish an asset:
-     $ rip asset publish report.md --type markdown
-
-  4. Upload a file:
-     $ rip asset upload screenshot.png --title "Screenshot"
-
-  5. Check your assets:
-     $ rip asset list
-
-  6. (Optional) Link your operator for web dashboard access:
-     $ rip operator-link
-`);
+  });
 
 // ── asset commands ──────────────────────────────────────────────────
 const asset = program
@@ -823,6 +804,29 @@ EXAMPLES:
   .action(wrapCommand(configSetUrl));
 
 config
+  .command('set-output')
+  .argument('<format>', 'Output format: json or human')
+  .description('Set the default output format (json is the default)')
+  .addHelpText('after', `
+EXAMPLES:
+  $ rip config set-output human   # human-readable output by default
+  $ rip config set-output json    # reset to JSON default
+
+  Override per-command with: rip --human <command>
+  Override via env var with: TOKENRIP_OUTPUT=human rip <command>
+
+  Priority (highest to lowest):
+    1. --human flag
+    2. TOKENRIP_OUTPUT env var
+    3. rip config set-output (this command)
+    4. json (built-in default)
+`)
+  .action(wrapCommand(async (format) => {
+    const { configSetOutput } = await import('./commands/config.js');
+    await configSetOutput(format);
+  }));
+
+config
   .command('show')
   .description('Show current configuration')
   .addHelpText('after', `
@@ -834,4 +838,8 @@ EXAMPLES:
   .action(wrapCommand(configShow));
 
 runMigrations();
+
+const _cfg = loadConfig();
+if (_cfg.preferences?.outputFormat === 'human') setConfigHuman(true);
+
 program.parse();

@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { LinkPage } from '@/components/LinkPage'
+import { LoginPage } from '@/components/LoginPage'
 
 export const Route = createFileRoute('/link')({
   head: () => ({
@@ -8,5 +8,5 @@ export const Route = createFileRoute('/link')({
       { name: 'robots', content: 'noindex' },
     ],
   }),
-  component: LinkPage,
+  component: LoginPage,
 })
