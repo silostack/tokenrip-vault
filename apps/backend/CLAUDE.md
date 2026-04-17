@@ -105,13 +105,13 @@ Abstracted via `StorageService` interface (`src/storage/`). Currently uses local
 
 | Module | Path | Purpose |
 |---|---|---|
-| ApiModule | `src/api/` | Core API — all v0 endpoints, services, auth guard |
+| ApiModule | `src/api/` | Core API — all v0 endpoints, services, auth guard, rate-limit guard (`src/api/ratelimit/`, see `docs/architecture/rate-limiting.md`) |
 | OAuthModule | `src/oauth/` | OAuth 2.1 — registration, login, token exchange |
 | McpModule | `src/mcp/` | MCP server — Streamable HTTP, 24 tools |
 | StorageModule | `src/storage/` | File storage abstraction (local/S3) |
 | LoggerModule | `src/logger/` | Winston logging |
 
-McpModule and OAuthModule import from ApiModule to reuse services. The global `AuthGuard` (`APP_GUARD`) is declared in AppModule and applies to all routes unless marked `@Public()`.
+McpModule and OAuthModule import from ApiModule to reuse services. The global `AuthGuard` (`APP_GUARD`) is declared in AppModule and applies to all routes unless marked `@Public()`. The rate-limit guard is a second `APP_GUARD` registered by ApiModule.
 
 See `docs/architecture/mcp-server.md` and `docs/architecture/oauth.md` for detailed architecture.
 

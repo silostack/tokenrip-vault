@@ -67,6 +67,43 @@ TanStack Start with SSR. Key separation:
 
 ---
 
+## Module & Service Creation
+
+**Default: add to an existing module. Only create a new module when the
+surface area justifies it.**
+
+Before creating a new NestJS module or service, check whether the work
+belongs in an existing one. A guard + config helper (~60 lines) doesn't
+need its own module — register it inside the module whose routes it
+guards. A handful of related functions don't need their own `@Injectable`
+service — extend the service that already owns the domain.
+
+**Questions that justify a new module:**
+
+- Does it have a lifecycle independent of existing modules (separate
+  bootstrap, shutdown, external connection)?
+- Does it have multiple external consumers (multiple other modules
+  importing it)?
+- Does it own 3+ providers that meaningfully cluster together?
+
+If the answer to all three is no, put the code in an existing module.
+
+**Questions that justify a new service:**
+
+- Is there a distinct bounded responsibility (not just "some helpers")?
+- Does it own domain logic that would accumulate over time?
+- Would splitting it out meaningfully reduce the surface of another
+  service?
+
+If you're adding one method to a domain that already has a service, add
+it to that service. A new `FooHelperService` with one method is almost
+always noise.
+
+**Rule of thumb:** the cheapest file to delete is the one that was never
+created. Start inline; extract when the abstraction has earned its keep.
+
+---
+
 ## Anti-Patterns
 
 ### Wrong EM Usage

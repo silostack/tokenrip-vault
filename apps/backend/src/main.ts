@@ -12,6 +12,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
+  // Trust N proxy hops so request.ip reflects the real client, not the LB.
+  // Default 0 (no trust) is safe in local dev; set TRUST_PROXY_HOPS=1 behind
+  // a single LB/CDN in production. Rate limiting depends on this being right.
+  const trustProxyHops = Number.parseInt(process.env.TRUST_PROXY_HOPS ?? '0', 10);
+  app.set('trust proxy', Number.isFinite(trustProxyHops) ? trustProxyHops : 0);
+
   // Enable JSON body parsing with larger limit for content
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
