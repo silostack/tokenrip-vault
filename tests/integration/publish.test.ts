@@ -256,6 +256,7 @@ describe('publish', () => {
 
     const assetId = parsed.data.id as string;
     const contentRes = await fetch(`${backend.url}/v0/assets/${assetId}/content`);
+    expect(contentRes.status).toBe(200);
     const contentText = await contentRes.text();
     expect(contentText).toBe('Hello from inline content');
 
@@ -291,5 +292,33 @@ describe('publish', () => {
     expect(parsed.ok).toBe(false);
     expect(parsed.error).toBe('INVALID_ARGS');
     expect(parsed.message).toMatch(/either a file or --content/i);
+  });
+
+  test('publish with --content but no --title errors with INVALID_ARGS', async () => {
+    const cliPath = path.resolve(__dirname, '../../packages/cli/src/cli.ts');
+    const proc = Bun.spawn({
+      cmd: [
+        'bun', 'run', cliPath,
+        'asset', 'publish',
+        '--content', 'missing a title',
+        '--type', 'markdown',
+      ],
+      env: {
+        ...process.env,
+        TOKENRIP_API_URL: backend.url,
+        TOKENRIP_API_KEY: apiKey,
+        TOKENRIP_OUTPUT: 'json',
+      },
+      stdout: 'pipe',
+      stderr: 'pipe',
+    });
+    const stdout = await new Response(proc.stdout).text();
+    await proc.exited;
+    expect(proc.exitCode).not.toBe(0);
+
+    const parsed = JSON.parse(stdout.trim());
+    expect(parsed.ok).toBe(false);
+    expect(parsed.error).toBe('INVALID_ARGS');
+    expect(parsed.message).toMatch(/--title is required/i);
   });
 });
