@@ -27,10 +27,14 @@ export async function threadCreate(options: {
   participants?: string;
   message?: string;
   refs?: string;
+  asset?: string;
+  title?: string;
+  tourWelcome?: boolean;
 }): Promise<void> {
   const { client } = requireAuthClient();
 
   const payload: Record<string, unknown> = {};
+  const metadata: Record<string, unknown> = {};
 
   if (options.participants) {
     payload.participants = resolveRecipients(
@@ -40,11 +44,17 @@ export async function threadCreate(options: {
 
   if (options.refs) {
     payload.refs = parseRefList(options.refs);
+  } else if (options.asset) {
+    payload.refs = [{ type: 'asset', target_id: options.asset }];
   }
 
   if (options.message) {
     payload.message = { body: options.message };
   }
+
+  if (options.title) metadata.title = options.title;
+  if (options.tourWelcome) metadata.tour_welcome = true;
+  if (Object.keys(metadata).length > 0) payload.metadata = metadata;
 
   const { data } = await client.post('/v0/threads', payload);
   outputSuccess(data.data, formatThreadCreated);

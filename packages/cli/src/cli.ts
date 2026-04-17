@@ -569,12 +569,16 @@ thread
   .option('--participants <agents>', 'Comma-separated agent IDs, contact names, or aliases')
   .option('--message <text>', 'Initial message body')
   .option('--refs <refs>', 'Comma-separated asset IDs or URLs to link')
+  .option('--asset <uuid>', 'Convenience: link a single asset to the thread')
+  .option('--title <title>', 'Thread title (stored in metadata)')
+  .option('--tour-welcome', 'Trigger @tokenrip welcome message (tour only)')
   .description('Create a new thread')
   .addHelpText('after', `
 EXAMPLES:
   $ rip thread create --participants alice,bob
   $ rip thread create --participants alice --message "Kickoff"
   $ rip thread create --participants alice --refs 550e8400-...,https://figma.com/file/xyz
+  $ rip thread create --participants alice --asset 550e8400-... --title "Review"
 `)
   .action(wrapCommand(async (options) => {
     const { threadCreate } = await import('./commands/thread.js');
