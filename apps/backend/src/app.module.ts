@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import ormConfig from './db/mikro-orm.config';
 import { ApiModule } from './api/api.module';
 import { StorageModule } from './storage/storage.module';
 import { LoggerModule } from './logger/logger.module';
+import { HttpLoggerInterceptor } from './logger/http-logger.interceptor';
 import { AuthGuard } from './api/auth/auth.guard';
 import { OAuthModule } from './oauth/oauth.module';
 import { McpModule } from './mcp/mcp.module';
@@ -26,6 +27,10 @@ import { AnalyticsModule } from './analytics/analytics.module';
     McpModule,
   ],
   providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: HttpLoggerInterceptor,
+    },
     {
       provide: APP_GUARD,
       useClass: AuthGuard,

@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './app/__root'
 import { Route as OperatorRouteImport } from './app/operator'
 import { Route as LoginRouteImport } from './app/login'
-import { Route as LinkRouteImport } from './app/link'
 import { Route as FaqRouteImport } from './app/faq'
 import { Route as AboutRouteImport } from './app/about'
 import { Route as IndexRouteImport } from './app/index'
@@ -37,11 +36,6 @@ const OperatorRoute = OperatorRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LinkRoute = LinkRouteImport.update({
-  id: '/link',
-  path: '/link',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -131,7 +125,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/faq': typeof FaqRoute
-  '/link': typeof LinkRoute
   '/login': typeof LoginRoute
   '/operator': typeof OperatorRouteWithChildren
   '/oauth/authorize': typeof OauthAuthorizeRoute
@@ -152,7 +145,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/faq': typeof FaqRoute
-  '/link': typeof LinkRoute
   '/login': typeof LoginRoute
   '/oauth/authorize': typeof OauthAuthorizeRoute
   '/operator/auth': typeof OperatorAuthRoute
@@ -171,7 +163,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/faq': typeof FaqRoute
-  '/link': typeof LinkRoute
   '/login': typeof LoginRoute
   '/operator': typeof OperatorRouteWithChildren
   '/oauth/authorize': typeof OauthAuthorizeRoute
@@ -194,7 +185,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/faq'
-    | '/link'
     | '/login'
     | '/operator'
     | '/oauth/authorize'
@@ -215,7 +205,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/faq'
-    | '/link'
     | '/login'
     | '/oauth/authorize'
     | '/operator/auth'
@@ -233,7 +222,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/faq'
-    | '/link'
     | '/login'
     | '/operator'
     | '/oauth/authorize'
@@ -255,7 +243,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   FaqRoute: typeof FaqRoute
-  LinkRoute: typeof LinkRoute
   LoginRoute: typeof LoginRoute
   OperatorRoute: typeof OperatorRouteWithChildren
   OauthAuthorizeRoute: typeof OauthAuthorizeRoute
@@ -277,13 +264,6 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/link': {
-      id: '/link'
-      path: '/link'
-      fullPath: '/link'
-      preLoaderRoute: typeof LinkRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -455,7 +435,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   FaqRoute: FaqRoute,
-  LinkRoute: LinkRoute,
   LoginRoute: LoginRoute,
   OperatorRoute: OperatorRouteWithChildren,
   OauthAuthorizeRoute: OauthAuthorizeRoute,

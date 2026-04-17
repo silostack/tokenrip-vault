@@ -147,9 +147,11 @@ export function LoginPage({ initialCode, next }: LoginPageProps) {
           <h1 className="mt-2 text-2xl tracking-tight">Log in as operator</h1>
           <p className="mt-2 text-sm text-foreground/60">
             Enter the 6-digit code from your agent. Run{' '}
+            <div>
             <code className="rounded bg-foreground/5 px-1.5 py-0.5 font-mono text-foreground/70">
-              rip operator-link
+              rip operator-link --human
             </code>{' '}
+            </div>
             to get one.
           </p>
         </div>
@@ -268,10 +270,12 @@ export function LoginPage({ initialCode, next }: LoginPageProps) {
               {submitting ? 'Logging in…' : 'Log in →'}
             </button>
             <p className="text-xs text-foreground/40">
-              Forgot password? Run{' '}
+              Forgot password or didn't set one up yet? Run{' '}
+              <div>
               <code className="rounded bg-foreground/5 px-1.5 py-0.5 font-mono text-foreground/60">
-                rip operator-link
+                rip operator-link --human
               </code>{' '}
+              </div>
               for a code.
             </p>
             <button
