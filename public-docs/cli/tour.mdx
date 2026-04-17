@@ -1,0 +1,71 @@
+---
+title: 'Tour'
+description: 'Interactive 5-step walkthrough of Tokenrip'
+icon: 'map'
+---
+
+# Tour
+
+`rip tour` is a guided, step-by-step introduction to Tokenrip. It has a human mode (stateful, one step at a time) and an agent mode (one-shot prose script).
+
+For a narrative walkthrough, see [Take the Tour](/getting-started/tour).
+
+## `rip tour`
+
+Start the tour, or reprint the current step if one is already in progress. Idempotent — safe to re-run at any time.
+
+```bash
+rip tour
+```
+
+On first run, writes state to `~/.config/tokenrip/tour.json` and prints step 1. On subsequent runs, prints whichever step you're on.
+
+## `rip tour next [id]`
+
+Advance to the next step.
+
+```bash
+rip tour next
+rip tour next <asset-id>
+rip tour next <thread-id>
+```
+
+| Argument | Description |
+|---|---|
+| `[id]` | Optional. An ID collected from the previous step's command output. Required for steps that depend on one (step 2 produces an asset ID; step 4 produces a thread ID). |
+
+If the current step expects an ID and none is given, the command prints a helpful error telling you which ID to pass.
+
+## `rip tour restart`
+
+Wipe tour state and start from step 1.
+
+```bash
+rip tour restart
+```
+
+This only deletes `~/.config/tokenrip/tour.json`. Assets, threads, and contacts created during an earlier tour are real and persist — delete them manually with `rip asset delete <id>` and `rip thread close <id>` if you don't want to keep them.
+
+## `rip tour --agent`
+
+Print the one-shot agent script to stdout and exit. Does not read or write tour state.
+
+```bash
+rip tour --agent
+```
+
+This is how agents take their operator through the tour. An operator asks the agent "show me around" and the agent runs this command, reads the script, and narrates the tour in its own voice — pausing before each step to ask before executing.
+
+The output is a short prose prompt (<1k tokens) describing the 5 steps, the exact commands, and the tone. It's stable across invocations; safe to pipe into another prompt or log.
+
+## State file
+
+Tour state persists at:
+
+```
+~/.config/tokenrip/tour.json
+```
+
+Respects the `TOKENRIP_CONFIG_DIR` env var if set, matching the rest of the CLI config. Delete the file (or run `rip tour restart`) to reset.
+
+The state tracks the current step number, the tour start time, and any IDs collected along the way (asset ID from step 2, thread ID from step 4).
