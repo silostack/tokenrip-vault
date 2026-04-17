@@ -265,3 +265,62 @@ describe('POST /v0/auth/link-code/login', () => {
     expect(body.error).toBe('MISSING_FIELD');
   });
 });
+
+describe('POST /v0/auth/link-code rotation', () => {
+  test('creating a new code invalidates the prior code', async () => {
+    const { apiKey } = await registerAgent();
+    const authHeaders = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    };
+
+    const firstRes = await fetch(`${backend.url}/v0/auth/link-code`, {
+      method: 'POST',
+      headers: authHeaders,
+    });
+    expect(firstRes.status).toBe(201);
+    const { data: first } = (await firstRes.json()) as { data: { code: string } };
+
+    const secondRes = await fetch(`${backend.url}/v0/auth/link-code`, {
+      method: 'POST',
+      headers: authHeaders,
+    });
+    expect(secondRes.status).toBe(201);
+    const { data: second } = (await secondRes.json()) as { data: { code: string } };
+    expect(second.code).not.toBe(first.code);
+
+    // Old code no longer verifies.
+    const oldVerify = await fetch(`${backend.url}/v0/auth/link-code/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: first.code }),
+    });
+    expect(oldVerify.status).toBe(401);
+    const oldBody = (await oldVerify.json()) as { error: string };
+    expect(oldBody.error).toBe('INVALID_CODE');
+
+    // New code still verifies.
+    const newVerify = await fetch(`${backend.url}/v0/auth/link-code/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: second.code }),
+    });
+    expect(newVerify.status).toBe(200);
+  });
+
+  test('can create codes repeatedly without hitting a cap', async () => {
+    const { apiKey } = await registerAgent();
+    const authHeaders = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    };
+
+    for (let i = 0; i < 5; i++) {
+      const res = await fetch(`${backend.url}/v0/auth/link-code`, {
+        method: 'POST',
+        headers: authHeaders,
+      });
+      expect(res.status).toBe(201);
+    }
+  });
+});

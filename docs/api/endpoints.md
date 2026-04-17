@@ -134,7 +134,7 @@ Revokes the current key and generates a new one.
 
 **Auth:** Agent (Bearer `tr_`)
 
-Generates a 6-digit code for operator linking. Max 3 active codes per agent.
+Generates a 6-digit code for operator linking. Rotates: any prior code for the calling agent is invalidated — at most one active code exists per agent.
 
 **Response (200):**
 ```json

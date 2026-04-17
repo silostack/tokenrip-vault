@@ -1,6 +1,5 @@
 import {
   Injectable,
-  BadRequestException,
   ConflictException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -23,26 +22,16 @@ export class LinkCodeService {
     private readonly userService: UserService,
   ) {}
 
-  /** Generate a 6-digit link code for an agent. Max 3 active codes per agent. */
+  /**
+   * Generate a 6-digit link code for an agent. Rotates: any existing codes
+   * for this agent are deleted first so at most one code exists per agent.
+   */
+  @Transactional()
   async create(agentId: string): Promise<{ code: string; expiresAt: Date }> {
-    const now = new Date();
-
-    // Enforce max 3 active (unused + unexpired) codes per agent
-    const activeCount = await this.repo.count({
-      agentId,
-      used: false,
-      expiresAt: { $gt: now },
-    });
-    if (activeCount >= 3) {
-      throw new BadRequestException({
-        ok: false,
-        error: 'TOO_MANY_CODES',
-        message: 'Maximum 3 active link codes. Wait for existing codes to expire.',
-      });
-    }
+    await this.em.nativeDelete(LinkCode, { agentId });
 
     const code = String(randomInt(0, 1_000_000)).padStart(6, '0');
-    const expiresAt = new Date(now.getTime() + 10 * 60 * 1000); // 10 minutes
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
     const linkCode = new LinkCode(code, agentId, expiresAt);
     await this.em.persistAndFlush(linkCode);
