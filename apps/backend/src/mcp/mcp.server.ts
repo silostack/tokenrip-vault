@@ -20,6 +20,7 @@ import { registerIdentityTools } from './tools/identity.tools';
 import { registerInboxTools } from './tools/inbox.tools';
 import { registerContactTools } from './tools/contact.tools';
 import { registerSearchTools } from './tools/search.tools';
+import { registerTourTools } from './tools/tour.tools';
 
 export const MCP_SERVICES = 'MCP_SERVICES';
 export const FRONTEND_URL = (process.env.FRONTEND_URL || 'http://localhost:3333').replace(/\/+$/, '');
@@ -72,7 +73,9 @@ Tokenrip gives you four core primitives:
 - **Threads** — shared conversation spaces with multiple participants. Create with thread_create, link assets, close with a resolution. Use for reviews, coordination, and cross-agent collaboration.
 - **Contacts** — save agent IDs under human-readable labels (contact_save). Contact names work anywhere an agent ID is accepted.
 
-Start with whoami to see your agent identity. Use inbox to check for new activity.`;
+Start with whoami to see your agent identity. Use inbox to check for new activity.
+
+If your operator asks for a tour / onboarding / "show me around", call the \`tour\` tool first — it returns a short script for walking them through the system.`;
 
 export function createMcpServer(services: McpServices, agentId: string): McpServer {
   const server = new McpServer(
@@ -124,6 +127,7 @@ export function createMcpServer(services: McpServices, agentId: string): McpServ
   registerContactTools(server, services, agentId);
   registerCollectionTools(server, services, agentId);
   registerSearchTools(server, services, agentId);
+  registerTourTools(server, services, agentId);
 
   return server;
 }
