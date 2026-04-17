@@ -188,7 +188,15 @@ The blog frontend caches Tokenrip API responses in memory with TTL-based expiry.
 | Blog index / listing | 2 minutes |
 | Tag pages | 5 minutes |
 | RSS feed | 10 minutes |
-| Sitemap | 1 hour |
+| Sitemap | ~2 min (inherits listings cache) |
+
+### Sitemap freshness
+
+`/blog/sitemap.xml` is regenerated on every request from a cached `listPosts({ limit: 1000 })` call (`apps/blog/src/serve.ts:79-85`). The sitemap response itself is not separately cached — staleness is bounded by the underlying listings TTL (~2 min). New posts appear within that window.
+
+The site-wide sitemap entry point is `https://tokenrip.com/sitemap.xml`, a sitemap *index* served by `apps/frontend` that references `/sitemap-marketing.xml` (static) and `/blog/sitemap.xml` (dynamic, this file).
+
+**Known limitation:** the 1000-post cap is hardcoded. Needs pagination before the blog grows past that.
 
 ---
 
@@ -214,3 +222,5 @@ The blog frontend caches Tokenrip API responses in memory with TTL-based expiry.
 | Asset entity (with alias) | `apps/backend/src/db/models/Asset.ts` |
 | Asset controller (query, PATCH) | `apps/backend/src/api/controller/asset.controller.ts` |
 | Canonical URL logic (frontend) | `apps/frontend/src/app/s/$uuid.tsx` |
+| Site sitemap index (frontend) | `apps/frontend/public/sitemap.xml` |
+| Marketing sitemap (frontend) | `apps/frontend/public/sitemap-marketing.xml` |
