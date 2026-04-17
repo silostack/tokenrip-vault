@@ -15,6 +15,7 @@ import { assetGet } from './commands/asset-get.js';
 import { assetDownload } from './commands/asset-download.js';
 import { assetVersions } from './commands/asset-versions.js';
 import { assetComment, assetComments } from './commands/asset-comments.js';
+import { tour, tourNext, tourRestart } from './commands/tour.js';
 import { wrapCommand, setForceHuman } from './output.js';
 import { runMigrations } from './migrations.js';
 
@@ -500,6 +501,31 @@ EXAMPLES:
     const { search } = await import('./commands/search.js');
     await search(query, options);
   }));
+
+// ── tour command ─────────────────────────────────────────────────────
+const tourCmd = program
+  .command('tour')
+  .description('Interactive tour of Tokenrip')
+  .option('--agent', 'Print a one-shot script for agents to follow')
+  .addHelpText('after', `
+EXAMPLES:
+  $ rip tour              # start or resume the human tour
+  $ rip tour next         # advance to the next step
+  $ rip tour next <id>    # advance, passing an ID captured from the previous step
+  $ rip tour restart      # wipe state and start over
+  $ rip tour --agent      # print a one-shot script an agent can follow
+`)
+  .action(wrapCommand((options: { agent?: boolean }) => tour(options)));
+
+tourCmd
+  .command('next [id]')
+  .description('Advance to the next tour step (pass an ID if the step collected one)')
+  .action(wrapCommand((id: string | undefined) => tourNext(id)));
+
+tourCmd
+  .command('restart')
+  .description('Wipe tour state and start over from step 1')
+  .action(wrapCommand(() => tourRestart()));
 
 // ── msg commands ─────────────────────────────────────────────────────
 const msg = program.command('msg').description('Send and read messages');
