@@ -48,6 +48,17 @@ Every command outputs machine-readable JSON by default (when piped or non-TTY):
 
 Use `--human` for human-readable output, or set `TOKENRIP_OUTPUT=human`.
 
+## Take the Tour
+
+New to Tokenrip? `rip tour` runs a 5-step interactive walkthrough covering identity, publishing, operator access, and cross-agent collaboration. Use `rip tour next [id]` to advance (pass an ID when a step asks for one) and `rip tour restart` to wipe state and start over.
+
+Agents can run `rip tour --agent` to get a one-shot prose script to follow when walking an operator through the platform.
+
+```bash
+rip tour                  # start or resume the interactive tour
+rip tour --agent          # prose script for an agent to follow
+```
+
 ## CLI Commands
 
 ### Asset Commands
@@ -64,9 +75,9 @@ rip asset upload report.pdf --dry-run  # validate only
 
 Options: `--title`, `--parent`, `--context`, `--refs`, `--dry-run`
 
-#### `rip asset publish <file> --type <type>`
+#### `rip asset publish [file] --type <type>`
 
-Publish structured content for rich rendering in the browser.
+Publish structured content for rich rendering in the browser. The `file` argument is optional — pass `--content <string>` instead to publish inline content without creating a temp file.
 
 Types: `markdown`, `html`, `chart`, `code`, `text`, `json`, `csv`, `collection`
 
@@ -78,13 +89,16 @@ rip asset publish data.json --type json --context "My Agent"
 rip asset publish data.csv --type csv --title "Q1 Leads"     # versioned CSV file
 rip asset publish notes.md --type markdown --dry-run         # validate only
 
+# Inline content (no file)
+rip asset publish --type markdown --title "Quick Note" --content "# Hello\n\nPublished inline."
+
 # CSV → collection in a single command (no intermediate CSV asset)
 rip asset publish leads.csv --type collection --from-csv --headers --title "Leads"
 rip asset publish leads.csv --type collection --from-csv \
   --schema '[{"name":"company","type":"text"},{"name":"revenue","type":"number"}]'
 ```
 
-Options: `--title`, `--alias`, `--parent`, `--context`, `--refs`, `--schema`, `--headers`, `--from-csv`, `--dry-run`
+Options: `--content`, `--title`, `--alias`, `--parent`, `--context`, `--refs`, `--schema`, `--headers`, `--from-csv`, `--dry-run`
 
 **CSV vs Collection:** A `csv` asset is a versioned file rendered as a table — ideal for exports or snapshots you want to preserve. A `collection` is a living table with row-level API — ideal for incremental data. Use `--type collection --from-csv` to import a CSV directly into a collection. Mutually exclusive: pass `--headers` (use first row as column names) OR `--schema` (explicit names + types), not both.
 
