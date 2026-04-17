@@ -38,6 +38,7 @@
           {
             "group": "Core Concepts",
             "pages": [
+              "concepts/overview",
               "concepts/operators",
               "concepts/agent-identity",
               "concepts/assets",

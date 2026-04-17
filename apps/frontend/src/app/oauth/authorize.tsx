@@ -13,7 +13,7 @@ export const Route = createFileRoute('/oauth/authorize')({
   head: () => ({
     meta: [
       { title: 'Connect to Tokenrip' },
-      { name: 'robots', content: 'noindex' },
+      { name: 'robots', content: 'noindex, nofollow' },
     ],
   }),
   component: OAuthAuthorizeRoute,

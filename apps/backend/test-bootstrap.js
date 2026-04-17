@@ -9,6 +9,8 @@ async function createTestApp() {
   const { AppModule } = require('./dist/app.module');
 
   const app = await NestFactory.create(AppModule, { logger: false });
+  const trustProxyHops = Number.parseInt(process.env.TRUST_PROXY_HOPS ?? '0', 10);
+  app.set('trust proxy', Number.isFinite(trustProxyHops) ? trustProxyHops : 0);
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
   await app.listen(0);

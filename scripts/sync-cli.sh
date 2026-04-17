@@ -6,7 +6,13 @@ TARGET="../tokenrip-cli"
 
 echo "Syncing $SOURCE → $TARGET"
 
-cp -r "$SOURCE/src" "$TARGET/"
+mkdir -p "$TARGET/src"
+rsync -a \
+  --delete \
+  --exclude '__tests__/' \
+  --exclude '*.test.ts' \
+  --exclude '*.spec.ts' \
+  "$SOURCE/src/" "$TARGET/src/"
 cp -r "$SOURCE/dist" "$TARGET/" 2>/dev/null
 cp "$SOURCE/package.json" "$TARGET/"
 cp "$SOURCE/tsconfig.json" "$TARGET/"

@@ -20,19 +20,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       meta: [
         { charSet: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { title: 'Tokenrip — The Collaboration Layer for Agents and Operators' },
+        { title: 'Tokenrip — The collaboration layer for AI agents' },
         {
           name: 'description',
           content:
-            'Your agent\'s best work is trapped in a chat window. Tokenrip gives it a home — publish, share, and collaborate on anything your agent creates with a single link.',
+            'The collaboration layer for AI agents. Your agent — working with anyone else\u2019s, on different platforms, for different people. No custom integrations. No orchestrator in the middle.',
         },
-        { property: 'og:title', content: 'Tokenrip — The Collaboration Layer for Agents and Operators' },
-        { property: 'og:description', content: 'Your agent\'s best work is trapped in a chat window. Tokenrip gives it a home — publish, share, and collaborate on anything your agent creates with a single link.' },
+        { property: 'og:title', content: 'Tokenrip — The collaboration layer for AI agents' },
+        { property: 'og:description', content: 'The collaboration layer for AI agents. Your agent — working with anyone else\u2019s, on different platforms, for different people. No custom integrations. No orchestrator in the middle.' },
         { property: 'og:type', content: 'website' },
         { property: 'og:image', content: 'https://tokenrip.com/og-image.png' },
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'Tokenrip — The Collaboration Layer for Agents and Operators' },
-        { name: 'twitter:description', content: 'Your agent\'s best work is trapped in a chat window. Tokenrip gives it a home — publish, share, and collaborate on anything your agent creates with a single link.' },
+        { name: 'twitter:title', content: 'Tokenrip — The collaboration layer for AI agents' },
+        { name: 'twitter:description', content: 'The collaboration layer for AI agents. Your agent — working with anyone else\u2019s, on different platforms, for different people. No custom integrations. No orchestrator in the middle.' },
         { name: 'twitter:image', content: 'https://tokenrip.com/og-image.png' },
       ],
       links: [
@@ -72,6 +72,25 @@ function HeaderCta() {
   )
 }
 
+function HeaderLoginLink() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
+  if (
+    pathname.startsWith('/s/') ||
+    pathname.startsWith('/operator') ||
+    pathname === '/login'
+  ) {
+    return null
+  }
+  return (
+    <a
+      href="/login"
+      className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60"
+    >
+      Login
+    </a>
+  )
+}
+
 function HeaderNav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   if (pathname.startsWith('/s/') || pathname.startsWith('/operator')) return null
@@ -103,7 +122,7 @@ function Footer() {
 
   return (
     <footer className="border-t border-foreground/10 px-6 py-6">
-      <div className="mx-auto flex max-w-4xl flex-col items-center gap-4">
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-3">
         <nav className="flex items-center gap-6">
           <a href="/about" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">About</a>
           <a href="/faq" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">FAQ</a>
@@ -111,7 +130,7 @@ function Footer() {
           <a href="/blog" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">Blog</a>
           <a href="https://github.com/tokenrip/tokenrip-cli" target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">GitHub</a>
         </nav>
-        <span className="text-xs text-foreground/30">&copy; 2026 Tokenrip</span>
+        <span className="text-xs text-foreground/25">&copy; 2026 Tokenrip</span>
       </div>
     </footer>
   )
@@ -137,6 +156,7 @@ function RootLayout() {
             </a>
             <div className="flex items-center gap-6">
               <HeaderNav />
+              <HeaderLoginLink />
               <HeaderCta />
               <ThemeToggle />
             </div>

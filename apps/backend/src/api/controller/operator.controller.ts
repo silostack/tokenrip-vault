@@ -123,6 +123,24 @@ export class OperatorController {
     return { ok: true, data: { agent_id: agentId, has_binding: hasBinding } };
   }
 
+  @Public()
+  @Post('auth/link-code/login')
+  @HttpCode(200)
+  async loginWithLinkCode(@Body() body: { code?: string }) {
+    if (!body?.code) {
+      throw new BadRequestException({
+        ok: false,
+        error: 'MISSING_FIELD',
+        message: 'code is required',
+      });
+    }
+    const { agentId, userId, sessionToken } = await this.linkCodeService.loginWithCode(body.code);
+    return {
+      ok: true,
+      data: { user_id: userId, auth_token: sessionToken, agent_id: agentId },
+    };
+  }
+
   /** Bind a CLI agent to the logged-in user's account via short code. */
   @Auth('user')
   @Post('auth/link-code/bind')

@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { Asset } from '../db/models/Asset';
 import { AssetVersion } from '../db/models/AssetVersion';
 import { ApiKey } from '../db/models/ApiKey';
@@ -43,11 +45,23 @@ import { ShareTokenService } from './service/share-token.service';
 import { LinkCodeService } from './service/link-code.service';
 import { CollectionRowService } from './service/collection-row.service';
 import { AuthService } from './auth/auth.service';
+import { buildThrottlers } from './ratelimit/ratelimit.config';
+import { TokenripThrottlerGuard } from './ratelimit/tokenrip-throttler.guard';
 
 @Module({
-  imports: [MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, Contact, LinkCode, CollectionRow])],
+  imports: [
+    MikroOrmModule.forFeature([Asset, AssetVersion, ApiKey, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, Contact, LinkCode, CollectionRow]),
+    // forRootAsync so the factory re-reads env at each container bootstrap
+    // (integration tests rely on this to override limits).
+    ThrottlerModule.forRootAsync({
+      useFactory: () => ({ throttlers: buildThrottlers(), setHeaders: true }),
+    }),
+  ],
   controllers: [AssetController, CollectionRowController, AgentController, OperatorController, ThreadController, MessageController, InboxController, SearchController, ContactController, HealthController, OpenapiController, RootController],
-  providers: [AssetService, AssetVersionService, CollectionRowService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, SearchService, OperatorAuthService, OperatorBindingService, ShareTokenService, ContactService, LinkCodeService, AuthService],
+  providers: [
+    AssetService, AssetVersionService, CollectionRowService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, SearchService, OperatorAuthService, OperatorBindingService, ShareTokenService, ContactService, LinkCodeService, AuthService,
+    { provide: APP_GUARD, useClass: TokenripThrottlerGuard },
+  ],
   exports: [AuthService, AssetService, AssetVersionService, CollectionRowService, AgentService, UserService, ThreadService, ParticipantService, MessageService, RefService, InboxService, SearchService, ShareTokenService, ContactService, LinkCodeService],
 })
 export class ApiModule {}

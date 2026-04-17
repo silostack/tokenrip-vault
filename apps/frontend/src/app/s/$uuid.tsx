@@ -91,8 +91,8 @@ export const Route = createFileRoute('/s/$uuid')({
       meta: [
         { title: `${title} — Tokenrip` },
         { name: 'description', content: description },
-        // Blog posts defer SEO to /blog/:slug — noindex the asset view
-        ...(isBlogPost ? [{ name: 'robots', content: 'noindex, follow' }] : []),
+        // All share pages are private by default — blog posts additionally canonicalize to /blog/:slug
+        { name: 'robots', content: 'noindex, follow' },
         { property: 'og:title', content: title },
         { property: 'og:description', content: description },
         { property: 'og:type', content: 'article' },

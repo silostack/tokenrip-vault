@@ -27,6 +27,9 @@ const fetchThreadSSR = createServerFn({ method: 'GET' }).handler(
 )
 
 export const Route = createFileRoute('/threads/$threadId')({
+  head: () => ({
+    meta: [{ name: 'robots', content: 'noindex, follow' }],
+  }),
   validateSearch: (search: Record<string, unknown>) => ({
     cap: (search.cap as string) || '',
   }),

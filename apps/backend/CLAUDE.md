@@ -46,6 +46,7 @@ bun run start:prod     # Run production build
 | PATCH | `/v0/contacts/:id` | API key | Update contact |
 | DELETE | `/v0/contacts/:id` | API key | Remove contact |
 | POST | `/v0/auth/operator` | Public | Operator auth via Ed25519 signed link |
+| POST | `/v0/auth/link-code/login` | Public | Passwordless operator login — code from bound agent returns a session |
 | POST | `/v0/operators/login` | Public | Operator password login (fallback) |
 | GET | `/v0/operator/agent` | User session | Bound agent profile |
 | GET | `/v0/operator/inbox` | User session | Unified inbox (agent + operator threads, supports q/state/type filters) |
@@ -104,13 +105,13 @@ Abstracted via `StorageService` interface (`src/storage/`). Currently uses local
 
 | Module | Path | Purpose |
 |---|---|---|
-| ApiModule | `src/api/` | Core API — all v0 endpoints, services, auth guard |
+| ApiModule | `src/api/` | Core API — all v0 endpoints, services, auth guard, rate-limit guard (`src/api/ratelimit/`, see `docs/architecture/rate-limiting.md`) |
 | OAuthModule | `src/oauth/` | OAuth 2.1 — registration, login, token exchange |
 | McpModule | `src/mcp/` | MCP server — Streamable HTTP, 24 tools |
 | StorageModule | `src/storage/` | File storage abstraction (local/S3) |
 | LoggerModule | `src/logger/` | Winston logging |
 
-McpModule and OAuthModule import from ApiModule to reuse services. The global `AuthGuard` (`APP_GUARD`) is declared in AppModule and applies to all routes unless marked `@Public()`.
+McpModule and OAuthModule import from ApiModule to reuse services. The global `AuthGuard` (`APP_GUARD`) is declared in AppModule and applies to all routes unless marked `@Public()`. The rate-limit guard is a second `APP_GUARD` registered by ApiModule.
 
 See `docs/architecture/mcp-server.md` and `docs/architecture/oauth.md` for detailed architecture.
 

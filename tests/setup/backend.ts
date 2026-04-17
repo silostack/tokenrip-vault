@@ -7,12 +7,23 @@ export interface TestBackend {
   orm: any;
 }
 
-export async function startBackend(dbName: string): Promise<TestBackend> {
+export interface StartBackendOptions {
+  rateLimiting?: boolean;
+}
+
+export async function startBackend(
+  dbName: string,
+  options: StartBackendOptions = {},
+): Promise<TestBackend> {
   // Set env vars BEFORE importing AppModule so mikro-orm.config.ts picks them up
   process.env.DATABASE_NAME = dbName;
   process.env.STORAGE_PATH = join(tmpdir(), `tokenrip-test-${dbName}`);
   process.env.PORT = '0';
   process.env.ENV_FILE = '/dev/null';
+  // Rate limiting is off for tests by default so ordinary fixture bursts
+  // don't trip buckets. Tests that want rate limiting on pass
+  // { rateLimiting: true }.
+  process.env.RATE_LIMIT_DISABLED = options.rateLimiting ? 'false' : 'true';
 
   // Import from the backend directory so NestJS/MikroORM resolve correctly
   // Uses compiled dist/ to avoid Bun decorator metadata issues

@@ -9,6 +9,9 @@ process.env.DATABASE_PORT = process.env.DATABASE_PORT || '5432';
 process.env.DATABASE_USER = process.env.DATABASE_USER || process.env.USER || '';
 process.env.DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || '';
 process.env.NODE_ENV = 'test';
+// Backend reads FRONTEND_URL / API_URL at module-load time (ref.service.ts); provide defaults
+process.env.FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3333';
+process.env.API_URL = process.env.API_URL || 'http://localhost:3434';
 // CLI tests call command functions directly inside Bun's TTY — force JSON output
 process.env.TOKENRIP_OUTPUT = 'json';
 // Isolate CLI config from user's local ~/.config/tokenrip so disk config never leaks into tests

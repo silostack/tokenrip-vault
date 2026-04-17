@@ -2,6 +2,9 @@ import { createFileRoute, Outlet, useRouterState } from '@tanstack/react-router'
 import { OperatorShell } from '@/components/operator/OperatorShell'
 
 export const Route = createFileRoute('/operator')({
+  head: () => ({
+    meta: [{ name: 'robots', content: 'noindex, follow' }],
+  }),
   component: OperatorLayout,
 })
 
