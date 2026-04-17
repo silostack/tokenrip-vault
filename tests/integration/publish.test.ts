@@ -220,4 +220,76 @@ describe('publish', () => {
     const storedContent = await contentRes.text();
     expect(storedContent).toBe(largeContent);
   });
+
+  test('publish with --content flag sends inline content without file', async () => {
+    // Invoke the built CLI binary — this exercises Commander argument parsing
+    // which is where the --content flag (and [file] becoming optional) lives.
+    const cliPath = path.resolve(__dirname, '../../packages/cli/src/cli.ts');
+    const proc = Bun.spawn({
+      cmd: [
+        'bun', 'run', cliPath,
+        'asset', 'publish',
+        '--content', 'Hello from inline content',
+        '--type', 'markdown',
+        '--title', 'Inline Test',
+      ],
+      env: {
+        ...process.env,
+        TOKENRIP_API_URL: backend.url,
+        TOKENRIP_API_KEY: apiKey,
+        TOKENRIP_OUTPUT: 'json',
+      },
+      stdout: 'pipe',
+      stderr: 'pipe',
+    });
+    const stdout = await new Response(proc.stdout).text();
+    const stderr = await new Response(proc.stderr).text();
+    await proc.exited;
+    expect(proc.exitCode).toBe(0);
+
+    // Without TTY / with TOKENRIP_OUTPUT=json, output is JSON on stdout.
+    const parsed = JSON.parse(stdout.trim());
+    expect(parsed.ok).toBe(true);
+    expect(parsed.data.id).toBeDefined();
+    expect(parsed.data.title).toBe('Inline Test');
+    expect(parsed.data.type).toBe('markdown');
+
+    const assetId = parsed.data.id as string;
+    const contentRes = await fetch(`${backend.url}/v0/assets/${assetId}/content`);
+    const contentText = await contentRes.text();
+    expect(contentText).toBe('Hello from inline content');
+
+    // stderr should be clean on success (no hints, no errors).
+    expect(stderr).toBe('');
+  });
+
+  test('publish with both file and --content errors', async () => {
+    const cliPath = path.resolve(__dirname, '../../packages/cli/src/cli.ts');
+    const proc = Bun.spawn({
+      cmd: [
+        'bun', 'run', cliPath,
+        'asset', 'publish', '/tmp/file.md',
+        '--content', 'also inline',
+        '--type', 'markdown',
+      ],
+      env: {
+        ...process.env,
+        TOKENRIP_API_URL: backend.url,
+        TOKENRIP_API_KEY: apiKey,
+        TOKENRIP_OUTPUT: 'json',
+      },
+      stdout: 'pipe',
+      stderr: 'pipe',
+    });
+    const stdout = await new Response(proc.stdout).text();
+    await proc.exited;
+    expect(proc.exitCode).not.toBe(0);
+
+    // Our handler throws CliError('INVALID_ARGS'), which outputs JSON on stdout
+    // (not stderr) when TOKENRIP_OUTPUT=json.
+    const parsed = JSON.parse(stdout.trim());
+    expect(parsed.ok).toBe(false);
+    expect(parsed.error).toBe('INVALID_ARGS');
+    expect(parsed.message).toMatch(/either a file or --content/i);
+  });
 });
