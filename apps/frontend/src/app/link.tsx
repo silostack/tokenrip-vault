@@ -1,12 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { LinkPage } from '@/components/LinkPage'
+import { createFileRoute, redirect } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/link')({
-  head: () => ({
-    meta: [
-      { title: 'Link Agent — Tokenrip' },
-      { name: 'robots', content: 'noindex' },
-    ],
-  }),
-  component: LinkPage,
-})
+  validateSearch: (search: Record<string, unknown>) => {
+    const raw = search.code;
+    return {
+      code:
+        typeof raw === 'string' ? raw : typeof raw === 'number' ? String(raw) : undefined,
+    };
+  },
+  beforeLoad: ({ search }) => {
+    throw redirect({ to: '/login', search: { code: search.code } });
+  },
+});

@@ -355,6 +355,10 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+.login-card-enter {
+  animation: md-enter 0.4s ease-out;
+}
+
 /* --- Body Text — editorial serif --- */
 
 .markdown-body p,

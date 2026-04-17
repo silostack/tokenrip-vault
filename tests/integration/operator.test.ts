@@ -162,3 +162,106 @@ describe('operator flow', () => {
     expect(res.status).toBe(401);
   });
 });
+
+describe('POST /v0/auth/link-code/login', () => {
+  test('returns session for already-bound agent', async () => {
+    const { agentId, apiKey, secretKeyHex } = await registerAgent();
+    const token = createOperatorToken(agentId, secretKeyHex);
+
+    // First: register an operator + binding via signed-token flow (existing).
+    const regRes = await fetch(`${backend.url}/v0/auth/operator`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token,
+        display_name: 'Login Tester',
+        password: 'pw-loginwithcode',
+        alias: 'login-tester',
+      }),
+    });
+    expect(regRes.status).toBe(201);
+    const { data: registered } = (await regRes.json()) as {
+      data: { user_id: string; auth_token: string };
+    };
+
+    // Now mint a fresh short code from that agent.
+    const codeRes = await fetch(`${backend.url}/v0/auth/link-code`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+    });
+    expect(codeRes.status).toBe(201);
+    const { data: codeData } = (await codeRes.json()) as { data: { code: string } };
+
+    // Exercise the new endpoint as an anonymous caller.
+    const loginRes = await fetch(`${backend.url}/v0/auth/link-code/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: codeData.code }),
+    });
+    expect(loginRes.status).toBe(200);
+    const body = (await loginRes.json()) as {
+      ok: boolean;
+      data: { user_id: string; auth_token: string; agent_id: string };
+    };
+    expect(body.ok).toBe(true);
+    expect(body.data.user_id).toBe(registered.user_id);
+    expect(body.data.agent_id).toBe(agentId);
+    expect(body.data.auth_token).toBeTruthy();
+    expect(body.data.auth_token).not.toBe(registered.auth_token); // fresh session
+  });
+
+  test('returns 409 NO_BINDING when agent has no operator binding', async () => {
+    const { apiKey } = await registerAgent();
+    const codeRes = await fetch(`${backend.url}/v0/auth/link-code`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+    });
+    const { data: codeData } = (await codeRes.json()) as { data: { code: string } };
+
+    const loginRes = await fetch(`${backend.url}/v0/auth/link-code/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: codeData.code }),
+    });
+    expect(loginRes.status).toBe(409);
+    const body = (await loginRes.json()) as { error: string };
+    expect(body.error).toBe('NO_BINDING');
+
+    // Code should NOT be consumed; a follow-up /register call must still succeed.
+    const regRes = await fetch(`${backend.url}/v0/auth/link-code/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        code: codeData.code,
+        displayName: 'Recovery User',
+        password: 'pw1234567',
+      }),
+    });
+    expect(regRes.status).toBe(200);
+  });
+
+  test('returns 401 INVALID_CODE for an unknown code', async () => {
+    const res = await fetch(`${backend.url}/v0/auth/link-code/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: '000000' }),
+    });
+    expect(res.status).toBe(401);
+    const body = (await res.json()) as { error: string };
+    expect(body.error).toBe('INVALID_CODE');
+  });
+
+  test('returns 400 MISSING_FIELD when body omits code', async () => {
+    const res = await fetch(`${backend.url}/v0/auth/link-code/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({}),
+    });
+    expect(res.status).toBe(400);
+    const body = (await res.json()) as { error: string };
+    expect(body.error).toBe('MISSING_FIELD');
+  });
+});

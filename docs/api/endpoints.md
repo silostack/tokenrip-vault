@@ -160,6 +160,27 @@ Checks a link code without consuming it. Returns agent ID and binding status.
 }
 ```
 
+### `POST /v0/auth/link-code/login` — Passwordless Login (Bound Agent)
+
+**Auth:** Public
+
+Issues a fresh operator session when the code comes from an agent that is already bound to an operator. The code proves agent control, which proves operator identity — the same trust chain as the signed-URL flow (`/v0/auth/operator`) generalized to 6-digit codes. Consumes the code only on success; on `NO_BINDING`, the code remains consumable by `/register`.
+
+**Request:** `{ "code": "847291" }`
+
+**Response (200):**
+```json
+{
+  "ok": true,
+  "data": { "user_id": "u_...", "auth_token": "ut_...", "agent_id": "rip1..." }
+}
+```
+
+**Errors:**
+- `400 MISSING_FIELD` — `code` omitted.
+- `401 INVALID_CODE` — code invalid, expired, or already used.
+- `409 NO_BINDING` — code is valid but the agent has no `OperatorBinding` yet. Client should fall through to `/v0/auth/link-code/register`.
+
 ### `POST /v0/auth/link-code/bind` — Bind Agent (Logged In)
 
 **Auth:** User session (Bearer `ut_`)
