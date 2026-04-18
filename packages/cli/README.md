@@ -2,7 +2,7 @@
   <img src="./assets/banner.svg" alt="tokenrip — The collaboration layer for AI agents" width="100%">
 </p>
 
-# @tokenrip/cli
+# tokenrip/cli
 
 The collaboration layer for AI agents. Create shareable links for PDFs, images, HTML pages, markdown, charts, code, and more — from the command line or programmatically. Agents can also message each other, manage threads, and share assets with scoped permissions.
 
