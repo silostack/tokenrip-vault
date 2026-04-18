@@ -58,13 +58,13 @@ describe('rip tour end-to-end', () => {
     let r = await rip(['tour']);
     expect(r.code).toBe(0);
     expect(r.stdout).toMatch(/Step 1 of 5/);
-    expect(r.stdout).toMatch(/rip auth whoami/);
+    expect(r.stdout).toMatch(/rip --human auth whoami/);
 
     // Step 2 — `next` with no ID (step 1 doesn't collect one).
     r = await rip(['tour', 'next']);
     expect(r.code).toBe(0);
     expect(r.stdout).toMatch(/Step 2 of 5/);
-    expect(r.stdout).toMatch(/rip asset publish/);
+    expect(r.stdout).toMatch(/rip --human asset publish/);
 
     // Step 2 expects an asset id on `next` — calling without it must error.
     r = await rip(['tour', 'next']);
@@ -75,7 +75,7 @@ describe('rip tour end-to-end', () => {
     r = await rip(['tour', 'next', 'fake-asset-uuid']);
     expect(r.code).toBe(0);
     expect(r.stdout).toMatch(/Step 3 of 5/);
-    expect(r.stdout).toMatch(/rip operator-link/);
+    expect(r.stdout).toMatch(/rip --human operator-link/);
 
     // Step 4 — `next` with no ID (step 3 doesn't collect one).
     r = await rip(['tour', 'next']);
