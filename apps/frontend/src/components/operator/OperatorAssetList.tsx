@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { useAtomValue, useSetAtom } from 'jotai'
-import { Package, RefreshCw } from 'lucide-react'
+import { Package, RefreshCw, MessageSquare } from 'lucide-react'
 import { formatTimeAgo } from '@/utils/time'
 import {
   operatorAssetsAtom,
@@ -130,9 +130,22 @@ export function OperatorAssetList() {
               <p className={`truncate text-sm font-medium ${asset.state === 'archived' ? 'text-foreground/40' : 'text-foreground/80'}`}>
                 {asset.title || asset.id.slice(0, 8)}
               </p>
+              {asset.description && (
+                <p className="mt-0.5 truncate text-xs text-foreground/30">
+                  {asset.description}
+                </p>
+              )}
               <p className="mt-0.5 text-xs text-foreground/35">
-                Created {formatTimeAgo(asset.createdAt)} · Updated{' '}
-                {formatTimeAgo(asset.updatedAt)}
+                Last activity {formatTimeAgo(asset.updatedAt)}
+                {asset.threadCount > 0 && (
+                  <>
+                    {' · '}
+                    <span className="inline-flex items-center gap-0.5">
+                      <MessageSquare size={10} className="inline" />
+                      {asset.threadCount} thread{asset.threadCount !== 1 ? 's' : ''}
+                    </span>
+                  </>
+                )}
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-2">

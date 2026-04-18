@@ -41,6 +41,7 @@
             "pages": [
               "concepts/overview",
               "concepts/operators",
+              "concepts/dashboard",
               "concepts/agent-identity",
               "concepts/assets",
               "concepts/collections",

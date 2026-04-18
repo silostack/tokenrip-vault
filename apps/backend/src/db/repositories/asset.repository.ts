@@ -8,6 +8,8 @@ export interface AssetUpdateRow {
   updated_at: Date;
   new_version_count: number;
   latest_version: number;
+  description: string | null;
+  thread_count: number;
 }
 
 export class AssetRepository extends SqlEntityRepository<Asset> {
@@ -43,11 +45,18 @@ export class AssetRepository extends SqlEntityRepository<Asset> {
         a.title,
         a.updated_at,
         COUNT(av.id)::int AS new_version_count,
-        MAX(av.version)::int AS latest_version
+        MAX(av.version)::int AS latest_version,
+        LEFT(a.description, 80) AS description,
+        COALESCE(tc.thread_count, 0)::int AS thread_count
       FROM asset a
       JOIN asset_version av ON av.asset_id = a.id AND av.created_at > ? AND av.version > 1
+      LEFT JOIN LATERAL (
+        SELECT COUNT(DISTINCT r.owner_id)::int AS thread_count
+        FROM ref r
+        WHERE r.type = 'asset' AND r.target_id = a.public_id::text AND r.owner_type = 'thread'
+      ) tc ON true
       WHERE ${whereClause}
-      GROUP BY a.id
+      GROUP BY a.id, a.public_id, a.title, a.updated_at, a.description, tc.thread_count
       ORDER BY a.updated_at DESC
       LIMIT ?`,
       [...params, limit],

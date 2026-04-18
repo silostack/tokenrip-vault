@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react'
-import { MessageSquare, FileText, X } from 'lucide-react'
+import { MessageSquare, FileText, X, Link2 } from 'lucide-react'
 import { formatTimeAgo } from '@/utils/time'
 import type { InboxItem } from '@/lib/operator'
+import { ParticipantChips } from './ParticipantChips'
 
 interface InboxCardProps {
   item: InboxItem
@@ -46,6 +47,14 @@ export function InboxCard({ item, onDismiss, onNavigate }: InboxCardProps) {
           <p className="truncate text-sm text-foreground/80">
             {t.last_body_preview || `Thread ${t.thread_id.slice(0, 8)}`}
           </p>
+          {t.participants?.length > 0 && (
+            <div className="mt-1">
+              <ParticipantChips
+                participants={t.participants}
+                ownerId={t.owner_id}
+              />
+            </div>
+          )}
           <div className="mt-0.5 flex items-center gap-2 text-xs text-foreground/35">
             <span>
               {t.new_message_count} new message
@@ -61,7 +70,13 @@ export function InboxCard({ item, onDismiss, onNavigate }: InboxCardProps) {
                 closed
               </span>
             )}
-            <span>{formatTimeAgo(t.updated_at)}</span>
+            {t.ref_count > 0 && (
+              <span className="flex items-center gap-1">
+                <Link2 size={10} />
+                {t.ref_count} asset{t.ref_count !== 1 ? 's' : ''}
+              </span>
+            )}
+            <span>Last activity {formatTimeAgo(t.updated_at)}</span>
           </div>
         </div>
         <button
@@ -89,13 +104,24 @@ export function InboxCard({ item, onDismiss, onNavigate }: InboxCardProps) {
         <p className="truncate text-sm text-foreground/80">
           {a.title || `Asset ${a.asset_id.slice(0, 8)}`}
         </p>
+        {a.description && (
+          <p className="mt-0.5 truncate text-xs text-foreground/30">
+            {a.description}
+          </p>
+        )}
         <div className="mt-0.5 flex items-center gap-2 text-xs text-foreground/35">
           <span>
             {a.new_version_count} new version
             {a.new_version_count !== 1 ? 's' : ''}
           </span>
           <span>v{a.latest_version}</span>
-          <span>{formatTimeAgo(a.updated_at)}</span>
+          {a.thread_count > 0 && (
+            <span className="flex items-center gap-1">
+              <MessageSquare size={10} />
+              {a.thread_count} thread{a.thread_count !== 1 ? 's' : ''}
+            </span>
+          )}
+          <span>Last activity {formatTimeAgo(a.updated_at)}</span>
         </div>
       </div>
       {/* Assets don't have dismiss */}

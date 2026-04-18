@@ -19,6 +19,9 @@ export interface InboxThread {
   last_intent: string | null
   last_body_preview: string | null
   refs: Array<{ type: string; target_id: string; version?: number }>
+  owner_id: string
+  participants: Array<{ agent_id: string; alias: string | null }>
+  ref_count: number
 }
 
 export interface InboxFetchOpts {
@@ -35,6 +38,8 @@ export interface InboxAsset {
   updated_at: string
   new_version_count: number
   latest_version: number
+  description: string | null
+  thread_count: number
 }
 
 export interface InboxData {
@@ -46,10 +51,12 @@ export interface InboxData {
 export interface OperatorAssetItem {
   id: string
   title: string | null
+  description: string | null
   type: string
   mimeType: string | null
   state: string
   versionCount: number
+  threadCount: number
   createdAt: string
   updatedAt: string
 }
@@ -221,6 +228,45 @@ export async function updateOperatorContact(
 
 export async function removeOperatorContact(id: string): Promise<void> {
   await api.delete(`/v0/operator/contacts/${id}`)
+}
+
+// ── Thread list ──────────────────────────────────────────
+
+export interface ThreadListItem {
+  thread_id: string
+  state: 'open' | 'closed'
+  created_by: string
+  owner_id: string
+  participant_count: number
+  participants: Array<{ agent_id: string; alias: string | null }>
+  ref_count: number
+  last_message_at: string | null
+  last_message_preview: string | null
+  metadata: Record<string, unknown> | null
+  created_at: string
+  updated_at: string
+}
+
+export interface ThreadListData {
+  threads: ThreadListItem[]
+  total: number
+}
+
+export interface ThreadListFetchOpts {
+  state?: 'open' | 'closed'
+  limit?: number
+  offset?: number
+}
+
+export async function fetchOperatorThreads(
+  opts?: ThreadListFetchOpts,
+): Promise<ThreadListData> {
+  const params: Record<string, string | number> = {}
+  if (opts?.state) params.state = opts.state
+  if (opts?.limit) params.limit = opts.limit
+  if (opts?.offset != null) params.offset = opts.offset
+  const res = await api.get('/v0/operator/threads', { params })
+  return res.data.data
 }
 
 // ── Thread refs ───────────────────────────────────────────

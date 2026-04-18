@@ -14,6 +14,9 @@ interface InboxThread {
   last_body_preview: string | null;
   refs: Array<{ type: string; target_id: string; version?: number }>;
   updated_at: Date;
+  owner_id: string;
+  participants: Array<{ agent_id: string; alias: string | null }>;
+  ref_count: number;
 }
 
 interface InboxAsset {
@@ -22,6 +25,8 @@ interface InboxAsset {
   new_version_count: number;
   latest_version: number;
   updated_at: Date;
+  description: string | null;
+  thread_count: number;
 }
 
 export interface InboxResult {
@@ -114,6 +119,9 @@ export class InboxService {
       last_body_preview: r.last_body_preview ?? null,
       refs: refsByThread.get(r.thread_id) ?? [],
       updated_at: r.updated_at,
+      owner_id: r.owner_id,
+      participants: r.participants ?? [],
+      ref_count: r.ref_count ?? 0,
     }));
 
     const assets: InboxAsset[] = assetRows.map((r) => ({
@@ -122,6 +130,8 @@ export class InboxService {
       new_version_count: r.new_version_count,
       latest_version: r.latest_version,
       updated_at: r.updated_at,
+      description: r.description ?? null,
+      thread_count: r.thread_count ?? 0,
     }));
 
     return { threads, assets, poll_after: 30 };

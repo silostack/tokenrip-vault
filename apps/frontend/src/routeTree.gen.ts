@@ -21,6 +21,7 @@ import { Route as OperatorContactsRouteImport } from './app/operator/contacts'
 import { Route as OperatorAuthRouteImport } from './app/operator/auth'
 import { Route as OauthAuthorizeRouteImport } from './app/oauth/authorize'
 import { Route as SUuidIndexRouteImport } from './app/s/$uuid/index'
+import { Route as OperatorThreadsIndexRouteImport } from './app/operator/threads/index'
 import { Route as OperatorAssetsIndexRouteImport } from './app/operator/assets/index'
 import { Route as SUuidVersionIdRouteImport } from './app/s/$uuid/$versionId'
 import { Route as OperatorThreadsThreadIdRouteImport } from './app/operator/threads/$threadId'
@@ -88,6 +89,11 @@ const SUuidIndexRoute = SUuidIndexRouteImport.update({
   path: '/',
   getParentRoute: () => SUuidRoute,
 } as any)
+const OperatorThreadsIndexRoute = OperatorThreadsIndexRouteImport.update({
+  id: '/threads/',
+  path: '/threads/',
+  getParentRoute: () => OperatorRoute,
+} as any)
 const OperatorAssetsIndexRoute = OperatorAssetsIndexRouteImport.update({
   id: '/assets/',
   path: '/assets/',
@@ -137,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/operator/threads/$threadId': typeof OperatorThreadsThreadIdRoute
   '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
   '/operator/assets/': typeof OperatorAssetsIndexRoute
+  '/operator/threads/': typeof OperatorThreadsIndexRoute
   '/s/$uuid/': typeof SUuidIndexRoute
   '/operator/assets/$publicId/$versionId': typeof OperatorAssetsPublicIdVersionIdRoute
   '/operator/assets/$publicId/': typeof OperatorAssetsPublicIdIndexRoute
@@ -154,6 +161,7 @@ export interface FileRoutesByTo {
   '/operator/threads/$threadId': typeof OperatorThreadsThreadIdRoute
   '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
   '/operator/assets': typeof OperatorAssetsIndexRoute
+  '/operator/threads': typeof OperatorThreadsIndexRoute
   '/s/$uuid': typeof SUuidIndexRoute
   '/operator/assets/$publicId/$versionId': typeof OperatorAssetsPublicIdVersionIdRoute
   '/operator/assets/$publicId': typeof OperatorAssetsPublicIdIndexRoute
@@ -175,6 +183,7 @@ export interface FileRoutesById {
   '/operator/threads/$threadId': typeof OperatorThreadsThreadIdRoute
   '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
   '/operator/assets/': typeof OperatorAssetsIndexRoute
+  '/operator/threads/': typeof OperatorThreadsIndexRoute
   '/s/$uuid/': typeof SUuidIndexRoute
   '/operator/assets/$publicId/$versionId': typeof OperatorAssetsPublicIdVersionIdRoute
   '/operator/assets/$publicId/': typeof OperatorAssetsPublicIdIndexRoute
@@ -197,6 +206,7 @@ export interface FileRouteTypes {
     | '/operator/threads/$threadId'
     | '/s/$uuid/$versionId'
     | '/operator/assets/'
+    | '/operator/threads/'
     | '/s/$uuid/'
     | '/operator/assets/$publicId/$versionId'
     | '/operator/assets/$publicId/'
@@ -214,6 +224,7 @@ export interface FileRouteTypes {
     | '/operator/threads/$threadId'
     | '/s/$uuid/$versionId'
     | '/operator/assets'
+    | '/operator/threads'
     | '/s/$uuid'
     | '/operator/assets/$publicId/$versionId'
     | '/operator/assets/$publicId'
@@ -234,6 +245,7 @@ export interface FileRouteTypes {
     | '/operator/threads/$threadId'
     | '/s/$uuid/$versionId'
     | '/operator/assets/'
+    | '/operator/threads/'
     | '/s/$uuid/'
     | '/operator/assets/$publicId/$versionId'
     | '/operator/assets/$publicId/'
@@ -336,6 +348,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SUuidIndexRouteImport
       parentRoute: typeof SUuidRoute
     }
+    '/operator/threads/': {
+      id: '/operator/threads/'
+      path: '/threads'
+      fullPath: '/operator/threads/'
+      preLoaderRoute: typeof OperatorThreadsIndexRouteImport
+      parentRoute: typeof OperatorRoute
+    }
     '/operator/assets/': {
       id: '/operator/assets/'
       path: '/assets'
@@ -404,6 +423,7 @@ interface OperatorRouteChildren {
   OperatorAssetsPublicIdRoute: typeof OperatorAssetsPublicIdRouteWithChildren
   OperatorThreadsThreadIdRoute: typeof OperatorThreadsThreadIdRoute
   OperatorAssetsIndexRoute: typeof OperatorAssetsIndexRoute
+  OperatorThreadsIndexRoute: typeof OperatorThreadsIndexRoute
 }
 
 const OperatorRouteChildren: OperatorRouteChildren = {
@@ -413,6 +433,7 @@ const OperatorRouteChildren: OperatorRouteChildren = {
   OperatorAssetsPublicIdRoute: OperatorAssetsPublicIdRouteWithChildren,
   OperatorThreadsThreadIdRoute: OperatorThreadsThreadIdRoute,
   OperatorAssetsIndexRoute: OperatorAssetsIndexRoute,
+  OperatorThreadsIndexRoute: OperatorThreadsIndexRoute,
 }
 
 const OperatorRouteWithChildren = OperatorRoute._addFileChildren(

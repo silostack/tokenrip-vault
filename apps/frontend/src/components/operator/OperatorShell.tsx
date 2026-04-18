@@ -40,6 +40,7 @@ export function OperatorShell({ children }: OperatorShellProps) {
   const tabs = [
     { label: 'Inbox', path: '/operator' },
     { label: 'Assets', path: '/operator/assets' },
+    { label: 'Threads', path: '/operator/threads' },
     { label: 'Contacts', path: '/operator/contacts' },
   ]
 
@@ -58,7 +59,9 @@ export function OperatorShell({ children }: OperatorShellProps) {
         {/* Nav tabs */}
         <div className="mt-3 flex gap-1">
           {tabs.map((tab) => {
-            const active = pathname === tab.path
+            const active = tab.path === '/operator'
+              ? pathname === '/operator'
+              : pathname.startsWith(tab.path)
             return (
               <a
                 key={tab.path}

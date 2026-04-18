@@ -94,6 +94,19 @@ export class RefService {
     return result;
   }
 
+  async countThreadsByAssets(assetPublicIds: string[]): Promise<Map<string, number>> {
+    if (!assetPublicIds.length) return new Map();
+    const placeholders = assetPublicIds.map(() => '?').join(', ');
+    const rows = await this.em.getConnection().execute<Array<{ target_id: string; thread_count: number }>>(
+      `SELECT r.target_id, COUNT(DISTINCT r.owner_id)::int AS thread_count
+       FROM ref r
+       WHERE r.owner_type = 'thread' AND r.type = 'asset' AND r.target_id IN (${placeholders})
+       GROUP BY r.target_id`,
+      assetPublicIds,
+    );
+    return new Map(rows.map((r) => [r.target_id, r.thread_count]));
+  }
+
   async removeRef(refId: string): Promise<void> {
     const ref = await this.refRepo.findOne({ id: refId });
     if (ref) {

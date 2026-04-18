@@ -13,6 +13,8 @@ export interface ThreadListRow {
   participant_count: number;
   last_body_preview: string | null;
   last_message_at: Date | null;
+  participants: Array<{ agent_id: string; alias: string | null }>;
+  ref_count: number;
 }
 
 export interface ThreadActivityRow {
@@ -23,6 +25,9 @@ export interface ThreadActivityRow {
   last_sequence: number | null;
   last_intent: string | null;
   last_body_preview: string | null;
+  owner_id: string;
+  participants: Array<{ agent_id: string; alias: string | null }>;
+  ref_count: number;
 }
 
 export interface SearchThreadRow {
@@ -70,7 +75,7 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
 
     return this.getEntityManager().getConnection().execute<ThreadActivityRow[]>(
       `WITH agent_threads AS (
-        SELECT DISTINCT t.id, t.state, t.updated_at
+        SELECT DISTINCT t.id, t.state, t.updated_at, t.owner_id
         FROM participant p
         JOIN thread t ON t.id = p.thread_id
         ${qJoin}
@@ -91,6 +96,24 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
         FROM message m
         JOIN agent_threads at ON at.id = m.thread_id
         ORDER BY m.thread_id, m.sequence DESC
+      ),
+      participant_details AS (
+        SELECT p3.thread_id,
+               json_agg(json_build_object(
+                 'agent_id', COALESCE(p3.agent_id, p3.user_id),
+                 'alias', a.alias
+               )) AS participants
+        FROM participant p3
+        LEFT JOIN agent a ON a.id = p3.agent_id
+        WHERE p3.thread_id IN (SELECT id FROM agent_threads)
+        GROUP BY p3.thread_id
+      ),
+      ref_counts AS (
+        SELECT r.owner_id AS thread_id, COUNT(*)::int AS ref_count
+        FROM ref r
+        WHERE r.owner_type = 'thread'
+          AND r.owner_id IN (SELECT id FROM agent_threads)
+        GROUP BY r.owner_id
       )
       SELECT
         at.id AS thread_id,
@@ -99,10 +122,15 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
         COALESCE(nc.new_message_count, 0)::int AS new_message_count,
         lm.sequence AS last_sequence,
         lm.intent AS last_intent,
-        lm.body_preview AS last_body_preview
+        lm.body_preview AS last_body_preview,
+        at.owner_id,
+        COALESCE(pd.participants, '[]'::json) AS participants,
+        COALESCE(rc.ref_count, 0)::int AS ref_count
       FROM agent_threads at
       LEFT JOIN new_counts nc ON nc.thread_id = at.id
       LEFT JOIN latest_msgs lm ON lm.thread_id = at.id
+      LEFT JOIN participant_details pd ON pd.thread_id = at.id
+      LEFT JOIN ref_counts rc ON rc.thread_id = at.id
       ORDER BY at.updated_at DESC`,
       [...cteParams, limit, since],
     );
@@ -147,7 +175,7 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
 
     return this.getEntityManager().getConnection().execute<ThreadActivityRow[]>(
       `WITH active_threads AS (
-        SELECT DISTINCT t.id, t.state, t.updated_at
+        SELECT DISTINCT t.id, t.state, t.updated_at, t.owner_id
         FROM participant p
         JOIN thread t ON t.id = p.thread_id
         ${qJoin}
@@ -168,6 +196,24 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
         FROM message m
         JOIN active_threads at ON at.id = m.thread_id
         ORDER BY m.thread_id, m.sequence DESC
+      ),
+      participant_details AS (
+        SELECT p3.thread_id,
+               json_agg(json_build_object(
+                 'agent_id', COALESCE(p3.agent_id, p3.user_id),
+                 'alias', a.alias
+               )) AS participants
+        FROM participant p3
+        LEFT JOIN agent a ON a.id = p3.agent_id
+        WHERE p3.thread_id IN (SELECT id FROM active_threads)
+        GROUP BY p3.thread_id
+      ),
+      ref_counts AS (
+        SELECT r.owner_id AS thread_id, COUNT(*)::int AS ref_count
+        FROM ref r
+        WHERE r.owner_type = 'thread'
+          AND r.owner_id IN (SELECT id FROM active_threads)
+        GROUP BY r.owner_id
       )
       SELECT
         at.id AS thread_id,
@@ -176,10 +222,15 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
         COALESCE(nc.new_message_count, 0)::int AS new_message_count,
         lm.sequence AS last_sequence,
         lm.intent AS last_intent,
-        lm.body_preview AS last_body_preview
+        lm.body_preview AS last_body_preview,
+        at.owner_id,
+        COALESCE(pd.participants, '[]'::json) AS participants,
+        COALESCE(rc.ref_count, 0)::int AS ref_count
       FROM active_threads at
       LEFT JOIN new_counts nc ON nc.thread_id = at.id
       LEFT JOIN latest_msgs lm ON lm.thread_id = at.id
+      LEFT JOIN participant_details pd ON pd.thread_id = at.id
+      LEFT JOIN ref_counts rc ON rc.thread_id = at.id
       ORDER BY at.updated_at DESC`,
       [...cteParams, limit, since],
     );
@@ -208,7 +259,7 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
     );
     const total = countResult[0]?.total ?? 0;
 
-    const rows = await this.em.getConnection().execute(
+    const rows = await this.em.getConnection().execute<ThreadListRow[]>(
       `WITH agent_threads AS (
          SELECT DISTINCT t.id AS thread_id,
                 t.state,
@@ -227,6 +278,24 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
          WHERE p2.thread_id IN (SELECT thread_id FROM agent_threads)
          GROUP BY p2.thread_id
        ),
+       participant_details AS (
+         SELECT p3.thread_id,
+                json_agg(json_build_object(
+                  'agent_id', COALESCE(p3.agent_id, p3.user_id),
+                  'alias', a.alias
+                )) AS participants
+         FROM participant p3
+         LEFT JOIN agent a ON a.id = p3.agent_id
+         WHERE p3.thread_id IN (SELECT thread_id FROM agent_threads)
+         GROUP BY p3.thread_id
+       ),
+       ref_counts AS (
+         SELECT r.owner_id AS thread_id, COUNT(*)::int AS ref_count
+         FROM ref r
+         WHERE r.owner_type = 'thread'
+           AND r.owner_id IN (SELECT thread_id FROM agent_threads)
+         GROUP BY r.owner_id
+       ),
        latest_msgs AS (
          SELECT DISTINCT ON (m.thread_id)
                 m.thread_id,
@@ -239,10 +308,14 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
        SELECT at.thread_id, at.state, at.created_by, at.owner_id, at.metadata,
               at.created_at, at.updated_at,
               COALESCE(pc.participant_count, 0) AS participant_count,
+              COALESCE(pd.participants, '[]'::json) AS participants,
+              COALESCE(rc.ref_count, 0)::int AS ref_count,
               lm.last_body_preview,
               lm.last_message_at
        FROM agent_threads at
        LEFT JOIN participant_counts pc ON pc.thread_id = at.thread_id
+       LEFT JOIN participant_details pd ON pd.thread_id = at.thread_id
+       LEFT JOIN ref_counts rc ON rc.thread_id = at.thread_id
        LEFT JOIN latest_msgs lm ON lm.thread_id = at.thread_id
        ORDER BY at.updated_at DESC
        LIMIT ? OFFSET ?`,
@@ -276,7 +349,7 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
     );
     const total = countResult[0]?.total ?? 0;
 
-    const rows = await this.em.getConnection().execute(
+    const rows = await this.em.getConnection().execute<ThreadListRow[]>(
       `WITH unified_threads AS (
          SELECT DISTINCT t.id AS thread_id,
                 t.state,
@@ -295,6 +368,24 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
          WHERE p2.thread_id IN (SELECT thread_id FROM unified_threads)
          GROUP BY p2.thread_id
        ),
+       participant_details AS (
+         SELECT p3.thread_id,
+                json_agg(json_build_object(
+                  'agent_id', COALESCE(p3.agent_id, p3.user_id),
+                  'alias', a.alias
+                )) AS participants
+         FROM participant p3
+         LEFT JOIN agent a ON a.id = p3.agent_id
+         WHERE p3.thread_id IN (SELECT thread_id FROM unified_threads)
+         GROUP BY p3.thread_id
+       ),
+       ref_counts AS (
+         SELECT r.owner_id AS thread_id, COUNT(*)::int AS ref_count
+         FROM ref r
+         WHERE r.owner_type = 'thread'
+           AND r.owner_id IN (SELECT thread_id FROM unified_threads)
+         GROUP BY r.owner_id
+       ),
        latest_msgs AS (
          SELECT DISTINCT ON (m.thread_id)
                 m.thread_id,
@@ -307,10 +398,14 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
        SELECT ut.thread_id, ut.state, ut.created_by, ut.owner_id, ut.metadata,
               ut.created_at, ut.updated_at,
               COALESCE(pc.participant_count, 0) AS participant_count,
+              COALESCE(pd.participants, '[]'::json) AS participants,
+              COALESCE(rc.ref_count, 0)::int AS ref_count,
               lm.last_body_preview,
               lm.last_message_at
        FROM unified_threads ut
        LEFT JOIN participant_counts pc ON pc.thread_id = ut.thread_id
+       LEFT JOIN participant_details pd ON pd.thread_id = ut.thread_id
+       LEFT JOIN ref_counts rc ON rc.thread_id = ut.thread_id
        LEFT JOIN latest_msgs lm ON lm.thread_id = ut.thread_id
        ORDER BY ut.updated_at DESC
        LIMIT ? OFFSET ?`,

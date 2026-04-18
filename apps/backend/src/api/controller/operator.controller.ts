@@ -263,15 +263,23 @@ export class OperatorController {
       archived: archived === 'true',
       includeArchived: includeArchived === 'true',
     });
+
+    const publicIds = assets.map((a) => a.publicId);
+    const threadCounts = publicIds.length > 0
+      ? await this.refService.countThreadsByAssets(publicIds)
+      : new Map<string, number>();
+
     return {
       ok: true,
       data: assets.map((a) => ({
         id: a.publicId,
         title: a.title ?? null,
+        description: a.description ? a.description.slice(0, 80) : null,
         type: a.type,
         mimeType: a.mimeType ?? null,
         state: a.state,
         versionCount: a.versionCount,
+        threadCount: threadCounts.get(a.publicId) ?? 0,
         createdAt: a.createdAt,
         updatedAt: a.updatedAt,
       })),
@@ -344,6 +352,8 @@ export class OperatorController {
           created_by: r.created_by,
           owner_id: r.owner_id,
           participant_count: r.participant_count,
+          participants: r.participants ?? [],
+          ref_count: r.ref_count ?? 0,
           last_message_at: r.last_message_at,
           last_message_preview: r.last_body_preview,
           metadata: r.metadata,
