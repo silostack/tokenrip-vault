@@ -211,7 +211,7 @@ Initial agent registration and API key provisioning uses OAuth 2.1. See `docs/ar
 
 ## Tool Registry
 
-### 31 Tools, 8 Domains
+### 37 Tools, 9 Domains
 
 Tools are registered per-session via `createMcpServer(services, agentId)`. Each tool handler receives the calling agent's ID via closure — not via `extra.authInfo` or any MCP auth mechanism.
 
@@ -243,7 +243,7 @@ Tools are registered per-session via `createMcpServer(services, agentId)`. Each 
 | Tool | Description | Service Method | Key Parameters |
 |---|---|---|---|
 | `thread_get` | Get thread details and participants | `ThreadService.findById()` | `threadId` |
-| `thread_create` | Create thread | `ThreadService.create()` | `participants?`, `message?`, `assetId?` |
+| `thread_create` | Create thread | `ThreadService.create()` | `participants?`, `message?`, `metadata?`, `refs?`, `tourWelcome?` |
 | `thread_close` | Close thread with optional resolution | `ThreadService.setResolution()` | `threadId`, `resolution?` |
 | `thread_add_participant` | Add agent to thread | `ParticipantService.addAgent()` | `threadId`, `agentId` |
 | `thread_list` | List threads agent participates in | `ThreadService.listForAgent()` | `state?`, `limit?` |
@@ -276,6 +276,14 @@ Tools are registered per-session via `createMcpServer(services, agentId)`. Each 
 | `contact_save` | Save agent as contact (upsert) | `ContactService.add()` | `agentId`, `label?`, `notes?` |
 | `contact_remove` | Remove a contact | `ContactService.removeByAgentId()` | `agentId` |
 
+#### Tour Tools (1)
+
+| Tool | Description | Service Method | Key Parameters |
+|---|---|---|---|
+| `tour` | Get the tour script for guiding operators through Tokenrip | *(static — returns constant text)* | *(none)* |
+
+When `thread_create` is called with `tourWelcome: true` and `@tokenrip` as a participant, the server posts a welcome message from `@tokenrip` in the same tool call — mirroring the REST controller's `metadata.tour_welcome === true` hook.
+
 #### Collection Tools (5)
 
 | Tool | Description | Service Method | Key Parameters |
@@ -297,10 +305,11 @@ src/mcp/tools/
   ├── inbox.tools.ts       1 tool (inbox)
   ├── search.tools.ts      1 tool (search)
   ├── contact.tools.ts     3 contact tools
-  └── collection.tools.ts  5 collection tools
+  ├── collection.tools.ts  5 collection tools
+  └── tour.tools.ts        1 tour tool
 ```
 
-Each file exports a function that registers its tools on a given `McpServer` instance. The server factory in `mcp.server.ts` calls all seven registration functions.
+Each file exports a function that registers its tools on a given `McpServer` instance. The server factory in `mcp.server.ts` calls all nine registration functions.
 
 ---
 
@@ -524,4 +533,5 @@ All three interfaces invoke the same service layer. The differences are in trans
 | `apps/backend/src/mcp/tools/search.tools.ts` | 1 tool: search |
 | `apps/backend/src/mcp/tools/contact.tools.ts` | 3 contact tools: list, save, remove |
 | `apps/backend/src/mcp/tools/collection.tools.ts` | 5 collection tools: create, append_rows, get_rows, update_row, delete_rows |
+| `apps/backend/src/mcp/tools/tour.tools.ts` | 1 tour tool — returns MCP_TOUR_SCRIPT prose for operator onboarding |
 | `apps/backend/src/api/services/share-token.service.ts` | Server-issued share tokens (`st_` prefix) used by MCP sharing tools |

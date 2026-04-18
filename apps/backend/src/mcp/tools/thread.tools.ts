@@ -2,6 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import type { McpServices } from '../mcp.server';
 import { FRONTEND_URL, parseExpiry } from '../mcp.server';
+import { TOKENRIP_AGENT_ID, TOUR_WELCOME_BODY } from '../../api/service/tour.constants';
 
 export function registerThreadTools(server: McpServer, services: McpServices, agentId: string): void {
 
@@ -96,12 +97,16 @@ export function registerThreadTools(server: McpServer, services: McpServices, ag
         type: z.string().optional(),
       }).optional().describe('Initial message to post in the thread'),
       metadata: z.string().optional().describe('Thread metadata as JSON string'),
+      tourWelcome: z.boolean().optional().describe('If true and @tokenrip is a participant, @tokenrip will post a welcome message atomically. Sets metadata.tour_welcome = true.'),
       refs: z.string().optional().describe('JSON array of refs to link: [{"type":"asset","target_id":"uuid"}]'),
     },
     async (args) => {
       try {
-        const metadata = args.metadata ? JSON.parse(args.metadata) : undefined;
-        const thread = await services.threadService.create(agentId, { metadata });
+        const metadata: Record<string, unknown> = args.metadata ? JSON.parse(args.metadata) : {};
+        if (args.tourWelcome) metadata.tour_welcome = true;
+        const thread = await services.threadService.create(agentId, {
+          metadata: Object.keys(metadata).length ? metadata : undefined,
+        });
 
         const creatorParticipant = await services.participantService.addAgent(thread, agentId);
 
@@ -126,6 +131,20 @@ export function registerThreadTools(server: McpServer, services: McpServices, ag
             intent: args.message.intent,
             type: args.message.type,
           });
+        }
+
+        // Tour welcome: if flagged AND @tokenrip was invited, post a welcome message
+        // from @tokenrip. Mirrors ThreadController.create for parity.
+        if (metadata.tour_welcome === true) {
+          const tokenripParticipant = await services.participantService.findByThreadAndAgent(
+            thread.id,
+            TOKENRIP_AGENT_ID,
+          );
+          if (tokenripParticipant) {
+            await services.messageService.create(thread, tokenripParticipant, TOUR_WELCOME_BODY, {
+              intent: 'inform',
+            });
+          }
         }
 
         const participants = await services.participantService.listByThread(thread.id);
