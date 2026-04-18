@@ -10,6 +10,7 @@ import { useAtomValue } from 'jotai'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { themeAtom } from '@/_jotai/theme/theme.atoms'
+import { GA_MEASUREMENT_ID } from '@/config'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { NotFound } from '@/components/NotFound'
 import appCss from './globals.css?url'
@@ -144,6 +145,16 @@ function RootLayout() {
       <head>
         <script dangerouslySetInnerHTML={{ __html: ANTI_FLASH_SCRIPT }} />
         <HeadContent />
+        {GA_MEASUREMENT_ID && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`,
+              }}
+            />
+          </>
+        )}
       </head>
       <body className="font-sans min-h-screen" suppressHydrationWarning>
         <div className="relative z-10 flex min-h-screen flex-col">
