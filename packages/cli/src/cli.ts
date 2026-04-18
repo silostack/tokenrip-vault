@@ -281,11 +281,13 @@ collection
   .argument('<uuid>', 'Collection asset public ID')
   .option('--data <json>', 'Row data as inline JSON (single object or array)')
   .option('--file <path>', 'Path to JSON file with row data (object or array)')
-  .description('Append one or more rows to a collection')
+  .description('Append one or more rows to a collection (max 1000 per call)')
   .addHelpText('after', `
 EXAMPLES:
   $ rip collection append 550e8400-... --data '{"company":"Acme","signal":"API launch"}'
   $ rip collection append 550e8400-... --file rows.json
+
+NOTE: Maximum 1000 rows per call. For larger datasets, split into multiple calls.
 `)
   .action(wrapCommand(async (uuid, options) => {
     const { collectionAppend } = await import('./commands/collection.js');

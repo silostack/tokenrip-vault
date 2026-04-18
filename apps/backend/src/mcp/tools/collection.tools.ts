@@ -99,7 +99,7 @@ export function registerCollectionTools(server: McpServer, services: McpServices
 
   server.tool(
     'collection_append_rows',
-    'Append one or more rows to a collection. Rows are key-value objects matching the collection schema. Unknown keys auto-expand the schema.',
+    'Append one or more rows to a collection (max 1000 per call). Rows are key-value objects matching the collection schema. Unknown keys auto-expand the schema.',
     {
       publicId: z.string().describe('Collection asset UUID'),
       rowsJson: z.string().describe('JSON array of row data objects, e.g. [{"company":"Acme","signal":"API launch"}]'),

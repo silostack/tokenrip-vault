@@ -20,6 +20,7 @@ export interface CollectionSchema {
 }
 
 const COL_NAME_RE = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
+const MAX_ROWS_PER_APPEND = 1000;
 
 @Injectable()
 export class CollectionRowService {
@@ -38,6 +39,9 @@ export class CollectionRowService {
   ): Promise<CollectionRow[]> {
     if (!rows.length) {
       throw new BadRequestException({ ok: false, error: 'EMPTY_ROWS', message: 'At least one row is required' });
+    }
+    if (rows.length > MAX_ROWS_PER_APPEND) {
+      throw new BadRequestException({ ok: false, error: 'TOO_MANY_ROWS', message: `Max ${MAX_ROWS_PER_APPEND} rows per call. Split into multiple calls.` });
     }
 
     return this.em.transactional(async () => {

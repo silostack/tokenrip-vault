@@ -175,7 +175,7 @@ rip asset publish _ --type collection --title "Research" --schema '[{"name":"com
 rip asset publish leads.csv --type collection --from-csv --headers --title "Leads"
 ```
 
-### Append rows
+### Append rows (max 1000 per call)
 
 ```bash
 rip collection append <uuid> --data '{"company":"Acme","signal":"API launch"}'

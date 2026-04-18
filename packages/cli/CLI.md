@@ -153,7 +153,7 @@ rip asset stats
 
 ### `rip collection append <uuid>`
 
-Append rows to a collection.
+Append rows to a collection. Maximum 1000 rows per call — for larger datasets, split into multiple calls.
 
 ```bash
 rip collection append 550e8400-... --data '{"company":"Acme","signal":"API launch"}'

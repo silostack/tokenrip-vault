@@ -165,8 +165,142 @@ Map<string, StreamableHTTPServerTransport>
 | Process restart | All sessions lost. Clients re-initialize automatically (API key is still valid). |
 | Horizontal scaling | Sessions pinned to the instance that created them. Would need Redis or sticky sessions. |
 | Client disconnect | Transport `onclose` callback removes session from map. |
-| Idle timeout | 7-day sliding window. Every request resets the timer. Cleanup sweep runs hourly. |
-| Session expiry | Client gets 404. Re-initializes with same API key — no OAuth re-auth needed. |
+| Idle timeout | 30-minute sliding window. Every request resets the timer. Cleanup sweep runs every 5 minutes. |
+| Session expiry | Client gets 404. Re-initializes with same API key — transparent to user. |
+
+### Session Expiry and Re-initialization
+
+An MCP session expiring does **not** require the user to re-authenticate. The session (a UUID-keyed pairing of transport + McpServer) is a server-side construct. The user's API key (`tr_...`) lives in their MCP client config and is independent of session lifetime.
+
+When a session expires (30 minutes of inactivity, or process restart):
+
+```
+Client                                    Server
+  │                                         │
+  │  POST /mcp                              │
+  │  mcp-session-id: <expired-uuid>         │
+  │────────────────────────────────────────►│
+  │                                         │
+  │◄────────────────────────────────────────│
+  │  404 Session not found                  │
+  │                                         │
+  │  (client detects 404, retries           │
+  │   without session ID)                   │
+  │                                         │
+  │  POST /mcp                              │
+  │  Authorization: Bearer tr_...           │
+  │  body: { "method": "initialize" }       │
+  │────────────────────────────────────────►│
+  │                                         │
+  │                        ┌────────────────┤
+  │                        │ Validate API key (same key
+  │                        │ from client's MCP config)
+  │                        │ Create new session
+  │                        └────────────────┤
+  │                                         │
+  │◄────────────────────────────────────────│
+  │  200 OK                                 │
+  │  mcp-session-id: <new-uuid>             │
+```
+
+MCP SDK clients (Claude Code, Cursor, etc.) handle this automatically. The user never sees a prompt or credential request — the next tool call just takes slightly longer (~200ms) because it includes initialization. This is the "graceful degradation" design principle: clients re-initialize transparently whenever a session is lost, whether from idle expiry, cleanup, or server restart.
+
+The API key itself has no expiry (unless explicitly revoked). A user who configures the Tokenrip MCP server once never needs to touch their credentials again, regardless of how many sessions come and go.
+
+### Memory Management
+
+The cleanup sweep logs process memory (RSS, heap) and active session count every 5 minutes, providing visibility into memory trends without excessive logging. Session creation is also logged with the current session count.
+
+```
+MCP session created: <uuid> (active: 12)
+MCP cleanup: removed=3 active=9
+Memory: rss=245MB heap=180MB sessions=9
+```
+
+---
+
+## MCP Sessions and the MikroORM EntityManager
+
+MCP sessions are long-lived (up to 30 minutes), but each HTTP request through a session gets its own short-lived MikroORM EntityManager fork. Understanding how these two lifecycles interact is important for memory behavior.
+
+### How Request-Scoped EntityManagers Work
+
+MikroORM's NestJS integration registers `MikroOrmMiddleware` globally. This middleware runs for every HTTP request — including `/mcp` requests (the `@Public()` decorator only bypasses the `AuthGuard`, not HTTP middleware). The middleware does:
+
+```
+MikroOrmMiddleware.use(req, res, next):
+  RequestContext.create(orm.em, next)
+```
+
+`RequestContext.create()` forks the global EntityManager and stores the fork in Node.js `AsyncLocalStorage`. For the duration of that request's async context, any code that accesses `orm.em` (or an injected `EntityManager`) transparently resolves to the fork — not the global singleton.
+
+Each fork has its own **identity map**: a cache of every entity loaded or persisted during that request. The identity map ensures that two queries returning the same database row produce the same JS object, and it tracks dirty state for change detection.
+
+### The Request Flow
+
+```
+HTTP POST /mcp
+  │
+  ▼
+MikroOrmMiddleware
+  │  RequestContext.create(orm.em, next)
+  │  └─ forks global EM → request-scoped fork (with empty identity map)
+  │
+  ▼
+McpController.handlePost()
+  │  routes to transport
+  │
+  ▼
+transport.handleRequest()
+  │  fires onmessage → McpServer processes tool call
+  │
+  ▼
+Tool handler (e.g. collection_append_rows)
+  │  calls CollectionRowService.appendRows()
+  │  └─ em.transactional() creates a transaction fork
+  │  └─ entities created, persisted, flushed
+  │  └─ transaction fork merges entities back into request-scoped fork's identity map
+  │
+  ▼
+transport.handleRequest() returns
+  │
+  ▼
+McpController calls this.em.clear()    ◄── releases identity map
+  │
+  ▼
+MikroOrmMiddleware returns
+  │  RequestContext ends → request-scoped fork eligible for GC
+```
+
+### Why em.clear() Is Necessary
+
+Without `em.clear()`, the request-scoped fork's identity map holds references to every entity loaded or created during the request until the fork is garbage collected. For most REST API requests this is fine — the request ends, the fork goes out of scope, GC collects it promptly.
+
+MCP requests are different. The `StreamableHTTPServerTransport` internally creates closures per request (via `getRequestListener` from `@hono/node-server`) that can retain references to the async context and its associated objects. Under Bun's JavaScriptCore runtime, these closures are not always collected promptly due to conservative GC scanning. When the closures survive, they keep the request-scoped EntityManager fork alive, which keeps the identity map alive, which keeps every entity from that request alive.
+
+For a tool call like `collection_append_rows` that creates hundreds of entities, this means hundreds of entity objects (plus MikroORM's internal metadata: original data snapshots for dirty checking, wrapped entity references) stay in memory indefinitely.
+
+`em.clear()` explicitly empties the identity map before the controller returns. The entities become unreachable even if the enclosing closure survives GC. It's a defensive measure — the identity map *should* be collected with its fork, but `clear()` ensures it happens regardless of GC behavior.
+
+### What em.clear() Actually Does
+
+`EntityManager.clear()` does one thing: it calls `this.getUnitOfWork().clear()`, which:
+
+1. Empties the identity map (the `Map<string, entity>` keyed by entity class + primary key)
+2. Clears the change set tracker (pending inserts, updates, deletes)
+3. Clears the collection change tracker
+
+It does **not** close database connections, roll back transactions, or affect other request-scoped forks. It's safe to call after a request has completed all its database work — the identity map is no longer needed at that point.
+
+### Why This Only Applies to MCP
+
+Regular REST API requests don't need `em.clear()` because:
+
+1. The response is sent directly by the controller — no intermediate transport layer creating closures
+2. The request-scoped fork goes out of scope immediately after the response
+3. V8/JSC collects it on the next GC cycle
+
+MCP requests pass through an additional layer (the MCP SDK transport) that creates per-request closures which can delay GC. The `em.clear()` call compensates for this by releasing entity references eagerly.
 
 ---
 
@@ -289,7 +423,7 @@ When `thread_create` is called with `tourWelcome: true` and `@tokenrip` as a par
 | Tool | Description | Service Method | Key Parameters |
 |---|---|---|---|
 | `collection_create` | Create a structured data table | `AssetService.createCollection()` | `title`, `schemaJson` (JSON string of column definitions), `description?` |
-| `collection_append_rows` | Append rows to a collection | `CollectionRowService.appendRows()` | `publicId`, `rowsJson` (JSON array of row objects) |
+| `collection_append_rows` | Append rows to a collection (max 1000 per call) | `CollectionRowService.appendRows()` | `publicId`, `rowsJson` (JSON array of row objects) |
 | `collection_get_rows` | Get rows with pagination | `CollectionRowService.getRows()` | `publicId`, `limit?`, `after?` |
 | `collection_update_row` | Partial update a row | `CollectionRowService.updateRow()` | `publicId`, `rowId`, `dataJson` (JSON object of fields to update) |
 | `collection_delete_rows` | Delete rows | `CollectionRowService.deleteRows()` | `publicId`, `ids` |

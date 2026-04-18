@@ -243,13 +243,13 @@ rip asset publish schema.json --type collection --title "Research"
 rip asset publish _ --type collection --title "Research" --schema '[{"name":"company","type":"text"},{"name":"signal","type":"text"}]'
 ```
 
-### Append rows
+### Append rows (max 1000 per call)
 
 ```
 rip collection append <uuid> --data '<json>' [--file <file>]
 ```
 
-Add one or more rows to a collection.
+Add one or more rows to a collection. Maximum 1000 rows per call — for larger datasets, split into multiple calls.
 
 ```bash
 rip collection append 550e8400-... --data '{"company":"Acme","signal":"API launch"}'

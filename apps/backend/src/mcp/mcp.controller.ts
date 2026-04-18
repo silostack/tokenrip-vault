@@ -1,13 +1,14 @@
 import { Controller, Post, Get, Delete, Req, Res, Logger, Inject, OnModuleDestroy } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
+import { EntityManager } from '@mikro-orm/postgresql';
 import { randomUUID } from 'crypto';
 import { Public } from '../api/auth/public.decorator';
 import { AuthService } from '../api/auth/auth.service';
 import { createMcpServer, McpServices, MCP_SERVICES } from './mcp.server';
 
-const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days idle timeout (sliding window — resets on every request)
-const CLEANUP_INTERVAL_MS = 60 * 60 * 1000; // sweep every hour
+const SESSION_TTL_MS = 30 * 60 * 1000; // 30 min idle timeout (sliding window — resets on every request)
+const CLEANUP_INTERVAL_MS = 5 * 60 * 1000; // sweep every 5 minutes
 
 interface SessionEntry {
   transport: StreamableHTTPServerTransport;
@@ -23,6 +24,7 @@ export class McpController implements OnModuleDestroy {
   constructor(
     private readonly authService: AuthService,
     @Inject(MCP_SERVICES) private readonly mcpServices: McpServices,
+    private readonly em: EntityManager,
   ) {
     this.cleanupTimer = setInterval(() => this.cleanupIdleSessions(), CLEANUP_INTERVAL_MS);
   }
@@ -44,6 +46,7 @@ export class McpController implements OnModuleDestroy {
     if (sessionId && existing) {
       existing.lastActivity = Date.now();
       await existing.transport.handleRequest(req, res, req.body);
+      this.em.clear();
       return;
     }
 
@@ -79,10 +82,11 @@ export class McpController implements OnModuleDestroy {
     };
 
     await transport.handleRequest(req, res, req.body);
+    this.em.clear();
 
     if (transport.sessionId) {
       this.sessions.set(transport.sessionId, { transport, lastActivity: Date.now() });
-      this.logger.debug(`MCP session created: ${transport.sessionId}`);
+      this.logger.log('MCP session created: %s (active: %d)', transport.sessionId, this.sessions.size);
     }
   }
 
@@ -93,6 +97,7 @@ export class McpController implements OnModuleDestroy {
     if (!entry) { res.status(404).json({ error: 'Session not found' }); return; }
     entry.lastActivity = Date.now();
     await entry.transport.handleRequest(req, res);
+    this.em.clear();
   }
 
   @Public()
@@ -110,13 +115,20 @@ export class McpController implements OnModuleDestroy {
 
   private cleanupIdleSessions() {
     const now = Date.now();
+    let removed = 0;
     for (const [sessionId, entry] of this.sessions) {
       if (now - entry.lastActivity > SESSION_TTL_MS) {
         entry.transport.close?.();
         this.sessions.delete(sessionId);
-        this.logger.debug(`MCP session expired: ${sessionId}`);
+        removed++;
       }
     }
+    if (removed > 0) {
+      this.logger.log('MCP cleanup: removed=%d active=%d', removed, this.sessions.size);
+    }
+    const mem = process.memoryUsage();
+    this.logger.log('Memory: rss=%dMB heap=%dMB sessions=%d',
+      Math.round(mem.rss / 1048576), Math.round(mem.heapUsed / 1048576), this.sessions.size);
   }
 
   private async resolveAgentId(req: Request): Promise<string | null> {
