@@ -18,6 +18,7 @@ import { MessageService } from '../service/message.service';
 import { RefService, serializeRef } from '../service/ref.service';
 import { AgentService } from '../service/agent.service';
 import { OperatorBindingService } from '../service/operator-binding.service';
+import { TOKENRIP_AGENT_ID, TOUR_WELCOME_BODY } from '../service/tour.constants';
 
 @Controller('v0/threads')
 export class ThreadController {
@@ -80,6 +81,20 @@ export class ThreadController {
         intent: body.message.intent,
         type: body.message.type,
       });
+    }
+
+    // Tour welcome: if caller flagged this as a tour thread AND invited @tokenrip,
+    // post a welcome message from @tokenrip atomically inside the same transaction.
+    if (body.metadata?.tour_welcome === true) {
+      const tokenripParticipant = await this.participantService.findByThreadAndAgent(
+        thread.id,
+        TOKENRIP_AGENT_ID,
+      );
+      if (tokenripParticipant) {
+        await this.messageService.create(thread, tokenripParticipant, TOUR_WELCOME_BODY, {
+          intent: 'inform',
+        });
+      }
     }
 
     return { ok: true, data: await this.serializeThread(thread) };

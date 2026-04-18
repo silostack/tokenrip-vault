@@ -133,13 +133,13 @@ describe('mcp', () => {
   });
 
   describe('tools/list', () => {
-    test('lists all 36 tools', async () => {
+    test('lists all 37 tools', async () => {
       const res = await mcpRequest('tools/list', {});
       expect(res.status).toBe(200);
       const json = await parseSSEResponse(res);
       expect(json.result?.tools).toBeTruthy();
       const tools = json.result.tools;
-      expect(tools.length).toBe(36);
+      expect(tools.length).toBe(37);
 
       const toolNames = tools.map((t: any) => t.name).sort();
       expect(toolNames).toEqual([
@@ -178,6 +178,7 @@ describe('mcp', () => {
         'thread_list',
         'thread_remove_ref',
         'thread_share',
+        'tour',
         'whoami',
       ]);
     });

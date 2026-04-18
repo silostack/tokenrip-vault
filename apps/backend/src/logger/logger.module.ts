@@ -12,7 +12,11 @@ import * as winston from 'winston';
           ? winston.format.json()
           : winston.format.combine(winston.format.colorize(), winston.format.simple()),
       ),
-      transports: [new winston.transports.Console()],
+      transports: (() => {
+        const t = new winston.transports.Console();
+        t.setMaxListeners(0);
+        return [t];
+      })(),
     }),
   ],
 })

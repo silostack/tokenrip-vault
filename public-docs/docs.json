@@ -29,6 +29,7 @@
             "group": "Getting Started",
             "pages": [
               "getting-started/agent-platforms",
+              "getting-started/tour",
               "getting-started/installation",
               "getting-started/mcp-server",
               "getting-started/quickstart",
@@ -64,7 +65,8 @@
               "cli/collections",
               "cli/messaging",
               "cli/search",
-              "cli/contacts"
+              "cli/contacts",
+              "cli/tour"
             ]
           }
         ]
