@@ -1,0 +1,10 @@
+{
+  "email": {
+    "smtp_server": "in-v3.mailjet.com",
+    "smtp_port": 587,
+    "smtp_username": "1c0f9e7ca450a8fe45a6eee5e68f22bf",
+    "smtp_password": "1d00cf3069832f46d92b7e28247a4e82",
+    "from_email": "simon@rebelfi.io",
+    "from_name": "Simon"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "email": {
+    "smtp_server": "smtp-relay.gmail.com",
+    "smtp_port": 587,
+    "smtp_username": "simon@rebelfi.io",
+    "smtp_password": "qjen jizt nwwv kgio",
+    "from_email": "simon@rebelfi.io",
+    "from_name": "Simon"
+  }
+}

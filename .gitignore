@@ -1,0 +1,25 @@
+# Obsidian workspace files (user-specific UI state)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# Obsidian cache
+.obsidian/cache
+
+# Trash folder
+.trash/
+
+# macOS files
+.DS_Store
+
+# Temporary files
+*.tmp
+*~
+
+# Claude Code configuration (contains credentials)
+.claude/config.json
+
+# MCP configuration (contains API keys)
+.mcp.json
+
+.playwright*
+
