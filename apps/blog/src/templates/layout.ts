@@ -55,6 +55,14 @@ function renderFooter(): string {
 </footer>`;
 }
 
+const GA_ID = process.env.GA_MEASUREMENT_ID;
+
+function renderGASnippet(): string {
+  if (!GA_ID) return '';
+  return `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');</script>`;
+}
+
 export function renderLayout(head: string, body: string): string {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -67,6 +75,7 @@ ${head}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap">
 <link rel="stylesheet" href="/blog/_assets/blog.css">
+${renderGASnippet()}
 </head>
 <body>
 <div class="site-wrapper">
