@@ -97,7 +97,7 @@ function HeaderNav() {
   if (pathname.startsWith('/s/') || pathname.startsWith('/operator')) return null
 
   return (
-    <nav className="flex items-center gap-5">
+    <nav className="hidden sm:flex items-center gap-5">
       <a href="/about" className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60">About</a>
       <a href="/faq" className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60">FAQ</a>
       <a href="https://docs.tokenrip.com" className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60">Docs</a>
@@ -124,7 +124,7 @@ function Footer() {
   return (
     <footer className="border-t border-foreground/10 px-6 py-6">
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-3">
-        <nav className="flex items-center gap-6">
+        <nav className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2">
           <a href="/about" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">About</a>
           <a href="/faq" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">FAQ</a>
           <a href="https://docs.tokenrip.com" className="font-mono text-xs text-foreground/40 transition-colors hover:text-foreground/60">Docs</a>

@@ -45,7 +45,7 @@ export function HeroInstall() {
                 aria-selected={isActive}
                 onClick={() => setActiveId(p.id)}
                 className={[
-                  'flex-1 whitespace-nowrap border-r border-foreground/10 px-3.5 py-2.5 font-mono text-[11px] uppercase tracking-[0.12em] transition-colors last:border-r-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-inset',
+                  'flex-1 min-w-max whitespace-nowrap border-r border-foreground/10 px-3.5 py-2.5 font-mono text-[11px] uppercase tracking-[0.12em] transition-colors last:border-r-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-inset',
                   isActive
                     ? 'bg-background text-foreground shadow-[inset_0_-2px_0_var(--signal)]'
                     : 'text-foreground/50 hover:bg-background/60 hover:text-foreground/80',

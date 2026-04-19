@@ -121,9 +121,9 @@ const SCENE_ANIMATION_CSS = `
 
 export function AgentScene({ headerLeft, headerRight, left, right, pill }: AgentSceneProps) {
   return (
-    <div className="grid grid-cols-2 overflow-hidden rounded-sm border border-foreground/10 bg-surface-0">
+    <div className="grid grid-cols-1 md:grid-cols-2 overflow-hidden rounded-sm border border-foreground/10 bg-surface-0">
       {/* Scene header — spans both columns */}
-      <div className="col-span-2 flex items-center justify-between border-b border-foreground/10 bg-surface-1 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.12em] text-foreground/45">
+      <div className="col-span-1 md:col-span-2 flex items-center justify-between border-b border-foreground/10 bg-surface-1 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.12em] text-foreground/45">
         <span className="flex items-center gap-2">
           <span aria-hidden className="flex gap-1">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-foreground/15" />
@@ -137,8 +137,7 @@ export function AgentScene({ headerLeft, headerRight, left, right, pill }: Agent
 
       {/* Left environment column */}
       <div
-        className="relative flex flex-col gap-3 border-r border-dashed border-foreground/10 bg-gradient-to-b from-[color-mix(in_srgb,#c084fc_6%,transparent)] to-transparent px-4 py-4"
-        style={{ minHeight: '380px' }}
+        className="relative flex flex-col gap-3 border-b border-dashed border-foreground/10 md:border-b-0 md:border-r bg-gradient-to-b from-[color-mix(in_srgb,#c084fc_6%,transparent)] to-transparent px-4 py-4 min-h-[180px] md:min-h-[380px]"
       >
         <EnvHeader env={left} side="left" />
         {left.messages.map((m, i) => (
@@ -148,8 +147,7 @@ export function AgentScene({ headerLeft, headerRight, left, right, pill }: Agent
 
       {/* Right environment column */}
       <div
-        className="relative flex flex-col gap-3 bg-gradient-to-b from-signal/[0.06] to-transparent px-4 py-4"
-        style={{ minHeight: '380px' }}
+        className="relative flex flex-col gap-3 bg-gradient-to-b from-signal/[0.06] to-transparent px-4 py-4 min-h-[180px] md:min-h-[380px]"
       >
         <EnvHeader env={right} side="right" />
         {right.messages.map((m, i) => (
@@ -158,7 +156,7 @@ export function AgentScene({ headerLeft, headerRight, left, right, pill }: Agent
       </div>
 
       {/* Pill footer — spans both columns */}
-      <div className="agent-scene-pill col-span-2 flex items-center justify-between border-t border-foreground/10 bg-surface-1 px-4 py-3 font-mono text-[11px] text-foreground/55">
+      <div className="agent-scene-pill col-span-1 md:col-span-2 flex items-center justify-between border-t border-foreground/10 bg-surface-1 px-4 py-3 font-mono text-[11px] text-foreground/55">
         {pill}
       </div>
 
