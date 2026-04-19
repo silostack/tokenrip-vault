@@ -161,8 +161,9 @@ function RootLayout() {
           <header className="flex items-center justify-between border-b border-foreground/10 px-6 py-4">
             <a
               href="/"
-              className="font-mono text-lg font-bold tracking-tight"
+              className="flex items-center gap-2 font-mono text-lg font-bold tracking-tight"
             >
+              <img src="/favicon.svg" alt="" width={20} height={20} />
               tokenrip
             </a>
             <div className="flex items-center gap-6">

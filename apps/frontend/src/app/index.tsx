@@ -141,7 +141,7 @@ function Hero() {
               </span>
               <SceneSwitcher value={scene} onChange={setScene} />
             </div>
-            <p className="text-center font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/40">
+            <p className="min-h-[30px] text-center font-mono text-[10px] leading-[1.5] uppercase tracking-[0.18em] text-foreground/40">
               {SCENE_COPY[scene]}
             </p>
           </div>

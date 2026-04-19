@@ -25,13 +25,18 @@ const MOON_ICON = `<svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" wid
 
 function renderHeader(): string {
   return `<header class="site-header">
-  <a href="/" class="wordmark">tokenrip</a>
+  <a href="/" class="wordmark">
+    <img src="/favicon.svg" alt="" width="20" height="20" />
+    tokenrip
+  </a>
   <div class="header-right">
-    <nav>
+    <nav class="header-nav">
       <a href="/about">About</a>
       <a href="/faq">FAQ</a>
       <a href="https://docs.tokenrip.com">Docs</a>
+      <a href="/blog">Blog</a>
     </nav>
+    <a href="/login" class="header-login">Login</a>
     <button id="theme-toggle" class="theme-toggle" type="button" title="Toggle theme">
       ${SUN_ICON}
       ${MOON_ICON}
