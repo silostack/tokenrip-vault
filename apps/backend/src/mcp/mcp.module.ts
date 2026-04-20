@@ -14,6 +14,7 @@ import { RefService } from '../api/service/ref.service';
 import { ContactService } from '../api/service/contact.service';
 import { CollectionRowService } from '../api/service/collection-row.service';
 import { SearchService } from '../api/service/search.service';
+import { TeamService } from '../api/service/team.service';
 import { AnalyticsService } from '../analytics/analytics.service';
 import type { McpServices } from './mcp.server';
 
@@ -37,6 +38,7 @@ import type { McpServices } from './mcp.server';
         collectionRowService: CollectionRowService,
         searchService: SearchService,
         analyticsService: AnalyticsService,
+        teamService: TeamService,
       ): McpServices => ({
         assetService,
         assetVersionService,
@@ -51,6 +53,7 @@ import type { McpServices } from './mcp.server';
         collectionRowService,
         searchService,
         analyticsService,
+        teamService,
       }),
       inject: [
         AssetService,
@@ -66,6 +69,7 @@ import type { McpServices } from './mcp.server';
         CollectionRowService,
         SearchService,
         AnalyticsService,
+        TeamService,
       ],
     },
   ],

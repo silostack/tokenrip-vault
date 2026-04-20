@@ -21,7 +21,7 @@ function ActionButton({ action, onClick }: { action: ToolbarAction; onClick: () 
     <button
       type="button"
       onClick={onClick}
-      className={`rounded-lg px-3 py-2 text-xs font-medium transition-colors active:scale-95 ${
+      className={`rounded-lg px-3 py-2 text-xs font-mono font-medium tracking-wide transition-colors active:scale-[0.97] ${
         action.destructive
           ? 'text-status-error hover:bg-status-error/10'
           : 'text-foreground/50 hover:bg-foreground/5 hover:text-foreground/70'
@@ -67,15 +67,15 @@ export function OperatorToolbar({ title, actions = [], backTo }: OperatorToolbar
       <button
         type="button"
         onClick={handleBack}
-        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-foreground/40 transition-colors hover:bg-foreground/5 hover:text-foreground/60 active:scale-95"
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-foreground/40 transition-colors hover:bg-foreground/5 hover:text-foreground/60 active:scale-[0.97]"
         title="Back"
       >
-        <ArrowLeft size={18} />
+        <ArrowLeft size={18} strokeWidth={1.5} />
       </button>
 
       <div className="min-w-0 flex-1">
         {title && (
-          <span className="truncate text-sm font-medium text-foreground/60">{title}</span>
+          <span className="truncate text-[13px] font-mono font-medium tracking-wide text-foreground/60">{title}</span>
         )}
       </div>
 
@@ -96,12 +96,12 @@ export function OperatorToolbar({ title, actions = [], backTo }: OperatorToolbar
             <button
               type="button"
               onClick={() => setMenuOpen(!menuOpen)}
-              className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground/40 transition-colors hover:bg-foreground/5"
+              className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground/40 transition-colors hover:bg-foreground/5 active:scale-[0.97]"
             >
-              <MoreVertical size={16} />
+              <MoreVertical size={16} strokeWidth={1.5} />
             </button>
             {menuOpen && (
-              <div className="absolute right-0 top-full z-50 mt-1 min-w-[160px] rounded-lg border border-foreground/10 bg-background py-1 shadow-lg">
+              <div className="absolute right-0 top-full z-50 mt-1 min-w-[160px] rounded-lg border border-foreground/10 bg-background py-1 shadow-[0_2px_8px_rgba(0,0,0,0.25)]">
                 {secondaryActions.map((action) => (
                   <button
                     key={action.label}

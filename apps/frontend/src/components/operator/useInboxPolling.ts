@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback, useState } from 'react'
 import { useSetAtom, useAtomValue } from 'jotai'
 import { inboxItemsAtom, inboxLoadingAtom, inboxSearchAtom, inboxStateFilterAtom } from '@/_jotai/operator/operator.atoms'
+import { activeTeamSlugAtom } from '@/_jotai/operator/team-filter.atoms'
 import { fetchInbox, mergeInboxItems, type InboxItem, type InboxFetchOpts } from '@/lib/operator'
 
 function getItemId(item: InboxItem): string {
@@ -13,8 +14,9 @@ export function useInboxPolling() {
   const loading = useAtomValue(inboxLoadingAtom)
   const search = useAtomValue(inboxSearchAtom)
   const stateFilter = useAtomValue(inboxStateFilterAtom)
+  const activeTeamSlug = useAtomValue(activeTeamSlugAtom)
   const pollAfterRef = useRef(30)
-  const intervalRef = useRef<ReturnType<typeof setInterval>>()
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const lastFetchRef = useRef<string | null>(null)
   const [initialDone, setInitialDone] = useState(false)
 
@@ -27,6 +29,7 @@ export function useInboxPolling() {
           opts.state = stateFilter
           opts.type = 'thread'
         }
+        if (activeTeamSlug) opts.team = activeTeamSlug
         if (since) opts.since = since
         const data = await fetchInbox(opts)
         const merged = mergeInboxItems(data)
@@ -51,7 +54,7 @@ export function useInboxPolling() {
         // silent poll failure
       }
     },
-    [setItems, search, stateFilter],
+    [setItems, search, stateFilter, activeTeamSlug],
   )
 
   // Initial fetch + re-fetch when filters change
@@ -69,7 +72,7 @@ export function useInboxPolling() {
     if (!initialDone) return
 
     const startPolling = () => {
-      clearInterval(intervalRef.current)
+      if (intervalRef.current) clearInterval(intervalRef.current)
       intervalRef.current = setInterval(() => {
         if (document.hidden) return
         doFetch(lastFetchRef.current || undefined)
@@ -87,7 +90,7 @@ export function useInboxPolling() {
     document.addEventListener('visibilitychange', handleVisibility)
 
     return () => {
-      clearInterval(intervalRef.current)
+      if (intervalRef.current) clearInterval(intervalRef.current)
       document.removeEventListener('visibilitychange', handleVisibility)
     }
   }, [initialDone, doFetch])

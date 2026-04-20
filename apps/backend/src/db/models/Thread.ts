@@ -27,6 +27,9 @@ export class Thread {
   @Property({ type: 'json', nullable: true })
   metadata?: Record<string, unknown>;
 
+  @Property({ type: 'uuid', nullable: true })
+  teamId?: string;
+
   @Property()
   createdAt: Date = new Date();
 

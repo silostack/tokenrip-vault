@@ -18,6 +18,7 @@ import { MessageService } from '../service/message.service';
 import { RefService, serializeRef } from '../service/ref.service';
 import { AgentService } from '../service/agent.service';
 import { OperatorBindingService } from '../service/operator-binding.service';
+import { TeamService } from '../service/team.service';
 import { TOKENRIP_AGENT_ID, TOUR_WELCOME_BODY } from '../service/tour.constants';
 
 @Controller('v0/threads')
@@ -29,6 +30,7 @@ export class ThreadController {
     private readonly refService: RefService,
     private readonly agentService: AgentService,
     private readonly bindingService: OperatorBindingService,
+    private readonly teamService: TeamService,
   ) {}
 
   private async serializeThread(thread: any) {
@@ -59,13 +61,33 @@ export class ThreadController {
   @Transactional()
   async create(
     @AuthAgent() agent: { id: string },
-    @Body() body: { participants?: string[]; metadata?: Record<string, unknown>; message?: { body: string; intent?: string; type?: string }; refs?: Array<{ type: string; target_id: string; version?: number }> },
+    @Body() body: { participants?: string[]; metadata?: Record<string, unknown>; message?: { body: string; intent?: string; type?: string }; refs?: Array<{ type: string; target_id: string; version?: number }>; team?: string },
   ) {
-    const thread = await this.threadService.create(agent.id, { metadata: body.metadata });
+    let teamId: string | undefined;
+    let teamMemberIds: string[] = [];
+
+    if (body.team) {
+      const team = await this.teamService.findBySlugOrId(body.team);
+      const isMember = await this.teamService.isMember(team.id, agent.id);
+      if (!isMember) {
+        throw new BadRequestException({ ok: false, error: 'NOT_A_MEMBER', message: `You are not a member of team "${body.team}"` });
+      }
+      teamId = team.id;
+      const details = await this.teamService.getDetails(team.id);
+      teamMemberIds = details.members.map((m) => m.agentId);
+    }
+
+    const thread = await this.threadService.create(agent.id, { metadata: body.metadata, teamId });
 
     const creatorParticipant = await this.participantService.addAgent(thread, agent.id);
 
-    if (body.participants) {
+    if (teamId && teamMemberIds.length > 0) {
+      for (const memberId of teamMemberIds) {
+        if (memberId !== agent.id) {
+          await this.participantService.addAgent(thread, memberId);
+        }
+      }
+    } else if (body.participants) {
       for (const entry of body.participants) {
         const agentId = await this.agentService.resolveByIdOrAlias(entry);
         await this.participantService.addAgent(thread, agentId);
@@ -107,6 +129,7 @@ export class ThreadController {
     @Query('state') state: string | undefined,
     @Query('limit') limit: string | undefined,
     @Query('offset') offset: string | undefined,
+    @Query('team') team: string | undefined,
   ) {
     if (state && state !== 'open' && state !== 'closed') {
       throw new BadRequestException({
@@ -116,8 +139,15 @@ export class ThreadController {
       });
     }
 
+    let teamId: string | undefined;
+    if (team) {
+      const resolved = await this.teamService.findBySlugOrId(team);
+      teamId = resolved.id;
+    }
+
     const result = await this.threadService.listForAgent(agent.id, {
       state,
+      teamId,
       limit: limit ? parseInt(limit, 10) : undefined,
       offset: offset ? parseInt(offset, 10) : undefined,
     });
@@ -130,6 +160,7 @@ export class ThreadController {
           state: r.state,
           created_by: r.created_by,
           owner_id: r.owner_id,
+          team_id: r.team_id ?? null,
           participant_count: r.participant_count,
           last_message_at: r.last_message_at,
           last_message_preview: r.last_body_preview,

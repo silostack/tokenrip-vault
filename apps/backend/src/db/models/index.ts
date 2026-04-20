@@ -14,6 +14,10 @@ import { OAuthCode } from './OAuthCode';
 import { Contact } from './Contact';
 import { LinkCode } from './LinkCode';
 import { CollectionRow } from './CollectionRow';
+import { Team } from './Team';
+import { TeamMembership } from './TeamMembership';
+import { TeamAsset } from './TeamAsset';
+import { TeamInvite } from './TeamInvite';
 
 export { Asset, AssetType, AssetState } from './Asset';
 export { CollectionRow } from './CollectionRow';
@@ -47,5 +51,13 @@ export { Contact } from './Contact';
 export { ContactRepository } from '../repositories/contact.repository';
 export { LinkCode } from './LinkCode';
 export { LinkCodeRepository } from '../repositories/link-code.repository';
+export { Team } from './Team';
+export { TeamRepository } from '../repositories/team.repository';
+export { TeamMembership } from './TeamMembership';
+export { TeamMembershipRepository } from '../repositories/team-membership.repository';
+export { TeamAsset } from './TeamAsset';
+export { TeamAssetRepository } from '../repositories/team-asset.repository';
+export { TeamInvite } from './TeamInvite';
+export { TeamInviteRepository } from '../repositories/team-invite.repository';
 
-export const entities = [Asset, ApiKey, AssetVersion, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, AgentKeyPair, OAuthCode, Contact, LinkCode, CollectionRow];
+export const entities = [Asset, ApiKey, AssetVersion, Agent, User, OperatorBinding, Thread, Participant, Message, Ref, ShareToken, AgentKeyPair, OAuthCode, Contact, LinkCode, CollectionRow, Team, TeamMembership, TeamAsset, TeamInvite];

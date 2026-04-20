@@ -1,5 +1,13 @@
+import { Badge } from '@/components/ui/Badge'
+
+interface Participant {
+  agent_id: string
+  alias: string | null
+  team_name?: string | null
+}
+
 interface ParticipantChipsProps {
-  participants: Array<{ agent_id: string; alias: string | null }>
+  participants: Participant[]
   ownerId?: string
   max?: number
 }
@@ -15,25 +23,33 @@ export function ParticipantChips({
   return (
     <div className="flex flex-wrap items-center gap-1">
       {visible.map((p) => {
-        const label = p.alias || p.agent_id.slice(0, 8) + '...'
+        const label = p.alias || p.agent_id.slice(0, 8) + '…'
         const isOwner = ownerId && p.agent_id === ownerId
+        const isSystem = p.alias === 'tokenrip.ai'
         return (
           <span
             key={p.agent_id}
-            className="inline-flex items-center gap-1 rounded-full bg-foreground/5 px-2 py-0.5 text-[10px] font-medium text-foreground/50"
+            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-mono text-[10px] ${
+              isSystem
+                ? 'bg-signal-muted text-signal-strong ring-1 ring-inset ring-signal/20'
+                : 'bg-foreground/5 text-foreground/50'
+            }`}
           >
             {label}
             {isOwner && (
-              <span className="rounded bg-foreground/10 px-1 py-px text-[8px] uppercase text-foreground/40">
-                owner
-              </span>
+              <Badge size="sm" variant="accent">owner</Badge>
+            )}
+            {p.team_name && (
+              <Badge size="sm" className="ml-0.5">
+                {p.team_name}
+              </Badge>
             )}
           </span>
         )
       })}
       {overflow > 0 && (
-        <span className="text-[10px] text-foreground/30">
-          +{overflow} more
+        <span className="font-mono text-[10px] text-foreground/30">
+          +{overflow}
         </span>
       )}
     </div>

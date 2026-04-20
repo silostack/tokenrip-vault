@@ -12,6 +12,7 @@ import { ContactService } from '../api/service/contact.service';
 import { CollectionRowService } from '../api/service/collection-row.service';
 import { SearchService } from '../api/service/search.service';
 import { AnalyticsService } from '../analytics/analytics.service';
+import { TeamService } from '../api/service/team.service';
 import { registerAssetTools } from './tools/asset.tools';
 import { registerCollectionTools } from './tools/collection.tools';
 import { registerMessageTools } from './tools/message.tools';
@@ -21,6 +22,7 @@ import { registerInboxTools } from './tools/inbox.tools';
 import { registerContactTools } from './tools/contact.tools';
 import { registerSearchTools } from './tools/search.tools';
 import { registerTourTools } from './tools/tour.tools';
+import { registerTeamTools } from './tools/team.tools';
 
 export const MCP_SERVICES = 'MCP_SERVICES';
 export const FRONTEND_URL = (process.env.FRONTEND_URL || 'http://localhost:3333').replace(/\/+$/, '');
@@ -48,6 +50,7 @@ export interface McpServices {
   collectionRowService: CollectionRowService;
   searchService: SearchService;
   analyticsService: AnalyticsService;
+  teamService: TeamService;
 }
 
 const SANITIZE_KEYS = new Set(['body', 'content', 'base64Content', 'data', 'message']);
@@ -72,6 +75,7 @@ Tokenrip gives you four core primitives:
 - **Messaging** — send structured messages to other agents (msg_send) with typed intents (propose, accept, reject, counter, inform, request, confirm). Poll your inbox for new messages and asset activity (inbox).
 - **Threads** — shared conversation spaces with multiple participants. Create with thread_create, link assets, close with a resolution. Use for reviews, coordination, and cross-agent collaboration.
 - **Contacts** — save agent IDs under human-readable labels (contact_save). Contact names work anywhere an agent ID is accepted.
+- **Teams** — group agents for shared visibility. Create teams (team_create), add members (team_add_member), and share assets to teams when publishing.
 
 Start with whoami to see your agent identity. Use inbox to check for new activity.
 
@@ -128,6 +132,7 @@ export function createMcpServer(services: McpServices, agentId: string): McpServ
   registerCollectionTools(server, services, agentId);
   registerSearchTools(server, services, agentId);
   registerTourTools(server, services, agentId);
+  registerTeamTools(server, services, agentId);
 
   return server;
 }

@@ -63,6 +63,35 @@ export class AssetRepository extends SqlEntityRepository<Asset> {
     );
   }
 
+  async findTeamAssetUpdates(teamIds: string[], since: Date, limit: number): Promise<AssetUpdateRow[]> {
+    if (teamIds.length === 0) return [];
+    const placeholders = teamIds.map(() => '?').join(', ');
+    return this.getEntityManager().getConnection().execute<AssetUpdateRow[]>(
+      `SELECT
+        a.public_id AS asset_id,
+        a.title,
+        a.updated_at,
+        COALESCE(COUNT(av.id), 0)::int AS new_version_count,
+        COALESCE(MAX(av.version), a.version_count)::int AS latest_version,
+        LEFT(a.description, 80) AS description,
+        COALESCE(tc.thread_count, 0)::int AS thread_count
+      FROM team_asset ta
+      JOIN asset a ON a.id = ta.asset_id
+      LEFT JOIN asset_version av ON av.asset_id = a.id AND av.created_at > ?
+      LEFT JOIN LATERAL (
+        SELECT COUNT(DISTINCT r.owner_id)::int AS thread_count
+        FROM ref r
+        WHERE r.type = 'asset' AND r.target_id = a.public_id::text AND r.owner_type = 'thread'
+      ) tc ON true
+      WHERE ta.team_id IN (${placeholders})
+        AND a.state NOT IN ('${AssetState.DESTROYED}', '${AssetState.ARCHIVED}')
+      GROUP BY a.id, a.public_id, a.title, a.updated_at, a.description, a.version_count, tc.thread_count
+      ORDER BY a.updated_at DESC
+      LIMIT ?`,
+      [since, ...teamIds, limit],
+    );
+  }
+
   /**
    * Search assets for a given owner with optional text, date, and type filters.
    * Raw SQL for dynamic WHERE construction and count query.

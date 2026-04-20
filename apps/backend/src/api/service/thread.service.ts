@@ -24,9 +24,10 @@ export class ThreadService {
   ) {}
 
   @Transactional()
-  async create(agentId: string, opts?: { metadata?: Record<string, unknown>; ownerId?: string }): Promise<Thread> {
+  async create(agentId: string, opts?: { metadata?: Record<string, unknown>; ownerId?: string; teamId?: string }): Promise<Thread> {
     const thread = new Thread(agentId, opts?.ownerId);
     if (opts?.metadata) thread.metadata = opts.metadata;
+    if (opts?.teamId) thread.teamId = opts.teamId;
     this.em.persist(thread);
 
     this.analyticsService.track('thread_created', {
@@ -189,11 +190,12 @@ export class ThreadService {
     await this.em.nativeUpdate(Thread, { id: { $in: threadIds } }, { state: ThreadState.CLOSED });
   }
 
-  async listForAgent(agentId: string, opts?: { state?: string; limit?: number; offset?: number }) {
+  async listForAgent(agentId: string, opts?: { state?: string; teamId?: string; limit?: number; offset?: number }) {
     const limit = Math.min(Math.max(opts?.limit ?? 50, 1), 200);
     const offset = Math.max(opts?.offset ?? 0, 0);
     return this.participantRepo.findAllThreadsForAgent(agentId, {
       state: opts?.state,
+      teamId: opts?.teamId,
       limit,
       offset,
     });

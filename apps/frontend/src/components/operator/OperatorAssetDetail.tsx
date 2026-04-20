@@ -1,12 +1,14 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
-import { Provider } from 'jotai'
-import { Trash2, Share2, Check, Archive, ArchiveRestore } from 'lucide-react'
+import { Provider, useSetAtom } from 'jotai'
+import { Trash2, Share2, Check, Archive, ArchiveRestore, PanelRight } from 'lucide-react'
 import { toast } from 'react-toastify'
 import api from '@/utils/api'
 import { SharePageContent } from '@/components/SharePageContent'
 import { OperatorToolbar, type ToolbarAction } from '@/components/operator/OperatorToolbar'
 import { ConfirmDialog } from '@/components/operator/ConfirmDialog'
+import { AssetDrawer } from '@/components/operator/AssetDrawer'
+import { assetDrawerOpenAtom } from '@/_jotai/operator/drawer.atoms'
 import { destroyAsset, createShareToken, archiveAsset, unarchiveAsset } from '@/lib/operator'
 
 /**
@@ -16,6 +18,7 @@ import { destroyAsset, createShareToken, archiveAsset, unarchiveAsset } from '@/
  */
 export function OperatorAssetDetail({ publicId, versionId }: { publicId: string; versionId?: string }) {
   const navigate = useNavigate()
+  const setDrawerOpen = useSetAtom(assetDrawerOpenAtom)
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [destroying, setDestroying] = useState(false)
   const [sharing, setSharing] = useState(false)
@@ -82,10 +85,15 @@ export function OperatorAssetDetail({ publicId, versionId }: { publicId: string;
 
   const actions: ToolbarAction[] = [
     {
+      label: 'Details',
+      icon: <PanelRight size={14} />,
+      onClick: () => setDrawerOpen(true),
+      primary: true,
+    },
+    {
       label: shared ? 'Copied!' : 'Copy edit link',
       icon: shared ? <Check size={14} /> : <Share2 size={14} />,
       onClick: handleShare,
-      primary: true,
     },
     {
       label: archiving ? (isArchived ? 'Unarchiving...' : 'Archiving...') : (isArchived ? 'Unarchive' : 'Archive'),
@@ -117,6 +125,7 @@ export function OperatorAssetDetail({ publicId, versionId }: { publicId: string;
           if (!destroying) setConfirmOpen(false)
         }}
       />
+      <AssetDrawer publicId={publicId} />
     </>
   )
 }

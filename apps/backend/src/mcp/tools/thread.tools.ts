@@ -99,16 +99,38 @@ export function registerThreadTools(server: McpServer, services: McpServices, ag
       metadata: z.string().optional().describe('Thread metadata as JSON string'),
       tourWelcome: z.boolean().optional().describe('If true and @tokenrip is a participant, @tokenrip will post a welcome message atomically. Sets metadata.tour_welcome = true.'),
       refs: z.string().optional().describe('JSON array of refs to link: [{"type":"asset","target_id":"uuid"}]'),
+      team: z.string().optional().describe('Team slug or ID — creates a team thread visible to all team members'),
     },
     async (args) => {
       try {
         const metadata: Record<string, unknown> = args.metadata ? JSON.parse(args.metadata) : {};
         if (args.tourWelcome) metadata.tour_welcome = true;
+
+        let teamId: string | undefined;
+        if (args.team) {
+          const teamEntity = await services.teamService.findBySlugOrId(args.team);
+          const isMember = await services.teamService.isMember(teamEntity.id, agentId);
+          if (!isMember) {
+            return { content: [{ type: 'text', text: 'Error: You are not a member of this team' }], isError: true };
+          }
+          teamId = teamEntity.id;
+        }
+
         const thread = await services.threadService.create(agentId, {
           metadata: Object.keys(metadata).length ? metadata : undefined,
+          teamId,
         });
 
         const creatorParticipant = await services.participantService.addAgent(thread, agentId);
+
+        if (teamId) {
+          const { members } = await services.teamService.getDetails(teamId);
+          await Promise.all(
+            members
+              .filter((m) => m.agentId !== agentId)
+              .map((m) => services.participantService.addAgent(thread, m.agentId)),
+          );
+        }
 
         if (args.participants) {
           const resolvedIds = await Promise.all(

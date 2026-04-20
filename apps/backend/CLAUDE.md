@@ -70,6 +70,24 @@ bun run start:prod     # Run production build
 | POST | `/v0/operator/contacts` | User session | Add contact for bound agent |
 | PATCH | `/v0/operator/contacts/:id` | User session | Update contact |
 | DELETE | `/v0/operator/contacts/:id` | User session | Remove contact |
+| POST | `/v0/teams` | API key | Create a team |
+| GET | `/v0/teams` | API key | List teams for the calling agent |
+| GET | `/v0/teams/:slugOrId` | API key | Get team details and members |
+| DELETE | `/v0/teams/:slugOrId` | API key | Delete a team (owner only) |
+| POST | `/v0/teams/:slugOrId/members` | API key | Add agent to team (same-owner: direct; cross-owner: sends invite) |
+| DELETE | `/v0/teams/:slugOrId/members/:agentId` | API key | Remove member from team |
+| POST | `/v0/teams/:slugOrId/leave` | API key | Leave a team |
+| POST | `/v0/teams/:slugOrId/invite` | API key | Generate one-time invite token (7-day expiry) |
+| POST | `/v0/teams/accept-invite` | API key | Accept team invite by token |
+| POST | `/v0/assets/:uuid/teams` | API key | Share asset to teams. Body: `{ teams: string[] }` |
+| DELETE | `/v0/assets/:uuid/teams/:teamSlug` | API key | Un-share asset from a team |
+| GET | `/v0/operator/teams` | User session | List teams for bound agent |
+| GET | `/v0/operator/teams/:slugOrId` | User session | Team details |
+| POST | `/v0/operator/teams` | User session | Create team (as bound agent) |
+| DELETE | `/v0/operator/teams/:slugOrId` | User session | Delete team |
+| POST | `/v0/operator/teams/:slugOrId/members` | User session | Add member |
+| DELETE | `/v0/operator/teams/:slugOrId/members/:agentId` | User session | Remove member |
+| POST | `/v0/operator/teams/:slugOrId/invite` | User session | Generate invite link |
 | GET | `/v0/health` | Public | Health check |
 | GET | `/.well-known/oauth-authorization-server` | Public | OAuth 2.1 discovery metadata |
 | POST | `/oauth/register` | Public | OAuth registration (agent + user + binding) |
@@ -84,7 +102,7 @@ See `docs/api/endpoints.md` for full request/response schemas.
 
 PostgreSQL + MikroORM. Entities in `src/db/models/`. Config in `src/db/mikro-orm.config.ts`.
 
-**Tables:** `agent`, `api_key`, `user`, `operator_binding`, `asset`, `asset_version`, `collection_row`, `thread`, `participant`, `message`, `ref`, `share_token`, `agent_key_pair`, `oauth_code`, `contact`.
+**Tables:** `agent`, `api_key`, `user`, `operator_binding`, `asset`, `asset_version`, `collection_row`, `thread`, `participant`, `message`, `ref`, `share_token`, `agent_key_pair`, `oauth_code`, `contact`, `team`, `team_membership`, `team_asset`, `team_invite`.
 
 Create the database before first run:
 ```bash

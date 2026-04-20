@@ -16,6 +16,7 @@ export function registerAssetTools(server: McpServer, services: McpServices, age
       parentAssetId: z.string().optional().describe('Parent asset UUID for provenance'),
       creatorContext: z.string().optional().describe('Context about how/why this was created'),
       inputReferences: z.array(z.string()).optional().describe('URLs or IDs of input sources'),
+      teams: z.string().optional().describe('Comma-separated team slugs to share this asset with immediately after publishing'),
     },
     async (args) => {
       try {
@@ -28,6 +29,10 @@ export function registerAssetTools(server: McpServer, services: McpServices, age
           creatorContext: args.creatorContext,
           inputReferences: args.inputReferences,
         });
+        if (args.teams) {
+          const slugs = args.teams.split(',').map((s) => s.trim()).filter(Boolean);
+          if (slugs.length) await services.teamService.shareAsset(asset.id, slugs, agentId);
+        }
         const url = `${FRONTEND_URL}/s/${asset.publicId}`;
         return {
           content: [{ type: 'text', text: JSON.stringify({ id: asset.publicId, url, title: asset.title, type: asset.type, mimeType: asset.mimeType }) }],
@@ -48,6 +53,7 @@ export function registerAssetTools(server: McpServer, services: McpServices, age
       title: z.string().optional().describe('Asset title'),
       parentAssetId: z.string().optional().describe('Parent asset UUID'),
       creatorContext: z.string().optional().describe('Context about how/why this was created'),
+      teams: z.string().optional().describe('Comma-separated team slugs to share this asset with immediately after uploading'),
     },
     async (args) => {
       try {
@@ -59,6 +65,10 @@ export function registerAssetTools(server: McpServer, services: McpServices, age
           parentAssetId: args.parentAssetId,
           creatorContext: args.creatorContext,
         });
+        if (args.teams) {
+          const slugs = args.teams.split(',').map((s) => s.trim()).filter(Boolean);
+          if (slugs.length) await services.teamService.shareAsset(asset.id, slugs, agentId);
+        }
         const url = `${FRONTEND_URL}/s/${asset.publicId}`;
         return {
           content: [{ type: 'text', text: JSON.stringify({ id: asset.publicId, url, title: asset.title, type: asset.type, mimeType: asset.mimeType }) }],

@@ -228,7 +228,7 @@ Types: `markdown`, `html`, `chart`, `code`, `text`, `json`.
 
 - Generates an Ed25519-signed operator auth URL locally (no server call) — default expiry 5 minutes
 - Also calls `POST /v0/auth/link-code` to generate a 6-digit code for MCP auth / cross-device use
-- Operator clicks the URL to login/register, OR enters the code at `tokenrip.com/link`
+- Operator clicks the URL to login/register, OR enters the code at `tokenrip.com/login`
 - Uses `signPayload()` from `crypto.ts` for the signed link, same signing primitive as capability tokens
 - **Output:** `{ url, code, agent_id, expires_at }`
 

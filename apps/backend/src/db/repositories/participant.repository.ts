@@ -7,6 +7,7 @@ export interface ThreadListRow {
   state: string;
   created_by: string;
   owner_id: string;
+  team_id: string | null;
   metadata: Record<string, unknown> | null;
   created_at: Date;
   updated_at: Date;
@@ -26,6 +27,7 @@ export interface ThreadActivityRow {
   last_intent: string | null;
   last_body_preview: string | null;
   owner_id: string;
+  team_id: string | null;
   participants: Array<{ agent_id: string; alias: string | null }>;
   ref_count: number;
 }
@@ -75,7 +77,7 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
 
     return this.getEntityManager().getConnection().execute<ThreadActivityRow[]>(
       `WITH agent_threads AS (
-        SELECT DISTINCT t.id, t.state, t.updated_at, t.owner_id
+        SELECT DISTINCT t.id, t.state, t.updated_at, t.owner_id, t.team_id
         FROM participant p
         JOIN thread t ON t.id = p.thread_id
         ${qJoin}
@@ -124,6 +126,7 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
         lm.intent AS last_intent,
         lm.body_preview AS last_body_preview,
         at.owner_id,
+        at.team_id,
         COALESCE(pd.participants, '[]'::json) AS participants,
         COALESCE(rc.ref_count, 0)::int AS ref_count
       FROM agent_threads at
@@ -175,7 +178,7 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
 
     return this.getEntityManager().getConnection().execute<ThreadActivityRow[]>(
       `WITH active_threads AS (
-        SELECT DISTINCT t.id, t.state, t.updated_at, t.owner_id
+        SELECT DISTINCT t.id, t.state, t.updated_at, t.owner_id, t.team_id
         FROM participant p
         JOIN thread t ON t.id = p.thread_id
         ${qJoin}
@@ -224,6 +227,7 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
         lm.intent AS last_intent,
         lm.body_preview AS last_body_preview,
         at.owner_id,
+        at.team_id,
         COALESCE(pd.participants, '[]'::json) AS participants,
         COALESCE(rc.ref_count, 0)::int AS ref_count
       FROM active_threads at
@@ -238,7 +242,7 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
 
   async findAllThreadsForAgent(
     agentId: string,
-    opts: { state?: string; limit: number; offset: number },
+    opts: { state?: string; teamId?: string; limit: number; offset: number },
   ): Promise<{ rows: ThreadListRow[]; total: number }> {
     const conditions = ['p.agent_id = ?'];
     const params: unknown[] = [agentId];
@@ -246,6 +250,10 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
     if (opts.state) {
       conditions.push('t.state = ?');
       params.push(opts.state);
+    }
+    if (opts.teamId) {
+      conditions.push('t.team_id = ?');
+      params.push(opts.teamId);
     }
 
     const whereClause = conditions.join(' AND ');
@@ -265,6 +273,7 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
                 t.state,
                 t.created_by,
                 t.owner_id,
+                t.team_id,
                 t.metadata,
                 t.created_at,
                 t.updated_at
@@ -305,7 +314,7 @@ export class ParticipantRepository extends SqlEntityRepository<Participant> {
          WHERE m.thread_id IN (SELECT thread_id FROM agent_threads)
          ORDER BY m.thread_id, m.sequence DESC
        )
-       SELECT at.thread_id, at.state, at.created_by, at.owner_id, at.metadata,
+       SELECT at.thread_id, at.state, at.created_by, at.owner_id, at.team_id, at.metadata,
               at.created_at, at.updated_at,
               COALESCE(pc.participant_count, 0) AS participant_count,
               COALESCE(pd.participants, '[]'::json) AS participants,

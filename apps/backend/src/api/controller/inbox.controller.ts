@@ -18,6 +18,7 @@ export class InboxController {
     @Query('state') state: string | undefined,
     @Query('type') type: string | undefined,
     @Query('kind') kind: string | undefined,
+    @Query('team') team: string | undefined,
   ) {
     let sinceDate: Date | undefined;
     try {
@@ -58,6 +59,7 @@ export class InboxController {
       q: q || undefined,
       state: state || undefined,
       type: resolvedType || undefined,
+      team: team || undefined,
     });
 
     return { ok: true, data: result };

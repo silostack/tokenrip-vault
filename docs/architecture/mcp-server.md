@@ -345,7 +345,7 @@ Initial agent registration and API key provisioning uses OAuth 2.1. See `docs/ar
 
 ## Tool Registry
 
-### 37 Tools, 9 Domains
+### 39 Tools, 9 Domains
 
 Tools are registered per-session via `createMcpServer(services, agentId)`. Each tool handler receives the calling agent's ID via closure — not via `extra.authInfo` or any MCP auth mechanism.
 
@@ -440,7 +440,8 @@ src/mcp/tools/
   ├── search.tools.ts      1 tool (search)
   ├── contact.tools.ts     3 contact tools
   ├── collection.tools.ts  5 collection tools
-  └── tour.tools.ts        1 tour tool
+  ├── tour.tools.ts        1 tour tool
+  └── team.tools.ts        9 team tools
 ```
 
 Each file exports a function that registers its tools on a given `McpServer` instance. The server factory in `mcp.server.ts` calls all nine registration functions.
@@ -648,6 +649,7 @@ All three interfaces invoke the same service layer. The differences are in trans
 | Sharing | Client-signed Ed25519 tokens | Capability tokens or share tokens | Server-issued share tokens (`st_`) |
 | Session state | Stateless (per-command) | Stateless (per-request) | Stateful (per-session) |
 | Offline capable | Sharing only | No | No |
+| Team aliases | Local cache (`teams.json`), alias resolution on all `--team` flags | No | No |
 | Service layer | HTTP client → REST API → Services | Controllers → Services | Tool handlers → Services |
 
 ---
@@ -668,4 +670,5 @@ All three interfaces invoke the same service layer. The differences are in trans
 | `apps/backend/src/mcp/tools/contact.tools.ts` | 3 contact tools: list, save, remove |
 | `apps/backend/src/mcp/tools/collection.tools.ts` | 5 collection tools: create, append_rows, get_rows, update_row, delete_rows |
 | `apps/backend/src/mcp/tools/tour.tools.ts` | 1 tour tool — returns MCP_TOUR_SCRIPT prose for operator onboarding |
+| `apps/backend/src/mcp/tools/team.tools.ts` | 9 team tools: create, list, show, add_member, remove_member, invite, accept_invite, leave, delete |
 | `apps/backend/src/api/services/share-token.service.ts` | Server-issued share tokens (`st_` prefix) used by MCP sharing tools |

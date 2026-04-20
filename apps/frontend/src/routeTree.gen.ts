@@ -17,14 +17,18 @@ import { Route as IndexRouteImport } from './app/index'
 import { Route as OperatorIndexRouteImport } from './app/operator/index'
 import { Route as ThreadsThreadIdRouteImport } from './app/threads/$threadId'
 import { Route as SUuidRouteImport } from './app/s/$uuid'
+import { Route as OperatorSettingsRouteImport } from './app/operator/settings'
 import { Route as OperatorContactsRouteImport } from './app/operator/contacts'
 import { Route as OperatorAuthRouteImport } from './app/operator/auth'
 import { Route as OauthAuthorizeRouteImport } from './app/oauth/authorize'
 import { Route as SUuidIndexRouteImport } from './app/s/$uuid/index'
 import { Route as OperatorThreadsIndexRouteImport } from './app/operator/threads/index'
+import { Route as OperatorTeamsIndexRouteImport } from './app/operator/teams/index'
 import { Route as OperatorAssetsIndexRouteImport } from './app/operator/assets/index'
 import { Route as SUuidVersionIdRouteImport } from './app/s/$uuid/$versionId'
 import { Route as OperatorThreadsThreadIdRouteImport } from './app/operator/threads/$threadId'
+import { Route as OperatorTeamsCreateRouteImport } from './app/operator/teams/create'
+import { Route as OperatorTeamsSlugRouteImport } from './app/operator/teams/$slug'
 import { Route as OperatorAssetsPublicIdRouteImport } from './app/operator/assets/$publicId'
 import { Route as OperatorAssetsPublicIdIndexRouteImport } from './app/operator/assets/$publicId/index'
 import { Route as OperatorAssetsPublicIdVersionIdRouteImport } from './app/operator/assets/$publicId/$versionId'
@@ -69,6 +73,11 @@ const SUuidRoute = SUuidRouteImport.update({
   path: '/s/$uuid',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OperatorSettingsRoute = OperatorSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => OperatorRoute,
+} as any)
 const OperatorContactsRoute = OperatorContactsRouteImport.update({
   id: '/contacts',
   path: '/contacts',
@@ -94,6 +103,11 @@ const OperatorThreadsIndexRoute = OperatorThreadsIndexRouteImport.update({
   path: '/threads/',
   getParentRoute: () => OperatorRoute,
 } as any)
+const OperatorTeamsIndexRoute = OperatorTeamsIndexRouteImport.update({
+  id: '/teams/',
+  path: '/teams/',
+  getParentRoute: () => OperatorRoute,
+} as any)
 const OperatorAssetsIndexRoute = OperatorAssetsIndexRouteImport.update({
   id: '/assets/',
   path: '/assets/',
@@ -107,6 +121,16 @@ const SUuidVersionIdRoute = SUuidVersionIdRouteImport.update({
 const OperatorThreadsThreadIdRoute = OperatorThreadsThreadIdRouteImport.update({
   id: '/threads/$threadId',
   path: '/threads/$threadId',
+  getParentRoute: () => OperatorRoute,
+} as any)
+const OperatorTeamsCreateRoute = OperatorTeamsCreateRouteImport.update({
+  id: '/teams/create',
+  path: '/teams/create',
+  getParentRoute: () => OperatorRoute,
+} as any)
+const OperatorTeamsSlugRoute = OperatorTeamsSlugRouteImport.update({
+  id: '/teams/$slug',
+  path: '/teams/$slug',
   getParentRoute: () => OperatorRoute,
 } as any)
 const OperatorAssetsPublicIdRoute = OperatorAssetsPublicIdRouteImport.update({
@@ -136,13 +160,17 @@ export interface FileRoutesByFullPath {
   '/oauth/authorize': typeof OauthAuthorizeRoute
   '/operator/auth': typeof OperatorAuthRoute
   '/operator/contacts': typeof OperatorContactsRoute
+  '/operator/settings': typeof OperatorSettingsRoute
   '/s/$uuid': typeof SUuidRouteWithChildren
   '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/operator/': typeof OperatorIndexRoute
   '/operator/assets/$publicId': typeof OperatorAssetsPublicIdRouteWithChildren
+  '/operator/teams/$slug': typeof OperatorTeamsSlugRoute
+  '/operator/teams/create': typeof OperatorTeamsCreateRoute
   '/operator/threads/$threadId': typeof OperatorThreadsThreadIdRoute
   '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
   '/operator/assets/': typeof OperatorAssetsIndexRoute
+  '/operator/teams/': typeof OperatorTeamsIndexRoute
   '/operator/threads/': typeof OperatorThreadsIndexRoute
   '/s/$uuid/': typeof SUuidIndexRoute
   '/operator/assets/$publicId/$versionId': typeof OperatorAssetsPublicIdVersionIdRoute
@@ -156,11 +184,15 @@ export interface FileRoutesByTo {
   '/oauth/authorize': typeof OauthAuthorizeRoute
   '/operator/auth': typeof OperatorAuthRoute
   '/operator/contacts': typeof OperatorContactsRoute
+  '/operator/settings': typeof OperatorSettingsRoute
   '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/operator': typeof OperatorIndexRoute
+  '/operator/teams/$slug': typeof OperatorTeamsSlugRoute
+  '/operator/teams/create': typeof OperatorTeamsCreateRoute
   '/operator/threads/$threadId': typeof OperatorThreadsThreadIdRoute
   '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
   '/operator/assets': typeof OperatorAssetsIndexRoute
+  '/operator/teams': typeof OperatorTeamsIndexRoute
   '/operator/threads': typeof OperatorThreadsIndexRoute
   '/s/$uuid': typeof SUuidIndexRoute
   '/operator/assets/$publicId/$versionId': typeof OperatorAssetsPublicIdVersionIdRoute
@@ -176,13 +208,17 @@ export interface FileRoutesById {
   '/oauth/authorize': typeof OauthAuthorizeRoute
   '/operator/auth': typeof OperatorAuthRoute
   '/operator/contacts': typeof OperatorContactsRoute
+  '/operator/settings': typeof OperatorSettingsRoute
   '/s/$uuid': typeof SUuidRouteWithChildren
   '/threads/$threadId': typeof ThreadsThreadIdRoute
   '/operator/': typeof OperatorIndexRoute
   '/operator/assets/$publicId': typeof OperatorAssetsPublicIdRouteWithChildren
+  '/operator/teams/$slug': typeof OperatorTeamsSlugRoute
+  '/operator/teams/create': typeof OperatorTeamsCreateRoute
   '/operator/threads/$threadId': typeof OperatorThreadsThreadIdRoute
   '/s/$uuid/$versionId': typeof SUuidVersionIdRoute
   '/operator/assets/': typeof OperatorAssetsIndexRoute
+  '/operator/teams/': typeof OperatorTeamsIndexRoute
   '/operator/threads/': typeof OperatorThreadsIndexRoute
   '/s/$uuid/': typeof SUuidIndexRoute
   '/operator/assets/$publicId/$versionId': typeof OperatorAssetsPublicIdVersionIdRoute
@@ -199,13 +235,17 @@ export interface FileRouteTypes {
     | '/oauth/authorize'
     | '/operator/auth'
     | '/operator/contacts'
+    | '/operator/settings'
     | '/s/$uuid'
     | '/threads/$threadId'
     | '/operator/'
     | '/operator/assets/$publicId'
+    | '/operator/teams/$slug'
+    | '/operator/teams/create'
     | '/operator/threads/$threadId'
     | '/s/$uuid/$versionId'
     | '/operator/assets/'
+    | '/operator/teams/'
     | '/operator/threads/'
     | '/s/$uuid/'
     | '/operator/assets/$publicId/$versionId'
@@ -219,11 +259,15 @@ export interface FileRouteTypes {
     | '/oauth/authorize'
     | '/operator/auth'
     | '/operator/contacts'
+    | '/operator/settings'
     | '/threads/$threadId'
     | '/operator'
+    | '/operator/teams/$slug'
+    | '/operator/teams/create'
     | '/operator/threads/$threadId'
     | '/s/$uuid/$versionId'
     | '/operator/assets'
+    | '/operator/teams'
     | '/operator/threads'
     | '/s/$uuid'
     | '/operator/assets/$publicId/$versionId'
@@ -238,13 +282,17 @@ export interface FileRouteTypes {
     | '/oauth/authorize'
     | '/operator/auth'
     | '/operator/contacts'
+    | '/operator/settings'
     | '/s/$uuid'
     | '/threads/$threadId'
     | '/operator/'
     | '/operator/assets/$publicId'
+    | '/operator/teams/$slug'
+    | '/operator/teams/create'
     | '/operator/threads/$threadId'
     | '/s/$uuid/$versionId'
     | '/operator/assets/'
+    | '/operator/teams/'
     | '/operator/threads/'
     | '/s/$uuid/'
     | '/operator/assets/$publicId/$versionId'
@@ -320,6 +368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SUuidRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/operator/settings': {
+      id: '/operator/settings'
+      path: '/settings'
+      fullPath: '/operator/settings'
+      preLoaderRoute: typeof OperatorSettingsRouteImport
+      parentRoute: typeof OperatorRoute
+    }
     '/operator/contacts': {
       id: '/operator/contacts'
       path: '/contacts'
@@ -355,6 +410,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OperatorThreadsIndexRouteImport
       parentRoute: typeof OperatorRoute
     }
+    '/operator/teams/': {
+      id: '/operator/teams/'
+      path: '/teams'
+      fullPath: '/operator/teams/'
+      preLoaderRoute: typeof OperatorTeamsIndexRouteImport
+      parentRoute: typeof OperatorRoute
+    }
     '/operator/assets/': {
       id: '/operator/assets/'
       path: '/assets'
@@ -374,6 +436,20 @@ declare module '@tanstack/react-router' {
       path: '/threads/$threadId'
       fullPath: '/operator/threads/$threadId'
       preLoaderRoute: typeof OperatorThreadsThreadIdRouteImport
+      parentRoute: typeof OperatorRoute
+    }
+    '/operator/teams/create': {
+      id: '/operator/teams/create'
+      path: '/teams/create'
+      fullPath: '/operator/teams/create'
+      preLoaderRoute: typeof OperatorTeamsCreateRouteImport
+      parentRoute: typeof OperatorRoute
+    }
+    '/operator/teams/$slug': {
+      id: '/operator/teams/$slug'
+      path: '/teams/$slug'
+      fullPath: '/operator/teams/$slug'
+      preLoaderRoute: typeof OperatorTeamsSlugRouteImport
       parentRoute: typeof OperatorRoute
     }
     '/operator/assets/$publicId': {
@@ -419,20 +495,28 @@ const OperatorAssetsPublicIdRouteWithChildren =
 interface OperatorRouteChildren {
   OperatorAuthRoute: typeof OperatorAuthRoute
   OperatorContactsRoute: typeof OperatorContactsRoute
+  OperatorSettingsRoute: typeof OperatorSettingsRoute
   OperatorIndexRoute: typeof OperatorIndexRoute
   OperatorAssetsPublicIdRoute: typeof OperatorAssetsPublicIdRouteWithChildren
+  OperatorTeamsSlugRoute: typeof OperatorTeamsSlugRoute
+  OperatorTeamsCreateRoute: typeof OperatorTeamsCreateRoute
   OperatorThreadsThreadIdRoute: typeof OperatorThreadsThreadIdRoute
   OperatorAssetsIndexRoute: typeof OperatorAssetsIndexRoute
+  OperatorTeamsIndexRoute: typeof OperatorTeamsIndexRoute
   OperatorThreadsIndexRoute: typeof OperatorThreadsIndexRoute
 }
 
 const OperatorRouteChildren: OperatorRouteChildren = {
   OperatorAuthRoute: OperatorAuthRoute,
   OperatorContactsRoute: OperatorContactsRoute,
+  OperatorSettingsRoute: OperatorSettingsRoute,
   OperatorIndexRoute: OperatorIndexRoute,
   OperatorAssetsPublicIdRoute: OperatorAssetsPublicIdRouteWithChildren,
+  OperatorTeamsSlugRoute: OperatorTeamsSlugRoute,
+  OperatorTeamsCreateRoute: OperatorTeamsCreateRoute,
   OperatorThreadsThreadIdRoute: OperatorThreadsThreadIdRoute,
   OperatorAssetsIndexRoute: OperatorAssetsIndexRoute,
+  OperatorTeamsIndexRoute: OperatorTeamsIndexRoute,
   OperatorThreadsIndexRoute: OperatorThreadsIndexRoute,
 }
 

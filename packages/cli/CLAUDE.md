@@ -48,6 +48,7 @@ The CLI entry (`src/cli.ts`) is ESM-only with a `#!/usr/bin/env node` shebang.
   - `search.ts` — `rip search` (unified search across threads and assets)
   - `contacts.ts` — `rip contacts add/list/resolve/remove`
   - `config.ts` — `rip config set-key`, `rip config set-url`, `rip config show`
+  - `team.ts` — `rip team create/list/show/add/remove/leave/delete/invite/accept-invite`
 
 ## Config file
 

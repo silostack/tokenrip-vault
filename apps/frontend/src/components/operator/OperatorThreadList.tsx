@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { useAtomValue, useSetAtom } from 'jotai'
-import { MessageSquare, RefreshCw, Link2 } from 'lucide-react'
+import { MessageSquare, Link2 } from 'lucide-react'
 import { formatTimeAgo } from '@/utils/time'
 import { operatorAgentAtom } from '@/_jotai/operator/operator.atoms'
 import {
@@ -9,6 +9,7 @@ import {
   operatorThreadsLoadingAtom,
   operatorThreadsTotalAtom,
 } from '@/_jotai/operator/operator.atoms'
+import { activeTeamSlugAtom } from '@/_jotai/operator/team-filter.atoms'
 import { fetchOperatorThreads } from '@/lib/operator'
 import { ParticipantChips } from './ParticipantChips'
 import {
@@ -30,6 +31,7 @@ export function OperatorThreadList() {
   const [ownershipFilter, setOwnershipFilter] =
     useState<ThreadOwnershipFilter>('all')
   const [search, setSearch] = useState('')
+  const activeTeamSlug = useAtomValue(activeTeamSlugAtom)
 
   const load = useCallback(async () => {
     setThreads([])
@@ -39,6 +41,7 @@ export function OperatorThreadList() {
         limit: 100,
       }
       if (stateFilter !== 'all') params.state = stateFilter
+      if (activeTeamSlug) params.team = activeTeamSlug
       const data = await fetchOperatorThreads(params)
       setThreads(data.threads)
       setTotal(data.total)
@@ -47,7 +50,7 @@ export function OperatorThreadList() {
     } finally {
       setLoading(false)
     }
-  }, [setThreads, setLoading, setTotal, stateFilter])
+  }, [setThreads, setLoading, setTotal, stateFilter, activeTeamSlug])
 
   useEffect(() => {
     load()
@@ -71,7 +74,7 @@ export function OperatorThreadList() {
     return (
       <div className="flex flex-col items-center justify-center py-16">
         <div className="h-8 w-8 animate-pulse rounded-full bg-foreground/5" />
-        <p className="mt-3 text-xs text-foreground/25">Loading threads...</p>
+        <p className="mt-3 font-mono text-[11px] text-foreground/25">Loading…</p>
       </div>
     )
   }
@@ -86,31 +89,18 @@ export function OperatorThreadList() {
         onOwnershipChange={setOwnershipFilter}
         onSearchChange={setSearch}
       />
-      <div className="flex items-center justify-end px-4 py-2">
-        <button
-          type="button"
-          onClick={load}
-          disabled={loading}
-          className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs text-foreground/40 transition-colors hover:bg-foreground/5 hover:text-foreground/60"
-        >
-          <RefreshCw size={12} className={loading ? 'animate-spin' : ''} />
-          Refresh
-        </button>
-      </div>
       {filtered.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-foreground/5">
-            <MessageSquare size={18} className="text-foreground/15" />
-          </div>
-          <p className="mt-3 text-sm font-medium text-foreground/30">
+        <div className="flex flex-col items-center justify-center py-20">
+          <MessageSquare size={20} strokeWidth={1.5} className="text-foreground/15" />
+          <p className="mt-3 text-sm text-foreground/30">
             No threads found
           </p>
-          <p className="mt-1 text-[11px] text-foreground/20">
+          <p className="mt-1 font-mono text-[11px] text-foreground/20">
             Threads your agent participates in will appear here
           </p>
         </div>
       ) : (
-        <div>
+        <div className="divide-y divide-foreground/5">
           {filtered.map((thread) => (
             <button
               key={thread.thread_id}
@@ -121,46 +111,48 @@ export function OperatorThreadList() {
                   params: { threadId: thread.thread_id },
                 })
               }
-              className="flex w-full items-start gap-3 border-b border-foreground/5 px-4 py-3 text-left transition-colors hover:bg-foreground/[0.03] active:bg-foreground/5"
+              className="flex w-full items-start gap-3 px-4 py-3.5 text-left transition-colors hover:bg-foreground/[0.03] active:bg-foreground/[0.05]"
             >
               <div
                 className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${
                   thread.state === 'open'
-                    ? 'bg-green-500'
-                    : 'bg-foreground/20'
+                    ? 'bg-status-success'
+                    : 'bg-foreground/15'
                 }`}
               />
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm text-foreground/80">
-                  {thread.last_message_preview ||
-                    `Thread ${thread.thread_id.slice(0, 8)}`}
-                </p>
-                <div className="mt-1">
+                <div className="flex items-baseline justify-between gap-3">
+                  <p className="truncate text-sm text-foreground/80">
+                    {thread.last_message_preview ||
+                      `Thread ${thread.thread_id.slice(0, 8)}`}
+                  </p>
+                  <span className="shrink-0 font-mono text-[11px] text-foreground/30">
+                    {thread.last_message_at
+                      ? formatTimeAgo(thread.last_message_at)
+                      : formatTimeAgo(thread.updated_at)}
+                  </span>
+                </div>
+                <div className="mt-1.5">
                   <ParticipantChips
                     participants={thread.participants}
                     ownerId={thread.owner_id}
                   />
                 </div>
-              </div>
-              <div className="flex shrink-0 flex-col items-end gap-1">
-                <span className="text-xs text-foreground/30">
-                  {thread.last_message_at
-                    ? formatTimeAgo(thread.last_message_at)
-                    : formatTimeAgo(thread.updated_at)}
-                </span>
-                <div className="flex items-center gap-2">
-                  {thread.ref_count > 0 && (
-                    <span className="flex items-center gap-1 text-[10px] text-foreground/30">
-                      <Link2 size={10} />
-                      {thread.ref_count} asset{thread.ref_count !== 1 ? 's' : ''}
-                    </span>
-                  )}
-                  {thread.state === 'closed' && (
-                    <span className="rounded-full bg-foreground/10 px-1.5 py-px text-[10px] font-medium text-foreground/40">
-                      closed
-                    </span>
-                  )}
-                </div>
+                {(thread.ref_count > 0 || thread.state === 'closed') && (
+                  <div className="mt-1 flex items-center gap-2 font-mono text-[11px] text-foreground/30">
+                    {thread.ref_count > 0 && (
+                      <span className="flex items-center gap-1">
+                        <Link2 size={10} strokeWidth={1.5} />
+                        {thread.ref_count} asset{thread.ref_count !== 1 ? 's' : ''}
+                      </span>
+                    )}
+                    {thread.state === 'closed' && (
+                      <span className="rounded-full bg-foreground/5 px-1.5 py-px text-foreground/40">
+                        closed
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
             </button>
           ))}

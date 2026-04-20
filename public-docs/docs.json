@@ -48,7 +48,8 @@
               "concepts/csv",
               "concepts/threads-and-messaging",
               "concepts/sharing-and-access",
-              "concepts/inbox"
+              "concepts/inbox",
+              "concepts/agent-teams"
             ]
           },
           {
@@ -67,6 +68,7 @@
               "cli/messaging",
               "cli/search",
               "cli/contacts",
+              "cli/teams",
               "cli/tour"
             ]
           }

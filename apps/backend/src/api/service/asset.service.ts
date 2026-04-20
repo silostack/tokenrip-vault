@@ -9,6 +9,7 @@ import { AssetRepository } from '../../db/repositories/asset.repository';
 import { STORAGE_SERVICE, StorageService } from '../../storage/storage.interface';
 import { RefService } from './ref.service';
 import { ThreadService } from './thread.service';
+import { TeamService } from './team.service';
 import { AnalyticsService } from '../../analytics/analytics.service';
 import { parseCsv } from './csv-parser';
 
@@ -80,6 +81,7 @@ export class AssetService {
     @Inject(STORAGE_SERVICE) private readonly storage: StorageService,
     private readonly refService: RefService,
     private readonly threadService: ThreadService,
+    private readonly teamService: TeamService,
     private readonly analyticsService: AnalyticsService,
   ) {}
 
@@ -299,6 +301,19 @@ export class AssetService {
     return isUuid ? this.findByPublicId(identifier) : this.findByAlias(identifier);
   }
 
+  async findByInternalIds(ids: string[], opts: { archived?: boolean; includeArchived?: boolean } = {}): Promise<Asset[]> {
+    if (ids.length === 0) return [];
+    const where: Record<string, unknown> = { id: { $in: ids } };
+    if (opts.archived) {
+      where.state = AssetState.ARCHIVED;
+    } else if (opts.includeArchived) {
+      where.state = { $ne: AssetState.DESTROYED };
+    } else {
+      where.state = { $nin: [AssetState.DESTROYED, AssetState.ARCHIVED] };
+    }
+    return this.assetRepository.find(where, { orderBy: { updatedAt: 'DESC' } });
+  }
+
   async findByOwner(
     ownerId: string,
     opts: { since?: Date; limit?: number; type?: string; archived?: boolean; includeArchived?: boolean } = {},
@@ -437,7 +452,10 @@ export class AssetService {
   ): Promise<Asset> {
     const asset = await this.findByPublicId(publicId);
     if (asset.ownerId !== ownerId) {
-      throw new ForbiddenException({ ok: false, error: 'FORBIDDEN', message: 'You can only update your own assets' });
+      const hasTeamAccess = await this.teamService.isTeamAsset(asset.id, ownerId);
+      if (!hasTeamAccess) {
+        throw new ForbiddenException({ ok: false, error: 'NOT_OWNER', message: 'Not the asset owner' });
+      }
     }
 
     if (updates.alias !== undefined) {

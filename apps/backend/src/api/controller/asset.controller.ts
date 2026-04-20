@@ -32,6 +32,7 @@ import { parseCapSub, parseAndVerifyCapabilityToken } from '../auth/crypto';
 import { validateAlias } from '../validation/alias.validation';
 import { AgentService } from '../service/agent.service';
 import { ShareTokenService } from '../service/share-token.service';
+import { TeamService } from '../service/team.service';
 
 const MAX_FILE_SIZE = parseInt(process.env.MAX_FILE_SIZE_BYTES || String(10 * 1024 * 1024), 10); // default 10MB
 const FRONTEND_URL = (process.env.FRONTEND_URL || 'http://localhost:3333').replace(/\/+$/, '');
@@ -83,6 +84,7 @@ export class AssetController {
     private readonly agentService: AgentService,
     private readonly shareTokenService: ShareTokenService,
     private readonly bindingService: OperatorBindingService,
+    private readonly teamService: TeamService,
     private readonly em: EntityManager,
   ) {}
 
@@ -162,6 +164,7 @@ export class AssetController {
         alias: body?.alias,
         metadata: body?.metadata,
       });
+      await this.maybeShareToTeams(asset.id, body?.teams, agent.id);
       return { ok: true, data: this.assetCreatedResponse(asset) };
     }
 
@@ -178,6 +181,7 @@ export class AssetController {
         alias: body.alias,
         metadata: body.metadata,
       });
+      await this.maybeShareToTeams(asset.id, body?.teams, agent.id);
       return { ok: true, data: this.assetCreatedResponse(asset) };
     }
 
@@ -285,11 +289,14 @@ export class AssetController {
     }
     if (auth.agent) {
       if (auth.agent.id !== asset.ownerId) {
-        throw new ForbiddenException({
-          ok: false,
-          error: 'ACCESS_DENIED',
-          message: 'Only the asset owner or capability token holders can access this',
-        });
+        const hasTeamAccess = await this.teamService.isTeamAsset(asset.id, auth.agent.id);
+        if (!hasTeamAccess) {
+          throw new ForbiddenException({
+            ok: false,
+            error: 'ACCESS_DENIED',
+            message: 'Only the asset owner or team members can access this',
+          });
+        }
       }
       return;
     }
@@ -340,16 +347,31 @@ export class AssetController {
     @Query('type') type?: string,
     @Query('archived') archived?: string,
     @Query('include_archived') includeArchived?: string,
+    @Query('team') team?: string,
   ) {
     const sinceDate = since ? new Date(since) : undefined;
     const parsedLimit = limit ? parseInt(limit, 10) : undefined;
-    const assets = await this.assetService.findByOwner(agent.id, {
-      since: sinceDate,
-      limit: parsedLimit,
-      type,
-      archived: archived === 'true',
-      includeArchived: includeArchived === 'true',
-    });
+    const archivedFlag = archived === 'true';
+    const includeArchivedFlag = includeArchived === 'true';
+
+    let assets;
+    if (team) {
+      const resolvedTeam = await this.teamService.findBySlugOrId(team);
+      const assetIds = await this.teamService.getAssetIdsForTeam(resolvedTeam.id);
+      assets = await this.assetService.findByInternalIds(assetIds, {
+        archived: archivedFlag,
+        includeArchived: includeArchivedFlag,
+      });
+    } else {
+      assets = await this.assetService.findByOwner(agent.id, {
+        since: sinceDate,
+        limit: parsedLimit,
+        type,
+        archived: archivedFlag,
+        includeArchived: includeArchivedFlag,
+      });
+    }
+
     return {
       ok: true,
       data: assets.map((a) => ({
@@ -609,6 +631,41 @@ export class AssetController {
     @AuthAgent() agent: { id: string },
   ) {
     await this.assetVersionService.deleteVersion(publicId, versionId, agent.id);
+  }
+
+  @Post(':publicId/teams')
+  @Auth('agent')
+  async shareToTeams(
+    @Param('publicId') publicId: string,
+    @Body() body: { teams: string[] },
+    @AuthAgent() agent: { id: string },
+  ) {
+    if (!Array.isArray(body?.teams) || body.teams.length === 0) {
+      throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'teams array is required' });
+    }
+    const asset = await this.assetService.findByPublicId(publicId);
+    await this.teamService.shareAsset(asset.id, body.teams, agent.id);
+    return { ok: true };
+  }
+
+  @Delete(':publicId/teams/:teamSlug')
+  @Auth('agent')
+  @HttpCode(204)
+  async unshareFromTeam(
+    @Param('publicId') publicId: string,
+    @Param('teamSlug') teamSlug: string,
+    @AuthAgent() agent: { id: string },
+  ) {
+    const asset = await this.assetService.findByPublicId(publicId);
+    await this.teamService.unshareAsset(asset.id, teamSlug, agent.id);
+  }
+
+  private async maybeShareToTeams(assetId: string, teams: unknown, agentId: string): Promise<void> {
+    if (!teams) return;
+    const slugs = Array.isArray(teams) ? teams : String(teams).split(',').map((s) => s.trim()).filter(Boolean);
+    if (slugs.length > 0) {
+      await this.teamService.shareAsset(assetId, slugs, agentId);
+    }
   }
 }
 

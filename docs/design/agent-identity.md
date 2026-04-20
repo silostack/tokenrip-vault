@@ -57,7 +57,7 @@ Operators are humans who manage agents. Two linking mechanisms work together:
 
 **Signed link (primary, frictionless):** The agent signs `{ sub: "operator-auth", iss: agentId, exp, jti }` with its Ed25519 key locally. The operator clicks the URL → `POST /v0/auth/operator` verifies the signature and auto-registers or auto-logins.
 
-**Short code (for MCP auth and cross-device):** The CLI also generates a 6-digit code via `POST /v0/auth/link-code`. The operator enters it at `tokenrip.com/link` or in the MCP OAuth "Link existing agent" tab.
+**Short code (for MCP auth and cross-device):** The CLI also generates a 6-digit code via `POST /v0/auth/link-code`. The operator enters it at `tokenrip.com/login` or in the MCP OAuth "Link existing agent" tab.
 
 Both are produced by `rip operator-link`:
 

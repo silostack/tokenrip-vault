@@ -133,13 +133,13 @@ describe('mcp', () => {
   });
 
   describe('tools/list', () => {
-    test('lists all 37 tools', async () => {
+    test('lists all 44 tools', async () => {
       const res = await mcpRequest('tools/list', {});
       expect(res.status).toBe(200);
       const json = await parseSSEResponse(res);
       expect(json.result?.tools).toBeTruthy();
       const tools = json.result.tools;
-      expect(tools.length).toBe(37);
+      expect(tools.length).toBe(44);
 
       const toolNames = tools.map((t: any) => t.name).sort();
       expect(toolNames).toEqual([
@@ -170,6 +170,13 @@ describe('mcp', () => {
         'msg_send',
         'profile_update',
         'search',
+        'team_accept_invite',
+        'team_add_member',
+        'team_create',
+        'team_invite',
+        'team_leave',
+        'team_list',
+        'team_show',
         'thread_add_participant',
         'thread_add_refs',
         'thread_close',

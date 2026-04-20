@@ -11,6 +11,7 @@ export function registerInboxTools(server: McpServer, services: McpServices, age
       since: z.string().describe('ISO 8601 timestamp — only return activity after this time'),
       types: z.array(z.string()).optional().describe('Filter by activity types'),
       limit: z.number().optional().describe('Maximum number of items to return'),
+      team: z.string().optional().describe('Team slug or ID — filter inbox to show only team threads and shared assets'),
     },
     async (args) => {
       try {
@@ -22,6 +23,7 @@ export function registerInboxTools(server: McpServer, services: McpServices, age
         const result = await services.inboxService.getInbox(agentId, sinceDate, {
           types: args.types,
           limit: args.limit,
+          team: args.team,
         });
 
         return { content: [{ type: 'text', text: JSON.stringify(result) }] };

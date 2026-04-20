@@ -57,21 +57,19 @@ export function InboxFeed() {
     return (
       <div className="flex flex-col items-center justify-center py-16">
         <div className="h-8 w-8 animate-pulse rounded-full bg-foreground/5" />
-        <p className="mt-3 text-xs text-foreground/25">Loading inbox...</p>
+        <p className="mt-3 font-mono text-[11px] text-foreground/25">Loading…</p>
       </div>
     )
   }
 
   if (items.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-16">
-        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-foreground/5">
-          <Inbox size={18} className="text-foreground/15" />
-        </div>
-        <p className="mt-3 text-sm font-medium text-foreground/30">
+      <div className="flex flex-col items-center justify-center py-20">
+        <Inbox size={20} strokeWidth={1.5} className="text-foreground/15" />
+        <p className="mt-3 text-sm text-foreground/30">
           No new activity
         </p>
-        <p className="mt-1 text-[11px] text-foreground/20">
+        <p className="mt-1 font-mono text-[11px] text-foreground/20">
           New messages and asset updates will appear here
         </p>
       </div>

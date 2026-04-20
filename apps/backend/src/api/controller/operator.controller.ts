@@ -27,6 +27,7 @@ import { ContactService } from '../service/contact.service';
 import { AgentService } from '../service/agent.service';
 import { LinkCodeService } from '../service/link-code.service';
 import { RefService, serializeRef } from '../service/ref.service';
+import { TeamService, serializeTeam } from '../service/team.service';
 import { parseSince } from '../service/search.service';
 
 @Controller('v0')
@@ -45,6 +46,7 @@ export class OperatorController {
     private readonly agentService: AgentService,
     private readonly linkCodeService: LinkCodeService,
     private readonly refService: RefService,
+    private readonly teamService: TeamService,
   ) {}
 
   // --- Auth ---
@@ -696,6 +698,104 @@ export class OperatorController {
   ) {
     await this.shareTokenService.revoke(id, user.id);
   }
+
+  // --- Operator Team Endpoints ---
+
+  @Auth('user')
+  @Get('operator/teams')
+  async listTeams(@AuthUser() user: { id: string }) {
+    const agent = await this.requireBoundAgent(user.id);
+    const results = await this.teamService.listForAgent(agent.id);
+    return {
+      ok: true,
+      data: results.map(({ team, memberCount }) => ({
+        id: team.id,
+        slug: team.slug,
+        name: team.name,
+        owner_id: team.ownerId,
+        description: team.description ?? null,
+        member_count: memberCount,
+        created_at: team.createdAt,
+      })),
+    };
+  }
+
+  @Auth('user')
+  @Get('operator/teams/:slugOrId')
+  async getTeam(@Param('slugOrId') slugOrId: string, @AuthUser() user: { id: string }) {
+    await this.requireBoundAgent(user.id);
+    const team = await this.teamService.findBySlugOrId(slugOrId);
+    const { members, aliases } = await this.teamService.getDetails(team.id);
+    return { ok: true, data: serializeTeam(team, members, aliases) };
+  }
+
+  @Auth('user')
+  @Post('operator/teams')
+  async createTeam(
+    @AuthUser() user: { id: string },
+    @Body() body: { slug: string; name?: string; description?: string },
+  ) {
+    if (!body?.slug) {
+      throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'slug is required' });
+    }
+    const agent = await this.requireBoundAgent(user.id);
+    const team = await this.teamService.create(agent.id, body.slug, body.name ?? body.slug, body.description);
+    const { members, aliases } = await this.teamService.getDetails(team.id);
+    return { ok: true, data: serializeTeam(team, members, aliases) };
+  }
+
+  @Auth('user')
+  @Delete('operator/teams/:slugOrId')
+  @HttpCode(204)
+  async deleteTeam(@Param('slugOrId') slugOrId: string, @AuthUser() user: { id: string }) {
+    const agent = await this.requireBoundAgent(user.id);
+    const team = await this.teamService.findBySlugOrId(slugOrId);
+    await this.teamService.delete(team.id, agent.id);
+  }
+
+  @Auth('user')
+  @Post('operator/teams/:slugOrId/members')
+  async addTeamMember(
+    @Param('slugOrId') slugOrId: string,
+    @AuthUser() user: { id: string },
+    @Body() body: { agentId: string },
+  ) {
+    if (!body?.agentId) {
+      throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'agentId is required' });
+    }
+    const agent = await this.requireBoundAgent(user.id);
+    const team = await this.teamService.findBySlugOrId(slugOrId);
+    const targetAgentId = await this.agentService.resolveByIdOrAlias(body.agentId);
+    const result = await this.teamService.addMember(team.id, targetAgentId, agent.id);
+    if (result.invited) {
+      return { ok: true, data: { invited: true, message: 'Invite sent to agent' } };
+    }
+    return { ok: true, data: { added: true } };
+  }
+
+  @Auth('user')
+  @Delete('operator/teams/:slugOrId/members/:agentId')
+  @HttpCode(204)
+  async removeTeamMember(
+    @Param('slugOrId') slugOrId: string,
+    @Param('agentId') agentId: string,
+    @AuthUser() user: { id: string },
+  ) {
+    const agent = await this.requireBoundAgent(user.id);
+    const team = await this.teamService.findBySlugOrId(slugOrId);
+    const resolvedAgentId = await this.agentService.resolveByIdOrAlias(agentId);
+    await this.teamService.removeMember(team.id, resolvedAgentId, agent.id);
+  }
+
+  @Auth('user')
+  @Post('operator/teams/:slugOrId/invite')
+  async generateTeamInvite(@Param('slugOrId') slugOrId: string, @AuthUser() user: { id: string }) {
+    const agent = await this.requireBoundAgent(user.id);
+    const team = await this.teamService.findBySlugOrId(slugOrId);
+    const token = await this.teamService.createInviteLink(team.id, agent.id);
+    return { ok: true, data: { token } };
+  }
+
 }
 
 function parseExpiry(s: string): number | null {

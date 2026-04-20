@@ -6,6 +6,7 @@ import type { ThreadMessage } from '@/lib/thread'
 export interface OperatorAgent {
   agent_id: string
   alias: string | null
+  public_key?: string | null
   metadata: Record<string, unknown> | null
   registered_at: string
 }
@@ -30,6 +31,7 @@ export interface InboxFetchOpts {
   type?: 'thread' | 'asset'
   q?: string
   state?: 'open' | 'closed'
+  team?: string
 }
 
 export interface InboxAsset {
@@ -121,6 +123,7 @@ export async function fetchInbox(opts?: InboxFetchOpts): Promise<InboxData> {
   if (opts?.type) params.type = opts.type
   if (opts?.q) params.q = opts.q
   if (opts?.state) params.state = opts.state
+  if (opts?.team) params.team = opts.team
   const res = await api.get('/v0/operator/inbox', { params })
   return res.data.data
 }
@@ -131,6 +134,7 @@ export async function fetchOperatorAssets(params?: {
   type?: string
   archived?: boolean
   include_archived?: boolean
+  team?: string
 }): Promise<OperatorAssetItem[]> {
   const res = await api.get('/v0/operator/assets', { params })
   return res.data.data
@@ -256,6 +260,7 @@ export interface ThreadListFetchOpts {
   state?: 'open' | 'closed'
   limit?: number
   offset?: number
+  team?: string
 }
 
 export async function fetchOperatorThreads(
@@ -265,6 +270,7 @@ export async function fetchOperatorThreads(
   if (opts?.state) params.state = opts.state
   if (opts?.limit) params.limit = opts.limit
   if (opts?.offset != null) params.offset = opts.offset
+  if (opts?.team) params.team = opts.team
   const res = await api.get('/v0/operator/threads', { params })
   return res.data.data
 }
@@ -298,4 +304,65 @@ export async function fetchOperatorMessages(
   if (sinceSequence != null) params.since_sequence = String(sinceSequence)
   const res = await api.get(`/v0/operator/threads/${threadId}/messages`, { params })
   return res.data.data
+}
+
+// ── Teams ─────────────────────────────────────────────────
+
+export interface TeamDetail {
+  id: string
+  name: string
+  slug: string
+  description: string | null
+  owner_id: string
+  members: Array<{ agent_id: string; alias: string | null }>
+  recent_assets: Array<{ public_id: string; title: string | null; type: string }>
+}
+
+export async function fetchOperatorTeams(): Promise<
+  Array<{ id: string; name: string; slug: string; memberCount: number }>
+> {
+  const res = await api.get('/v0/operator/teams')
+  return res.data.data.map((t: any) => ({
+    id: t.id,
+    name: t.name,
+    slug: t.slug,
+    memberCount: t.member_count ?? 0,
+  }))
+}
+
+export async function fetchTeamDetail(slug: string): Promise<TeamDetail> {
+  const res = await api.get(`/v0/operator/teams/${slug}`)
+  return res.data.data
+}
+
+export async function createTeam(data: {
+  slug: string
+  name?: string
+  description?: string
+}): Promise<TeamDetail> {
+  const res = await api.post('/v0/operator/teams', data)
+  return res.data.data
+}
+
+export async function addTeamMember(slug: string, agentId: string): Promise<void> {
+  await api.post(`/v0/operator/teams/${slug}/members`, { agent_id: agentId })
+}
+
+export async function removeTeamMember(slug: string, agentId: string): Promise<void> {
+  await api.delete(`/v0/operator/teams/${slug}/members/${agentId}`)
+}
+
+export async function generateTeamInvite(
+  slug: string,
+): Promise<{ invite_url?: string; token?: string }> {
+  const res = await api.post(`/v0/operator/teams/${slug}/invite`)
+  return res.data.data
+}
+
+export async function deleteTeam(slug: string): Promise<void> {
+  await api.delete(`/v0/operator/teams/${slug}`)
+}
+
+export async function leaveTeam(slug: string): Promise<void> {
+  await api.post(`/v0/operator/teams/${slug}/leave`)
 }
