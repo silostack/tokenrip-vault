@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
+import { useNavigate } from '@tanstack/react-router'
 import { useAtomValue } from 'jotai'
-import { Bot, Copy, Check, UsersRound } from 'lucide-react'
+import { Bot, Copy, Check, LogOut, UsersRound } from 'lucide-react'
 import { operatorAgentAtom } from '@/_jotai/operator/operator.atoms'
 import { operatorTeamsAtom } from '@/_jotai/operator/team-filter.atoms'
+import { clearSession } from '@/lib/session'
 import { Badge } from '@/components/ui/Badge'
 import { Card } from '@/components/ui/Card'
 
@@ -41,6 +43,12 @@ function CopyField({ label, value }: { label: string; value: string }) {
 export function SettingsPage() {
   const agent = useAtomValue(operatorAgentAtom)
   const teams = useAtomValue(operatorTeamsAtom)
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    clearSession()
+    navigate({ to: '/' })
+  }
 
   if (!agent) return null
 
@@ -91,6 +99,17 @@ export function SettingsPage() {
             ))}
           </div>
         )}
+      </section>
+
+      <section className="pt-2">
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="flex items-center gap-2 text-[12px] font-mono text-foreground/30 transition-colors hover:text-status-error"
+        >
+          <LogOut size={13} strokeWidth={1.5} />
+          Log out
+        </button>
       </section>
     </div>
   )

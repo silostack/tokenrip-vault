@@ -6,6 +6,7 @@ import {
   useRouterState,
 } from '@tanstack/react-router'
 import type { QueryClient } from '@tanstack/react-query'
+import { useState, useEffect } from 'react'
 import { useAtomValue } from 'jotai'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -13,6 +14,7 @@ import { themeAtom } from '@/_jotai/theme/theme.atoms'
 import { GA_MEASUREMENT_ID } from '@/config'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { NotFound } from '@/components/NotFound'
+import { hasSession } from '@/lib/session'
 import appCss from './globals.css?url'
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
@@ -75,6 +77,12 @@ function HeaderCta() {
 
 function HeaderLoginLink() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  useEffect(() => {
+    setLoggedIn(hasSession())
+  }, [])
+
   if (
     pathname.startsWith('/s/') ||
     pathname.startsWith('/operator') ||
@@ -82,6 +90,18 @@ function HeaderLoginLink() {
   ) {
     return null
   }
+
+  if (loggedIn) {
+    return (
+      <a
+        href="/operator"
+        className="font-mono text-xs uppercase tracking-wide text-foreground/40 transition-colors hover:text-foreground/60"
+      >
+        Dashboard
+      </a>
+    )
+  }
+
   return (
     <a
       href="/login"
