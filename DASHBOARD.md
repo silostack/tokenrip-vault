@@ -1,5 +1,5 @@
 # Focus Dashboard
-*Updated: 2026-04-13*
+*Updated: 2026-04-20*
 
 **North Star:** Build the collaboration layer for AI agents.
 **Direction:** Option B decided (Apr 13). RebelFi is an AI company. Crypto in maintenance mode.
@@ -9,7 +9,7 @@
 
 ## The ONE Thing This Week
 
-**Blog live on Tokenrip with zero-friction agent onboarding.** First public product on Tokenrip infrastructure. Proves the platform works, starts SEO clock, gives someone outside RebelFi a reason to use it. Test: is the blog up? Can a Claude Code user install and publish an asset without hand-holding?
+**Content cluster live — 4+ interlinked posts establishing topical authority on agentic collaboration.** Post 1 is live and indexed. Posts 2-4 complete the minimum viable cluster for SEO traction. Every week without content density is a week the domain stays invisible. Test: are 4 posts live, cross-linked, and indexed?
 
 ---
 
@@ -18,6 +18,7 @@
 - Ship > spec. Build > strategize. Close > explore.
 - If either track is stalling, flag it.
 - As complex as necessary, but as simple as possible.
+- Signal collection ≠ system building. Read first, automate later.
 
 ---
 
@@ -26,36 +27,34 @@
 ```
 TOKENRIP (product)  →  INTELLIGENCE ENGINE (first product on Tokenrip)  →  DISTRIBUTION (adoption)
      ↑                         ↑                                                ↑
-  Deployed.              Blog/content system                          Skills, packaging,
-  CLI live.              operational. Deploying                       zero-friction onboarding
-  Dogfooding             this week as first                           for Claude Code + others.
-  starts today.          Tokenrip-based product.                      SEO flywheel.
+  Deployed.              Blog live (1 post).                         "Everywhere all at once."
+  CLI live.              Content cluster this week.                   Signal collection starting.
+  Installable.           Pipeline still manual.                      Reading accounts → ingestion
+  Indexed in Google.     Automation secondary.                       → processing (later).
 ```
 
 **Crypto (maintenance):** No new builds without clear customer requirement. Alek handles pipeline. Simon roped in only when needed. Existing infrastructure maintained.
 
 ---
 
-## This Week (Apr 14 - Apr 20)
+## This Week (Apr 21 - Apr 27)
 
 ### P0
-- [ ] **Blog live on Tokenrip** — deployed, public, findable
-- [ ] **Zero-friction onboarding** — Claude Code user can install + publish without hand-holding
-- [ ] **Alek dogfooding session** — honest reaction captured
+- [ ] **Post 2: OpenClaw vs Hermes** — published and cross-linked
+- [ ] **Post 3: Agent Harnesses Compared** — published and cross-linked
+- [ ] **Post 4: Agent Stack Map** — published and cross-linked
+- [ ] **Internal linking pass** — all 4 posts cross-linked per topology plan
 
 ### P1
-- [ ] Additional blog posts (toward 8) — quality > quantity
-- [ ] Distribution to second agent platform (only after Claude Code path is solid)
-
-### P2
-- [ ] Intelligence engine integration with blog publishing pipeline
-
-### Cleanup
-- [ ] **Close Drift smart contracts** — 30 minutes. Just do it.
+- [ ] **Reading accounts connected** — Twitter, Reddit, Moltbook. Signal collection only. 2hr cap.
+- [ ] **Bing indexing** — submit sitemap. 30 min.
+- [ ] **Distribution doc updated** — capture "everywhere all at once" strategy in `product/tokenrip/distribution.md`
+- [ ] **10x roadmap: one stage advanced** — pick highest-leverage item
+- [ ] **Define Alek dogfooding test** — falsifiable, May 18 deadline. Write it down.
 
 ### Alek
-- [ ] Tokenrip dogfooding
-- [ ] Crypto pipeline maintenance (Netcoins, WhizPay, Nomadrem as needed)
+- [ ] Crypto pipeline maintenance (as needed)
+- [ ] Tokenrip dogfooding continues
 
 ---
 
@@ -63,9 +62,9 @@ TOKENRIP (product)  →  INTELLIGENCE ENGINE (first product on Tokenrip)  →  D
 
 | Project | What | Status | Key Docs |
 |---------|------|--------|----------|
-| **Tokenrip** | Agentic collaboration platform — publish, render, coordinate agent-produced assets | **Deployed** — blog + onboarding this week | [[__PROJECTS/tokenrip/tokenrip]] |
-| **Intelligence Engine** | Agentic knowledge marketplace — blog (Phase 1) → oracle (Phase 2). Built on Tokenrip | **Content system operational** — deploying this week | [[__PROJECTS/10x/intelligence-engine]] |
-| **10x Roadmap** | AI-native operations: Build Machine → Intelligence Engine → Agent Deployment | **Active** (5-10 hrs/wk) | [[__PROJECTS/10x/10x-roadmap]] |
+| **Tokenrip** | Agentic collaboration platform — publish, render, coordinate agent-produced assets | **Deployed** — content cluster + distribution this week | [[tokenrip]] |
+| **Intelligence Engine** | Agentic knowledge marketplace — blog (Phase 1) → oracle (Phase 2). Built on Tokenrip | **1 post live** — building content cluster | [[intelligence-engine]] |
+| **10x Roadmap** | AI-native operations: Build Machine → Intelligence Engine → Agent Deployment | **Active** (5-10 hrs/wk) | [[10x-roadmap]] |
 
 ---
 
@@ -96,8 +95,10 @@ TOKENRIP (product)  →  INTELLIGENCE ENGINE (first product on Tokenrip)  →  D
 
 | Area | Status | Notes |
 |------|--------|-------|
-| **Tokenrip** | **Deployed** | CLI live, public docs, dogfooding starting |
-| **Blog/Content** | **Operational** | Content system built, deploying this week on Tokenrip |
+| **Tokenrip** | **Deployed + Live** | CLI live, installable, public docs, blog live, Google indexed |
+| **Blog/Content** | **1 post live** | Post 1 published. Content cluster (Posts 2-4) this week |
+| **SEO** | **Google: indexed. Bing: pending** | Submit Bing this week |
+| **Analytics** | **Tracking** | |
 | **Banking wind-down** | **Essentially done** | Waiting Lulo liquidation signal → emails → shutdown |
 | **Drift contracts** | **Still open** | 30-min job. Overdue. Just close it |
 | **SDK** | **Shipped** (Mar 24) | Maintenance mode. Zero external users |
@@ -107,26 +108,26 @@ TOKENRIP (product)  →  INTELLIGENCE ENGINE (first product on Tokenrip)  →  D
 
 ---
 
-## Recent (Apr 7 - Apr 13) — Recap
+## Recent (Apr 14 - Apr 20) — Recap
 
-### Shipped / Decided
-- [x] **Tokenrip deployed** — CLI live, publish assets, set up inboxes. Public docs up.
-- [x] **Option B decided** (Apr 13) — RebelFi is an AI company. Crypto to maintenance.
-- [x] **Blog/content system operational** — Ready to deploy on Tokenrip.
-- [x] **Banking wind-down handled** — High-value account managed. Program essentially closed.
-- [x] **10x roadmap — two stages advanced** — Blog system (Track 2) + Tokenrip deploy (Track 1).
+### Shipped / Delivered
+- [x] **Blog live on Tokenrip** — Post 1 published: "Agentic Collaboration — The Missing Layer in the Agent Stack"
+- [x] **Zero-friction onboarding** — Claude Code user can install + publish without hand-holding
+- [x] **Alek dogfooding session** — completed. Sees value but not potential. Using as PMF barometer.
+- [x] **Google indexing** — Tokenrip indexed and discoverable
+- [x] **Analytics tracking** — live
+- [x] **Vault restructure** — Clean operating system for AI-first direction
 
-### Collapsed
-- **Ramping strategy dead** — Dakota can't support Pakistan (WhizPay). SWIFT still offline (Nomadrem, Remitrix). Paybis unresponsive. Fourth dependency failure.
-- **Crypto pipeline moved to maintenance** — Alek handles. No new builds without customer pull.
-
-### Key Insight
-- Naming Option B "freed up space" — the decision was already made internally. Maintaining two directions was cognitive drag. Clear label → clear energy → clear execution.
+### Key Insights
+- Alek as "normal user" barometer: if dogfooding convinces him by May 18, that's a real PMF signal.
+- "Everywhere all at once" distribution strategy — competitive positioning requires multi-front presence, but signal collection before system building.
+- 3/3 P0s delivered. Shipping on deadlines is now a confirmed pattern (third consecutive week).
 
 ---
 
 ## Update Log
 
+- **2026-04-20**: Weekly review. All P0s delivered — blog live (Post 1), zero-friction onboarding working, Alek dogfooding done. Alek sees value but not potential — reframed as normal-user barometer with May 18 evaluation deadline. Google indexed, analytics tracking, Bing pending. Vault restructured for AI-first direction. This week: content cluster (Posts 2-4) is P0. Distribution signal collection starting (reading accounts on Twitter, Reddit, Moltbook). Distribution doc needs updating. 10x roadmap: one stage to advance. Drift contracts still open.
 - **2026-04-13**: Option B decided — RebelFi is an AI company. Crypto moves to maintenance mode. Dakota can't support Pakistan corridor (WhizPay ramping dead). Nomadrem still SWIFT-blocked. Paybis unresponsive. Fourth dependency failure pushed strategic direction to its endpoint. Tokenrip deployed — CLI live, public docs up. Blog/content system operational, deploying this week as first Tokenrip-based product. Banking wind-down essentially complete. Alek managing crypto pipeline. Simon heads-down on Tokenrip. P0 this week: blog live + zero-friction onboarding + Alek dogfooding.
 - **2026-04-08**: Strategic direction decided (Option C, Apr 6): agent-first for new work, yield/ramping as revenue floor. Tokenrip is now primary building focus with prototype due Apr 13. Drift contracts + old banking platform being closed this week (clean break from dependency risk). 10x Roadmap created — structured path to AI-native operations with three tracks (Build Machine, Intelligence Engine, Agent Deployment), 5-10 hrs/wk, Yoda-tracked weekly. Agent OS retired as standalone project — superseded by Tokenrip + 10x roadmap. Co-founder memo exercise validated as company practice. Pipeline stable — WhizPay KYB still stuck, SWIFT still down, Netcoins call completed strong. Constrained week (Drift cleanup + personal) — Tokenrip prototype P0, one small 10x win as secondary.
 - **2026-03-30**: Weekly review. SDK shipped on time (Mar 24). Ramping confirmed working + off-ramping added. Insurance on Base shipped (OpenCover/EthCC). Dakota SWIFT outage discovered — blocks Nomadrem + Remitrix. Paybis found as backup (same rates, SWIFT, widget, no ACH). SWIFT damage control executed. Security incident (SSH-Snake) contained and resolved. Ontop emerged ($1.5-2M/mo corridor, NDA stage). Acta dropped. Agent OS bumped to P0 — execution factory to multiply bandwidth. Biggest bottleneck: Simon's bandwidth. ONE thing this week: Agent OS live + producing SDK distribution.

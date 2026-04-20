@@ -25,6 +25,9 @@
 - **Finds dual-purpose and convergence work** — single efforts advancing multiple goals simultaneously
 - **Effective delegation emerging** — labor division improving
 - **Operational crisis response is strong** — handles crises with clarity and speed
+- **Shipping on self-imposed deadlines is now reliable** — third consecutive week of hitting targets (Apr 20). Not a one-off. This is a dependable strength.
+- **Sunsetting dead weight creates energy** — killing old work (crypto, previous vault structure) produced immediate cognitive relief and momentum. Worth remembering when things feel heavy.
+- **Uses skeptics as signal, not threat** — reframed Alek's lukewarm reaction as a product-market fit barometer rather than a discouragement. Healthy founder instinct.
 
 ## Observed Patterns
 
@@ -57,6 +60,8 @@
 
 | Date | Insight | Context |
 |------|---------|---------|
+| 2026-04-20 | Sunsetting creates energy — kill dead weight when things feel heavy | Sunsetted crypto work + vault restructure. Immediate cognitive relief. "Lifted a lot of baggage." Energy spike followed. |
+| 2026-04-20 | Skeptics as product-market fit barometers | Alek sees value but not potential. Simon reframed: "If he's convinced later, that's a good sign. If we build something that convinces him, I know we're on to something." Uses non-technical co-founder as proxy for early adopter readiness. |
 | 2026-04-13 | Naming a decision creates relief when the decision was already made | Resisted calling it "Option B" for weeks. When named, "freed up space." If naming creates relief, not anxiety, the decision was already made internally. |
 | 2026-04-06 | Constrained memo format reveals genuine thinking vs. AI-assisted confidence | Alek's 20-page AI brief vs. 1-page constrained memo. "What I Don't Know" section is the key forcing function. |
 | 2026-04-03 | Dependency risk is the strategic argument that survives after fear fades | Four instances of same pattern. Direction that reduces dependency (own code) is structurally sound. |
