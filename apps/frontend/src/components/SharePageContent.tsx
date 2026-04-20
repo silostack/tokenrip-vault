@@ -39,23 +39,23 @@ function StaticContent({ asset, textContent, versionId }: { asset: AssetMetadata
   if (textContent != null) {
     switch (asset.type) {
       case 'markdown':
-        return <div>{textContent}</div>
+        return <div className="whitespace-pre-wrap text-sm text-foreground/90">{textContent}</div>
       case 'code':
-        return <pre><code>{textContent}</code></pre>
+        return <pre className="overflow-auto"><code className="font-mono text-sm">{textContent}</code></pre>
       case 'json': {
         let formatted = textContent
         try { formatted = JSON.stringify(JSON.parse(textContent), null, 2) } catch {}
-        return <pre>{formatted}</pre>
+        return <pre className="overflow-auto font-mono text-sm">{formatted}</pre>
       }
       case 'html':
       case 'text':
       case 'chart':
-        return <pre>{textContent}</pre>
+        return <pre className="whitespace-pre-wrap break-words font-mono text-sm text-foreground/90 overflow-auto">{textContent}</pre>
     }
   }
 
   if (asset.mimeType?.startsWith('image/')) {
-    return <img src={contentUrl} alt={asset.title || 'Image asset'} />
+    return <div className="flex justify-center"><img src={contentUrl} alt={asset.title || 'Image asset'} /></div>
   }
 
   return <a href={contentUrl}>Download: {asset.title || 'asset'}</a>
@@ -133,7 +133,7 @@ export function SharePageContent({ uuid, versionId, ssrAsset, ssrTextContent, ss
   if (!mounted) {
     if (!ssrAsset) return null
     return (
-      <article className="sr-only">
+      <article className="mx-auto max-w-5xl px-6 py-8">
         <StaticContent asset={ssrAsset} textContent={ssrTextContent} versionId={versionId} />
       </article>
     )
