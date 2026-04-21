@@ -1,0 +1,39 @@
+{
+  "planPath": "docs/superpowers/plans/2026-04-21-hermes-tokenrip-integration.md",
+  "tasks": [
+    {
+      "id": 8,
+      "subject": "Task 1: Rename Tokenrip agent alias to hermes",
+      "status": "pending",
+      "description": "**Goal:** Change existing `rip-claude.ai` alias to `hermes`.\n\n**Files:**\n- Modified by CLI: `~/.config/tokenrip/config.json`\n\n**Acceptance Criteria:**\n- [ ] `rip auth whoami` returns `\"alias\":\"hermes\"`\n- [ ] Same `rip1x37m...` ID — no new keypair\n\n**Verify:** `rip auth whoami | python3 -c \"import sys,json; d=json.load(sys.stdin); print(d['data']['alias'])\"` → `hermes`\n\n**Steps:**\n- Run `rip auth update --alias hermes`\n- Verify with `rip auth whoami`\n\n```json:metadata\n{\"files\": [\"~/.config/tokenrip/config.json\"], \"verifyCommand\": \"rip auth whoami | python3 -c \\\"import sys,json; d=json.load(sys.stdin); print(d['data']['alias'])\\\"\", \"acceptanceCriteria\": [\"rip auth whoami returns alias hermes\", \"Same rip1x37m agent ID\"]}\n```"
+    },
+    {
+      "id": 9,
+      "subject": "Task 2: Create tokenrip-ops team",
+      "status": "pending",
+      "blockedBy": [8],
+      "description": "**Goal:** Create shared ops team feed, set alias `ops`, add Simon as member.\n\n**Files:**\n- Remote: team on Tokenrip server\n- Local: `~/.config/tokenrip/teams.json`\n\n**Acceptance Criteria:**\n- [ ] `rip team show tokenrip-ops` returns team\n- [ ] `rip team show ops` resolves via alias\n- [ ] Simon appears as member\n\n**Verify:** `rip team show ops | python3 -c \"import sys,json; d=json.load(sys.stdin); print('OK' if d['ok'] else d)\"` → `OK`\n\n**Steps:**\n- `rip team create tokenrip-ops --name \"Tokenrip Ops\"`\n- `rip team alias tokenrip-ops ops`\n- `rip team add tokenrip-ops rip1zuanzhupecy470263s76z3n0v4jcrxn9rc025226sdm8px456tyss6h4hk`\n- `rip team sync`\n\n```json:metadata\n{\"files\": [\"~/.config/tokenrip/teams.json\"], \"verifyCommand\": \"rip team show ops | python3 -c \\\"import sys,json; d=json.load(sys.stdin); print('OK' if d['ok'] else d)\\\"\", \"acceptanceCriteria\": [\"rip team show ops resolves\", \"Simon is a member\"]}\n```"
+    },
+    {
+      "id": 10,
+      "subject": "Task 3: Write Hermes memory",
+      "status": "pending",
+      "blockedBy": [9],
+      "description": "**Goal:** Replace single-line MEMORY.md with full Tokenrip operational context.\n\n**Files:**\n- Modify: `~/.hermes/memories/MEMORY.md`\n\n**Acceptance Criteria:**\n- [ ] File has 4 `##` sections\n- [ ] Contains alias, agent ID, Simon's ID, workspace path, hard stops\n- [ ] `last_notified_sha:` field present (empty)\n\n**Verify:** `grep -c \"^##\" ~/.hermes/memories/MEMORY.md` → `4`\n\n**Steps:**\n- Write full memory content via heredoc (exact content in plan doc)\n- Verify section count and key fields\n\n```json:metadata\n{\"files\": [\"~/.hermes/memories/MEMORY.md\"], \"verifyCommand\": \"grep -c \\\"^##\\\" ~/.hermes/memories/MEMORY.md\", \"acceptanceCriteria\": [\"4 sections present\", \"last_notified_sha field present\"]}\n```"
+    },
+    {
+      "id": 11,
+      "subject": "Task 4: Update default workspace",
+      "status": "pending",
+      "description": "**Goal:** Point Hermes default workspace at `/home/dbot/projects/tokenrip-work`.\n\n**Files:**\n- Modify: `~/.hermes/webui/last_workspace.txt`\n\n**Acceptance Criteria:**\n- [ ] `cat ~/.hermes/webui/last_workspace.txt` returns `/home/dbot/projects/tokenrip-work`\n\n**Verify:** `cat ~/.hermes/webui/last_workspace.txt` → `/home/dbot/projects/tokenrip-work`\n\n**Steps:**\n- Confirm `git -C /home/dbot/projects/tokenrip-work branch --show-current` → `develop`\n- `echo -n \"/home/dbot/projects/tokenrip-work\" > ~/.hermes/webui/last_workspace.txt`\n\n```json:metadata\n{\"files\": [\"~/.hermes/webui/last_workspace.txt\"], \"verifyCommand\": \"cat ~/.hermes/webui/last_workspace.txt\", \"acceptanceCriteria\": [\"path is /home/dbot/projects/tokenrip-work\"]}\n```"
+    },
+    {
+      "id": 12,
+      "subject": "Task 5: Create hourly inbox poll cron",
+      "status": "pending",
+      "blockedBy": [10, 11],
+      "description": "**Goal:** Add inbox poll job to `~/.hermes/cron/jobs.json` that checks threads, routes directives, and checks promotion readiness.\n\n**Files:**\n- Modify: `~/.hermes/cron/jobs.json`\n\n**Acceptance Criteria:**\n- [ ] Job named \"Tokenrip Inbox Poll\" in jobs array\n- [ ] Schedule: interval 60 minutes\n- [ ] enabled: true\n- [ ] Telegram delivery to chat_id 5287158277\n- [ ] JSON valid\n\n**Verify:** `python3 -c \"import json; jobs=json.load(open('/home/dbot/.hermes/cron/jobs.json')); names=[j['name'] for j in jobs['jobs']]; print(names)\"` → includes 'Tokenrip Inbox Poll'\n\n**Steps:**\n- Write Python script to `/tmp/add_cron.py` (full script in plan doc)\n- Run `python3 /tmp/add_cron.py`\n- Verify JSON validity and job presence\n- Reload Hermes gateway\n\n```json:metadata\n{\"files\": [\"~/.hermes/cron/jobs.json\"], \"verifyCommand\": \"python3 -c \\\"import json; jobs=json.load(open('/home/dbot/.hermes/cron/jobs.json')); names=[j['name'] for j in jobs['jobs']]; print(names)\\\"\", \"acceptanceCriteria\": [\"Tokenrip Inbox Poll in jobs array\", \"60 min interval\", \"enabled true\", \"Telegram delivery to 5287158277\"]}\n```"
+    }
+  ],
+  "lastUpdated": "2026-04-21T00:00:00Z"
+}
