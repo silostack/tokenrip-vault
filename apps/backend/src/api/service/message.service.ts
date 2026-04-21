@@ -1,4 +1,4 @@
-import { Injectable, ForbiddenException } from '@nestjs/common';
+import { Injectable, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { EntityManager, LockMode } from '@mikro-orm/postgresql';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Message } from '../../db/models/Message';
@@ -55,7 +55,13 @@ export class MessageService {
       if (opts?.intent) message.intent = opts.intent;
       if (opts?.type) message.type = opts.type;
       if (opts?.data) message.data = opts.data;
-      if (opts?.inReplyTo) message.inReplyTo = opts.inReplyTo;
+      if (opts?.inReplyTo) {
+        const parent = await em.findOne(Message, { id: opts.inReplyTo, thread: { id: thread.id } });
+        if (!parent) {
+          throw new NotFoundException({ ok: false, error: 'MESSAGE_NOT_FOUND', message: 'in_reply_to message not found' });
+        }
+        message.inReplyTo = opts.inReplyTo;
+      }
 
       em.persist(message);
 

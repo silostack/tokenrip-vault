@@ -9,6 +9,7 @@ import {
   Query,
   BadRequestException,
   ForbiddenException,
+  NotFoundException,
   HttpCode,
 } from '@nestjs/common';
 import { Public } from '../auth/public.decorator';
@@ -711,7 +712,10 @@ export class OperatorController {
     @AuthUser() user: { id: string },
     @Param('id') id: string,
   ) {
-    await this.shareTokenService.revoke(id, user.id);
+    const ok = await this.shareTokenService.revoke(id, user.id);
+    if (!ok) {
+      throw new NotFoundException({ ok: false, error: 'SHARE_TOKEN_NOT_FOUND', message: 'Share token not found' });
+    }
   }
 
   // --- Operator Team Endpoints ---

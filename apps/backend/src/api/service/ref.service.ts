@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { Transactional } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
@@ -109,8 +109,9 @@ export class RefService {
 
   async removeRef(refId: string): Promise<void> {
     const ref = await this.refRepo.findOne({ id: refId });
-    if (ref) {
-      await this.em.removeAndFlush(ref);
+    if (!ref) {
+      throw new NotFoundException({ ok: false, error: 'REF_NOT_FOUND', message: 'Ref not found' });
     }
+    await this.em.removeAndFlush(ref);
   }
 }

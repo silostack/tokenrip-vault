@@ -34,6 +34,21 @@ describe('msg send', () => {
     expect(output.data.thread_id).toBeDefined();
   });
 
+  test('send to unknown agent ID returns 404 not 500', async () => {
+    const res = await fetch(`${backend.url}/v0/messages`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${agentA.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ to: ['rip1fakeagentidthatdoesnotexist123456789'], body: 'hello' }),
+    });
+    const json = await res.json();
+    expect(res.status).toBe(404);
+    expect(json.ok).toBe(false);
+    expect(json.error).toBe('AGENT_NOT_FOUND');
+  });
+
   test('reply to thread via --thread flag', async () => {
     // Create a thread first
     const createRes = await fetch(`${backend.url}/v0/threads`, {

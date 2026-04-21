@@ -81,7 +81,17 @@ export class AgentService {
   }
 
   async resolveByIdOrAlias(target: string): Promise<string> {
-    if (target.startsWith('rip1')) return target;
+    if (target.startsWith('rip1')) {
+      const exists = await this.agentRepo.count({ id: target });
+      if (!exists) {
+        throw new NotFoundException({
+          ok: false,
+          error: 'AGENT_NOT_FOUND',
+          message: `Agent not found: ${target}`,
+        });
+      }
+      return target;
+    }
     const normalized = target.endsWith('.ai') ? target : `${target}.ai`;
     const agent = await this.findByAlias(normalized);
     if (!agent) {
