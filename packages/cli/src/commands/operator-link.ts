@@ -61,43 +61,20 @@ export async function operatorLink(
 
   const expiresAt = new Date(exp * 1000).toISOString();
 
-  outputSuccess(
-    {
-      url,
-      code,
-      code_error: codeError,
-      warning,
-      agent_id: identity.agentId,
-      expires_at: expiresAt,
-      ...(code && { link_page: `${frontendUrl}/link` }),
-    },
-    (data) => {
-      const codeError = data.code_error as OperatorLinkIssue | null | undefined;
-      const warning = data.warning as OperatorLinkIssue | null | undefined;
-      const lines = [
-        '',
-        `Operator link for ${data.agent_id}:`,
-        '',
-        `  ${data.url}`,
-        '',
-      ];
-      if (data.code) {
-        lines.push(`Link code: ${data.code}`);
-        lines.push(`Enter at ${data.link_page} — expires in 10 minutes`);
-        lines.push('');
-      } else if (codeError?.message) {
-        lines.push(`Link code unavailable: ${codeError.message}`);
-        lines.push('');
-      }
-      if (warning?.message) {
-        lines.push(`Warning: ${warning.message}`);
-        lines.push('');
-      }
-      lines.push(`Expires: ${data.expires_at}`);
-      lines.push('');
-      return lines.join('\n');
-    },
-  );
+  const outputData = {
+    url,
+    code,
+    code_error: codeError,
+    warning,
+    agent_id: identity.agentId,
+    expires_at: expiresAt,
+    ...(code && { link_page: `${frontendUrl}/link` }),
+  };
+
+  // Always emit JSON for operator-link — the url field contains a long JWT token
+  // that gets silently truncated by human-formatting formatters. This command is
+  // always machine-to-machine; the human-friendly display belongs in the dashboard.
+  console.log(JSON.stringify({ ok: true, data: outputData }));
 }
 
 async function createLinkCode(client: ReturnType<typeof createHttpClient>) {
