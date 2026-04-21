@@ -109,6 +109,11 @@ export async function authenticateOperator(params: {
   return res.data.data
 }
 
+export async function bindOperatorAgent(token: string): Promise<{ agent_id: string }> {
+  const res = await api.post('/v0/auth/operator/bind', { token })
+  return res.data.data
+}
+
 // ── Dashboard ──────────────────────────────────────────
 
 export async function fetchOperatorAgent(): Promise<OperatorAgent> {

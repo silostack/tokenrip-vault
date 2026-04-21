@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
-import { authenticateOperator } from '@/lib/operator'
-import { setSession } from '@/lib/session'
+import { authenticateOperator, bindOperatorAgent } from '@/lib/operator'
+import { setSession, hasSession } from '@/lib/session'
 
 interface OperatorAuthPageProps {
   token: string
@@ -10,6 +10,7 @@ interface OperatorAuthPageProps {
 type AuthState =
   | { step: 'verifying' }
   | { step: 'register' }
+  | { step: 'link-existing' }
   | { step: 'redirecting' }
   | { step: 'error'; message: string }
 
@@ -30,7 +31,7 @@ export function OperatorAuthPage({ token }: OperatorAuthPageProps) {
       .catch((err) => {
         const error = err.response?.data?.error
         if (error === 'REGISTRATION_REQUIRED') {
-          setState({ step: 'register' })
+          setState({ step: hasSession() ? 'link-existing' : 'register' })
         } else {
           const message =
             error === 'TOKEN_EXPIRED'
@@ -67,6 +68,22 @@ export function OperatorAuthPage({ token }: OperatorAuthPageProps) {
     }
   }
 
+  const handleLinkExisting = async () => {
+    setSubmitting(true)
+    try {
+      await bindOperatorAgent(token)
+      setState({ step: 'redirecting' })
+      navigate({ to: '/operator' })
+    } catch (err: any) {
+      setState({
+        step: 'error',
+        message: err.response?.data?.message || 'Linking failed.',
+      })
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
   return (
     <div className="flex min-h-[80vh] items-center justify-center px-4">
       <div className="w-full max-w-sm">
@@ -84,6 +101,25 @@ export function OperatorAuthPage({ token }: OperatorAuthPageProps) {
             <p className="text-sm text-foreground/40">
               Welcome back. Redirecting...
             </p>
+          </div>
+        )}
+
+        {state.step === 'link-existing' && (
+          <div>
+            <h1 className="font-mono text-lg font-bold">Link agent</h1>
+            <p className="mt-1 text-sm text-foreground/50">
+              Add this agent to your existing operator account.
+            </p>
+            <div className="mt-6">
+              <button
+                type="button"
+                onClick={handleLinkExisting}
+                disabled={submitting}
+                className="w-full rounded-lg bg-foreground px-4 py-3 text-sm font-medium text-background transition-colors hover:bg-foreground/90 active:scale-[0.98] disabled:opacity-50"
+              >
+                {submitting ? 'Linking…' : 'Link agent →'}
+              </button>
+            </div>
           </div>
         )}
 
@@ -137,6 +173,9 @@ export function OperatorAuthPage({ token }: OperatorAuthPageProps) {
                 {submitting ? 'Creating account...' : 'Continue'}
               </button>
             </form>
+            <p className="mt-4 text-xs text-foreground/40">
+              Already have an account? Log in to your dashboard first, then open this link again.
+            </p>
           </div>
         )}
 

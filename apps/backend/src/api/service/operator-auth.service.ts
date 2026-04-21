@@ -4,6 +4,7 @@ import { Transactional } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { agentIdToPublicKey, verifyEd25519 } from '../auth/crypto';
 import { Agent } from '../../db/models/Agent';
+import { User } from '../../db/models/User';
 import { OperatorBinding } from '../../db/models/OperatorBinding';
 import { AgentRepository, OperatorBindingRepository } from '../../db/models';
 import { UserService } from './user.service';
@@ -112,5 +113,28 @@ export class OperatorAuthService {
     this.em.persist(newBinding);
 
     return { userId: user.id, sessionToken, isNewRegistration: true };
+  }
+
+  /**
+   * Bind an agent (identified by signed token) to an already-authenticated user.
+   * Idempotent — safe to call if the binding already exists.
+   */
+  @Transactional()
+  async bindExistingUser(token: string, userId: string): Promise<{ agentId: string }> {
+    const payload = this.verifyToken(token);
+
+    const [agent, existing] = await Promise.all([
+      this.agentRepo.findOne({ id: payload.iss }),
+      this.bindingRepo.findOne({ agent: { id: payload.iss }, user: { id: userId } }),
+    ]);
+    if (!agent) {
+      throw new UnauthorizedException({ ok: false, error: 'AGENT_NOT_FOUND', message: 'Issuing agent not found' });
+    }
+
+    if (!existing) {
+      this.em.persist(new OperatorBinding(agent, this.em.getReference(User, userId)));
+    }
+
+    return { agentId: agent.id };
   }
 }

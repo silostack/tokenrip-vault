@@ -105,6 +105,21 @@ export class OperatorController {
     };
   }
 
+  /** Bind an agent (by signed token) to an already-logged-in operator's account. */
+  @Auth('user')
+  @Post('auth/operator/bind')
+  @HttpCode(200)
+  async bindOperator(
+    @AuthUser() user: { id: string },
+    @Body() body: { token?: string },
+  ) {
+    if (!body?.token) {
+      throw new BadRequestException({ ok: false, error: 'MISSING_FIELD', message: 'token is required' });
+    }
+    const { agentId } = await this.operatorAuthService.bindExistingUser(body.token, user.id);
+    return { ok: true, data: { agent_id: agentId } };
+  }
+
   /** Generate a 6-digit link code for operator linking (called by CLI agent) */
   @Auth('agent')
   @Post('auth/link-code')
