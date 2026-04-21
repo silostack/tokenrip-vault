@@ -114,6 +114,15 @@ export async function bindOperatorAgent(token: string): Promise<{ agent_id: stri
   return res.data.data
 }
 
+export async function checkOperatorAuth(): Promise<boolean> {
+  try {
+    await api.get('/v0/operator/agent')
+    return true
+  } catch {
+    return false
+  }
+}
+
 // ── Dashboard ──────────────────────────────────────────
 
 export async function fetchOperatorAgent(): Promise<OperatorAgent> {

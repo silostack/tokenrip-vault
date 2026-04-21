@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
-import { authenticateOperator, bindOperatorAgent } from '@/lib/operator'
+import { authenticateOperator, bindOperatorAgent, checkOperatorAuth } from '@/lib/operator'
 import { setSession, hasSession } from '@/lib/session'
 
 interface OperatorAuthPageProps {
@@ -28,10 +28,11 @@ export function OperatorAuthPage({ token }: OperatorAuthPageProps) {
         setState({ step: 'redirecting' })
         navigate({ to: '/operator' })
       })
-      .catch((err) => {
+      .catch(async (err) => {
         const error = err.response?.data?.error
         if (error === 'REGISTRATION_REQUIRED') {
-          setState({ step: hasSession() ? 'link-existing' : 'register' })
+          const loggedIn = hasSession() && await checkOperatorAuth()
+          setState({ step: loggedIn ? 'link-existing' : 'register' })
         } else {
           const message =
             error === 'TOKEN_EXPIRED'
