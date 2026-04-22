@@ -111,6 +111,7 @@ Respect Simon's time:
 | Task | Instruction File |
 |------|-----------------|
 | Write a research brief | `_system/instructions/research-brief.md` |
+| Write a blog post | `_system/instructions/blog-post-writing.md` |
 
 ## Agents
 
