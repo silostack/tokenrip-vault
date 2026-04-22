@@ -167,17 +167,19 @@ Launch an editor via the Agent tool with **clean context**. The editor has never
 
 **Nothing else.** No sources, no conversation context, no knowledge of the user's intent.
 
-**Editor prompt must instruct it to check these five categories:**
+**Editor prompt must instruct it to check these six categories:**
 
 1. **Source hygiene** — Flag any internal identifiers: issue numbers (e.g. "Issue #48028"), PR links, commit SHAs, internal ticket references, raw URLs used as citations, or references that would mean nothing to someone outside a specific project. These must be removed or replaced with reader-meaningful context.
 
-2. **Jargon density** — Flag sections where technical language is inaccessible to non-engineer operators. The test: "Would someone running agents for content marketing understand this paragraph?" If not, it needs rewriting or explaining.
+2. **Jargon density** — Flag sections where technical language is inaccessible to non-engineer operators. The test: "Would someone running agents for content marketing understand this paragraph?" If not, it needs rewriting or explaining. Also flag inline code formatting (backtick code spans like `file/paths` or `command --flags`) in posts that are not workflow/how-to type. Inline code signals "implement this" to readers. In informational, thesis, comparison, or landscape posts, describe behaviors in plain language instead: "Claude Code stores memory in a project-scoped markdown file" not `~/.claude/projects/<project>/memory/MEMORY.md`.
 
 3. **Writing guide compliance** — Is there a clear angle in the first 3 sentences? Does it open with tension (not definitions)? Are subheadings claims (not labels)? Does the post have an actual take? Is it 1500-2500 words? Does every section earn its place? Does it end with implication (not summary)?
 
 4. **Tokenrip mention rules** — Does Tokenrip appear only in the gap/fix section (if at all)? Does it read as infrastructure reference or product pitch? If it appears in the intro or as the hero, flag it.
 
-5. **AI tells** — Flag generated-sounding phrases: "in today's rapidly evolving landscape", "it's important to note", "let's dive in", "in conclusion", hedging without substance, filler paragraphs that add nothing.
+5. **AI tells** — Flag generated-sounding phrases: "in today's rapidly evolving landscape", "it's important to note", "let's dive in", "in conclusion", hedging without substance, filler paragraphs that add nothing. Also flag structural repetition patterns: if every section ends with a punchy one-liner declaration, that uniformity is itself a tell. Vary section exits — some can end mid-thought, some with a question, some flowing into the next section.
+
+6. **Reader utility** — Read the post as a practitioner who runs agents in production. After reading, ask: "Can I do something differently now? Did I learn something I didn't know? Or did I just read a structured summary of things I could have found myself?" Flag sections that inform without enabling — where the post describes a concept but never shows the reader how to apply it, what to watch for, or what decision to make. An information dump organized under nice headings is still an information dump. Every section should leave the reader with something actionable: a technique to try, a failure mode to watch for, a decision framework, or a concrete next step. If more than two sections fail this test, the post needs structural revision, not patch fixes.
 
 **The editor must return a structured report:**
 
@@ -198,6 +200,9 @@ Launch an editor via the Agent tool with **clean context**. The editor has never
 
 ## AI Tells
 [findings or "Clean"]
+
+## Reader Utility
+[findings or "Actionable"]
 
 ## Specific Issues
 1. [Location] — [issue] — [suggested fix]
@@ -262,7 +267,7 @@ On approval, generate SEO metadata and publish.
 - **faq**: 5-10 Q&A pairs. Questions must be things a reader would genuinely ask — not restatements of headers. Answers must come from article content, specific and useful on their own.
 - **reading_time**: word count / 200, rounded up, minimum 1
 - **publish_date**: current ISO 8601 timestamp
-- **author**: from frontmatter. If missing, ask the user.
+- **author**: omit. This publication does not publish named authors.
 
 ### Step 2: Build metadata JSON
 
@@ -272,38 +277,50 @@ On approval, generate SEO metadata and publish.
   "title": "...",
   "description": "...",
   "publish_date": "...",
-  "author": "...",
   "tags": ["...", "..."],
   "reading_time": N,
   "faq": [{"q": "...", "a": "..."}, ...]
 }
 ```
 
-### Step 3: Check if slug exists
+### Step 3: Create a publish-ready file
+
+The draft file contains YAML frontmatter and an H1 heading that are for local tracking only — they must not appear in the published post. Before publishing, create a clean file:
+
+1. Strip the YAML frontmatter (everything between the opening and closing `---` delimiters, inclusive)
+2. Strip the first `# Heading` line (Tokenrip renders the title from the `--title` flag separately)
+3. Strip any leading blank lines after removal
+4. Save to `content/<slug>-publish.md` (this is a temporary file — can be deleted after publish)
+
+### Step 4: Check if slug exists
 
 ```bash
 rip asset get <slug>
 ```
 
-- Success → update path (Step 4b)
-- Not found → publish path (Step 4a)
+- Success → update path (Step 5b)
+- Not found → publish path (Step 5a)
 
-### Step 4a: New post
+### Step 5a: New post
 
 ```bash
-rip asset publish <file> --type markdown --alias <slug> --title "<title>" --metadata '<metadata-json>'
+rip asset publish content/<slug>-publish.md --type markdown --alias <slug> --title "<title>" --metadata '<metadata-json>'
 ```
 
-### Step 4b: Existing post
+### Step 5b: Existing post
 
 ```bash
-rip asset update <id> <file> --type markdown
+rip asset update <id> content/<slug>-publish.md --type markdown
 rip asset patch <id> --metadata '<metadata-json>'
 ```
 
 Use the asset ID returned by `rip asset get <slug>`.
 
-### Step 5: Report
+### Step 6: Clean up
+
+Delete `content/<slug>-publish.md`. The draft file (`content/<slug>-draft.md`) remains as the local record with full metadata.
+
+### Step 7: Report
 
 ```
 Published: <title>
@@ -323,5 +340,4 @@ Draft: content/<slug>-draft.md
 - **Slug exists but is not a blog post**: stop, ask user whether to continue
 - **rip CLI publish/update/patch fails**: show full error, stop. Don't retry automatically.
 - **Editor rejects draft**: present report to user, don't auto-rewrite
-- **Author missing from frontmatter**: ask user before publishing
 - **Metadata JSON build fails**: show the metadata, ask user to fix

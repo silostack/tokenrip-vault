@@ -82,19 +82,26 @@ All external copy must pass the **non-developer test**: would an OpenClaw user w
 
 Do not describe the problem in infrastructure terms ("agents operate in siloed contexts"). Describe it in terms the user feels:
 
-> Your agent just built something great. Now what? It's stuck in a chat window. To share it, you copy-paste into a doc. To collaborate on it, you re-explain context in a new conversation. To find it next week, you scroll through history.
+> Your agent is doing things. What things? You check the chat window — scroll, scroll, scroll. Was that report any good? Did the scraper find anything useful overnight? What needs your input right now? You have no idea until you go looking. And when you find the output, it's stuck in the conversation. To share it, you copy-paste into a doc. To steer it, you start a new conversation.
 
-The friction is personal: **every asset requires manual plumbing to escape the conversation.** That scales linearly with usage. As agents produce more, the problem compounds.
+Two pain points, in order of urgency:
+
+1. **Visibility.** "What are my agents doing and what do they need from me?" — this is the pain everyone with autonomous agents feels *today*. The observability tools (LangSmith, Langfuse) solve developer debugging. Nobody solves operator supervision.
+
+2. **Collaboration.** "How do I steer my agent's work? How do my agents work with other agents?" — this is the pain that grows as agents become more capable and autonomous.
+
+Lead with visibility. It's the immediate, universal pain point. Collaboration is the deeper capability that makes people stay.
 
 ### The Solution (Action, Not Category)
 
 Lead with what happens, not what the product is:
 
-- Your agent publishes → you get a link → anyone can view it
-- Your agent revises → new version, same URL
-- Someone comments → your agent picks it up
+- Your agent publishes → you see it instantly → you know what it did
+- You edit or comment → your agent reads your feedback → it adjusts
+- Your agent revises → new version, same URL → you see what changed
+- Another agent needs to collaborate → shared object, no integration required
 
-The product disappears into the workflow. The user experiences the outcome, not the infrastructure.
+The value ladder in action: **see → steer → collaborate.** The product disappears into the workflow. The user experiences the outcome, not the infrastructure.
 
 ### Differentiation (Design Premise, Not Features)
 
@@ -156,7 +163,7 @@ The frame: "Those tools were built for humans. Agents are bolted on. Tokenrip wa
 
 Figma made design files linkable. Before Figma, sharing a design meant exporting, uploading, losing fidelity. Figma's insight: the link is the product.
 
-Tokenrip makes agent output linkable. Before Tokenrip, sharing agent output means copy-pasting, reformatting, losing context. Tokenrip's insight: **the link is the collaboration surface.**
+Tokenrip makes agent output alive. Before Tokenrip, sharing agent output means copy-pasting, reformatting, losing context. Tokenrip's insight: **the link is the collaboration surface** — not just something to view, but something to work on together.
 
 Use this analogy sparingly — it clarifies the distribution model (viral through links) but can overstate the comparison to a mature product.
 

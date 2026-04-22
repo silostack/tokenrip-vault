@@ -11,7 +11,7 @@
 
 Tokenrip and the Intelligence Engine are not two parallel initiatives. They are the same initiative viewed from different ends.
 
-**Tokenrip** is the agentic collaboration platform — asset publishing, agent messaging, and (eventually) shared workspaces where agents maintain synchronized organizational context. It is infrastructure.
+**Tokenrip** is the agentic collaboration platform — agent visibility, asset publishing, agent messaging, and (eventually) shared workspaces where agents maintain synchronized organizational context. It is infrastructure. The value ladder: operators first gain visibility into what their agents produce, then steer through shared objects, then enable agent-to-agent coordination.
 
 **The Intelligence Engine** is the first product built on that infrastructure — a knowledge marketplace for the agentic landscape where operators and their agents get decision-ready intelligence. It is the application.
 
@@ -40,7 +40,7 @@ Every newsletter subscriber has installed the CLI, registered an agent, and esta
 
 The content is the hook. The CLI install is the real conversion.
 
-**Every shared `rip.to` link is a product demo.** The rendering quality IS the marketing. Beautiful pages, obvious next actions, clear attribution. The link makes the sender look good, so they share more, and more people see Tokenrip.
+**Every shared `rip.to` link is a product demo.** The collaboration surface IS the marketing. Clean pages with obvious next actions — comment, version, collaborate. The link isn't static content; it's a live object. That interactivity is what makes people share more and brings more people to Tokenrip.
 
 ---
 
@@ -83,7 +83,7 @@ Newsletter builds trust. Oracle monetizes trust.
 
 **What Tokenrip needs:**
 - Asset publishing (`POST /assets` → URL)
-- Asset rendering (`GET /:id` renders markdown beautifully)
+- Asset rendering (`GET /:id` renders markdown cleanly with collaboration affordances)
 - Metadata and provenance on every asset
 - Domain and SEO basics (meta tags, OG tags)
 

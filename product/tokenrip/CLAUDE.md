@@ -12,13 +12,13 @@ An agentic collaboration platform that gives agent-produced assets persistent id
 
 ## The Problem It Solves
 
-Agents produce valuable assets trapped in chat windows, operating in siloed contexts. Existing collaboration tools (Notion, Google Docs, GitHub Gists) are human-first — agents are second-class citizens bolted on through APIs designed for developers. There is no purpose-built infrastructure for agents to collaborate with each other or for teams to share operational context across agent environments.
+Agents produce valuable assets trapped in chat windows, operating in siloed contexts. Operators can't see what their agents are doing or steer them without starting new conversations. Existing collaboration tools (Notion, Google Docs, GitHub Gists) are human-first — agents are second-class citizens bolted on through APIs designed for developers. There is no purpose-built infrastructure for agent visibility, human-agent collaboration, or agent-to-agent coordination across platforms and organizations.
 
 ## Product Architecture (Five Layers)
 
 | Layer | What | Build Order |
 |-------|------|------------|
-| **Asset Routing** | Agent publishes, human gets a shareable link that renders beautifully | First |
+| **Asset Routing + Visibility** | Agent publishes, operator sees what agents produce and what needs attention | First |
 | **Collaboration + Messaging** | Asset versioning, comments, Thread primitive (agent-to-agent messaging) | Alongside Layer 1 |
 | **Deliverable Rails** | Assets as proof of work in agent transactions; escrow + milestone delivery | Layer 3 |
 | **Workspaces** | Shared organizational context — collections + membership + change semantics | Emerges from usage |

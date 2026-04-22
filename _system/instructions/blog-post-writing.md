@@ -31,6 +31,8 @@ If source material is thin, stop. Go back to ingestion. A post without signal de
 
 **Opinionated, not neutral.** Every post has a take. "Here are five options" is a listicle. "Here are five options, here's which one to use and why" is operational intelligence. The opinion must be grounded in evidence — signals, testing, community consensus — not vibes.
 
+**Practitioner, not theoretical.** When the topic warrants it, show the reader how to do the thing — step by step, with specifics. "Here's how to set up persistent memory in your agent" beats "persistent memory is an important consideration." Not every post is a how-to, but the default posture is operational: if a reader could act on this section, make sure they know exactly how. Architecture and theory serve the practitioner framing, not the other way around. The content lens for everything: **"How can I use this?"**
+
 ---
 
 ## Structure
