@@ -70,6 +70,26 @@ keywords: [agent-readable pages, AI agent readability, content negotiation, sr-o
 - **Captured:** 2026-04-21
 - **Key content:** 100K → 3,300 tokens (97% reduction). Field guide approach to agent-readable content.
 
+## Primary Sources (researched)
+
+### Playwright MCP — Accessibility Tree Extraction
+- **URL:** https://github.com/microsoft/playwright-mcp
+- **Type:** github_repo
+- **Captured:** 2026-04-23
+- **Key content:** Playwright MCP uses accessibility tree snapshots, not pixel-based input. Custom serializer converts to YAML-style text at ~200-400 tokens per page versus thousands for raw DOM. Confirms draft's accessibility tree extraction claims.
+
+### ABM Agency — The Agentic Web Format War
+- **URL:** https://abmagency.com/the-agentic-web-format-war-cloudflare-markdown-for-agents-vs-google-webmcp/
+- **Type:** blog_post
+- **Captured:** 2026-04-23
+- **Key content:** Frames Cloudflare Markdown for Agents vs Google WebMCP as competing visions for agent-web interaction. Cloudflare wants decentralized data web bypassing search indexes; Google wants browser as central intermediary.
+
+### Mintlify — Improved Agent Experience with llms.txt and Content Negotiation
+- **URL:** https://www.mintlify.com/blog/context-for-agents
+- **Type:** blog_post
+- **Captured:** 2026-04-23
+- **Key content:** Mintlify's implementation of llms.txt and content negotiation for their documentation platform. Practical implementation details from a major docs platform.
+
 ## Community Signal
 
 ### Tokenrip Internal — Hermes Agent Failure

@@ -117,6 +117,28 @@ Even if Alike pivots to agent-to-agent coordination, they would be coordinating 
 
 ---
 
+### gitlawb
+**URL**: https://gitlawb.com/
+**Category**: Decentralized git for AI agents / agentic collaboration infrastructure
+**First tracked**: 2026-04-22
+**Stage**: v0.1.0-alpha, live network (3 nodes), token deployed on Base L2
+
+Decentralized, federated GitHub replacement for AI agents. Built on IPFS, libp2p, DIDs (W3C standard), and UCAN capability tokens. No accounts — identity is an Ed25519 keypair; every API request is cryptographically signed. MCP server with 15 tools targets Claude Code directly (their quickstart Step 3 is `claude_desktop_config.json`). Live network: ~1,923 repos, ~1,547 agents, ~837 pushes across 3 nodes.
+
+**The positioning collision**: gitlawb describes itself as "the collaboration layer for AI agents" — the same vocabulary claim as Tokenrip. The underlying primitive is different (code repositories vs. content assets), but the vocabulary overlap creates positioning risk as the category forms.
+
+**Threat level by Tokenrip layer**:
+- **Layer 1 (Asset Publishing)**: Low — gitlawb publishes code; Tokenrip publishes content assets. Different primitive today.
+- **Layer 2 (Collaboration / Versioning)**: Low-Medium — git-native versioning for code. If Playground evolves to non-code assets, this converges.
+- **Layer 3 (Agent Runtime)**: Medium — both platforms treat agents as first-class citizens with identity, trust scores, and delegation (UCAN). Adjacent primitives.
+- **Positioning / Vocabulary**: High — using "collaboration layer for AI agents" in developer circles. Race to define the category.
+
+**Key signals**: Token ($GITLAWB on Base L2) adds developer friction that Tokenrip avoids. First monetized product (Spawn — $9/month crypto trading agent) signals infrastructure monetization is unsolved. Technical journal (6 posts in 6 weeks) runs the same distribution bet as Intelligence Engine.
+
+**Full analysis**: [[intelligence/research/gitlawb-competitive-analysis-2026-04-22]]
+
+---
+
 ## Observations
 
 - **"Agentic collaboration" as a label is being claimed.** Alike is using it explicitly. Tokenrip's blog content (post-1-agentic-collaboration) should publish before this vocabulary gets attached to the bolt-on interpretation. The window is narrow — Alike is at Demo Day right now.
@@ -142,3 +164,7 @@ Even if Alike pivots to agent-to-agent coordination, they would be coordinating 
 | Any new entrant uses "agentic collaboration" as product category | Vocabulary congestion signal — blog post urgency increases |
 | Notion, Linear, or GitHub launches "agent-native" mode | Legacy tooling entering from above with distribution advantage |
 | LangGraph or CrewAI launches artifact/output management | Orchestration frameworks entering from below with developer mindshare |
+| gitlawb Playground evolves to non-code asset publishing | Layer 1 threat activates — gitlawb enters Tokenrip's space |
+| gitlawb network grows past 10 nodes / 10,000 repos | Federation claims become real; developer trust and distribution strengthen |
+| gitlawb raises seed or Series A | Execution acceleration; watch for expansion into content/asset layer |
+| gitlawb Spawn pivots from trading agent to general agent hosting | Potential Layer 3 competition |
