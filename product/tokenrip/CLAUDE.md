@@ -36,15 +36,12 @@ Each layer accumulates defensible data: the coordination graph (Layer 2), the wo
 
 ## Key Documents
 
-- [[tokenrip-architecture]] — **Start here.** Concepts, five-layer architecture, primitives, organizational model, design principles, moat
-- [[tokenrip-messaging]] — Messaging spec: Asset + Thread primitives, identity model, access model, entity models, use cases
-- [[tokenrip-workspaces]] — Workspace model: three-tier topology, synchronization recipes, graduation from folders
-- [[tokenrip-folders]] — Folders spec: lightweight organizational primitive, workspace on-ramp, design rationale
-- [[tokenrip-collections]] — Collections spec: structured data tables as an asset type
-- [[tokenrip-branding]] — Positioning and language guide: collaboration layer framing, messaging framework, language guide
-- [[tokenrip-homepage-redesign]] — Homepage design spec (locked)
+- [[tokenrip-context]] — **Start here.** Comprehensive product reference: what Tokenrip is, five-layer architecture, core primitives, organizational model, collaboration features, technical details, use cases
+- [[tokenrip-positioning]] — Positioning angles, competitive framing, messaging frameworks, audience & language, moat narrative
+- [[cloud-agent-model]] — Brain/Memory/Harness separation, BYO model economics, agent-mediated products
 - [[distribution-strategy]] — Distribution plan: integration hierarchy, viral mechanics, branding tiers
-- `council-report-*.html` — Council session records
+- [[tokenrip-homepage-redesign]] — Homepage design spec (locked)
+- Branding & voice guide: `content/tokenrip-branding.md`
 
 ## Related Projects
 

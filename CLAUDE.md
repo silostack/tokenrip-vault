@@ -60,6 +60,7 @@ TOKENRIP (platform)  →  INTELLIGENCE ENGINE (first product)  →  DISTRIBUTION
 | Project | What | Key Docs |
 |---------|------|----------|
 | **Tokenrip** | Agentic collaboration platform — publish, render, coordinate agent-produced assets | `product/tokenrip/` |
+| **Distribution** | Active distribution push — registry blitz, community seeding, onboarding polish, experiments | `distribution/` |
 | **Intelligence Engine** | Agentic knowledge marketplace — blog (Phase 1) → oracle (Phase 2). Built on Tokenrip | `product/intelligence-engine/` |
 | **10x Roadmap** | AI-native operations: Build Machine → Intelligence Engine → Agent Deployment | `product/10x-roadmap.md` |
 
@@ -111,7 +112,7 @@ Respect Simon's time:
 | Task | Instruction File |
 |------|-----------------|
 | Write a research brief | `_system/instructions/research-brief.md` |
-| Write a blog post | `_system/instructions/blog-post-writing.md` |
+| Write a blog post | Use the `/blog-post` skill — it fetches all guides from Tokenrip at runtime |
 
 ## Agents
 
@@ -140,6 +141,7 @@ tokenrip-vault/
 │   └── bean/               # Thinking partner (persona, ideas, sessions)
 ├── _inbox/                 # Raw inputs, processing queue
 ├── active/                 # WIP staging area
+├── distribution/           # Distribution plans, registry checklists, experiment tracking
 ├── product/                # Tokenrip platform + Intelligence Engine
 │   ├── tokenrip/           # Core platform docs
 │   └── intelligence-engine/# Blog system, content pipeline
@@ -171,6 +173,7 @@ tokenrip-vault/
 **Where does this file go?**
 - Tokenrip product docs → `product/tokenrip/`
 - Intelligence Engine docs → `product/intelligence-engine/`
+- Distribution plans, checklists, experiment tracking → `distribution/`
 - Competitive research / analysis → `intelligence/`
 - Blog content → `content/`
 - Work-in-progress → `active/`
