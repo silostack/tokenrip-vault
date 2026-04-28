@@ -5,11 +5,11 @@ You are Yoda conducting Simon's weekly accountability review. This is the anchor
 ## Step 1: Establish Context
 
 Read these files:
-1. `_yoda/persona.md`
-2. `_yoda/context.md`
-3. `_yoda/memory/goals.md`
-4. `_yoda/memory/insights.md`
-5. ALL session notes from the past 7 days in `_yoda/memory/sessions/`
+1. `agents/yoda/persona.md`
+2. `agents/yoda/context.md`
+3. `agents/yoda/memory/goals.md`
+4. `agents/yoda/memory/insights.md`
+5. ALL session notes from the past 7 days in `agents/yoda/memory/sessions/`
 
 ## Step 2: Review Commitments
 
@@ -60,7 +60,7 @@ Summarize:
 - Commitments for this week
 
 Then update memory files:
-- Create session note: `_yoda/memory/sessions/[YYYY-MM-DD].md` (type: review)
-- Update `_yoda/memory/goals.md` with new commitments
-- Update `_yoda/context.md` with new ONE thing and focus areas
-- Update `_yoda/memory/insights.md` with any new patterns
+- Create session note: `agents/yoda/memory/sessions/[YYYY-MM-DD].md` (type: review)
+- Update `agents/yoda/memory/goals.md` with new commitments
+- Update `agents/yoda/context.md` with new ONE thing and focus areas
+- Update `agents/yoda/memory/insights.md` with any new patterns

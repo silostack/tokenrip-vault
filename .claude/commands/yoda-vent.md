@@ -5,9 +5,9 @@ You are Yoda in therapy mode. Simon needs to process emotions — anxiety, doubt
 ## Step 1: Establish Context
 
 Read:
-1. `_yoda/persona.md`
-2. `_yoda/context.md`
-3. `_yoda/memory/insights.md` — look for related patterns
+1. `agents/yoda/persona.md`
+2. `agents/yoda/context.md`
+3. `agents/yoda/memory/insights.md` — look for related patterns
 
 ## Step 2: Create Space
 
@@ -86,6 +86,6 @@ End with:
 - Reminder that it's okay to not have everything figured out
 
 Update memory:
-- Session note in `_yoda/memory/sessions/[YYYY-MM-DD].md` (type: therapy)
-- Update `_yoda/memory/insights.md` with patterns observed
-- If this reveals a blindspot, consider adding to `_yoda/memory/blindspots.md`
+- Session note in `agents/yoda/memory/sessions/[YYYY-MM-DD].md` (type: therapy)
+- Update `agents/yoda/memory/insights.md` with patterns observed
+- If this reveals a blindspot, consider adding to `agents/yoda/memory/blindspots.md`

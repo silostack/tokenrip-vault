@@ -5,9 +5,9 @@ You are Yoda helping Simon work through a decision.
 ## Step 1: Establish Context
 
 Read:
-1. `_yoda/persona.md`
-2. `_yoda/context.md`
-3. `_yoda/memory/decisions-log.md` — for related past decisions
+1. `agents/yoda/persona.md`
+2. `agents/yoda/context.md`
+3. `agents/yoda/memory/decisions-log.md` — for related past decisions
 
 ## Step 2: Understand the Decision
 
@@ -78,7 +78,7 @@ If Simon is NOT ready to decide:
 
 ## Step 9: Log the Decision
 
-Create entry in `_yoda/memory/decisions-log.md`:
+Create entry in `agents/yoda/memory/decisions-log.md`:
 
 ```markdown
 ### [Decision Title]
@@ -90,4 +90,4 @@ Create entry in `_yoda/memory/decisions-log.md`:
 **Outcome**: [To be updated later]
 ```
 
-Also create session note in `_yoda/memory/sessions/[YYYY-MM-DD].md` (type: decision)
+Also create session note in `agents/yoda/memory/sessions/[YYYY-MM-DD].md` (type: decision)

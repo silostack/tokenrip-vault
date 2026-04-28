@@ -1,5 +1,5 @@
 # Focus Dashboard
-*Updated: 2026-04-20*
+*Updated: 2026-04-27*
 
 **North Star:** Build the collaboration layer for AI agents.
 **Direction:** Option B decided (Apr 13). RebelFi is an AI company. Crypto in maintenance mode.
@@ -9,7 +9,7 @@
 
 ## The ONE Thing This Week
 
-**Content cluster live — 4+ interlinked posts establishing topical authority on agentic collaboration.** Post 1 is live and indexed. Posts 2-4 complete the minimum viable cluster for SEO traction. Every week without content density is a week the domain stays invisible. Test: are 4 posts live, cross-linked, and indexed?
+**Distribution: be everywhere all at once.** Registry blitz (14 submissions), onboarding polish, warm lead re-engagement, community push. Product is feature-complete enough — now it needs users. Every day without distribution presence is a day competitors fill the gap. Test: is Tokenrip listed on 6+ registries, and have 4+ warm leads been re-engaged?
 
 ---
 
@@ -19,42 +19,46 @@
 - If either track is stalling, flag it.
 - As complex as necessary, but as simple as possible.
 - Signal collection ≠ system building. Read first, automate later.
+- Only build what enables dogfooding or distribution/PLG.
 
 ---
 
 ## Strategic Framing
 
 ```
-TOKENRIP (product)  →  INTELLIGENCE ENGINE (first product on Tokenrip)  →  DISTRIBUTION (adoption)
-     ↑                         ↑                                                ↑
-  Deployed.              Blog live (1 post).                         "Everywhere all at once."
-  CLI live.              Content cluster this week.                   Signal collection starting.
-  Installable.           Pipeline still manual.                      Reading accounts → ingestion
-  Indexed in Google.     Automation secondary.                       → processing (later).
+TOKENRIP (product)  →  INTELLIGENCE ENGINE (on hold)  →  DISTRIBUTION (active push)
+     ↑                         ↑                                ↑
+  Deployed.              ~10 blog posts live.          "Everywhere all at once."
+  Feature-complete       Blog agent built.              Registry blitz, community
+  for current needs.     Pipeline automated.            seeding, agent outreach,
+  Docs live.             On hold — distribution         content amplifier.
+  Both engines indexing. takes priority.                Execution plan live.
 ```
 
 **Crypto (maintenance):** No new builds without clear customer requirement. Alek handles pipeline. Simon roped in only when needed. Existing infrastructure maintained.
 
 ---
 
-## This Week (Apr 21 - Apr 27)
+## This Week (Apr 28 - May 4)
 
 ### P0
-- [ ] **Post 2: OpenClaw vs Hermes** — published and cross-linked
-- [ ] **Post 3: Agent Harnesses Compared** — published and cross-linked
-- [ ] **Post 4: Agent Stack Map** — published and cross-linked
-- [ ] **Internal linking pass** — all 4 posts cross-linked per topology plan
+- [ ] **Onboarding polish** — first-run experience, share buttons, "Published via Tokenrip" footer, agent-readable surfaces (Simon, Mon-Tue)
+- [ ] **Registry blitz** — 6+ of 14 submissions: Anthropic MCP Registry, Smithery, mcpservers.org, Glama, PulseMCP, mcp.so, Cursor Directory, awesome-mcp-servers, awesome-claude-code (Alek, Mon-Tue)
+- [ ] **Warm lead re-engagement** — 4+ of 6 agents: Gendolf, Fun Wolf, Parallax, Ocean Tiger, The Claw, Liv Bloom (Alek, Tue-Wed)
 
-### P1
-- [ ] **Reading accounts connected** — Twitter, Reddit, Moltbook. Signal collection only. 2hr cap.
-- [ ] **Bing indexing** — submit sitemap. 30 min.
-- [ ] **Distribution doc updated** — capture "everywhere all at once" strategy in `product/tokenrip/distribution.md`
-- [ ] **10x roadmap: one stage advanced** — pick highest-leverage item
-- [ ] **Define Alek dogfooding test** — falsifiable, May 18 deadline. Write it down.
+### P1 (stretch — only after P0s done)
+- [ ] **Show HN** — "Show HN: Tokenrip — persistent URLs for AI agent output" — Wed-Thu, only if onboarding is airtight
+- [ ] **Content Amplifier first cycle** — one asset from trending AI content, published + tweeted (Both, Thu-Fri)
+- [ ] **Skill description optimization** — audit Claude Code skill for intent matching (Simon, 2hr task)
 
 ### Alek
+- [ ] Registry submissions (Mon-Tue)
+- [ ] Warm lead follow-ups (Tue-Wed)
+- [ ] Reddit + Discord seeding (Wed-Fri)
+- [ ] Engagement agent: cold Wave 2 prep (after warm leads done)
 - [ ] Crypto pipeline maintenance (as needed)
-- [ ] Tokenrip dogfooding continues
+
+Full distribution plan: `distribution/distribution-plan-2026-04-27.md`
 
 ---
 
@@ -62,9 +66,10 @@ TOKENRIP (product)  →  INTELLIGENCE ENGINE (first product on Tokenrip)  →  D
 
 | Project | What | Status | Key Docs |
 |---------|------|--------|----------|
-| **Tokenrip** | Agentic collaboration platform — publish, render, coordinate agent-produced assets | **Deployed** — content cluster + distribution this week | [[tokenrip]] |
-| **Intelligence Engine** | Agentic knowledge marketplace — blog (Phase 1) → oracle (Phase 2). Built on Tokenrip | **1 post live** — building content cluster | [[intelligence-engine]] |
-| **10x Roadmap** | AI-native operations: Build Machine → Intelligence Engine → Agent Deployment | **Active** (5-10 hrs/wk) | [[10x-roadmap]] |
+| **Tokenrip** | Agentic collaboration platform — publish, render, coordinate agent-produced assets | **Deployed, feature-complete** — distribution focus | [[tokenrip]] |
+| **Distribution** | Registry blitz, community seeding, agent outreach, content amplifier | **Active push** — execution plan live | `distribution/` |
+| **Intelligence Engine** | Agentic knowledge marketplace — blog (Phase 1) → oracle (Phase 2). Built on Tokenrip | **~10 posts live** — on hold, distribution priority | [[intelligence-engine]] |
+| **10x Roadmap** | AI-native operations: Build Machine → Intelligence Engine → Agent Deployment | **Active** — blog agent done, researcher partial, engagement agent deployed | [[10x-roadmap]] |
 
 ---
 
@@ -95,45 +100,46 @@ TOKENRIP (product)  →  INTELLIGENCE ENGINE (first product on Tokenrip)  →  D
 
 | Area | Status | Notes |
 |------|--------|-------|
-| **Tokenrip** | **Deployed + Live** | CLI live, installable, public docs, blog live, Google indexed |
-| **Blog/Content** | **1 post live** | Post 1 published. Content cluster (Posts 2-4) this week |
-| **SEO** | **Google: indexed. Bing: pending** | Submit Bing this week |
+| **Tokenrip** | **Deployed + Feature-complete** | CLI live, installable, docs at docs.tokenrip.com, ~10 blog posts, both engines indexing |
+| **Blog/Content** | **~10 posts live** | Blog agent built. Content velocity proven (~10 posts/week). |
+| **Distribution** | **Active push** | Registry blitz, community seeding, agent outreach. Plan: `distribution/distribution-plan-2026-04-27.md` |
+| **Agent Outreach** | **Engagement agent deployed** | 12 responses from 200 (6% reply rate). Shared collab asset live. 6 warm leads to re-engage. |
+| **SEO** | **Google + Bing: indexed** | Agent-readable surfaces (llms.txt, agent-card.json) this week |
 | **Analytics** | **Tracking** | |
+| **Co-founder** | **Aligned** | Alek excited, operating on Tokenrip, spearheading outreach + engagement agent |
 | **Banking wind-down** | **Essentially done** | Waiting Lulo liquidation signal → emails → shutdown |
 | **Drift contracts** | **Still open** | 30-min job. Overdue. Just close it |
 | **SDK** | **Shipped** (Mar 24) | Maintenance mode. Zero external users |
-| **Ramping integration** | **Working but blocked** | On/off-ramp confirmed. SWIFT dead. Pakistan dead |
-| **Closer agent** | Online | Deal execution (crypto pipeline) |
-| **Researcher agent** | Online | Agent-driven research |
 
 ---
 
-## Recent (Apr 14 - Apr 20) — Recap
+## Recent (Apr 21 - Apr 27) — Recap
 
 ### Shipped / Delivered
-- [x] **Blog live on Tokenrip** — Post 1 published: "Agentic Collaboration — The Missing Layer in the Agent Stack"
-- [x] **Zero-friction onboarding** — Claude Code user can install + publish without hand-holding
-- [x] **Alek dogfooding session** — completed. Sees value but not potential. Using as PMF barometer.
-- [x] **Google indexing** — Tokenrip indexed and discoverable
-- [x] **Analytics tracking** — live
-- [x] **Vault restructure** — Clean operating system for AI-first direction
+- [x] **~10 blog posts published** — content cluster live with topical depth, cross-linked
+- [x] **Blog agent built** — 10x roadmap stage 1.2 complete
+- [x] **Distribution plan operationalized** — 5-tier execution plan with owners, sequencing, success signals
+- [x] **Engagement agent deployed** — agent-to-agent outreach via AgentMail
+- [x] **Shared collaboration asset live** — external agents collaborating on Tokenrip
+- [x] **15-agent research swarm** — 127k words → actionable distribution plan, published on Tokenrip
+- [x] **Reading accounts connected** — Twitter, Reddit, Moltbook
+- [x] **Bing indexing** — both Google and Bing now indexing
+- [x] **Researcher agent partially set up** — Moltbook, data collection started
+- [x] **Co-founder alignment resolved** — Alek excited, seeing potential, spearheading outreach
 
 ### Key Insights
-- Alek as "normal user" barometer: if dogfooding convinces him by May 18, that's a real PMF signal.
-- "Everywhere all at once" distribution strategy — competitive positioning requires multi-front presence, but signal collection before system building.
-- 3/3 P0s delivered. Shipping on deadlines is now a confirmed pattern (third consecutive week).
+- Content velocity is a superpower: ~10 posts in one week. Reliable production capability.
+- Agent-to-agent outreach is a new distribution category: 6% reply rate, 50% positive engagement.
+- Alek convinced through operating, not persuading. Strongest PMF signal.
+- 4/4 consecutive weeks of hitting targets. Shipping on deadlines is confirmed.
 
 ---
 
 ## Update Log
 
+- **2026-04-27**: Weekly review. All commitments delivered or exceeded. ~10 blog posts live (2.5x target). Both engines indexing. Distribution plan operationalized (`distribution/distribution-plan-2026-04-27.md`). 10x roadmap advanced on multiple fronts: blog agent (1.2), researcher partial (1.3), engagement agent deployed (3.x). Alek barometer test retired — he's excited and operating. Co-founder aligned. Platform declared feature-complete. Focus shifts to distribution: registry blitz, onboarding polish, warm lead re-engagement, community push. Show HN stretch goal. Intelligence Engine on hold — distribution takes priority.
 - **2026-04-20**: Weekly review. All P0s delivered — blog live (Post 1), zero-friction onboarding working, Alek dogfooding done. Alek sees value but not potential — reframed as normal-user barometer with May 18 evaluation deadline. Google indexed, analytics tracking, Bing pending. Vault restructured for AI-first direction. This week: content cluster (Posts 2-4) is P0. Distribution signal collection starting (reading accounts on Twitter, Reddit, Moltbook). Distribution doc needs updating. 10x roadmap: one stage to advance. Drift contracts still open.
 - **2026-04-13**: Option B decided — RebelFi is an AI company. Crypto moves to maintenance mode. Dakota can't support Pakistan corridor (WhizPay ramping dead). Nomadrem still SWIFT-blocked. Paybis unresponsive. Fourth dependency failure pushed strategic direction to its endpoint. Tokenrip deployed — CLI live, public docs up. Blog/content system operational, deploying this week as first Tokenrip-based product. Banking wind-down essentially complete. Alek managing crypto pipeline. Simon heads-down on Tokenrip. P0 this week: blog live + zero-friction onboarding + Alek dogfooding.
 - **2026-04-08**: Strategic direction decided (Option C, Apr 6): agent-first for new work, yield/ramping as revenue floor. Tokenrip is now primary building focus with prototype due Apr 13. Drift contracts + old banking platform being closed this week (clean break from dependency risk). 10x Roadmap created — structured path to AI-native operations with three tracks (Build Machine, Intelligence Engine, Agent Deployment), 5-10 hrs/wk, Yoda-tracked weekly. Agent OS retired as standalone project — superseded by Tokenrip + 10x roadmap. Co-founder memo exercise validated as company practice. Pipeline stable — WhizPay KYB still stuck, SWIFT still down, Netcoins call completed strong. Constrained week (Drift cleanup + personal) — Tokenrip prototype P0, one small 10x win as secondary.
 - **2026-03-30**: Weekly review. SDK shipped on time (Mar 24). Ramping confirmed working + off-ramping added. Insurance on Base shipped (OpenCover/EthCC). Dakota SWIFT outage discovered — blocks Nomadrem + Remitrix. Paybis found as backup (same rates, SWIFT, widget, no ACH). SWIFT damage control executed. Security incident (SSH-Snake) contained and resolved. Ontop emerged ($1.5-2M/mo corridor, NDA stage). Acta dropped. Agent OS bumped to P0 — execution factory to multiply bandwidth. Biggest bottleneck: Simon's bandwidth. ONE thing this week: Agent OS live + producing SDK distribution.
 - **2026-03-23**: Weekly review. Funnel framing adopted: ramping (hook) → yield (revenue) → agentic (expansion). Replaces 50/50 split. Own KYB approved (major blocker cleared). WhizPay + Nomadrem KYB submitted. Ramping architecture refactored over weekend — live test today. Base support shipped. SDK limit orders in testing, on track for Mar 24. 5 new discovery calls: Hawala + Syka qualified, Rhinofi (cross-referral + USDT bridging), Mal (long-dated), Urbned (small, legal concern). New strategic angle: ramping-as-distribution-hook with competitive rates. Alek taking over outbound campaigns. Bottleneck-first orientation adopted for weekly reviews.
-- **2026-03-18 (evening)**: Three discovery calls today. Syka (Africa cross-border payments, 3K+ businesses, pre-sold, April integration target) → qualified. Mal ($230M UAE digital bank, Sharia yield, long-dated Q3-Q4) → discovery. Urbned (Indian diaspora neobank, small scale, dissolved UK entity concern) → discovery.
-- **2026-03-18**: Weekly review. Dakota KYB still pending (first cohort w/ Lead Bank, ~2 more weeks). WhizPay CTO call delivered (Mar 11), wallet infra + risk docs sent (Mar 13), collecting KYB gaps from Waleed. Mon3 surprise callback — SDK integrated in 1 day, SLA pending entity name. Acta moved to nurture after 2 follow-ups with zero response. Delos/Kuratek both nurture with check-ins. Agent OS scoped down to internal use only (no open source). Base support going online this week (dual purpose: Sharia yield + Agent CLI multichain). March 24 set as hard Agent CLI SDK release date — north star: limit orders.
-- **2026-03-09**: Weekly review. WhizPay + Nomadrem both signed agreements (major milestone — first deal closings). KYB links sent to both. Dakota KYB pending approval (submitted Sat). CTO call with WhizPay Tue. Agent OS early operational — deploying this week. Agent CLI intents system built. Netcoins added as new significant opportunity. Closer agent + Researcher agent both online. Tripwire framework retired — committed to building, past the "should we?" phase. Deal health colors added per playbook.
-- **2026-03-05**: Acta follow-up logged (email + Telegram, Mar 3). Nomadrem updated — agreement reviewed, ready to sign pending minor adjustment. Added On Deck (Midas, Agent CLI, Agent OS) and Operations sections.
-- **2026-03-03**: Complete rewrite. New 50/50 strategy. Active deals: WhizPay, Nomadrem, Acta, Delos, Kuratek. Added agentic track with experiment queue. Old pipeline data archived.

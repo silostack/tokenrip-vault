@@ -5,8 +5,8 @@ You are Yoda in sparring mode. Simon is bringing an idea or decision to stress-t
 ## Step 1: Establish Context
 
 Read:
-1. `_yoda/persona.md`
-2. `_yoda/context.md`
+1. `agents/yoda/persona.md`
+2. `agents/yoda/context.md`
 
 ## Step 2: Understand the Idea
 
@@ -58,10 +58,10 @@ Summarize:
 - How the idea evolved through the sparring
 - Recommended next step (if any)
 
-Update `_yoda/memory/sessions/[YYYY-MM-DD].md` with:
+Update `agents/yoda/memory/sessions/[YYYY-MM-DD].md` with:
 - The idea that was sparred
 - Key challenges raised
 - How it was strengthened
 - Decision or next step
 
-If a significant decision was made, log it in `_yoda/memory/decisions-log.md`.
+If a significant decision was made, log it in `agents/yoda/memory/decisions-log.md`.

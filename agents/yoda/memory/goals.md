@@ -4,27 +4,21 @@
 
 ## Active Goals
 
-### Goal 1: Content Cluster — 4+ Interlinked Posts
-- **Success criteria**: Posts 1-4 from blog plan live, cross-linked per topology, indexed in Google and Bing.
-- **Progress**: Post 1 live and indexed. Posts 2-4 planned and ready to write.
-- **Deadline**: End of week (Apr 27)
+### Goal 1: Distribution — Be Everywhere All At Once
+- **Success criteria**: Tokenrip listed on 6+ registries/directories. 4+ warm leads re-engaged. Onboarding polish complete. Show HN posted (stretch).
+- **Progress**: Distribution plan written. Execution starts Mon.
+- **Deadline**: End of week (May 4)
 - **Status**: In progress — P0
 
-### Goal 2: Distribution Signal Collection
-- **Success criteria**: Reading accounts on Twitter, Reddit, Moltbook connected. Able to monitor signal manually. No automated pipelines yet.
-- **Progress**: Not started.
-- **Deadline**: Apr 27 (2 hour cap)
+### Goal 2: Content Amplifier — First Cycle
+- **Success criteria**: One asset created from trending AI content, published on Tokenrip, posted to Twitter.
+- **Progress**: Workflow designed. Not yet executed.
+- **Deadline**: End of week (May 4)
 - **Status**: Not started — P1
 
-### Goal 3: Co-Founder Alignment on AI Direction
-- **Success criteria**: Define falsifiable dogfooding test for Alek. If dogfooding meaningfully improves his workflow by May 18, conviction follows.
-- **Progress**: Dogfooding session completed. Alek sees value but not potential. Barometer framing adopted.
-- **Deadline**: Test defined by Apr 27. Evaluated May 18.
-- **Status**: Critical watch item
-
-### Goal 4: 10x Roadmap — Weekly Progress
+### Goal 3: 10x Roadmap — Weekly Progress
 - **Success criteria**: At least one stage advanced every week.
-- **Progress**: Blog live (1.2 partially done). Auto-deploy status unclear.
+- **Progress**: Blog agent (1.2) done. Researcher agent partially set up. Engagement agent deployed (Track 3).
 - **Deadline**: Ongoing — weekly accountability
 - **Status**: Active
 
@@ -36,12 +30,9 @@
 
 | Date | Promise | Status | Follow-up |
 |------|---------|--------|-----------|
-| 2026-04-20 | Posts 2, 3, 4 published and cross-linked | **Not started** | Ship by Apr 27 |
-| 2026-04-20 | Reading accounts connected (2hr cap) | **Not started** | Twitter, Reddit, Moltbook |
-| 2026-04-20 | Bing indexing | **Not started** | 30 min job |
-| 2026-04-20 | Distribution doc updated | **Not started** | Capture "everywhere all at once" strategy |
-| 2026-04-20 | 10x roadmap: one stage advanced | **Not started** | Pick highest-leverage item |
-| 2026-04-20 | Define Alek dogfooding test (falsifiable, May 18 deadline) | **Not started** | Write it down |
+| 2026-04-27 | Onboarding polish (first-run, share buttons, footer, agent-readable surfaces) | **Not started** | Simon, Mon-Tue |
+| 2026-04-27 | Registry blitz: 6+ of 14 submitted | **Not started** | Alek, Mon-Tue |
+| 2026-04-27 | Warm lead re-engagement: 4+ of 6 replied to | **Not started** | Alek, Tue-Wed |
 
 ---
 
@@ -51,9 +42,15 @@
 
 | Goal | Completed | Notes |
 |------|-----------|-------|
+| Content cluster — 4+ interlinked posts | 2026-04-27 | ~10 posts live. Massively exceeded. Content velocity is a proven capability. |
+| Distribution signal collection (reading accounts) | 2026-04-27 | Twitter, Reddit, Moltbook connected. |
+| Bing indexing | 2026-04-27 | Both Google and Bing indexing. |
+| Distribution doc updated | 2026-04-27 | `distribution/distribution-plan-2026-04-27.md` — comprehensive 5-tier execution plan. |
+| 10x roadmap: stages advanced | 2026-04-27 | Blog agent (1.2), researcher partially (1.3), engagement agent deployed (3.x). |
+| Co-founder alignment on AI direction | 2026-04-27 | Alek excited, operating on Tokenrip, spearheading outreach. Barometer test retired — conviction arrived through operating. |
 | Tokenrip prototype — working software | 2026-04-13 | CLI deployed. Publish assets, set up inboxes. Built in ~1 week. |
 | Blog live on Tokenrip + zero-friction onboarding | 2026-04-20 | Post 1 published. Tokenrip installable. Google indexed. |
-| Alek dogfooding session | 2026-04-20 | Completed. Result: sees value but not potential. |
+| Alek dogfooding session | 2026-04-20 | Completed. Initially skeptical — now excited. |
 
 ---
 
@@ -64,6 +61,7 @@
 | Goal | Dropped | Reason |
 |------|---------|--------|
 | Crypto pipeline deals | 2026-04-13 | Option B — AI pivot. Crypto moved to separate RebelFi vault. |
+| Alek dogfooding barometer test (May 18) | 2026-04-27 | Retired — Alek is now excited and operating. Conviction arrived through product use, not persuasion. Test no longer needed. |
 
 ---
 
