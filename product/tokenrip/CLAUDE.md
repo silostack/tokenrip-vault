@@ -38,7 +38,7 @@ Each layer accumulates defensible data: the coordination graph (Layer 2), the wo
 
 - [[tokenrip-context]] — **Start here.** Comprehensive product reference: what Tokenrip is, five-layer architecture, core primitives, organizational model, collaboration features, technical details, use cases
 - [[tokenrip-positioning]] — Positioning angles, competitive framing, messaging frameworks, audience & language, moat narrative
-- [[cloud-agent-model]] — Brain/Memory/Harness separation, BYO model economics, agent-mediated products
+- [[mounted-agent-model]] — Imprint/Memory/Harness separation, BYO model economics, agent-mediated products
 - [[distribution-strategy]] — Distribution plan: integration hierarchy, viral mechanics, branding tiers
 - [[tokenrip-homepage-redesign]] — Homepage design spec (locked)
 - Branding & voice guide: `content/tokenrip-branding.md`

@@ -40,7 +40,7 @@ The space is early. No dominant winner has emerged. Most solutions launched in l
 
 ## Category 2: Artifact Packaging & Sharing
 
-### MCPH
+### MCPH (dead)
 - **URL:** [mcph.io](https://www.mcph.io/)
 - **What it does:** AI artifact storage and sharing via "crates." Users save artifacts from Claude or ChatGPT with one command, get a permanent shareable link. Recipients view without needing an account. Open source (MIT), self-hostable.
 - **Key differentiator:** Simplest possible model — save from chat, get a link. Works directly inside Claude and ChatGPT Pro+. No infrastructure, no API integration needed.

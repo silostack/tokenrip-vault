@@ -1,5 +1,12 @@
 {
   "showLineNumber": true,
   "spellcheck": false,
-  "vimMode": true
+  "vimMode": true,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "active",
+  "alwaysUpdateLinks": true,
+  "showUnsupportedFiles": true,
+  "userIgnoreFilters": [
+    "__ARCHIVE/"
+  ]
 }

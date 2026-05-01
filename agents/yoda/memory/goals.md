@@ -4,19 +4,25 @@
 
 ## Active Goals
 
-### Goal 1: Distribution — Be Everywhere All At Once
-- **Success criteria**: Tokenrip listed on 6+ registries/directories. 4+ warm leads re-engaged. Onboarding polish complete. Show HN posted (stretch).
-- **Progress**: Distribution plan written. Execution starts Mon.
-- **Deadline**: End of week (May 4)
-- **Status**: In progress — P0
+### Goal 1: Build the Vertical Demo (THE BLOCKER)
+- **Success criteria**: 3-minute demo showing document workflow with AI agent (review, route, track, approve). Alek can show it and say "this is what we sell."
+- **Progress**: Not started. Vertical selection happening tonight (Apr 30).
+- **Deadline**: 2-day build Mon-Tue May 4-5; Alek-test Wed May 6
+- **Status**: Not started — **P0, blocks everything downstream**
 
-### Goal 2: Content Amplifier — First Cycle
-- **Success criteria**: One asset created from trending AI content, published on Tokenrip, posted to Twitter.
-- **Progress**: Workflow designed. Not yet executed.
-- **Deadline**: End of week (May 4)
-- **Status**: Not started — P1
+### Goal 2: Application-Layer Revenue — First Outreach
+- **Success criteria**: 5 booked calls/week sustained by Week 4 of outreach (June 7). 1 signed $25K design partner by Sun July 5 (Week 8).
+- **Progress**: Gameplan + KPIs committed to disk in `bd/`. Term sheet drafted ($25K, 6-wk build, retained IP). Vertical rubric scored. Demo spec written. KPIs defined per YC framework (north star: revenue; primary process: calls/week; leading indicator week 4+: active term sheet conversations).
+- **Deadline**: Outreach live Mon May 11 (full motion). Decision points at end of weeks 2/4/6/8 of outreach.
+- **Status**: Blocked by Goal 1 (demo build, May 4-6) — P0
 
-### Goal 3: 10x Roadmap — Weekly Progress
+### Goal 3: Distribution — Continue Bottom-Up Motion
+- **Success criteria**: Tokenrip listed on 6+ registries/directories. Onboarding polish complete. Warm leads re-engaged.
+- **Progress**: Distribution plan written. Some execution started.
+- **Deadline**: Ongoing, parallel track
+- **Status**: In progress — P1 (deprioritized from P0 in favor of revenue push)
+
+### Goal 4: 10x Roadmap — Weekly Progress
 - **Success criteria**: At least one stage advanced every week.
 - **Progress**: Blog agent (1.2) done. Researcher agent partially set up. Engagement agent deployed (Track 3).
 - **Deadline**: Ongoing — weekly accountability
@@ -30,9 +36,18 @@
 
 | Date | Promise | Status | Follow-up |
 |------|---------|--------|-----------|
-| 2026-04-27 | Onboarding polish (first-run, share buttons, footer, agent-readable surfaces) | **Not started** | Simon, Mon-Tue |
-| 2026-04-27 | Registry blitz: 6+ of 14 submitted | **Not started** | Alek, Mon-Tue |
-| 2026-04-27 | Warm lead re-engagement: 4+ of 6 replied to | **Not started** | Alek, Tue-Wed |
+| 2026-04-30 | Pick demo vertical with Alek | **Not started** | Tonight (Apr 30) |
+| 2026-04-30 | Finalize term sheet v1 | **Not started** | Tonight (Apr 30) |
+| 2026-04-30 | Alek: LinkedIn profile finalized + week 1 content drafted | **Not started** | Fri May 1 |
+| 2026-04-30 | Alek: pre-source 100 ICP prospects | **Not started** | Sat-Sun May 2-3 |
+| 2026-04-30 | Build vertical demo (2-day time-box) | **Not started** | Mon-Tue May 4-5 |
+| 2026-04-30 | Alek test: "can I show this and say 'this is what we sell'?" | **Not started** | Wed May 6 |
+| 2026-04-30 | Record demo screencast | **Not started** | Wed May 6 (post-test) |
+| 2026-04-30 | Soft launch (20-prospect calibration) | **Not started** | Fri May 8 |
+| 2026-04-30 | Outreach motion fully live | **Not started** | Mon May 11 |
+| 2026-04-27 | Onboarding polish (first-run, share buttons, footer, agent-readable surfaces) | **Deprioritized** | Still needed, but demo is now P0 |
+| 2026-04-27 | Registry blitz: 6+ of 14 submitted | **In progress** | Alek |
+| 2026-04-27 | Warm lead re-engagement: 4+ of 6 replied to | **Unknown** | Check next session |
 
 ---
 

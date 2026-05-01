@@ -48,12 +48,17 @@
 - **Co-founder alignment resolved through operating, not persuading.** Alek went from "sees value but not potential" (Apr 20) to excited and spearheading outreach (Apr 27). Conviction arrived through product use — he convinced himself by operating on the platform. This is the strongest validation: the product sold itself to a skeptic through usage.
 - **External resonance may diverge from builder excitement.** What resonates with others may not be what excites Simon technically. Worth tracking.
 
+- **Infrastructure-language trap is persistent and fractal.** Three instances in two days (angel investor, TaxDome co-founder, Alek) of the same pattern: Simon describes infrastructure when asked "what is it?" The listener needs to see the application. This isn't a discipline problem — it's a tooling problem. Without a demo to point at, infrastructure language is the default. The demo is the fix. (Apr 30)
+
+- **Alek as proxy buyer is a reliable test.** Alek asking "what's the product?" six times is the strongest co-founder dynamic observed. He's not being difficult — he's functioning as the first customer. If the demo convinces Alek, it'll convince prospects. If not, iterate. Similar to the barometer test (Apr 20) but higher-stakes: this time the question is "can we sell this?" not "do you believe in this?"
+
 ## Questions That Keep Coming Up
 
 *Questions Simon returns to repeatedly — often point to deeper issues.*
 
 - How to leverage myself maximally? (Connected to system-building instinct)
 - Where does the real value live — infrastructure or application layer?
+- What's the product? (NEW — this is Alek's question, and it's now Simon's question too)
 
 ## Breakthrough Moments
 
@@ -65,6 +70,10 @@
 | 2026-04-20 | Skeptics as product-market fit barometers | Alek sees value but not potential. Simon reframed: "If he's convinced later, that's a good sign. If we build something that convinces him, I know we're on to something." Uses non-technical co-founder as proxy for early adopter readiness. |
 | 2026-04-27 | Conviction through operating > conviction through persuading | Alek went from skeptical to excited in one week — not through argument, but through running the engagement agent and managing outreach on Tokenrip. The product convinced him. Strongest PMF signal so far. |
 | 2026-04-27 | System-building instinct can serve distribution | Three Bean sessions + 400-line gameplan looked like architecture-over-execution. Turned out to be execution planning. The instinct channels productively when aimed at distribution, not infrastructure. |
+| 2026-04-30 | Infrastructure language doesn't sell — at any level | Three instances in two days: angel investor (needed application framing), TaxDome co-founder (needed concrete product), Alek (needed a demo to point at). The pattern is fractal and consistent. The fix is a demo, not more discipline. |
+| 2026-04-30 | Alek as proxy buyer = reliable test for product readiness | If Alek can show the demo and say "this is what we sell," prospects will get it. If not, iterate. The co-founder who pushes for concreteness is protecting the company from vague outreach. |
+| 2026-04-30 | Naming the primary motion collapses scatter complexity | Simon was holding three motions in mind as if equal-weight (enterprise pilot, AI influencer, capability demo). When Yoda pushed for "which is THE one," answer was clear (enterprise pilot). The other two became secondary by definition. The scatter wasn't real complexity — it was unranked priority. |
+| 2026-04-30 | Term sheet is the most undercooked piece in early BD motion | Strategy memos abound; offer specifics rare. Without a one-page term sheet, every interested prospect drags founder into custom negotiation in real time, which produces concessions you regret. Lock the offer before the first call. |
 | 2026-04-13 | Naming a decision creates relief when the decision was already made | Resisted calling it "Option B" for weeks. When named, "freed up space." If naming creates relief, not anxiety, the decision was already made internally. |
 | 2026-04-06 | Constrained memo format reveals genuine thinking vs. AI-assisted confidence | Alek's 20-page AI brief vs. 1-page constrained memo. "What I Don't Know" section is the key forcing function. |
 | 2026-04-03 | Dependency risk is the strategic argument that survives after fear fades | Four instances of same pattern. Direction that reduces dependency (own code) is structurally sound. |

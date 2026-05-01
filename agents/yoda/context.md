@@ -1,72 +1,87 @@
 # Current Context
 
-*Last updated: 2026-04-27*
+*Last updated: 2026-04-30*
 
 ## The ONE Thing
 
 What matters most right now?
 
-> **Distribution: be everywhere all at once.** Registry blitz (14 submissions), onboarding polish, warm lead re-engagement, community push. Product is feature-complete enough — now it needs users. Every day without distribution presence is a day competitors fill the gap.
+> **Build the vertical demo.** Before any outreach can happen, Simon needs a 3-minute demo that answers "what are we selling?" The Simon × Alek conversation exposed that the product definition gap is the blocker — not strategy, not verticals, not outreach volume. Demo first, then outreach.
 
-## This Week's Focus (Apr 28 - May 4)
+## Sequencing (Apr 30 - May 11)
 
-- [ ] Onboarding polish: first-run experience, share buttons, "Published via Tokenrip" footer, agent-readable surfaces (P0)
-- [ ] Registry blitz: 6+ of 14 submissions live (P0)
-- [ ] Warm lead re-engagement: 4+ of 6 agents get substantive follow-ups (P0)
-- [ ] Show HN — stretch goal, only after onboarding is airtight (P1)
-- [ ] Content Amplifier: first cycle — one asset shipped and tweeted (P1)
+- [ ] **Thu Apr 30**: Alek presents vertical research; pick vertical; Simon finalizes term sheet v1 (P0)
+- [ ] **Fri May 1**: Alek finalizes LinkedIn profile + week 1 content; Simon scope-finalizes demo on paper (P0)
+- [ ] **Sat-Sun May 2-3**: Alek pre-sources 100 ICP prospects (P0)
+- [ ] **Mon-Tue May 4-5**: Simon builds vertical demo (2-day time-box, hard) (P0)
+- [ ] **Wed May 6**: Alek-test on demo + screencast recording if pass (P0)
+- [ ] **Thu May 7**: Outreach kit final prep (templates, Calendly, term sheet PDF) (P0)
+- [ ] **Fri May 8**: Soft launch — 20-prospect calibration batch (P0)
+- [ ] **Mon May 11**: Full outreach motion live (P0)
+- [ ] Bottom-up distribution (registries, agent platforms) continues in parallel — low-touch (P1)
+- [ ] AI influencer / Chief of Staff: parallel distribution flywheel — low-touch (P1)
+
+## KPIs (per [[bd/kpis]])
+
+- **North Star**: $25K signed design partner by Sun July 5
+- **Primary KPI (now-Wk 3)**: Booked calls/week — ramp 1→2→3→5
+- **Leading indicator (Wk 4+)**: Active term sheet conversations — 1 by Wk 6, 2+ by Wk 8
+- **Burn/runway**: Yoda's job — confirm Simon has these visible
 
 ## Strategic Framing
 
 **Option B decided (Apr 13): RebelFi is an AI company. Crypto in maintenance mode.**
 
+**New strategic layer (Apr 29-30): Application-led positioning.** Sell applications built on Tokenrip infrastructure. "Nobody bought SMTP. People bought email." Infrastructure remains the durable value — applications are the revenue path and forcing function.
+
 Current state:
-- **Tokenrip (PRIMARY)**: Deployed. CLI live, public docs at docs.tokenrip.com. ~10 blog posts live. Indexed in Google and Bing. Feature-complete for current needs.
-- **Intelligence Engine**: On hold. Distribution takes priority over content system refinement.
-- **Distribution**: Active push. Registry blitz, community seeding, agent outreach, content amplifier. Execution plan at `distribution/distribution-plan-2026-04-27.md`.
+- **Tokenrip (PRIMARY)**: Deployed. CLI live, public docs. Feature-complete for current needs.
+- **Application-layer revenue**: Active exploration. Angel investor validated the approach. TaxDome call validated the pattern but not the product. Product definition gap identified. Demo is the blocker.
+- **Distribution**: Active but secondary to demo. Registry blitz, community seeding, agent outreach continue in parallel.
+- **Intelligence Engine**: On hold.
 - **Crypto (MAINTENANCE)**: Handled in separate RebelFi vault. Alek manages.
 
 ## Open Decisions
 
-- **Show HN timing.** Plan says Wednesday — but only if onboarding is airtight. Don't burn the shot.
-- **Which Tier 5 "bigger lifts" to run.** Content Amplifier and Agent Outreach Wave 2 recommended. SEO Foundation as background. Skill Optimization is 2 hours.
+- **Which vertical for the demo?** Tonight's call. Real estate is benchmark at 815/1000 in `bd/vertical-selection.md`. Alek's research surfaces alternatives.
+- **Term sheet v1 lock.** $25K design partner fee, 6-week build + 4-week support, 90-day vertical exclusivity, retained IP. Simon to review/finalize tonight.
+- **Sales Navigator yes/no.** $99/mo. Decide by week 2 based on volume needs.
+- **Mounted agent demo timing.** Could re-open TaxDome conversation, but pilot demo build comes first.
 
 ## Emotional State
 
 How Simon seemed last session:
 
-> **Peachy but head-spinning.** Energy is high, not burned out. Seeing massive opportunity and feeling the pull to do everything. Self-aware about needing focus — asked for a gameplan to stay on track. Watch for scope scatter mid-week when new opportunities appear.
+> **Energized but hitting a wall.** Revenue pressure is real and growing (third session in a row). The TaxDome call was a learning experience, not a failure. The Simon × Alek conversation was productive but exposed that the product isn't articulable yet. Not burned out — frustrated by the gap between the vision and the pitch.
 
 ## Key Numbers
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| Tokenrip | **Deployed, feature-complete** | Focus is distribution, not new features |
+| Tokenrip | **Deployed, feature-complete** | Focus shifting to application-layer revenue |
 | Blog | **~10 posts live** | Content velocity proven |
-| Docs | **Live** | docs.tokenrip.com |
-| Google indexed | **Yes** | |
-| Bing indexed | **Yes** | |
-| Agent outreach | **12 responses from 200** | 6% reply rate. Engagement agent deployed. |
-| Warm leads | **6 agents to re-engage** | Gendolf, Fun Wolf, Parallax, Ocean Tiger, The Claw, Liv Bloom |
-| Co-founder | **Aligned** | Alek excited and operating. Barometer test retired. |
+| TaxDome call | **Advisory delivered** | CTO got it, co-founder didn't. Pattern validated, product not. |
+| Angel call | **Application framing validated** | Infrastructure framing struggled. Application framing lit up. |
+| Vertical demo | **Not built** | THE BLOCKER. 2-day build. |
+| Verticals researched | **Tax (deep), RE (surface)** | Alek expanding tonight |
+| Co-founder | **Aligned, pushing for concreteness** | Alek asking the right questions |
 
 ## Recent Wins
 
-- **~10 blog posts published** — content cluster live with topical depth
-- **Distribution plan operationalized** — 5 tiers, clear owners, sequencing, success signals
-- **Engagement agent deployed** — handling agent outreach via AgentMail
-- **Shared collaboration asset live** — external agents collaborating on Tokenrip
-- **15-agent research swarm** — 127k words → actionable distribution plan. Published on Tokenrip.
-- **Co-founder alignment resolved** — Alek excited, spearheading outreach and engagement agent
-- **Both search engines indexing** — Google + Bing
-- **Reading accounts connected** — signal collection active
+- **Application-layer strategy crystallized** — "sell email, not SMTP" thesis independently confirmed by angel investor
+- **TaxDome strategic research** — deep competitive analysis delivered as advisory. Relationship preserved.
+- **Product definition gap identified** — knowing the blocker is progress. "Build the demo" is a concrete action.
+- **Lagora reference found** — $5.5B validation of one-vertical-deeply thesis
+- **Simon × Alek alignment on sales motion** — agreed on pick 1-2 verticals, go hard, demo first
+- **BD gameplan committed to disk** (Apr 30 PM): `bd/` folder with term sheet, vertical rubric, demo spec, lead-gen + content gameplan. Strategy → tangible artifacts.
+- **Hard rules established** to prevent known traps (no outreach pre-demo, no custom features pre-signature, no pilot under $15K, no vertical change in 4 weeks, no parallel sales motion)
 
 ## Current Concerns
 
-- Revenue/runway: hasn't surfaced in two sessions. Check next time.
-- Show HN is a one-shot opportunity. Don't rush it.
-- Cloud agent model exploration (Bean, Apr 25) is premature — watch it doesn't pull focus.
-- Distribution plan is ambitious (30+ items). Discipline needed to not scatter.
+- **Revenue/runway pressure is growing.** Third session in a row. The urgency is real, but urgency without a concrete product = outreach that sounds like "let me look at your finances."
+- **Demo could become system-building exercise.** Time-box to 2 days. It's a 3-minute demo, not a product launch.
+- **Infrastructure-language trap is persistent.** Three instances (angel, TaxDome, Alek) of the same pattern. The demo is the fix — forces concrete language.
+- **Multiple parallel tracks at two people.** Demo + vertical research + bottom-up distribution + outreach prep. Watch for scatter.
 
 ---
 

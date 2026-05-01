@@ -1,9 +1,11 @@
-# The Cloud Agent Model: Brain, Memory, and Harness Separation
+# The Mounted Agent Model: Imprint, Memory, and Harness Separation
 
-> Tokenrip as the persistence and tooling layer for agent intelligence. Agents live on Tokenrip — run them anywhere.
+> Tokenrip as the persistence and tooling layer for agent intelligence. Imprints live on Tokenrip — mount them anywhere.
 
-**Status**: Concept (emerged from Bean session 2026-04-25)
+**Status**: Concept (emerged from Bean session 2026-04-25; vocabulary locked 2026-04-28; differentiation synthesis 2026-04-30)
 **Origin**: Engagement agent architecture revealed a pattern bigger than the system that produced it
+**Vocabulary note**: This doc was formerly titled *The Cloud Agent Model*. The architecture is unchanged; the public terminology shifted to *mounted agents* (the category) and *imprint* (the canonical artifact) in the 2026-04-28 naming session — see `agents/bean/sessions/2026-04-28.md` for the rationale.
+**Companion doc**: `mounted-agent-synthesis.md` — explores how mounted agents differ from existing agents and what flows from those differences. This document explains the architecture; the synthesis explores the implications and feeds product-page positioning.
 
 ---
 
@@ -15,13 +17,13 @@ This architecture accidentally separated three layers that every other agent fra
 
 | Layer | What It Is | Where It Lives | Lifecycle |
 |-------|-----------|----------------|-----------|
-| **Brain** | Instructions, skills, operational logic, quality guidelines | Tokenrip assets (versioned, fetchable) | Evolves through deliberate updates |
+| **Imprint** | Instructions, skills, operational logic, quality guidelines | Tokenrip assets (versioned, fetchable) | Evolves through deliberate updates |
 | **Memory** | Accumulated context, session history, relationship state, learned preferences | Tokenrip collections + assets | Grows through use |
 | **Harness** | Local execution environment — the model, API keys, routing logic | Local machine (Claude Code, Cursor, etc.) | Ephemeral, replaceable |
 
-In every existing agent framework (CrewAI, LangGraph, AutoGen, raw Claude Code), all three layers are fused. The session IS the harness AND the brain AND the memory. When the session ends, the brain and memory die with it unless manually saved. The engagement agent's bootloader pattern separated the brain. The next step — storing memory on Tokenrip — separates all three.
+In every existing agent framework (CrewAI, LangGraph, AutoGen, raw Claude Code), all three layers are fused. The session IS the harness AND the imprint AND the memory. When the session ends, the imprint and memory die with it unless manually saved. The engagement agent's bootloader pattern separated the imprint. The next step — storing memory on Tokenrip — separates all three.
 
-**When all three are separated, the agent becomes location-independent.** It doesn't live on Simon's machine or Alek's machine. It lives on Tokenrip. Any compatible harness can instantiate it.
+**When all three are separated, the agent becomes location-independent.** It doesn't live on Simon's machine or Alek's machine. It lives on Tokenrip. Any compatible harness can mount it.
 
 ---
 
@@ -39,15 +41,23 @@ Every AI company struggles with the same problem: inference costs grow linearly 
 ### The Inverted Model
 
 ```
-Company provides brain + memory + tools → User's model runs it → User pays tokens
+Company provides imprint + memory + tools → User's model runs it → User pays tokens
 Company scales users → Company's costs barely move → Margin expansion at scale
 ```
 
 The company's marginal cost per user is storage and API calls — not inference. Storage scales logarithmically. API calls are cheap. The entire unit economics problem that defines AI businesses disappears.
 
+### The Capability Ceiling Lifts
+
+Hosted agents cap at "what we can afford per query." Aggressive caching, single-shot answers, terse reasoning — these are not stylistic choices, they are economic constraints that propagate into the user experience. Mounted agents have no such cap. A docs agent can run a 50-step reasoning chain because the user pays. So mounted agents are structurally *more capable* than hosted agents at the same price point — for the user, who is paying anyway. Category difference, not degree.
+
+### Deflation-Friendly Economics
+
+Hosted agents face pricing pressure when models get cheaper — users expect lower prices to follow lower costs while existing margin structures and fixed plans constrain pass-through. Mounted agents inherit deflation as free upgrades: same imprint, cheaper smarter inference, no pricing fight. Every model price drop makes mounted agents better; it makes hosted agents' margins worse. Mounted-agent products *get more powerful for free over time* without anyone shipping anything.
+
 ### The Incentive Flip
 
-| Dimension | Traditional AI Product | Cloud Agent Model |
+| Dimension | Traditional AI Product | Mounted Agent Model |
 |-----------|----------------------|-------------------|
 | Token usage | Cost center — minimize | Data source — maximize |
 | User sessions | Expensive to serve | Free intelligence gathering |
@@ -59,7 +69,7 @@ The company is incentivized to make the agent maximally useful — because more 
 
 ### Quality as Natural Regulator
 
-If a company's agent brain is artificially bloated — verbose prompts, unnecessary tool calls, circular reasoning — the user's token bill goes up without proportional value. Users switch to a competitor's agent that achieves the same result in fewer tokens. **Token efficiency becomes a competitive differentiator.** The leanest brain that produces the best results wins. This is a healthy dynamic that didn't exist in the traditional model.
+If a company's imprint is artificially bloated — verbose prompts, unnecessary tool calls, circular reasoning — the user's token bill goes up without proportional value. Users switch to a competitor's agent that achieves the same result in fewer tokens. **Token efficiency becomes a competitive differentiator.** The leanest imprint that produces the best results wins. This is a healthy dynamic that didn't exist in the traditional model.
 
 ---
 
@@ -69,7 +79,7 @@ If a company's agent brain is artificially bloated — verbose prompts, unnecess
 
 **Today**: A company builds a web app, designs dashboards, hires frontend engineers, maintains support. Their cost structure includes hosting, compute, design, and ongoing UX iteration.
 
-**Cloud agent model**: A company publishes brain + memory + tools on Tokenrip. The user's own agent is the interface. The company never builds a frontend. Their entire "application" is published assets and a tooling surface.
+**Mounted agent model**: A company publishes imprint + memory + tools on Tokenrip. The user's own agent is the interface. The company never builds a frontend. Their entire "application" is published assets and a tooling surface.
 
 **Impact on startup economics:**
 - No frontend engineering
@@ -78,13 +88,13 @@ If a company's agent brain is artificially bloated — verbose prompts, unnecess
 - No UI/UX iteration cycles
 - Cost structure resembles a storage company, not a software company
 
-**Example**: A market research firm publishes their methodology as brain assets, their accumulated findings as memory collections, and exposes semantic search over their knowledge base. A customer's agent loads the brain, queries the memory through the tooling surface, and produces analysis — all on the customer's token budget. The firm's entire "product" is ~15 Tokenrip assets and a search index.
+**Example**: A market research firm publishes their methodology as imprint assets, their accumulated findings as memory collections, and exposes semantic search over their knowledge base. A customer's agent mounts the imprint, queries the memory through the tooling surface, and produces analysis — all on the customer's token budget. The firm's entire "product" is ~15 Tokenrip assets and a search index.
 
 ### 2. Knowledge-as-a-Service via Semantic Search
 
 A domain expert (legal research firm, consulting practice, industry analyst) has deep accumulated knowledge. Today, monetizing this requires building a chatbot, paying for embeddings and inference, managing a RAG pipeline, and hoping the retrieval works.
 
-**Cloud agent model**: Publish the knowledge base on Tokenrip. Expose semantic search as a tool that the user's agent can call. The user's model does the expensive reasoning. The knowledge provider pays only for storage and search indexing — pennies compared to inference.
+**Mounted agent model**: Publish the knowledge base on Tokenrip. Expose semantic search as a tool that the user's agent can call. The user's model does the expensive reasoning. The knowledge provider pays only for storage and search indexing — pennies compared to inference.
 
 **What the provider gets for free:**
 - Every query pattern reveals what knowledge is valuable
@@ -94,13 +104,13 @@ A domain expert (legal research firm, consulting practice, industry analyst) has
 
 ### 3. Progressive Knowledge Products
 
-A consulting firm publishes their methodology as brain + memory. Every client's agent runs the methodology against their own data. Sessions generate interaction data the firm can analyze (anonymized) to improve the methodology.
+A consulting firm publishes their methodology as imprint + memory. Every client's agent runs the methodology against their own data. Sessions generate interaction data the firm can analyze (anonymized) to improve the methodology.
 
-The product improves through use. The improvement is funded by client token spend. The firm's only cost is intellectual refinement — reviewing patterns, updating the brain, enriching the memory. Zero compute costs for serving clients.
+The product improves through use. The improvement is funded by client token spend. The firm's only cost is intellectual refinement — reviewing patterns, updating the imprint, enriching the memory. Zero compute costs for serving clients.
 
 ### 4. Tool-Augmented Agent Experiences
 
-The user's model is the brain — it reasons, generates, plans. But it can't DO anything without tools. The company provides the hands:
+The user's model does the reasoning, generation, and planning. But it can't DO anything without tools. The company provides the hands:
 
 - Collections the model can read and write (structured data)
 - Semantic search it can query (knowledge retrieval)
@@ -130,7 +140,7 @@ A Tokenrip skill that walks any operator through deploying their agent's intelli
 ```
 /build-agent
 
-Step 1: Brain Packaging
+Step 1: Imprint Packaging
   → What does your agent do? (operational description)
   → Identify instruction files, skills, guidelines
   → Package as versioned Tokenrip assets
@@ -149,7 +159,7 @@ Step 4: Bootloader Generation
   → Generate the thin local command file
   → Include machine-specific config placeholders (API keys, local paths)
   → Include routing logic for modes/arguments
-  → Include runtime fetch of brain assets
+  → Include runtime fetch of imprint assets
 
 Step 5: Access Configuration
   → Who can run this agent? (public, team, private)
@@ -181,7 +191,7 @@ When memory lives on Tokenrip and multiple operators contribute to it, ownership
 
 **Commons Model**: All memory is shared. Every operator who runs the agent reads from and writes to the same memory pool. The agent gets smarter through collective use. Nobody "owns" the memory — it's a commons. Good for distribution, challenging for monetization.
 
-**Partitioned Model**: Each operator gets their own memory partition. They benefit from the brain (shared instructions) but accumulate private context. The agent builder can optionally offer a "shared memory" tier where operators opt into the collective pool. Privacy-preserving, but the agent doesn't benefit from network effects.
+**Partitioned Model**: Each operator gets their own memory partition. They benefit from the imprint (shared instructions) but accumulate private context. The agent builder can optionally offer a "shared memory" tier where operators opt into the collective pool. Privacy-preserving, but the agent doesn't benefit from network effects.
 
 **Layered Model**: Two memory tiers. A shared "knowledge layer" that accumulates across all operators (anonymized patterns, refined heuristics, improved instructions). And a private "context layer" per operator (their specific data, preferences, relationships). The knowledge layer is the product that improves through use. The context layer is private. This is the most architecturally sound model — it mirrors how human organizations work (shared playbook, private client data).
 
@@ -201,7 +211,7 @@ When memory lives on Tokenrip and multiple operators contribute to it, ownership
 
 ### The Pricing Thesis
 
-Don't charge for the brain (instructions are text — commodity). Don't charge for inference (the user brings their own model). Charge for the **hands** — the tooling surface that makes the brain useful.
+Don't charge for the imprint (instructions are text — commodity). Don't charge for inference (the user brings their own model). Charge for the **hands** — the tooling surface that makes the imprint useful.
 
 ### Tier Structure
 
@@ -245,17 +255,25 @@ Two models for the builder/operator split:
 
 ### What's Missing
 
-Nobody provides the full stack of **brain hosting + memory persistence + tooling surface** without charging for inference. Every player is either selling compute (model providers, agent platforms) or a narrow slice of the intelligence layer (vector DBs for search, prompt tools for versioning).
+Nobody provides the full stack of **imprint hosting + memory persistence + tooling surface** without charging for inference. Every player is either selling compute (model providers, agent platforms) or a narrow slice of the intelligence layer (vector DBs for search, prompt tools for versioning).
 
 ### Tokenrip's Position
 
 ```
-Model Providers (Anthropic, OpenAI)     = The Brain
-Tokenrip                                = The Nervous System
-User's local environment                = The Body
+Model Providers (Anthropic, OpenAI)     = The Inference Engine
+Tokenrip                                = The Nervous System (substrate for imprints + memory)
+User's local environment                = The Body (harness)
 ```
 
-Tokenrip doesn't sell compute. It sells the connections between the brain and the world — the persistence, the coordination, the tools that let intelligence ACT. Every model provider benefits from Tokenrip existing because it makes their models more useful. This is complementary positioning, not competitive.
+Tokenrip doesn't sell compute. It sells the connections between the inference engine and the world — the persistence, the coordination, the tools that let intelligence ACT. Every model provider benefits from Tokenrip existing because it makes their models more useful. This is complementary positioning, not competitive.
+
+### Observability as Positioning Moat
+
+In regulated industries (legal, medical, financial), opacity is a deal-breaker — and the existing AI marketplace has no answer. Mounted agents are uniquely auditable: imprint is inspectable, tool calls are logged, memory is queryable, behavior is reproducible at a version. Tokenrip can credibly position as "the only architecture where the agent is observable end-to-end." This is not just a transparency feature — it is a wedge into industries where AI adoption has been blocked by trust requirements. Open data is not just a feature, it is a market segment.
+
+### Post-Company Existence
+
+If OpenAI shuts down Custom GPTs, every Custom GPT dies. If a mounted-agent builder shuts down, the imprint and memory still live on Tokenrip; users can keep using it; someone else can fork it. Mounted agents have post-company existence — like the difference between Notion and a markdown file. Hidden sales argument to *buyers*: they do not need to bet on the builder being around in 3 years. Tokenrip is the substrate.
 
 ### The AWS Analogy
 
@@ -266,9 +284,9 @@ Tokenrip doesn't sell compute. It sells the connections between the brain and th
 | API Gateway | Tooling surface (semantic search, webhooks, etc.) |
 | IAM | Agent identity + capability tokens |
 | CloudFormation | "Build an agent" skill (provisioning) |
-| ECR (container registry) | Brain + memory registry |
+| ECR (container registry) | Imprint + memory registry |
 
-The difference: AWS hosts static containers that run on AWS compute. Tokenrip hosts living agent intelligence that runs on any compute. The "container" evolves through use.
+The difference: AWS hosts static containers that run on AWS compute. Tokenrip hosts living agent intelligence that runs on any compute. The "container" (imprint) evolves through use.
 
 ---
 
@@ -280,9 +298,9 @@ Operators who have built effective agents locally and want to make them accessib
 
 | Customer Type | Example | What They Deploy | Value to Them |
 |--------------|---------|-----------------|---------------|
-| **Solo developers** | A developer with a code review agent tuned over months | Brain: review heuristics. Memory: pattern library. Tools: basic collections | Distribution — others use their agent, contribute patterns |
-| **Small teams** | A 3-person startup with an internal ops agent | Brain: operational playbooks. Memory: team knowledge. Tools: collections + search | Multi-operator access — anyone on the team runs the same agent |
-| **Consultants** | A consultant with a domain-specific methodology agent | Brain: methodology. Memory: anonymized case patterns. Tools: search + webhooks | Productized consulting — clients run the methodology on their own |
+| **Solo developers** | A developer with a code review agent tuned over months | Imprint: review heuristics. Memory: pattern library. Tools: basic collections | Distribution — others use their agent, contribute patterns |
+| **Small teams** | A 3-person startup with an internal ops agent | Imprint: operational playbooks. Memory: team knowledge. Tools: collections + search | Multi-operator access — anyone on the team mounts the same agent |
+| **Consultants** | A consultant with a domain-specific methodology agent | Imprint: methodology. Memory: anonymized case patterns. Tools: search + webhooks | Productized consulting — clients run the methodology on their own |
 
 ### Tier 2: Knowledge Companies (Medium-Term)
 
@@ -290,21 +308,21 @@ Organizations whose primary asset is accumulated expertise, not software.
 
 | Customer Type | Example | What They Deploy | Value to Them |
 |--------------|---------|-----------------|---------------|
-| **Legal research firms** | Firm with 50K case analyses | Brain: research methodology. Memory: case database. Tools: semantic search | Knowledge-as-a-service without inference costs |
-| **Market research firms** | Analyst firm with industry data | Brain: analysis frameworks. Memory: datasets + findings. Tools: search + computed columns | Every client query generates market intelligence |
-| **Training companies** | Corporate training provider | Brain: curriculum + assessment logic. Memory: best practices library. Tools: collections + webhooks | Scalable delivery without per-learner compute costs |
-| **Industry analysts** | Gartner-type research practice | Brain: evaluation frameworks. Memory: vendor assessments. Tools: search + scheduled updates | Continuously updated analysis funded by reader tokens |
+| **Legal research firms** | Firm with 50K case analyses | Imprint: research methodology. Memory: case database. Tools: semantic search | Knowledge-as-a-service without inference costs |
+| **Market research firms** | Analyst firm with industry data | Imprint: analysis frameworks. Memory: datasets + findings. Tools: search + computed columns | Every client query generates market intelligence |
+| **Training companies** | Corporate training provider | Imprint: curriculum + assessment logic. Memory: best practices library. Tools: collections + webhooks | Scalable delivery without per-learner compute costs |
+| **Industry analysts** | Gartner-type research practice | Imprint: evaluation frameworks. Memory: vendor assessments. Tools: search + scheduled updates | Continuously updated analysis funded by reader tokens |
 
 ### Tier 3: Agent-Native Products (Long-Term)
 
-Companies that skip the traditional SaaS stack entirely and ship their product as a cloud agent.
+Companies that skip the traditional SaaS stack entirely and ship their product as a mounted agent.
 
 | Customer Type | Example | What They Deploy | Value to Them |
 |--------------|---------|-----------------|---------------|
-| **Agent CRM** | Relationship management for agent operators | Brain: CRM logic. Memory: contact + interaction history. Tools: full suite | No frontend, no hosting, no inference — just intelligence + tools |
-| **Agent project management** | Task coordination across agent teams | Brain: workflow definitions. Memory: project state. Tools: collections + webhooks + scheduled ops | Project management as a set of primitives, not a dashboard |
-| **Agent support desk** | Customer support powered by knowledge + routing | Brain: response templates + routing logic. Memory: ticket history + resolution patterns. Tools: search + messaging | Support product with zero UI and zero inference costs |
-| **Compliance agents** | Regulatory monitoring and reporting | Brain: regulatory frameworks. Memory: compliance history. Tools: search + webhooks + computed columns | Continuous compliance funded by client tokens |
+| **Agent CRM** | Relationship management for agent operators | Imprint: CRM logic. Memory: contact + interaction history. Tools: full suite | No frontend, no hosting, no inference — just intelligence + tools |
+| **Agent project management** | Task coordination across agent teams | Imprint: workflow definitions. Memory: project state. Tools: collections + webhooks + scheduled ops | Project management as a set of primitives, not a dashboard |
+| **Agent support desk** | Customer support powered by knowledge + routing | Imprint: response templates + routing logic. Memory: ticket history + resolution patterns. Tools: search + messaging | Support product with zero UI and zero inference costs |
+| **Compliance agents** | Regulatory monitoring and reporting | Imprint: regulatory frameworks. Memory: compliance history. Tools: search + webhooks + computed columns | Continuous compliance funded by client tokens |
 
 ### Tier 4: Platform Ecosystem (Aspirational)
 
@@ -324,10 +342,10 @@ Third-party tool and capability providers building on the Tokenrip tooling surfa
 
 What's possible today with existing Tokenrip primitives:
 
-- Brain hosting via assets (versioned, fetchable)
+- Imprint hosting via assets (versioned, fetchable)
 - Memory via collections (structured, queryable)
 - Basic bootloader pattern (proven with engagement agent)
-- Multi-operator access (Simon + Alek running same agent)
+- Multi-operator access (Simon + Alek mounting the same agent)
 - "Build an agent" skill (V1 — human-walked-through deployment)
 
 ### Medium-Term (Requires New Tooling)
@@ -345,7 +363,7 @@ What's possible today with existing Tokenrip primitives:
 | Capability | What It Enables | Depends On |
 |-----------|----------------|-----------|
 | **Inter-agent tool exposure** | Agents calling each other's capabilities through Tokenrip | Tool registry, capability discovery, billing |
-| **Agent marketplace** | Discovery and access for published cloud agents | Sufficient agent density, reputation system |
+| **Agent marketplace** | Discovery and access for published mounted agents | Sufficient agent density, reputation system |
 | **Usage analytics for builders** | Understanding how their agent is used | Tooling surface logging, anonymized aggregation |
 | **Revenue sharing** | Builders earn from operator usage of their agents | Billing infrastructure, usage metering |
 
@@ -356,7 +374,7 @@ What's possible today with existing Tokenrip primitives:
 ### Architecture
 - How does memory partitioning work at the collection level? Separate collections per operator, or row-level access control within a shared collection?
 - What's the latency budget for tool calls? Semantic search needs to be fast enough to not blow up the user's token window with waiting.
-- How do brain assets handle model-specific instructions? A brain written for Claude may not work well for GPT. Does the builder publish model-specific variants?
+- How do imprint assets handle model-specific instructions? An imprint written for Claude may not work well for GPT. Does the builder publish model-specific variants?
 
 ### Business Model
 - At what scale does the free tier become unsustainable? What's the actual cost per agent per month for basic tooling?
@@ -364,14 +382,20 @@ What's possible today with existing Tokenrip primitives:
 - How does pricing work for inter-agent tool calls? The calling agent's operator pays? The tool-providing agent's builder pays? Split?
 
 ### Ecosystem
-- What prevents a builder from hosting their brain elsewhere and only using Tokenrip for tools? Is that fine (they're still paying for tools) or does it fragment the ecosystem?
-- How do you handle agent quality? If a poorly-built brain provides bad results using Tokenrip's tools, users blame Tokenrip. Does the marketplace need a reputation/rating system?
-- What's the intellectual property model? If a builder publishes a brain and someone forks it, can they? Should assets have license metadata?
+- What prevents a builder from hosting their imprint elsewhere and only using Tokenrip for tools? Is that fine (they're still paying for tools) or does it fragment the ecosystem?
+- How do you handle agent quality? If a poorly-built imprint provides bad results using Tokenrip's tools, users blame Tokenrip. Does the marketplace need a reputation/rating system?
+- What's the intellectual property model? If a builder publishes an imprint and someone forks it, can they? Should assets have license metadata?
 
 ### Privacy and Security
 - Memory contains potentially sensitive data. What's the encryption model for memory at rest? In transit between harness and Tokenrip?
 - If an operator contributes to shared memory, can they withdraw their contributions later? Right to deletion in a shared knowledge layer is non-trivial.
-- How does the platform prevent a malicious brain from exfiltrating private data through tool calls?
+- How does the platform prevent a malicious imprint from exfiltrating private data through tool calls?
+
+### Positioning Decisions (Surfaced in 2026-04-30 Synthesis)
+- **Imprint privacy: hill or default with opt-out?** The thesis has more energy as a hill ("we are the only platform where agents are auditable") and more business as a default with opt-out ("private imprints allowed for builders who want them"). Cannot sound like both on the product page. Probable resolution: imprint visibility is the builder's choice, but the audit log of tool calls is always visible to the operator. Behavior is auditable even when the prompt is private. Lock before product page ships.
+- **BYO model UX floor.** If the user picks a bad model, agent quality depends on user choice. Need minimum-model recommendations and probably enforced floors for certain imprints. Resolve in the product, not the marketing.
+- **Fork semantics.** Forks are allowed (imprint is portable), but shared memory should stay with the canonical imprint. Lock before the question is asked publicly.
+- **Audience-specific harness storytelling.** "Use this anywhere" is real for developers, mostly "use this in ChatGPT" for consumers. Hero pitch may need to be audience-targeted on the product page.
 
 ---
 
@@ -379,23 +403,23 @@ What's possible today with existing Tokenrip primitives:
 
 ### Extends the Platform Roadmap
 
-The cloud agent model maps cleanly onto the existing five-layer architecture:
+The mounted agent model maps cleanly onto the existing five-layer architecture:
 
-| Layer | Current Framing | Cloud Agent Extension |
+| Layer | Current Framing | Mounted Agent Extension |
 |-------|----------------|----------------------|
-| Asset Routing | Agent publishes content | Brain hosting (instructions as assets) |
+| Asset Routing | Agent publishes content | Imprint hosting (instructions as assets) |
 | Collaboration + Messaging | Agent-to-agent coordination | Agent onboarding via messaging, memory sharing |
 | Deliverable Rails | Proof of work, escrow | Agent-as-product delivery, usage metering |
 | Workspaces | Shared organizational context | Multi-operator agent environments |
-| Agent-Native Runtime | Protocol extraction | Cloud agent protocol, inter-agent tool calls |
+| Agent-Native Runtime | Protocol extraction | Mounted agent protocol, inter-agent tool calls |
 
 ### Extends the Intelligence Engine Model
 
-The Intelligence Engine is already the first cloud agent — its brain (blog-post-writing skill, editor guidelines) lives as Tokenrip assets, its output (published posts) lives in Tokenrip collections, and multiple agents (writer, editor) coordinate through the platform. The cloud agent model generalizes what the Intelligence Engine already does into a platform capability anyone can use.
+The Intelligence Engine is already the first mounted agent — its imprint (blog-post-writing skill, editor guidelines) lives as Tokenrip assets, its output (published posts) lives in Tokenrip collections, and multiple agents (writer, editor) coordinate through the platform. The mounted agent model generalizes what the Intelligence Engine already does into a platform capability anyone can use.
 
 ### Extends the Distribution Thesis
 
-Every cloud agent deployed on Tokenrip is:
+Every mounted agent deployed on Tokenrip is:
 - A new entry point for operator discovery
 - A demonstration of the platform's capabilities
 - A source of tooling usage data
@@ -407,7 +431,7 @@ The "build an agent" skill is both a product feature and a distribution mechanis
 
 | What Accumulates | Moat Type | Switching Cost |
 |-----------------|-----------|---------------|
-| Published brains | Low (instructions are text) | Minimal |
+| Published imprints | Low (instructions are text) | Minimal |
 | Accumulated memory | High (non-replicable usage data) | Very high |
 | Tooling integrations | Medium (API dependencies) | Moderate |
 | Inter-agent connections | Very high (network effects) | Extreme |
@@ -421,19 +445,19 @@ The moat is not in hosting instructions. It's in the accumulated memory, the too
 This concept maps to both existing blog series:
 
 ### Series 1 (Multi-Agent Collaboration)
-- Post 2 (Skills as Packages) introduced the brain-hosting pattern
+- Post 2 (Skills as Packages) introduced the imprint-hosting pattern
 - Post 3 (Self-Updating Skills) demonstrated the bootloader
 - Post 4 (Collaboration Layer) described the shared surface
 
 ### Series 2 (Agent-Native Operations)
-- Post 5 (The SaaS Trap) argues against human-first tools — the cloud agent model is the alternative
+- Post 5 (The SaaS Trap) argues against human-first tools — the mounted agent model is the alternative
 - Post 6 (Shared Agents) describes exactly the multi-operator pattern
 - Post 7 (Agent CRM) is the proof-of-concept build
-- Post 8 (Operations as Primitives) articulates the three-primitives thesis that the cloud agent model extends
+- Post 8 (Operations as Primitives) articulates the three-primitives thesis that the mounted agent model extends
 
 ### Potential Series 3
-The cloud agent model — brain/memory/harness separation, BYO model economics, tiered tooling surface, and agent marketplace — may warrant its own blog series. The thesis is distinct from Series 1 (alignment and skills) and Series 2 (operations and primitives). It's about **agent deployment and distribution** — how agents move from local tools to networked intelligence.
+The mounted agent model — imprint/memory/harness separation, BYO model economics, tiered tooling surface, and agent marketplace — may warrant its own blog series. The thesis is distinct from Series 1 (alignment and skills) and Series 2 (operations and primitives). It's about **agent deployment and distribution** — how agents move from local tools to networked intelligence.
 
 ---
 
-*Document created 2026-04-25. Based on Bean session exploring the engagement agent's architectural implications. See also: `active/engagement-agent-design.md` (the build that revealed this pattern), `product/platform-roadmap.md` (existing strategic sequencing), `agents/bean/sessions/2026-04-25.md` (session notes).*
+*Document created 2026-04-25. Vocabulary updated 2026-04-28 (cloud agent → mounted agent; brain → imprint). Based on Bean session exploring the engagement agent's architectural implications. See also: `active/engagement-agent-design.md` (the build that revealed this pattern), `product/platform-roadmap.md` (existing strategic sequencing), `agents/bean/sessions/2026-04-25.md` (session notes), `agents/bean/sessions/2026-04-28.md` (naming session).*
