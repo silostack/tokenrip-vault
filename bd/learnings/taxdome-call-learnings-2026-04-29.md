@@ -242,3 +242,7 @@ Tracked here so they don't get lost. These are not blockers — they are researc
 ---
 
 *Doc created 2026-04-29. To be revisited after the next vertical-SaaS-vendor conversation to test which learnings generalize and which were TaxDome-specific.*
+
+---
+
+> **2026-05-01 update:** These learnings drove a strategic pivot in Tokenrip's BD motion. The vendor-substrate insight (Motion B in the new taxonomy) is being staged for 2027 rather than pursued now, and the firm-direct motion (Motion A) was deprioritized in favor of audience-led creator deployment (Motion E). Full reasoning: [[../motions-and-strategy]]. Active execution: [[../audience-led-gameplan]].

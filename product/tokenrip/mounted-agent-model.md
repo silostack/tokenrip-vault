@@ -455,9 +455,27 @@ This concept maps to both existing blog series:
 - Post 7 (Agent CRM) is the proof-of-concept build
 - Post 8 (Operations as Primitives) articulates the three-primitives thesis that the mounted agent model extends
 
-### Potential Series 3
-The mounted agent model — imprint/memory/harness separation, BYO model economics, tiered tooling surface, and agent marketplace — may warrant its own blog series. The thesis is distinct from Series 1 (alignment and skills) and Series 2 (operations and primitives). It's about **agent deployment and distribution** — how agents move from local tools to networked intelligence.
+### Series 3 (Mounted Agents) — Plan Locked
+
+Six-post category-creation series. Plan: `content/plans/blog-series-3-mounted-agents-plan.md`.
+
+Series 1 separated *instructions*. Series 2 separated *operations*. Series 3 separates *the agent itself* — naming "mounted agents" as the category and anchoring the vocabulary (imprint, harness, BYO model) before any competitor or analyst does.
+
+| Post | Slug | Type | Maps to This Doc |
+|------|------|------|-----------------|
+| **#9: The Cloud Agent Ceiling** | `cloud-agent-ceiling` | Thesis | §BYO Model Inversion (the problem half — inference ceilings, drift, vendor death) |
+| **#10: Mounted Agents** | `mounted-agents` | Thesis | §Core Insight + §The Three Layers (imprint/memory/harness separation) |
+| **#11: Your Model, Your Bill** | `byo-model-mounted-agents` | Thesis | §BYO Model Inversion (the economics half — margin flip, deflation, long tail) |
+| **#12: How We Built Chief of Staff** | `building-a-mounted-agent` | Craft | §The "Build an Agent" Skill + §Memory Ownership (layered model in practice) |
+| **#13: The Imprint Is a Contract** | `imprint-as-contract` | Thesis | §Observability as Positioning Moat (versioned imprint, audit trail, regulated-industry wedge) |
+| **#14: The Imprint Isn't the Moat** | `mounted-agent-moats` | Thesis | §Extends the Moat Thesis (memory, tools, authorship, inter-agent connections) |
+
+**Strategic purpose:** Category capture + vocabulary anchoring + regulated-industry wedge + Series 4 tee-up (inter-agent composition, marketplace, build-an-agent skill).
+
+**Tokenrip mention gradient:** Post 9 (none) → Post 10 (once) → Post 11 (none) → Post 12 (natural throughout) → Post 13 (once) → Post 14 (capstone, most prominent).
+
+**Status:** Post 9 shipped. Posts 10–14 in flight. Cadence: two posts week 1, two posts week 2, two posts weeks 3–4.
 
 ---
 
-*Document created 2026-04-25. Vocabulary updated 2026-04-28 (cloud agent → mounted agent; brain → imprint). Based on Bean session exploring the engagement agent's architectural implications. See also: `active/engagement-agent-design.md` (the build that revealed this pattern), `product/platform-roadmap.md` (existing strategic sequencing), `agents/bean/sessions/2026-04-25.md` (session notes), `agents/bean/sessions/2026-04-28.md` (naming session).*
+*Document created 2026-04-25. Vocabulary updated 2026-04-28 (cloud agent → mounted agent; brain → imprint). Series 3 blog plan locked 2026-04-30. Based on Bean session exploring the engagement agent's architectural implications. See also: `active/engagement-agent-design.md` (the build that revealed this pattern), `product/platform-roadmap.md` (existing strategic sequencing), `agents/bean/sessions/2026-04-25.md` (session notes), `agents/bean/sessions/2026-04-28.md` (naming session), `content/plans/blog-series-3-mounted-agents-plan.md` (Series 3 plan).*

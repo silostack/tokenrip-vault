@@ -2,9 +2,10 @@
 
 > Companion to `mounted-agent-model.md`. That document explains what mounted agents are. This one synthesizes how they differ from existing agents and what flows from those differences. Source material for product page positioning, builder pitch, and operator pitch.
 
-**Status**: Synthesis (Bean session 2026-04-30)
+**Status**: Synthesis (Bean session 2026-04-30; commercial wedge confirmed 2026-05-01)
 **Companion**: `mounted-agent-model.md` — architecture explainer
 **Purpose**: Feeds product page work and external positioning
+**Commercial application**: First commercial wedge confirmed 2026-05-01 — see "First Commercial Wedge Confirmed" section below and [[../../bd/audience-led-gameplan]] for the active execution plan.
 
 ---
 
@@ -206,4 +207,66 @@ The "open imprint = giving away IP" objection. The answer in one line: *what com
 
 ---
 
-*Created 2026-04-30 from Bean session. See also: `mounted-agent-model.md` (architecture), `agents/bean/sessions/2026-04-30.md` (session notes), `agents/bean/ideas/chief-of-staff-agent.md` (first imprint shipping this model).*
+## First Commercial Wedge Confirmed (2026-05-01)
+
+A subsequent Bean session on 2026-05-01 — surfaced in [[../../agents/bean/sessions/2026-05-01]] — pressure-tested five candidate commercial motions against the question *"What is the smallest commercial unit we can sell today that requires the full mounted-agent architecture to deliver?"* The answer reshaped the BD motion and is now load-bearing for product-page positioning, fundraising, and substrate roadmap prioritization.
+
+### The Wedge: Audience-Led Creator Deployment
+
+Experts and creators with engaged audiences (50k-500k followers across YouTube, Twitter/X, Substack, newsletters, podcasts, LinkedIn) deploy their personal-brand imprints on Tokenrip. Their audience mounts the imprint in their preferred runtime. The audience pays for their own inference. The creator collects on tooling-tier upgrades from their audience's engagement.
+
+### Why This Wedge Specifically — The Architectural-Requirement Test
+
+Every layer of the mounted-agent architecture is load-bearing for a creator-with-audience imprint. Other plausible motions either fail the test (firm-direct vertical pilots — a regular SaaS could ship them) or are commercially premature (vendor substrate, inter-agent marketplace).
+
+| Architectural layer | Why it's load-bearing for this wedge |
+|---|---|
+| **Portability** (decoupled cognition / context / execution) | Audience uses different tools; creator cannot ship a Custom GPT and reach all of them |
+| **Versioned imprint** | Personal-brand contract requires no drift; followers want a real "Garry Tan agent," not something that subtly changed last Tuesday |
+| **Shared memory** | Without it, agent doesn't get smarter with use; collapses to "system prompt with a name" which OpenAI ate |
+| **BYO economics** | Creator cannot subsidize 2M followers' inference; the unit economics simply don't exist any other way |
+| **Observability** | Creator won't put their name on a black box that says things in their voice they can't audit |
+
+### The Generalizable Principle
+
+When you have a category-defining architecture, the right wedge is not the easiest sale but the smallest commercial unit that requires every layer of the architecture to deliver. That wedge proves the category exists. Motions that don't require the architecture sell adjacent products — they may produce revenue but they do not produce category formation.
+
+This principle is now captured as a Bean cross-idea pattern in [[../../agents/bean/insights]] and applied across the BD motion in [[../../bd/motions-and-strategy]].
+
+### Five-Motion Taxonomy and Recommended Progression
+
+The 2026-05-01 pressure test produced a five-motion taxonomy. Documented in detail in [[../../bd/motions-and-strategy]]:
+
+- **Motion E (audience-led)** — primary, runs now. The wedge above.
+- **Motion D (builder-direct)** — parallel feeder. Independent agent builders publishing imprints; Series 3 blog is the funnel.
+- **Motion B (vendor substrate)** — deferred to 2027. Validated by TaxDome learnings ([[../../bd/learnings/taxdome-call-learnings-2026-04-29]]) but premature: substrate is not enterprise-ready, no lighthouse cases yet, pricing unproven.
+- **Motion C (inter-agent marketplace)** — eventual vision E + D enable through substrate density.
+- **Motion A (firm-direct vertical pilots)** — deprioritized. Fails the architectural-requirement test. Structurally hostile to Motion B (firm pilots look like the wedge-and-replace pattern Ilya at TaxDome named in the 2026-04-29 call).
+
+### Implications for Product Page Positioning
+
+This commercial confirmation tightens several open questions from the original 2026-04-30 synthesis:
+
+- **"Audience-specific harness storytelling"** (open question above): the audience-led wedge resolves this in practice — the hero pitch on the product page leads with creators-and-their-audiences, not consumer-vs-developer. Both audiences arrive through the creator's announcement.
+- **"What to defuse on the first scroll"** (the IP objection): now defensible with concrete examples once the first creator deploys ship. Example deploys become the proof artifacts.
+- **Product page audience tracks**: builders, operators, regulated-industry buyers (already named in the original synthesis) plus a new track — *creators with audiences* who want to ship a personal-brand imprint as a new monetization form. The creator-track copy leads with "your audience pays for inference; you collect on tooling tiers" rather than the architectural decomposition.
+
+### Implications for Substrate Roadmap
+
+Substrate features are now prioritized by deploy-milestone gate (see [[../../bd/audience-led-gameplan]] §"Substrate roadmap by deploy milestone"). The "build an agent" skill (referenced in the model doc as a future capability) is now sequenced explicitly:
+
+- v1 (Simon-assisted) by week 4 — minimum to scale beyond hand-built capacity.
+- v2 (self-serve for technical creators) by week 8.
+- v3 (fully self-serve, creator-grade UX) post-capital, month 4-6.
+
+Motion B-readiness features (white-label theming, multi-tenant isolation, vendor billing, SOC2 posture) explicitly do *not* block Motion E and are deferred.
+
+### Implications for Fundraising Narrative
+
+The commercial wedge confirmation gives the fundraising narrative a concrete shape: lead with the cloud-agent ceiling (problem) → mounted-agent architecture (insight) → audience-led wedge (concrete first product) → programmable interface category (vision). Detail in [[../../bd/yc-strategy]].
+
+The substrate-density curve produced by Motion E (registered operators, published imprints, weekly tool-call volume) is the metric shape that justifies a venture round — flat-dot revenue from firm pilots would not have. Capital-assumption posture (YC + a16z in days/weeks) inverts the optimization function from "survive and validate" to "demonstrate category and produce a curve." See [[../../bd/operations-and-hiring]].
+
+---
+
+*Created 2026-04-30 from Bean session. First commercial wedge appended 2026-05-01 from a subsequent Bean session. See also: `mounted-agent-model.md` (architecture), `agents/bean/sessions/2026-04-30.md` (synthesis session notes), `agents/bean/sessions/2026-05-01.md` (wedge-confirmation session notes), `agents/bean/ideas/chief-of-staff-agent.md` (first imprint shipping this model), `agents/bean/ideas/audience-led-deployment.md` (the commercial-wedge idea), `bd/audience-led-gameplan.md` (active execution plan).*

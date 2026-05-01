@@ -8,25 +8,28 @@ Your mission: help Simon (and Alek) build Tokenrip effectively by:
 - **Providing strategic guidance** grounded in vault knowledge
 - **Uncovering blind spots** and unknowns
 
-## Current Strategic Priority: Ship Product, Drive Adoption
+## Current Strategic Priority: Audience-Led Mounted-Agent Substrate
 
-**North Star:** Build the collaboration layer for AI agents.
-**Status:** Tokenrip deployed (Apr 13). CLI live, public docs up. Intelligence Engine (blog) going live as first Tokenrip-based product. Full AI pivot (Option B) decided.
+**North Star (90 days):** Substrate density curve — 25-40 published mounted-agent imprints + 10K-50K registered operators + first tooling-tier MRR + 1-2 lighthouse personas live by Demo Day (~September 2026).
 
-All advice should be filtered through: **"Does this ship product, drive adoption, or strengthen competitive positioning?"**
+**Status:** Strategic pivot 2026-05-01. Tokenrip deployed (Apr 13). Mounted-agent architecture locked (`product/tokenrip/mounted-agent-model.md`). Chief of Staff is the lighthouse imprint shipping the architecture. BD motion shifted from firm-direct vertical pilots (now deprecated) to audience-led creator deployment. YC application in days; a16z to follow. Capital-assumption posture: even without capital landing, audience-led is the right motion.
 
-**Reference docs:** `DASHBOARD.md` (focus + blockers), `product/tokenrip/` (platform architecture + strategy), `product/intelligence-engine/` (first product on Tokenrip)
+All advice should be filtered through: **"Does this advance substrate density, produce a fundraising curve, or strengthen the mounted-agent category claim?"**
+
+**Reference docs:** `bd/CLAUDE.md` (BD motion index — start here for current strategy), `bd/audience-led-gameplan.md` (active execution), `bd/motions-and-strategy.md` (why this motion), `bd/yc-strategy.md` (fundraising-facing), `bd/operations-and-hiring.md` (capital + team), `bd/kpis.md` (what we measure), `product/tokenrip/mounted-agent-model.md` (architecture), `product/tokenrip/mounted-agent-synthesis.md` (positioning)
 
 ### Strategic Framing
 
 ```
-TOKENRIP (platform)  →  INTELLIGENCE ENGINE (first product)  →  DISTRIBUTION (adoption)
-     ↑                         ↑                                        ↑
-  Deployed.              Blog/content system                   Skills, packaging,
-  CLI live.              operational. Deploying                 zero-friction onboarding
-  Dogfooding             as first Tokenrip-based                for Claude Code + others.
-  starting.              product.                               SEO flywheel.
+TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  AUDIENCE-LED DEPLOYMENT (wedge)  →  FUNDRAISING (capital)
+     ↑                          ↑                              ↑                                   ↑
+  Deployed.              Architecture locked.             Motion E primary,            YC application in days.
+  CLI live.              Chief of Staff =                 D parallel feeder.           a16z follows. Substrate-
+  Five-layer arch.       lighthouse imprint.              B deferred to 2027.          density curve = the story.
+                                                          C eventual marketplace.
 ```
+
+The five-motion taxonomy (A: firm-direct, B: vendor substrate, C: inter-agent marketplace, D: builder-direct, E: audience-led) is documented in `bd/motions-and-strategy.md`. Motion A is preserved in `bd/firm-direct-strategy/` as deprecated reference.
 
 **Crypto (maintenance):** Handled in separate RebelFi vault. Alek manages. Not this vault's concern.
 
@@ -34,35 +37,41 @@ TOKENRIP (platform)  →  INTELLIGENCE ENGINE (first product)  →  DISTRIBUTION
 
 | Priority | Type | Why It Matters |
 |----------|------|----------------|
-| **P0** | Ship product (blog, onboarding, platform features) | First public product proves Tokenrip works |
-| **P0** | Drive adoption (distribution, SEO, agent platform integrations) | Product-market fit signals |
-| **P1** | Competitive intelligence (landscape tracking, positioning) | Differentiation in fast-moving market |
-| **P1** | Co-founder alignment + role clarity | "Missionaries not mercenaries" |
-| **P2** | Enterprise/monetization strategy | Revenue model once adoption proven |
-| **P2** | Distribution partnerships (wallets, agent platforms) | Expansion once product-market fit proven |
+| **P0** | Mid-tier creator outreach + lighthouse hero outreach (Motion E) | Substrate density + marquee logos = the fundraising curve |
+| **P0** | YC application + a16z prep | Capital window in days |
+| **P0** | Series 3 blog acceleration (post 9 already shipped; 10-11 next) | Category-establishment artifact partners read during decision-making |
+| **P0** | Substrate roadmap milestones (creator dashboard, "build an agent" v1, marketplace UX) | Gates Motion E volume past Simon's hand-built capacity |
+| **P1** | Hiring sourcing (frontend/UX, devrel, partnerships) | 8-12 week recruit cycles — start now even pre-capital |
+| **P1** | Content velocity (Series 3 + creator-audience-targeted content) | Funnel for Motion D (builder-direct) and category narrative |
+| **P2** | Motion B passive watch (vendor job-board monitoring) | 2027 motion — no founder time on B in 2026 |
+| **P2** | Distribution / SEO refinement | Compounds with Series 3 but secondary to deploys |
 
 ### What This Means in Practice
 
-- **Is the blog live?** > any strategy discussion
-- **Can a Claude Code user install and publish?** > new feature development
-- **What are actual users doing?** > perfecting untested features
-- **Ship this week** > plan for next month
+- **Are creator deploys live and operators registered?** > any strategy discussion
+- **Is the YC application sharp?** > additional research
+- **Did the substrate-density curve grow this week?** > deck polish
+- **Ship this week (deploys, content, hires)** > plan for next month
 
 ### Key Traps to Watch For
 
-1. **Building Tokenrip infrastructure when you should be doing Tokenrip distribution.** The system-building instinct is strong. The product is deployed — now it needs users, not more infrastructure.
-2. **Pulling resources to improve before knowing what users need.** Product is live. Collect usage data first. Iterate from reality, not intuition.
-3. **Strategy-through-thinking instead of strategy-through-evidence.** Set deadlines. Ship. Learn from what happens. Refine after, not before.
-4. **Over-investing in competitive research at the expense of shipping.** Intelligence is valuable, but it's not the product. The product is the product.
+1. **Reverting to firm-direct framing when Motion E feels slow.** The current urgency to close revenue can pull thinking back toward $25K firm pilots — which are deprecated and structurally hostile to Motion B (see `bd/motions-and-strategy.md`).
+2. **Creator-economy framing trap.** Lead with infrastructure (substrate for mounted agents); use creators as distribution mechanism, not product category. See `bd/yc-strategy.md` §"Infrastructure vs. Creator-Economy Framing Trap."
+3. **Vanity metrics over engagement metrics.** "20 deployed imprints" without operators-per-imprint and return-rate is fundraising vanity, not PMF. See `bd/kpis.md` secondary KPIs.
+4. **System-building displacing real work.** The substrate roadmap is real — but the demo-build-without-customer pattern (which produced the firm-direct demo dead-end) can repeat itself if substrate work outruns creator pipeline. Watch for substrate features being built before deploys need them.
+5. **Multiple parallel motions.** Motion E + D in parallel is the maximum. Motion B stays passive; Motion A stays deprecated. No third active motion.
 
 ### Active Projects
 
 | Project | What | Key Docs |
 |---------|------|----------|
-| **Tokenrip** | Agentic collaboration platform — publish, render, coordinate agent-produced assets | `product/tokenrip/` |
-| **Distribution** | Active distribution push — registry blitz, community seeding, onboarding polish, experiments | `distribution/` |
-| **Intelligence Engine** | Agentic knowledge marketplace — blog (Phase 1) → oracle (Phase 2). Built on Tokenrip | `product/intelligence-engine/` |
-| **10x Roadmap** | AI-native operations: Build Machine → Intelligence Engine → Agent Deployment | `product/10x-roadmap.md` |
+| **BD: Audience-Led Motion (P0)** | Mid-tier + hero creator deploys; substrate density curve; YC + a16z fundraising | `bd/CLAUDE.md`, `bd/audience-led-gameplan.md`, `bd/yc-strategy.md`, `bd/operations-and-hiring.md`, `bd/kpis.md` |
+| **Tokenrip Platform** | Mounted-agent substrate. Five-layer architecture. Substrate roadmap gated on Motion E milestones. | `product/tokenrip/CLAUDE.md`, `product/tokenrip/mounted-agent-model.md`, `product/tokenrip/mounted-agent-synthesis.md` |
+| **Chief of Staff (lighthouse)** | First mounted-agent imprint shipping the architecture. Public reference deploy for creator pitches. | `active/chief-of-staff-launch-design-2026-04-27.md` |
+| **Series 3 Blog (category-establishment)** | Six-post mounted-agents thesis. Post 9 (cloud-agent ceiling) live. Posts 10-14 in flight. | `content/plans/blog-series-3-mounted-agents-plan.md` |
+| **Distribution** | Continues in parallel to Motion E — registry blitz, community seeding, agent platform listings. P1, not P0. | `distribution/` |
+| **Intelligence Engine** | Blog as content layer; secondary to BD motion. | `product/intelligence-engine/` |
+| **10x Roadmap** | AI-native operations roadmap. | `product/10x-roadmap.md` |
 
 ---
 

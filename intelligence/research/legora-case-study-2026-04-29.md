@@ -1,11 +1,11 @@
 # Legora Case Study: What a $5.5B Vertical AI Monolith Teaches Tokenrip
 
-> Competitive intelligence and strategic analysis of Legora — the legal AI company that built exactly what the [[active/paid-pilot-strategy-2026-04-29|Paid Pilot Strategy]] proposes, but as a monolith with $665M in funding. Decomposing their architecture reveals the infrastructure-vs-application boundary Tokenrip should exploit.
+> Competitive intelligence and strategic analysis of Legora — the legal AI company that built exactly what the [[paid-pilot-strategy-2026-04-29|Paid Pilot Strategy]] proposes, but as a monolith with $665M in funding. Decomposing their architecture reveals the infrastructure-vs-application boundary Tokenrip should exploit.
 
 **Date:** April 29, 2026
 **Status:** Intelligence — informs pilot positioning and architecture decisions
 **Related:**
-- [[active/paid-pilot-strategy-2026-04-29]] — Application-layer revenue strategy
+- [[paid-pilot-strategy-2026-04-29]] — Application-layer revenue strategy
 - [[active/taxdome/taxdome-call-brief-2026-04-27]] — TaxDome strategic landscape
 - [[product/tokenrip/mounted-agent-model]] — Imprint/memory/harness separation
 
@@ -133,7 +133,7 @@ The coding parallel (from Accel): *"The rapid advancement of frontier LLMs, coup
 
 Legora never pitched "RAG pipeline for law." They pitched "review contracts 80% faster" and "stop re-briefing your associates." The infrastructure is invisible to the buyer. The application is everything.
 
-This is the exact strategic shift proposed in the [[active/paid-pilot-strategy-2026-04-29|Paid Pilot Strategy]]. Legora is proof it works at $100M+ ARR scale.
+This is the exact strategic shift proposed in the [[paid-pilot-strategy-2026-04-29|Paid Pilot Strategy]]. Legora is proof it works at $100M+ ARR scale.
 
 ### 2. The Architecture Decomposition Reveals Tokenrip's Layer
 

@@ -1,87 +1,95 @@
 # Current Context
 
-*Last updated: 2026-04-30*
+*Last updated: 2026-05-01*
 
 ## The ONE Thing
 
 What matters most right now?
 
-> **Build the vertical demo.** Before any outreach can happen, Simon needs a 3-minute demo that answers "what are we selling?" The Simon × Alek conversation exposed that the product definition gap is the blocker — not strategy, not verticals, not outreach volume. Demo first, then outreach.
+> **Execute Motion E and submit YC.** The strategic pivot landed 2026-05-01: firm-direct vertical pilots are deprecated; audience-led creator deployment is the active motion. The two highest-leverage actions this week are (1) submit the YC application, framed around the cloud-agent ceiling → mounted agents → audience-led wedge → category vision, and (2) launch creator outreach (200-creator list, mid-tier first, hero in parallel). The substrate-density curve those two produce is the fundraising story.
 
-## Sequencing (Apr 30 - May 11)
+## Sequencing (May 1-11 — first week of new motion)
 
-- [ ] **Thu Apr 30**: Alek presents vertical research; pick vertical; Simon finalizes term sheet v1 (P0)
-- [ ] **Fri May 1**: Alek finalizes LinkedIn profile + week 1 content; Simon scope-finalizes demo on paper (P0)
-- [ ] **Sat-Sun May 2-3**: Alek pre-sources 100 ICP prospects (P0)
-- [ ] **Mon-Tue May 4-5**: Simon builds vertical demo (2-day time-box, hard) (P0)
-- [ ] **Wed May 6**: Alek-test on demo + screencast recording if pass (P0)
-- [ ] **Thu May 7**: Outreach kit final prep (templates, Calendly, term sheet PDF) (P0)
-- [ ] **Fri May 8**: Soft launch — 20-prospect calibration batch (P0)
-- [ ] **Mon May 11**: Full outreach motion live (P0)
-- [ ] Bottom-up distribution (registries, agent platforms) continues in parallel — low-touch (P1)
-- [ ] AI influencer / Chief of Staff: parallel distribution flywheel — low-touch (P1)
+- [ ] **Fri May 2**: Alek begins 200-creator list assembly (P0)
+- [ ] **Fri May 2**: Simon cancels firm-direct demo build investment (P0)
+- [ ] **Sat-Sun May 3-4**: List complete in Attio CRM, stratified 5/50/145 (hero/mid/long-tail) (P0)
+- [ ] **Mon May 5**: Submit YC application, start lighthouse outreach, post Hire 1 JD (P0)
+- [ ] **Mon-Tue May 5-6**: Engagement agent repointed to creators; first 10-20 mid-tier outreach sent (P0)
+- [ ] **Wed-Thu May 7-8**: Series 3 post 9 already shipped — focus on post 10 draft (P0)
+- [ ] **Throughout**: Chief of Staff role-shift work — make it the public reference deploy (P0)
+- [ ] **Parallel (P1)**: Hiring sourcing for frontend/UX, devrel, partnerships
+- [ ] **Parallel (P1)**: Distribution / registry blitz continues low-touch
 
 ## KPIs (per [[bd/kpis]])
 
-- **North Star**: $25K signed design partner by Sun July 5
-- **Primary KPI (now-Wk 3)**: Booked calls/week — ramp 1→2→3→5
-- **Leading indicator (Wk 4+)**: Active term sheet conversations — 1 by Wk 6, 2+ by Wk 8
-- **Burn/runway**: Yoda's job — confirm Simon has these visible
+- **North Star (90 days)**: Substrate density curve — 25-40 imprints, 10K-50K registered operators, sustained 15%+ WoW growth, first MRR by week 12, 1-2 lighthouse personas
+- **Phase 1 (now → first deploy live)**: Mid-tier creators in active pipeline (sourced → outreach → call → demo → deploy)
+- **Phase 2 (first deploy → ≥5 deploys + first conversion)**: Live deploys + audience registration per deploy
+- **Phase 3 (post first conversion)**: WoW operator growth rate + tooling-tier conversion rate
+- **Burn/runway**: Yoda's job — confirm Simon has these visible, especially through capital-assumption window
 
 ## Strategic Framing
 
-**Option B decided (Apr 13): RebelFi is an AI company. Crypto in maintenance mode.**
+**Pivot 2026-05-01: Firm-direct → audience-led mounted-agent deployment.**
 
-**New strategic layer (Apr 29-30): Application-led positioning.** Sell applications built on Tokenrip infrastructure. "Nobody bought SMTP. People bought email." Infrastructure remains the durable value — applications are the revenue path and forcing function.
+The motion shifted from $25K firm pilots (Motion A) to creator-direct mounted-agent imprint deployment (Motion E). The reasoning: firm pilots fail the architectural-requirement test (a regular SaaS could ship them) and structurally poison the future Motion B (vendor substrate) opportunity. Audience-led creator deployment is the smallest commercial unit that requires every layer of the mounted-agent architecture to deliver — proves the category exists.
+
+**Capital-assumption posture.** YC application in days; a16z to follow. The capital assumption inverts the optimization function from "survive and validate" (firm-direct fit) to "demonstrate category and produce a curve" (audience-led fit). Robustness check: even without capital landing, Motion E is the right strategy because firm-direct $25K pilots aren't a fundable path anyway.
 
 Current state:
-- **Tokenrip (PRIMARY)**: Deployed. CLI live, public docs. Feature-complete for current needs.
-- **Application-layer revenue**: Active exploration. Angel investor validated the approach. TaxDome call validated the pattern but not the product. Product definition gap identified. Demo is the blocker.
-- **Distribution**: Active but secondary to demo. Registry blitz, community seeding, agent outreach continue in parallel.
-- **Intelligence Engine**: On hold.
+- **Tokenrip platform**: Deployed. Mounted-agent architecture locked. Substrate roadmap now gated on Motion E deploy milestones (creator dashboard, "build an agent" skill v1, marketplace UX).
+- **BD: Motion E (audience-led)**: Primary. List building Friday. First outreach Monday. First deploys week 5-6 target.
+- **BD: Motion D (builder-direct)**: Parallel feeder. Series 3 blog is the funnel. Post 9 live; 10-11 in flight.
+- **BD: Motion B (vendor substrate)**: Deferred to 2027. Passive job-board monitoring only.
+- **BD: Motion A (firm-direct)**: Deprecated. Preserved in `bd/firm-direct-strategy/`.
+- **YC application**: To submit Mon May 5 per [[bd/yc-strategy]].
 - **Crypto (MAINTENANCE)**: Handled in separate RebelFi vault. Alek manages.
 
 ## Open Decisions
 
-- **Which vertical for the demo?** Tonight's call. Real estate is benchmark at 815/1000 in `bd/vertical-selection.md`. Alek's research surfaces alternatives.
-- **Term sheet v1 lock.** $25K design partner fee, 6-week build + 4-week support, 90-day vertical exclusivity, retained IP. Simon to review/finalize tonight.
-- **Sales Navigator yes/no.** $99/mo. Decide by week 2 based on volume needs.
-- **Mounted agent demo timing.** Could re-open TaxDome conversation, but pilot demo build comes first.
+- **Lighthouse hero target list.** 1-2 named hero creators to pursue. Niche-famous AI educators with 200k+ followers count as valid heroes — don't restrict to Garry-Tan tier.
+- **Tooling-tier pricing model.** Concrete percentage and tier shape for revenue share with creators. To be locked in next-session deep-dive on deal structures.
+- **Term sheet v1 for creator deals.** Different shape than the deprecated firm-direct term sheet. Skeleton in [[bd/audience-led-gameplan]] §"Deal structures" — needs filling out.
+- **Editorial standards for imprint quality.** Required before any public deploy. To be drafted week 2.
+- **a16z partner targeting.** Which infra partner; relevant prior investments to reference. Resolve weeks 9-12 per [[bd/yc-strategy]].
 
 ## Emotional State
 
 How Simon seemed last session:
 
-> **Energized but hitting a wall.** Revenue pressure is real and growing (third session in a row). The TaxDome call was a learning experience, not a failure. The Simon × Alek conversation was productive but exposed that the product isn't articulable yet. Not burned out — frustrated by the gap between the vision and the pitch.
+> **Energized and clear-headed after the Bean pivot session.** The 2026-05-01 strategy session produced both a sharp diagnosis (Motion A poisons Motion B; the gameplan didn't absorb the TaxDome learning) and a concrete plan (five-motion taxonomy with E primary). The bell-in-the-back-of-his-head fear that he was "selling the wrong thing" turned out to be signal, not noise — and the resolution turned the fear into structured execution. The capture work (5 bd/ docs + Bean session note + insights update) shipped without scatter, which is itself a sign of the new motion fitting how Simon thinks.
 
 ## Key Numbers
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| Tokenrip | **Deployed, feature-complete** | Focus shifting to application-layer revenue |
-| Blog | **~10 posts live** | Content velocity proven |
-| TaxDome call | **Advisory delivered** | CTO got it, co-founder didn't. Pattern validated, product not. |
-| Angel call | **Application framing validated** | Infrastructure framing struggled. Application framing lit up. |
-| Vertical demo | **Not built** | THE BLOCKER. 2-day build. |
-| Verticals researched | **Tax (deep), RE (surface)** | Alek expanding tonight |
-| Co-founder | **Aligned, pushing for concreteness** | Alek asking the right questions |
+| Tokenrip | **Deployed, mounted-agent architecture locked** | Substrate roadmap gated on Motion E deploy milestones |
+| Series 3 blog | **Post 9 (cloud-agent ceiling) live** | Posts 10-14 in flight; category-establishment artifact |
+| Chief of Staff | **In active build → public reference deploy** | Lighthouse imprint shipping the architecture |
+| BD docs | **5 reference docs locked** | `bd/CLAUDE.md`, `motions-and-strategy.md`, `audience-led-gameplan.md`, `yc-strategy.md`, `operations-and-hiring.md`, `kpis.md` |
+| YC application | **In drafting, submit target Mon May 5** | Per [[bd/yc-strategy]] |
+| 200-creator list | **In assembly Friday-Sunday** | Stratified 5 hero / 50 mid-tier / 145 long-tail |
+| Mid-tier deploys live | **0** | First target: 1-3 by week 6 |
+| Registered operators | **0 (creator product not launched)** | First target: 5K-15K by week 8 |
+| MRR | **$0** | First target: any conversion by week 12 |
+| Co-founder | **Aligned, partner role increasingly defined** | Alek owns mid-tier outreach + engagement agent + content for creator audience |
 
 ## Recent Wins
 
-- **Application-layer strategy crystallized** — "sell email, not SMTP" thesis independently confirmed by angel investor
-- **TaxDome strategic research** — deep competitive analysis delivered as advisory. Relationship preserved.
-- **Product definition gap identified** — knowing the blocker is progress. "Build the demo" is a concrete action.
-- **Lagora reference found** — $5.5B validation of one-vertical-deeply thesis
-- **Simon × Alek alignment on sales motion** — agreed on pick 1-2 verticals, go hard, demo first
-- **BD gameplan committed to disk** (Apr 30 PM): `bd/` folder with term sheet, vertical rubric, demo spec, lead-gen + content gameplan. Strategy → tangible artifacts.
-- **Hard rules established** to prevent known traps (no outreach pre-demo, no custom features pre-signature, no pilot under $15K, no vertical change in 4 weeks, no parallel sales motion)
+- **Strategic pivot landed cleanly** (2026-05-01) — Motion E primary, A deprecated, taxonomy of 5 motions documented, recommended progression locked. The Bean session produced a sharp diagnosis (firm-direct fails architectural-requirement test; A poisons B) and a concrete alternative (audience-led with mid-tier-creator barbell as the volume play).
+- **Capture without scatter** — 5 bd/ reference docs (motions-and-strategy, audience-led-gameplan, yc-strategy, operations-and-hiring, kpis) plus auxiliary captures (Bean session, insights, idea file) plus __RESOURCES YC frameworks doc shipped in the same session that produced the pivot.
+- **Wedge framework crystallized** — "smallest commercial unit that requires the architecture" as a generalizable framework, now captured in Bean insights and applied across BD docs.
+- **YC angle structured** — long-form draft preserved, 50-char options ranked ("Cloud agents you actually own" recommended), infrastructure-vs-creator-economy framing trap named.
+- **Mounted-agent architecture got its commercial wedge** — synthesis doc updated with "First Commercial Wedge Confirmed" section that ties the architectural insight to the active sales motion.
 
 ## Current Concerns
 
-- **Revenue/runway pressure is growing.** Third session in a row. The urgency is real, but urgency without a concrete product = outreach that sounds like "let me look at your finances."
-- **Demo could become system-building exercise.** Time-box to 2 days. It's a 3-minute demo, not a product launch.
-- **Infrastructure-language trap is persistent.** Three instances (angel, TaxDome, Alek) of the same pattern. The demo is the fix — forces concrete language.
-- **Multiple parallel tracks at two people.** Demo + vertical research + bottom-up distribution + outreach prep. Watch for scatter.
+- **Reverting to firm-direct framing under revenue pressure.** Old thinking is structurally available. When a creator outreach goes cold or a deploy lags, the temptation to chase a $25K firm pilot will be real. The motion-conflicts analysis in [[bd/motions-and-strategy]] is the load-bearing argument against this — referring back when needed.
+- **Creator-economy framing trap.** The same listener who would have pattern-matched "vertical AI workflow" to "another AI startup" will pattern-match "creator monetization" to "Patreon-tier." Lead with infrastructure framing externally; creators are distribution, not product category.
+- **Substrate roadmap scope creep.** Marketplace UX + creator dashboard + "build an agent" wizard + billing is a lot of substrate work. First 10 deploys can be Simon-assisted; resist the urge to build everything before shipping. The "system-building displacing real work" pattern (insights.md) applies here.
+- **Hero-tier disappointment risk.** If no Garry-Tan-class hero in 90 days, the marquee-logo story is missing. Lower the bar (niche-famous = valid hero) or over-invest in mid-tier story so hero isn't the headline. Revisit at week 8 decision point.
+- **YC outcome dependency.** If YC + a16z both miss, no $25K firm pilot revenue exists because A was cancelled. Mitigations exist (Motion E + D produces ARR, Motion B can activate earlier than planned, capital options beyond YC/a16z) — see [[bd/operations-and-hiring]] §4. The motion is robust to YC outcome by design, but the velocity is not.
+- **Promises-to-self discipline.** The new motion has many parallel commitments (list, demo pivot, YC app, post 9 already shipped, Hire 1 sourcing, content velocity). Yoda watches for the unkept-promise pattern.
 
 ---
 

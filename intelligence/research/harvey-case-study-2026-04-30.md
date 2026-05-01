@@ -6,7 +6,7 @@
 **Status:** Intelligence — informs platform architecture and competitive positioning
 **Related:**
 - [[intelligence/research/legora-case-study-2026-04-29]] — Legora (the other $5B+ legal AI monolith)
-- [[active/paid-pilot-strategy-2026-04-29]] — Application-layer revenue strategy
+- [[paid-pilot-strategy-2026-04-29]] — Application-layer revenue strategy
 - [[product/tokenrip/mounted-agent-model]] — Imprint/memory/harness separation
 
 ---
