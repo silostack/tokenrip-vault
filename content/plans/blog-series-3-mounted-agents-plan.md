@@ -2,46 +2,48 @@
 
 ## Context
 
-Series 1 named the alignment problem and proposed skills as packages. Series 2 named the SaaS trap and proposed operations as primitives. Both series proved that *parts* of the agent stack belong on a shared substrate (skills, then operations).
+Series 1 named the alignment problem and proposed skills as packages. Series 2 named the SaaS trap and proposed operations as primitives. Both series proved that *parts* of the agent stack belong on a shared substrate: instructions first, then operations.
 
-Series 3 closes the arc: when imprint, memory, and harness are all separated, the agent itself becomes a portable artifact. This is the *category* play — naming "mounted agents" before anyone else does, anchoring the vocabulary ("imprint", "harness", "BYO model", "cloud agents" as the contrast term), and capturing SEO around terms that don't yet have a Wikipedia entry, an a16z deck, or cloud-AI marketing copy.
+Series 3 closes the arc: AI agents should become **portable, persistent products** instead of disposable chat sessions. When an agent's instructions, memory, tools, identity, and usage history can live outside the runtime that executes it, the agent becomes portable across harnesses and persistent across sessions. That is the reader-facing outcome. "Mounted agents" is the category name for the architecture that makes it possible.
 
-Source material is locked: `product/tokenrip/mounted-agent-model.md` (architecture) and `product/tokenrip/mounted-agent-synthesis.md` (positioning). The synthesis names three frames in order — architecture → economics → outcomes — and that ordering shapes the series.
+The framing shift matters. The series should not ask readers to care about "mounted agents" before they understand the pain. Start with the universal problem: useful agents are trapped inside chat products, model providers, and local runtimes. Then introduce the architectural pattern: durable agent intelligence mounted into whatever runtime the user prefers.
+	
+Source material is locked: `product/tokenrip/mounted-agent-model.md` (architecture), `product/tokenrip/mounted-agent-synthesis.md` (positioning), and `active/yc-tokenrip-pitch-framing-2026-05-02-codex.md` (investor-facing pitch ladder). The series now follows: problem → portable/persistent outcome → runtime separation/economics → proof → memory → moats.
 
 The craft post has a real subject: the Chief of Staff agent (`active/chief-of-staff-launch-design-2026-04-27.md`) is in a 14-day build sprint (Apr 28 – May 11) and is explicitly described as "the first imprint shipping this model." By the time Post 12 ships, it will have soaked through real use.
 
-**Why six posts and not four.** Series 1 and 2 each shipped four posts because they had two thesis ideas plus a craft and a synthesis. Series 3 is a category-creation series with five distinct thesis surfaces — problem, architecture, economics, contract, moats — each anchoring a different keyword cluster. Compressing them into four posts loses SEO surface and bundles arguments that should breathe independently. Six posts is the right shape for the territory.
+**Why six posts and not four.** Series 1 and 2 each shipped four posts because they had two thesis ideas plus a craft and a synthesis. Series 3 is a category-creation series with five distinct thesis surfaces — problem, portability/persistence, economics, memory, moats — each anchoring a different keyword cluster. Compressing them into four posts loses SEO surface and bundles arguments that should breathe independently. Six posts is the right shape for the territory.
 
 **Strategic priorities driving this series:**
-1. **Category capture.** Own the term "mounted agents" before any competitor or analyst names it.
-2. **Vocabulary anchoring.** Lock "imprint", "harness", and "BYO model" as terms readers reach for.
-3. **Wedge into regulated industries.** Open imprint + audit log = the only AI architecture that can credibly serve legal, medical, and financial buyers. This is a market segment, not a feature.
-4. **Tee up Series 4.** Inter-agent tool composition, agent marketplace, "build an agent" skill — all logical follow-ups once the category is named.
+1. **Outcome-first category capture.** Own "mounted agents" without leading with unexplained vocabulary. The reader first understands portable, persistent agents; then learns the category name.
+2. **Vocabulary anchoring.** Lock "imprint", "memory", "harness", "BYO model", and "mounted agent" as terms readers reach for after the pain is clear.
+3. **Substrate-density narrative.** Show why each deployed agent adds durable intelligence, shared memory, operators, and tool usage to Tokenrip.
+4. **Tee up Series 4.** Regulated-industry auditability, inter-agent tool composition, agent marketplace, and the "build an agent" skill all follow once portability and persistence are established.
 
 ## Series Arc
 
 ```
-#9  The Cloud Agent Ceiling (thesis)         → name the problem cloud AI can't escape
-#10 Mounted Agents (thesis)                  → claim the category, name the architecture
-#11 Your Model, Your Bill (thesis)           → the economics flip
-#12 How We Built Chief of Staff (craft)      → working proof of the model
-#13 The Imprint Is a Contract (thesis)       → versioned cognition for regulated buyers
-#14 The Imprint Isn't the Moat (thesis)      → what actually compounds
+#9  The Cloud Agent Ceiling (thesis)                 → name the problem cloud AI can't escape
+#10 Portable Agents (thesis)                         → agents should be portable and persistent
+#11 The Agent Shouldn't Live Where Inference Runs    → architecture + economics
+#12 How We Built Chief of Staff as a Portable Agent  → working proof of the model
+#13 The Agent's Memory Is the Product                → persistence + shared/private memory
+#14 The Imprint Isn't the Moat                       → what actually compounds
 ```
 
 **Standalone-completeness rule.** Every post earns its keep alone. A reader who lands cold from search gets (a) a problem named in their language, (b) a payoff they can use Monday morning — diagnostic, checklist, framework, or question to ask — and (c) optional links forward to the rest of the series. No post ends with a tease. The series accumulates through reinforcement, not dependency.
 
-Same shape as Series 1 and 2 in spirit (problem → category → … → craft → capstone), extended with two additional thesis posts (economics and contract) that each anchor an independent keyword cluster.
+Same shape as Series 1 and 2 in spirit (problem → category → proof → capstone), extended with two additional thesis posts (runtime economics and memory) that each anchor an independent keyword cluster.
 
 ## Connection to Prior Series
 
 | Series 1 | Series 2 | Series 3 | Progression |
 |----------|----------|----------|-------------|
 | Post 1: Alignment Problem | Post 5: SaaS Trap | Post 9: Cloud Agent Ceiling | Different layers of the same trap (drift → friction → ceiling) |
-| Post 2: Skills as Packages | Post 6: Shared Agents | Post 10: Mounted Agents | Skills → agents → category |
-| — | — | Post 11: Your Model, Your Bill | New economic argument enabled by the architecture |
-| Post 3: Self-Updating Skills | Post 7: Agent CRM | Post 12: Chief of Staff | Built a skill → built a CRM → built a deployable agent |
-| — | — | Post 13: The Imprint Is a Contract | New market wedge enabled by the architecture |
+| Post 2: Skills as Packages | Post 6: Shared Agents | Post 10: Portable Agents | Skills → shared agents → portable/persistent agents |
+| — | — | Post 11: The Agent Shouldn't Live Where Inference Runs | Architecture creates the economics |
+| Post 3: Self-Updating Skills | Post 7: Agent CRM | Post 12: Chief of Staff | Built a skill → built a CRM → built a portable agent |
+| — | — | Post 13: The Agent's Memory Is the Product | Persistence becomes the product surface |
 | Post 4: Collaboration Layer | Post 8: Operations as Primitives | Post 14: Imprint Isn't the Moat | What collaboration → operations → cognition reveal |
 
 The arc compounds. Series 1 separated *instructions*. Series 2 separated *operations*. Series 3 separates *the agent itself*.
@@ -49,6 +51,8 @@ The arc compounds. Series 1 separated *instructions*. Series 2 separated *operat
 ---
 
 ## Post 9: The Ceiling on Cloud Agents
+
+**Status:** Published. Do not rewrite the plan unless the published post itself changes.
 
 **Type:** Thesis
 **Slug:** `cloud-agent-ceiling`
@@ -81,90 +85,91 @@ The arc compounds. Series 1 separated *instructions*. Series 2 separated *operat
 
 ---
 
-## Post 10: Mounted Agents
+## Post 10: Portable Agents
 
 **Type:** Thesis
-**Slug:** `mounted-agents`
-**Angle:** Every existing agent fuses three layers — cognition (instructions, methodology), context (memory, history), and execution (model, runtime). End the session, lose two of them. Switch tools, lose all three. *Mounted agents pull the layers apart.* Cognition lives on a shared substrate. Memory lives on a shared substrate. Execution lives on the user's machine. The agent isn't *on* a server — it's mounted *into* a runtime, the way a filesystem is mounted into an OS.
+**Slug:** `portable-ai-agents`
+**Angle:** AI agents should not live inside the chat session or runtime that executes them. Their durable parts — instructions, memory, tools, identity, and usage history — should live outside the runtime so the same agent can survive sessions, move across harnesses, and improve through use. A mounted agent is the architecture for this: durable agent intelligence mounted into whatever runtime the user prefers.
 
-**Hook:** When you talk to your Custom GPT, three things are happening at once: you're loading instructions, accumulating memory, and running inference — all on OpenAI's machines, in a session that owns all three. End the chat, you lose the memory. Switch to Claude, you lose the instructions. Shut down OpenAI, you lose the agent. Every cloud agent works this way. *Mounted agents fix it with a single architectural move: separate the layers and let each live where it belongs.*
+**Hook:** A website is not the browser. A package is not the machine that runs it. An agent should not be the chat session that executes it. Today, useful agents are trapped inside the place they run. End the session, switch tools, or lose the vendor, and the agent disappears. Portable agents fix the location problem: the durable parts live somewhere stable, and the runtime is just where the work happens.
 
 **Body sections:**
-1. **The three layers every agent fuses.** Cognition (the imprint — instructions, skills, methodology). Context (memory — accumulated history, relationships, learned preferences). Execution (the harness — model, runtime, local environment). Today these are bundled inside a single session. Mounted agents pull them apart.
-2. **What "mount" means.** A filesystem is mounted into an operating system. A container is mounted into a host. A skill, in Series 2, was mounted into an agent. Now: an *agent* is mounted into a harness. The imprint and memory live on a shared substrate. The user's harness — Claude Code, Cursor, ChatGPT, MCP-enabled apps — pulls them in at runtime. Same agent, any compatible harness.
-3. **The decomposition produces the consequences.** The architecture isn't the only thing that's new. Three deep consequences flow directly from it: the user pays for inference (Post 11), the imprint is a versioned contract (Post 13), and the moat shifts to memory and tools (Post 14). Tease each.
-4. **Why nobody else can do this.** Cloud-agent platforms can't decouple — their business model depends on bundling all three layers. Local agent frameworks (CrewAI, LangGraph, AutoGen) decouple inside one session but lose everything when the session ends. Mounted agents need a shared substrate that hosts cognition without hosting execution — and that's a category that didn't exist until now.
-5. **Where does each layer of *your* agent live?** Standalone payoff. A self-assessment the reader can run on whatever they're using or building right now. Three questions:
-   - *Cognition:* are your agent's instructions in a place you can version, share, and reuse — or are they trapped in a vendor's textbox?
-   - *Memory:* when the session ends, what survives? Where does it survive? Who can read it?
-   - *Execution:* who pays for inference, and who decides when the model gets downgraded?
+1. **The location problem.** Today's agents live in the wrong place. Custom GPTs live inside OpenAI. Claude Projects live inside Anthropic. Local agents live on one machine. Framework agents live inside one workflow. The agent's durable intelligence is fused to the execution environment.
+2. **What should be portable and persistent.** Five things need to survive the session: instructions/methodology, memory/context, tools/capabilities, identity/provenance, and usage history. If those do not move, the agent is not a product — it is a session.
+3. **The mounted-agent pattern.** We call the durable instruction layer the imprint, the execution environment the harness, and the persistent context the memory. A mounted agent stores imprint and memory on a shared substrate, then mounts them into a harness at runtime. The harness may be Claude Code, Cursor, ChatGPT, or any compatible environment.
+4. **Why portability without persistence is not enough.** Copying a prompt across tools creates a portable prompt, not a portable agent. The agent becomes a product only when memory, tools, identity, and usage history survive too.
+5. **Where does your agent live?** Standalone payoff. A self-assessment for readers:
+   - *Instructions:* are they versioned somewhere outside a vendor textbox?
+   - *Memory:* what survives when the session ends?
+   - *Tools:* can the agent access the same capabilities across runtimes?
+   - *Identity:* can the agent be recognized across operators and sessions?
+   - *Execution:* who runs the model, and can the runtime be swapped?
 
-   If two of three answers point to the same vendor, you're running a fused agent. The questions tell the reader what to fix and in what order — and what to look for in any agent platform they're considering.
+   If the durable answers all point to one vendor or one machine, the agent is not portable. If the runtime and durable state can separate, the agent can become a product.
 
-**Tokenrip mention:** Name it once. "We publish imprints as Tokenrip assets and memory as Tokenrip collections — the substrate runs on us, the inference runs on the user." Vocabulary anchor: "imprint", "harness", "mounted" used precisely throughout. Reserve "asset" / "collection" for the single Tokenrip-mention sentence.
+**Tokenrip mention:** Name it once. "Tokenrip hosts the durable layer — imprints, memory, assets, messages, identity, and tools — while the user's chosen harness runs the model." Keep the sentence infrastructure-first. Avoid making the post a product page.
 
 **Sources needed:**
 - The mounted-agent-model.md architecture (primary source)
 - The mounted-agent-synthesis.md framing (positioning)
+- active/yc-tokenrip-pitch-framing-2026-05-02-codex.md for plain-English pitch ladder
 - Cloud-agent reference points (Custom GPT, Claude Projects, Agentforce) for contrast
-- Filesystem / container "mount" semantics from systems engineering as analogy
-- Series 1 Post 2 (Skills as Packages) and Series 2 Post 6 (Shared Agents) as the staircase that led here
+- Filesystem / package / browser analogies as plain-English bridges
 
-**Keywords:** mounted agents, agent imprint, BYO LLM agents, portable AI agents, open agent architecture, agent harness, decoupled AI agents
+**Keywords:** portable AI agents, persistent AI agents, mounted agents, agent imprint, agent harness, decoupled AI agents, AI agent portability
 
 ---
 
-## Post 11: Your Model, Your Bill
+## Post 11: The Agent Shouldn't Live Where Inference Runs
 
 **Type:** Thesis
-**Slug:** `byo-model-mounted-agents`
-**Angle:** The AI industry has a unit-economics problem that's killing startups: inference costs scale linearly with users, and margins compress at scale. Every cloud-AI company solves it the same way — degrade the experience to control cost. Mounted agents flip the model. The user pays for inference. The builder pays for storage. The capability ceiling lifts because the user is paying anyway. Token efficiency becomes a competitive feature instead of a hidden cost lever. Model price drops become free upgrades to every shipped agent. This isn't a pricing tweak — it's the cleanest economic structure the AI industry has seen.
+**Slug:** `agent-inference-runtime-separation`
+**Angle:** The agent should not live where inference runs. Once the durable agent layer separates from execution, several consequences fall out: the user can bring their own model, the builder avoids inference burn, capability no longer has a hidden vendor-imposed ceiling, token efficiency becomes a visible product quality, and model price drops become free upgrades. BYO inference is not the category; it is one consequence of putting the agent in the right place.
 
-**Hook:** Every AI company has a hidden incentive: make the agent as bad as you can get away with. Truncate context, skip steps, downgrade models. Inference is a margin destroyer at scale, and the user pays the cost in degraded experience without ever seeing the bill. Move the inference to the user, and the incentive flips overnight. The builder is now incentivized to make the agent *as capable as possible*, because better answers don't cost the builder anything — they cost the user, who is paying happily because the answer is worth it.
+**Hook:** Every AI company faces the same margin problem: the more users run the agent, the more inference the company pays for. That cost pressure leaks into the product as shorter context, caching, model downgrades, and invisible quality decay. The way out is not a cheaper model. The way out is architectural: the agent should not live where inference runs.
 
 **Body sections:**
-1. **The AI unit-economics problem.** Cloud AI margins compress as users scale. The industry's quiet response: feature-gate aggressive caching as "performance," cap context windows as "best practices," silently downgrade Opus to Sonnet to Haiku as "optimization." The user can't see any of this. The cost discipline propagates into the product as quality decay.
-2. **The BYO inversion.** The user runs the model. The builder hosts the imprint and memory. The user's marginal cost goes up with usage; the builder's marginal cost is roughly flat. Margin pressure goes to zero. Capability ceiling lifts because the user is paying anyway — a 50-step reasoning chain costs the user $0.40 instead of the builder bankrupting themselves. Walk the cost structure side-by-side.
-3. **Token efficiency as a competitive feature.** When the user pays per token, a bloated imprint is a tax the user feels directly. Lean imprints win head-to-head. Quality and economy point in the same direction for the first time in AI. This is a market dynamic — competition naturally produces leaner, smarter agents instead of bloated ones.
-4. **Deflation becomes a free upgrade.** When Anthropic cuts Opus pricing in half, cloud-agent companies face a pricing fight (users expect lower prices to follow lower costs). Mounted agents inherit the cut as a free upgrade — same imprint, cheaper inference, no pricing decision to make. Every model price drop makes mounted-agent products more powerful overnight, without anyone shipping anything.
-5. **What gets unlocked at the long tail.** SaaS economics need *N* users to break even on inference. Mounted agents work for one user. A consultant deploys a methodology imprint for a single client; a researcher deploys an analysis imprint for their own workflow; a legal team deploys a precedent-search imprint for ten partners. None of these clear the SaaS economic bar. All clear the mounted-agent bar trivially. New market shelf: *single-user and small-team agents that cloud AI can't profitably serve.*
-6. **How to spot a margin-trap AI product.** Standalone payoff. Three signals that an AI product's economics are working against the user — and why each is structural, not fixable with feature work:
-   - *"We've optimized for performance" = aggressive caching that returns stale or shared answers.* If the same prompt comes back faster the second time, you're being served a cache. Caching is a cost lever priced as a feature.
-   - *"Best practices recommend shorter context" = a context window cap dressed as advice.* The vendor is rationing the resource you're paying for. Watch for context limits that drop without notice.
-   - *"We continuously optimize the underlying model" = silent downgrades.* Opus → Sonnet → Haiku, no announcement, no pricing change. The agent gets dumber. The bill stays the same.
+1. **Runtime fusion creates margin pressure.** When the builder hosts both the agent and the inference, usage growth creates linear cost growth. The vendor's rational response is to control how much thinking each user gets.
+2. **Separate the agent from execution.** The builder hosts durable agent intelligence: instructions, memory, tools, identity, and usage history. The user's harness runs the model. The runtime becomes replaceable.
+3. **The BYO inversion.** The user pays for inference in the environment they already use. The builder pays for storage and tooling. A 50-step reasoning chain is no longer a builder-margin problem; it is a user-value decision.
+4. **Token efficiency becomes product quality.** A bloated imprint becomes a tax the user can feel. Leaner agents win because quality and economy point in the same direction.
+5. **Deflation becomes a free upgrade.** When models get cheaper or better, portable agents inherit the improvement without the builder changing pricing or absorbing margin pressure.
+6. **How to spot a runtime-trap AI product.** Standalone payoff. Three signals:
+   - *"Optimized for performance"* can mean aggressive caching.
+   - *"Best practices recommend shorter context"* can mean rationed reasoning.
+   - *"We continuously optimize the model"* can mean silent downgrades.
 
-   Each one is a margin lever the vendor has to pull as they scale. The mounted-agent shape removes the lever entirely. The reader leaves with three questions to ask of any AI product priced as a flat subscription.
+   Each signal is a symptom of the same architectural problem: the agent lives where inference runs.
 
-**Tokenrip mention:** Don't name it directly — economics arguments are stronger when they don't read as vendor pitches. Hint with the substrate framing ("a platform that hosts the imprint but not the inference"). Lets the reader connect the architecture from Post 10 to the economics here.
+**Tokenrip mention:** Don't name it directly. Economics arguments are stronger when they do not read as vendor pitches. Hint with "a platform that hosts durable agent intelligence without hosting inference."
 
 **Sources needed:**
 - Public information on AI company margins (Jasper, Copy.ai, Character.ai post-mortems where available)
 - OpenAI / Anthropic / Google pricing tables and recent cuts
-- The Anthropic post on Opus pricing reductions (if recent enough)
 - Industry analyst writing on AI SaaS unit economics (a16z, Tomasz Tunguz, etc.)
-- Concrete cost calculations: 50-step reasoning chain at Opus pricing
+- Concrete cost calculations: 50-step reasoning chain at current model pricing
 
-**Keywords:** BYO LLM, BYO model AI, AI unit economics, AI inference costs, AI agent pricing, AI margin compression, long-tail AI agents
+**Keywords:** BYO LLM, BYO model AI, AI unit economics, AI inference costs, AI agent pricing, agent runtime, AI margin compression, long-tail AI agents
 
 ---
 
-## Post 12: How We Built Chief of Staff as a Mounted Agent
+## Post 12: How We Built Chief of Staff as a Portable Agent
 
 **Type:** Craft / Workflow
 **Slug:** `building-a-mounted-agent`
-**Angle:** Step-by-step walkthrough of building Chief of Staff — the first agent shipped on the mounted model. The imprint published as versioned assets. Memory architected as shared knowledge + private context. The harness in Claude Code, but the agent is portable to any harness. The build reveals what's actually different about mounted agents: the *imprint* is small, the *memory* is the product, and shipping is publishing.
+**Angle:** Step-by-step walkthrough of building Chief of Staff — the first agent shipped on the mounted model. The agent's durable layer lives on Tokenrip: versioned imprint assets, shared/private memory, assets, messages, identity, and tool access. The harness is Claude Code for now, but the agent is portable to any compatible runtime. The build shows what changes when shipping an agent means publishing durable intelligence instead of hosting inference.
 
-**Hook:** We built an agent that doesn't live on our servers. We don't run inference for it. We don't host its memory in a way the user can't see. The agent's whole brain is published — six versioned assets and two memory collections. Anyone with a Claude Code install and credentials can mount it in two minutes. We've been running it for two weeks, and the part that surprised us isn't the architecture — it's how small the imprint actually has to be.
+**Hook:** We built an agent that doesn't live on our servers and doesn't live in one chat product. We don't run inference for it. We host the parts that need to persist: instructions, memory, assets, messages, and tools. Anyone with a compatible harness can run it. The surprising part is not that the architecture works — it is that the agent starts to feel more like a product once the runtime becomes replaceable.
 
-**Cold-reader intro (one paragraph after the hook):** A reader who lands here from search may not know the term "mounted agent." Open with one paragraph that pays them off in plain language: a mounted agent separates an agent's instructions, its memory, and the model that runs it — instructions and memory live on a shared platform, the model runs on the user's machine. No server holds the whole agent. Same agent, any compatible runtime. *That's what we built. Here's how.* One sentence link back to Post 10 for readers who want the full architecture argument.
+**Cold-reader intro (one paragraph after the hook):** A reader who lands here from search may not know the term "mounted agent." Open with one paragraph that pays them off in plain language: a portable agent separates the durable parts of the agent from the model that runs it. Instructions and memory live on a shared substrate; execution happens in the user's chosen runtime. We call this a mounted agent. *That's what we built. Here's how.*
 
 **Body sections:**
-1. **The requirement.** Build a Chief of Staff: an agent that runs Friday Reviews, holds organizational context, learns operator preferences, and works for multiple operators across machines. Traditional answer: stand up a SaaS, run inference, build a dashboard, host memory in a database the user can't inspect. Mounted answer: publish six imprint assets, provision two collection types, write a thin bootloader.
+1. **The requirement.** Build a Chief of Staff: an agent that runs Friday Reviews, holds organizational context, learns operator preferences, and works for multiple operators across machines. Traditional answer: stand up a SaaS, run inference, build a dashboard, host memory in a database the user can't inspect. Portable-agent answer: publish durable intelligence, provision memory, write a thin bootloader.
 2. **The architecture.** Show the three layers concretely. *Imprint*: persona, intake-flow skill, Friday Review ritual, voice guidelines, shared-knowledge schema — all published as Tokenrip assets, all versioned. *Memory*: shared knowledge layer (anonymized patterns across operators) + private context layer (per-operator history, preferences, relationships). *Harness*: 20-line bootloader command in Claude Code that fetches imprint at runtime, routes by mode, holds machine-specific config.
-3. **Design decisions.** Three non-obvious choices. (a) **Layered memory over commons or partitioned** — patterns compound across operators, but private context never leaks. The cognitive architecture nobody has shipped. (b) **Imprint as several small assets, not one big one** — context budget, independent versioning, mode-specific loading. (c) **Friday Review as a ritual, not a feature** — agents need recurring touchpoints to accumulate memory; the ritual is what produces the data the shared layer learns from.
-4. **The build.** The actual commands. Publish each imprint asset with `rip asset publish`. Create the two collections. Generate the bootloader. Onboard a second operator by sending them a message — they fetch the same imprint, get a new private memory partition, operational. Total build time, end to end: a single working session.
-5. **The surprise.** The imprint we shipped is *smaller* than the imprint we use locally. Once memory is doing real work, instructions don't have to compensate for missing context. Cloud agents are bloated with prompt scaffolding because they have nowhere else to put state. When state has a home, the brain shrinks.
-6. **What it looks like to use.** Second operator runs the agent on a different machine. Same imprint version. Same shared-pattern memory. Different private context. Friday Review runs the same way, accumulates the same way, but the operator's data never enters the shared layer. The agent feels like a single product, but it's running on two machines, on two operators' token budgets, and we're paying for the substrate.
+3. **Design decisions.** Three non-obvious choices. (a) **Layered memory over commons or partitioned** — patterns compound across operators, but private context never leaks. (b) **Imprint as several small assets, not one big one** — context budget, independent versioning, mode-specific loading. (c) **Friday Review as a ritual, not a feature** — agents need recurring touchpoints to accumulate memory; the ritual produces the data the shared layer learns from.
+4. **The build.** The actual commands. Publish each imprint asset with `rip asset publish`. Create the memory collections. Generate the bootloader. Onboard a second operator by sending them a message — they fetch the same imprint, get a new private memory partition, operational. Total build time: a single working session.
+5. **The surprise.** The imprint we shipped is *smaller* than the imprint we use locally. Once memory has a real home, instructions don't have to compensate for missing context. Cloud agents are bloated with prompt scaffolding because they have nowhere else to put state. When state has a home, the brain shrinks.
+6. **What it looks like to use.** Second operator runs the agent on a different machine. Same imprint version. Same shared-pattern memory. Different private context. Friday Review runs the same way, accumulates the same way, but the operator's data never enters the shared layer. The agent feels like a single product, but it is running on two machines, on two operators' token budgets, and Tokenrip hosts the substrate.
 
 **Tokenrip mention:** Natural presence throughout — Tokenrip is the substrate. Not a pitch, infrastructure narrating itself. "Published as a Tokenrip asset." "Memory in two Tokenrip collections." "Onboarded via Tokenrip messaging."
 
@@ -174,45 +179,42 @@ The arc compounds. Series 1 separated *instructions*. Series 2 separated *operat
 - The bootloader command file
 - The imprint assets (link to the public versions on Tokenrip)
 - Two-week soak data: how memory grew, what surprised us, what didn't work
-- Comparison: local hand-built agent imprint size vs. mounted version
+- Comparison: local hand-built agent imprint size vs. portable/mounted version
 
-**Keywords:** building a mounted agent, AI agent architecture, deploying AI agents, agent memory architecture, chief of staff agent, multi-operator AI agents
+**Keywords:** building a mounted agent, portable AI agent, AI agent architecture, deploying AI agents, agent memory architecture, chief of staff agent, multi-operator AI agents
 
 ---
 
-## Post 13: The Imprint Is a Contract
+## Post 13: The Agent's Memory Is the Product
 
 **Type:** Thesis
-**Slug:** `imprint-as-contract`
-**Angle:** Cloud AI cannot be audited. The model changes. The system prompt changes. The temperature changes. There's no version, no diff, no way to reproduce a decision the agent made last quarter. For consumer use, fine. For legal review, medical triage, regulatory compliance, scientific reasoning, financial analysis — *unusable.* Mounted agents make the imprint a versioned, public, executable contract for how the agent thinks. The behavior is reproducible at a version. The decision is auditable. This isn't a transparency feature; it's the door into industries that have refused to adopt AI.
+**Slug:** `agent-memory-is-the-product`
+**Angle:** A portable prompt is not enough. The agent becomes a product when memory persists, compounds, and separates shared patterns from private user context. Durable memory is what lets an agent improve through use without leaking operator data, and it is the product surface cloud agents and prompt marketplaces mostly miss.
 
-**Hook:** A general counsel at a Fortune 500 will not let her team use ChatGPT to review contracts. Not because the answers are wrong — they're often right — but because she cannot reproduce the analysis next quarter when opposing counsel asks how the decision was made. The model has changed. The prompt has changed. The agent that approved the contract no longer exists. There is no version of an audit trail that cloud AI can produce, and that is the reason a $40 billion legal-services market won't touch it.
+**Hook:** A prompt can be copied. A memory layer cannot. The first version of an agent is its instructions; the hundredth use of an agent is its memory. If that memory dies with the session, the product never compounds. If it leaks across users, nobody trusts it. The hard part is not storing context. The hard part is knowing which context should be shared, which should stay private, and how both make the agent better.
 
 **Body sections:**
-1. **What "auditable" actually requires.** A reproducible decision needs three things: known inputs, known reasoning logic, and a known output. Cloud AI produces only the output. The reasoning logic is a moving target — the model version drifts, the system prompt drifts, the temperature drifts. None of it is visible, and none of it is reproducible. This isn't a UX problem; it's a structural one.
-2. **The versioned imprint as contract.** Mounted agents publish the imprint as versioned assets. Same imprint version + same model version + same input = same output. The agent's thinking is open; the model's behavior is documented; the decision is reproducible. Buying a mounted agent means buying *a behavioral guarantee, frozen at a version.* No cloud agent can offer this — by definition, cloud agents change underneath the user.
-3. **Audit logs over closed prompts.** Open imprint isn't the only option. Builders can keep the imprint private if they want IP protection. What's *non-negotiable* is the audit log of tool calls — every action the agent took, every collection it read, every message it sent, all recorded against a specific imprint version. *Behavior is auditable even when the prompt is private.* This is the resolution that lets builders protect IP while preserving the trust pitch.
-4. **The market this opens.** Legal research, regulatory compliance, medical decision support, financial analysis, scientific computation. These are not adjacent markets to consumer AI — they are *separate* markets that cloud AI structurally cannot serve. Mounted agents are the first AI architecture that can. Open imprint isn't a generic transparency play; it's the wedge into industries that currently account for hundreds of billions in services revenue and zero AI adoption.
-5. **Why this matters more than buyers realize.** Buyers in regulated industries are used to reading "AI for [industry]" pitches that ignore the audit problem. The first vendor that solves it doesn't compete on quality of analysis — they compete on a feature their entire industry has been demanding for two years. The category is not "better AI for legal." The category is *AI that legal can actually use.*
-6. **The procurement checklist for regulated buyers.** Standalone payoff. Five clauses to put in any AI vendor RFP — pasteable, defensible, and structurally impossible for cloud agents to satisfy:
-   - *Imprint version pinning.* Vendor must disclose and version every instruction the agent operates under. Buyer can pin a version for the contract term.
-   - *Model lock with disclosure.* Vendor must name the model and version, and notify in advance of any change. No silent downgrades.
-   - *Tool-call audit log.* Every action the agent took, against a specific imprint version, retained for the regulatory horizon (typically 7 years for legal/financial, longer for medical).
-   - *Reproducibility guarantee.* Buyer can replay any historical decision and get the same output, given the same inputs. No "we updated the model" excuses.
-   - *Data residency and portability.* Where memory lives, who can read it, what survives contract termination.
+1. **Portable prompts are not portable agents.** Moving instructions across runtimes gives the agent a starting behavior, but nothing improves unless memory survives.
+2. **Three memory layers.** Private context (operator-specific history/preferences), shared pattern memory (generalizable learnings across users), and public artifact memory (assets, outputs, decisions, references). Each compounds differently.
+3. **Shared patterns + private context.** The strongest model is layered memory: the agent learns from everyone while remembering each operator specifically. This is the cognitive abstraction that makes a creator/expert imprint better with audience usage without turning user data into a commons.
+4. **Why memory changes the product.** Once memory works, the imprint can be smaller, the agent can personalize without prompt bloat, and the builder's moat shifts from instructions to accumulated usage.
+5. **What to ask of any agent memory layer.** Standalone payoff:
+   - *What survives the session?*
+   - *What is private to me?*
+   - *What becomes shared pattern memory?*
+   - *Can I inspect what the agent remembers?*
+   - *Can I delete or correct memory?*
+   - *Does usage by other operators improve my result without exposing their data?*
 
-   Each clause is a feature mounted agents have natively and cloud agents cannot ship. The checklist is the procurement conversation legal/medical/financial buyers have been trying to have for two years — now they have the language for it.
-
-**Tokenrip mention:** Name it once. The post is about the architectural property; Tokenrip is what makes it credible. "Tokenrip stores imprint versions and tool-call audit logs as first-class objects — the substrate is built for this." Frame as why-this-platform, not what-this-platform.
+**Tokenrip mention:** Name it once in the memory architecture section. "Tokenrip models this with versioned assets plus collections that can separate shared knowledge from private operator context." Keep it architectural, not promotional.
 
 **Sources needed:**
-- Specific examples of regulated-industry AI adoption blockers (legal, medical, financial — well-documented in industry press)
-- AI audit / explainability frameworks from regulators (EU AI Act, NIST AI RMF)
-- Case studies of failed cloud-AI deployments in regulated sectors
-- Market size data for legal services, financial services, healthcare (the addressable markets)
-- Concrete example of a regulated decision that cloud AI cannot reproduce
+- mounted-agent-model.md sections on Commons / Partitioned / Layered memory
+- mounted-agent-synthesis.md section "Shared patterns + private context"
+- Chief of Staff memory design and soak data
+- Any concrete examples from engagement agent / CRM usage where memory reduced prompt burden
 
-**Keywords:** AI for regulated industries, AI agent observability, explainable AI, AI audit trail, legal AI, medical AI, AI compliance, reproducible AI
+**Keywords:** AI agent memory, persistent AI memory, shared agent memory, private AI context, agent personalization, portable AI agents, mounted agent memory
 
 ---
 
@@ -220,71 +222,69 @@ The arc compounds. Series 1 separated *instructions*. Series 2 separated *operat
 
 **Type:** Thesis
 **Slug:** `mounted-agent-moats`
-**Angle:** The first reaction to "publish your agent's instructions" is *"you're giving away the IP."* The thesis: the imprint was never the moat. What compounds is memory, tools, authorship, inter-agent connections, and end-to-end observability — and *only* mounted agents accumulate all five. This isn't a defense of openness; it's a different shape of moat that cloud agents can't build. Capstone post for the series.
+**Angle:** The first reaction to "publish your agent's instructions" is *"you're giving away the IP."* The thesis: the imprint was never the moat. What compounds is memory, tools, authorship, inter-agent connections, and end-to-end observability — and only portable/mounted agents accumulate all five. This isn't a defense of openness; it's a different shape of moat that cloud agents can't build.
 
-**Hook:** "If the imprint is open, what stops a competitor from copying it?" Nothing. They should. The imprint is the recipe; the moat is the kitchen. After two weeks of running Chief of Staff in the open, we know exactly what compounds — and the prompt isn't on the list.
+**Hook:** "If the imprint is open, what stops a competitor from copying it?" Nothing. They should. The imprint is the seed; the moat is what grows around it. After running Chief of Staff as a portable agent, the lesson is blunt: prompts can be copied, but memory, tools, relationships, and usage history compound.
 
 **Body sections:**
-1. **The wrong question.** "If everything is open, what's the moat?" assumes the moat is in the instructions. In cloud-agent companies, that's the only thing it could be — the prompt is the product. Mounted agents change the substrate. *Other things start to compound.*
-2. **What actually accumulates.** Five concrete moats. (a) **Shared memory** — the first 1,000 users generate a pattern layer no fork inherits. Yelp reviews for cognition. (b) **Tooling surface** — webhooks, semantic search, computed columns: infrastructure investments, not text. (c) **Authorship** — "Garry Tan's imprint" beats "an imprint that quotes Garry Tan." Substack, not random blog. (d) **Inter-agent connections** — once a mounted agent calls five others through the platform, switching costs aren't operational, they're network-effect. (e) **Observability** — the only architecture where agent behavior is auditable end-to-end (hat-tip Post 13).
-3. **The shape change: protective → attractive moats.** Software moats are *protective* — defend the code, defend the prompt, lock the user in. Mounted-agent moats are *attractive* — the user can leave any time, but the agent gets stickier through accumulation. This is the right moat shape for cognition because the user-builder relationship is structurally aligned: user can switch harness, builder can switch platform, neither can extract from the other. Both sides win by making the other side happy.
-4. **What this means for what gets built next.** The next wave of agent products won't compete on prompts. They'll compete on memory depth, tool surface, builder reputation, and inter-agent composition. The platforms that win will be the ones that host these compounding things at the lowest unit cost. Names what's coming next without trying to name everything.
-5. **The moat audit: five questions for any agent platform you're betting on.** Standalone payoff. The reader takes this framework to evaluate the rest of the market — including us. Each question maps to one of the five moats above:
-   - *Shared memory:* Does usage by other operators make my agent better, without leaking my data? If memory is fully private or fully commons, the answer is no. Layered memory is the thing to demand.
-   - *Tooling surface:* Can the platform's tools — search, webhooks, computed columns — be composed by my agent without the platform owning the agent? If tools are bundled into the agent product, switching costs are operational, not architectural.
-   - *Authorship:* Can the imprint carry a name? Is reputation visible, portable, and distinct from the platform's brand? If everything is "made by [Platform]," the platform is the brand and the author can't compound.
-   - *Inter-agent composition:* Can my agent call another agent on the same platform as a first-class operation? If not, the platform is hosting siloes, not a network.
-   - *Observability:* Can I, as the buyer, see what the agent did — every tool call, every collection read, every message sent? If the platform can't show me that, no buyer in a regulated industry can use it.
+1. **The wrong question.** "If everything is open, what's the moat?" assumes the moat is in the instructions. In cloud-agent companies, the prompt looks like the product because nothing else is portable. Mounted agents change the substrate. Other things start to compound.
+2. **Memory is the lead moat.** The first 1,000 users of an agent generate a pattern layer no fork inherits. Fork the imprint, you get the seed. Fork the memory, you cannot. This is network-effect data for cognition.
+3. **The other compounding layers.** Tooling surface (search, webhooks, computed columns, scheduled ops), authorship/reputation, inter-agent connections, and observability. Each compounds around the imprint, not inside it.
+4. **The shape change: protective → attractive moats.** Software moats are protective: defend the code, defend the prompt, lock the user in. Mounted-agent moats are attractive: the user can leave, but the product gets better through accumulation. That is the right moat shape for cognition.
+5. **The moat audit.** Standalone payoff. Five questions for any agent platform:
+   - *Memory:* does usage by other operators make my agent better without leaking their data?
+   - *Tooling:* can the platform's tools be composed by my agent without the platform owning the agent?
+   - *Authorship:* can the imprint carry a name and reputation distinct from the platform?
+   - *Inter-agent composition:* can my agent call another agent as a first-class operation?
+   - *Observability:* can I see what the agent did — tool calls, collection reads, messages, and versioned outputs?
+6. **Series capstone.** Tie the six posts together: cloud agents have a ceiling (Post 9). Portable agents lift it by moving durable intelligence outside the runtime (Post 10). That unlocks BYO economics (Post 11), working proof (Post 12), persistent memory (Post 13), and a new moat shape (this post). Tokenrip is the substrate that hosts what compounds.
 
-   Five "yes" answers describes the platform we're building. Five "no" answers describes a cloud-AI vendor with rebranded buzzwords. The reader leaves with the audit framework and one quotable line: *the agent is mounted; the moat is on us.*
-6. **Series capstone.** Tie the six posts together in one paragraph: cloud agents have a ceiling (Post 9). Mounted agents lift it through a single architectural move (Post 10). Three things flow from that move: the user pays for inference (Post 11), the imprint becomes a contract (Post 13), and the moat shifts to what compounds (this post). The proof is built and running (Post 12). What we're building Tokenrip for is exactly this competition — the substrate that hosts what compounds, at the lowest unit cost.
-
-**Tokenrip mention:** Lessons learned framing — most prominent of the series. "Building Chief of Staff on the platform showed us what compounds and what doesn't." Frame the platform as the substrate that makes these moats possible. End with the sentence that lands the category: *the agent is mounted; the moat is on us.*
+**Tokenrip mention:** Lessons learned framing — most prominent of the series. "Building Chief of Staff on the platform showed us what compounds and what doesn't." Frame Tokenrip as the substrate that makes these moats possible. End with a sharper line than the old version: *the agent is portable; the moat is what compounds around it.*
 
 **Sources needed:**
 - The mounted-agent-synthesis.md (primary positioning material)
-- Substack-style authorship moats as analogy (creator economy)
-- Any precedent on protective-vs-attractive moats from venture writing
-- Two-week Chief of Staff soak data on what actually grew vs. what didn't
+- Chief of Staff soak data on what actually grew vs. what didn't
 - Network-effects / two-sided marketplace literature for the inter-agent argument
+- Examples of authorship moats, used carefully as analogy only — avoid creator-economy framing as the dominant reference point
 
-**Keywords:** AI agent moats, mounted agent moats, AI network effects, AI competitive advantage, agent marketplace, attractive moats
+**Keywords:** AI agent moats, mounted agent moats, AI network effects, AI competitive advantage, agent marketplace, portable AI agents, agent platform evaluation
 
 ---
 
 ## Cross-Series Strategy
 
 **Publishing cadence:**
-- Post 9 + Post 10 same week (problem + category back-to-back, like Series 1 and 2)
-- Post 11 a few days after Post 10 (economics builds on architecture)
-- Post 12 lands after CoS has soaked through real use (post-May 11)
-- Post 13 a few days after Post 12 (regulated-industries thesis stronger after readers see proof)
-- Post 14 capstone, after a gap
+- Post 9 is already published.
+- Post 10 should ship next as the plain-English category doorway.
+- Post 11 follows a few days after Post 10 because economics should read as a consequence of runtime separation.
+- Post 12 lands after Chief of Staff has soaked through real use (post-May 11).
+- Post 13 follows Post 12 because memory is stronger once readers have seen the build.
+- Post 14 capstone, after a gap.
 
-Roughly: two posts week 1, two posts week 2, two posts weeks 3–4. Tighter than Series 1/2 cadence because the territory rewards momentum.
+Roughly: Post 10 + 11 in the next active push, Post 12 + 13 after CoS proof, Post 14 as the series close. Tighter than Series 1/2 cadence because the territory rewards momentum, but do not rush Post 12 without real soak data.
 
 **Internal linking:**
-- Post 9 links forward to Post 10 (one-line tease at the close, after the diagnostic — not a dependency)
-- Post 10 links back to Series 1 Post 2 and Series 2 Post 6; links forward to Posts 11/13/14 as the three consequences
-- Post 11 links back to Post 10 (architecture); links forward to Post 12 (proof of the economic claim)
-- Post 12 links back to Post 10 (architecture this implements) and Series 2 Post 7 (CRM craft post sets the format pattern); links forward to Post 13
-- Post 13 links back to Post 10 (architecture) and Post 12 (proof); links forward to Post 14
-- Post 14 links back to Post 10 (architecture that makes these moats possible) and Series 2 Post 8 (operations as primitives → cognition as primitives is the same unbundling); closes the series
+- Post 9 links forward to Post 10 as the "different shape" answer, but Post 10 should not assume the reader has read Post 9.
+- Post 10 links back to Series 1 Post 2 and Series 2 Post 6; links forward to Posts 11/13/14 as consequences of portability/persistence.
+- Post 11 links back to Post 10; links forward to Post 12 as proof of runtime separation.
+- Post 12 links back to Post 10 and Series 2 Post 7; links forward to Post 13 because the build reveals memory as the product.
+- Post 13 links back to Post 10 and Post 12; links forward to Post 14 because memory is the lead moat.
+- Post 14 links back to Post 10, Post 13, and Series 2 Post 8; closes the series.
 
-**SEO:** Distinct keywords per post. Deliberate "mounted agent" repetition in 10/12/14 to anchor the category term across the series. Deliberate "cloud agent" repetition in 9/10/11/13/14 to anchor the contrast term.
+**SEO:** Distinct keywords per post. Deliberate "mounted agent" repetition remains in 10/12/13/14 for category capture, but titles lead with legible outcomes.
 - Post 9: **cloud AI agents**, cloud agent limitations, cloud agent drift, cloud agent shutdown, evaluating cloud AI vendors
-- Post 10: **mounted agents**, agent imprint, BYO LLM, decoupled AI
-- Post 11: BYO LLM, AI unit economics, AI inference costs, long-tail AI agents, AI margin trap
-- Post 12: **building a mounted agent**, agent memory architecture, chief of staff agent
-- Post 13: AI for regulated industries, AI audit trail, explainable AI, legal AI, AI compliance, AI procurement checklist
-- Post 14: **mounted agent moats**, AI network effects, AI competitive advantage, agent platform evaluation
+- Post 10: **portable AI agents**, persistent AI agents, mounted agents, agent imprint, agent harness, decoupled AI
+- Post 11: BYO LLM, AI unit economics, AI inference costs, agent runtime, AI margin trap
+- Post 12: **building a mounted agent**, portable AI agent, agent memory architecture, chief of staff agent
+- Post 13: **AI agent memory**, persistent AI memory, shared agent memory, private AI context, mounted agent memory
+- Post 14: **mounted agent moats**, AI network effects, portable AI agents, AI competitive advantage, agent platform evaluation
 
 **Tokenrip mention gradient:**
 - Post 9: Don't name it. Pure problem thesis.
 - Post 10: Name it once. Infrastructure framing.
 - Post 11: Don't name it directly. Economics arguments are stronger without vendor pitches.
 - Post 12: Natural presence (it's the substrate).
-- Post 13: Name it once. Why-this-platform framing.
+- Post 13: Name it once. Memory architecture framing.
 - Post 14: Lessons learned framing. Most prominent. Capstone pitch.
 
 **Quality gates (from blog-post-framework.md):** Each post must pass the four pre-writing gates (Who Gives a Shit, Payoff, Not a Research Log, Scope) at brief stage, and the six post-draft gates (Catalog Ratio, Original Thinking, Structure Test, Tokenrip Integration, First-Paragraph Test, Final-Sentence Test) before publishing.
@@ -293,22 +293,21 @@ Roughly: two posts week 1, two posts week 2, two posts weeks 3–4. Tighter than
 
 Particular risks for this series:
 - **Post 9:** the standalone payoff is the diagnostic ("three questions to ask any cloud agent vendor"). If it gets cut for length, the post collapses back into pure setup. Don't cut it.
-- **Post 11:** can drift into a generic "AI economics" rant. Anchor with concrete cost calculations and the margin-trap framework.
-- **Post 13:** can drift into a "regulated industries are slow" lament. Anchor with one specific market, one specific buyer pain, and the procurement checklist.
+- **Post 10:** can collapse into vocabulary-first category naming. Lead with portable/persistent pain; introduce "mounted agent" only after the reader has a reason to care.
+- **Post 11:** can drift into a generic "AI economics" rant. Anchor with runtime separation and concrete cost calculations.
+- **Post 13:** can become abstract memory philosophy. Anchor with concrete shared/private memory examples and the reader-facing memory checklist.
 - **Post 14:** easy slide into manifesto. Catalog Ratio gate matters. The moat-audit framework is the catalog discipline; manifestos don't ship audit frameworks.
 
 ---
 
 ## Tangents Worth Writing Later (Series 4 Candidates)
 
-These are smaller because Series 3 absorbs more of the territory than a 4-post version would have. Remaining ideas worth tracking:
-
-1. **Inter-Agent Tool Composition** — once mounted agents can call each other through the platform, what changes about agent ecosystems. The eBay-of-cognition argument.
-2. **The Build-an-Agent Skill** — the craft post for the deployment skill, once it ships post-CoS validation.
-3. **Token Spend with Observability Is Consent** — the user-psychology post. Why mounted-agent users feel different about their token bill than cloud-agent users do.
-4. **Pattern Memory Is the Cognitive Abstraction Nobody Shipped** — the deep dive on layered memory. Currently lives inside Posts 12 and 14; could carry its own post once memory has soaked longer.
+1. **The Imprint Is a Contract** — versioned cognition, tool-call audit logs, and reproducible behavior for regulated buyers. This was formerly Post 13; it is stronger as expansion/fundraising collateral after the portable/persistent thesis is established.
+2. **Inter-Agent Tool Composition** — once mounted agents can call each other through the platform, what changes about agent ecosystems. The eBay-of-cognition argument.
+3. **The Build-an-Agent Skill** — the craft post for the deployment skill, once it ships post-CoS validation.
+4. **Token Spend with Observability Is Consent** — the user-psychology post. Why mounted-agent users feel different about their token bill than cloud-agent users do.
 5. **Forks and Fairness** — fork semantics for imprints. What happens when someone forks an imprint and runs it on a different platform with no shared memory? Defer until the question is asked publicly.
 
 ---
 
-*Series 3 plan created 2026-04-30. Based on the mounted agent architecture (Bean session 2026-04-25) and synthesis (Bean session 2026-04-30). See also: `product/tokenrip/mounted-agent-model.md` (architecture), `product/tokenrip/mounted-agent-synthesis.md` (positioning), `active/chief-of-staff-launch-design-2026-04-27.md` (craft subject), `content/plans/blog-series-1-multi-agent-collaboration-plan.md` (Series 1), `content/plans/blog-series-2-agent-native-operations-plan.md` (Series 2), `content/plans/blog-post-framework.md` (framework).*
+*Series 3 plan created 2026-04-30. Restructured 2026-05-03 around portable, persistent agents as the reader-facing outcome and mounted agents as the category/architecture. Based on the mounted agent architecture (Bean session 2026-04-25), synthesis (Bean session 2026-04-30), and YC pitch framing (`active/yc-tokenrip-pitch-framing-2026-05-02-codex.md`). See also: `product/tokenrip/mounted-agent-model.md` (architecture), `product/tokenrip/mounted-agent-synthesis.md` (positioning), `active/chief-of-staff-launch-design-2026-04-27.md` (craft subject), `content/plans/blog-series-1-multi-agent-collaboration-plan.md` (Series 1), `content/plans/blog-series-2-agent-native-operations-plan.md` (Series 2), `content/plans/blog-post-framework.md` (framework).*

@@ -1,24 +1,26 @@
 # Current Context
 
-*Last updated: 2026-05-01*
+*Last updated: 2026-05-06*
 
 ## The ONE Thing
 
 What matters most right now?
 
-> **Execute Motion E and submit YC.** The strategic pivot landed 2026-05-01: firm-direct vertical pilots are deprecated; audience-led creator deployment is the active motion. The two highest-leverage actions this week are (1) submit the YC application, framed around the cloud-agent ceiling → mounted agents → audience-led wedge → category vision, and (2) launch creator outreach (200-creator list, mid-tier first, hero in parallel). The substrate-density curve those two produce is the fundraising story.
+> **Build traction on two channels before a16z application (~May 12).** YC is submitted. The product shipped (homepage, Chief of Staff, MOA). Now the game is traction. Two parallel channels: Alek on Motion E (audience-led creator outreach from the 200-creator list), Simon on Motion D (builder-direct growth via MOA distribution in agent-builder and expertise-productizer communities). The number that matters: external adoption — creator deploys AND builder-published agents. a16z weighs traction and team; team lacks traditional pedigree, so traction velocity is the story.
 
-## Sequencing (May 1-11 — first week of new motion)
+## Sequencing (May 6-12 — traction week)
 
-- [ ] **Fri May 2**: Alek begins 200-creator list assembly (P0)
-- [ ] **Fri May 2**: Simon cancels firm-direct demo build investment (P0)
-- [ ] **Sat-Sun May 3-4**: List complete in Attio CRM, stratified 5/50/145 (hero/mid/long-tail) (P0)
-- [ ] **Mon May 5**: Submit YC application, start lighthouse outreach, post Hire 1 JD (P0)
-- [ ] **Mon-Tue May 5-6**: Engagement agent repointed to creators; first 10-20 mid-tier outreach sent (P0)
-- [ ] **Wed-Thu May 7-8**: Series 3 post 9 already shipped — focus on post 10 draft (P0)
-- [ ] **Throughout**: Chief of Staff role-shift work — make it the public reference deploy (P0)
-- [ ] **Parallel (P1)**: Hiring sourcing for frontend/UX, devrel, partnerships
-- [ ] **Parallel (P1)**: Distribution / registry blitz continues low-touch
+- [x] ~~YC application submitted~~ (May 5)
+- [x] ~~200-creator list assembled~~ (Alek, May 4)
+- [x] ~~Homepage / positioning shipped~~
+- [x] ~~Chief of Staff shipped (team-scoped, public)~~
+- [x] ~~MOA shipped~~
+- [ ] **Tue May 6**: Simon research day — ClawMart/marketplace reverse-engineering + frustration-based search for non-technical expertise-productizers. One page of notes each. (P0)
+- [ ] **Wed-Thu May 7-8**: Simon builds MOA demo content + posts in builder communities. Engage where signal appears. (P0)
+- [ ] **Fri May 9**: Simon outreach to 5-10 agent creators/builders from research. (P0)
+- [ ] **Throughout**: Alek continues Motion E mid-tier outreach. Simon available for demo calls Alek books. (P0)
+- [ ] **End of week ~May 12**: a16z application submitted. Lean on YC materials + whatever traction data exists. (P0)
+- [ ] **Target**: First external (non-founder) MOA-built agent published. (P0)
 
 ## KPIs (per [[bd/kpis]])
 
@@ -57,39 +59,43 @@ Current state:
 
 How Simon seemed last session:
 
-> **Energized and clear-headed after the Bean pivot session.** The 2026-05-01 strategy session produced both a sharp diagnosis (Motion A poisons Motion B; the gameplan didn't absorb the TaxDome learning) and a concrete plan (five-motion taxonomy with E primary). The bell-in-the-back-of-his-head fear that he was "selling the wrong thing" turned out to be signal, not noise — and the resolution turned the fear into structured execution. The capture work (5 bd/ docs + Bean session note + insights update) shipped without scatter, which is itself a sign of the new motion fitting how Simon thinks.
+> **Energized despite being sick.** Simon was down for ~2 days (Sun-Mon) with indigestion. Still recovering but came into the review with good energy ("let's fuckin go"). The pivot week was a heavy shipping sprint — YC, homepage, Chief of Staff, MOA all landed. The illness may have been the body's response to the compressed output. Watch for rebound crash if he overcompensates this week. Mood: confident, forward-leaning, not anxious. The MOA success in particular has him excited about builder-direct distribution.
 
 ## Key Numbers
 
 | Metric | Value | Notes |
 |--------|-------|-------|
-| Tokenrip | **Deployed, mounted-agent architecture locked** | Substrate roadmap gated on Motion E deploy milestones |
-| Series 3 blog | **Post 9 (cloud-agent ceiling) live** | Posts 10-14 in flight; category-establishment artifact |
-| Chief of Staff | **In active build → public reference deploy** | Lighthouse imprint shipping the architecture |
-| BD docs | **5 reference docs locked** | `bd/CLAUDE.md`, `motions-and-strategy.md`, `audience-led-gameplan.md`, `yc-strategy.md`, `operations-and-hiring.md`, `kpis.md` |
-| YC application | **In drafting, submit target Mon May 5** | Per [[bd/yc-strategy]] |
-| 200-creator list | **In assembly Friday-Sunday** | Stratified 5 hero / 50 mid-tier / 145 long-tail |
+| Tokenrip | **Deployed, architecture locked, homepage shipped** | New positioning: "Cloud agents you actually own" |
+| MOA (agent-building agent) | **Shipped, validated by both founders** | Key distribution lever for Motion D. Arrived ~3 weeks early. |
+| Series 3 blog | **Post 9 live; post 10 draft in progress** | `content/drafts/portable-ai-agents-draft.md` |
+| Chief of Staff | **Shipped (team-scoped, public)** | Both founders using daily. Public reference deploy live. |
+| YC application | **Submitted May 5** | |
+| a16z application | **Prep this week, submit ~May 12** | Easier than YC; heavier on team + traction |
+| 200-creator list | **Done** | Alek delivered. Outreach started. |
+| Motion E (audience-led) | **Alek in flight** | Outreach happening; no calls booked yet (week 1) |
+| Motion D (builder-direct) | **Simon exploring this week** | Research → community posts → outreach. KPI: external MOA-built agents. |
 | Mid-tier deploys live | **0** | First target: 1-3 by week 6 |
-| Registered operators | **0 (creator product not launched)** | First target: 5K-15K by week 8 |
+| External MOA-built agents | **0** | First target: 1+ by next review |
+| Registered operators | **0** | First target: 5K-15K by week 8 |
 | MRR | **$0** | First target: any conversion by week 12 |
-| Co-founder | **Aligned, partner role increasingly defined** | Alek owns mid-tier outreach + engagement agent + content for creator audience |
+| Co-founder | **Aligned, operating, channel-split working** | Alek owns Motion E outreach; Simon owns Motion D builder growth + demo calls |
 
 ## Recent Wins
 
-- **Strategic pivot landed cleanly** (2026-05-01) — Motion E primary, A deprecated, taxonomy of 5 motions documented, recommended progression locked. The Bean session produced a sharp diagnosis (firm-direct fails architectural-requirement test; A poisons B) and a concrete alternative (audience-led with mid-tier-creator barbell as the volume play).
-- **Capture without scatter** — 5 bd/ reference docs (motions-and-strategy, audience-led-gameplan, yc-strategy, operations-and-hiring, kpis) plus auxiliary captures (Bean session, insights, idea file) plus __RESOURCES YC frameworks doc shipped in the same session that produced the pivot.
-- **Wedge framework crystallized** — "smallest commercial unit that requires the architecture" as a generalizable framework, now captured in Bean insights and applied across BD docs.
-- **YC angle structured** — long-form draft preserved, 50-char options ranked ("Cloud agents you actually own" recommended), infrastructure-vs-creator-economy framing trap named.
-- **Mounted-agent architecture got its commercial wedge** — synthesis doc updated with "First Commercial Wedge Confirmed" section that ties the architectural insight to the active sales motion.
+- **Week 1 execution was strong.** YC submitted, homepage shipped, Chief of Staff shipped (team-scoped), 200-creator list done, outreach started, MOA shipped. Nearly every P0 commitment from May 1 was hit — plus a bonus (MOA).
+- **MOA is the breakout.** Agent-building agent shipped ~3 weeks ahead of "build an agent" v1 target. Both founders used it same day to deploy different agents (content agent, reply-guy agent). Validates the architecture's generative capacity and opens Motion D as an active channel.
+- **YC submitted on target** with strong framing: cloud-agent ceiling → mounted agents → audience-led wedge → category vision.
+- **Design-doc-to-shipping pipeline is reliable.** 200K+ words of design docs in the vault produced actual shipped product, not just more docs. The pattern from Apr 27 (shipping on deadlines) held through the pivot week.
 
 ## Current Concerns
 
-- **Reverting to firm-direct framing under revenue pressure.** Old thinking is structurally available. When a creator outreach goes cold or a deploy lags, the temptation to chase a $25K firm pilot will be real. The motion-conflicts analysis in [[bd/motions-and-strategy]] is the load-bearing argument against this — referring back when needed.
-- **Creator-economy framing trap.** The same listener who would have pattern-matched "vertical AI workflow" to "another AI startup" will pattern-match "creator monetization" to "Patreon-tier." Lead with infrastructure framing externally; creators are distribution, not product category.
-- **Substrate roadmap scope creep.** Marketplace UX + creator dashboard + "build an agent" wizard + billing is a lot of substrate work. First 10 deploys can be Simon-assisted; resist the urge to build everything before shipping. The "system-building displacing real work" pattern (insights.md) applies here.
-- **Hero-tier disappointment risk.** If no Garry-Tan-class hero in 90 days, the marquee-logo story is missing. Lower the bar (niche-famous = valid hero) or over-invest in mid-tier story so hero isn't the headline. Revisit at week 8 decision point.
-- **YC outcome dependency.** If YC + a16z both miss, no $25K firm pilot revenue exists because A was cancelled. Mitigations exist (Motion E + D produces ARR, Motion B can activate earlier than planned, capital options beyond YC/a16z) — see [[bd/operations-and-hiring]] §4. The motion is robust to YC outcome by design, but the velocity is not.
-- **Promises-to-self discipline.** The new motion has many parallel commitments (list, demo pivot, YC app, post 9 already shipped, Hire 1 sourcing, content velocity). Yoda watches for the unkept-promise pattern.
+- **Motion D distribution is undefined.** Simon is exploring builder-direct growth this week but hasn't figured out the playbook yet. Risk: research day expands into a multi-day exploration cycle (the system-building pattern). Time-boxed to one day; watch whether execution follows Wed-Fri.
+- **Hero outreach fully deprioritized.** Nobody is working the hero pipeline. Fine for week 1-2, but by week 4 decision point someone needs to be on it.
+- **Secondary commitments accumulating.** Editorial standards, term sheet, pricing structure, Hire 1 JD — all deferred from week 1. None urgent today but all gate future progress. Track at next review.
+- **a16z application could become a design-doc week.** Simon says it's easier than YC. Hold him to that — lean on existing materials, update with traction data. No new strategy docs.
+- **Health.** Two days sick after a heavy shipping sprint. Recovering but at risk of overcompensating. Watch energy levels.
+- **Creator-economy framing trap persists.** Lead with infrastructure framing externally; creators are distribution, not product category.
+- **YC/a16z outcome dependency.** If both miss, Motion E + D still produce ARR path, but velocity drops. Mitigations in [[bd/operations-and-hiring]] §4.
 
 ---
 

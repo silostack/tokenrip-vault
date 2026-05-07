@@ -221,9 +221,9 @@ FOOTER (preserved)
 
 **Tile 2: Chief of Staff** (NEW — preview state)
 - Title: *Chief of Staff*
-- Subtitle: *Tracks commitments. Runs Friday Reviews. Surfaces patterns.*
+- Subtitle: *Your team's chief of staff. Layered memory. Any harness.*
 - Status badge (top-right corner): **SHIPPING THIS WEEK** (or **PREVIEW** if we want softer language)
-- One-line description: *Built on layered memory — your private context plus anonymized patterns from every other operator using it.*
+- One-line description: *One agent for the whole team. Team context shared, personal context private, cross-session references when they matter. Mount it anywhere.*
 - CTA: *Get notified →* linking to either:
   - A waitlist form (P1 — see P1.1), or
   - The CoS landing page once it exists (post P1.1)
@@ -496,21 +496,21 @@ The P0 stub becomes a real landing page. This is partly site work and partly dep
 ```
 HEADER
   Chief of Staff                    [SHIPPING NOW — PUBLISHED MAY X, 2026]
-  Your business chief of staff. Built on mounted-agent infrastructure.
+  Your team's chief of staff. Built on mounted-agent infrastructure.
   [3-line description — see copy below]
 
 § Status & Stats
   Status: v0 — Shipping this week
   Published: May X, 2026
   Imprint version: v0.1
-  Active operators: [N]
+  Active operators: [N] (e.g., 2 — Simon + Alek)
   Friday Reviews completed: [N]
 
 § What it does
-  - Builds substantive personal context through structured intake
-  - Tracks commitments and surfaces slippage
-  - Runs Friday Reviews with shareable artifacts
-  - References anonymized patterns from every operator using it
+  - One agent for the whole team — shared team context, private personal context
+  - Structured intake builds both layers in one conversation
+  - Cross-session awareness: the agent references what your co-founder discussed
+  - Runs team-scoped Friday Reviews with shareable artifacts
   - Survives across runtimes — start in Claude Code, continue in ChatGPT
 
 § How to use it
@@ -519,15 +519,15 @@ HEADER
 
 § The aha moment (NEW — sells the differentiation)
   [Side-by-side or sequential demo of:
-    1. Substantive intake
-    2. Visible memory ("here's what I know about you")
-    3. Cross-harness mount
-    4. Friday Review artifact
-    5. Shared-pattern surfacing]
+    1. Layered memory — team context + private context in a three-column view
+    2. Cross-session reference — the agent surfaces what your co-founder discussed
+    3. Same agent, any harness — mount in Claude Code, then ChatGPT
+    4. Team Friday Review — commitments, outcomes, and patterns for the whole team
+    5. Substantive intake — two phases (team, then personal)]
   [Could be screenshots, a short looping video, or a live-demo CTA]
 
-§ How this agent is built (mini Diagram A specific to CoS)
-§ What gets stored (privacy + governance)
+§ How this agent is built (mini Diagram A specific to CoS + team-memory diagram)
+§ What gets stored (privacy + governance — team vs. private)
 § Sample session (shorter than office-hours; representative)
 
 [Mount Chief of Staff →]
@@ -537,11 +537,11 @@ HEADER
 
 **Headline:** *Chief of Staff*
 
-**Subhead:** *Your business chief of staff — built on mounted-agent infrastructure.*
+**Subhead:** *Your team's chief of staff — built on mounted-agent infrastructure.*
 
 **Description paragraph:**
 
-> Chief of Staff is the kind of agent only mounted agents can be: substantive intake builds your private context, layered memory accumulates patterns across every operator using it, and you can mount the same agent in any runtime — Claude Code, Cursor, ChatGPT — without losing a thing. Friday Reviews land on time. Slippage gets surfaced. The agent gets smarter every week, both for you and for everyone using it.
+> Chief of Staff is the kind of agent only mounted agents can be: one imprint, multiple operators, three layers of memory. Team context is shared — company goals, timelines, decisions. Personal context is private — your commitments, working style, slippage patterns. The agent draws on both. And when your co-founder discusses something that affects you, it surfaces the reference in your next session. Mount it in any runtime — Claude Code, Cursor, ChatGPT — without losing a thing. Friday Reviews cover the whole team. The agent gets smarter every week.
 
 **§ The aha moment — section header:** *"What makes this different"*
 
@@ -549,15 +549,15 @@ Body copy:
 
 > Chief of Staff is built to demonstrate what only mounted agents can do.
 >
-> 1. **Substantive intake.** Not a system prompt. The agent asks 15-20 substantive questions about your business and goals, then writes its understanding back to a structured personal-memory record you can read and edit.
+> 1. **Layered team memory.** [Screenshot of three-column memory view.] Team context in the center — company, goals, timelines. Each operator's private context on the sides — commitments, working style, slippage patterns. The agent reads both layers in every session but keeps private context private.
 >
-> 2. **Visible memory.** [Screenshot of memory pane.] The agent doesn't have hidden state — every fact it knows about you is here, in your structured memory. Add to it. Edit it. Take it with you.
+> 2. **Cross-session awareness.** [Screenshot of the agent referencing another operator's update.] "Simon mentioned he's leading the YC pitch with the cloud-agent ceiling. You might want to align the outreach messaging." The agent connects what one co-founder discussed to what the other is working on — without exposing private details.
 >
 > 3. **Same agent, any harness.** [Screenshot or animation of the agent running in Claude Code, then in ChatGPT.] Memory persists across runtimes. Switch tools mid-week without losing anything.
 >
-> 4. **Friday Reviews.** [Screenshot of a Friday Review artifact.] Structured weekly ritual. Commitments → outcomes → slippage → next steps. Shareable as a Tokenrip asset. Compounds into your private memory.
+> 4. **Team Friday Reviews.** [Screenshot of a Friday Review artifact.] Structured weekly ritual covering every operator. Commitments → outcomes → slippage → team patterns → next steps. Shareable as a Tokenrip asset.
 >
-> 5. **Patterns from every operator.** [Screenshot of a pattern surfacing.] When you describe a problem, the agent checks anonymized patterns from other operators in your phase. "Other founders raising a seed often face X — does this resonate?" — only mounted agents have a shared knowledge layer like this.
+> 5. **Substantive intake.** Not a system prompt. The agent runs a two-phase intake — first about the team (shared), then about you (private). Fifteen to twenty questions. Every answer written to structured memory you can read and verify.
 
 **Mount CTA:**
 
@@ -565,12 +565,40 @@ Body copy:
 > [Bootloader install command for Claude Code]
 > Or use [MCP / Cursor / etc.]
 
+### Team Memory Diagram (additional visual for this page)
+
+In addition to the mini Diagram A (3-layer architecture), the CoS landing page should include a team-memory diagram:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    CHIEF OF STAFF                       │
+│                    (one imprint)                         │
+│                                                         │
+│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐  │
+│  │ Simon's       │ │ Team          │ │ Alek's        │  │
+│  │ private       │ │ context       │ │ private       │  │
+│  │ context       │ │ (shared)      │ │ context       │  │
+│  ├───────────────┤ ├───────────────┤ ├───────────────┤  │
+│  │ Commitments   │ │ Company goals │ │ Commitments   │  │
+│  │ Working style │ │ YC timeline   │ │ Working style │  │
+│  │ Slippage      │ │ Team decisions│ │ Slippage      │  │
+│  │ Personal goals│ │ Resources     │ │ Personal goals│  │
+│  └───────────────┘ └───────────────┘ └───────────────┘  │
+│                                                         │
+│      Claude Code ←──── mount ────→ Cursor / ChatGPT    │
+│      (Simon)                         (Alek)             │
+└─────────────────────────────────────────────────────────┘
+```
+
+This diagram should be implemented as a reusable component (it may also appear on the homepage P1.3 as a deeper example of what layered memory looks like in practice).
+
 ### Acceptance Criteria
 
 - [ ] Page lives at `/agents/chief-of-staff`.
 - [ ] Status badge says SHIPPING NOW or PUBLISHED with the actual date.
-- [ ] Stats render real numbers (≥1 operator using it, ≥1 Friday Review completed — Simon's own count).
+- [ ] Stats render real numbers (≥2 operators, ≥1 Friday Review completed).
 - [ ] Five aha-moment beats render with images or descriptive placeholders.
+- [ ] Team-memory diagram renders below or alongside the 3-layer architecture diagram.
 - [ ] Mount CTA produces a working install (links to chief-of-staff bootloader).
 - [ ] All depends on backend work shipping per [[chief-of-staff-v0-2026-05-01]].
 
@@ -724,9 +752,9 @@ FOOTER (preserved)
 
 **Body copy (above Diagram C):**
 
-> One imprint. One memory. Many harnesses.
+> One imprint. One memory layer. Many harnesses.
 >
-> Mount the same Chief of Staff agent in Claude Code on your laptop, in ChatGPT on your phone, in Cursor while you're coding, or in any MCP-enabled app. Same context. Same patterns. Same agent.
+> Mount the same Chief of Staff agent in Claude Code on your laptop, in ChatGPT on your phone, in Cursor while you're coding, or in any MCP-enabled app. Team context shared, personal context private, same agent everywhere.
 
 **[Diagram C renders here.]**
 
@@ -774,7 +802,7 @@ Building on P0.3 (status badge + meta added to office-hours), P1 enhances both d
 
 **§ What gets stored — enhance:**
 - Existing table of stored fields preserved
-- Add: "Why this matters" callout explaining how the layered memory works (private context vs. shared patterns)
+- Add: "Why this matters" callout explaining how the layered memory works (team context vs. private context, cross-session references)
 
 **§ Recent activity (NEW, only if backend supports):**
 - "Last 5 anonymized patterns" or "Recent insights surfaced" — pulled from the shared memory collection

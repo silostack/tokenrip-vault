@@ -24,15 +24,16 @@ Capital assumption is YC application in days, a16z to follow. Even without capit
 
 ## Reference Docs (Read Order)
 
-| When you need...                                 | Read                            |
-| ------------------------------------------------ | ------------------------------- |
-| **The roadmap (Alek-shareable jumping-off point)** | **[[gameplan]]** |
-| The strategy and why this motion                 | [[motions-and-strategy]]        |
-| What we're doing this week / next 90 days        | [[audience-led-gameplan]]       |
-| What we measure + Monday review cadence          | [[kpis]]                        |
-| YC application reference + positioning           | [[yc-strategy]]                 |
-| Hiring, founder time, capital implications       | [[operations-and-hiring]]       |
-| Deprecated firm-direct strategy (reference only) | [[firm-direct-strategy/README]] |
+| When you need...                                   | Read                            |
+| -------------------------------------------------- | ------------------------------- |
+| **The roadmap (Alek-shareable jumping-off point)** | **[[gameplan]]**                |
+| The strategy and why this motion                   | [[motions-and-strategy]]        |
+| What we're doing this week / next 90 days          | [[audience-led-gameplan]]       |
+| Who we're selling to (ICP taxonomy)                | [[icps]]                        |
+| What we measure + Monday review cadence            | [[kpis]]                        |
+| YC application reference + positioning             | [[yc-strategy]]                 |
+| Hiring, founder time, capital implications         | [[operations-and-hiring]]       |
+| Deprecated firm-direct strategy (reference only)   | [[firm-direct-strategy/README]] |
 
 ## Origin
 

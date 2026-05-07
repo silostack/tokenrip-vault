@@ -10,13 +10,13 @@
 
 ## The Week at a Glance
 
-| Priority | Category | Items | Owner | Days |
-|----------|----------|-------|-------|------|
-| **Tier 1** | Registry Blitz | 14 submissions | Alek | Mon-Tue |
-| **Tier 2** | Agent-Readable Surfaces | 7 files/fixes | Simon | Mon-Tue |
-| **Tier 3** | Onboarding Polish | 5 fixes | Simon | Mon-Wed |
-| **Tier 4** | Community Push | HN + 3 Reddit + 3 Discord | Both | Wed-Fri |
-| **Tier 5** | Bigger Lifts (pick 2-3) | 4 options | Both | Start this week, run 2-4 weeks |
+| Priority   | Category                | Items                     | Owner | Days                           |
+| ---------- | ----------------------- | ------------------------- | ----- | ------------------------------ |
+| **Tier 1** | Registry Blitz          | 14 submissions            | Alek  | Mon-Tue                        |
+| **Tier 2** | Agent-Readable Surfaces | 7 files/fixes             | Simon | Mon-Tue                        |
+| **Tier 3** | Onboarding Polish       | 5 fixes                   | Simon | Mon-Wed                        |
+| **Tier 4** | Community Push          | HN + 3 Reddit + 3 Discord | Both  | Wed-Fri                        |
+| **Tier 5** | Bigger Lifts (pick 2-3) | 4 options                 | Both  | Start this week, run 2-4 weeks |
 
 ---
 
@@ -31,11 +31,11 @@
 
 Submit Tokenrip MCP server (`https://api.tokenrip.com/mcp`) to each:
 
-- [ ] **Anthropic MCP Registry** — the big one. Every Claude product surfaces this catalog.
+- [x] **Anthropic MCP Registry** — the big one. Every Claude product surfaces this catalog.
 - [ ] **Smithery** — largest MCP marketplace. Cursor's default search surface.
-- [ ] **mcpservers.org**
-- [ ] **Glama**
-- [ ] **PulseMCP**
+- [x] **mcpservers.org**
+- [x] **Glama**
+- [x] **PulseMCP**
 - [ ] **mcp.so**
 
 ### IDE Directories
@@ -66,9 +66,9 @@ Submit Tokenrip MCP server (`https://api.tokenrip.com/mcp`) to each:
 
 ### Create
 
-- [ ] **`.well-known/agent-card.json`** — A2A protocol discovery file. JSON describing Tokenrip's capabilities and endpoints.
+- [x] **`.well-known/agent-card.json`** — A2A protocol discovery file. JSON describing Tokenrip's capabilities and endpoints.
 - [ ] **`llms-full.txt`** — expanded `llms.txt` with complete API docs, all tool descriptions, example workflows. LLM crawlers use this as primary surface.
-- [ ] **Schema.org JSON-LD on asset pages** — `SoftwareApplication` + `WebAPI` + `Article` markup per asset. Structured data gives 30-40% AI-visibility lift per KDD 2024 research.
+- [x] **Schema.org JSON-LD on asset pages** — `SoftwareApplication` + `WebAPI` + `Article` markup per asset. Structured data gives 30-40% AI-visibility lift per KDD 2024 research.
 
 ### Fix/Update
 
@@ -91,7 +91,7 @@ Submit Tokenrip MCP server (`https://api.tokenrip.com/mcp`) to each:
 
 ### Critical
 
-- [ ] **Fix /docs page** (currently 404) — single page with: install → authenticate → publish first asset → see it live. Four steps. Ship before registry submissions go out.
+- [x] **Fix /docs page** (currently 404) — single page with: install → authenticate → publish first asset → see it live. Four steps. Ship before registry submissions go out.
 
 ### First-Run Experience
 

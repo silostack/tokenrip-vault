@@ -1,13 +1,17 @@
 # Chief of Staff Launch — Strategy + Architecture Design Brief
 
-**Date**: 2026-04-27
-**Status**: Working doc — strategic framing + architecture starting point
+**Date**: 2026-04-27 (updated 2026-05-02)
+**Status**: Working doc — strategic framing + architecture starting point. **Sections 1, 7, 10, 11, 13, 14 updated 2026-05-02** to reflect the team-scoped CoS pivot and Motion E strategic shift. Historical reasoning preserved throughout.
 **Origin**: Bean session 2026-04-27 (pressure-test of v1/v2 marketplace plan)
 **Related docs**:
 - `product/tokenrip/mounted-agent-model.md` — the architecture this finally instantiates
-- Tokenrip asset `s/16831d36-592f-4317-9a5f-dd505d60469f` — Alek's agent-swarm v2 launch plan
+- `active/chief-of-staff-v0-2026-05-01.md` — the v0 build spec (team-scoped, aha-moment design, concrete build tasks)
+- `bd/audience-led-gameplan.md` — the active BD motion that replaces the persona-lure distribution mechanism
+- `bd/motions-and-strategy.md` — why Motion E replaced the hero+lure approach
+- Tokenrip asset `s/16831d36-592f-4317-9a5f-dd505d60469f` — Alek's agent-swarm v2 launch plan (historical)
 - `agents/bean/ideas/chief-of-staff-agent.md` — Bean's compressed idea file
 - `agents/bean/sessions/2026-04-27.md` — Bean's session note
+- `agents/bean/sessions/2026-05-01.md` — Bean's session note (Motion E pivot + team-scoped CoS)
 
 ---
 
@@ -24,35 +28,41 @@ Read sections 1-3 for the locked decisions. Read sections 4-9 for the full desig
 
 ## 1. The Locked Decisions (TL;DR)
 
-**The bet**: Path C, hero + lure (β).
-- **Hero**: Chief of Staff (Yoda-class agent). Substance. Validates infrastructure differentiation.
-- **Lure**: One persona — Garry Tan most likely, given the YC application timing (May 4-7) won't repeat. Distribution wedge.
+> **Updated 2026-05-02.** The original bet was Path C, hero + lure (β). The May 1 strategic pivot to Motion E (audience-led creator deployment) changed the distribution mechanism: the persona-lure is replaced by the audience-led motion, which is a structurally stronger distribution play. The hero product bet — Chief of Staff — survived and strengthened. See §2-3 for the original reasoning (still valid); see below for the current locked state.
 
-**Naming**: "Chief of Staff" as the role/category. "Yoda" stays as the agent's name for now (to revisit). "Friday Review" possibly used as the headline ritual/feature.
+**The bet**: Chief of Staff as the hero mounted agent, now **team-scoped with layered memory**.
+- **Hero**: Chief of Staff — one imprint, multiple operators (Simon + Alek), three memory layers (team context + per-operator private context). Validates infrastructure differentiation through the cognitive abstraction nobody else has shipped.
+- **Distribution**: Motion E (audience-led creator deployment) replaces persona-as-lure. CoS is the lighthouse imprint that proves the architecture to creators considering their own deploys. See `bd/audience-led-gameplan.md`.
+- **Lure**: ~~Garry Tan persona~~ — deprioritized. The YC timing wave was tactical; the strategic pivot to Motion E provides a structurally better distribution mechanism. Persona candidates (§9) preserved for potential future use.
 
-**Specialization**: Broad operator framing, not narrowed to "for solo founders." Stays approachable.
+**Naming**: "Chief of Staff" as the role/category. "Yoda" dropped from public-facing surfaces. The voice/imprint draws from Yoda's methodology but carries its own name.
 
-**Resource posture**: Mostly all-in for 14 days.
-- Intelligence Engine paused.
-- AgentMail follow-up is autonomous (encoded as an agent).
-- Other distribution work continues in parallel.
-- Simon: heads-down on substance/engineering. Alek: comms/content/outreach.
+**Specialization**: Team-scoped — "your team's Chief of Staff." The framing shifted from "broad operator" to "the operating system for a two-person AI-native company." Still generalizes to any small team.
 
-**Validation horizon**: 14-day sprint ships *substance*, not validation. Day 14 measures "did we ship + did anyone notice." **Day 56 (~6-8 weeks) is when stickiness data arrives** — that's the real Path C validation point.
+**The team-scoped architecture** (the key design evolution since Apr 27):
+- **Team context** (`team_context` collection) — shared across all operators. Company goals, timelines, decisions, resources. Written during intake (first operator creates; subsequent operators confirm/augment).
+- **Private context** (per-operator collections: `simon_private`, `alek_private`) — commitments, working style, slippage patterns, personal goals. Only the owning operator's sessions read/write directly.
+- **Cross-session references** — the agent can reference what one operator discussed in another operator's session when relevant. Paraphrased, not quoted verbatim. This is the "oh shit" moment in the demo.
+
+**Resource posture**: All-in on CoS v0 ship (Sat May 3 → Mon May 5). See `active/chief-of-staff-v0-2026-05-01.md` for build tasks.
+- Simon: heads-down on substance/engineering.
+- Alek: **must complete intake by Sunday** (second operator's memory is required for the team-scoped demo).
+- Intelligence Engine paused. Other distribution work continues.
+
+**Validation horizon**: v0 ships Mon May 5 with YC application. Stickiness validation (Day 56 framing from original spec) still applies — team-scoped Friday Reviews running unprompted, cross-session references producing real value, both operators actively using it.
 
 **Kill criteria** (Day 14):
 - Substance didn't ship → kill.
-- 0 dogfooders by Day 14 → CoS positioning is wrong.
-- Lure thread <3K impressions → persona-as-lure thesis fails for current audience.
+- Only one operator using it (team-scoped architecture untested) → positioning is wrong.
+- Zero creator interest in deploying their own imprint after seeing CoS → Motion E thesis weakened.
 
-**Cuts** (from Alek's v2 plan):
-- Twitter @-tag pipeline (defer to week 3+ if v1 lands)
-- Tier 2/3 personas (PG, Naval, Karpathy, Solomon, VC Decoder — all defer)
-- Yoda-as-separate-listing (Yoda IS the hero)
-- Bounty board
-- "Agents Apply to YC" stunt (overlaps with Garry Tan persona)
-- "Replaced cofounder" stunt
-- 20-creator outreach push (drop to 10 hand-picked)
+**Cuts** (from original v2 plan + updated):
+- ~~Garry Tan persona~~ — deprioritized (Motion E replaces the distribution mechanism)
+- Twitter @-tag pipeline (defer)
+- Tier 2/3 personas (all defer; revisit as Motion E creator deploys)
+- Bounty board, stunts — all defer
+- Shared knowledge layer (founder-patterns) — deferred from v0. Team-scoped layered memory is a stronger architectural moat to demonstrate. Revisit for v1.
+- Multi-operator beyond 2 — v0 is Simon + Alek only
 
 ---
 
@@ -209,38 +219,60 @@ The agent does what a real Chief of Staff does:
 
 ### Five must-have features for v1
 
-1. **Intake flow** — 5-10 minutes of structured questions that build personal context (business, goals, current commitments, working style). This IS the differentiator at first contact. Don't skimp.
-   - Hard-coded starters: name, what they want a CoS for (fintech, agency, coaching business, etc.)
+> **Updated 2026-05-02.** The team-scoped pivot changes features #2 and #5 substantially and adds cross-session reference logic. The v0 build spec (`active/chief-of-staff-v0-2026-05-01.md`) has the concrete implementation details; this section captures the design intent.
+
+1. **Intake flow (dual-phase)** — Two phases, not one. Phase 1: team context (company, goals, timelines, decisions, team structure) — written to `team_context` collection, shared across all operators. Phase 2: personal context (role, working style, commitments, blind spots, personal goals) — written to the operator's private collection. Second operator to onboard gets a condensed Phase 1 ("here's what I know about the team — anything to add?") and a full Phase 2. This IS the differentiator at first contact — the dual-phase structure makes the layered architecture *felt*, not just described.
+   - Hard-coded starters: name, role, what the team is building
    - Then dynamic: model generates next questions based on context built so far
-   - Open exit: "anything else you think I should know about?" — let users go as deep as they want
-   - Output: persistent personal context written to Tokenrip
-2. **Personal memory** — Tokenrip-persisted state of commitments, decisions, patterns. Survives sessions and surfaces.
-3. **Friday Review** — flagship ritual. Structured prompt: what did you commit to last week, what got done, what slipped, why, what's next. Produces a shareable artifact (a Tokenrip asset).
-4. **Yoda's voice** — direct, pressure-tests, no fluff. Port verbatim from existing Yoda. Adapt to remove Simon-specific operational context.
-5. **Shared knowledge layer v0** — concrete, visible manifestation. Each session contributes one anonymized pattern to a public `founder-patterns` collection. Browsable. Future Yoda sessions reference it. **Non-negotiable for v1** — without it, we're just shipping memory, which is being commoditized. With it, we have the screenshot that says "no one else can do this."
+   - Open exit: "anything else you think I should know about?"
+   - Output: persistent context written to appropriate collection (team or private) in real-time
+   - Target: 15-20 questions total across both phases
+
+2. **Layered memory (three collections)** — The architectural centerpiece. Three Tokenrip collections, each with a different access scope:
+   - **`team_context`** (shared) — company goals, timelines, decisions, resources, processes. Both operators read and write. This is what makes the agent a *team member*, not a per-user chatbot.
+   - **`[operator]_private`** (per-operator) — commitments, working style, slippage patterns, personal goals, preferences. Only the owning operator's sessions read/write directly. The agent accesses the active operator's private collection + team context in every session.
+   - **Cross-session references** — the agent can reference items from another operator's private collection when relevant to the active operator's question. References are paraphrased, not quoted. Flagged items (`cross_session_flag: true`) and recent updates from the other operator are eligible. This produces the "oh shit" moment: *"Simon mentioned in his session that he's leaning toward X for the YC pitch. Does that align with how you're thinking about the outreach sequence?"*
+
+   The three-collection model replaces the original "personal memory + shared knowledge layer" design. The team layer is a *stronger* moat than hand-seeded founder-patterns because it's real, functional, multi-operator memory — the cognitive abstraction nobody else has shipped. Custom GPTs are per-user. Claude Projects are per-workspace. Nothing has team + private + cross-session in a single agent.
+
+3. **Friday Review (team-scoped)** — flagship ritual. Now covers the whole team: both operators' commitments → outcomes → slippage → team-level patterns → alignment check → next week. Either operator can trigger it. If only one is present, their commitments are reviewed in full and the other's at summary level. Produces a shareable team artifact (Tokenrip asset with sections per operator + a team-patterns section).
+
+4. **Chief of Staff voice** — direct, pressure-tests, no fluff. Port from existing Yoda methodology. Drop the "Yoda" name from public surfaces; the agent is "Chief of Staff." The voice carries a team-awareness register: it can speak to what the team decided vs. what one operator committed to, and surface misalignment.
+
+5. **Shared knowledge layer (DEFERRED from v0)** — ~~Non-negotiable for v1~~ → deferred. The original reasoning was correct: "without it, we're just shipping memory, which is being commoditized." But the team-scoped layered memory *is* the thing that isn't being commoditized. The three-collection model with cross-session references is a stronger differentiator than hand-seeded founder-patterns. Revisit the shared knowledge layer for v1 when there are enough operators to produce real cross-team patterns.
 
 ### Bootstrap strategy
 
-- Knowledge layer seeded from Simon's existing Yoda session history
-- Patterns extrapolated to bootstrap before live users arrive
-- Manual curation in week 1; automatic contribution from sessions in week 2+
+- **Simon runs intake first** (Saturday) — populates `team_context` + `simon_private`
+- **Alek runs intake second** (Sunday, REQUIRED) — confirms/augments `team_context` + populates `alek_private`
+- **Both run 2-3 substantive sessions** before the demo — produces real commitments, decisions, cross-session material
+- **First team Friday Review** (Sunday or Monday) — produces the team artifact for the demo
+- The demo runs on real data, not fabricated content
 
 ### The high-leverage open design question
 
-**How does Yoda visibly USE the shared collection in a Friday Review?**
+**~~How does Yoda visibly USE the shared collection in a Friday Review?~~**
 
-If the patterns are silent background context, the differentiator is invisible. If Yoda explicitly cites them — "based on patterns from 12 founders in your phase, the slip you're describing usually traces to X" — the differentiator is in every screenshot.
+**Updated:** The high-leverage design question is now: **How does the agent handle cross-session references without feeling invasive?**
 
-**Make the shared layer's surfacing deliberate and visible in prompt design.** Path C money shot. Design intentionally, not as side effect.
+The cross-session reference is the demo's "oh shit" moment. But if the agent over-shares ("Simon said he thinks your outreach emails are too long"), it breaks trust. The design constraint: references must be *helpful* (connecting dots the operator couldn't see) without being *surveillance* (exposing private context the other operator didn't intend to share).
+
+**v0 defaults** (per `active/chief-of-staff-v0-2026-05-01.md`):
+- Lead-with on first turn of each session (any relevant updates from the other operator).
+- Mid-session references only when directly relevant to the active question.
+- Paraphrased, not quoted. Focus on decisions, timelines, and strategic context — not opinions or working-style observations.
+- Items must be flagged `cross_session_flag: true` OR be clearly team-relevant (decisions, timeline changes, priority shifts).
+
+**Make the cross-session layer's surfacing deliberate and visible in prompt design.** This is the new Path C money shot. Design intentionally, not as side effect.
 
 ### Other open design questions
 
-- **Intake flow length** — friction-vs-context-quality sweet spot? Risk: long → drop-off; short → weak personalization.
-- **Surface design for shared layer** — sidebar, in-prompt, in-artifact? How does Yoda choose patterns to surface? Consent model for contributing patterns?
-- **Friday Review artifact format** — markdown asset, structured collection row, both?
-- **Cold-start patterns** — minimum dogfooder cohort that produces meaningful pattern signal? 5? 10? 50?
-- **Agent name** — stay "Yoda" publicly, or rebrand? Yoda is *Simon's*. Platform version may need its own name.
-- **Pricing** — v1 free? Paid tier from day one? Upgrade trigger?
+- **Intake flow length** — friction-vs-context-quality sweet spot? Risk: long → drop-off; short → weak personalization. **v0 default: 15-20 questions across both phases.**
+- **Visibility scoping** — the web view shows all three columns (god-view for transparency). But during a session, the agent only accesses active operator's private + team context + flagged cross-session items. **Resolved for v0.** See `active/chief-of-staff-v0-2026-05-01.md` Q1.
+- **Dual-layer item classification** — some information belongs in both team and personal context. Agent classifies automatically; asks on ambiguity. **Resolved for v0.** See Q2.
+- **Operator identity** — hardcoded in bootloader config for v0 (two operators, two machines). Dynamic auth is v1. **Resolved for v0.** See Q4.
+- **Friday Review artifact format** — markdown asset with team + per-operator sections, published to Tokenrip with shareable URL.
+- **Pricing** — v0 free. Tiered tooling surface comes later.
 
 ---
 
@@ -356,6 +388,8 @@ Recording these so they can be re-entered without re-running the analysis.
 
 ## 10. The 14-Day Sequencing
 
+> **Superseded 2026-05-02.** The timeline below was written for the hero+lure (Path C β) approach. The Motion E pivot and team-scoped CoS change the sequencing substantially. **Current build plan:** `active/chief-of-staff-v0-2026-05-01.md` (Sat May 3 → Mon May 5 v0 ship). **Current 90-day plan:** `bd/audience-led-gameplan.md`. The original sequencing is preserved below for reference — the structural logic (build substance first, distribution second, stickiness validation at week 6-8) still holds.
+
 ### Week 1 (Apr 28 – May 4) — Build substance
 
 | Day | Hero (Simon) | Lure (Simon, parallel) | Other (Alek) |
@@ -387,6 +421,8 @@ This is when the actual Path C thesis gets validated. v2's Day 14 metrics don't 
 ---
 
 ## 11. Metrics — Calibrated for This Shape
+
+> **Partially superseded 2026-05-02.** The specific numbers below were calibrated for the hero+lure approach. Current KPIs are in `bd/kpis.md` (phase-evolving primary KPI tied to substrate density). The Day 14 / Day 56 *framing* below still holds as a useful structure; the lure-specific metrics (Garry Tan thread impressions, etc.) are moot.
 
 v2's metrics measured a viral-distribution sprint. Recalibrate honestly given baseline (Simon: 11 Twitter followers).
 
@@ -465,9 +501,9 @@ Captured here so they don't get lost.
 
 4. **Tiered tooling pricing model** (free / pro / enterprise from mounted agent doc) — revisit once tooling surface is richer (semantic search, webhooks, scheduled ops). v1 is free for everyone.
 
-5. **Layered memory ownership model** — shared knowledge + private context. v0 is bootstrapped manually; v1 implements layered model. Revisit when production patterns force the design choice (probably week 4-6).
+5. **~~Layered memory ownership model~~** — ~~shared knowledge + private context. v0 is bootstrapped manually; v1 implements layered model.~~ **No longer a tangent — this is now the core architecture.** The team-scoped CoS v0 ships with three collections: `team_context` (shared), `simon_private`, `alek_private`. Cross-session references bridge them. See §7 updated must-haves and `active/chief-of-staff-v0-2026-05-01.md` F2/F7.
 
-6. **Working with creators who already have audiences** — Simon's instinct in the transcript. Defer until v1 ships and there's a working agent to point at. Once "here's the CoS we built" is real, the offer to creators ("turn your work into an agent on this") becomes credible. Currently premature.
+6. **~~Working with creators who already have audiences~~** — ~~Defer until v1 ships.~~ **No longer a tangent — this is now the primary BD motion (Motion E).** The May 1 strategic pivot made audience-led creator deployment the primary go-to-market. CoS is the lighthouse imprint that proves the architecture to creators. See `bd/audience-led-gameplan.md` for the full execution plan.
 
 7. **Slop filter as standalone product vs. integrated into Editor persona** — multiple framings live. The Editor persona absorbs the slop filter functionality. If a standalone "slop filter" use case emerges (e.g., publishers wanting batch slop scoring), revisit.
 
@@ -481,29 +517,34 @@ Captured here so they don't get lost.
 
 ### Core entities to design
 
-1. **Agent definition** — imprint (instructions, persona rules, methodology), schema for inputs/outputs, memory layer references, tooling capabilities
-2. **User context** — per-user persistent state. How is it scoped? What's the schema? How does it survive across surfaces?
-3. **Session** — a unit of interaction. Linked to user context, contributes to personal memory, optionally contributes to shared layer
-4. **Shared collection** (e.g., `founder-patterns`) — schema for entries, contribution rules, surfacing rules (how does Yoda choose which to cite?)
-5. **Friday Review artifact** — Tokenrip asset. Schema/template. Sharing rules.
-6. **Intake flow** — sequence of question/answer pairs. State transitions. Output transformation (turn answers into context).
+> **Updated 2026-05-02** to reflect team-scoped architecture. Several decisions below are now resolved in `active/chief-of-staff-v0-2026-05-01.md`.
+
+1. **Agent definition** — imprint (instructions, persona rules, methodology, cross-session-rules), schema for inputs/outputs, memory layer references (three collections, not one), tooling capabilities
+2. **Team context** (`team_context` collection) — shared state across all operators. Company goals, timelines, decisions, resources, processes. Written during intake Phase 1. **Resolved for v0:** Tokenrip collection, schema defined in v0 spec F2.
+3. **Operator private context** (per-operator collections) — per-operator persistent state. Commitments, working style, slippage, personal goals. Scoped to owning operator's sessions. **Resolved for v0:** `simon_private` and `alek_private` collections.
+4. **Cross-session reference logic** — rules for when and how the agent references one operator's context in another's session. Paraphrased, not quoted. Eligible items: flagged items + recent updates. **Resolved for v0:** lead-with on first turn, mid-session only when directly relevant. See v0 spec F7.
+5. **Session** — a unit of interaction. Linked to operator identity → selects which private collection to read/write. Reads team context on every session start. Optionally surfaces cross-session references.
+6. **Friday Review artifact** — Tokenrip asset. Team-scoped template with per-operator sections + team patterns + alignment check. Either operator can trigger.
+7. **Intake flow** — dual-phase: Phase 1 (team context, skipped/condensed for second operator), Phase 2 (personal context, always full). State transitions. Output transformation (answers → appropriate collection).
+8. **Visible memory web view** — three-column layout (team | operator A | operator B). God-view for transparency; agent session behavior is more scoped.
 
 ### Key technical decisions ahead
 
-- Where does the imprint live? (Tokenrip asset — versioned, fetchable. Same as engagement agent pattern.)
-- Where does personal memory live? (Tokenrip collection? Per-user asset? Hybrid?)
-- How is the shared layer accessed during a session? (Pre-loaded, pulled on demand, semantic search?)
-- How is agent invocation handled? (CLI bootloader pattern from engagement agent, generalized?)
-- Web UI for the agent — what's the minimum? (Asset URL, Friday Review preview, intake flow?)
-- Authentication and per-user state isolation
-- Anonymization of shared-layer contributions — explicit consent, automatic, hybrid?
+- ~~Where does personal memory live?~~ **Resolved:** three Tokenrip collections per v0 spec.
+- ~~How is the shared layer accessed?~~ **Resolved for v0:** agent reads `team_context` + active operator's private collection at session start. Cross-session references pulled from other operator's collection per F7 rules.
+- ~~Authentication and per-user state isolation~~ **Resolved for v0:** hardcoded operator ID in bootloader config. Dynamic auth is v1.
+- Where does the imprint live? (Tokenrip asset — versioned, fetchable. Same as engagement agent pattern.) **Confirmed.**
+- How is agent invocation handled? (CLI bootloader pattern from engagement agent, generalized with operator-ID.) **Confirmed.**
+- Web UI for the agent — what's the minimum? Three-column visible-memory view + Friday Review asset rendering + intake flow. See v0 spec F4.
+- **NEW: Cross-session reference scoping** — how granular should the cross-session flag be? Per-item? Per-field-type? Per-session? v0 uses per-item flagging; may need refinement based on dogfooding.
+- **NEW: Multi-operator scaling** — v0 is hardcoded for 2 operators. What changes when a third operator joins? Collection naming, operator discovery, visibility rules, the web view layout. Not blocking v0 but shapes v1 architecture.
 
 ### Suggested architecture exploration prompt
 
 When this doc is used to seed architecture work, the prompt should be roughly:
 
-> Design the technical architecture for shipping the Chief of Staff agent v1 per the spec in section 7. Use existing Tokenrip primitives where possible. Cover: agent definition format, user context persistence, session lifecycle, shared collection design, intake flow state machine, Friday Review artifact, web UI minimum, invocation paths (web, CLI, API). Identify what new platform capabilities are required vs. what works with current primitives. Output an architecture doc that an implementer could start from.
+> Design the technical architecture for shipping the team-scoped Chief of Staff agent per the spec in section 7 and `active/chief-of-staff-v0-2026-05-01.md`. Use existing Tokenrip primitives where possible. Cover: imprint definition with cross-session-rules, three-collection memory model (team + per-operator private), cross-session reference logic, operator identification, dual-phase intake flow, team-scoped Friday Review artifact, three-column visible-memory web view, invocation paths with operator-ID (CLI, MCP, web). Identify what new platform capabilities are required vs. what works with current primitives.
 
 ---
 
-*Working doc. Update as decisions evolve. Move to permanent location (likely `product/tokenrip/`) once v1 ships and the architecture stabilizes.*
+*Working doc. Updated 2026-05-02 for team-scoped pivot and Motion E. The v0 build spec (`active/chief-of-staff-v0-2026-05-01.md`) is the active implementation reference. This doc remains the strategic design brief and decision archive. Move to permanent location (likely `product/tokenrip/`) once v1 ships and the architecture stabilizes.*
