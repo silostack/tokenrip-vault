@@ -137,4 +137,24 @@ These are not strategic questions, but they will block a deal from closing if no
 
 ---
 
-*Draft v0.1 — 2026-04-30. Iterate based on first 3 conversations and feedback.*
+---
+
+## Vertical-Specific Pricing (Added 2026-05-09)
+
+Ranges below are starting points — adjust based on discovery call data.
+
+| Vertical | Build Fee | Monthly SaaS | Sweet Spot ICP | Wedge Workflow |
+|---|---|---|---|---|
+| **Insurance (P&C agencies)** | $20K | $2,500-4,000/month per agency | Mid-market agencies, 10-50 employees | COI processing (zero competitors on supply-side) |
+| **Tax/Accounting** | $15K-25K (scales with firm size) | $2,000-5,000/month per firm | 200-1,000 client firms | Document chase agent (saves 6-10 hrs/week/person in season) |
+| **Real Estate** | $20K-25K | $2,500-5,000/month per operator | CRE syndicators managing 10-50 units | LOI-to-close coordination |
+
+---
+
+## Tokenrip Reference
+
+This doc is synced to Tokenrip: `dd5fa00a` ([link](https://tokenrip.com/s/dd5fa00a-09c5-4e4d-913b-f8aec8f69668))
+
+---
+
+*Draft v0.1 — 2026-04-30. v0.2 — 2026-05-09: added vertical-specific pricing. Iterate based on first 3 conversations and feedback.*

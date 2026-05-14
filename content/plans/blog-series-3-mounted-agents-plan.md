@@ -37,14 +37,14 @@ Same shape as Series 1 and 2 in spirit (problem → category → proof → capst
 
 ## Connection to Prior Series
 
-| Series 1 | Series 2 | Series 3 | Progression |
-|----------|----------|----------|-------------|
-| Post 1: Alignment Problem | Post 5: SaaS Trap | Post 9: Cloud Agent Ceiling | Different layers of the same trap (drift → friction → ceiling) |
-| Post 2: Skills as Packages | Post 6: Shared Agents | Post 10: Portable Agents | Skills → shared agents → portable/persistent agents |
-| — | — | Post 11: The Agent Shouldn't Live Where Inference Runs | Architecture creates the economics |
-| Post 3: Self-Updating Skills | Post 7: Agent CRM | Post 12: Chief of Staff | Built a skill → built a CRM → built a portable agent |
-| — | — | Post 13: The Agent's Memory Is the Product | Persistence becomes the product surface |
-| Post 4: Collaboration Layer | Post 8: Operations as Primitives | Post 14: Imprint Isn't the Moat | What collaboration → operations → cognition reveal |
+| Series 1                     | Series 2                         | Series 3                                               | Progression                                                    |
+| ---------------------------- | -------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------- |
+| Post 1: Alignment Problem    | Post 5: SaaS Trap                | Post 9: Cloud Agent Ceiling                            | Different layers of the same trap (drift → friction → ceiling) |
+| Post 2: Skills as Packages   | Post 6: Shared Agents            | Post 10: Portable Agents                               | Skills → shared agents → portable/persistent agents            |
+| —                            | —                                | Post 11: The Agent Shouldn't Live Where Inference Runs | Architecture creates the economics                             |
+| Post 3: Self-Updating Skills | Post 7: Agent CRM                | Post 12: Chief of Staff                                | Built a skill → built a CRM → built a portable agent           |
+| —                            | —                                | Post 13: The Agent's Memory Is the Product             | Persistence becomes the product surface                        |
+| Post 4: Collaboration Layer  | Post 8: Operations as Primitives | Post 14: Imprint Isn't the Moat                        | What collaboration → operations → cognition reveal             |
 
 The arc compounds. Series 1 separated *instructions*. Series 2 separated *operations*. Series 3 separates *the agent itself*.
 

@@ -1,8 +1,9 @@
 # Lead Generation + Alek Content Gameplan
 
 **Status**: Day 1 plan. Iterate based on first 2 weeks of execution.
-**Owners**: Alek (primary) for both outbound and content. Simon supports with founder-led calls and demos.
-**Target**: 5 booked calls per week within 4 weeks.
+**Owners**: Alek (Tax + Real Estate outbound + content), Simon (Insurance outbound + engineering + founder-led demos).
+**Target**: 5 booked calls per week within 4 weeks (combined across both owners).
+**Verticals locked (2026-05-09)**: Insurance (Simon), Tax + Real Estate (Alek). No changes until May 23.
 
 ---
 
@@ -98,6 +99,76 @@ Direct, specific call-to-action. Calendly link.
 ### Founder-led, not BDR-style
 
 This is **founder outreach**, not SDR-blast. Don't sound like a recruiter or a sales tool. Sound like a real human with a specific point of view who's curious about the recipient's world. Quality over volume — if 100 messages/week feels formulaic, do 50/week with twice the personalization.
+
+---
+
+## Simon's Insurance Outreach
+
+Simon owns the insurance vertical — specifically independent P&C agencies. This runs in parallel with Alek's tax + RE outreach, at lower volume (Simon also carries engineering).
+
+### ICP — Commercial Insurance Agencies
+
+| Dimension | Target |
+|---|---|
+| Market | 40,000+ independent P&C agencies in the US |
+| Sweet spot | 15,000-20,000 agencies with $1M-$20M revenue |
+| Company size | 11-200 employees |
+| Key role | Agency Owner/Principal, VP Operations, CSR Manager |
+| Tech budget | $15,000-$60,000/year per agency |
+| SAM | $270M-$720M at $1,500-3,000/month pricing |
+
+### Sales Navigator Setup
+
+| Filter | Setting |
+|---|---|
+| Industry | Insurance |
+| Company size | 11-200 employees |
+| Title | Owner, Principal, Agency President, VP Operations, CSR Manager |
+| Geography | Start regional, expand later |
+| Keywords | "independent agency" OR "P&C" |
+
+### The COI Angle
+
+Supply-side COI automation has **zero competitors**. Every COI player (myCOI, PINS, Certus) tracks COIs that companies *receive* from vendors. Nobody helps agencies *process and issue* them. This is the lead hook.
+
+CSRs spend 60-80% of their time on repetitive operational tasks. COI requests alone consume 50-200 requests/week × 15-30 min each = a full headcount of capacity.
+
+ROI justification: one CSR costs $45-65K loaded. Automating 50% of COI processing pays for the product immediately.
+
+### Outreach Sequence (Insurance-Specific)
+
+**Touch 1 — Connection request (Day 0)**
+
+> Hi [Name] — I'm building AI tools for independent agencies. I noticed [Agency] handles commercial P&C in [region]. Quick question: how many COI requests does your team process per week? We're working on something that automates the review step entirely. Happy to share what we're seeing if useful.
+
+**Touch 2 — Value drop (Day 4-5)**
+
+> Following up — put together a 90-sec walkthrough of AI handling a COI request: checks coverage requirements, flags gaps, routes to CSR for approval. [link] No pitch — just curious if this matches the friction you see on your side.
+
+**Touch 3 — Direct ask (Day 9-10)**
+
+> Last note — would 20 minutes be useful? I'm talking to a handful of agency owners about how AI could take the repetitive ops off their CSRs' plates. Not selling anything yet — genuinely gathering intel. [Calendly link] if it's a fit.
+
+### Volume (Calibrated for Simon's Split Time)
+
+| Metric | Target |
+|---|---|
+| Messages/day | 15-20 |
+| Messages/week | 75-100 |
+| Connection acceptance | 30-50% |
+| Reply rate (3 touches) | 5-15% |
+| Reply → call booked | 30-50% |
+| Expected calls/week | 1-5 |
+
+### Sales Navigator Tips (First-Timer)
+
+1. Don't InMail — connection request + note always outperforms
+2. Engage on their posts before you message (like, comment, be visible)
+3. Monday and Tuesday mornings get the best acceptance rates
+4. Personalize the first line every time
+5. Start with a tracking spreadsheet, migrate to Attio CRM at >50 contacts
+6. Set up 2-3 saved searches, check weekly for new matches
+7. Use boolean search: quotes for exact phrases, OR for alternatives
 
 ---
 
@@ -232,4 +303,12 @@ Set checkpoints. Measure honestly. Course-correct fast.
 
 ---
 
-*Draft v0.1 — 2026-04-30. Tighten and refine after first week of execution.*
+---
+
+## Tokenrip Reference
+
+This doc is synced to Tokenrip: `f2855094` ([link](https://tokenrip.com/s/f2855094-f83c-476f-8345-319f87664e4a))
+
+---
+
+*Draft v0.1 — 2026-04-30. v0.2 — 2026-05-09: added Simon's insurance outreach section, updated roles for 3-vertical split (Simon=insurance, Alek=tax+RE).*

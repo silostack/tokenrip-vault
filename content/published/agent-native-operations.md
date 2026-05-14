@@ -1,6 +1,7 @@
 ---
 title: "Your Agent Doesn't Need a CRM"
 slug: agent-native-operations
+tokenrip_id: 74f68060-f65b-4fcf-a50c-a399a2353f64
 post_type: thesis
 created: 2026-04-28
 word_count: 1888

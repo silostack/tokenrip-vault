@@ -2,7 +2,9 @@
 
 **Purpose**: Pick the first vertical for the design partner pilot. Optimize for **speed to test**: how fast can we get from pitch → call → demo → signed deal?
 
-**Status**: Yoda's pressure-test of the most likely candidates. Alek has additional candidates from his research — score those into the same rubric.
+**Status**: **Decision locked 2026-05-09.** Three verticals selected. See decision section at bottom.
+
+**Original status**: Yoda's pressure-test of the most likely candidates. Alek has additional candidates from his research — score those into the same rubric.
 
 ---
 
@@ -117,15 +119,26 @@ Scoring is Yoda's read based on vault context. Alek and Simon: recalibrate any c
 
 **Verdict**: Skip unless Alek's research turned up something specific.
 
-### Insurance — **370 / 1000**
+### Insurance — **370 / 1000** (rubric score) → **Selected despite rubric**
 
-**Why it scores low**:
+**Why the rubric scored it low**:
 - Heavily regulated → long procurement, security review, compliance
 - Enterprise-style sales cycles even for "small" insurers
 - No warm lead
 - Limited domain knowledge
 
-**The angel investor named insurance as a target.** Yoda's read: he's right that insurance has the pain (claims, adjusters, multi-party document workflows). But it's the wrong place to **start the test** — too slow, too gated. Park it for vertical #2 or #3 once the motion is proven.
+**Why it was selected anyway (2026-05-09)**:
+Subsequent vertical research revealed a critical factor the rubric missed: **supply-side COI automation has zero competitors.** Every COI player (myCOI, PINS, Certus) tracks COIs that companies *receive*. Nobody helps agencies *process and issue* them. This zero-competition angle changes the calculus — you're not entering a competitive market, you're creating one.
+
+Additional research findings:
+- 40,000+ independent P&C agencies in the US; sweet spot = 15,000-20,000 with $1M-$20M revenue
+- CSRs spend 60-80% of time on repetitive operational tasks
+- SAM: $270M-$720M at $1,500-3,000/month pricing
+- ROI: one CSR costs $45-65K loaded; automating 50% of COI processing pays for the product immediately
+
+The rubric correctly identified procurement complexity and access challenges. The bet is that the zero-competition angle + clear ROI justification overcome those barriers for independent agencies (which have simpler procurement than carriers).
+
+**The angel investor named insurance as a target.** Yoda's original read: park it for vertical #2 or #3. Post-research read: the COI angle is strong enough to justify a parallel test with Simon owning it directly.
 
 ---
 
@@ -169,4 +182,32 @@ Run any candidate Alek surfaces through the same rubric. Specifically:
 
 ---
 
-*Draft v0.1 — 2026-04-30. Recalibrate scoring after Alek's research lands.*
+---
+
+## Decision — Locked 2026-05-09
+
+**Verticals selected**: 3
+
+| Vertical | Owner | Rationale |
+|---|---|---|
+| **Insurance (P&C agencies, COI focus)** | Simon | Zero-competition COI supply-side angle. Clear ROI. Simon owns outreach + engineering. |
+| **Tax / Accounting** | Alek | Strong adjacency reuse (tax → bookkeeping → audit). Alek owns outreach. |
+| **Real Estate** | Alek | Highest rubric score (815). Best demo legibility. Alek owns outreach. |
+
+**Lock period**: Minimum 2 weeks. No vertical changes until May 23.
+
+**Tradeoff acknowledged**: Running 3 verticals splits outreach volume ~3x vs. single-vertical focus. Each vertical gets tested at lower volume, producing slower signal. The bet: broader coverage compensates by increasing odds that at least one vertical produces clear signal.
+
+**Review trigger**: End of week 2 (May 23). Evaluate which vertical(s) have signal. Consider consolidating to 1-2 if data supports it.
+
+---
+
+---
+
+## Tokenrip Reference
+
+This doc is synced to Tokenrip: `570d51ac` ([link](https://tokenrip.com/s/570d51ac-7466-4b95-926f-4ba9bbfa168a))
+
+---
+
+*Draft v0.1 — 2026-04-30. v0.2 — 2026-05-09: decision locked (3 verticals, ownership split), insurance reasoning updated with COI zero-competition insight.*

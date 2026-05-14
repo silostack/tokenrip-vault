@@ -39,6 +39,8 @@ Each layer accumulates defensible data: the coordination graph (Layer 2), the wo
 - [[tokenrip-context]] — **Start here.** Comprehensive product reference: what Tokenrip is, five-layer architecture, core primitives, organizational model, collaboration features, technical details, use cases
 - [[tokenrip-positioning]] — Positioning angles, competitive framing, messaging frameworks, audience & language, moat narrative
 - [[mounted-agent-model]] — Imprint/Memory/Harness separation, BYO model economics, agent-mediated products
+- [[tool-layer]] — The skill/tool distinction, bypassable-vs-substrate test, three tool categories, COI email worked example. Foundational for any tool-layer implementation work
+- [[business-model]] — Monetization architecture: charge for substrate, three revenue lines, pricing tiers, anti-patterns. Companion to tool-layer
 - [[distribution-strategy]] — Distribution plan: integration hierarchy, viral mechanics, branding tiers
 - [[tokenrip-homepage-redesign]] — Homepage design spec (locked)
 - Branding & voice guide: `content/tokenrip-branding.md`

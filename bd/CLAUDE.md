@@ -1,55 +1,50 @@
 # BD — Internal Index
 
-> **This is the internal vault index.** It contains cross-vault touch points and origin context that don't belong in shareable docs. The external roadmap / jumping-off point Alek and other collaborators get is **[[gameplan]]**.
+> **This is the internal vault index.** It contains cross-vault touch points and origin context that don't belong in shareable docs. Current execution is tracked in `DASHBOARD.md`.
 
-**Purpose**: The active sales motion to seed substrate density for Tokenrip's mounted-agent architecture and produce the fundraising curve toward a venture round.
+**Purpose**: Find the right BD motion to seed substrate density for Tokenrip's mounted-agent architecture and produce the fundraising curve toward a venture round.
 
-**Status**: Pivoted 2026-05-01. Audience-led creator deployment (Motion E) is primary; firm-direct (Motion A) deprecated.
+**Status**: Two-week vertical discovery sprint (May 8-22). Motion E on maintenance. Motion D paused. Hard comparison May 22.
 
-**Owners**: Simon (lighthouse + product + investor narrative), Alek (mid-tier outreach + content + list-building + engagement agent)
+**Owners**: Simon (75% vertical discovery + 25% Motion E maintenance), Alek (100% vertical discovery via LinkedIn Sales Navigator)
 
 ## Strategic Frame
 
-Tokenrip is shipping the smallest commercial unit that requires the full mounted-agent architecture: experts and creators with engaged audiences deploy their personal-brand imprints on Tokenrip. Their audience mounts the imprint in their preferred runtime and pays for their own inference. The substrate accumulates published imprints, registered operators, and shared memory — producing the compounding curve that funds a venture round.
+Two tests determine whether a BD motion is viable:
 
-Five-motion taxonomy:
+1. **Architectural-requirement test** (May 1): Does the motion require the full mounted-agent architecture (memory, persistence, portability, BYO economics)? If not, any AI shop could deliver it — it's consulting, not product.
+2. **Pain-proximity test** (May 8): Is the buyer in enough pain to act urgently? Vitamins get weekly follow-ups. Painkillers get daily nagging.
 
-- **E (audience-led)** — primary motion, starts now.
-- **D (builder-direct)** — parallel feeder via Series 3 blog.
-- **B (vendor substrate)** — deferred to 2027 (post-capital, post-density).
-- **C (inter-agent marketplace)** — eventual vision E + D enable.
-- **A (firm-direct)** — deprecated; preserved in `firm-direct-strategy/` as reference.
+| Motion | Architecture | Pain | Status |
+|--------|-------------|------|--------|
+| A (firm-direct) | Fails | Passes | Deprecated (May 1) |
+| E (audience-led) | Passes | Unclear | Maintenance — 25% Simon |
+| D (builder-direct) | Passes | Fails (vitamin) | Paused |
+| B (vendor substrate) | Passes | Passes | Deferred to 2027 |
+| Vertical discovery | ? | ? | **Active sprint — May 8-22** |
 
-Capital assumption is YC application in days, a16z to follow. Even without capital landing, the audience-led motion is the right strategy. See [[motions-and-strategy]] for the full reasoning and the architectural-requirement test that produced it.
+The vertical discovery sprint tests whether firm-level pain exists that ALSO requires the architecture. If yes, a new motion emerges. If no, it's consulting.
 
-## Reference Docs (Read Order)
+## Reference Docs
 
-| When you need...                                   | Read                            |
-| -------------------------------------------------- | ------------------------------- |
-| **The roadmap (Alek-shareable jumping-off point)** | **[[gameplan]]**                |
-| The strategy and why this motion                   | [[motions-and-strategy]]        |
-| What we're doing this week / next 90 days          | [[audience-led-gameplan]]       |
-| Who we're selling to (ICP taxonomy)                | [[icps]]                        |
-| What we measure + Monday review cadence            | [[kpis]]                        |
-| YC application reference + positioning             | [[yc-strategy]]                 |
-| Hiring, founder time, capital implications         | [[operations-and-hiring]]       |
-| Deprecated firm-direct strategy (reference only)   | [[firm-direct-strategy/README]] |
+| When you need... | Read |
+|---|---|
+| Current sprint + KPIs | `DASHBOARD.md` |
+| Five-motion taxonomy + architectural-requirement test | [[motions-and-strategy]] |
+| ICP taxonomy (all buyer types) | [[icps]] |
+| YC application reference | [[yc-strategy]] |
+| Hiring, founder time, capital implications | [[operations-and-hiring]] |
+| Motion E execution docs (maintenance mode) | [[audience-led-strategy/README]] |
+| Deprecated firm-direct strategy (reference only) | [[firm-direct-strategy/README]] |
+| Vertical selection rubric (segments being targeted) | [[firm-direct-strategy/vertical-selection]] |
+| Sales Navigator workflow reference | [[firm-direct-strategy/lead-gen-strategy]] |
 
-## Origin
+## Strategy Evolution
 
-The pivot was produced in a Bean session on 2026-05-01: see [[../agents/bean/sessions/2026-05-01]] for the conversational arc and [[../agents/bean/insights]] for the cross-idea patterns it surfaced ("smallest commercial unit that requires the architecture" framework; capital-assumption inverts optimization function).
+- **2026-05-01**: Bean session produces five-motion taxonomy. Motion E (audience-led) primary. Motion A (firm-direct) deprecated. Architectural-requirement test established.
+- **2026-05-08**: Yoda decision session. Both founders independently conclude E/D are vitamin-grade. Pain-proximity test added as second dimension. Two-week vertical discovery rebalance. Not a formal pivot — time-boxed test with May 22 hard comparison.
 
-## Follow-Up Updates Needed (Cross-Vault)
-
-The pivot affects several documents outside `bd/`. These are flagged here for next-session deep-dives, not executed in the same work that produced this folder:
-
-- **[[../agents/yoda/memory/]]** — Yoda's strategic frame: primary BD motion is audience-led; firm-direct deprioritized; capital-assumption changes the playbook.
-- **[[../CLAUDE.md]] (root vault)** — Active Projects table + Strategic Priority section reflect the new posture.
-- **[[../product/tokenrip/mounted-agent-synthesis]]** — add "First commercial wedge confirmed" section, cross-link to [[audience-led-gameplan]].
-- **[[../content/plans/blog-series-3-mounted-agents-plan]]** — note elevated priority on post 9 (cloud-agent ceiling) as fundraising artifact.
-- **[[paid-pilot-strategy-2026-04-29]]** — supersede with pointer to `bd/` or move to `__ARCHIVE/`.
-
-A combined cross-vault touch-up session should resolve these once the bd/ work has settled.
+Full decision log: `agents/yoda/memory/decisions-log.md`. Bean session: `agents/bean/sessions/2026-05-01.md`.
 
 ## Related
 

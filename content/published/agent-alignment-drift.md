@@ -1,6 +1,7 @@
 ---
 title: "The Alignment Problem Nobody's Solving"
 slug: agent-alignment-drift
+tokenrip_id: bbafd808-46b1-4eeb-94e4-75577c6a03f9
 post_type: thesis
 created: 2026-04-23
 word_count: 1748

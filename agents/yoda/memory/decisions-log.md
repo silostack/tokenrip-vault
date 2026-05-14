@@ -63,6 +63,45 @@
 
 **Captured in**: `bd/CLAUDE.md`, `bd/motions-and-strategy.md`, `bd/audience-led-gameplan.md`, `bd/yc-strategy.md`, `bd/operations-and-hiring.md`, `bd/kpis.md`, `agents/bean/sessions/2026-05-01.md`, `agents/bean/ideas/audience-led-deployment.md`.
 
+### Two-Week Portfolio Rebalance — Vertical Discovery + Motion E Maintenance
+**Date**: 2026-05-08
+**Context**: Both co-founders independently felt that Motion E (audience-led) and Motion D (builder-direct) are vitamin motions, not painkillers. Simon's day of GitHub skill-creator outreach confirmed Motion D is low-urgency (most skill creators don't care about monetization). Alek's Motion E outreach produced 1 booked call (which is actually a vertical discovery call), 1 Twitter demo that confirmed vitamin-grade interest, and scattered responses with nothing materializing. A mock YC roast flagged no revenue after 3 months. Both founders converged independently on wanting to pursue vertical firms with real workflow pain. Alek proposed: "let's not use Claude for strategy" and "just discovery, discovery, discovery."
+
+Simon named the core insight: **pain vs. vitamin is a dimension missing from the motion analysis.** The architectural-requirement test asks whether the architecture is load-bearing; it doesn't ask whether the buyer is in enough pain to act. Motion E passes the architecture test and may fail the urgency test. Motion A fails the architecture test but passes the urgency test.
+
+**Options Considered**:
+- Full formal pivot back to Motion A (firm-direct vertical agents) — rejected by Yoda challenge (three pivots in three weeks destroys execution; this is Motion A in different clothes; same B-poisoning risk)
+- Stay the course on Motion E/D unchanged — rejected by Simon (vitamin-grade urgency doesn't produce revenue; revenue is the forcing function)
+- **Two-week portfolio rebalance with comparison deadline** — adopted
+
+**Decision**:
+- **Not a formal pivot.** Framed as a time-boxed test with a hard comparison date.
+- **Simon**: 75% vertical discovery via Sales Navigator, 25% Motion E maintenance (outreach from existing 200-creator list). Takes over Motion E from Alek at maintenance level.
+- **Alek**: 100% LinkedIn vertical discovery via Sales Navigator. Shifts entirely from Motion E to vertical outreach. This is his area of expertise.
+- **Segments**: Tax + real estate confirmed; 2 additional TBD (Simon and Alek take 2 each).
+- **Maha (GTM playbook skill creator)**: Email sent. Key Motion E data point — her response urgency is a test of whether Motion E can produce painkiller-grade signal.
+- **Hard comparison date: May 22.** Both pipelines compared. Whoever has more traction gets both founders.
+- **Architectural filter on discovery calls**: pain must map to Tokenrip's architecture (memory, persistence, portability, BYO economics). If any AI shop could solve it with Zapier + GPT, it's consulting revenue, not product research.
+
+**Kill/continue criteria at May 22:**
+- Vertical succeeds: 3+ qualified discovery calls, ≥1 firm with architectural-grade pain, ≥1 deal-shaped conversation
+- Vertical fails: 200+ connects with <3 calls, or pain is generic with no architectural fit
+- Motion E signal: Maha response urgency, booked-call conversion, any prospect following up daily (painkiller) vs. weekly (vitamin)
+
+**Rationale**:
+1. **Pain proximity as a missing analytical dimension.** The architectural-requirement test and the pain-proximity test are both necessary. Motion E passes architecture, unclear on pain. Motion A passes pain, fails architecture. The test is whether vertical discovery surfaces pain that ALSO maps to the architecture.
+2. **Revenue as forcing function.** Simon self-diagnosed: "I'm an engineer, I gravitate toward building. I need a forcing function toward revenue." Revenue pressure is legitimate and healthy when it produces focus rather than panic.
+3. **Not a formal pivot prevents oscillation damage.** Three pivots in three weeks = no execution data from any motion. Time-boxing preserves the option to return to Motion E with data rather than killing it based on one week of a different motion's experiment.
+4. **Co-founder convergence is signal.** Both founders independently arrived at the same conclusion. Same pattern as Apr 27 when Alek convinced himself through operating — independent convergence is stronger signal than persuasion.
+
+**Risks Yoda flagged:**
+- Motion E is functionally dead with both founders on Sales Navigator. If it "fails" at May 22, the failure was under-investment, not market signal.
+- "Outreach is autopilot" is a rationalization. 25% Motion E = pipeline maintenance, not a real test. Don't claim Motion E was tested.
+- If vertical discovery produces pain that doesn't require the architecture, taking the money is survival but not company-building. Filter matters.
+- Strategy oscillation: this is the third direction change in three weeks. Even if each change is locally rational, the cumulative cost is real.
+
+**Outcome**: [To be evaluated May 22. Compare vertical discovery pipeline vs. Motion E pipeline. Key question: did vertical discovery surface architectural-grade pain, or generic "we want AI" interest?]
+
 ---
 
 *Full historical decisions log archived in `__ARCHIVE/yoda-decisions-log.md`*

@@ -120,16 +120,31 @@ Per Tom's three-core-metrics rule, every B2B founder should know:
 
 ---
 
+## Per-Vertical Funnel Tracking (Added 2026-05-09)
+
+Track all funnel metrics separately per vertical. If one vertical converts at 2x the rate of another by Week 4, shift allocation.
+
+| Vertical | Owner | Track Separately |
+|---|---|---|
+| Commercial Insurance | Simon | Connections, replies, calls, pain signals |
+| Tax/Accounting | Alek | Connections, replies, calls, pain signals |
+| Real Estate | Alek | Connections, replies, calls, pain signals |
+
+**Why**: Running 3 verticals means slower signal per vertical. Per-vertical tracking surfaces which one to double down on and which to drop at the May 23 review.
+
+---
+
 ## Weekly KPI Review — Sunday Cadence
 
-Every Monday, both Simon and Alek look at:
+Every Sunday, both Simon and Alek look at:
 
 1. **North Star**: Revenue this week. (Will be $0 until July.)
 2. **Primary KPI**: Calls booked this week. Cumulative since outreach started.
-3. **Leading indicator**: Term sheet conversations active. (Starts populating Week 4+.)
-4. **Funnel rates**: Did each stage hit target conversion this week? Where's the leak?
-5. **Channel attribution**: Which channel produced the calls? Cold outbound vs. content-inbound vs. warm intros.
-6. **One thing to change**: Based on the data, what's the highest-leverage adjustment for next week? Pick one. Don't change five things.
+3. **Pain signals heard**: What specific pain did prospects describe this week? Written pain signals with specifics, not vague interest. If the answer is "none," something is wrong.
+4. **Leading indicator**: Term sheet conversations active. (Starts populating Week 4+.)
+5. **Funnel rates per vertical**: Did each stage hit target conversion this week? Where's the leak? Which vertical is converting best?
+6. **Channel attribution**: Which channel produced the calls? Cold outbound vs. content-inbound vs. warm intros.
+7. **One thing to change**: Based on the data, what's the highest-leverage adjustment for next week? Pick one. Don't change five things.
 
 **Format**: short async write-up shared between Simon and Alek. ~10 minutes to write, ~10 minutes to discuss. Logged so we can look back at week-over-week change.
 
@@ -185,4 +200,12 @@ Two paths from the July 5 review:
 
 ---
 
-*KPIs v0.1 — 2026-04-30. Next review: Sunday May 24 (end of Week 2 of outreach).*
+---
+
+## Tokenrip Reference
+
+This doc is synced to Tokenrip: `fd5784ef` ([link](https://tokenrip.com/s/fd5784ef-451e-4dc0-b9d7-0fbfe5f6d8e2))
+
+---
+
+*KPIs v0.1 — 2026-04-30. v0.2 — 2026-05-09: added per-vertical funnel tracking, pain-signal metric in weekly review. Next review: Sunday May 24 (end of Week 2 of outreach).*

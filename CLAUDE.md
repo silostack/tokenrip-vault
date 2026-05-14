@@ -38,18 +38,19 @@ The five-motion taxonomy (A: firm-direct, B: vendor substrate, C: inter-agent ma
 | Priority | Type | Why It Matters |
 |----------|------|----------------|
 | **P0** | Mid-tier creator outreach + lighthouse hero outreach (Motion E) | Substrate density + marquee logos = the fundraising curve |
-| **P0** | YC application + a16z prep | Capital window in days |
+| **P0** | Firm-direct BD motion (Motion A) — outreach, discovery, design partner | Revenue signal + first customer. See `bd/firm-direct-strategy/` |
 | **P0** | Series 3 blog acceleration (post 9 already shipped; 10-11 next) | Category-establishment artifact partners read during decision-making |
 | **P0** | Substrate roadmap milestones (creator dashboard, "build an agent" v1, marketplace UX) | Gates Motion E volume past Simon's hand-built capacity |
 | **P1** | Hiring sourcing (frontend/UX, devrel, partnerships) | 8-12 week recruit cycles — start now even pre-capital |
 | **P1** | Content velocity (Series 3 + creator-audience-targeted content) | Funnel for Motion D (builder-direct) and category narrative |
 | **P2** | Motion B passive watch (vendor job-board monitoring) | 2027 motion — no founder time on B in 2026 |
+| **P2** | YC follow-up (application submitted, no further optimization) | Already applied — respond if contacted, don't optimize proactively |
 | **P2** | Distribution / SEO refinement | Compounds with Series 3 but secondary to deploys |
 
 ### What This Means in Practice
 
 - **Are creator deploys live and operators registered?** > any strategy discussion
-- **Is the YC application sharp?** > additional research
+- **Are discovery calls producing pain signals?** > any strategy discussion
 - **Did the substrate-density curve grow this week?** > deck polish
 - **Ship this week (deploys, content, hires)** > plan for next month
 

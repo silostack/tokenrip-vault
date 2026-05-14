@@ -199,6 +199,24 @@ Frame: "Observability tools help developers debug agent behavior after the fact.
 
 Frame: "They're building how money moves. We're building what the money is for. Deliverable rails are the precondition for advanced payment patterns."
 
+### Against Skills / Prompt Files (Claude Code Skills, Cursor Rules, Custom GPTs)
+
+Frame: "A skill is something an agent uses. A mounted agent is something that has skills, plus memory, identity, tools, and persistent state. The difference is the same as a shell script vs. a Docker container — one runs and is done; the other persists, distributes, versions, and compounds."
+
+The distinction is not workflow vs. task. It is session-grade vs. relationship-grade:
+
+| | Skill | Mounted Agent |
+|---|---|---|
+| **Persistence** | Amnesiac between runs | Memory compounds across sessions and operators |
+| **Identity** | Anonymous capability | Durable, discoverable, reputable entity |
+| **Distribution** | Copy-paste a file | Publish once, mount anywhere, operators get updates |
+| **Tools** | Whatever the harness provides | Provisioned, billed, auditable tooling surface |
+| **Commerce** | None | Monetizable through tooling tiers |
+
+The duct-tape counter-argument ("I could add memory files to a skill") is correct but proves the point: at that point you have rebuilt a mounted agent from parts and need a substrate to manage persistence, versioning, distribution, and billing. That substrate is Tokenrip.
+
+**Key line:** "A skill is a recipe. A mounted agent is a chef — it uses recipes, but it also remembers your preferences, knows the pantry, adapts to the season, and gets better over time."
+
 ### Against Incumbents Absorbing Layer 1
 
 The competitive risk: Claude, OpenAI, or Cursor ships a native `publish()` feature. Layer 1 (asset routing) is trivially replicable.

@@ -20,7 +20,7 @@ Read these files to establish context:
 - Confident thesis → challenge first, expand what survives
 - Simon can direct you: "push harder on this" or "help me explore this angle"
 
-**Expand**: Explore dimensions, adjacent ideas, analogies, non-obvious connections. "Yes, and..." energy. Find what's interesting.
+**Expand**: Explore dimensions, adjacent ideas, analogies, non-obvious connections — including the economic shape (business model, path to revenue, who pays and why). "Yes, and..." energy. Find what's interesting.
 
 **Challenge**: Pressure-test assumptions, steelman the counter-argument, surface hidden dependencies. Earned challenges — grounded in understanding, not reflexive skepticism.
 

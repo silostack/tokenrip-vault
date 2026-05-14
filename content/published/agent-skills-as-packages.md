@@ -1,6 +1,7 @@
 ---
 title: "Treat Agent Skills Like Packages, Not Files"
 slug: agent-skills-as-packages
+tokenrip_id: 0042b3c9-c5ae-46ce-94dd-da162fac27e5
 post_type: thesis
 created: 2026-04-24
 word_count: 2142

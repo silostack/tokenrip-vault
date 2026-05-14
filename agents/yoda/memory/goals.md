@@ -6,15 +6,15 @@
 
 ### Goal 1: Land Capital Window (YC Submitted, a16z Next)
 - **Success criteria**: YC application submitted. a16z application submitted. At least one capital path lands before week 12.
-- **Progress**: YC submitted May 5. a16z application target: end of week May 12. a16z weighs team + traction heavily; team lacks traditional pedigree so traction velocity is the lever.
-- **Deadline**: a16z submission ~May 12; outcomes by week 12.
-- **Status**: YC done; a16z prep this week — **P0**
+- **Progress**: YC submitted May 5. a16z targeting May 15 (due May 16). Alek creating pitch deck; Simon reviews by May 14. Leveraging existing YC materials.
+- **Deadline**: a16z submission May 15; outcomes by week 12.
+- **Status**: YC done; a16z this week — **P0**
 
-### Goal 2: Launch Audience-Led Motion (Motion E) — First Deploys
+### Goal 2: Launch Audience-Led Motion (Motion E) — Agent-Assisted Maintenance
 - **Success criteria**: First mid-tier deploy live by week 5-6. 5-10 deploys live by week 8. 10-15 by week 12.
-- **Progress**: 200-creator list done. Alek started outreach. Homepage shipped with new positioning. Chief of Staff shipped as public reference deploy. Alek owns this channel day-to-day; Simon available for demo calls.
-- **Deadline**: First deploy live week 5-6 (early June).
-- **Status**: In flight, Alek-led — **P0, ramps continuously**
+- **Progress**: 200-creator list done. Maha (key signal) declined — vitamin confirmed. Now agent-assisted: reply-guy + content agents deployed via MOA to field leads. Simon does high-value conversations when leads surface. Builder ICP still important long-term, just not primary focus now.
+- **Deadline**: Re-evaluate at May 22 comparison.
+- **Status**: **Agent-assisted maintenance** — agents field leads, Simon engages on signal. — **P1**
 
 ### Goal 3: Substrate Density Curve to Demo Day
 - **Success criteria**: 25-40 published imprints, 10K-50K registered operators, sustained 15%+ WoW operator growth, first MRR live, 1-2 lighthouse personas live by Demo Day (~September 2026).
@@ -51,12 +51,21 @@
 - **Deadline**: Dashboard by deploy 25; v2 by week 8.
 - **Status**: Active — **P1**
 
-### Goal 8: Motion D — Builder-Direct Growth (Active Channel)
+### Goal 8: Motion D — Builder-Direct Growth (Paused)
 - **Success criteria**: External builders publishing agents on Tokenrip via MOA. Builder communities engaged. Distribution playbook identified.
-- **Progress**: Two angles being explored: (1) reverse-engineer agent marketplace distribution (ClawMart etc.), (2) find non-technical expertise-productizers via frustration-based search. Research day May 6, execution Wed-Fri.
-- **Deadline**: First external MOA-built agent by next review (~May 12). Distribution playbook draft by May 9.
-- **Status**: Exploring — **P0** (Simon's primary focus this week)
-- **KPI**: Non-founder MOA-built agents published
+- **Progress**: GitHub skill-creator outreach confirmed vitamin-grade interest (most don't care about monetization). Bottom-up distribution playbook drafted (`active/bottom-up-distribution-playbook-2026-05-06.md`). ICP taxonomy created (`bd/icps.md`). One strong lead: Maha (GTM playbook) — emailed.
+- **Deadline**: Re-evaluate at May 22 comparison.
+- **Status**: **Paused** — vitamin-grade signal. Playbook exists if signal changes. — **P2**
+- **KPI**: Non-founder MOA-built agents published (target was 1+ by May 12 — unlikely to hit)
+
+### Goal 10: Vertical Discovery Sprint — Pain-Proximity Test
+- **Success criteria**: 3+ qualified discovery calls with firms that have real workflow pain mapping to Tokenrip's architecture. ≥1 deal-shaped conversation. Pain validated as painkiller, not vitamin.
+- **Progress**: Segments finalized: Insurance (Simon), Tax + Real Estate (Alek). Simon: ~100 connects sent, ~25 accepted (25%), messaging starting May 12. Alek: active, getting responses, sharpening pitch. Framed as "Motion A but building infrastructure" — consulting-as-platform playbook.
+- **Week 1 target (May 11-18)**: 2-3 calls booked, 1 completed.
+- **Deadline**: May 22 hard comparison date.
+- **Status**: Executing — **P0** (both founders)
+- **KPI**: Qualified discovery calls completed; architectural-grade pain found; deal-shaped conversations
+- **Architectural filter**: Does the pain require memory, persistence, portability, BYO economics? If any AI shop could solve it with Zapier + GPT, it's consulting, not product research.
 
 ### Goal 9: Distribution / Registry — Continue Low-Touch
 - **Success criteria**: Tokenrip listed on 6+ registries/directories. Onboarding polish complete. Warm leads re-engaged.
@@ -85,11 +94,19 @@
 | 2026-05-01 | Tooling-tier pricing structure locked | **Not started** | Deferred |
 | 2026-05-01 | Term sheet v1 for creator deals | **Not started** | Deferred |
 | 2026-05-01 | First mid-tier deploy live + audience launch | **Not started** | Week 5-6 target holds |
-| 2026-05-06 | Research day: ClawMart + frustration search | **Committed** | Tue May 6, one page each |
-| 2026-05-06 | MOA demo content + community posts | **Committed** | Wed-Thu May 7-8 |
-| 2026-05-06 | Outreach to 5-10 agent creators/builders | **Committed** | Fri May 9 |
-| 2026-05-06 | a16z application submitted | **Committed** | End of week ~May 12 |
-| 2026-05-06 | First external MOA-built agent published | **Target** | By next review |
+| 2026-05-06 | Research day: ClawMart + frustration search | **Done** | Completed; confirmed vitamin-grade interest |
+| 2026-05-06 | MOA demo content + community posts | **Superseded** | Direction changed to vertical discovery |
+| 2026-05-06 | Outreach to 5-10 agent creators/builders | **Superseded** | Direction changed to vertical discovery |
+| 2026-05-06 | a16z application submitted | **Deprioritized** | Was May 12; now secondary to vertical discovery |
+| 2026-05-06 | First external MOA-built agent published | **Deprioritized** | Motion D paused |
+| 2026-05-08 | Sales Navigator vertical discovery sprint (75% effort) | **In progress** | ~100 connects sent, ~25 accepted, messaging starting |
+| 2026-05-08 | Motion E maintenance outreach (25% effort) | **Shifted to agent-assisted** | Reply-guy + content agents fielding leads |
+| 2026-05-08 | Follow up on Maha GTM lead | **Done** | She declined. Vitamin confirmed. |
+| 2026-05-08 | May 22 hard comparison: vertical vs. Motion E pipeline | **On track** | 11 days away |
+| 2026-05-11 | Message all 25 accepted connections | **Committed** | Mon May 12 |
+| 2026-05-11 | Book 2-3 discovery calls, complete 1 | **Committed** | By Sun May 18 |
+| 2026-05-11 | Review Alek's a16z pitch deck | **Committed** | By Wed May 14 |
+| 2026-05-11 | Submit a16z application | **Committed** | Thu May 15 (due May 16) |
 
 ---
 

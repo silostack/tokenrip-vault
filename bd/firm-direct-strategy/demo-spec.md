@@ -1,8 +1,9 @@
 # Demo Spec — Vertical Workflow Demo
 
 **Status**: Spec only. Build is Simon's. 2-day time-box.
-**Audience**: Pilot prospects in the chosen vertical. Not AI influencers — that's the homepage capability demo, which is already shipped.
+**Audience**: Pilot prospects across three verticals (Insurance, Tax, Real Estate). Not AI influencers — that's the homepage capability demo, which is already shipped.
 **Goal**: Answer "what are we selling?" in 3 minutes such that a non-technical buyer says "I want that for my business."
+**Verticals locked (2026-05-09)**: Insurance (Simon), Tax + Real Estate (Alek). See [[starting-guide]] for full motion context.
 
 ---
 
@@ -105,6 +106,21 @@ The skeleton is the same. What changes per vertical:
 
 **Pain quantified**: tax season capacity is everything. Saving even 30 min/return on a 500-return practice = 250 hours = capacity for 50+ more clients = ~$25K/year revenue.
 
+### Insurance — COI Processing
+
+| Stage | What it shows |
+|---|---|
+| Submit | Contractor/client requests a certificate of insurance |
+| Review | Agent checks: coverage requirements met? Policy active? Limits sufficient? Additional insured endorsement needed? |
+| Decide | Routes to CSR (ready to issue) or back to requestor (missing info / insufficient coverage) |
+| Notify | Slack/email: "Acme Corp COI — ready for issuance, all requirements verified" |
+| Approve | CSR reviews, approves, certificate generated |
+| Track | Dashboard: COI requests in pipeline, turnaround time, stuck requests |
+
+**Pain quantified**: agencies process 50-200 COI requests/week. Each takes 15-30 min of CSR time. At 100/week × 20 min = 33 hours/week of CSR capacity on document checking — almost a full headcount ($45-65K/year) spent on work AI does in seconds.
+
+**Key competitive angle**: supply-side COI automation has **zero competitors**. Every COI player (myCOI, PINS, Certus) tracks COIs that companies *receive*. Nobody helps agencies *process and issue* them.
+
 ---
 
 ## What Simon Has to Build
@@ -152,6 +168,16 @@ If Alek can answer all 5 from just watching the demo, ship. If not, iterate the 
 
 ---
 
+## "Agent Caught It" Moment Scripts
+
+The single most memorable demo moment. Script one per vertical — this is what prospects remember.
+
+- **Insurance (COI)**: "COI request requires $2M general liability, but current policy shows $1M limit. Agent flags: 'Coverage gap — additional coverage or umbrella endorsement needed before certificate can be issued.'"
+- **Tax**: "Prior year return shows $82K W-2 income, but no W-2 uploaded this year. Agent flags: 'Missing W-2 — confirm if employer changed or if document is still pending.'"
+- **Real Estate**: "Inspection report dated March 3, but purchase agreement contingency expires March 1. Agent flags: 'Inspection contingency may have lapsed — verify extension with buyer's agent.'"
+
+---
+
 ## What This Demo Is NOT
 
 To prevent scope creep:
@@ -173,4 +199,12 @@ To prevent scope creep:
 
 ---
 
-*Draft v0.1 — 2026-04-30. Update with vertical-specific copy after vertical pick.*
+---
+
+## Tokenrip Reference
+
+This doc is synced to Tokenrip: `11997fd9` ([link](https://tokenrip.com/s/11997fd9-c4ac-4e94-9b89-63638542fd17))
+
+---
+
+*Draft v0.1 — 2026-04-30. v0.2 — 2026-05-09: added insurance/COI vertical adaptation, "agent caught it" moment scripts, updated for 3-vertical scope and discovery-first sequencing (demo is post-discovery, not pre-outreach).*
