@@ -10,7 +10,9 @@
 
 ## Core Thesis (One Paragraph)
 
-The unit of automation in knowledge work is shifting from the chatbot session to the persistent agent. But enterprises are still buying chatbots top-down while their employees are building real automation bottom-up. The two sides cannot meet without a substrate that makes individual automations team-shareable. Tokenrip is that substrate. The wedge is the non-technical employee who is already automating their job with AI. The ladder is Glo (individual, free) → AI Agent Manager (team, paid) → Company Tenant (enterprise). The motion is precedented (Slack/Notion/Figma/GitHub bottom-up SaaS) and happening now in the AI agent layer with no incumbent.
+The unit of automation in knowledge work is shifting from the chatbot session to the persistent agent. But enterprises are still buying chatbots top-down while their employees are building real automation bottom-up. The two sides cannot meet without a substrate that makes individual automations team-shareable. The wedge is the non-technical employee who is already automating their job with AI. The ladder is Glo (individual, free) → automation owner / AI Agent Manager (team, paid) → Company Tenant (enterprise). The motion is precedented (Slack/Notion/Figma/GitHub bottom-up SaaS) and happening now in the AI agent layer with no incumbent.
+
+**One-line positioning**: Tokenrip is the durable home for employee-built AI agents — so individual automations can become team infrastructure.
 
 ---
 
@@ -87,13 +89,13 @@ Not three customer segments. One motion with three pricing moments.
 - Free tier; substrate cost is storage, not inference
 - Distribution: viral through Glo telling coworkers; published creators (the supply layer) as gateway agents
 
-### Step 2 — AI Agent Manager (Team / Paid)
+### Step 2 — Automation owner / AI Agent Manager (Team / Paid)
 
 - Emerges when 3+ Glos exist on one team
 - Coordinates the team's workflow library, versions, credentials, governance
 - Pays for: shared memory across team, observability, tooling tier (search, webhooks, scheduled runs), audit
 - ACV: hundreds to low thousands per team per month
-- Real role today (Upwork postings, LinkedIn "AI Champion" titles); will be common by 2028
+- Function emerging now — AI Champions, ops leads, automation owners; the platform will name the formal role (the way Slack named the "Slack admin")
 
 ### Step 3 — Company Tenant (Enterprise)
 
@@ -140,7 +142,7 @@ Tokenrip follows the same shape with AI agents as the unit.
 
 ### The window
 
-Anthropic + OpenAI are circling SMB. Microsoft is circling enterprise top-down. None of them solve the "individual automation → team capability" graduation problem because their architectures are session-grade. The window is open for the substrate that makes graduation possible. The window is not infinite — 12-24 months before someone else names this.
+Anthropic + OpenAI are circling SMB. Microsoft is circling enterprise top-down. None of them solve the "individual automation → team capability" graduation problem because their architectures are session-grade and their incentives keep users inside their runtime. The window is open now because workplace AI adoption is accelerating, but the portable team layer has not been named yet.
 
 ---
 
@@ -183,28 +185,24 @@ A 2×2 matrix is the cleanest way to show the empty quadrant. Two axes that matt
 - **Top-down vs. Bottom-up** — who decides to use it?
 
 ```
-                 TOP-DOWN                        BOTTOM-UP
-              ┌────────────────────────┬────────────────────────┐
-              │                        │                        │
-SINGLE-       │ Microsoft Copilot      │ ChatGPT                │
-PLAYER        │ Salesforce Einstein    │ Claude                 │
-              │ Enterprise IT pilots   │ CodeWords.ai           │
-              │                        │ Lovable / Bolt / v0    │
-              │                        │                        │
-              ├────────────────────────┼────────────────────────┤
-              │                        │                        │
-MULTI-        │ Palantir-style         │ TOKENRIP               │
-PLAYER        │ McKinsey deployments   │ (empty quadrant today) │
-              │ Slow, expensive        │                        │
-              │                        │                        │
-              └────────────────────────┴────────────────────────┘
+                       TOP-DOWN                  BOTTOM-UP
+
+SINGLE-PLAYER          Copilot                   ChatGPT
+                       Salesforce Einstein       Claude
+                       Enterprise IT pilots      Lovable / Bolt / v0
+                                                 CodeWords.ai
+
+MULTI-PLAYER           Palantir / services       TOKENRIP
+                       consulting deployments    portable team agents
 ```
 
-Note: agent frameworks (LangGraph, CrewAI, AutoGen) belong off-matrix — they're orchestration tools for developers, not platforms for end users. Worth one line of acknowledgment in speaker notes, not real estate on the slide.
+**Caption** (deck-ready): Incumbents validate workplace AI. Tokenrip owns the runtime-neutral collaboration layer.
+
+Note: agent frameworks (LangGraph, CrewAI, AutoGen) belong off-matrix — they're orchestration tools for developers, not platforms for end users. Worth one line of acknowledgment in speaker notes, not real estate on the slide. Cursor is deliberately off-matrix too — it's a coding tool with multi-player via git, which doesn't fit cleanly on the bottom-up single-player end.
 
 ### The hard question this slide invites
 
-"What stops Anthropic / OpenAI from filling the empty quadrant?" — answered in speaker notes: their economics (selling inference) are structurally hostile to BYO model; their products are runtimes, not substrates; portability across competitors' tools is anti-aligned with their business model.
+"What stops Anthropic / OpenAI from filling the empty quadrant?" — answered in speaker notes: their incentives keep users inside their runtime (that's where their inference revenue lives); portability across competitors' tools is anti-aligned with their business model. The neutral substrate has to be a third party.
 
 ---
 

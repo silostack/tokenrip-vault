@@ -16,9 +16,9 @@
 
 - Enterprises buy AI top-down (Microsoft Copilot, ChatGPT Enterprise, Salesforce Einstein).
 - Employees adopt AI bottom-up (ChatGPT, Claude, VS Code, personal subscriptions).
-- The two sides aren't meeting. The gap has no home.
+- The missing layer is where individual automations become team capability.
 
-**Visual**: Two arrows pointing at each other across a gap. Top arrow labeled "Enterprise IT". Bottom arrow labeled "Employees automating themselves". Negative space in the middle labeled "?".
+**Visual**: Two arrows pointing at each other across a gap. Top arrow labeled "Enterprise IT". Bottom arrow labeled "Employees automating themselves". Negative space in the middle labeled "Shareable, governable agents".
 
 ---
 
@@ -26,54 +26,77 @@
 
 **Headline**: Meet the new knowledge worker.
 
-**Body**: Verbatim quote (no paraphrase, no fixes):
+**Body**: Three fragments (verbatim):
 
-> "I'm still a newbie but ChatGPT walks me through it. Mainly trying to find ways to automate repetitive tasks at work...
+> "I'm still a newbie but ChatGPT walks me through it."
 >
-> I like working in VS Code terminal...
+> "I like working in VS Code terminal."
 >
-> I want to basically automate all of my most repetitive tasks. My boss totally fully supports this...
+> "I want to automate all my repetitive tasks. My boss totally supports this."
+
+**Secondary caption** (smaller, beneath the main quote):
+
+> "And: 'I can't use OpenClaw at work — feel like that shit is gonna give me a virus lol.'"
 >
-> I can't use OpenClaw at work nor do I want to because I feel like that shit is gonna give me a virus lol."
+> Security anxiety is built into the protagonist.
 
 **Caption**: Glo. Arts degree. No code background. Automating her own job in VS Code with ChatGPT as her guide. Boss-supported. Anthropic Personal, not Enterprise.
 
-**There are millions of Glos.** They are bootstrapping the bottom-up wave with no platform.
+**Glo is not an edge case.** She is the first visible version of a new enterprise user.
 
 ---
 
-## Slide 3 — The Graveyard
+## Slide 3 — Trapped on Individual Laptops
 
-**Headline**: Every Glo's automation dies on her laptop.
+**Headline**: Employee-built automations die alone.
 
 **Body**:
 
-- She figures out how to automate her COI workflow.
+- Glo automates a real workflow.
 - It works for her.
-- Her coworker has to rebuild it from scratch.
-- Her team has no way to share it, version it, govern it, or trust it.
-- Six months later she changes jobs and it's gone.
+- Her coworker rebuilds it from scratch.
+- Her manager cannot share, version, govern, audit, or trust it.
+- When she leaves, the automation leaves with her.
 
-**The gap**: there is no path from individual automation to team capability. The session is the product. The session ends. The work dies.
+**Bottom line**: There is no path from individual automation to team capability.
 
-**Visual**: A graveyard of laptops, each labeled with a dead automation ("Sarah's COI bot", "Mike's invoice agent", "Glo's spreadsheet extractor").
+**Visual**: One laptop with its workflow contents listed, surrounded by coworker and manager who can't reach in.
+
+```
+Glo's laptop
+  └─ COI checker
+  └─ spreadsheet extractor
+  └─ broker follow-up draft
+
+Coworker → rebuilds from scratch
+Manager  → no versioning, no audit, no governance
+```
 
 ---
 
-## Slide 4 — Mounted Agents
+## Slide 4 — Tokenrip's Architecture
 
 **Headline**: We make the automation outlive the session.
 
 **Body**:
 
-- The agent's instructions, memory, and tools live on Tokenrip.
-- The user runs it in whatever AI tool they already use (ChatGPT, Claude, VS Code, Cursor).
-- The user pays for their own AI. We host everything else.
-- The automation persists. The team can mount it. The company can govern it.
+- Instructions, memory, artifacts, tools, and versions live on Tokenrip.
+- The user runs the agent in whatever AI tool they already use: ChatGPT, Claude, Cursor, VS Code, MCP-compatible tools.
+- The user brings their own model.
+- Tokenrip hosts the durable layer that lets the agent persist, move, and be shared.
 
-**Why we win on economics**: We don't pay for inference. Users do. Our cost is storage. Margins expand with scale instead of compressing.
+**Economics**: Our marginal cost is storage, metadata, API calls, and coordination — not model inference. Margins expand with scale instead of compressing.
 
-**Visual**: Three boxes — `Instructions + Memory + Tools (Tokenrip)` → `Runs in (ChatGPT / Claude / Cursor / VS Code)` → `Built once, used by anyone on the team`.
+**Visual**:
+
+```
+Tokenrip
+Instructions + Memory + Tools + Artifacts + Versions
+      ↓
+Mounted into ChatGPT / Claude / Cursor / VS Code / MCP
+      ↓
+Built once. Used by the team.
+```
 
 ---
 
@@ -86,10 +109,10 @@
 | Step | Who | Price | Why they pay |
 |------|-----|-------|--------------|
 | **1. Individual** | Glo | Free | Her automations finally persist |
-| **2. Team** | AI Agent Manager | $20-50/user/mo | She can share, version, govern, audit her team's agents |
+| **2. Team** | Automation owner / AI Agent Manager | $20-50/user/mo | She can share, version, govern, audit her team's agents |
 | **3. Enterprise** | IT / CTO | $50K-500K/yr | The substrate runs on their infrastructure with their data and their models |
 
-**The "AI Agent Manager" is a real role**, emerging now (Upwork postings, LinkedIn "AI Champion" titles, growing 12-month trend). Like the Slack admin or the Notion workspace owner — created *by* the platform existing.
+**The role is forming now**: AI Champions, ops leads, and automation owners become the first team buyers.
 
 **Visual**: Three-rung ladder. Free → Team → Enterprise. Same product, ascending value.
 
@@ -97,46 +120,59 @@
 
 ## Slide 6 — Why Now / The Empty Quadrant
 
-**Headline**: Everyone is building the wrong shape.
+**Headline**: Today's AI is single-player. Workplace AI is multi-player.
 
 **Visual** (the matrix is the slide):
 
 ```
-                 TOP-DOWN                BOTTOM-UP
+                       TOP-DOWN                  BOTTOM-UP
 
-SINGLE-       Microsoft Copilot      ChatGPT, Claude
-PLAYER        Salesforce Einstein    CodeWords.ai
-                                     Lovable / Bolt / v0
+SINGLE-PLAYER          Copilot                   ChatGPT
+                       Salesforce Einstein       Claude
+                                                 Lovable / Bolt / v0
+                                                 CodeWords.ai
 
-MULTI-        McKinsey deployments   TOKENRIP
-PLAYER        Palantir-style         ← empty
-              (slow, expensive)
+MULTI-PLAYER           Palantir / services       TOKENRIP
+                       consulting deployments    portable team agents
 ```
 
-**Caption** (one line): The bottom-up multi-player quadrant is empty because no one's architecture supports it. Mounted agents do.
+**Caption**: Incumbents validate workplace AI. Tokenrip owns the runtime-neutral collaboration layer.
 
-**Why now** (three lines max):
+**Why now**:
 
 - Anthropic and OpenAI just opened the bottom-up wave (Claude for SMB, ChatGPT Enterprise).
-- Their economics (selling inference) are structurally hostile to BYO model + portability.
-- The window is 12-24 months before this gets named by someone.
+- Their incentives keep users inside their runtime. Tokenrip makes agents portable across them.
+- The window is open now because workplace AI adoption is accelerating, but the portable team layer has not been named yet.
 
 ---
 
 ## Slide 7 — The Bet
 
-**Headline**: In 5 years, every knowledge-work team has a roster of mounted agents managed by an AI Agent Manager. We're the substrate.
+**Headline**: In 5 years, every knowledge-work team has a roster of persistent agents. Tokenrip is where those agents live.
 
 **Traction**:
 
-- Substrate live. CLI shipped April 2026.
-- First creators publishing methodology agents (Motion E supply layer).
-- First Glos mounting them (workplace demand side).
-- Upwork-as-discovery active: paid gigs that double as customer discovery and produce reusable mounted agents on the platform.
+- Substrate live. CLI shipped.
+- Agents, assets, collections, messaging, and MCP-compatible architecture in place.
+- First creator-published methodology agents.
+- First workplace automation users.
+- Upwork-as-discovery active: paid workflow builds that become reusable mounted-agent patterns.
 
-**Asks**: [accelerator slot, capital amount, what we'll do with it]
+**Ask**: We are applying to a16z Speedrun to turn early workflow demand into a repeatable bottom-up distribution loop: individual → team → enterprise.
 
-**Visual**: A line going up. Y-axis: "Teams with mounted-agent rosters". X-axis: 2026 → 2031. Tokenrip's line is the slope. Anthropic / OpenAI / Microsoft lines run flat in the multi-player quadrant.
+**Visual** (compounding loop):
+
+```
+Glo builds or mounts agent
+      ↓
+Coworkers reuse it
+      ↓
+Team owner governs it
+      ↓
+Company tenant standardizes it
+      ↓
+More agents, more memory, more workflows
+```
 
 ---
 
@@ -144,7 +180,7 @@ PLAYER        Palantir-style         ← empty
 
 ### "What stops Anthropic or OpenAI from doing this?"
 
-Their entire business is selling inference. Mounted agents work because the user pays for their own model. Anthropic eating their own margin to host portable agents that run in OpenAI's tools is structurally impossible. Same in reverse. The neutral substrate has to be a third party.
+Their incentives keep users inside their runtime — that's where their inference revenue lives. Tokenrip's whole value proposition is portability *across* runtimes (your agent runs the same way in Claude, ChatGPT, Cursor, VS Code). A model provider hosting portable agents that run in a competitor's tool is structurally anti-aligned. The neutral substrate has to be a third party.
 
 ### "Aren't there a hundred agent frameworks?"
 
@@ -152,7 +188,7 @@ LangGraph, CrewAI, AutoGen are orchestration tools for developers. Tokenrip is a
 
 ### "Is the AI Agent Manager role real or aspirational?"
 
-Real and growing. Upwork has active postings (literal "AI Agent Manager" job, May 2026). LinkedIn shows accelerating "AI Champion" / "Head of AI" / "AI Lead" title proliferation. Like every prior bottom-up wave, the role gets named *after* the platform exists — we're early to it.
+Forming now. Upwork has active postings (including a literal "AI Agent Manager" job, May 2026). LinkedIn shows accelerating "AI Champion" / "Head of AI" / "AI Lead" title proliferation. Like Slack admins, Notion workspace owners, and GitHub org admins, the role gets named *after* bottom-up adoption creates the need — we're early to it.
 
 ### "Why won't builders just leave the platform?"
 
@@ -172,7 +208,7 @@ Marginal cost per user is storage and API calls, not inference. Storage scales l
 
 - 7 slides hard cap for the version a16z reviews; longer versions for follow-up conversations
 - Keep slide bodies to 3-5 lines max — partners scan, they don't read
-- Glo's quote should be on screen long enough to read (slide 2 is intentionally text-heavy; this is the only slide that breaks the rule)
+- Slide 2 is three short fragments plus a smaller secondary caption — scannable but quote-anchored
 - Matrix on slide 6 is the most important diagram in the deck — it does the heavy lifting of differentiation
 - No animations, no transitions, no stock photos
 - Designed for static PDF; should print legibly in B&W
