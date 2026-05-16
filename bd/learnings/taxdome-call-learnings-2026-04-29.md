@@ -15,7 +15,7 @@
 The call was a generous strategic consult, not a sales conversation. TaxDome appreciated the input but did not bite on the orchestration-layer thesis. The most valuable output was not commercial — it was a sharp read on how vertical SaaS CEOs are currently thinking about AI, and what they actually want to build. Three high-value takeaways:
 
 1. **The orchestration-layer framing is contested by the people who would license it.** Vertical SaaS CEOs see it as marketing copy wrapped around defensive walled-garden architecture, not a real strategic posture.
-2. **Vertical SaaS vendors are about to build "Cloud Cowork for their vertical" themselves.** Pre-built agent libraries + internal agent builders is the dominant playbook. This is a 6–18 month build window where Tokenrip could be infrastructure underneath.
+2. **Vertical SaaS vendors are about to build "Claude Cowork for their vertical" themselves.** Pre-built agent libraries + internal agent builders is the dominant playbook. This is a 6–18 month build window where Tokenrip could be infrastructure underneath.
 3. **There are two distinct motions hiding in the Tokenrip GTM.** Firm-direct (briefing tax, Garcia-scene pitch) and vendor-substrate (B2B2B, "infrastructure for your AI features"). They have different products, ICPs, and pitches. Conflating them costs deals.
 
 ---
