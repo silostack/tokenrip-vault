@@ -13,19 +13,13 @@
 
 ## Slide 1 — Cover
 
-**Purpose**: Open the deck by stating what Tokenrip is and where it is going — identity and ambition. The problem belongs to slide 2; the cover must not duplicate it.
+**Purpose**: Open the deck — the company name and what it does, nothing else. The problem belongs to slide 2; the vision now closes the deck on slide 6.
 
-**Company**: TOKENRIP
+**Company name** (the hero element — large and prominent): Tokenrip
 
-**Headline**: Portable AI agents shared with your team.
+**Tagline**: Portable AI agents shared with your team.
 
-**Vision line**: In 5 years, every knowledge-work team has a roster of persistent agents. Tokenrip is where those agents live.
-
-**Founders**: Simon Pettibone & Alek Perak — second-time founders, previously RebelFi.
-
-**Context**: a16z Pitch · May 2026 · Founded April 2026
-
-> Keep the TR monogram treatment. No problem statement on the cover — slide 2 owns the problem.
+> Cover is name + tagline only. No vision line, no founder credit, no pitch/date context — that was clutter. Logo/wordmark treatment is the designer's call.
 
 ---
 
@@ -53,7 +47,7 @@
 2. **Her manager can't see it or govern it** — automation running invisibly inside the org.
 3. **When she leaves, it leaves with her** — the institutional knowledge walks out the door.
 
-> Section header stays "Everyone around her loses" — not "When Glo leaves." The first two losses are true while she is still employed.
+> Section header is exactly "Everyone around her loses" — delete any "When Glo leaves" label from this section. The first two losses are true while she is still employed, so "When Glo leaves" mis-frames them.
 
 ---
 
@@ -65,7 +59,7 @@
 
 **Subheading**: It runs in the AI tools your team already uses — Claude, ChatGPT, Cursor, VS Code.
 
-**The inversion** (callout): Your model runs the agent — Tokenrip never runs inference.
+**The inversion** (callout): Your model runs the agent — Tokenrip doesn't run inference.
 
 > Render the inversion as a filled, emphasized box — not a thin-bordered footnote. It states architecture only. Do not add economics ("margins expand with scale") here — that lives on slide 4.
 
@@ -78,7 +72,11 @@
 
 > Size the four step-cards to their content — avoid tall, near-empty cards.
 
-**What this is not**: Not a coding-agent tool. Not an orchestration framework. Tokenrip is collaboration infrastructure — complementary to LangGraph, CrewAI, AutoGen.
+**What it is not**: Not a coding-agent tool. Not an orchestration framework.
+
+**What it is**: Collaboration infrastructure — complementary to LangGraph, CrewAI, AutoGen.
+
+> Render the two "is not" items each marked ✕, and the "what it is" item visually distinct — a ✓ or the accent color, never ✕. The previous render marked all three ✕, which read as "✕ NOT collaboration infrastructure" — the opposite of the intent.
 
 ---
 
@@ -134,9 +132,9 @@
 
 ## Slide 6 — Traction & Team
 
-**Purpose**: For a pre-traction company the founders are the bet. Show velocity as team-proof — a substrate shipped in six weeks — and a pair that covers both halves of the problem: go-to-market with founder-market-fit, and the technical capability to build the substrate.
+**Purpose**: For a pre-traction company the founders are the bet. Show velocity as team-proof — a substrate shipped in six weeks — and a pair that covers both halves: the technical depth to build the substrate, and a proven go-to-market operator to put it in front of teams. Close the deck on the vision.
 
-**Headline**: One founder lived the problem. The other built the fix.
+**Headline**: One founder builds the product. The other takes it to market.
 
 **Stat row**:
 
@@ -157,9 +155,13 @@
 - Upwork-as-discovery: paid agent builds that become reusable patterns.
 - First teams sharing agents on the paid tier.
 
-**Alek — Go-to-market**: Worked title companies and real-estate closings firsthand, both sides. Watched institutional knowledge walk out the door every time an employee left. Now running outreach to thousands of title companies and insurance brokers.
+**Alek — Go-to-market**: A career go-to-market operator — enterprise sales at Gartner, full-time insurance sales, and a real estate company of his own. Co-founded RebelFi with Simon, running 400+ customer-development conversations with banks and fintechs. Leads go-to-market at Tokenrip.
 
 **Simon — Technical**: Twenty years an engineer — VP of Backend Engineering at RealtyCrunch (acquired by The Real Brokerage, NASDAQ: REAX), then co-founded RebelFi with Alek. Built the entire Tokenrip substrate solo in six weeks, MCP-native from day one.
+
+**Closing line**: In 5 years, every knowledge-work team has a roster of persistent agents. Tokenrip is where those agents live.
+
+> The closing line is the deck's final statement — render it as a full-width band below the two bios, set apart with whitespace. It is the deck's mic-drop, not a footnote.
 
 ---
 
@@ -205,18 +207,18 @@ Marginal cost per user is storage and API calls, not inference. Storage scales l
 - Each content slide opens with a **Purpose** annotation — internal, not slide content.
 - Keep slide bodies tight — partners scan, they don't read.
 - This markdown is the content source of truth; the rendered PDF is produced from it. Keep them in sync.
-- **The founding figure is locked at "6 weeks" / "Founded April 2026."** Use it consistently — cover context line, slide 6 stat row, Simon's bio ("six weeks"). Do not let it drift to "4 weeks."
-- **Slide 1 (cover)**: identity headline + the 5-year vision line + a one-line founder credit. No problem statement on the cover — slide 2 owns the problem. Keep the TR monogram.
-- **Slide 2**: render the headline as two clauses at equal (headline) weight, the second clause in the accent color — do not demote it to a grey subheading. The three losses use a numbered treatment; the section header is "Everyone around her loses," not "When Glo leaves."
-- **Slide 3**: the "inversion" callout is a filled, emphasized box and states architecture only — "Tokenrip never runs inference." Do NOT add economics here; that lives on slide 4. Size the four step-cards to their content — avoid tall, near-empty cards.
+- **The founding figure is locked at "6 weeks" / "Founded April 2026."** Use it consistently — slide 6 stat row and Simon's bio ("six weeks"). Do not let it drift to "4 weeks."
+- **Slide 1 (cover)**: company name + tagline only — no vision, no founder credit, no pitch/date context. The company name is the hero element; make it prominent.
+- **Slide 2**: render the headline as two clauses at equal (headline) weight, the second clause in the accent color — do not demote it to a grey subheading. The three losses use a numbered treatment; the section header is exactly "Everyone around her loses" — no "When Glo leaves" label.
+- **Slide 3**: the "inversion" callout is a filled, emphasized box and states architecture only — "Tokenrip doesn't run inference." Do NOT add economics here; that lives on slide 4. The "what it is" / "what it is not" row has two negatives (✕) and one positive ("Collaboration infrastructure") — the positive must never be marked ✕. Size the four step-cards to their content.
 - **Slide 4**: headline is "How a free agent becomes enterprise revenue" — not "The Ladder." No subheading restating the headline. Three tier cards; the two notes (economics inversion, emerging buyer) sit below.
 - **Slide 5**: the matrix IS the slide — render it large, fill the Tokenrip quadrant with the accent color, and make the axis labels big and legible. One moat line only. Do not add side boxes — observability and the compounding moat stay in the FAQ.
-- **Slide 6**: traction and team merged. Headline is the founder line; velocity reads through the stat row. The 5-year vision is NOT here — it moved to the cover.
+- **Slide 6**: traction and team merged. Headline is the build/sell founder line; velocity reads through the stat row. The deck's closing line is the 5-year vision — a full-width band below the bios.
 - The inverted model is split deliberately: slide 3's callout states the architecture, slide 4's "Why the economics invert" states the economics. "Margins expand with scale" appears once — on slide 4.
 - No animations, no transitions, no stock photos.
 - Designed for static PDF; should print legibly in B&W — accent-color fills need a B&W fallback (heavier border or tint).
 
 ## To confirm before the deck is final
 
-- Simon's bio: the RealtyCrunch acquisition by The Real Brokerage and the NASDAQ ticker (REAX) are drafted from `active/a16z-speedrun-application-2026-05-15.md` — verify both.
-- Founder last names on the cover (Pettibone / Perak).
+- Simon's bio: verify the RealtyCrunch acquisition by The Real Brokerage and the NASDAQ ticker (REAX).
+- Alek's bio cites "400+ customer-development conversations" at RebelFi; the a16z application doc cites "300+" for the same work in Simon's bio. Reconcile to one number.
