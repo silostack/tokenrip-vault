@@ -12,13 +12,13 @@ An agentic collaboration platform that gives agent-produced assets persistent id
 
 ## The Problem It Solves
 
-Agents produce valuable assets trapped in chat windows, operating in siloed contexts. Existing collaboration tools (Notion, Google Docs, GitHub Gists) are human-first — agents are second-class citizens bolted on through APIs designed for developers. There is no purpose-built infrastructure for agents to collaborate with each other or for teams to share operational context across agent environments.
+Agents produce valuable assets trapped in chat windows, operating in siloed contexts. Operators can't see what their agents are doing or steer them without starting new conversations. Existing collaboration tools (Notion, Google Docs, GitHub Gists) are human-first — agents are second-class citizens bolted on through APIs designed for developers. There is no purpose-built infrastructure for agent visibility, human-agent collaboration, or agent-to-agent coordination across platforms and organizations.
 
 ## Product Architecture (Five Layers)
 
 | Layer | What | Build Order |
 |-------|------|------------|
-| **Asset Routing** | Agent publishes, human gets a shareable link that renders beautifully | First |
+| **Asset Routing + Visibility** | Agent publishes, operator sees what agents produce and what needs attention | First |
 | **Collaboration + Messaging** | Asset versioning, comments, Thread primitive (agent-to-agent messaging) | Alongside Layer 1 |
 | **Deliverable Rails** | Assets as proof of work in agent transactions; escrow + milestone delivery | Layer 3 |
 | **Workspaces** | Shared organizational context — collections + membership + change semantics | Emerges from usage |
@@ -36,20 +36,16 @@ Each layer accumulates defensible data: the coordination graph (Layer 2), the wo
 
 ## Key Documents
 
-- [[tokenrip]] — Full project doc: architecture, moat strategy, 30-day build plan, competitive context
-- [[tokenrip-exploration]] — Thinking landscape: origin friction, deliverable rails, payment primitives, moat deep dive
-- [[tokenrip-workspaces]] — Workspace model: three-tier topology, synchronization, cross-org use cases
-- [[tokenrip-messaging]] — Agent messaging architecture: Thread/Message primitives, identity, privacy model
-- [[tokenrip-messaging-architecture-v2]] — Updated messaging architecture
-- [[tokenrip-coordination]] — Coordination infrastructure: coordination artifacts, organizational memory
-- [[tokenrip-coordination-data-model]] — Data model for coordination artifacts
-- [[tokenrip-branding]] — Branding, positioning & framing: collaboration layer positioning, audience definition, messaging framework, language guide, competitive framing, brand voice
-- [[tokenrip-collections]] — Collections spec: structured data tables for agents, data model, API, frontend rendering, agent workflow
+- [[tokenrip-context]] — **Start here.** Comprehensive product reference: what Tokenrip is, five-layer architecture, core primitives, organizational model, collaboration features, technical details, use cases
+- [[tokenrip-positioning]] — Positioning angles, competitive framing, messaging frameworks, audience & language, moat narrative
+- [[mounted-agent-model]] — Imprint/Memory/Harness separation, BYO model economics, agent-mediated products
+- [[tool-layer]] — The skill/tool distinction, bypassable-vs-substrate test, three tool categories, COI email worked example. Foundational for any tool-layer implementation work
+- [[business-model]] — Monetization architecture: charge for substrate, three revenue lines, pricing tiers, anti-patterns. Companion to tool-layer
 - [[distribution-strategy]] — Distribution plan: integration hierarchy, viral mechanics, branding tiers
-- [[thinking-notes]] — Ongoing strategic thinking and open questions
-- `council-transcript-*.md` — Council session transcripts (strategic review sessions)
+- [[tokenrip-homepage-redesign]] — Homepage design spec (locked)
+- Branding & voice guide: `content/tokenrip-branding.md`
 
 ## Related Projects
 
-- `__PROJECTS/10x/` — 10x roadmap: Tokenrip is Track 1 build target and Track 2 infrastructure
-- `__PROJECTS/agentic-economy/` — Market research informing Tokenrip's competitive positioning
+- `product/10x/` — 10x roadmap: Tokenrip is Track 1 build target and Track 2 infrastructure
+- `intelligence/` — Competitive landscape, market research informing positioning

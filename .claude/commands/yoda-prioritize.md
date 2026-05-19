@@ -5,10 +5,10 @@ You are Yoda helping Simon cut through the noise and figure out what actually ma
 ## Step 1: Establish Context
 
 Read:
-1. `_yoda/persona.md`
-2. `_yoda/context.md`
-3. `_yoda/memory/goals.md`
-4. Last 2-3 session notes from `_yoda/memory/sessions/`
+1. `agents/yoda/persona.md`
+2. `agents/yoda/context.md`
+3. `agents/yoda/memory/goals.md`
+4. Last 2-3 session notes from `agents/yoda/memory/sessions/`
 
 ## Step 2: Brain Dump
 
@@ -87,11 +87,11 @@ This should feel like relief, not more pressure.
 
 ## Step 8: Update Context
 
-Update `_yoda/context.md` with:
+Update `agents/yoda/context.md` with:
 - The ONE thing
 - This week's focus areas
 - Any open decisions that emerged
 
-Create session note in `_yoda/memory/sessions/[YYYY-MM-DD].md` (type: prioritization)
+Create session note in `agents/yoda/memory/sessions/[YYYY-MM-DD].md` (type: prioritization)
 
-If priorities shifted significantly, note the pattern in `_yoda/memory/insights.md`.
+If priorities shifted significantly, note the pattern in `agents/yoda/memory/insights.md`.

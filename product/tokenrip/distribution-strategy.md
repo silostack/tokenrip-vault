@@ -10,12 +10,13 @@
 
 Layer 1 (asset routing) is trivially replicable. Any platform could ship a `publish()` command tomorrow. The moat — the asset graph — only exists if Tokenrip becomes the default place agent-produced assets live. Distribution speed determines whether Tokenrip becomes the standard or becomes a feature someone else ships.
 
-Two forces create the distribution window:
+Three forces create the distribution window:
 
 1. **Agent output is exploding.** Every AI tool produces more assets than its interface can manage. The sharing problem is universal and getting worse.
-2. **Nobody owns the export layer.** Every AI tool has a different, usually bad, answer to "how do I share this?" There's no Stripe for agent output — no drop-in solution that just works.
+2. **Nobody owns the visibility layer.** Operators can't see what their agents are doing without digging through chat histories. Observability tools (LangSmith, Langfuse) solve developer debugging. Nobody solves operator supervision — the forward-looking question of "what is my agent working on and what does it need from me?"
+3. **Nobody owns the collaboration layer.** Every AI tool has a different, usually bad, answer to "how do I share this?" and no answer at all for "how do I steer this?" There's no purpose-built surface for human-agent or agent-to-agent collaboration.
 
-The strategy: make Tokenrip so easy to plug into any tool that it becomes the default export layer before anyone else builds one. Then use the installed base to build the collaboration layer (Layer 2) that creates real switching costs.
+The strategy: lead with visibility (the most universal pain point today), build the collaboration surface that creates switching costs, and use the installed base to become the connective tissue between agents. Visibility is the door. Collaboration is why they stay.
 
 ---
 
@@ -101,7 +102,7 @@ For this to work, the link experience must be a first-class product:
 
 ### What the Recipient Sees at `rip.to/abc123`
 
-1. **Beautiful rendering.** The document, code, or asset renders better than the originating tool could manage. Professional typography, syntax highlighting, responsive layout. The link should make the sender look good.
+1. **Clean, functional rendering.** The document, code, or asset renders well — professional typography, syntax highlighting, responsive layout. But the real draw is what happens next: the recipient can interact with it. Comment, version, collaborate. The link isn't just a view — it's an invitation to participate.
 2. **Immediate next actions.** Comment button. Fork button. Share button. Version history. The page isn't a static render — it's an invitation to interact.
 3. **Attribution.** "Created with [Tool Name] + AI" — credits the originating tool (important for tool builder incentive alignment). "Published via Tokenrip" — credits the platform (important for viral awareness).
 4. **Path to becoming a publisher.** Subtle but present. "Publish your own AI outputs" with a link to getting started. Not aggressive — just visible.
@@ -117,7 +118,7 @@ User publishes asset → shares link with N people
 
 The key levers:
 - **N (share breadth):** How many people see each link? Optimize for content types that get shared widely (reports, design previews, code documentation).
-- **Quality of impression:** Does the page make people think "I want this"? This is why rendering quality is non-negotiable.
+- **Quality of impression:** Does the page make people think "I want this"? Clean rendering is table stakes — the real hook is seeing the collaboration surface (comments, versions, activity) that makes the link feel alive, not static.
 - **Friction to first publish:** How fast can a curious recipient go from "this is cool" to publishing their own asset? Target: under 2 minutes.
 
 ---
@@ -130,7 +131,7 @@ Three tiers that make the free tier drive viral growth and the paid tiers serve 
 |--|------|-----|------------|
 | **URL** | `rip.to/abc123` | `rip.to/abc123` | `share.toolname.com/abc123` |
 | **Page branding** | "Published via Tokenrip" (prominent) | Tool's logo + colors + "Powered by Tokenrip" (footer) | Fully custom, white-label option |
-| **Rendering** | Beautiful (this is the ad) | Beautiful + custom theming | Fully branded experience |
+| **Rendering** | Clean + full collaboration surface (this is the ad) | Custom theming + collaboration | Fully branded experience |
 | **Collaboration** | Comments, versions | Comments, versions, teams | Full workflow, roles, policies |
 | **API limits** | Generous free tier | Usage-based | Contract |
 | **Analytics** | Basic (views) | Detailed (engagement, shares) | Full analytics + API |
@@ -222,7 +223,7 @@ async function shareDocument(doc, user) {
 ```
 
 **Recipient experience:**
-- Clicks link → sees beautifully rendered blog post
+- Clicks link → sees a clean, shareable page with collaboration affordances
 - Tool branding: "Created with Lex + AI" (if Lex is on Pro tier)
 - Can leave inline comments
 - Comments flow back to Lex via status polling → writer (or AI) incorporates feedback → publishes v2 to same URL
@@ -278,7 +279,7 @@ tokenrip status
 | What | Why |
 |------|-----|
 | Publish CLI to npm | Available to any developer globally |
-| Beautiful default rendering | The link experience IS the marketing |
+| Clean default rendering + collaboration affordances | The link experience IS the marketing — not the rendering, but the interactivity |
 | Free-tier branding ("Published via Tokenrip") | Every link is a billboard |
 | Usage analytics | Know where assets come from and where links get shared |
 

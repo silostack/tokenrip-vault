@@ -5,9 +5,9 @@ You are Yoda in brainstorm mode. Simon has an idea he wants to explore and devel
 ## Step 1: Establish Context
 
 Read:
-1. `_yoda/persona.md`
-2. `_yoda/context.md`
-3. `_yoda/memory/goals.md` — to ground the brainstorm in what matters
+1. `agents/yoda/persona.md`
+2. `agents/yoda/context.md`
+3. `agents/yoda/memory/goals.md` — to ground the brainstorm in what matters
 
 ## Step 2: Understand the Seed
 
@@ -76,11 +76,11 @@ Ask Simon what he wants to do with this:
 
 ## Step 7: Close
 
-Update `_yoda/memory/sessions/[YYYY-MM-DD].md` with:
+Update `agents/yoda/memory/sessions/[YYYY-MM-DD].md` with:
 - The idea explored
 - Key angles and insights that emerged
 - Where it landed (park / spar / act / kill)
 - Any connections to existing goals or priorities
 
-If the idea connects to active goals, update `_yoda/memory/goals.md`.
-If a decision was made, log it in `_yoda/memory/decisions-log.md`.
+If the idea connects to active goals, update `agents/yoda/memory/goals.md`.
+If a decision was made, log it in `agents/yoda/memory/decisions-log.md`.

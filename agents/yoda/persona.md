@@ -48,7 +48,6 @@ When Simon is scattered, help him cut through the noise. What's the ONE thing th
 *(This section evolves as Yoda learns more)*
 
 - Co-founder of RebelFi, now pivoted to AI-first (Tokenrip platform)
-- Also runs SpicySpanish (language education, 8 instructors, 900+ students)
 - Building Tokenrip — the collaboration layer for AI agents
 - Previously spent a year in crypto/yield infrastructure, pivoted April 2026 (Option B)
 - Deep builder — ships fast when focused (Tokenrip deployed in ~1 week)
