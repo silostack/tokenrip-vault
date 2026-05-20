@@ -4,7 +4,7 @@
 **Window**: Sat May 3 → Mon May 5 for P0; Tue-Fri May 6-9 for P1; following week for P2
 **Submission target**: Mon May 5
 **Audience for this doc**: A model executing the updates to tokenrip.com (no codebase context preloaded)
-**Source framing**: [[../bd/yc-strategy]], [[../bd/audience-led-gameplan]], [[../bd/motions-and-strategy]]
+**Source framing**: [[yc-strategy]], [[../bd/audience-led-gameplan]], [[../bd/motions-and-strategy]]
 **Companion doc**: [[chief-of-staff-v0-2026-05-01]] (backend work that supplies the CoS preview / launch surface this site work points at)
 
 ---
@@ -606,7 +606,7 @@ This diagram should be implemented as a reusable component (it may also appear o
 
 ## P1.2 — `/about` Founders Page
 
-YC application Q3 wants a founder intro video; the live `/about` page should support that with bios that match the founder-fit framing in [[../bd/yc-strategy]] §3.
+YC application Q3 wants a founder intro video; the live `/about` page should support that with bios that match the founder-fit framing in [[yc-strategy]] §3.
 
 ### Target State
 
@@ -819,7 +819,7 @@ Building on P0.3 (status badge + meta added to office-hours), P1 enhances both d
 
 ## P1.5 — Series 3 Post 9 Surface on Homepage
 
-Post 9 is referenced as the most important pre-fundraising artifact in [[../bd/yc-strategy]]. It needs to be visible from the homepage so YC partners reading top-to-bottom find it.
+Post 9 is referenced as the most important pre-fundraising artifact in [[yc-strategy]]. It needs to be visible from the homepage so YC partners reading top-to-bottom find it.
 
 ### Implementation
 
@@ -1018,7 +1018,7 @@ By following week (end of P2):
 
 # Cross-References
 
-- **Why these changes:** [[../bd/yc-strategy]]
+- **Why these changes:** [[yc-strategy]]
 - **Architecture explainer source:** [[../product/tokenrip/mounted-agent-model]] and [[../product/tokenrip/mounted-agent-synthesis]]
 - **Companion: backend work for CoS:** [[chief-of-staff-v0-2026-05-01]]
 - **Underlying motion:** [[../bd/audience-led-gameplan]]

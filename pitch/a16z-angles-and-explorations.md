@@ -4,7 +4,7 @@
 **Created**: 2026-05-14
 **Purpose**: Comprehensive reasoning behind the a16z deck. Captures the angles considered, the protagonist-swap decision, supporting evidence, competitive context, GTM logic, and open validation threads. Source of truth for deck iteration.
 
-**Companion**: [[a16z-pitch-deck]] (the deck itself, 7 slides), [[../active/yc-tokenrip-pitch-framing-2026-05-02-codex]] (prior YC framing — useful contrast)
+**Companion**: [[a16z-pitch-deck]] (the deck itself, 7 slides), [[yc-tokenrip-pitch-framing-2026-05-02-codex]] (prior YC framing — useful contrast)
 
 ---
 
@@ -87,7 +87,7 @@ Not three customer segments. One motion with three pricing moments.
 - Brings her own model (BYO inference)
 - Automations persist across sessions (the mounted-agent core)
 - Free tier; substrate cost is storage, not inference
-- Distribution: viral through Glo telling coworkers; published creators (the supply layer) as gateway agents
+- Distribution: the **engineered first share** (see "Engineering the First Share") — handoff-shaped agent outputs (intrinsic) and manager-pull via observability (pulled); published creators as seeded gateway agents
 
 ### Step 2 — Automation owner / AI Agent Manager (Team / Paid)
 
@@ -99,11 +99,22 @@ Not three customer segments. One motion with three pricing moments.
 
 ### Step 3 — Company Tenant (Enterprise)
 
+**What triggers the buy**: IT realizes employee agents have created vendor dependency — the company has no control over which models run, which tokens go where, or what client/IP data gets exposed. The buy is to absorb the bottom-up automation without rebuilding it: same imprint, swap the inference layer underneath. Two distinct pain shapes converge on this tier and both are addressable by the same architecture:
+
+- **Token-control / methodology-IP exfiltration** — for firms whose moat *is* the methodology being sent to the model provider (consulting, law, audit, compliance, advisory), deploying Anthropic or OpenAI internally is feeding the company that is openly funding their competitors. Chamath Palihapitiya named this publicly in May 2026 ("letting the fox in the hen house"); Vijay Laknidhi (Liberate, 2026-05-19) independently surfaced the same pain inside insurance, citing Travelers' 12K-seat Anthropic deployment as a vendor-lock-in time bomb the company has no exit from. Tokenrip's Enterprise tier sells sovereignty over the AI stack — tokens, models, audit trail — without forcing IT to rebuild employee automation from scratch when the model layer changes.
+- **Data sensitivity / regulatory blockers** — for firms that legally or contractually cannot send client data through public model providers (boutique legal, regional financial advisors, healthcare-adjacent services, defense subcontractors, accounting firms with audit obligations), AI adoption has been blocked by trust requirements no hosted product can meet. Local-model and private-endpoint inference unblocks adoption; the substrate is the only place the agent itself survives the model swap.
+
+Both pain shapes are load-bearing on mounted-agent architecture: the imprint must be portable across model providers, memory must live on the customer's tenancy, observability must be audit-grade. A regular SaaS cannot ship the same product.
+
+**Architectural shape:**
+
 - Tokenrip runs on the company's infrastructure (MCP layer, internal data sources, own models)
 - Employees point their personal AI tools (ChatGPT, Claude, Cursor) at the company tenant for company-aware agents
 - Multi-tenant isolation, SSO, compliance, audit packages
 - ACV: tens to hundreds of thousands per year
-- Bottom-up adoption produces buy-intent (consumerization-of-IT pattern)
+- Bottom-up adoption produces buy-intent (consumerization-of-IT pattern); token-control pain produces *top-down* buy-intent in methodology-IP firms even without prior Glo-class adoption
+
+**Why this isn't a protagonist swap**: The Glo wedge (Step 1) doesn't change. What changes is that the Tenant rung — historically the vaguest part of the ladder — now has a sharp, named pain that closes deals. The deck doesn't lead with token control; it leads with Glo. But when partners ask "why does the company ever pay $500K/yr?", the answer is no longer "enterprise plan with SSO" — it's "they realized their entire AI stack depends on a single vendor they don't control, and we're the only architecture that lets them switch without throwing away what employees built."
 
 ### Architectural necessity per step
 
@@ -113,6 +124,33 @@ Each step is load-bearing on the mounted-agent architecture:
 - **Step 3** requires tenancy, identity, permission boundaries, on-prem MCP
 
 If any of these requirements were optional, a regular SaaS could ship the same product. The architectural-requirement test (from `bd/motions-and-strategy.md`) passes cleanly at all three steps.
+
+---
+
+## Engineering the First Share
+
+The ladder has a hidden dependency: every rung past Step 1 requires that an agent built by one person gets **shared and re-used by a second person**. That single event — an agent crossing from operator 1 to operator 2 — is the real activation metric. Deploy count without it is vanity.
+
+### Why this needs engineering, not hope
+
+Dust's hardest-won GTM lesson (see `active/research-dust-competitive-analysis-2026-05-18.md`) is that lone-individual rollouts fail. But Dust is a destination workspace, and its failure stacked three causes: adoption friction (a new tool to move into), no collaboration partner (single-player Dust is thin), and learning curve with no peer reinforcement.
+
+Tokenrip's architecture dissolves the first two. A mounted agent delivers standalone value to one operator on day one, and it is shared by being mounted into a harness the coworker *already uses* — no workspace to adopt. Tokenrip therefore escapes Dust's top-down precondition: adoption is an outcome of the agent being good, not a gate cleared before any value appears.
+
+But that same architecture removes the **forcing function**. Dust's top-down motion has a trigger — the company decided, budget exists, an exec keynote launches it. Tokenrip's bottom-up motion has none. Standalone value can produce a permanently happy *free solo* user who never shares — and the business compounds only past the share. The first share will not happen by default. It has to be designed.
+
+### Two mechanisms: intrinsic and pulled
+
+- **Intrinsic share** — the agent produces an output a coworker needs, so the share is a natural handoff. "Here is the agent that produced this — run it yourself" is frictionless when the output already crosses desks. Bias the early agent templates toward handoff-shaped work (reports, drafts, formatted deliverables that travel) over private-utility work (Glo's inbox triage) that never leaves her desk.
+- **Pulled share** — the manager-observability layer is Tokenrip's closest analogue to Dust's forcing function. A manager who *sees* a high-performing agent propagates it: "everyone on the team should run this." This reframes observability — the deck positions it as "govern," but operationally it is the **distribution mechanism**. The manager is the soft top-down trigger inside the bottom-up motion.
+
+### The learning curve is architecture-independent
+
+The third cause of Dust's individual-rollout failure — learning curve, no peer reinforcement — is behavioral, not architectural, and it bites Tokenrip harder. Dust's customers are large tech companies, and Dust wraps deployments in human change-management (internal hotline, accompaniment, upskilling). Glo has none of that. So the learning curve relocates **into the product**: Moa and the bootloader/onboarding flow are Tokenrip's substitute for Dust's consulting layer. If a non-technical Glo cannot reach a working agent without a human helping her, the motion stalls regardless of architecture.
+
+### The load-bearing assumption
+
+The entire advantage rests on single-operator value being genuinely real. If standalone retention is thin, Tokenrip is closer to Dust's team-precondition than the architecture suggests, and the first share becomes a prerequisite rather than a growth event. Verifying that solo Glos retain and return is a prerequisite, not a footnote — see Validation Threads.
 
 ---
 
@@ -171,7 +209,7 @@ The mounted-agent architecture (imprint / memory / harness separation) should be
 
 - **Glo's automation survives the session** (persistent memory)
 - **Her coworker can use it in their own tool** (portability)
-- **Her manager can version and govern it** (versioning + observability)
+- **Her manager can version, govern, and propagate it** (versioning + observability — observability doubles as the team-distribution mechanism; see "Engineering the First Share")
 - **The company can run it on their infrastructure** (tenancy)
 - **Tokenrip's costs don't scale with usage** (BYO model — the slide a16z will care about)
 
@@ -232,6 +270,17 @@ Track per gig: which pattern category, which architectural primitives used, whet
 
 This is structurally the Stripe/Patrick-Collison concierge pattern, with an explicit graduation rule.
 
+### First-customer sourcing: warm before cold
+
+Dust's first customers were not a channel — they were the founders' network (Gabriel Hubert was CPO at Alan, now a flagship customer; the rest are Paris-ecosystem scale-ups reachable by warm intro). The scalable channels came *after* product-market fit. Tokenrip's first 10 deploys should be sourced the same way: Simon's documented "Glo" contact is customer zero; Alek's 400+ RebelFi customer-development relationships are a warm list. Cold mid-tier creator and Glo outreach (motion 2 above) is where the motion *scales to*, not where it *starts*.
+
+### Discipline lessons from the Dust teardown
+
+- **Probe and kill.** Dust ran two failed motions (developer framework, XP1 browser extension) before the winner, and never married either. Treat the CLI, Moa, and the Chief of Staff lighthouse the same way — instruments measured by signal, not artifacts to defend.
+- **Instrument every deploy as a case study.** Dust converts every customer into a hard-numbers story. Tokenrip has none because it has no customers; build the capture template before the first deploy lands.
+- **Kill jargon in the product, not only the deck.** Dust deliberately shipped "instructions," not "system prompt." The pitch-translation table above must also govern the product UI — "mounted agent / imprint / harness / substrate / operator" should not appear in front of a Glo.
+- **Founder as credible voice.** Stan Polu (ex-OpenAI) builds in public with real metrics. Simon's twenty-year record and a NASDAQ-acquired company are unused distribution credibility.
+
 ---
 
 ## Pricing Hypothesis
@@ -270,6 +319,8 @@ Things that are real but would muddy a 7-slide deck:
 4. **Anthropic Claude for SMB delta analysis** — exact feature gap. The slide-9 "why doesn't Anthropic do this" answer should be ready.
 5. **First 5 Upwork gigs run with the rule in place** — produces real traction evidence for slide 7.
 6. **CodeWords.ai teardown** — exactly how single-player vs. multi-player plays in their actual product. Sharpens the counter-data-point.
+7. **Solo-operator retention** — do single Glos return on standalone value alone, before any coworker sharing? The architectural advantage over destination-workspace incumbents (Dust et al.) depends on this being true. Test before the deck leans on it.
+8. **Tenant-tier pain validation via cold LinkedIn outreach** — methodology-IP firms (mid-tier consulting, boutique law, regional accounting), regulated mid-market (RIAs, specialty insurance, family offices), and healthcare-adjacent services (pharma services, medical billing, CROs). Test whether the token-control / data-sovereignty pain produces faster response than Glo-side outreach. Five qualified intro calls in 30 days = signal that Step 3 has a real buyer today; zero = Step 3 remains a forecast and the deck should not lean on it for partner Q&A.
 
 ---
 
@@ -283,6 +334,8 @@ Things that are real but would muddy a 7-slide deck:
 | Bottom-up takes too long to compound | Workplace ladder (free → team → enterprise) has 3 monetization moments, not one |
 | The "vibecoder" frame contaminates the pitch | Don't use it. Glo is a workflow author, not a builder. Empty shelf, not Lovable's shelf. |
 | Multi-protagonist pitch (Glo + Manager + Creator + IT) becomes incoherent | Ladder discipline: pitch the journey, not the segments |
+| Glo stays a happy free solo user; the first share never happens | Engineer the share: handoff-shaped agent outputs (intrinsic) + manager-pull via observability (pulled). See "Engineering the First Share." |
+| Enterprise tier remains hand-wavy without a named buyer | Wide-net LinkedIn outreach to methodology-IP and regulated-mid-market ICPs using the Vijay/Chamath frame as the hook; 5 intro calls in 30 days as signal. If zero response, the deck stops claiming the tier and Step 3 becomes a future-state slide. |
 
 ---
 
@@ -292,6 +345,7 @@ Things that are real but would muddy a 7-slide deck:
 - **Does the creator motion need a dedicated slide or fits in GTM?** Lean toward GTM-only. Don't bifurcate the pitch.
 - **Should we name the category?** "Agent ops"? "Agent management"? "Bottom-up agent platforms"? The naming question matters less than the matrix slide showing the empty quadrant. Let a16z name it back to us.
 - **What's the deck length for accelerator vs. seed/Series A?** This deck targets a16z accelerator (7 slides). The seed/A version would be 12-15 with traction, financials, team depth.
+- **Does the first-share mechanic belong on a slide?** Slide 4 currently asserts the team adopts without showing *how*. The intrinsic/pulled mechanic lives in speaker notes for now — revisit if partners keep asking "why does the team ever pay?"
 
 ---
 
@@ -305,4 +359,6 @@ Things that are real but would muddy a 7-slide deck:
 - `bd/icps.md` — full ICP taxonomy (Glo is the New Normal Worker; Manager is the AI Enabler)
 - `bd/motions-and-strategy.md` — five-motion taxonomy and architectural-requirement test
 - `active/upwork-ai-agent-jobs.csv` — Upwork "AI Agent" job market scrape (2026-05-14)
-- `active/yc-tokenrip-pitch-framing-2026-05-02-codex.md` — prior YC framing (useful contrast)
+- `__ARCHIVE/yc-tokenrip-pitch-framing-2026-05-02-codex.md` — prior YC framing (useful contrast)
+- `active/research-dust-competitive-analysis-2026-05-18.md` — Dust competitive analysis + GTM teardown (source of the first-share mechanic and the discipline lessons)
+- `bd/calls/transcripts/vijay-laknidhi-2026-05-19.md` — discovery call that surfaced the Travelers/12K-Claude-seat vendor-lock-in framing; primary evidence for the Enterprise-tier trigger (token-control / portability as the close-the-deal pain)

@@ -2,7 +2,7 @@
 
 **Status**: Draft v2
 **Created**: 2026-05-14
-**Updated**: 2026-05-15
+**Updated**: 2026-05-18
 **Length**: 6 slides (cover + 5 content)
 
 **Companion**: [[a16z-angles-and-explorations]] (full reasoning, evidence, open threads)
@@ -94,7 +94,7 @@
 |------|-----|-------|---------------------|
 | **Individual** | Glo | Free | Her agents finally persist |
 | **Team** | Automation owner / AI Agent Manager | $20-50/user/mo | She shares, versions, and governs her team's agents |
-| **Enterprise** | IT / CTO | $50K-500K/yr | The substrate runs on company infra, data, and models |
+| **Enterprise** | IT / CTO | $50K-500K/yr | IT needs to govern models, tokens, and data — without losing what employees built |
 
 **Why the economics invert**: Operators bring their own model — Tokenrip doesn't pay for inference. Margins expand with scale, while hosted-AI margins compress.
 
@@ -198,6 +198,22 @@ Because a hosted agent has an invisible ceiling. The vendor pays for inference, 
 ### "What's the unit economics?"
 
 Marginal cost per user is storage and API calls, not inference. Storage scales logarithmically. The free tier is sustainable indefinitely because we're not paying tokens. Team tier (~$20-50/user/mo) lands at SaaS-margin economics. Enterprise tier is annual contract with on-prem deployment.
+
+### "What about industries that can't send data to Anthropic or OpenAI?"
+
+That's where the Enterprise tier sells fastest. Regulated and methodology-driven firms — boutique law, mid-tier consulting, regional financial advisors, healthcare-adjacent services, defense subcontractors — are increasingly blocked from sending sensitive data through public model providers by compliance, client contracts, or competitive paranoia. Tokenrip's architecture supports BYO model from day one: local models, private endpoints, fine-tuned weights, or mixed inference (easy work routed local, hard work routed to frontier). Same imprint, swap the model layer underneath. The pain is being articulated publicly now — Chamath Palihapitiya's May 2026 note on token control as the new consulting moat is one signal of many; we hear the same frame in discovery calls with insurance and professional-services operators.
+
+### "Doesn't running on Anthropic mean training your competitor?"
+
+For firms whose moat is methodology — consulting, law, audit, compliance, advisory — yes. Chamath named this directly in May 2026 ("letting the fox in the hen house"). Tokenrip makes the model layer swappable, not strategic. A mid-tier consulting firm can route their agents through any model — frontier API, private endpoint, fine-tuned local — and switch as the market moves, without rebuilding what their employees built. The Enterprise tier monetizes the firm's desire for vendor neutrality and audit-grade control over where every token goes.
+
+### "Glo uses it free — why does her team ever pay?"
+
+Because the agent spreads, and the spread is engineered, not hoped for. Two mechanisms. *Intrinsic*: Glo's agent produces outputs a coworker needs, so "here's the agent that made this — run it yourself" is a natural handoff — and the coworker mounts it in their own tool, with no adoption friction. *Pulled*: the manager sees a high-performing agent through the observability layer and propagates it to the team. The team tier is the moment the manager wants shared memory, versioning, and governance across those agents. The free individual is the wedge; the engineered first share is the conversion event.
+
+### "Can a non-technical person like Glo actually build a working agent?"
+
+Yes — that is what Moa is for. Glo describes her workflow in chat; Moa turns it into a persistent, portable agent. The learning curve is real, and Tokenrip solves it inside the product rather than with a services team. That is deliberate: enterprise-internal platforms absorb the learning curve with consultants and change-management programs; a bottom-up motion can't, so the onboarding has to carry it.
 
 ---
 

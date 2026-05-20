@@ -19,6 +19,7 @@ Then read the last 2 session notes from `agents/closer/memory/sessions/` (if any
 
 Mode-specific reading:
 - **Firm-direct work** → also read `bd/firm-direct-strategy/gameplan.md`
+- **Firm-direct outreach (crafting a cold/connection message)** → also read `agents/closer/insurance-linkedin-outreach.md` — the A/B/Fallback bucketing rubric. Always reach for this when helping Simon craft an outreach message.
 - **Upwork work** → also read `active/upwork-agent-jobs-analysis-2026-05-13.md`
 
 ## Step 2: Determine Mode
@@ -36,6 +37,8 @@ If Simon provides a specific deal, job, or ask, go directly to the relevant mode
 **Deal Review** *(Firm-direct)*. Simon brings a prospect. Read the relevant context from `context.md`. Assess health (Green/Yellow/Red). Locate the deal in the gameplan's phase sequencing (outreach → discovery → pain validation → demo → term sheet → close). Prescribe specific actions with exact deadlines. End with: "What are you sending, and when?"
 
 **Follow-Up Coaching** *(both)*. Simon drafts an email or message — prospect follow-up or Upwork client reply. Review it line by line. Kill every instance of passive language ("let us know," "happy to accommodate," "worth a conversation," "just checking in"). Rewrite to lead. Ensure it includes a specific next step with a date. Don't let anything ship that puts the burden on the other party.
+
+**Outreach Coaching** *(firm-direct)*. Simon brings a LinkedIn profile, connection, or asks for a cold outreach message. ALWAYS run it through `agents/closer/insurance-linkedin-outreach.md` — sort the prospect into Bucket A / B / Fallback, draft from the matching template, and apply the rubric's rules (no "curious" open, match the grind line to the bucket, offer more than you ask, one paragraph, humanize). Flag ICP fit honestly: a reply is not validation.
 
 **Role-Play** *(Firm-direct)*. Simon names a prospect. Read their context. Adopt their perspective — objections, priorities, communication style, technical sophistication. Push back the way they would. After the role-play, debrief: what worked, what didn't, what to adjust.
 

@@ -100,7 +100,38 @@ Simon named the core insight: **pain vs. vitamin is a dimension missing from the
 - If vertical discovery produces pain that doesn't require the architecture, taking the money is survival but not company-building. Filter matters.
 - Strategy oscillation: this is the third direction change in three weeks. Even if each change is locally rational, the cumulative cost is real.
 
-**Outcome**: [To be evaluated May 22. Compare vertical discovery pipeline vs. Motion E pipeline. Key question: did vertical discovery surface architectural-grade pain, or generic "we want AI" interest?]
+**Outcome**: [Evaluated early, 2026-05-18 — see next decision. Two clean kills: (1) LinkedIn cold outreach to insurance is structurally dead — buyers are inactive on the platform, not an effort problem; (2) Motion E confirmed vitamin (3-4 conversations, all low-urgency; a creator tried to invoice Tokenrip). The sprint did its job: first motion in five weeks to run long enough to produce a real verdict. Channel reallocated, not thesis.]
+
+### Active-Demand Interception — Upwork + Job-Req Outreach as Primary Channel
+**Date**: 2026-05-18
+**Context**: The May 8 two-week discovery sprint produced verdicts ahead of the May 22 date. LinkedIn cold outreach to insurance returned a structural null result — Simon reviewed hundreds of prospects and could reach only a handful; insurance buyers are largely inactive on LinkedIn. Motion E returned 3-4 conversations, all confirmed vitamin-grade. Meanwhile Simon identified that channels where buyers *post and fund* work (Upwork, AI-agent job reqs) are painkiller-grade by construction — the buyer has already allocated budget and declared urgency.
+
+**Options Considered**:
+- Continue LinkedIn cold vertical discovery — rejected (channel structurally dead for the insurance buyer)
+- Return to Motion E — rejected (confirmed vitamin)
+- **Reallocate to active-demand interception (Upwork + job-req outreach)** — adopted
+
+**Decision**:
+- **Upwork bidding is the primary channel.** Target: 25 job-post submissions/week (5/day).
+- **Direct outreach to companies posting AI-agent job reqs** — secondary channel. Baseline 2/day (10/week), calibrate up after starting.
+- **LinkedIn continues but minimal.** Motion E on agent-assisted maintenance only.
+- **No per-call architectural filter.** Take every conversation that fits the schedule — every conversation is signal. Filter on expected utility only once call volume becomes the constraint (not the case today). The architecture test becomes an *aggregate* read: across ~15 conversations, what fraction need memory/persistence/portability?
+- **Build a demand-scout agent** (polls Upwork/job feeds/Reddit/X for agent-build requests, surfaces them ranked) — secondary goal, built after each day's bidding.
+- **May 22**: repurposed from "comparison" to a verdict call — name the two kills on record, lock the channel mix, define the next 2-week test.
+
+**Rationale**:
+1. **This is channel reallocation, not thesis oscillation.** The thesis (find painkiller pain the substrate can serve; build the platform through engagements) is unchanged. A channel test returned a null result; capital moved. That is discovery working.
+2. **Active-demand channels are painkiller-grade by construction.** A posted, funded job carries budget + urgency — the pain-proximity test is passed at the door.
+3. **Revenue is the forcing function; conversations a close second.** Upwork is the fastest path to both.
+4. **Consulting-trap concern is premature at zero volume.** Palantir took near-100%-custom engagements in the Foundry-genesis era. The trap is a problem of success/volume; filtering starts only when calls outpace capacity.
+
+**Risks Yoda flagged:**
+- Demand-scout agent build could displace the day's bidding (revenue work). Mitigated: Simon ranked it explicitly secondary.
+- Architecture-fit must still be read in aggregate — if ~15/15 conversations are Zapier-grade, that is the market saying the mounted-agent wedge isn't in the Upwork population.
+
+**Outcome**: [To be evaluated. Watch: conversations booked (5 = decent, 10 = stretch), revenue, and the aggregate architecture-fit ratio across early calls.]
+
+**Captured in**: `DASHBOARD.md`, `agents/yoda/memory/sessions/2026-05-18.md`.
 
 ---
 

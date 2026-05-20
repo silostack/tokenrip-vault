@@ -263,7 +263,7 @@ Motion B-readiness features (white-label theming, multi-tenant isolation, vendor
 
 ### Implications for Fundraising Narrative
 
-The commercial wedge confirmation gives the fundraising narrative a concrete shape: lead with the cloud-agent ceiling (problem) → mounted-agent architecture (insight) → audience-led wedge (concrete first product) → programmable interface category (vision). Detail in [[../../bd/yc-strategy]].
+The commercial wedge confirmation gives the fundraising narrative a concrete shape: lead with the cloud-agent ceiling (problem) → mounted-agent architecture (insight) → audience-led wedge (concrete first product) → programmable interface category (vision). Detail in [[yc-strategy]].
 
 The substrate-density curve produced by Motion E (registered operators, published imprints, weekly tool-call volume) is the metric shape that justifies a venture round — flat-dot revenue from firm pilots would not have. Capital-assumption posture (YC + a16z in days/weeks) inverts the optimization function from "survive and validate" to "demonstrate category and produce a curve." See [[../../bd/operations-and-hiring]].
 

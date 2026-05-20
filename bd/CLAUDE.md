@@ -48,6 +48,6 @@ Full decision log: `agents/yoda/memory/decisions-log.md`. Bean session: `agents/
 ## Related
 
 - **Architectural foundation:** [[../product/tokenrip/mounted-agent-model]] and [[../product/tokenrip/mounted-agent-synthesis]]
-- **Lighthouse imprint design:** [[../active/chief-of-staff-launch-design-2026-04-27]]
+- **Lighthouse imprint design:** [[chief-of-staff-launch-design-2026-04-27]]
 - **Distribution / content thesis:** [[../content/plans/blog-series-3-mounted-agents-plan]]
 - **Tokenrip platform docs:** [[../product/tokenrip/CLAUDE]]

@@ -4,17 +4,17 @@
 
 ## Active Goals
 
-### Goal 1: Land Capital Window (YC Submitted, a16z Next)
+### Goal 1: Land Capital Window (YC + a16z Submitted)
 - **Success criteria**: YC application submitted. a16z application submitted. At least one capital path lands before week 12.
-- **Progress**: YC submitted May 5. a16z targeting May 15 (due May 16). Alek creating pitch deck; Simon reviews by May 14. Leveraging existing YC materials.
-- **Deadline**: a16z submission May 15; outcomes by week 12.
-- **Status**: YC done; a16z this week — **P0**
+- **Progress**: YC submitted May 5. a16z Speedrun submitted (~May 18). Both applications in. Outcomes pending.
+- **Deadline**: Outcomes by week 12.
+- **Status**: Both submitted — respond if contacted, don't optimize proactively — **P2**
 
-### Goal 2: Launch Audience-Led Motion (Motion E) — Agent-Assisted Maintenance
-- **Success criteria**: First mid-tier deploy live by week 5-6. 5-10 deploys live by week 8. 10-15 by week 12.
-- **Progress**: 200-creator list done. Maha (key signal) declined — vitamin confirmed. Now agent-assisted: reply-guy + content agents deployed via MOA to field leads. Simon does high-value conversations when leads surface. Builder ICP still important long-term, just not primary focus now.
-- **Deadline**: Re-evaluate at May 22 comparison.
-- **Status**: **Agent-assisted maintenance** — agents field leads, Simon engages on signal. — **P1**
+### Goal 2: Audience-Led Motion (Motion E) — CONFIRMED VITAMIN, KILLED
+- **Success criteria**: [Original] First mid-tier deploy live by week 5-6, scaling to 10-15 by week 12.
+- **Progress**: 3-4 audience-led conversations total, all confirmed vitamin-grade. Maha declined; a newsletter creator pitched Simon on *paying her* for a write-up rather than deploying. No painkiller signal found.
+- **Outcome**: **Killed 2026-05-18.** Not a painkiller for creators right now. Agent-assisted maintenance (reply-guy/content agents) may continue passively but consumes no founder time. Re-open only if inbound signal materially changes.
+- **Status**: **Killed — vitamin confirmed** — P3 (passive)
 
 ### Goal 3: Substrate Density Curve to Demo Day
 - **Success criteria**: 25-40 published imprints, 10K-50K registered operators, sustained 15%+ WoW operator growth, first MRR live, 1-2 lighthouse personas live by Demo Day (~September 2026).
@@ -58,14 +58,15 @@
 - **Status**: **Paused** — vitamin-grade signal. Playbook exists if signal changes. — **P2**
 - **KPI**: Non-founder MOA-built agents published (target was 1+ by May 12 — unlikely to hit)
 
-### Goal 10: Vertical Discovery Sprint — Pain-Proximity Test
-- **Success criteria**: 3+ qualified discovery calls with firms that have real workflow pain mapping to Tokenrip's architecture. ≥1 deal-shaped conversation. Pain validated as painkiller, not vitamin.
-- **Progress**: Segments finalized: Insurance (Simon), Tax + Real Estate (Alek). Simon: ~100 connects sent, ~25 accepted (25%), messaging starting May 12. Alek: active, getting responses, sharpening pitch. Framed as "Motion A but building infrastructure" — consulting-as-platform playbook.
-- **Week 1 target (May 11-18)**: 2-3 calls booked, 1 completed.
-- **Deadline**: May 22 hard comparison date.
-- **Status**: Executing — **P0** (both founders)
-- **KPI**: Qualified discovery calls completed; architectural-grade pain found; deal-shaped conversations
-- **Architectural filter**: Does the pain require memory, persistence, portability, BYO economics? If any AI shop could solve it with Zapier + GPT, it's consulting, not product research.
+### Goal 10: Active-Demand Interception — Upwork + Job-Req Outreach
+- **Success criteria**: A live conversation pipeline with buyers who have posted and funded AI-agent work; first paid engagement revenue; aggregate signal on whether the mounted-agent wedge appears in this population.
+- **Progress**: LinkedIn cold discovery to insurance found structurally dead (buyers inactive on the platform — see Goal 10 history below). Channel reallocated 2026-05-18 to active-demand interception: Upwork bidding (primary) + direct outreach to companies posting AI-agent job reqs (secondary). Demand-scout agent planned to feed the funnel.
+- **This week target (May 18-22)**: 25 Upwork submissions (5/day); 10 job-req outreaches (2/day baseline); 5 conversations booked (10 stretch).
+- **Status**: Executing — **P0** (Simon primary)
+- **KPI**: Conversations booked; paid engagements; aggregate architecture-fit ratio across early calls
+- **Architecture test (aggregate, not per-call)**: Take every conversation that fits the schedule. Across ~15 conversations, what fraction describe a problem that genuinely needs memory/persistence/portability? That ratio — not any single call — is the signal. Filter on expected utility only once call volume becomes the constraint.
+
+*History: This goal began (May 8) as a vertical discovery sprint via LinkedIn Sales Navigator — Insurance (Simon), Tax + Real Estate (Alek). The LinkedIn-insurance channel returned a structural null result by May 18 (buyers not active on the platform). Thesis unchanged; channel reallocated. Not strategy oscillation.*
 
 ### Goal 9: Distribution / Registry — Continue Low-Touch
 - **Success criteria**: Tokenrip listed on 6+ registries/directories. Onboarding polish complete. Warm leads re-engaged.
@@ -103,10 +104,15 @@
 | 2026-05-08 | Motion E maintenance outreach (25% effort) | **Shifted to agent-assisted** | Reply-guy + content agents fielding leads |
 | 2026-05-08 | Follow up on Maha GTM lead | **Done** | She declined. Vitamin confirmed. |
 | 2026-05-08 | May 22 hard comparison: vertical vs. Motion E pipeline | **On track** | 11 days away |
-| 2026-05-11 | Message all 25 accepted connections | **Committed** | Mon May 12 |
-| 2026-05-11 | Book 2-3 discovery calls, complete 1 | **Committed** | By Sun May 18 |
-| 2026-05-11 | Review Alek's a16z pitch deck | **Committed** | By Wed May 14 |
-| 2026-05-11 | Submit a16z application | **Committed** | Thu May 15 (due May 16) |
+| 2026-05-11 | Message all 25 accepted connections | **Partial** | Sent — but only a handful were genuinely insurance-relevant (Simon overcounted) |
+| 2026-05-11 | Book 2-3 discovery calls, complete 1 | **Partial** | 2 booked (Vijay May 19, Alek May 22); 0 completed in-window — first call is May 19 |
+| 2026-05-11 | Review Alek's a16z pitch deck | **Done** | a16z submitted |
+| 2026-05-11 | Submit a16z application | **Done** | a16z Speedrun submitted ~May 18 |
+| 2026-05-18 | 25 Upwork job-post submissions (5/day) | **Committed** | By end of week |
+| 2026-05-18 | 10 job-req company outreaches (2/day baseline) | **Committed** | By end of week |
+| 2026-05-18 | Book 5 conversations (10 stretch) | **Committed** | By end of week |
+| 2026-05-18 | Demand-scout agent operational | **Committed** | Secondary goal — after each day's bidding |
+| 2026-05-18 | May 22 verdict call — lock channel mix, set next test | **Committed** | Thu May 22 |
 
 ---
 

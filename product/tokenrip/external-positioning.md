@@ -307,7 +307,7 @@ For when someone asks "how is this different from X?"
 ## Related Docs
 
 - [[tokenrip-positioning]] — Strategic/investor positioning: seven angles, competitive framing, moat narrative
-- [[../../active/yc-tokenrip-pitch-framing-2026-05-02-codex]] — Investor pitch ladder and YC application framing
+- [[yc-tokenrip-pitch-framing-2026-05-02-codex]] — Investor pitch ladder and YC application framing
 - [[../../bd/firm-direct-strategy/starting-guide]] — Execution guide: landing page copy, outreach sequences, content strategy
 - [[../../bd/firm-direct-strategy/demo-spec]] — Demo skeleton and vertical adaptations
 - [[../../bd/icps]] — Full ICP taxonomy and motion mapping
