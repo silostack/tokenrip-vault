@@ -3,7 +3,7 @@
 > Unified pipeline across both motions. Closer updates this at the end of every session.
 > Health: 🟢 Green (on track) · 🟡 Yellow (gap forming, needs action) · 🔴 Red (stalled or at risk).
 
-**Last updated**: 2026-05-19 (insurance LinkedIn outreach: bucketing rubric created, first message to Sultan Ahmed)
+**Last updated**: 2026-05-21 (Luai El Haj proposal v4: bridge monthly added; agreement retitled as draft term sheet, signature ceremony stripped)
 
 **Operating phase**: Conversation Volume. Goal is replies and learning, not winning bids. Bid wide, triage advisory-only. See `upwork-proposal-playbook.md` → Current Phase.
 
@@ -16,8 +16,21 @@ Per `bd/firm-direct-strategy/gameplan.md`. Phases: Outreach → Discovery → Pa
 | Prospect | Vertical | Owner | Phase | Health | Next Action | Due |
 |----------|----------|-------|-------|--------|-------------|-----|
 | Mohammad "Sultan" Ahmed (NY Coverage / SkR Agency) | Insurance | Simon | Outreach | 🟡 | Bucket B outreach message sent; watch for reply. Possible sub-ICP (small/specialist shop) — reply ≠ validation | 2026-05-19 |
+| Luai Walid El Haj (Get In Canada) | Immigration | Alek (lead) + Simon (technical) | Proposal Drafted | 🟡 | Run proposal + cover email through `/humanizer`; publish to Tokenrip; Alek sends cover email | 2026-05-22 |
 
 Outreach motion now runs off `agents/closer/insurance-linkedin-outreach.md` (A/B/Fallback bucketing rubric).
+
+**Luai deal notes (added 2026-05-20):**
+- **Send package (two docs):**
+  - Proposal — sales narrative: `bd/calls/proposals/luai-elhaj-2026-05-20-final.md` (includes cover email)
+  - Draft term sheet for negotiation: `bd/calls/proposals/luai-elhaj-2026-05-20-agreement.md` (filename retained for stability; content retitled in v4)
+- **Pricing structure (v4):** $5,000 pilot one-time (90 days, all-in) + $500/month bridge starting day 91, locked 12 months OR until Phase 2 starts. Additional standard app types $1,000 each.
+- **Bridge framing:** Bridge monthly is not subscription — it holds the system running between Phase 1 and Phase 2. Phase 2 supersedes the bridge.
+- Pricing: **$5,000 all-in for 90-day Phase 1** + full no-conditions refund in first 30 days. **Breaks `bd/firm-direct-strategy/gameplan.md` Hard Rule #4 ($15K floor) by Simon's explicit override** — close-rate prioritized over precedent at this stage.
+- Reference rights protect the override: signed at kickoff via `bd/firm-direct-strategy/reference-rights-letter-template.md`. Persist past refund.
+- Phase 2 = B2B back-office venture (multi-tenant). Land-and-expand frame.
+- Sub-ICP flag: $1K/month labor cost = no acute pain on Phase 1. Real opportunity is Phase 2.
+- Follow-up gate: if no reply by 2026-05-27, Closer prescribes dated follow-up.
 
 ---
 
@@ -38,6 +51,13 @@ Per `active/upwork-agent-jobs-analysis-2026-05-13.md`. Status: Triaged → Propo
 | — | AI implementation advisor (strategic + technical, advisory) | Not stated | n/a (volume phase) | Submitted | Watch for reply | 2026-05-19 |
 | — | AI marketing workflow architect (boutique agency, productize packages) | Not stated | n/a (volume phase) | Submitted | Watch for reply | 2026-05-19 |
 | — | AI/operations consultant (multi-location business, part-time) | Not stated | n/a (volume phase) | Submitted | Watch for reply | 2026-05-19 |
+| — | AI agent for commercial/private lender (CRE lending + mortgage, intake-to-routing) | Not stated | n/a (volume phase) | Proposal drafted | Submit cover letter | 2026-05-23 |
+| — | Contract extraction → Zoho CRM (email attachments, OpenAI + Zoho API) | Not stated | n/a (volume phase) | Proposal drafted | Submit cover letter | 2026-05-23 |
+| — | AI sales/marketing automation for gym (GoHighLevel + n8n + Claude, France) | Not stated | n/a (volume phase) | Proposal drafted | Submit cover letter | 2026-05-23 |
+| — | AI Ops Agent for real estate surplus funds / asset recovery (lead gen → claim processing → legal routing) | Not stated | n/a (volume phase) | Proposal drafted | Submit cover letter | 2026-05-25 |
+| — | AI-native full-stack eng for healthcare ops SaaS (workflow orchestration, Next.js/React/Node/TS/PG) | Not stated | n/a (volume phase) | Proposal drafted | Submit cover letter | 2026-05-25 |
+| — | AI automation consulting partner (logistics/supply chain/procurement, pre-revenue, channel-partner fit) | Not stated | n/a (volume phase) | Proposal drafted | Submit cover letter | 2026-05-25 |
+| — | AI audit/strategy for RE agent + Airbnb portfolio (paid discovery $300-$700, roadmap deliverable) | $300–$700 | n/a (volume phase) | Proposal drafted | Submit cover letter | 2026-05-25 |
 
 ---
 

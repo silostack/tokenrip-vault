@@ -17,13 +17,13 @@ The answer was yes. See `gameplan.md` for the full hypothesis testing results.
 
 ## What Lives Here
 
-| Area | Content |
-|------|---------|
-| **Strategy** | `gameplan.md` (hypotheses, kill criteria), `strategy-landscape.md` (competitive landscape, positioning) |
-| **Market Research** | `landscape-tracker.md` (ongoing), `research/` (deep dives on specific segments) |
-| **Competitive Analysis** | `competitive-testing/` (hands-on competitor teardowns) |
-| **Frameworks** | `agentic-strategy-reference.md`, readings analysis (a16z, Citrini, etc.) |
-| **Experiments** | `experiments/` (individual experiment writeups) |
+| Area                     | Content                                                                                                 |
+| ------------------------ | ------------------------------------------------------------------------------------------------------- |
+| **Strategy**             | `gameplan.md` (hypotheses, kill criteria), `strategy-landscape.md` (competitive landscape, positioning) |
+| **Market Research**      | `landscape-tracker.md` (ongoing), `research/` (deep dives on specific segments)                         |
+| **Competitive Analysis** | `competitive-testing/` (hands-on competitor teardowns)                                                  |
+| **Frameworks**           | `agentic-strategy-reference.md`, readings analysis (a16z, Citrini, etc.)                                |
+| **Experiments**          | `experiments/` (individual experiment writeups)                                                         |
 
 ## Key Documents
 

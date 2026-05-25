@@ -55,6 +55,10 @@ Every post (draft or published) should have a matching `sources/[slug]/reference
 
 Superseded research goes in `sources/_archive/` rather than being deleted.
 
+## Publishing Queue
+
+`plans/publishing-queue.md` tracks all unpublished posts — drafts ready to publish, drafts in progress, and planned posts from series briefs. Check it before starting a new post (it may already be queued). Update it when drafts are created, published, or deprioritized.
+
 ## Series Plans
 
 Series outlines live in `plans/`. Each plan covers a multi-post arc with post briefs, SEO strategy, and cross-linking guidance. Current series:
@@ -62,6 +66,7 @@ Series outlines live in `plans/`. Each plan covers a multi-post arc with post br
 - Series 1: Multi-Agent Collaboration (`blog-series-1-multi-agent-collaboration-plan.md`)
 - Series 2: Agent-Native Operations (`blog-series-2-agent-native-operations-plan.md`)
 - Series 3: Mounted Agents (`blog-series-3-mounted-agents-plan.md`)
+- Series 4: The Lock-In Trap (`blog-series-4-lock-in-trap-plan.md`)
 
 The blog post framework (`blog-post-framework.md`) defines post types and structural templates.
 

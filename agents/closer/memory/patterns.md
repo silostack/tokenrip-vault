@@ -28,14 +28,47 @@ Moves that feel persuasive but backfire in cold proposals.
 - **De-risk comes from structure, not from a low price.** The instinct on a $10K fixed job is to make the first milestone tiny ($0, then $1K) so the buyer says yes. Wrong lever. A serious buyer is committing to the full amount conceptually regardless; a cheaper first milestone doesn't de-risk him more, it just devalues the work and signals hunger (same family as the free-POC tell). The de-risk the buyer actually feels comes from the *shape*: a small first milestone, a kill-switch, proof on his real data before the big commit. Price milestone 1 *fairly* and frame it as "deliberately small — a cheap, fast look at the highest-risk part."
 - **The riskiest-scope milestone should never be the cheapest.** Milestone 1 is where the unknowns live (how messy is the real data?). If it's underpriced *and* carries the most uncertainty, every overrun gets eaten. A fairly-priced first milestone is also fixed-price insurance: if the sample reveals a nightmare, that's learned cheaply, and re-scope happens before the next milestone instead of mid-commitment.
 
+## Structural Anchors For Risk-Removal Deals
+
+When a deal is intentionally structured for maximum customer risk-removal (e.g. full no-conditions refund, design-partner pricing well below standard floor), the close-rate gain is real but two failure modes show up:
+
+1. The deal becomes free work (customer takes delivery, refunds, walks).
+2. The discount is unjustified (we gave up margin without buying anything strategic).
+
+Three structural anchors compensate without softening the customer-facing risk-removal:
+
+- **Files-gate (or equivalent input-gate).** The build doesn't start until the customer delivers a meaningful input — anonymized files, workflow walkthroughs, integration credentials, etc. This is a low-friction customer commitment that proves intent. No input = no work begun = no money owed = no exposure. Used on Luai El Haj proposal 2026-05-20 (20 files in week 1 gates the build).
+- **Reference rights signed at kickoff, persistent past refund.** The economic exchange for the discount is the rights, not the cash. Logo, case study, reference-call commitments, and anonymized pattern reuse all signed before build starts and persist for 12 months even if the customer exercises a refund. Cash refund does not extinguish the rights. Template at `bd/firm-direct-strategy/reference-rights-letter-template.md`.
+- **Substrate-first work sequencing.** Sequence the build so reusable substrate (vertical workflow templates, document recognition patterns, discrepancy schemas) gets produced *first*, and bespoke customer-specific tuning happens *last*. If the customer refunds mid-pilot, Tokenrip keeps the substrate; only the bespoke layer is lost. The substrate is what makes the next pilot cheaper.
+
+These anchors keep the deal commercially honest at full customer-facing risk-removal. They are non-negotiable when a deal goes below the standard floor.
+
+## Land-and-Expand Framing
+
+When discovery surfaces two value props in the same buyer — one immediate-but-thin (their own firm), one architecturally-aligned-but-speculative (a future venture they're building) — the wrong move is two parallel sales tracks. The right move is to fold the architecturally-aligned conversation into the same product as **Phase 2**, with Phase 1 priced for close-rate, and Phase 2 explicitly deferred until Phase 1 has delivered.
+
+Why this works:
+- Customer sees one product, one decision, one onramp — not two negotiations
+- We don't commit to Phase 2 pricing or scope before Phase 1 proves value
+- Phase 1's reference rights become exponentially more valuable if Phase 2 lands (each Phase-2 sub-customer is an indirect Tokenrip user)
+- The architectural-requirement test (per `bd/CLAUDE.md`) gets satisfied by Phase 2 — so even discounted Phase 1 work is substrate-density progress, not consulting
+
+Used on Luai El Haj proposal 2026-05-20 (Phase 1 = his consultancy, Phase 2 = his B2B back-office venture, multi-tenant). Originated from Alek's draft restructure plus Simon's "build the system for him, then turn it into a platform he can scale" framing.
+
 ## Proof Framing
 
 - **Reframe the same credential per buyer.** RebelFi is one proof asset, but how it's described flexes to the buyer's domain. For a crypto buyer, lead with the specific DeFi/chain detail — it's the strongest domain-fluency signal. For a non-crypto buyer (e.g. mortgage), strip the crypto jargon to plain "a fintech product that's live in production"; the detail is noise at best and reads as off-topic risk at worst. The credential never changes; the framing always does.
 - **Platform-as-credential beats portfolio-as-showcase.** tokenrip.com/agents only has ~2 agents — too thin to showcase. The strong move is to make Tokenrip itself the trust signal ("a platform I built for running AI agents") and link tokenrip.com, not /agents. "I built the infrastructure agents run on" outweighs "here are 2 agents I made" — and a platform claim can't be weakened by a low agent count, whereas directing a cold buyer to /agents invites them to count two. In a cold proposal, don't link /agents at all; agent walkthroughs belong on the call.
+- **When the posting is about "agentifying" workflows, lead with Tokenrip as the product built for that.** Generic "I build AI agents" undersells. When the buyer wants to take existing workflows and add AI agent automation, Tokenrip *is* the product — frame it as "I built Tokenrip to do exactly this." Stronger product claim, differentiates from freelancers who assemble tools per project. Especially strong when the posting's industry is one we're already targeting (e.g. real estate lending) — say so, it shows the work isn't speculative. Observed on lending agent bid (2026-05-23).
+
+## Implementation Approach Framing
+
+- **Lead with human-in-the-loop, graduate to autonomy.** When a buyer wants full AI automation of their workflows, don't promise full autonomy upfront. Frame as two phases: (1) agents augment existing workflows with heavy human approval and oversight, (2) once the team trusts the system, identify pieces that can run with less hand-holding. This is honest (autonomy without trust = disaster), it de-risks the buyer's fear of losing control, and it maps to how the work actually gets delivered. The line "avoids the 'we replaced everything with AI and now nobody knows what's happening' problem" landed well in the lending bid (2026-05-23).
 
 ## The CTA Question
 
 - **The closing question must read senior, not junior.** §7 says end with an easy question — but *which* question matters. Detail questions the buyer finds obvious ("what format are the files in", "is your hardware powerful enough") read as junior, or mildly insulting to a competent buyer who has clearly specified their stack. The fix: ask a project-level or execution-forward question — one that advances the deal and signals the bidder is already thinking about delivery. Best of class: a question that moves toward milestone 1 ("do you have a sample portfolio you could share for milestone 1?"). Easy to answer, not junior, and it pulls the conversation toward starting the work. Observed on the mortgage bid (detail vs. project-level) and the tax-fraud bid (dropped two junior questions for one execution-forward one).
+- **Don't ask project specifics before the bid is accepted.** Questions like "which loan type has the highest volume?" are execution-forward but presume the deal is already happening. Before they've even picked you, that reads presumptuous. Pre-acceptance close = call offer with a bring-something promise ("Got 15 minutes? I'll come with some ideas on where agents would hit hardest"). Save the execution-forward questions for the call itself. Observed on lending agent bid (2026-05-23).
 
 ## Outreach (Firm-Direct LinkedIn)
 

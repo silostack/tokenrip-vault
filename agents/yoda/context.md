@@ -1,14 +1,14 @@
 # Current Context
 
-*Last updated: 2026-05-18*
+*Last updated: 2026-05-23*
 
 ## The ONE Thing
 
 What matters most right now?
 
-> **Build a live conversation pipeline through active-demand interception.** Upwork bidding is the primary channel (25 submissions/week, 5/day); direct outreach to companies posting AI-agent job reqs is secondary (10/week). Revenue is the forcing function; booked conversations a close second. The LinkedIn cold-discovery channel for insurance is dead (buyers not on the platform) and Motion E is confirmed vitamin — both clean kills from the May 8 discovery sprint. The thesis is unchanged: find painkiller pain the substrate can serve, take engagements, build the platform through them. Only the channel moved.
+> **Get a sale.** A design partner, a paid pilot, a recurring-revenue customer — even a fully custom consulting engagement. 0 → 1 momentum is the unblock. Revenue is the forcing function; momentum stacks from there. Anything that doesn't compound toward this is a distraction.
 
-## Sequencing (May 18-22 — active-demand interception week)
+## Sequencing (May 23-30 — Simon-owned-deal-manufacturing week)
 
 ### Completed (prior weeks)
 - [x] ~~YC application submitted~~ (May 5)
@@ -16,59 +16,65 @@ What matters most right now?
 - [x] ~~Homepage / positioning shipped~~
 - [x] ~~Chief of Staff shipped (team-scoped, public)~~
 - [x] ~~MOA shipped~~
-- [x] ~~May 8 discovery sprint — produced verdicts (see Kills below)~~
+- [x] ~~May 8 discovery sprint — three clean kills (LinkedIn-insurance, Motion E, job-reqs)~~
+- [x] ~~Vijay call (May 19) — portability thesis validated by an insider non-buyer~~
+- [x] ~~Luai proposal sent (Alek) — $5K 90-day file-readiness pilot~~
+- [x] ~~Paul (DECA Dental) call — non-fit (RAG-grade)~~
 
-### Active (May 18-22)
-- [ ] **Simon**: 25 Upwork job-post submissions — 5/day. (P0)
-- [ ] **Simon**: 10 job-req company outreaches — 2/day baseline, calibrate after starting. (P0)
-- [ ] **Simon**: Vijay Laknidhi (COO, Liberate) call — May 19. Prep run with Yoda. (P0)
-- [ ] **Both**: 5 conversations booked by end of week (10 = stretch). (P0)
-- [ ] **Simon**: Demand-scout agent operational — secondary goal, built after each day's bidding. (P1)
-- [ ] **May 22**: Verdict call — name the two kills on record, lock channel mix, define next 2-week test.
-- [ ] **Alek**: call booked Thu May 22.
+### Active (May 23-30)
+- [ ] **Simon**: LinkedIn pipeline → start real conversations from accepted connections. Manufacture the most-progressable deal that doesn't exist yet. (P0)
+- [ ] **Simon**: Demand-scout v1 deployed on Reddit. Discovery + demand-validation loop. Measure by *conversations engaged*, not posts/artifacts. (P0)
+- [ ] **Simon**: Upwork on maintenance — bid when alerts fire, no daily target. (P2)
+- [ ] **Simon**: Support Alek on Luai close where useful. (P1)
+- [ ] **Background**: Building own audience as long compounding layer (NOT Motion E — Tokenrip's audience, not a creator's; Make.com pattern not Substack pattern).
 
 ### Deferred
 - [ ] Series 3 post 10 — draft exists, secondary.
-- [ ] Term sheet / pricing — matters when a conversation turns deal-shaped.
+- [ ] Substack/Roblox + Make.com playbook recommendations (custom interface primitive, lighthouse imprint sequencing) — strong research; activates once we have substrate-density-curve material to feed.
 
-## The Two Kills (May 8 discovery sprint verdict)
+## The Three Kills (Discovery sprint verdicts)
 
-1. **LinkedIn cold outreach to insurance: DEAD.** Structural — insurance buyers are largely inactive on LinkedIn. Hundreds reviewed, a handful reachable. Not an effort problem.
-2. **Motion E (audience-led creators): DEAD.** 3-4 conversations, all vitamin. A creator tried to invoice Tokenrip for a write-up. Confirmed, not "one data point."
+1. **LinkedIn cold outreach to insurance: DEAD** (May 18). Structural — buyers not on the platform.
+2. **Motion E (audience-led creators): DEAD** (May 18). 3-4 conversations, all vitamin. A creator pitched paying her for a write-up rather than deploying.
+3. **Job-req outreach: DEAD** (May 23). All "AI agent" jobs are AI-coding jobs as of May 2026. No biddable supply for substrate-relevant work. Periodic monitor only.
 
-Both kills are *valuable data* — the discovery sprint was the first motion in five weeks to run long enough to produce a real verdict.
+**Upwork: DEMOTED to maintenance** (May 23). Real supply ceiling at 2-5 biddable/day. Lottery, not motion.
 
-## KPIs (active-demand interception)
+All four channel verdicts are *valuable data* — the discovery sprint is now running long enough to decide cleanly. Thesis unchanged throughout: get to first sale.
+
+## KPIs (get-a-sale week)
 
 - **Forcing function**: Revenue — first paid engagement.
-- **Primary (now)**: Conversations booked per week. This week: 5 (decent) / 10 (stretch).
-- **Activity**: Upwork submissions (25/wk target), job-req outreaches (10/wk baseline).
-- **Aggregate architecture test**: Across ~15 conversations, what fraction describe a problem genuinely needing memory/persistence/portability? That ratio is the real signal on whether the mounted-agent wedge lives in this population — not any single call.
+- **Primary**: Sale closed / deal materially progressed.
+- **Leading indicator**: Conversations had this week (LinkedIn pipeline + demand-scout-sourced Reddit conversations).
+- **Substrate-yield test (refined 2026-05-23)**: At zero revenue, minimal filtering. Architecture-fit is judged on *the work that gets built if won*, not the words in the conversation — customers describe problems, the engineering call is whether solving them builds reusable substrate. Filtering tightens with revenue; hard-filter at ~$1M ARR.
 - **90-day North Star** (per `bd/kpis.md`): substrate density curve toward Demo Day (~Sept 2026).
 
 ## Strategic Framing
 
-**The May 8 two-week discovery sprint resolved early — and resolved as channel reallocation, not a pivot.**
+**The discovery sprint is now resolving as a sequence of channel verdicts, not a thesis change.** Three clean kills on record (LinkedIn-insurance, Motion E, job-reqs); Upwork demoted to maintenance. Thesis unchanged throughout: get to first sale via whatever channel produces conversations.
 
-The thesis has been stable since May 8: find painkiller-grade pain the substrate can serve, take engagements, build the platform through them (consulting-as-platform — AWS/Palantir playbook). What changed on May 18 is the *channel*: LinkedIn cold outreach returned a structural null result, so capital moved to active-demand interception (Upwork + job reqs). A channel test produced a verdict; capital reallocated. That is discovery working — not the strategy oscillation pattern.
+**Forward-deployed-engineer framing (Palantir/AWS pattern, sharpened 2026-05-23):** We sell the solution, not the architecture. Customers describe problems; we build the custom solution on top of substrate that either exists or needs to be built. The customer doesn't care which — they care that their problem is solved. So no conversation should be about architecture (except special cases like Vijay). Architecture-fit is judged on what gets built behind the scenes, not what's said in the call.
 
-**Active-demand interception inverts the pain/architecture problem.** Cold outreach has unclear pain. A posted, funded job is painkiller-grade by construction. So pain is now confirmed at the door; the open question is architecture-fit, read in aggregate across conversations.
-
-**No per-call architectural filter.** At zero conversation volume, filtering is premature — every conversation is signal. Take every call that fits the schedule. Filter on expected utility only once call volume becomes the constraint.
+**Two distinct audience motions — don't conflate (insight, 2026-05-23):**
+- **Motion E (KILLED)** = recruit existing creators who bring *their* audience to deploy mounted agents. Substack/Roblox pattern. Vitamin-confirmed across 3-4 conversations.
+- **Building our own audience (active background)** = brand/inbound/community/SEO/demand-validation that compounds independently of any single sales motion. Make.com pattern. Tokenrip's audience, not a creator's. This-quarter expression: demand-scout on Reddit doubles as discovery + demand-validation. Long compounding layer — cannot displace ONE thing.
 
 Current state:
 - **Tokenrip platform**: Deployed. Architecture locked. Substrate roadmap paused pending pipeline.
-- **BD: Active-demand interception**: Primary. Upwork + job reqs. Simon leads.
-- **BD: Motion E**: Killed (vitamin). Passive agent-assisted maintenance only, no founder time.
+- **BD: Get a sale**: Primary. LinkedIn pipeline follow-ups (Simon direct), demand-scout Reddit discovery loop (Simon), Luai close support (Simon helps Alek).
+- **BD: Motion E**: Killed (vitamin). Not the same as "building our own audience" — distinct motion.
 - **BD: Motion D / B**: Paused / deferred 2027.
 - **Capital**: YC + a16z both submitted. Outcomes pending — respond if contacted, don't optimize.
 - **Crypto**: Separate RebelFi vault. Alek manages.
 
 ## Open Threads
 
-- **Demand-scout agent** — polls Upwork/job feeds/Reddit/X for agent-build requests, surfaces ranked. Secondary build this week. Candidate to publish as a Tokenrip imprint.
-- **Sales machinery framework** — Simon wants GTM-as-a-machine as a mental model to build toward (7-stage: sourcing → qualification → outreach → conversation → conversion assets → instrumentation → feedback/expansion). Their own GTM machine = a dogfood and a candidate lighthouse imprint set.
-- **Term sheet / pricing v1** — needed once a conversation turns deal-shaped.
+- **Demand-scout agent** — deployed on Reddit May 23 as discovery + demand-validation loop. Test of bottom-up discovery as a channel.
+- **Sales machinery framework** — Simon's 7-stage GTM-as-machine mental model. Their own GTM machine = dogfood + candidate lighthouse imprint set.
+- **Term sheet / pricing v1** — Luai proposal exercises this; future deals will pattern off it.
+- **Substack/Roblox + Make.com playbook recommendations** — strong research from 2026-05-21. Custom interface primitive (Make-wedge) + lighthouse imprint sequencing (Substack pattern) are real recommendations; they activate once we have a customer to point at and substrate-density-curve material to feed.
+- **Job-req monitor** — periodic check for when "AI agent" job postings start including non-coding workflow automation. Channel re-opens then.
 
 ## Execution Read
 
@@ -85,28 +91,28 @@ Current state:
 | Chief of Staff | **Shipped (team-scoped, public)** | |
 | YC application | **Submitted May 5** | Outcome pending |
 | a16z Speedrun | **Submitted ~May 18** | Outcome pending |
-| LinkedIn insurance discovery | **Channel killed** | Buyers inactive on platform |
-| Motion E | **Killed — vitamin confirmed** | 3-4 conversations |
-| Upwork submissions | **0** | Week target: 25 |
-| Job-req outreaches | **0** | Week target: 10 |
-| Conversations booked | **2** (Vijay May 19, Alek May 22) | Week target: 5 / 10 stretch |
-| Conversations completed | **0** | First is May 19 |
+| LinkedIn insurance discovery | **Channel killed** (May 18) | Buyers inactive on platform |
+| Motion E | **Killed — vitamin confirmed** (May 18) | 3-4 conversations |
+| Job-req outreach | **Channel killed** (May 23) | All AI agent jobs are AI-coding jobs |
+| Upwork | **Demoted to maintenance** (May 23) | Supply ceiling 2-5 biddable/day |
+| Discovery calls completed | **~3-4** | Vijay (intel), Luai (Alek proposal sent), Paul (non-fit), Alek's call |
+| Live deals | **1** (Luai — Alek owns) | $5K 90-day pilot proposal sent |
 | MRR | **$0** | Revenue is the forcing function |
-| Co-founder | **Aligned** | Simon: Upwork/job-reqs. Alek: own call Thu. |
+| Demand-scout agent | **Deployed on Reddit May 23** | Discovery + demand-validation loop |
+| Co-founder | **Aligned** | Simon: LinkedIn pipeline + demand-scout. Alek: Luai close. |
 
 ## Recent Wins
 
-- **a16z Speedrun submitted.** Both capital applications now in.
-- **The discovery sprint produced a real verdict.** First motion in five weeks to run long enough to decide — two clean kills, channel reallocated with data.
-- **Disciplined channel reallocation, not oscillation.** Thesis held; channel moved off a null result.
-- **2 conversations booked** heading into the new channel.
+- **First real proposal out** (Luai, via Alek) — substrate-yield deal: document recognition, multi-app-type generalization, Phase 2 multi-tenant.
+- **Three clean channel kills on record.** Discovery sprint is producing decisions, not oscillation.
+- **Strong positioning intel from Vijay call** — portability validated by an insider as the monetizable angle.
+- **Demand-scout agent built and deployed** — first system-building output aimed at direct sales rather than at infrastructure.
 
 ## Current Concerns
 
-- **First real call (Vijay, May 19) is a note-swap, not hot inbound.** Mutual connection, "swap notes / stay connected" framing. Set expectations accordingly — it's relationship/intel, not a live deal.
-- **Conversation pipeline is still near-zero.** The week's targets are the test of whether active-demand interception actually produces volume.
-- **Demand-scout build vs. bidding.** Secondary by design — just ensure it stays second to revenue work.
-- **Aggregate architecture-fit unknown.** If early conversations are all Zapier-grade, that's the market saying the wedge isn't in this population. Watch the ratio.
+- **No Simon-owned most-progressable deal yet.** Luai is Alek's. Simon needs to manufacture one from the LinkedIn pipeline this week or the "0 → 1" lands in Alek's column only.
+- **Demand-scout watch.** Signal that it's working = conversations engaged from Reddit pain-posts. Signal that it's drifting into infrastructure work = posts/dashboards/agents shipped with no conversations had. Watch the right number.
+- **Yoda calibration this session was poor** — three flags pushed back (Motion E conflation, architecture-filter at conversation level, consulting-trap at zero revenue) and one bad deal proposal (Paul re-engagement on the work Paul himself diagnosed as not-fit). Pattern: Yoda needs to re-read recent insight notes before opening flags or proposals.
 
 ---
 
