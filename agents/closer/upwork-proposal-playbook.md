@@ -43,10 +43,12 @@ The proposal is not a formula to fill in. It is a short, human message that prov
 
 The first sentence decides whether the rest gets read. It must **not** narrate the client's post back to them ("you're looking for...", "sounds like you want...", "you asked for...") and must **not** be a generic line about the bidder ("I'm an experienced developer...").
 
-Open with substance. Two openings that work:
+**Standard opener:** Every cover letter begins with `Hi,` on its own line, then `I'm Simon. <one concrete, relevant first sentence>`. The greeting + name reads warm and human (a person, not a firm), and the first real sentence still does the work of proving comprehension without narrating the post.
 
-1. **Who you are, in one concrete, relevant sentence.** *"I build and run AI agents for a living, and most of what you listed is work I do day to day."* The relevance does the work — it is specific to this job, not a résumé line.
-2. **A real point of view that reframes the job.** *"Most AI consulting is slideware. I'd rather point you at a system that's actually running."* This has a spine; it answers the buyer's unspoken worry before they raise it.
+Two ways that first sentence can land:
+
+1. **Who you are, in one concrete, relevant sentence.** *"I'm Simon. I build and run AI agents for a living, and most of what you listed is work I do day to day."* The relevance does the work — it is specific to this job, not a résumé line.
+2. **A real point of view that reframes the job.** *"I'm Simon. Most AI consulting is slideware — I'd rather point you at a system that's actually running."* This has a spine; it answers the buyer's unspoken worry before they raise it.
 
 Both prove comprehension without narrating the post. The particulars of the job still appear, woven into the body as normal sentences, never announced as "you said X."
 
@@ -96,6 +98,8 @@ End with one low-friction next step that's easy to say yes to. The goal is a rep
 - A time-boxed call offer — "Got 15 minutes this week for a quick call?" — better still when you offer to bring something ("I'll come with a first-pass outline").
 
 A question they can answer in one line beats a polished sign-off. The proposal ends with a door held open, not a bow.
+
+**Standard LinkedIn sign-off line.** After the close + signature, append one final line: *"Also, feel free to look me up on LinkedIn for some more information about me: Simon Pettibone."* It's a low-friction trust signal — a real name, a real person, easily verifiable. Goes on every cover letter.
 
 ---
 

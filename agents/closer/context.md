@@ -3,7 +3,7 @@
 > Unified pipeline across both motions. Closer updates this at the end of every session.
 > Health: 🟢 Green (on track) · 🟡 Yellow (gap forming, needs action) · 🔴 Red (stalled or at risk).
 
-**Last updated**: 2026-05-21 (Luai El Haj proposal v4: bridge monthly added; agreement retitled as draft term sheet, signature ceremony stripped)
+**Last updated**: 2026-05-25 (Alex Khadempour added — first pull-shaped firm-direct call; portfolio pack scoped, Bill C-3 bot identified as lead proposal wedge)
 
 **Operating phase**: Conversation Volume. Goal is replies and learning, not winning bids. Bid wide, triage advisory-only. See `upwork-proposal-playbook.md` → Current Phase.
 
@@ -17,6 +17,7 @@ Per `bd/firm-direct-strategy/gameplan.md`. Phases: Outreach → Discovery → Pa
 |----------|----------|-------|-------|--------|-------------|-----|
 | Mohammad "Sultan" Ahmed (NY Coverage / SkR Agency) | Insurance | Simon | Outreach | 🟡 | Bucket B outreach message sent; watch for reply. Possible sub-ICP (small/specialist shop) — reply ≠ validation | 2026-05-19 |
 | Luai Walid El Haj (Get In Canada) | Immigration | Alek (lead) + Simon (technical) | Proposal Drafted | 🟡 | Run proposal + cover email through `/humanizer`; publish to Tokenrip; Alek sends cover email | 2026-05-22 |
+| Alex Khadempour (CICS Immigration) | Immigration | Alek (lead) + Simon (technical) | Discovery → Portfolio | 🟢 | Send portfolio email (CoS + Moa links + Loom) Fri; tailored proposal Bill C-3 bot Mon | 2026-05-29 (proposal) |
 
 Outreach motion now runs off `agents/closer/insurance-linkedin-outreach.md` (A/B/Fallback bucketing rubric).
 
@@ -76,3 +77,7 @@ Rolling list of what's been promised but not yet done. Cleared as completed.
 | Submit AI marketing workflow architect cover letter | Simon | 2026-05-19 | Done — submitted |
 | Submit AI/operations consultant cover letter | Simon | 2026-05-19 | Done — submitted |
 | Update Upwork profile (headline + overview) with rewritten version | Simon | 2026-05-19 | Open |
+| Decide Alex Khadempour proposal lead: Bill C-3 bot vs. application review (Bill C-3 recommended) | Simon + Alek | 2026-05-26 | Open |
+| Record 90s Loom walkthrough of Chief of Staff for Alex Khadempour portfolio | Simon | 2026-05-27 | Open |
+| Send portfolio email to Alex Khadempour (CoS + Moa links + Loom if recorded) | Alek | 2026-05-27 | Open |
+| Draft + send tailored Bill C-3 chatbot proposal to Alex Khadempour | Alek + Simon | 2026-05-29 | Open |

@@ -10,7 +10,7 @@
 
 ## Core Thesis (One Paragraph)
 
-The unit of automation in knowledge work is shifting from the chatbot session to the persistent agent. But enterprises are still buying chatbots top-down while their employees are building real automation bottom-up. The two sides cannot meet without a substrate that makes individual automations team-shareable. The wedge is the non-technical employee who is already automating their job with AI. The ladder is Glo (individual, free) → automation owner / AI Agent Manager (team, paid) → Company Tenant (enterprise). The motion is precedented (Slack/Notion/Figma/GitHub bottom-up SaaS) and happening now in the AI agent layer with no incumbent.
+The unit of automation in knowledge work is shifting from the chatbot session to the persistent agent. But enterprises are still buying chatbots top-down while their employees are building real automation bottom-up. The two sides cannot meet without a substrate that makes individual automations team-shareable. The wedge is the non-technical employee who is already automating their job with AI. The ladder is Glo (individual, free) → automation owner / AI Agent Manager (team, paid) → Company Tenant (enterprise). The motion is precedented (Slack/Notion/Figma/GitHub bottom-up SaaS) and happening now in the AI agent layer with no incumbent. The deeper architectural bet: as personal agents proliferate across runtimes (Codex, ChatGPT, Cohere, vendor-hosted), they will need a neutral surface to share state with each other — and only a third party can host it.
 
 **One-line positioning**: Tokenrip is the durable home for employee-built AI agents — so individual automations can become team infrastructure.
 
@@ -184,6 +184,96 @@ Anthropic + OpenAI are circling SMB. Microsoft is circling enterprise top-down. 
 
 ---
 
+## The Multi-Agent Sharpening
+
+Independent validation arrived 2026-05-25 via Dan Shipper on Lenny's Podcast (`active/2026-05-25-the-ai-paradox-more-automation-more-humans-more-work-dan-shipper.md`). Shipper described the future of knowledge work in language that mapped onto Tokenrip's architecture without naming it. The thesis did not change. The pain articulation got sharper — and a dimension that was implicit in the deck became explicit.
+
+### What Shipper surfaced
+
+Four claims that map directly onto the architecture:
+
+1. **Work will happen on a shared surface, not in a chat session.** Humans and agents need to act on the same mutable state in real time, with mutual visibility. ("I need visibility into what the agent is doing. The agent has to have visibility into what I'm doing.")
+2. **Two agents are better than one.** Agent-to-agent context transfer is faster than the human-typing equivalent. The bottleneck is the surface the two agents share.
+3. **SaaS comes back because users bring their own tokens.** Apps live inside the agent harness; the harness brings inference. Margins expand for SaaS that builds for the human + agent + agent collaboration pattern. This is BYO-inference, validated from outside.
+4. **Forward-deployed engineer is the new role, not "AI Agent Manager."** The person who keeps the company's agent working and mediates between agents and humans. Worth re-evaluating the deck's role-naming.
+
+### What changed in the deck
+
+The pain on slide 2 was framed around Glo's *automation being orphaned*. Three losses, each about the script not crossing teams. Correct but architecturally imprecise. The sharpened framing: every loss is about *agents that cannot share state*, not just scripts that cannot move. The deck now reads:
+
+- Loss 1: coworker cannot pick up where she left off → no shared state, no handoff between AI tools (was: "no shared version")
+- Loss 2: manager cannot see what her agent has done → every agent runs in an invisible session (was: "automation running invisibly")
+- Loss 3: when she leaves, the workflows her agent learned leave with her → institutional memory walks out (was: "institutional knowledge walks out")
+
+Slide 3 follows: step 2 ("Mount") now spells out the runtimes (Claude, ChatGPT, Cursor) to make cross-runtime concrete; step 4 ("Persist") elevates "memory compounds across agents and sessions" from a closing footnote to the load-bearing claim, and pairs explicitly with slide 2 loss 3 ("when Glo leaves, the work doesn't").
+
+Slide 5's moat line is now structural rather than values-based: "Cross-runtime agent collaboration has to be hosted by a third party." Anthropic literally cannot host state that OpenAI's agents are supposed to mutate. The neutrality argument is now a structural one.
+
+### Why this is a sharpening, not a pivot
+
+The protagonist (Glo) stays. The ladder stays. The motion stays. The architecture stays. What changes is the *pain language* on slide 2 and the *moat language* on slide 5 — both moving from "sharing" framing to "shared state across runtimes" framing. The downstream effect: the architecture becomes structurally necessary in a way that is harder to argue with, because no SaaS session can host multi-party mutable state across vendors.
+
+### What this previews for the post-product (Series A) deck
+
+The accelerator deck leads with Glo because she is concrete and the wedge is precedented (bottom-up SaaS). The Series A deck — 12 months from now, after the lighthouse and the first deploys — can lead with the multi-agent shared-state thesis directly. Cross-runtime agent collaboration becomes the spine; Glo becomes the lighthouse example. Do not force that framing into the accelerator deck (too abstract for 7 slides). Do start drafting the Series A deck in parallel so the protagonist evolution is deliberate, not reactive.
+
+### Founders as future-state existence proof
+
+Underused data point: Simon and Alek already work the way Shipper describes — multi-agent, multi-runtime, persistent shared state, on Tokenrip itself. The Glo testimonial is *forecast* evidence (she will need this). The founders' workflow is *existence* evidence (this works today). Open question: does the deck reserve one slot for "here is the future-state, running today, on Tokenrip"? It adds a slide and adds rare lived-experience credibility that pre-traction decks usually cannot show. Decision deferred — try it on a couple of partners before committing.
+
+---
+
+## Cover-Line: Distinguishing from Slack-Resident Agents
+
+The current cover line — "Portable AI agents, shared with your team" — banks all the differentiation on the word **"portable."** A skeptical partner can read it and ask *Shopify's River does this. Ramp's agent does this. Slack-resident super-agents do this — what's different?* The line does not answer.
+
+### Shipper bifurcates the future into two surfaces
+
+The May 2026 podcast actually gives the answer. Shipper splits the future of work into two distinct surfaces:
+
+1. **The Slack-resident super-agent.** One agent per company, lives in Slack, top-down deployed, FDE-built, delegation-pattern. Examples: Shopify's River, Ramp's, Anthropic's internal Claudie. You ask it to do work; it goes off and does it elsewhere.
+2. **The work surface.** Codex, Cohere, Claude Code; where work actually happens, with mutable state and multiple parties acting on it concurrently.
+
+Tokenrip is for **surface 2**. The Slack-resident pattern is not a competitor — it is a different layer of the stack. They coexist. (A Slack-resident super-agent might even call into Tokenrip-hosted agents underneath.) The positioning win is that Shipper himself drew the line; we do not have to.
+
+### What structurally distinguishes Tokenrip
+
+Four properties, ordered by how cleanly each differentiates from the Slack-resident pattern:
+
+1. **Multi-runtime** — Tokenrip agents run in every AI tool the team uses (Codex, Claude Code, Cursor, ChatGPT, terminal, browser). Slack-resident agents only run in Slack. *This is the cleanest cover-line differentiator.*
+2. **Multi-agent** — Tokenrip is a roster of agents per operator. Slack-resident is one super-agent per company.
+3. **Bottom-up** — Glo builds her own and shares it; coworkers choose to mount it. Slack-resident is top-down: FDE builds, company deploys.
+4. **Operator-owned** — Each agent belongs to the person who built it. Slack-resident is org-owned.
+
+### Why the current line does not carry it
+
+"Portable" is doing too much work alone. As a property word it is abstract — a partner reads it and thinks *exportable? movable? lives in a file?* — none of which immediately collide with the Slack-resident pattern. "Shared with your team" is worse: Slack-resident agents also share work with the team. It is not differentiating at all.
+
+### Candidates that make the differentiation louder
+
+The fix is to name **where the agents run**, not the abstract property of portability:
+
+| # | Candidate | Why it works | Cost |
+|---|---|---|---|
+| A | "AI agents that run in every AI tool your team uses." | "Every AI tool" rules out "just Slack" | Drops "portable" as a word |
+| B | "Portable AI agents — in every AI tool your team is already using." | Keeps "portable"; "already using" signals bottom-up | Longer; em-dash |
+| C | "AI agents that travel between your team's tools." | "Travel between" forecloses Slack-resident in one short clause | Drops "portable" but implies it |
+| D | "Your team's AI agents — running across every tool they use." | Most on-thesis (plural agents, plural tools) | Longest; two clauses |
+
+**Recommended: C — "AI agents that travel between your team's tools."**
+
+A reader who knows what River or a Slack-resident super-agent is reads "travel between" and immediately understands: *oh, this is not that thing — this crosses tools.* Slack-resident agents do not travel. If "portable" is too hard-won across Series 3 to drop as a lexical anchor, fall back to B.
+
+### The trap to watch
+
+A version of "in every AI tool your team uses" can read as a *features* claim ("we integrate with X, Y, Z") rather than a *category* claim (structurally neutral substrate by architectural necessity). The way to avoid the trap is to make sure slide 3 immediately upgrades the parsing. "*Runs* in every AI tool" reads structural. "*Integrates with* every AI tool" reads feature-y. Same words; different reader frame; the deck has to land the right one.
+
+### Decision deferred
+
+Do not lock the cover line until the rendered deck is in front of partners. Render C and B as parallel cover slides; if C parses cleanly in 5 seconds, take it; if it feels too informal for the audience, fall back to B. The deck inside has been sharpened (slides 2/3/5 + FAQ); the cover does not have to chase, but it does have to stop tying for the Slack-resident pattern.
+
+---
+
 ## Architecture (Pitch Translation)
 
 The architecture stays the same as `product/tokenrip/mounted-agent-model.md`. What changes is how it's pitched.
@@ -212,6 +302,22 @@ The mounted-agent architecture (imprint / memory / harness separation) should be
 - **Her manager can version, govern, and propagate it** (versioning + observability — observability doubles as the team-distribution mechanism; see "Engineering the First Share")
 - **The company can run it on their infrastructure** (tenancy)
 - **Tokenrip's costs don't scale with usage** (BYO model — the slide a16z will care about)
+- **Agents on different runtimes can act on the same state** (cross-runtime shared surface — the multi-agent dimension surfaced by the Shipper podcast; see "The Multi-Agent Sharpening")
+
+### Naming the surface and the mode
+
+Three different things could be named, with different stakes:
+
+- **The surface itself** (what Tokenrip *is*). Don't coin a category noun. Let "Tokenrip" be the proper noun, and let the empty quadrant on slide 5 make the absence visible without language. Industry watchers and partners will give back names; adopt the strongest one that lands.
+
+- **The mode of work it enables** (humans and agents acting concurrently on shared state across runtimes). Worth coining, carefully, in non-deck surfaces. Candidates evaluated:
+  - **Co-agentic** — humans and agents acting concurrently as co-authors. Mirrors "co-design"/"co-author"/"co-working," contrasts cleanly with "single-player AI," reads as adjective ("co-agentic surface", "co-agentic mode"). Recommended candidate.
+  - **Pair-agentic** — riff on pair programming, accessible but conflates with human-human pair programming. Skip.
+  - **Multi-agent collaboration** — vague and already overloaded by orchestration frameworks (LangGraph, CrewAI, AutoGen) describing a different thing (one operator running a swarm). Skip.
+
+- **The category** ("agent ops"? "agent management"? "agent collaboration layer"?). Don't coin yet. Naming the category before industry alignment forms makes Tokenrip a category-of-one; every conversation pays education cost, and the coined term usually loses to whatever partners and reporters give back. Watch what comes back. Adopt or refine.
+
+**The rule**: be a noun-coiner in the angles doc and founder writing — places where a term can land carefully and we can watch whether it gets picked up. Be conservative in the deck — partners do not need a vocabulary lesson. Tokenrip is the proper noun; the empty quadrant is the absence; the mode of work goes unnamed in the deck and named ("co-agentic") only in the angles surface and founder writing.
 
 ---
 
@@ -343,7 +449,8 @@ Things that are real but would muddy a 7-slide deck:
 
 - **Where does Chief of Staff sit?** Probably as the "what a mounted agent looks like" demo — the lighthouse. Concrete proof of the architecture working. Less about creators now, more about "this is what a Glo could build with her boss's help and a creator's template."
 - **Does the creator motion need a dedicated slide or fits in GTM?** Lean toward GTM-only. Don't bifurcate the pitch.
-- **Should we name the category?** "Agent ops"? "Agent management"? "Bottom-up agent platforms"? The naming question matters less than the matrix slide showing the empty quadrant. Let a16z name it back to us.
+- **Should we name the category, the surface, or the mode of work?** Three different things, three different answers — see "Naming the surface and the mode" under Architecture. Short version: don't coin a category or surface noun in the deck (Tokenrip is the proper noun; the empty quadrant on slide 5 is the absence). Do float **"co-agentic"** as a mode-of-work term in the angles doc and founder writing — see whether partners pick it up.
+- **Is the cover line still right?** "Portable AI agents, shared with your team" banks the differentiation on "portable" alone, which does not clearly exclude Slack-resident super-agents (Shopify's River, Ramp's, etc.). See "Cover-Line: Distinguishing from Slack-Resident Agents." Recommendation: swap to **"AI agents that travel between your team's tools."** Defer locking until partner-rendered parallel tests.
 - **What's the deck length for accelerator vs. seed/Series A?** This deck targets a16z accelerator (7 slides). The seed/A version would be 12-15 with traction, financials, team depth.
 - **Does the first-share mechanic belong on a slide?** Slide 4 currently asserts the team adopts without showing *how*. The intrinsic/pulled mechanic lives in speaker notes for now — revisit if partners keep asking "why does the team ever pay?"
 
@@ -362,3 +469,4 @@ Things that are real but would muddy a 7-slide deck:
 - `__ARCHIVE/yc-tokenrip-pitch-framing-2026-05-02-codex.md` — prior YC framing (useful contrast)
 - `active/research-dust-competitive-analysis-2026-05-18.md` — Dust competitive analysis + GTM teardown (source of the first-share mechanic and the discipline lessons)
 - `bd/calls/transcripts/vijay-laknidhi-2026-05-19.md` — discovery call that surfaced the Travelers/12K-Claude-seat vendor-lock-in framing; primary evidence for the Enterprise-tier trigger (token-control / portability as the close-the-deal pain)
+- `active/2026-05-25-the-ai-paradox-more-automation-more-humans-more-work-dan-shipper.md` — Dan Shipper on Lenny's Podcast, May 25 2026; primary-source validation for the multi-agent shared-state framing (humans + agents on shared surfaces, two-agents-better-than-one, SaaS-comes-back-because-BYO-tokens, forward-deployed engineer as new role). Source of "The Multi-Agent Sharpening" section.

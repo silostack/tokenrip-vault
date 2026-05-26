@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tokenrip — Proposal for Get In Canada (v6 wireframe)</title>
+<style>
+  /* Wireframe styles — structural, not polished. */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 0 24px;
+    color: #222;
+    line-height: 1.5;
+    font-size: 15px;
+  }
+
+  /* Header bar */
+  .doc-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #222;
+    font-size: 13px;
+  }
+  .doc-header .brand { font-weight: 700; letter-spacing: 0.04em; }
+  .doc-header .sep { color: #999; }
+  .doc-header .meta { color: #666; font-size: 12px; margin-left: auto; }
+
+  /* Title */
+  h1 {
+    font-size: 26px;
+    line-height: 1.25;
+    margin: 28px 0 14px;
+    font-weight: 700;
+  }
+
+  /* Lead paragraph */
+  .lead { font-size: 16px; }
+  .lead em { font-style: italic; color: #444; }
+
+  /* Section headings */
+  h2 {
+    font-size: 16px;
+    margin: 32px 0 10px;
+    font-weight: 700;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+  }
+  h2.section-large {
+    font-size: 18px;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  /* Workflow steps */
+  .workflow-steps {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 16px;
+    counter-reset: step;
+  }
+  .workflow-steps li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+    align-items: start;
+  }
+  .workflow-steps li::before {
+    content: counter(step);
+    border: 1px solid #222;
+    width: 28px;
+    height: 28px;
+    line-height: 26px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    border-radius: 50%;
+  }
+  .workflow-steps .step-title {
+    font-weight: 700;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .workflow-steps .step-body {
+    font-size: 14px;
+    color: #444;
+  }
+
+  /* Two-column bullet list */
+  .two-col-list {
+    columns: 2;
+    column-gap: 32px;
+    margin: 8px 0 10px;
+    padding-left: 18px;
+  }
+  .two-col-list li { margin-bottom: 6px; break-inside: avoid; }
+
+  .intro-line {
+    font-style: italic;
+    color: #555;
+    margin: 4px 0 14px;
+    font-size: 14px;
+  }
+
+  /* Scope note */
+  .scope-note {
+    border-left: 3px solid #ccc;
+    padding: 8px 14px;
+    margin: 16px 0 0;
+    font-size: 13px;
+    color: #444;
+    background: #fafafa;
+  }
+
+  /* Refund callout — confidence voice */
+  .refund-callout {
+    border: 2px solid #222;
+    padding: 14px 18px;
+    margin: 24px 0 16px;
+    background: #f3f3f3;
+  }
+  .refund-callout .headline {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  .refund-callout .body {
+    font-size: 13px;
+    color: #444;
+    margin: 0;
+  }
+
+  /* Pricing grid */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #ccc;
+    margin: 8px 0 24px;
+  }
+  .pricing-grid .col {
+    padding: 16px 18px;
+  }
+  .pricing-grid .col + .col {
+    border-left: 1px solid #ccc;
+  }
+  .pricing-grid .col .tier {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  .pricing-grid .col .amount {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+  .pricing-grid .col ul {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 13px;
+  }
+  .pricing-grid .col li {
+    margin-bottom: 4px;
+  }
+  .pricing-grid .col .designation {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #ccc;
+    font-size: 12px;
+    color: #555;
+    font-style: italic;
+  }
+
+  /* Phase 2 */
+  .phase-two p {
+    margin: 0 0 10px;
+  }
+  .phase-two .emphasis {
+    font-weight: 600;
+    color: #222;
+  }
+
+  /* Wireframe footer */
+  .wf-footer {
+    margin-top: 48px;
+    padding-top: 12px;
+    border-top: 1px dashed #ccc;
+    font-size: 11px;
+    color: #999;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="doc-header">
+  <span class="brand">TOKENRIP</span>
+  <span class="sep">|</span>
+  <span>Proposal for Get In Canada</span>
+  <span class="meta">Prepared for Luai • May 2026</span>
+</div>
+
+<!-- TITLE + LEAD -->
+<h1>Pilot proposal: Post-engagement case review console for Get In Canada</h1>
+
+<p class="lead">
+  A client submits a questionnaire, the Get In Canada team reviews it, the file
+  goes to IRCC, and it comes back: <em>"you didn't sign this, your birth
+  certificate isn't stamped."</em> Another envelope. Another week. The console
+  proposed below runs that review in one pass — discrepancies flagged,
+  follow-up emails drafted, the reviewer in the loop on every case before
+  anything goes out.
+</p>
+
+<!-- HOW IT RUNS -->
+<h2>How the workflow runs</h2>
+
+<ol class="workflow-steps">
+  <li>
+    <div>
+      <span class="step-title">Intake</span>
+      <span class="step-body">
+        Questionnaire and documents land in the case console. One screen per
+        case, all source material in one place.
+      </span>
+    </div>
+  </li>
+  <li>
+    <div>
+      <span class="step-title">AI pass</span>
+      <span class="step-body">
+        Every field cross-referenced against every document. Discrepancies
+        flagged with source, conflict, and confidence score.
+      </span>
+    </div>
+  </li>
+  <li>
+    <div>
+      <span class="step-title">Drafts prepared</span>
+      <span class="step-body">
+        Missing-information follow-up emails to the client written and queued
+        for review. No back-and-forth — one consolidated message per case.
+      </span>
+    </div>
+  </li>
+  <li>
+    <div>
+      <span class="step-title">Reviewer console</span>
+      <span class="step-body">
+        The case manager sees the full picture in one screen: questionnaire,
+        documents, flags, draft email, AI reasoning. Designed for fast review,
+        not investigation.
+      </span>
+    </div>
+  </li>
+  <li>
+    <div>
+      <span class="step-title">Approve, reject, annotate</span>
+      <span class="step-body">
+        The reviewer approves the draft, rejects with a note, or adds a flag
+        the AI missed. Nothing is sent without this step.
+      </span>
+    </div>
+  </li>
+  <li>
+    <div>
+      <span class="step-title">The system learns</span>
+      <span class="step-body">
+        Reviewer notes feed back into the model. The next case is sharper.
+        The team's expertise compounds inside the system rather than getting
+        bypassed by it.
+      </span>
+    </div>
+  </li>
+</ol>
+
+<!-- TYPES OF ISSUES -->
+<h2>Types of issues the system catches</h2>
+
+<p class="intro-line">
+  The list below is representative, not exhaustive. The system is calibrated to
+  Get In Canada's specific client population and document mix during the pilot.
+</p>
+
+<ul class="two-col-list">
+  <li>Name spelling conflicts (questionnaire vs. passport)</li>
+  <li>Date-of-birth format mismatches (DD/MM vs. MM/DD)</li>
+  <li>Passport expiry vs. travel dates</li>
+  <li>Missing signatures and stamps</li>
+  <li>Document and form field conflicts</li>
+  <li>Blank answers vs. "N/A" (military service, prior refusals)</li>
+  <li>Employment and education date gaps</li>
+  <li>Travel history gaps</li>
+  <li>Illegible scans flagged before submission</li>
+  <li>Custom checks built to the Get In Canada workflow</li>
+</ul>
+
+<!-- SCOPE NOTE -->
+<div class="scope-note">
+  The questionnaire varies by application type — study permit, visitor visa,
+  work permit, Express Entry, family sponsorship, citizenship — but the
+  workflow above is the same across all of them. The pilot calibrates the
+  engine on one application type selected at kickoff; additional standard
+  types share the same architecture and are added for $1,000 each (scoped
+  below).
+</div>
+
+<!-- REFUND CALLOUT -->
+<div class="refund-callout">
+  <div class="headline">30-day no-questions-asked refund.</div>
+  <p class="body">
+    If the console isn't working the way Get In Canada expected, the engagement
+    ends and the $5,000 is returned. No paperwork, no clawback on what was
+    built.
+  </p>
+</div>
+
+<!-- PRICING -->
+<h2 class="section-large">Pricing</h2>
+
+<div class="pricing-grid">
+  <div class="col">
+    <div class="tier">90-day pilot</div>
+    <div class="amount">$5,000 USD</div>
+    <ul>
+      <li>One application type (selected at kickoff)</li>
+      <li>Full console build and calibration on Get In Canada's files</li>
+      <li>Weekly tuning and direct support</li>
+      <li>All hosting and model costs included</li>
+    </ul>
+    <div class="designation">
+      Design partner rate — reflects case study and reference rights, not a
+      discount on a productized offering.
+    </div>
+  </div>
+  <div class="col">
+    <div class="tier">Post-pilot (day 91+)</div>
+    <div class="amount">$500 / month</div>
+    <ul>
+      <li>Console hosting and ongoing operation</li>
+      <li>Updates as IRCC forms and policies change</li>
+      <li>Continuous calibration from reviewer feedback</li>
+      <li>Month-to-month, 30 days to cancel</li>
+    </ul>
+    <div class="designation">
+      Locked at $500/month for 12 months or until Phase 2 begins, whichever
+      comes first.
+    </div>
+  </div>
+</div>
+
+<!-- ADDING APPLICATION TYPES -->
+<h2 class="section-large">Adding application types</h2>
+
+<p class="intro-line">
+  Phase 1 covers one application type at kickoff. Additional standard types
+  share the same workflow, calibrated to each type's specific forms and
+  document set. Each new type runs under the same $500/month — no per-type
+  subscription escalation — and goes live within one week of payment.
+</p>
+
+<h3 style="font-size: 14px; margin: 18px 0 6px; font-weight: 700;">Standard application types — $1,000 each</h3>
+
+<ul class="two-col-list">
+  <li>Visitor visa</li>
+  <li>Study permit</li>
+  <li>Work permit</li>
+  <li>Express Entry profile review</li>
+  <li>PNP application review</li>
+  <li>Family sponsorship file review</li>
+  <li>Citizenship file review</li>
+</ul>
+
+<!-- PHASE 2 -->
+<h2 class="section-large">Phase 2: B2B back-office expansion</h2>
+
+<div class="phase-two">
+  <p>
+    Get In Canada is positioned to operate a back-office model for other
+    immigration consultants — those firms bring clients, the Get In Canada team
+    handles file preparation, and the firm charges a fraction of what an
+    in-house case manager would cost.
+  </p>
+  <p>
+    The structural constraint on that model today is throughput per reviewer.
+    Manual case review caps how many files each person can process, and quality
+    risk scales with volume. The Phase 1 console removes both constraints
+    inside one firm.
+  </p>
+  <p>
+    <span class="emphasis">Phase 2 is the same console operating in
+    multi-tenant mode</span> — each external consultant's cases routed through
+    Get In Canada's reviewers via the same interface, with tenant-level
+    permissions and routing. No new product to build; the Phase 1 console
+    <em>is</em> the Phase 2 platform, just with more tenants flowing through
+    it. Each reviewer handles a multiple of today's volume at the same
+    headcount, and the back-office becomes a scalable business rather than a
+    labor-margin play.
+  </p>
+  <p>
+    Pricing for Phase 2 is modeled on file volume rather than per-seat SaaS,
+    and is scoped together once Phase 1 is operating and the unit economics are
+    visible.
+  </p>
+</div>
+
+<!-- WIREFRAME FOOTER -->
+<div class="wf-footer">
+  v6 wireframe — 2026-05-21 — console reframe, structure only, not final visual treatment.
+</div>
+
+</body>
+</html>

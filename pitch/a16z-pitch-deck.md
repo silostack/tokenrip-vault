@@ -43,9 +43,9 @@
 
 **Everyone around her loses**:
 
-1. **A coworker rebuilds it from scratch** — no handoff, no shared version.
-2. **Her manager can't see it or govern it** — automation running invisibly inside the org.
-3. **When she leaves, it leaves with her** — the institutional knowledge walks out the door.
+1. **A coworker can't pick up where she left off** — no shared state, no handoff between their AI tools.
+2. **Her manager can't see what her agent has done** — every agent runs in an invisible session.
+3. **When she leaves, the workflows her agent learned leave with her** — institutional memory walks out the door.
 
 > Section header is exactly "Everyone around her loses" — delete any "When Glo leaves" label from this section. The first two losses are true while she is still employed, so "When Glo leaves" mis-frames them.
 
@@ -66,9 +66,9 @@
 **The workflow** (four steps):
 
 1. **Publish** — Glo publishes her agent to Tokenrip. Versioned, persistent, portable.
-2. **Mount** — A coworker mounts it in Claude, or any MCP-compatible client, instantly.
-3. **Govern** — Her manager sees operations, outputs, and a full audit trail in real time.
-4. **Persist** — The agent survives Glo's departure. Team memory compounds.
+2. **Mount** — A coworker mounts it in Claude, ChatGPT, Cursor — any MCP-compatible tool — instantly.
+3. **Govern** — Her manager sees every agent's operations, outputs, and audit trail in real time.
+4. **Persist** — Memory compounds across agents and sessions. When Glo leaves, the work doesn't.
 
 > Size the four step-cards to their content — avoid tall, near-empty cards.
 
@@ -124,7 +124,7 @@
 
 **Caption**: Incumbents validate workplace AI. Nobody owns the runtime-neutral collaboration layer.
 
-**Why incumbents can't follow**: Model providers keep users inside their own runtime — a neutral, portable layer is something only a third party can build.
+**Why incumbents can't follow**: Model providers keep users inside their own runtime — cross-runtime agent collaboration has to be hosted by a third party.
 
 > One moat line only. Do not add side boxes for observability or the compounding moat — those stay in the FAQ.
 
@@ -170,6 +170,10 @@
 ### "What stops Anthropic or OpenAI from doing this?"
 
 Their incentives keep users inside their runtime — that's where their inference revenue lives. Tokenrip's whole value proposition is portability *across* runtimes (your agent runs the same way in Claude, ChatGPT, Cursor, VS Code). A model provider hosting portable agents that run in a competitor's tool is structurally anti-aligned. The neutral substrate has to be a third party.
+
+### "Why does it matter that agents on different runtimes can work together?"
+
+Today most agents work alone inside one runtime. Tomorrow they routinely won't — your Codex talks to your company's internal agent, which talks to your vendor's ChatGPT agent. Neither Anthropic nor OpenAI can host the shared state those agents act on; it would require competitors' agents to defer to their runtime. The neutral substrate has to be a third party. Dan Shipper named this on Lenny's Podcast (May 2026): "two agents are better than one" because they transfer context faster than humans can type — but the bottleneck is the shared surface, which doesn't exist yet.
 
 ### "Isn't this just another agent framework — or a coding tool?"
 

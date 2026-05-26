@@ -78,9 +78,21 @@ Used on Luai El Haj proposal 2026-05-20 (Phase 1 = his consultancy, Phase 2 = hi
 
 ## Recurring Objections
 
-Objections that come up repeatedly, and the responses that work. _(Populated as evidence accumulates.)_
+Objections that come up repeatedly, and the responses that work.
 
-- _(none yet)_
+- **"Do you have examples I can show me / where is your work?"** Three consecutive firm-direct calls have hit this (Luai 2026-05-20, Paul 2026-05-21 in adjacent shape, Alex 2026-05-25 explicitly with the website open on his screen). This is no longer a coaching gap — it's a tools/assets gap. **Standing fix**: a portfolio pack (email + 2 live agent links + 1 short Loom walkthrough with a domain-bridge ending) must be ready to ship within 48 hours of any post-discovery call. The Chief of Staff + Moa pages on tokenrip.com are the spine of this. The Loom is recorded per-prospect (or per-vertical batch) with a one-sentence domain bridge at the end. Adjacent-vertical proof + dated proposal commitment beats "we're early days as far as your vertical goes" every time.
+
+## Portfolio Pack (Warm-Prospect)
+
+Distinct from the cold Upwork rules. When a warm firm-direct prospect asks to see work post-discovery:
+
+- **Email + 2 specific agent-page links + 1 short Loom**, not PDF/deck. Polish slows shipping; the prospect asked for examples, not collateral. The Tokenrip homepage already does heavy lifting once the call has happened — the discovery call has already established platform credibility, so the prospect is ready for specific agent detail pages.
+- **Cold-Upwork rule inverts here.** The Upwork playbook says don't link `/agents` because the thin count reads as absence. For a warm prospect, the same thinness reads as *focus* — each agent is a real shipped product with a detail page. Link directly to the specific agent pages, not `/agents`.
+- **Domain-bridge sentence is the highest-leverage line in any demo asset.** Every Loom, screenshot walkthrough, or one-pager that goes to a specific prospect must end with a one-sentence translation of the demo into *their* domain. For Chief of Staff to Alex Khadempour: "same memory mechanic catches a client name spelled three different ways across passport, diploma, and questionnaire." Without that bridge, the prospect has to do the translation themselves, and most won't.
+- **Close the strongest objection in the email body, not the proposal.** Whatever the prospect named as their biggest AI fear on the call (Alex: failed AI receptionist; Luai: credibility with clients), say in one explicit sentence why what we'd build doesn't trigger it. Pre-empt the objection before the proposal lands — the proposal then doesn't have to relitigate trust.
+- **Email ends with a clarifying question that pulls a reply without requiring one.** Best shape: the question whose answer shapes the proposal's Track B. If they answer, the proposal gets sharper. If they don't, no harm.
+
+Used on Alex Khadempour 2026-05-25 (Chief of Staff + Moa links + planned Loom + AI-receptionist-door-closing sentence + case-managers-vs-solo question).
 
 ## Notes
 
