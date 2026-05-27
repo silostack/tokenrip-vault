@@ -18,7 +18,7 @@ One post per week. Series 4 and Series 5 interleaved by news-cycle priority, not
 | Week        | Target         | Post                                                                                | Series                      | Why this slot                                                                                                                                                         |
 | ----------- | -------------- | ----------------------------------------------------------------------------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 0 ✅        | published 2026-05-25 | ~~**Your AI Vendor Lock-In Is Five Layers Deep**~~ ([live](https://tokenrip.com/s/77707a4c-aca6-4667-8554-9e77602a5254)) | Series 4 (standalone entry) | Shipped.                                                                                                                                                              |
-| 1           | Jun 1–8        | **Post 19: Two Agents Are Better Than One** (`two-agents-better-than-one`)          | Series 5                    | Shipper window. Single hottest news anchor.                                                                                                                           |
+| 1 ✅        | published 2026-05-26 | ~~**Post 19: Two Agents Are Better Than One**~~ ([live](https://tokenrip.com/s/cece3097-70e3-49e2-8548-54b8a5ad8266)) | Series 5                    | Shipped ahead of window.                                                                                                                                              |
 | 2           | Jun 9–15       | **Post 16: Your AI Vendor Is Your Competitor** (`ai-vendor-is-competitor`)          | Series 4                    | Chamath/$5.5B still warm. Pairs structurally with Post 19 (both: "the lab as structural problem").                                                                    |
 | 3           | Jun 16–22      | **Post 20: How We Actually Work With Agents** (`how-we-work-with-agents`)           | Series 5                    | Existence proof for Post 19. Production-heavy (screenshots, anonymization); this slot gives ~3 weeks runway. Within Series-5-plan's "7–14 days after Post 19" window. |
 | 4           | Jun 23–29      | **Post 17: You Can't Put Your Data in Someone Else's Cage** (`ai-data-sovereignty`) | Series 4                    | Buyer-defense duo with Post 16. Anonymization care needed — one week is enough.                                                                                       |
@@ -68,7 +68,7 @@ Full plan: `plans/blog-series-5-co-agentic-work-plan.md`
 
 | # | Title | Slug | Surface | Schedule slot | Status |
 |---|-------|------|---------|---------------|--------|
-| 19 | Two Agents Are Better Than One | `two-agents-better-than-one` | Thesis — multi-agent unlock | Week 1 | Brief complete |
+| 19 | Two Agents Are Better Than One | `two-agents-better-than-one` | Thesis — multi-agent unlock | Week 1 | ✅ Published 2026-05-26 |
 | 20 | How We Actually Work With Agents | `how-we-work-with-agents` | Craft — founder existence proof | Week 3 | Brief complete |
 | 21 | Co-Agentic Work | `co-agentic-work` | Category — mode-of-work coinage | Conditional | Brief complete — gated on signal |
 
@@ -76,8 +76,9 @@ Full plan: `plans/blog-series-5-co-agentic-work-plan.md`
 
 ## Published
 
-15 posts live. Full list in `published/`. Most recent:
+16 posts live. Full list in `published/`. Most recent:
 
+- **Post 19: Two Agents Are Better Than One** (`two-agents-better-than-one`) — published 2026-05-26
 - **Your AI Vendor Lock-In Is Five Layers Deep** (`ai-vendor-lock-in-five-layers`) — published 2026-05-25
 - Post 14: Collaboration Tax on Your Token Bill (`collaboration-tax-token-bill`)
 - Post 13: Agents Need a Resume (`agents-need-a-resume`)

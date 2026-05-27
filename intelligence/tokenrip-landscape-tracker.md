@@ -139,6 +139,42 @@ Decentralized, federated GitHub replacement for AI agents. Built on IPFS, libp2p
 
 ---
 
+### Default
+**URL**: https://www.default.com/
+**Raised**: $10.6M ($6.6M seed from Craft Ventures + $4M from 8VC)
+**Revenue**: $9.6M (2024)
+**Team**: ~64 people. CEO: Nico Ferreyra.
+**Customers**: Hex, OpenPhone, Bland AI, StackBlitz, People Data Labs, Cortex
+**Category**: GTM agent infrastructure / adjacent platform
+**First tracked**: 2026-05-27
+
+AI infrastructure platform for revenue teams. Started as inbound lead routing (Chili Piper competitor), repositioning as "the next sales and marketing cloud." Four components: unified data layer (identity-resolved across CRMs, forms, enrichment), workflow builder (no-code, conditional logic), AI agent "Dot" (natural language → working systems, human-in-the-loop), governance (review/logging/rollback). 50+ integrations including MCP, webhooks, Zapier.
+
+**Strategic thesis** (CEO Sacra interview): Inbound is the wedge to own "territories, segments, and global user ID." Switzerland positioning — neutral across the stack. Land with sub-30-person companies, expand as they grow. Predicts GTM stack consolidation in 3-4 years. Human-in-the-loop AI philosophy — doesn't believe in fully autonomous SDRs.
+
+**Why this matters for Tokenrip**: Default validates the "infrastructure for AI agents in business operations" market ($9.6M revenue). Their hosted-agent model ("Dot") is precisely the economic model that mounted agents disrupt — Default pays for inference, faces capability ceilings, and inherits pricing pressure from model deflation. Their MCP support creates a technical bridge for mounted agents to interact with their data layer. Their #1 weakness (inbound only, no outbound) is a concrete opportunity for mounted-agent operators.
+
+**Threat level by Tokenrip layer**:
+- **Layer 1 (Asset Routing)**: **None** — Default routes leads, not agent-produced assets
+- **Layer 2 (Collaboration)**: **Low** — workflow builder enables agent-human coordination, but only within GTM context
+- **Layer 3 (Deliverable Rails)**: **None** — no transaction/escrow layer
+- **Layer 4 (Workspaces)**: **Medium** — "marketing database" is a lightweight workspace for GTM objects. Expansion beyond GTM would converge.
+- **Layer 5 (Agent Runtime)**: **Low** — Dot is a hosted agent with natural-language configuration. No cross-platform portability, no imprint separation.
+- **Positioning / Vocabulary**: **Low** — different category label ("AI infrastructure for revenue teams" vs. "agentic collaboration"). No vocabulary collision.
+
+**Partnership potential**: **High**. MCP integration exists. Default's inbound-only gap is Tokenrip's opportunity. ICP overlap (Series A-C, ops-heavy, lean teams) creates channel access. Actionable after Tokenrip has a live customer and documented case study. See `active/research-default-com-2026-05-27.md` for the concrete partnership play.
+
+**Key tripwire signals**:
+1. Default expands Dot beyond GTM into general-purpose business operations
+2. Default announces "agent marketplace" or third-party agent support
+3. Default drops hosted-agent model in favor of BYO-model or MCP-first architecture
+4. Default raises a large round with "platform" positioning beyond revenue teams
+5. Default acquires or partners with an outbound intelligence company
+
+**Full analysis**: [[active/research-default-com-2026-05-27]]
+
+---
+
 ## Observations
 
 - **"Agentic collaboration" as a label is being claimed.** Alike is using it explicitly. Tokenrip's blog content (post-1-agentic-collaboration) should publish before this vocabulary gets attached to the bolt-on interpretation. The window is narrow — Alike is at Demo Day right now.
@@ -168,3 +204,8 @@ Decentralized, federated GitHub replacement for AI agents. Built on IPFS, libp2p
 | gitlawb network grows past 10 nodes / 10,000 repos | Federation claims become real; developer trust and distribution strengthen |
 | gitlawb raises seed or Series A | Execution acceleration; watch for expansion into content/asset layer |
 | gitlawb Spawn pivots from trading agent to general agent hosting | Potential Layer 3 competition |
+| Default expands Dot beyond GTM into general-purpose business ops | Category convergence risk — threat level upgrades |
+| Default announces agent marketplace or third-party agent support | Platform expansion — direct competition with Layer 5 |
+| Default drops hosted-agent model for BYO-model or MCP-first | Architectural convergence with mounted agents |
+| Default raises large round with "platform" positioning beyond revenue teams | Execution acceleration toward Tokenrip's space |
+| Default acquires or partners with outbound intelligence company | Fills their #1 gap without mounted agents — partnership window narrows |

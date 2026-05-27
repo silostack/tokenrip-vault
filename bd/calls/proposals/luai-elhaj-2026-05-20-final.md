@@ -100,13 +100,13 @@ Submission stays 100% human. AI prepares the review package. People send.
 
 ## Commercial Terms (Summary)
 
-| Item | Terms |
-|---|---|
-| **Phase 1 pilot fee** | **$5,000 USD all-in** for one application type, 90-day deployment |
-| **Refund window** | Full no-questions-asked refund any time in the first 30 days |
-| **Monthly after the pilot** | **$500/month** starting day 91. Locked for up to 12 months **or until Phase 2 starts** (whichever first). Cancel anytime with 30 days notice. The monthly is intentionally temporary — Phase 2 replaces it when ready. |
-| **Additional standard application types** | **$1,000 USD each** (during or after the pilot) |
-| **Standard list pricing (anchor)** | $25,000; design-partner pricing reflects first immigration-vertical engagement + design partner rights |
+| Item                                      | Terms                                                                                                                                                                                                                  |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Phase 1 pilot fee**                     | **$5,000 USD all-in** for one application type, 90-day deployment                                                                                                                                                      |
+| **Refund window**                         | Full no-questions-asked refund any time in the first 30 days                                                                                                                                                           |
+| **Monthly after the pilot**               | **$500/month** starting day 91. Locked for up to 12 months **or until Phase 2 starts** (whichever first). Cancel anytime with 30 days notice. The monthly is intentionally temporary — Phase 2 replaces it when ready. |
+| **Additional standard application types** | **$1,000 USD each** (during or after the pilot)                                                                                                                                                                        |
+| **Standard list pricing (anchor)**        | $25,000; design-partner pricing reflects first immigration-vertical engagement + design partner rights                                                                                                                 |
 
 ### What The 90 Days Is For
 
