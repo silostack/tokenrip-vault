@@ -61,14 +61,14 @@ This is the elevator version. The rest is structure.
 
 ### 5. IP / Ownership
 
-| Asset | Owner | Notes |
-|---|---|---|
-| **Tokenrip platform code** | Tokenrip | Core platform, never transferred |
-| **Application templates / patterns** | Tokenrip | Reusable across other customers; this clause is non-negotiable |
-| **Domain-specific custom logic** | Tokenrip (with customer license) | Logic specific to their workflow lives in templates Tokenrip can refine and reuse anonymously; customer gets perpetual usage license |
-| **Customer data** | Customer | Their data is theirs. We don't claim it. |
-| **Workflow definitions** | Customer | Their proprietary process docs, SOPs, etc. |
-| **Imprint config** | Tokenrip retains ability to anonymize patterns into shared knowledge layer | Customer can opt out of contribution |
+| Asset                                | Owner                                                                      | Notes                                                                                                                                |
+| ------------------------------------ | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **Tokenrip platform code**           | Tokenrip                                                                   | Core platform, never transferred                                                                                                     |
+| **Application templates / patterns** | Tokenrip                                                                   | Reusable across other customers; this clause is non-negotiable                                                                       |
+| **Domain-specific custom logic**     | Tokenrip (with customer license)                                           | Logic specific to their workflow lives in templates Tokenrip can refine and reuse anonymously; customer gets perpetual usage license |
+| **Customer data**                    | Customer                                                                   | Their data is theirs. We don't claim it.                                                                                             |
+| **Workflow definitions**             | Customer                                                                   | Their proprietary process docs, SOPs, etc.                                                                                           |
+| **Imprint config**                   | Tokenrip retains ability to anonymize patterns into shared knowledge layer | Customer can opt out of contribution                                                                                                 |
 
 **The key clause** (must be in every contract):
 > *"Tokenrip retains ownership of all platform code, integration patterns, and generalized workflow templates produced during the engagement. Customer receives a perpetual, non-exclusive license to use the deployed application. Customer-specific workflow definitions and data remain the exclusive property of Customer."*

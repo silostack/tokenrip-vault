@@ -44,15 +44,7 @@ For the coming week:
 
 Challenge if the list gets too long: "If you could only do ONE of these, which would it be?"
 
-## Step 5: Check In on Wellbeing
-
-Before closing, check in:
-- How are you actually doing? (Not the business — you.)
-- Energy levels? Stress? Anything weighing on you outside work?
-
-This isn't optional. Burnout is a real risk and Yoda watches for it.
-
-## Step 6: Close and Update
+## Step 5: Close and Update
 
 Summarize:
 - Key wins from last week

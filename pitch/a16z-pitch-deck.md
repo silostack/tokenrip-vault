@@ -2,7 +2,7 @@
 
 **Status**: Draft v2
 **Created**: 2026-05-14
-**Updated**: 2026-05-15
+**Updated**: 2026-05-18
 **Length**: 6 slides (cover + 5 content)
 
 **Companion**: [[a16z-angles-and-explorations]] (full reasoning, evidence, open threads)
@@ -13,19 +13,13 @@
 
 ## Slide 1 — Cover
 
-**Purpose**: Open the deck by stating what Tokenrip is and where it is going — identity and ambition. The problem belongs to slide 2; the cover must not duplicate it.
+**Purpose**: Open the deck — the company name and what it does, nothing else. The problem belongs to slide 2; the vision now closes the deck on slide 6.
 
-**Company**: TOKENRIP
+**Company name** (the hero element — large and prominent): Tokenrip
 
-**Headline**: Portable AI agents shared with your team.
+**Tagline**: Portable AI agents shared with your team.
 
-**Vision line**: In 5 years, every knowledge-work team has a roster of persistent agents. Tokenrip is where those agents live.
-
-**Founders**: Simon Pettibone & Alek Perak — second-time founders, previously RebelFi.
-
-**Context**: a16z Pitch · May 2026 · Founded April 2026
-
-> Keep the TR monogram treatment. No problem statement on the cover — slide 2 owns the problem.
+> Cover is name + tagline only. No vision line, no founder credit, no pitch/date context — that was clutter. Logo/wordmark treatment is the designer's call.
 
 ---
 
@@ -49,11 +43,11 @@
 
 **Everyone around her loses**:
 
-1. **A coworker rebuilds it from scratch** — no handoff, no shared version.
-2. **Her manager can't see it or govern it** — automation running invisibly inside the org.
-3. **When she leaves, it leaves with her** — the institutional knowledge walks out the door.
+1. **A coworker can't pick up where she left off** — no shared state, no handoff between their AI tools.
+2. **Her manager can't see what her agent has done** — every agent runs in an invisible session.
+3. **When she leaves, the workflows her agent learned leave with her** — institutional memory walks out the door.
 
-> Section header stays "Everyone around her loses" — not "When Glo leaves." The first two losses are true while she is still employed.
+> Section header is exactly "Everyone around her loses" — delete any "When Glo leaves" label from this section. The first two losses are true while she is still employed, so "When Glo leaves" mis-frames them.
 
 ---
 
@@ -65,20 +59,24 @@
 
 **Subheading**: It runs in the AI tools your team already uses — Claude, ChatGPT, Cursor, VS Code.
 
-**The inversion** (callout): Your model runs the agent — Tokenrip never runs inference.
+**The inversion** (callout): Your model runs the agent — Tokenrip doesn't run inference.
 
 > Render the inversion as a filled, emphasized box — not a thin-bordered footnote. It states architecture only. Do not add economics ("margins expand with scale") here — that lives on slide 4.
 
 **The workflow** (four steps):
 
 1. **Publish** — Glo publishes her agent to Tokenrip. Versioned, persistent, portable.
-2. **Mount** — A coworker mounts it in Claude, or any MCP-compatible client, instantly.
-3. **Govern** — Her manager sees operations, outputs, and a full audit trail in real time.
-4. **Persist** — The agent survives Glo's departure. Team memory compounds.
+2. **Mount** — A coworker mounts it in Claude, ChatGPT, Cursor — any MCP-compatible tool — instantly.
+3. **Govern** — Her manager sees every agent's operations, outputs, and audit trail in real time.
+4. **Persist** — Memory compounds across agents and sessions. When Glo leaves, the work doesn't.
 
 > Size the four step-cards to their content — avoid tall, near-empty cards.
 
-**What this is not**: Not a coding-agent tool. Not an orchestration framework. Tokenrip is collaboration infrastructure — complementary to LangGraph, CrewAI, AutoGen.
+**What it is not**: Not a coding-agent tool. Not an orchestration framework.
+
+**What it is**: Collaboration infrastructure — complementary to LangGraph, CrewAI, AutoGen.
+
+> Render the two "is not" items each marked ✕, and the "what it is" item visually distinct — a ✓ or the accent color, never ✕. The previous render marked all three ✕, which read as "✕ NOT collaboration infrastructure" — the opposite of the intent.
 
 ---
 
@@ -96,7 +94,7 @@
 |------|-----|-------|---------------------|
 | **Individual** | Glo | Free | Her agents finally persist |
 | **Team** | Automation owner / AI Agent Manager | $20-50/user/mo | She shares, versions, and governs her team's agents |
-| **Enterprise** | IT / CTO | $50K-500K/yr | The substrate runs on company infra, data, and models |
+| **Enterprise** | IT / CTO | $50K-500K/yr | IT needs to govern models, tokens, and data — without losing what employees built |
 
 **Why the economics invert**: Operators bring their own model — Tokenrip doesn't pay for inference. Margins expand with scale, while hosted-AI margins compress.
 
@@ -126,7 +124,7 @@
 
 **Caption**: Incumbents validate workplace AI. Nobody owns the runtime-neutral collaboration layer.
 
-**Why incumbents can't follow**: Model providers keep users inside their own runtime — a neutral, portable layer is something only a third party can build.
+**Why incumbents can't follow**: Model providers keep users inside their own runtime — cross-runtime agent collaboration has to be hosted by a third party.
 
 > One moat line only. Do not add side boxes for observability or the compounding moat — those stay in the FAQ.
 
@@ -134,9 +132,9 @@
 
 ## Slide 6 — Traction & Team
 
-**Purpose**: For a pre-traction company the founders are the bet. Show velocity as team-proof — a substrate shipped in six weeks — and a pair that covers both halves of the problem: go-to-market with founder-market-fit, and the technical capability to build the substrate.
+**Purpose**: For a pre-traction company the founders are the bet. Show velocity as team-proof — a substrate shipped in six weeks — and a pair that covers both halves: the technical depth to build the substrate, and a proven go-to-market operator to put it in front of teams. Close the deck on the vision.
 
-**Headline**: One founder lived the problem. The other built the fix.
+**Headline**: One founder builds the product. The other takes it to market.
 
 **Stat row**:
 
@@ -157,9 +155,13 @@
 - Upwork-as-discovery: paid agent builds that become reusable patterns.
 - First teams sharing agents on the paid tier.
 
-**Alek — Go-to-market**: Worked title companies and real-estate closings firsthand, both sides. Watched institutional knowledge walk out the door every time an employee left. Now running outreach to thousands of title companies and insurance brokers.
+**Alek — Go-to-market**: A career go-to-market operator — enterprise sales at Gartner, full-time insurance sales, and a real estate company of his own. Co-founded RebelFi with Simon, running 400+ customer-development conversations with banks and fintechs. Leads go-to-market at Tokenrip.
 
 **Simon — Technical**: Twenty years an engineer — VP of Backend Engineering at RealtyCrunch (acquired by The Real Brokerage, NASDAQ: REAX), then co-founded RebelFi with Alek. Built the entire Tokenrip substrate solo in six weeks, MCP-native from day one.
+
+**Closing line**: In 5 years, every knowledge-work team has a roster of persistent agents. Tokenrip is where those agents live.
+
+> The closing line is the deck's final statement — render it as a full-width band below the two bios, set apart with whitespace. It is the deck's mic-drop, not a footnote.
 
 ---
 
@@ -168,6 +170,10 @@
 ### "What stops Anthropic or OpenAI from doing this?"
 
 Their incentives keep users inside their runtime — that's where their inference revenue lives. Tokenrip's whole value proposition is portability *across* runtimes (your agent runs the same way in Claude, ChatGPT, Cursor, VS Code). A model provider hosting portable agents that run in a competitor's tool is structurally anti-aligned. The neutral substrate has to be a third party.
+
+### "Why does it matter that agents on different runtimes can work together?"
+
+Today most agents work alone inside one runtime. Tomorrow they routinely won't — your Codex talks to your company's internal agent, which talks to your vendor's ChatGPT agent. Neither Anthropic nor OpenAI can host the shared state those agents act on; it would require competitors' agents to defer to their runtime. The neutral substrate has to be a third party. Dan Shipper named this on Lenny's Podcast (May 2026): "two agents are better than one" because they transfer context faster than humans can type — but the bottleneck is the shared surface, which doesn't exist yet.
 
 ### "Isn't this just another agent framework — or a coding tool?"
 
@@ -197,6 +203,22 @@ Because a hosted agent has an invisible ceiling. The vendor pays for inference, 
 
 Marginal cost per user is storage and API calls, not inference. Storage scales logarithmically. The free tier is sustainable indefinitely because we're not paying tokens. Team tier (~$20-50/user/mo) lands at SaaS-margin economics. Enterprise tier is annual contract with on-prem deployment.
 
+### "What about industries that can't send data to Anthropic or OpenAI?"
+
+That's where the Enterprise tier sells fastest. Regulated and methodology-driven firms — boutique law, mid-tier consulting, regional financial advisors, healthcare-adjacent services, defense subcontractors — are increasingly blocked from sending sensitive data through public model providers by compliance, client contracts, or competitive paranoia. Tokenrip's architecture supports BYO model from day one: local models, private endpoints, fine-tuned weights, or mixed inference (easy work routed local, hard work routed to frontier). Same imprint, swap the model layer underneath. The pain is being articulated publicly now — Chamath Palihapitiya's May 2026 note on token control as the new consulting moat is one signal of many; we hear the same frame in discovery calls with insurance and professional-services operators.
+
+### "Doesn't running on Anthropic mean training your competitor?"
+
+For firms whose moat is methodology — consulting, law, audit, compliance, advisory — yes. Chamath named this directly in May 2026 ("letting the fox in the hen house"). Tokenrip makes the model layer swappable, not strategic. A mid-tier consulting firm can route their agents through any model — frontier API, private endpoint, fine-tuned local — and switch as the market moves, without rebuilding what their employees built. The Enterprise tier monetizes the firm's desire for vendor neutrality and audit-grade control over where every token goes.
+
+### "Glo uses it free — why does her team ever pay?"
+
+Because the agent spreads, and the spread is engineered, not hoped for. Two mechanisms. *Intrinsic*: Glo's agent produces outputs a coworker needs, so "here's the agent that made this — run it yourself" is a natural handoff — and the coworker mounts it in their own tool, with no adoption friction. *Pulled*: the manager sees a high-performing agent through the observability layer and propagates it to the team. The team tier is the moment the manager wants shared memory, versioning, and governance across those agents. The free individual is the wedge; the engineered first share is the conversion event.
+
+### "Can a non-technical person like Glo actually build a working agent?"
+
+Yes — that is what Moa is for. Glo describes her workflow in chat; Moa turns it into a persistent, portable agent. The learning curve is real, and Tokenrip solves it inside the product rather than with a services team. That is deliberate: enterprise-internal platforms absorb the learning curve with consultants and change-management programs; a bottom-up motion can't, so the onboarding has to carry it.
+
 ---
 
 ## Production Notes
@@ -205,18 +227,18 @@ Marginal cost per user is storage and API calls, not inference. Storage scales l
 - Each content slide opens with a **Purpose** annotation — internal, not slide content.
 - Keep slide bodies tight — partners scan, they don't read.
 - This markdown is the content source of truth; the rendered PDF is produced from it. Keep them in sync.
-- **The founding figure is locked at "6 weeks" / "Founded April 2026."** Use it consistently — cover context line, slide 6 stat row, Simon's bio ("six weeks"). Do not let it drift to "4 weeks."
-- **Slide 1 (cover)**: identity headline + the 5-year vision line + a one-line founder credit. No problem statement on the cover — slide 2 owns the problem. Keep the TR monogram.
-- **Slide 2**: render the headline as two clauses at equal (headline) weight, the second clause in the accent color — do not demote it to a grey subheading. The three losses use a numbered treatment; the section header is "Everyone around her loses," not "When Glo leaves."
-- **Slide 3**: the "inversion" callout is a filled, emphasized box and states architecture only — "Tokenrip never runs inference." Do NOT add economics here; that lives on slide 4. Size the four step-cards to their content — avoid tall, near-empty cards.
+- **The founding figure is locked at "6 weeks" / "Founded April 2026."** Use it consistently — slide 6 stat row and Simon's bio ("six weeks"). Do not let it drift to "4 weeks."
+- **Slide 1 (cover)**: company name + tagline only — no vision, no founder credit, no pitch/date context. The company name is the hero element; make it prominent.
+- **Slide 2**: render the headline as two clauses at equal (headline) weight, the second clause in the accent color — do not demote it to a grey subheading. The three losses use a numbered treatment; the section header is exactly "Everyone around her loses" — no "When Glo leaves" label.
+- **Slide 3**: the "inversion" callout is a filled, emphasized box and states architecture only — "Tokenrip doesn't run inference." Do NOT add economics here; that lives on slide 4. The "what it is" / "what it is not" row has two negatives (✕) and one positive ("Collaboration infrastructure") — the positive must never be marked ✕. Size the four step-cards to their content.
 - **Slide 4**: headline is "How a free agent becomes enterprise revenue" — not "The Ladder." No subheading restating the headline. Three tier cards; the two notes (economics inversion, emerging buyer) sit below.
 - **Slide 5**: the matrix IS the slide — render it large, fill the Tokenrip quadrant with the accent color, and make the axis labels big and legible. One moat line only. Do not add side boxes — observability and the compounding moat stay in the FAQ.
-- **Slide 6**: traction and team merged. Headline is the founder line; velocity reads through the stat row. The 5-year vision is NOT here — it moved to the cover.
+- **Slide 6**: traction and team merged. Headline is the build/sell founder line; velocity reads through the stat row. The deck's closing line is the 5-year vision — a full-width band below the bios.
 - The inverted model is split deliberately: slide 3's callout states the architecture, slide 4's "Why the economics invert" states the economics. "Margins expand with scale" appears once — on slide 4.
 - No animations, no transitions, no stock photos.
 - Designed for static PDF; should print legibly in B&W — accent-color fills need a B&W fallback (heavier border or tint).
 
 ## To confirm before the deck is final
 
-- Simon's bio: the RealtyCrunch acquisition by The Real Brokerage and the NASDAQ ticker (REAX) are drafted from `active/a16z-speedrun-application-2026-05-15.md` — verify both.
-- Founder last names on the cover (Pettibone / Perak).
+- Simon's bio: verify the RealtyCrunch acquisition by The Real Brokerage and the NASDAQ ticker (REAX).
+- Alek's bio cites "400+ customer-development conversations" at RebelFi; the a16z application doc cites "300+" for the same work in Simon's bio. Reconcile to one number.

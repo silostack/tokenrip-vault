@@ -8,28 +8,34 @@ Your mission: help Simon (and Alek) build Tokenrip effectively by:
 - **Providing strategic guidance** grounded in vault knowledge
 - **Uncovering blind spots** and unknowns
 
-## Current Strategic Priority: Audience-Led Mounted-Agent Substrate
+## Current Strategic Priority: Get a Sale (Forward-Deployed Engineer)
 
-**North Star (90 days):** Substrate density curve — 25-40 published mounted-agent imprints + 10K-50K registered operators + first tooling-tier MRR + 1-2 lighthouse personas live by Demo Day (~September 2026).
+**ONE Thing:** Get a sale. Design partner, paid pilot, recurring-revenue customer — even a fully custom consulting engagement. 0 → 1 momentum is the unblock. Revenue is the forcing function; momentum stacks from there.
 
-**Status:** Strategic pivot 2026-05-01. Tokenrip deployed (Apr 13). Mounted-agent architecture locked (`product/tokenrip/mounted-agent-model.md`). Chief of Staff is the lighthouse imprint shipping the architecture. BD motion shifted from firm-direct vertical pilots (now deprecated) to audience-led creator deployment. YC application in days; a16z to follow. Capital-assumption posture: even without capital landing, audience-led is the right motion.
+**90-day direction (still alive, downstream of the sale):** Substrate density curve toward Demo Day (~September 2026). Lighthouse imprint sequencing (Substack pattern) and custom-interface primitive (Make.com pattern) activate *once a sale lands* — they need a customer to point at.
 
-All advice should be filtered through: **"Does this advance substrate density, produce a fundraising curve, or strengthen the mounted-agent category claim?"**
+**Status:** Strategic evolution through three pivots — Motion A (firm-direct $25K pilots) deprecated 2026-05-01; Motion E (audience-led creator recruitment) killed 2026-05-18 after 3-4 vitamin-grade conversations; current motion locked 2026-05-23 — forward-deployed-engineer playbook (Palantir / AWS pattern): sell the solution, build substrate behind it. YC + a16z Speedrun both submitted; outcomes pending.
 
-**Reference docs:** `bd/CLAUDE.md` (BD motion index — start here for current strategy), `bd/audience-led-gameplan.md` (active execution), `bd/motions-and-strategy.md` (why this motion), `bd/yc-strategy.md` (fundraising-facing), `bd/operations-and-hiring.md` (capital + team), `bd/kpis.md` (what we measure), `product/tokenrip/mounted-agent-model.md` (architecture), `product/tokenrip/mounted-agent-synthesis.md` (positioning)
+All advice filtered through: **"Does this advance toward a paying customer, build substrate via the work that gets built, or strengthen the mounted-agent category claim?"** Strict order — sale first.
+
+**Reference docs:** `bd/CLAUDE.md` (BD index — current motion, channel verdicts, archives) · `bd/get-a-sale/CLAUDE.md` (current playbook) · `bd/get-a-sale/channel-verdicts.md` (kills + demotions log) · `bd/reference/motions-and-strategy.md` (five-motion taxonomy) · `bd/reference/icps.md` (buyer taxonomy) · `bd/reference/sales-machine-framework.md` (7-stage GTM model) · `product/tokenrip/mounted-agent-model.md` (architecture) · `product/tokenrip/mounted-agent-synthesis.md` (positioning) · `DASHBOARD.md` (week-to-week).
 
 ### Strategic Framing
 
 ```
-TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  AUDIENCE-LED DEPLOYMENT (wedge)  →  FUNDRAISING (capital)
-     ↑                          ↑                              ↑                                   ↑
-  Deployed.              Architecture locked.             Motion E primary,            YC application in days.
-  CLI live.              Chief of Staff =                 D parallel feeder.           a16z follows. Substrate-
-  Five-layer arch.       lighthouse imprint.              B deferred to 2027.          density curve = the story.
-                                                          C eventual marketplace.
+TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  GET A SALE (motion)  →  FUNDRAISING (capital)
+     ↑                          ↑                              ↑                       ↑
+  Deployed.              Architecture locked.            LinkedIn warm pipe       YC + a16z both
+  CLI + MOA shipped.     Chief of Staff +               (Simon) + Reddit          submitted.
+  Homepage live.         MOA = built imprints.          demand-scout (Simon) +    Outcomes pending.
+                                                        Luai close (Alek).        Don't optimize —
+                                                        Forward-deployed-         respond if contacted.
+                                                        engineer playbook.
 ```
 
-The five-motion taxonomy (A: firm-direct, B: vendor substrate, C: inter-agent marketplace, D: builder-direct, E: audience-led) is documented in `bd/motions-and-strategy.md`. Motion A is preserved in `bd/firm-direct-strategy/` as deprecated reference.
+Forward-deployed engineer = sell the solution, build the substrate behind it (Palantir / AWS pattern). Customers describe problems, not architectures. Architecture-fit is judged on *the work that gets built if won*, not the words in the call.
+
+The five-motion taxonomy (A: firm-direct, B: vendor substrate, C: inter-agent marketplace, D: builder-direct, E: audience-led) is documented in `bd/reference/motions-and-strategy.md`. Motion A archived to `__ARCHIVE/bd-motion-a-firm-direct-2026-05-01/`. Motion E archived to `__ARCHIVE/bd-motion-e-audience-led-2026-05-18/`.
 
 **Crypto (maintenance):** Handled in separate RebelFi vault. Alek manages. Not this vault's concern.
 
@@ -37,41 +43,45 @@ The five-motion taxonomy (A: firm-direct, B: vendor substrate, C: inter-agent ma
 
 | Priority | Type | Why It Matters |
 |----------|------|----------------|
-| **P0** | Mid-tier creator outreach + lighthouse hero outreach (Motion E) | Substrate density + marquee logos = the fundraising curve |
-| **P0** | Firm-direct BD motion (Motion A) — outreach, discovery, design partner | Revenue signal + first customer. See `bd/firm-direct-strategy/` |
-| **P0** | Series 3 blog acceleration (post 9 already shipped; 10-11 next) | Category-establishment artifact partners read during decision-making |
-| **P0** | Substrate roadmap milestones (creator dashboard, "build an agent" v1, marketplace UX) | Gates Motion E volume past Simon's hand-built capacity |
-| **P1** | Hiring sourcing (frontend/UX, devrel, partnerships) | 8-12 week recruit cycles — start now even pre-capital |
-| **P1** | Content velocity (Series 3 + creator-audience-targeted content) | Funnel for Motion D (builder-direct) and category narrative |
-| **P2** | Motion B passive watch (vendor job-board monitoring) | 2027 motion — no founder time on B in 2026 |
-| **P2** | YC follow-up (application submitted, no further optimization) | Already applied — respond if contacted, don't optimize proactively |
-| **P2** | Distribution / SEO refinement | Compounds with Series 3 but secondary to deploys |
+| **P0** | LinkedIn warm pipeline (Simon) — manufacture a Simon-owned most-progressable deal | 0 → 1 momentum; Luai is Alek's column, Simon needs his own |
+| **P0** | Luai pilot close (Alek) — $5K 90-day file-readiness | First live deal; substrate-yielding (doc recognition, multi-app generalization) |
+| **P0** | Reddit demand-scout discovery + demand-validation loop (Simon) | Discovery in chaotic space; measure by *conversations engaged*, not posts |
+| **P1** | Building Tokenrip's own audience (brand/inbound/SEO) — long compounding layer | Distinct from Motion E. Make.com pattern. Cannot displace ONE thing. |
+| **P1** | Series 3 blog continuity (post 9 live; post 10 in draft) | Category artifact; partners read during decision-making. Secondary to sales. |
+| **P2** | Upwork bidding — maintenance only (bid on alerts) | Real supply ceiling 2-5 biddable/day. Lottery, not motion. |
+| **P2** | Fundraising follow-up (YC + a16z submitted) | Respond if contacted; don't optimize proactively |
+| **P2** | Substrate roadmap milestones (creator dashboard, marketplace UX, etc.) | Paused pending live customer pulling on substrate |
+| **P3** | Hiring sourcing | Deferred until capital path clearer or revenue forces it |
 
 ### What This Means in Practice
 
-- **Are creator deploys live and operators registered?** > any strategy discussion
-- **Are discovery calls producing pain signals?** > any strategy discussion
-- **Did the substrate-density curve grow this week?** > deck polish
-- **Ship this week (deploys, content, hires)** > plan for next month
+- **Did a real conversation happen this week (LinkedIn warm or demand-scout-sourced)?** > any strategy discussion
+- **Did a Simon-owned deal materially advance?** > deck polish
+- **Did Luai progress?** > all background work
+- **Ship a sale, ship content, ship demand-scout engagements** > plan for next month
+- **Conversations engaged from demand-scout** is the right signal (not posts/dashboards/artifacts).
 
 ### Key Traps to Watch For
 
-1. **Reverting to firm-direct framing when Motion E feels slow.** The current urgency to close revenue can pull thinking back toward $25K firm pilots — which are deprecated and structurally hostile to Motion B (see `bd/motions-and-strategy.md`).
-2. **Creator-economy framing trap.** Lead with infrastructure (substrate for mounted agents); use creators as distribution mechanism, not product category. See `bd/yc-strategy.md` §"Infrastructure vs. Creator-Economy Framing Trap."
-3. **Vanity metrics over engagement metrics.** "20 deployed imprints" without operators-per-imprint and return-rate is fundraising vanity, not PMF. See `bd/kpis.md` secondary KPIs.
-4. **System-building displacing real work.** The substrate roadmap is real — but the demo-build-without-customer pattern (which produced the firm-direct demo dead-end) can repeat itself if substrate work outruns creator pipeline. Watch for substrate features being built before deploys need them.
-5. **Multiple parallel motions.** Motion E + D in parallel is the maximum. Motion B stays passive; Motion A stays deprecated. No third active motion.
+1. **Architecture-talk drift.** No conversation should be about architecture (Vijay-style insider calls are the exception, not the model). Customers describe problems; we build the solution. If a sales call starts to be about architecture, we're selling the wrong thing.
+2. **Premature consulting-trap flagging.** At zero revenue, "this looks like consulting" is not a flag — it's an aspiration. Almost any custom build produces substrate yield. Filtering scales with revenue; hard-filter at ~$1M ARR. Don't pre-empt traps that aren't live yet.
+3. **Conflating "building our own audience" with Motion E.** Motion E (killed) recruited *existing creators with audiences*. Building our own audience (active, P1) builds Tokenrip's audience directly — brand/inbound/community/SEO. Different motions. Diagnostic: *is the audience the platform's or a creator's?*
+4. **Substrate roadmap displacing the sale.** Substrate work is real but gated on a live customer pulling on it. The "demo-build-without-customer" pattern (which produced the firm-direct dead-end) repeats easily. Watch for substrate features being built before deploys need them.
+5. **Vanity signals in demand-scout work.** "Demand-scout deployed" is a build artifact. "Conversations engaged from Reddit pain-posts" is the real signal. If artifact count grows and conversations don't, the loop is broken.
+6. **Channel-kill discipline.** Three clean kills (LinkedIn-insurance, Motion E, job-reqs) + one demotion (Upwork) on record. The pattern is healthy — channels produce verdicts, thesis stays stable. Don't reanimate dead channels when current motion feels slow.
 
 ### Active Projects
 
 | Project | What | Key Docs |
 |---------|------|----------|
-| **BD: Audience-Led Motion (P0)** | Mid-tier + hero creator deploys; substrate density curve; YC + a16z fundraising | `bd/CLAUDE.md`, `bd/audience-led-gameplan.md`, `bd/yc-strategy.md`, `bd/operations-and-hiring.md`, `bd/kpis.md` |
-| **Tokenrip Platform** | Mounted-agent substrate. Five-layer architecture. Substrate roadmap gated on Motion E milestones. | `product/tokenrip/CLAUDE.md`, `product/tokenrip/mounted-agent-model.md`, `product/tokenrip/mounted-agent-synthesis.md` |
-| **Chief of Staff (lighthouse)** | First mounted-agent imprint shipping the architecture. Public reference deploy for creator pitches. | `active/chief-of-staff-launch-design-2026-04-27.md` |
-| **Series 3 Blog (category-establishment)** | Six-post mounted-agents thesis. Post 9 (cloud-agent ceiling) live. Posts 10-14 in flight. | `content/plans/blog-series-3-mounted-agents-plan.md` |
-| **Distribution** | Continues in parallel to Motion E — registry blitz, community seeding, agent platform listings. P1, not P0. | `distribution/` |
-| **Intelligence Engine** | Blog as content layer; secondary to BD motion. | `product/intelligence-engine/` |
+| **BD: Get a Sale (P0)** | LinkedIn warm pipeline (Simon) + Reddit demand-scout (Simon) + Luai close (Alek) | `bd/CLAUDE.md` · `bd/get-a-sale/CLAUDE.md` · `bd/get-a-sale/channel-verdicts.md` · `bd/calls/` |
+| **Tokenrip Platform** | Mounted-agent substrate. Five-layer architecture. Substrate roadmap paused pending live customer. | `product/tokenrip/CLAUDE.md` · `product/tokenrip/mounted-agent-model.md` · `product/tokenrip/mounted-agent-synthesis.md` |
+| **MOA (Master of Agents)** | Agent-building agent. Producing operational agents (demand-scout, reply-guys, content). | Shipped + producing |
+| **Chief of Staff (lighthouse)** | First mounted-agent imprint. Team-scoped, layered memory, public reference. | `active/chief-of-staff-launch-design-2026-04-27.md` |
+| **Series 3 Blog** | Category-establishment thesis. Post 9 live; post 10 in draft. | `content/plans/blog-series-3-mounted-agents-plan.md` |
+| **Building Own Audience (P1 background)** | Brand/inbound/SEO/community compounding layer. Make.com pattern. NOT Motion E. | `product/tokenrip/make-com-playbook-analysis-2026-05-21.md` |
+| **Distribution** | Registry listings, community seeding, agent platform presence. | `distribution/` |
+| **Intelligence Engine** | Blog as content layer. Secondary to sales motion. | `product/intelligence-engine/` |
 | **10x Roadmap** | AI-native operations roadmap. | `product/10x-roadmap.md` |
 
 ---

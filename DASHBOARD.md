@@ -1,69 +1,64 @@
 # Focus Dashboard
-*Updated: 2026-05-11*
+*Updated: 2026-05-23*
 
-**North Star:** $25K signed design partner by Jul 5. Revenue is the forcing function.
-**Direction:** Vertical discovery sprint (Motion A + infrastructure). Agent-assisted Motion E. May 22 comparison.
-**Full strategy:** [[bd/firm-direct-strategy/gameplan]] | [[bd/firm-direct-strategy/kpis]] | [[bd/motions-and-strategy]]
+**North Star (near-term):** Get a sale. Design partner / paid pilot / recurring-revenue customer — even fully custom consulting. 0 → 1 momentum is the unblock.
+**Direction:** Simon manufactures his own most-progressable deal from the LinkedIn pipeline. Demand-scout on Reddit doubles as discovery + demand-validation. Alek closes Luai. Consulting-as-platform playbook (AWS/Palantir).
+**Full strategy:** [[bd/get-a-sale/CLAUDE.md]] | [[bd/reference/motions-and-strategy]] | [[bd/CLAUDE]]
 
 ---
 
 ## The ONE Thing This Week
 
-**Book 2-3 discovery calls, complete 1. Submit a16z by May 15.** Three verticals executing: Insurance (Simon), Tax + Real Estate (Alek). ~100 connects sent, ~25 accepted, messaging starting Mon May 12. Revenue as the forcing function — but with the architectural filter: does the pain require the mounted-agent architecture? If not, it's consulting. Consulting-as-platform playbook is valid (AWS, Palantir) — but the guardrail must hold. Agent-assisted Motion E running in parallel via MOA-deployed bots.
+**Get a sale.** Closest live deal is Luai (Alek-owned, proposal sent). Simon needs to manufacture a Simon-owned deal from the LinkedIn pipeline this week or the "0 → 1" lands in Alek's column only. Anything not compounding toward this is a distraction.
 
 ---
 
 ## Reminders [always keep]
-- What's the biggest production bottleneck?
+- What's the biggest production bottleneck? ATTACK THE CONSTRAINT
 - Ship > spec. Build > strategize. Close > explore.
-- If either channel is stalling, flag it.
-- As complex as necessary, but as simple as possible.
-- Signal collection ≠ system building. Read first, automate later.
-- Lead with infrastructure framing. Creators are distribution, not product category.
+- **Sell the solution, not the architecture.** Customer describes the problem; we build the custom solution on substrate (Palantir/forward-deployed pattern). No call should be about architecture except special cases.
+- **Architecture-fit is judged on the work that gets built, not the words in the call.** "What fraction of deals, if won, would build reusable substrate?" — engineering call, not sales-call read.
+- **Filtering scales with revenue.** Zero revenue = almost zero filtering (any custom build produces substrate yield). Hard filtering at ~$1M ARR. Don't pre-empt traps that aren't live yet.
+- **Motion E ≠ building our own audience.** Motion E (killed) = recruit existing creators who bring *their* audience. Building our own = brand/inbound/demand-validation that compounds independently (Make.com pattern). Different motions.
+- Signal collection ≠ system building. Demand-scout serves the funnel — measure by conversations engaged, not artifacts shipped.
 
 ---
 
 ## Strategic Framing
 
 ```
-TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  FIRM DISCOVERY (Motion A)  →  FUNDRAISING (capital)
-     ↑                          ↑                              ↑                           ↑
-  Deployed.              Architecture locked.          Both founders: Sales Nav     YC submitted.
-  Homepage shipped.      Chief of Staff =              3 verticals executing.       a16z May 15.
-  MOA shipped.           lighthouse imprint.           Consulting-as-platform       May 22: compare.
-  CLI live.              MOA = agent builder.           playbook. Arch filter.
+TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  GET A SALE  →  FUNDRAISING (capital)
+     ↑                          ↑                          ↑                ↑
+  Deployed.              Architecture locked.       LinkedIn pipeline   YC + a16z both
+  Homepage shipped.      Chief of Staff =           (Simon direct) +    submitted. Outcomes
+  MOA shipped.           lighthouse imprint.        Reddit demand-     pending.
+  CLI live.              MOA = agent builder.       scout discovery +
+                                                    Luai close (Alek).
 ```
 
-Five-motion taxonomy: A (firm-direct) active with infrastructure framing, E (audience-led) agent-assisted maintenance, D (builder-direct) paused, B (vendor substrate) deferred to 2027, C (inter-agent marketplace) eventual.
+**Thesis (unchanged since May 8):** Find painkiller pain the substrate can serve, take engagements, build the platform through them. Consulting-as-platform — AWS/Palantir playbook.
 
-**Key frame:** Doing Motion A but still building infrastructure. The consulting-as-platform playbook. Architectural filter is the guardrail.
+**What changed May 23:** Third channel kill (job-req outreach — all "AI agent" jobs are AI-coding jobs as of May 2026). Upwork demoted to maintenance (real supply ceiling at 2-5 biddable/day). Channel reallocated to LinkedIn pipeline follow-ups + Reddit demand-scout discovery loop. Thesis unchanged; channels keep producing verdicts.
 
 **Crypto (maintenance):** Separate RebelFi vault. Alek manages.
 
 ---
 
-## This Week (May 11-18)
+## This Week (May 23-30)
 
-### Simon — Insurance Vertical + Agent-Assisted Motion E
-- [ ] Message all 25 accepted connections (Mon May 12)
-- [ ] Continue Sales Nav connects: 50/day in insurance vertical
-- [ ] Review Alek's a16z pitch deck (by Wed May 14)
-- [ ] Agent-assisted Motion E: reply-guy + content agents fielding leads (low-touch)
-- [x] ~~Follow up on Maha GTM lead~~ — Declined. Vitamin confirmed.
-- [x] ~~Finalize verticals~~ — Insurance (Simon), Tax + RE (Alek)
+### Simon — Manufacture a Simon-owned deal
+- [ ] LinkedIn pipeline → start real conversations from accepted connections
+- [ ] Demand-scout v1 deployed on Reddit — discovery + demand-validation loop. Measure by conversations engaged.
+- [ ] Upwork on maintenance — bid when alerts fire, no daily target
+- [ ] Support Alek on Luai close where useful
 
-### Alek — Tax + Real Estate Verticals + a16z Deck
-- [ ] LinkedIn Sales Navigator. 50 connects/day across tax + real estate
-- [ ] Continue messaging. Getting responses — sharpening pitch.
-- [ ] Create a16z pitch deck (leveraging YC materials)
+### Alek
+- [ ] Close Luai pilot ($5K 90-day file-readiness, $500/mo after, $1K/add'l app type)
 
-### Shared
-- [ ] Book 2-3 discovery calls (Week 1 target)
-- [ ] Complete ≥1 discovery call
-- [ ] Submit a16z application (Thu May 15, due May 16)
-- [ ] **May 22**: Hard comparison date. Decision with data.
+### Background (long compounding, do not let displace ONE thing)
+- [ ] Building Tokenrip's own audience — demand-scout doubles as discovery; brand/inbound surface compounds independently (Make.com pattern)
 
-**KPI this week:** Discovery calls booked + completed. Pain signals with specifics. Funnel conversion rates per vertical.
+**KPI this week:** Conversations had this week (LinkedIn + demand-scout-sourced). Luai progress. Any Simon-owned deal materially advanced.
 
 ---
 
@@ -71,32 +66,43 @@ Five-motion taxonomy: A (firm-direct) active with infrastructure framing, E (aud
 
 | Project | What | Status | Key Docs |
 |---------|------|--------|----------|
-| **Firm Discovery (Motion A)** | Sales Nav outreach: Insurance (Simon), Tax + RE (Alek). Revenue as forcing function. | **Active (P0)** — both founders, May 8-22 | [[bd/firm-direct-strategy/gameplan]] |
-| **Motion E — Agent-Assisted** | MOA-deployed agents (content, reply-guy) field leads. Simon engages on signal. | **Agent-assisted (P1)** — low founder-time | [[bd/audience-led-gameplan]] |
-| **Fundraising** | YC submitted. a16z targeting May 15. Alek creating pitch deck. | **Active (P0)** — a16z this week | [[bd/yc-strategy]] |
-| **Tokenrip Platform** | Mounted-agent substrate. Five-layer architecture. | **Shipped** — homepage, CLI, Chief of Staff, MOA all live | [[product/tokenrip/CLAUDE]] |
-| **MOA (Master of Agents)** | Agent-building agent. Now producing operational agents (content, reply-guy). | **Shipped + producing** — dogfooding the platform | — |
-| **Chief of Staff** | Lighthouse imprint. Team-scoped, layered memory. Public reference deploy. | **Shipped** — both founders using daily | — |
-| **Motion D — Builder-Direct** | MOA distribution in builder communities. | **Paused (P2)** — vitamin-grade confirmed | — |
-| **Series 3 Blog** | Category-establishment content. Mounted-agents thesis. | **Post 9 live; post 10 in draft** — secondary | [[content/plans/blog-series-3-mounted-agents-plan]] |
+| **Get a Sale** | Simon: LinkedIn pipeline + Reddit demand-scout. Alek: Luai close. | **Active (P0)** | [[bd/get-a-sale/CLAUDE.md]] |
+| **Luai Pilot (Live Deal)** | $5K 90-day file-readiness pilot, immigration vertical. Proposal sent. | **Active — Alek owns** | [[bd/calls/proposals/luai-elhaj-2026-05-20-final]] |
+| **Demand-Scout Agent** | Reddit discovery + demand-validation loop. Find stated problems → engage. | **Deployed (P0)** | — |
+| **Building Own Audience** | Long compounding brand/inbound/SEO layer. Make.com pattern. NOT Motion E. | **Background (P1)** | [[product/tokenrip/make-com-playbook-analysis-2026-05-21]] |
+| **Fundraising** | YC + a16z Speedrun submitted. | **Submitted (P2)** | [[yc-strategy]] |
+| **Tokenrip Platform** | Mounted-agent substrate. Five-layer architecture. | **Shipped** | [[product/tokenrip/CLAUDE]] |
+| **MOA (Master of Agents)** | Agent-building agent. Producing operational agents. | **Shipped + producing** | — |
+| **Chief of Staff** | Lighthouse imprint. Team-scoped, layered memory. | **Shipped** | — |
+| **Motion E — Audience-Led Creator Recruitment** | Recruit creators who bring their audience. | **Killed (P3)** — vitamin confirmed | — |
+| **Series 3 Blog** | Category-establishment content. | **Post 9 live; post 10 in draft (P2)** | [[content/plans/blog-series-3-mounted-agents-plan]] |
+| **Custom Interface Primitive (Make-wedge)** | Custom UI rendered on artifacts — competitor moat. Research done; activates with customer to point at. | **Research done (P2)** | [[product/tokenrip/make-com-playbook-analysis-2026-05-21]] |
 
 ---
 
 ## KPI Snapshot
 
-| Metric | Current | This Week (May 18) | May 22 Target | Notes |
-|--------|---------|-------------------|---------------|-------|
-| Discovery calls booked | 0 | 2-3 | 3+ qualified | Architectural-grade pain required |
-| Discovery calls completed | 0 | 1 | 3+ | — |
-| Deal-shaped conversations | 0 | — | ≥1 | Firm would pay for a solution |
-| Sales Nav connects (Simon) | ~100 sent, ~25 accepted | 350+ cumulative | ~700 | 25% accept rate (target: 30-50%) |
-| Sales Nav connects (Alek) | Active, getting responses | — | ~700 | Tax + RE segments |
-| Messages sent | 0 | 25+ (all accepts) | — | Starting Mon May 12 |
-| Motion E — agent-assisted leads | 0 | TBD | — | New: agents fielding, not founder |
-| Published imprints (external) | 0 | — | — | Deprioritized |
-| MRR | $0 | — | — | Revenue is the forcing function |
+| Metric | Current | This Week Target | Notes |
+|--------|---------|------------------|-------|
+| Sale closed | 0 | Materially progress 1 | The forcing function |
+| Live deals | 1 (Luai — Alek) | +1 Simon-owned | Manufacture from LinkedIn |
+| Conversations had | ~3-4 done (Vijay, Luai, Paul, Alek's call) | Real conversations from LinkedIn pipeline | Quality > count |
+| Demand-scout deployed | Yes (May 23) | Conversations engaged from Reddit | Measure engagements, not posts |
+| Paid engagements | 0 | — | — |
+| MRR | $0 | — | — |
 
-Full KPI roadmap: [[bd/firm-direct-strategy/kpis]]
+---
+
+## Channel Verdicts (Discovery Sprint)
+
+| Channel | Status | When | Why |
+|---------|--------|------|-----|
+| Motion E (creator recruitment) | **Killed** | May 18 | 3-4 conversations, all vitamin. Creator pitched Simon on paying *her*. |
+| LinkedIn cold (insurance) | **Killed** | May 18 | Buyers structurally inactive on the platform. |
+| Job-req outreach | **Killed** | May 23 | All "AI agent" jobs are AI-coding jobs as of May 2026. No biddable supply. Periodic monitor. |
+| Upwork bidding | **Maintenance** | May 23 | Real supply ceiling 2-5 biddable/day. Lottery, not motion. Bid on alerts. |
+| LinkedIn warm pipeline | **Active** | May 23 | Accepted connections → real conversations. Simon direct. |
+| Reddit demand-scout | **Active** | May 23 | Discovery + demand-validation loop. Find stated pain → engage. |
 
 ---
 
@@ -105,54 +111,57 @@ Full KPI roadmap: [[bd/firm-direct-strategy/kpis]]
 | Area | Status | Notes |
 |------|--------|-------|
 | **Tokenrip** | **Shipped** | CLI, homepage, docs, MCP endpoint, both engines indexing |
-| **MOA** | **Shipped + producing** | Content agent, reply-guy agents deployed. Dogfooding live. |
+| **MOA** | **Shipped + producing** | Content agent, reply-guy agents, demand-scout deployed |
 | **Chief of Staff** | **Shipped** | Team-scoped, layered memory, public reference deploy |
 | **Blog/Content** | **Post 9 live, ~10+ posts total** | Secondary priority |
-| **Distribution** | **Firm discovery (Motion A)** | Simon: insurance. Alek: tax + RE. Agent-assisted Motion E. |
+| **Distribution** | **LinkedIn pipeline + demand-scout discovery** | Simon primary |
 | **SEO** | **Google + Bing indexed** | |
-| **Co-founder** | **Aligned** | Simon: insurance + agent-assisted E. Alek: tax/RE + a16z deck. |
+| **Co-founder** | **Aligned** | Simon: LinkedIn + demand-scout. Alek: Luai close. |
 
 ---
 
 ## Deferred / Not This Week
 
-- Hero outreach — deprioritized. Revisit post-May 22.
+- Term sheet + pricing v1 — Luai proposal exercises the pattern; codify after close.
 - Hire 1 (frontend/UX) JD — deferred until capital path clearer.
-- Editorial standards for imprint quality — gates first public deploy.
-- Term sheet v1 — matters near-term if a discovery call becomes a deal. Prepare before first demo.
-- Series 3 post 10 — in draft, secondary priority.
-- Substrate metrics dashboard v1 — ships when there are metrics to track.
-- MOA distribution — paused with Motion D.
+- Series 3 post 10 — in draft, secondary.
+- Substrate roadmap (creator dashboard, marketplace UX) — paused pending pipeline.
+- Custom interface primitive — research done; ships when there's a customer to point at.
+- Lighthouse imprint sequencing (Substack pattern) — activates once a sale lands.
+- "Publish our GTM agents for anyone to use" — downstream of demand-scout proving out.
 
 ---
 
-## Recent (May 8 - May 11)
+## Recent (May 18 - May 23)
 
 ### What Happened
-- [x] **Sales Navigator outreach started** — Simon: ~100 connects, ~25 accepted in insurance. Alek: active in tax + RE, getting responses.
-- [x] **Verticals finalized** — Insurance (Simon), Tax + Real Estate (Alek).
-- [x] **Maha (key Motion E signal) declined** — Confirms vitamin-grade for Motion E right now.
-- [x] **Content-generation agent deployed via MOA** — Dogfooding the platform.
-- [x] **Twitter reply-guy agents deployed** — Both founders, via MOA. Building reputation + fielding leads.
-- [x] **Agent-assisted Motion E strategy** — Agents handle lead discovery; Simon engages on signal.
-- [x] **a16z application back on schedule** — Targeting May 15 (due May 16). Alek creating pitch deck.
+- [x] **Vijay (Liberate) call completed** — portability thesis validated by an insider, but non-buyer. Strong positioning intel: Travelers 12K/30K on Claude with zero migration path.
+- [x] **Luai (Get In Canada) proposal sent** by Alek — $5K 90-day file-readiness pilot, immigration vertical. Substrate-yielding work (document recognition, multi-app-type generalization, Phase 2 multi-tenant).
+- [x] **Paul (DECA Dental) call** — real CIO/CEO pain, but the one opportunity he surfaced (PMS migration training agent) is RAG-grade. Non-fit.
+- [x] **Job-req channel killed** — third clean kill. No biddable supply.
+- [x] **Upwork demoted to maintenance** — supply ceiling 2-5 biddable/day acknowledged.
+- [x] **Demand-scout agent deployed on Reddit** — discovery + demand-validation loop active.
+- [x] **Two strategic memos written** — Make.com playbook + Substack/Roblox playbook (custom interface primitive + lighthouse imprint sequencing as future activators).
 
 ### Key Insights
-- Consulting-as-platform is a real playbook (AWS, Palantir). The guardrail: does the work produce reusable platform learning, or just a deliverable?
-- Agent-assisted channel maintenance is genuine leverage: agents handle tedious work, founder engages on signal.
-- Revenue is the optimizing function even for YC — GojiberryAI got in after $1M ARR on 3rd attempt.
-- Unrealistic targets (10 calls in Week 1) demoralize. Set targets the funnel math supports (2-3 calls).
+- **Sell the solution, not the architecture.** Customer describes problems; we build substrate behind. Architecture-fit is judged on built work, not on call vocabulary.
+- **Filtering scales with revenue.** At zero revenue, almost any custom build produces substrate yield. Hard-filter at ~$1M ARR.
+- **Motion E ≠ building our own audience** — structurally different motions; surface vocabulary overlaps. The creator's audience (Motion E, killed) vs. the platform's audience (Make.com pattern, active background).
+- **Channel reallocation off null results is healthy** — three clean kills + one demotion = the discovery sprint working as designed.
+- **Cross-vertical vendor reuse pattern** validates mounted-agent thesis on the supply side (Paul, unprompted: "DSO solutions translate to optometry and vet").
 
-### Prior (Apr 28 - May 8) — Shipped
-- YC submitted (May 5). Homepage + Chief of Staff + MOA shipped. 200-creator list assembled. 5 BD docs locked. Pain vs. vitamin insight surfaced. Two-week discovery sprint decided.
+### Prior (May 11 - May 18)
+- a16z Speedrun submitted. LinkedIn-insurance channel killed. Motion E killed. Capital reallocated to active-demand interception. 2 conversations booked heading into the new channel.
 
 ---
 
 ## Update Log
 
-- **2026-05-11**: Yoda weekly review. Executing discovery sprint as committed. Verticals finalized: Insurance (Simon), Tax + RE (Alek). ~100 connects, ~25 accepted, messaging starting. Maha declined — Motion E vitamin confirmed. Agent-assisted Motion E via MOA-deployed bots. a16z back on schedule (May 15). Week 1 target: 2-3 calls booked, 1 completed. Term sheet needed before first demo.
-- **2026-05-08**: Yoda decision session. Both founders independently concluded Motion E/D are vitamin-grade, not painkiller-grade. Two-week portfolio rebalance: vertical discovery sprint (Sales Navigator) + Motion E maintenance. Not a formal pivot — time-boxed test. May 22 hard comparison. Pain vs. vitamin added as second analytical dimension alongside architectural-requirement test. Strategy oscillation flagged as #1 risk.
-- **2026-05-06**: Weekly review (Yoda). Pivot week delivered: YC submitted, homepage shipped, Chief of Staff shipped, MOA shipped (~3 weeks early), 200-creator list done, outreach started. Focus shifts to traction: Alek on Motion E (audience-led creator outreach), Simon on Motion D (builder-direct via MOA). a16z application end of this week. KPI: external MOA-built agents published. Two distribution angles for Motion D: agent marketplace reverse-engineering + non-technical expertise-productizer frustration search. Simon was sick Sun-Mon (indigestion), recovering.
-- **2026-04-27**: Weekly review. All commitments delivered or exceeded. ~10 blog posts live (2.5x target). Both engines indexing. Distribution plan operationalized (`distribution/distribution-plan-2026-04-27.md`). 10x roadmap advanced on multiple fronts: blog agent (1.2), researcher partial (1.3), engagement agent deployed (3.x). Alek barometer test retired — he's excited and operating. Co-founder aligned. Platform declared feature-complete. Focus shifts to distribution: registry blitz, onboarding polish, warm lead re-engagement, community push. Show HN stretch goal. Intelligence Engine on hold — distribution takes priority.
-- **2026-04-20**: Weekly review. All P0s delivered — blog live (Post 1), zero-friction onboarding working, Alek dogfooding done. Alek sees value but not potential — reframed as normal-user barometer with May 18 evaluation deadline. Google indexed, analytics tracking, Bing pending. Vault restructured for AI-first direction. This week: content cluster (Posts 2-4) is P0. Distribution signal collection starting (reading accounts on Twitter, Reddit, Moltbook). Distribution doc needs updating. 10x roadmap: one stage to advance. Drift contracts still open.
-- **2026-04-13**: Option B decided — RebelFi is an AI company. Crypto moves to maintenance mode. Tokenrip deployed — CLI live, public docs up. Banking wind-down essentially complete. Alek managing crypto pipeline. Simon heads-down on Tokenrip.
+- **2026-05-23**: Yoda weekly review. Third clean channel kill (job-reqs — all AI agent jobs are AI-coding jobs). Upwork demoted to maintenance (supply ceiling 2-5/day). Channel reallocated to LinkedIn pipeline (Simon direct) + Reddit demand-scout discovery loop. Luai proposal sent (Alek). Three Yoda calibration corrections recorded: Motion E vs. own-audience conflation, architecture-filter wrong level, consulting-trap rule-4 repeat-violation. New ONE thing: **get a sale**.
+- **2026-05-18**: Discovery sprint resolved early with two clean kills (LinkedIn-insurance, Motion E). Channel reallocated to active-demand interception (Upwork + job reqs). Yoda operating instructions updated: no premature guardrails.
+- **2026-05-11**: Executing discovery sprint. ~100 connects, ~25 accepted. Maha declined. a16z back on schedule.
+- **2026-05-08**: Yoda decision session. Both founders independently concluded Motion E/D vitamin-grade. Pain vs. vitamin added as second dimension.
+- **2026-05-06**: Pivot week delivered: YC submitted, homepage/Chief of Staff/MOA shipped, 200-creator list done.
+- **2026-04-27**: Weekly review. All commitments delivered. ~10 blog posts live. Platform feature-complete.
+- **2026-04-20**: Weekly review. Blog live, onboarding working, Alek dogfooding done.
+- **2026-04-13**: Option B decided — RebelFi is an AI company. Tokenrip deployed.

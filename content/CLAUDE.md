@@ -20,7 +20,7 @@ content/
 3. **Publish** → run the `/blog-post` skill, which publishes to Tokenrip
 4. **Archive locally** → move file to `published/[slug].md` (drop the `-draft` suffix, add `tokenrip_id` to frontmatter)
 
-Nothing should live at the content/ root. Every file belongs in a subdirectory.
+Almost nothing lives at the content/ root. Exception: `blog-schedule.md` — the active publishing schedule lives at the root so it's findable. Everything else belongs in a subdirectory.
 
 ## Frontmatter
 
@@ -55,6 +55,10 @@ Every post (draft or published) should have a matching `sources/[slug]/reference
 
 Superseded research goes in `sources/_archive/` rather than being deleted.
 
+## Blog Schedule
+
+`blog-schedule.md` is the active publishing schedule plus the standing queue (drafts in progress, planned posts, recently published). Check it before starting a new post — the schedule sets which post is up next, with rationale. Update it when drafts are created, published, deprioritized, or when the schedule shifts.
+
 ## Series Plans
 
 Series outlines live in `plans/`. Each plan covers a multi-post arc with post briefs, SEO strategy, and cross-linking guidance. Current series:
@@ -62,6 +66,8 @@ Series outlines live in `plans/`. Each plan covers a multi-post arc with post br
 - Series 1: Multi-Agent Collaboration (`blog-series-1-multi-agent-collaboration-plan.md`)
 - Series 2: Agent-Native Operations (`blog-series-2-agent-native-operations-plan.md`)
 - Series 3: Mounted Agents (`blog-series-3-mounted-agents-plan.md`)
+- Series 4: The Lock-In Trap (`blog-series-4-lock-in-trap-plan.md`)
+- Series 5: Co-Agentic Work (`blog-series-5-co-agentic-work-plan.md`)
 
 The blog post framework (`blog-post-framework.md`) defines post types and structural templates.
 

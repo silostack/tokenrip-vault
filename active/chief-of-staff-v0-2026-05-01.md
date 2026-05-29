@@ -366,7 +366,7 @@ Sequenced and sized. Compared to the single-player spec, the team-scoped version
 | Implement cross-session reference logic (F7) | Simon | 2h | F2, F6 | Agent references other operator's updates on first turn |
 | Verify cross-harness mount (Claude Code → MCP/ChatGPT) | Simon | 1h | F6 | Same memory accessible from both; operator-ID scoping works |
 | Record demo video | Both | 2h | F1-F7 | ~3 min screen recording per demo flow above |
-| Submit YC application | Simon | 1h | demo, [[../bd/yc-strategy]] | Application submitted |
+| Submit YC application | Simon | 1h | demo, [[yc-strategy]] | Application submitted |
 
 ### Through Friday May 9 (P1 backend extensions)
 
@@ -533,7 +533,7 @@ By Mon May 5 EOD:
 - **The 14-day strategy and full design space:** [[chief-of-staff-launch-design-2026-04-27]]
 - **Architectural foundation:** [[../product/tokenrip/mounted-agent-model]]
 - **Site work that depends on this:** [[site-updates-for-yc-2026-05-01]] (§P0.1, §P1.1, §P0.3)
-- **YC application reference:** [[../bd/yc-strategy]]
+- **YC application reference:** [[yc-strategy]]
 - **Active motion this proves:** [[../bd/audience-led-gameplan]]
 - **Existing Yoda content to port from:** [[../agents/yoda/]] (persona, voice, methodology)
 - **Engagement agent (architectural reference):** [[../agents/engagement-agent/]]

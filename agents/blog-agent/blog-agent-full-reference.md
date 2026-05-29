@@ -141,13 +141,13 @@ Full draft in one pass to `content/<slug>-draft.md`. Key rules from the writing 
 **Phase 6: Draft Gate (automated, binary)**
 Five kill signals — any one kills the draft:
 
-| Signal | What It Catches |
-|--------|----------------|
-| Catalog Ratio | >30% of body walks through sources one by one |
-| Original Thinking | Core insight is just restating what sources say |
-| Structure Test | Subheadings form a list, not a building argument |
-| Tokenrip Integration | Tokenrip mention bolted on rather than earned |
-| Standalone Close | Post ends with a tease/summary/rhetorical question instead of a tool, OR delivers a tool but stops without synthesis (no tie-back to body's argument, no landing line) |
+| Signal               | What It Catches                                                                                                                                                        |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Catalog Ratio        | >30% of body walks through sources one by one                                                                                                                          |
+| Original Thinking    | Core insight is just restating what sources say                                                                                                                        |
+| Structure Test       | Subheadings form a list, not a building argument                                                                                                                       |
+| Tokenrip Integration | Tokenrip mention bolted on rather than earned                                                                                                                          |
+| Standalone Close     | Post ends with a tease/summary/rhetorical question instead of a tool, OR delivers a tool but stops without synthesis (no tie-back to body's argument, no landing line) |
 
 A killed draft goes back to Phase 2 for re-angling. No salvage attempts.
 
