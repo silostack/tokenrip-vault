@@ -49,6 +49,50 @@ across other brokerages.
 
 Swap `[GRIND LINE]` per bucket. Keep it one paragraph, ~60 words.
 
+## Format — Simon's house style (locked 2026-05-29)
+
+The four anatomy beats stay, but the *layout* and *compression* follow Simon's
+preferences from the immigration sends. Use these as the default shape:
+
+- **Scannable line breaks, not one block.** Each beat gets its own line with a
+  blank line between. Greeting / disarm+posture / grind line / offer / signature.
+  LinkedIn rewards skimmable; the ~60-word block reads as a wall on mobile.
+- **Compress the disarm.** "Not pitching, just in discovery looking for design
+  partners, so I'd rather hear where the hours actually go than sell anything."
+  Tighter than "Not pitching you here. We're in discovery..." — keep it.
+- **Sign with the first name.** End with `Simon` on its own line. The message is
+  from a person, not a brand.
+- **"We're building" over "I build."** Simon's voice uses the team plural.
+- **No em dashes, ever.** Simon strips them on the way out. Use a period.
+
+### Worked example — immigration, Bucket B (Irina, EB-5 attorney), as sent
+
+> Hey Irina,
+>
+> Thanks for connecting.
+>
+> We're building AI agents for immigration practices. Not pitching, just in discovery looking for design partners, so I'd rather hear where the hours actually go than sell anything.
+>
+> With EB-5 work, what eats the most time you'd never get back? Source-of-funds documentation, petition assembly, RFE responses, something else?
+>
+> Happy to share what we're figuring out as we build these, if useful.
+>
+> Simon
+
+(As sent to Irina, the offer line read "Happy to trade notes on what we're
+seeing across other immigration firms." Superseded same day by the honesty
+caveat above — at near-zero conversations that claimed a corpus we don't have.)
+
+## Cross-vertical use (added 2026-05-29)
+
+This rubric was built for insurance but the structure transfers to any
+firm-direct vertical. Swap two slots: the **descriptor** ("AI agents for
+[immigration practices / wealth management / etc.]") and the **grind-line
+options** (lift the prospect's own domain vocabulary). The bucket logic
+(A volume / B specialist / Fallback) and the four anatomy beats are
+vertical-agnostic. Immigration is the current traction vertical (Luai, Alex),
+so immigration EB-5 / document-heavy profiles are the strongest ICP fits.
+
 ### Worked example — Bucket B (Mohammad "Sultan" Ahmed, NY Coverage / SkR)
 
 > Thanks for connecting, Sultan. I build AI agents for insurance brokerages. Not pitching you here. We're in discovery, looking for design partners, so I'd rather hear where the hours actually go than sell anything. For coverage-heavy work like yours, what eats the most time you'd never get back? Policy reviews, carrier negotiation, something else? Happy to trade notes on what we're seeing across other brokerages.
@@ -61,7 +105,7 @@ Swap `[GRIND LINE]` per bucket. Keep it one paragraph, ~60 words.
 - **"Not pitching you here. We're in discovery, looking for design partners."** Disarms the sales-radar. Tells him this is a conversation, not a funnel. Honest — it *is* discovery (gameplan Hard Rule #1: no demo before discovery).
 - **"I'd rather hear where the hours actually go than sell anything."** The posture: more interested in the conversation than the sale.
 - **The grind line.** A plausible, bucket-matched guess with options, so he can confirm or correct. Uses his own profile vocabulary where possible.
-- **"Happy to trade notes on what we're seeing across other brokerages."** The offer. Gives him something worth more than the reply it asks for. Leads instead of leaving the ball in his court.
+- **The offer line.** Gives him something worth more than the reply it asks for, and leads instead of leaving the ball in his court. **Honesty caveat (2026-05-29):** "Happy to trade notes on what we're seeing across other brokerages/firms" claims a cross-firm research corpus we don't yet have — at near-zero conversations it's a fabrication, the one false note in an otherwise honest message. Until there's a real body of firm conversations to trade on, use an honest offer instead: "Happy to share what we're figuring out as we build these, if useful." It offers our genuine learnings without claiming firm research. Once enough real conversations accumulate, the trade-notes line becomes true and can return.
 
 ---
 
@@ -71,7 +115,8 @@ Swap `[GRIND LINE]` per bucket. Keep it one paragraph, ~60 words.
 - **No "you're looking for X" / "you asked for."** Ceremony and parroting. Banned (see `upwork-proposal-playbook.md` §3).
 - **Match the grind line to the bucket.** A volume line sent to a specialist tells him you skimmed. Wrong-but-specific is worse than open.
 - **Use the prospect's own words.** Lift vocabulary from their profile into the grind line. It proves you read it.
-- **One paragraph, ~60 words.** First-touch LinkedIn. Longer gets skimmed.
+- **Don't claim a cross-firm corpus you don't have.** The "trade notes on what we're seeing across other firms" offer is a fabrication at near-zero conversations. Default to the honest offer: "Happy to share what we're figuring out as we build these, if useful." Return to trade-notes only once real firm conversations back it.
+- **~60 words, broken into scannable lines.** See "Format — Simon's house style." First-touch LinkedIn. Longer gets skimmed; a single block reads as a wall on mobile.
 - **No call ask on first touch.** The question is the ask. Booking a time comes after a reply.
 - **Humanize before sending.** No em dashes, no boldface, no forced rule-of-three. See `upwork-proposal-playbook.md` §9.
 

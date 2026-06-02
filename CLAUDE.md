@@ -12,52 +12,28 @@ Your mission: help Simon (and Alek) build Tokenrip effectively by:
 
 **ONE Thing:** Get a sale. Design partner, paid pilot, recurring-revenue customer — even a fully custom consulting engagement. 0 → 1 momentum is the unblock. Revenue is the forcing function; momentum stacks from there.
 
-**90-day direction (still alive, downstream of the sale):** Substrate density curve toward Demo Day (~September 2026). Lighthouse imprint sequencing (Substack pattern) and custom-interface primitive (Make.com pattern) activate *once a sale lands* — they need a customer to point at.
-
-**Status:** Strategic evolution through three pivots — Motion A (firm-direct $25K pilots) deprecated 2026-05-01; Motion E (audience-led creator recruitment) killed 2026-05-18 after 3-4 vitamin-grade conversations; current motion locked 2026-05-23 — forward-deployed-engineer playbook (Palantir / AWS pattern): sell the solution, build substrate behind it. YC + a16z Speedrun both submitted; outcomes pending.
-
 All advice filtered through: **"Does this advance toward a paying customer, build substrate via the work that gets built, or strengthen the mounted-agent category claim?"** Strict order — sale first.
 
-**Reference docs:** `bd/CLAUDE.md` (BD index — current motion, channel verdicts, archives) · `bd/get-a-sale/CLAUDE.md` (current playbook) · `bd/get-a-sale/channel-verdicts.md` (kills + demotions log) · `bd/reference/motions-and-strategy.md` (five-motion taxonomy) · `bd/reference/icps.md` (buyer taxonomy) · `bd/reference/sales-machine-framework.md` (7-stage GTM model) · `product/tokenrip/mounted-agent-model.md` (architecture) · `product/tokenrip/mounted-agent-synthesis.md` (positioning) · `DASHBOARD.md` (week-to-week).
+**Reference docs:** `bd/CLAUDE.md` (BD index — current motion, channel verdicts, archives) · `bd/get-a-sale/CLAUDE.md` (current playbook) · `DASHBOARD.md` (week-to-week).
 
 ### Strategic Framing
 
-```
-TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  GET A SALE (motion)  →  FUNDRAISING (capital)
-     ↑                          ↑                              ↑                       ↑
-  Deployed.              Architecture locked.            LinkedIn warm pipe       YC + a16z both
-  CLI + MOA shipped.     Chief of Staff +               (Simon) + Reddit          submitted.
-  Homepage live.         MOA = built imprints.          demand-scout (Simon) +    Outcomes pending.
-                                                        Luai close (Alek).        Don't optimize —
-                                                        Forward-deployed-         respond if contacted.
-                                                        engineer playbook.
-```
-
 Forward-deployed engineer = sell the solution, build the substrate behind it (Palantir / AWS pattern). Customers describe problems, not architectures. Architecture-fit is judged on *the work that gets built if won*, not the words in the call.
 
-The five-motion taxonomy (A: firm-direct, B: vendor substrate, C: inter-agent marketplace, D: builder-direct, E: audience-led) is documented in `bd/reference/motions-and-strategy.md`. Motion A archived to `__ARCHIVE/bd-motion-a-firm-direct-2026-05-01/`. Motion E archived to `__ARCHIVE/bd-motion-e-audience-led-2026-05-18/`.
-
-**Crypto (maintenance):** Handled in separate RebelFi vault. Alek manages. Not this vault's concern.
 
 ### Prioritization Hierarchy
 
-| Priority | Type | Why It Matters |
-|----------|------|----------------|
-| **P0** | LinkedIn warm pipeline (Simon) — manufacture a Simon-owned most-progressable deal | 0 → 1 momentum; Luai is Alek's column, Simon needs his own |
-| **P0** | Luai pilot close (Alek) — $5K 90-day file-readiness | First live deal; substrate-yielding (doc recognition, multi-app generalization) |
-| **P0** | Reddit demand-scout discovery + demand-validation loop (Simon) | Discovery in chaotic space; measure by *conversations engaged*, not posts |
-| **P1** | Building Tokenrip's own audience (brand/inbound/SEO) — long compounding layer | Distinct from Motion E. Make.com pattern. Cannot displace ONE thing. |
-| **P1** | Series 3 blog continuity (post 9 live; post 10 in draft) | Category artifact; partners read during decision-making. Secondary to sales. |
-| **P2** | Upwork bidding — maintenance only (bid on alerts) | Real supply ceiling 2-5 biddable/day. Lottery, not motion. |
-| **P2** | Fundraising follow-up (YC + a16z submitted) | Respond if contacted; don't optimize proactively |
-| **P2** | Substrate roadmap milestones (creator dashboard, marketplace UX, etc.) | Paused pending live customer pulling on substrate |
-| **P3** | Hiring sourcing | Deferred until capital path clearer or revenue forces it |
+| Priority | Type                                                                              | Why It Matters                                                            |
+| -------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| **P0**   | LinkedIn warm pipeline (Simon) — manufacture a Simon-owned most-progressable deal | 0 → 1 momentum; Luai is Alek's column, Simon needs his own                |
+| **P0**   | Reddit demand-scout discovery + demand-validation loop (Simon)                    | Discovery in chaotic space; measure by *conversations engaged*, not posts |
+| **P1**   | Building Tokenrip's own audience (brand/inbound/SEO) — long compounding layer     | Make.com pattern. Cannot displace ONE thing.                              |
+| **P2**   | Upwork bidding — maintenance only (bid on alerts)                                 | Real supply ceiling 2-5 biddable/day. Lottery, not motion.                |
 
 ### What This Means in Practice
 
 - **Did a real conversation happen this week (LinkedIn warm or demand-scout-sourced)?** > any strategy discussion
 - **Did a Simon-owned deal materially advance?** > deck polish
-- **Did Luai progress?** > all background work
 - **Ship a sale, ship content, ship demand-scout engagements** > plan for next month
 - **Conversations engaged from demand-scout** is the right signal (not posts/dashboards/artifacts).
 
@@ -72,17 +48,12 @@ The five-motion taxonomy (A: firm-direct, B: vendor substrate, C: inter-agent ma
 
 ### Active Projects
 
-| Project | What | Key Docs |
-|---------|------|----------|
-| **BD: Get a Sale (P0)** | LinkedIn warm pipeline (Simon) + Reddit demand-scout (Simon) + Luai close (Alek) | `bd/CLAUDE.md` · `bd/get-a-sale/CLAUDE.md` · `bd/get-a-sale/channel-verdicts.md` · `bd/calls/` |
-| **Tokenrip Platform** | Mounted-agent substrate. Five-layer architecture. Substrate roadmap paused pending live customer. | `product/tokenrip/CLAUDE.md` · `product/tokenrip/mounted-agent-model.md` · `product/tokenrip/mounted-agent-synthesis.md` |
-| **MOA (Master of Agents)** | Agent-building agent. Producing operational agents (demand-scout, reply-guys, content). | Shipped + producing |
-| **Chief of Staff (lighthouse)** | First mounted-agent imprint. Team-scoped, layered memory, public reference. | `active/chief-of-staff-launch-design-2026-04-27.md` |
-| **Series 3 Blog** | Category-establishment thesis. Post 9 live; post 10 in draft. | `content/plans/blog-series-3-mounted-agents-plan.md` |
-| **Building Own Audience (P1 background)** | Brand/inbound/SEO/community compounding layer. Make.com pattern. NOT Motion E. | `product/tokenrip/make-com-playbook-analysis-2026-05-21.md` |
-| **Distribution** | Registry listings, community seeding, agent platform presence. | `distribution/` |
-| **Intelligence Engine** | Blog as content layer. Secondary to sales motion. | `product/intelligence-engine/` |
-| **10x Roadmap** | AI-native operations roadmap. | `product/10x-roadmap.md` |
+| Project                                   | What                                                                                              | Key Docs                                                                                                                 |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **BD: Get a Sale (P0)**                   | LinkedIn warm pipeline (Simon) + Reddit demand-scout (Simon) + Luai close (Alek)                  | `bd/CLAUDE.md` · `bd/get-a-sale/CLAUDE.md` · `bd/get-a-sale/channel-verdicts.md` · `bd/calls/`                           |
+| **Tokenrip Platform**                     | Mounted-agent substrate. Five-layer architecture. Substrate roadmap paused pending live customer. | `product/tokenrip/CLAUDE.md` · `product/tokenrip/mounted-agent-model.md` · `product/tokenrip/mounted-agent-synthesis.md` |
+| **Building Own Audience (P1 background)** | Brand/inbound/SEO/community compounding layer. Make.com pattern. NOT Motion E.                    | `product/tokenrip/make-com-playbook-analysis-2026-05-21.md`                                                              |
+| **Distribution**                          | Registry listings, community seeding, agent platform presence.                                    | `distribution/`                                                                                                          |
 
 ---
 
@@ -133,20 +104,6 @@ Respect Simon's time:
 |------|-----------------|
 | Write a research brief | `_system/instructions/research-brief.md` |
 | Write a blog post | Use the `/blog-post` skill — it fetches all guides from Tokenrip at runtime |
-
-## Agents
-
-This vault has two specialized agents with clean separation of concerns:
-
-| Agent | Role | Directory | When to Reference |
-|-------|------|-----------|-------------------|
-| **Yoda** | Strategic business mentor — coaching, accountability, pattern tracking | `agents/yoda/` | When discussing goals, patterns, decisions, emotional state |
-| **Bean** | Thinking partner — idea exploration, sparring, non-obvious connections | `agents/bean/` | When exploring ideas without business execution baggage |
-
-**Yoda** tracks goals, surfaces patterns, holds Simon accountable. Knows Simon's tendencies and blind spots.
-**Bean** engages with ideas on their own merits. No priority filtering, no execution baggage.
-
-They don't overlap. Don't reference Yoda's concerns in Bean sessions or vice versa.
 
 ---
 
@@ -216,9 +173,19 @@ tokenrip-vault/
 
 **Strategic advice**: Ground in product reality and user evidence. Don't over-invest in planning at the expense of shipping. "What's the evidence?" is always the right question.
 
-**Co-founder dynamics**: Alek's role in an AI-first company is an open question. Help Simon think through this honestly.
-
 **_inbox content**: Assess type, ask for context if unclear, process into active/, suggest final location.
+
+## Founder Roles
+
+**Simon — Technical Co-Founder**
+- Owns: Technical architecture, product implementation, engineering scoping for customer work, compliance/security architecture
+- In sales: Asks the engineering-grade discovery questions; handles technical buyer credibility; scopes feasibility and builds
+
+**Alek — Business Co-Founder**
+- Sales, business development, deal progression, customer discovery framing
+- Owns: Initial customer discovery calls, pitch and positioning, deal advancement, relationship management
+- Delivery: Surfaces customer problems and requirements that feed into Simon's scoping
+- Working together: Alek discovers and frames → Simon scopes and sizes the build → both present the solution
 
 ## Document Writing Style
 

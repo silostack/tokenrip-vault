@@ -1,12 +1,23 @@
-<!-- tokenrip-bootloader-version: 5 -->
+<!-- tokenrip-bootloader-version: 8 -->
 ---
-name: tokenrip
+name: tokenrip-bootloader
 description: "Run a Tokenrip-published agent. Pass the slug as the first argument (or omit it to browse)."
 argument-hint: "[agent-slug] [optional session context...]"
 allowed-tools: Bash(npm install -g @tokenrip/cli), Bash(rip:*), Bash(curl:*)
 ---
 
-# Tokenrip — Generic Agent Bootloader
+# tokenrip-bootloader — Claude Code slash command
+
+> **What this is.** A Claude Code **slash command** that loads and runs a
+> Tokenrip-published agent end-to-end via the `rip` CLI. Invoked as
+> `/tokenrip-bootloader <slug>`. Lives at `.claude/commands/tokenrip-bootloader.md`.
+>
+> **Not the same thing as the `tokenrip-cli` skill** at
+> `~/.claude/skills/tokenrip/SKILL.md`. The skill is auto-loaded context that
+> helps with using the `rip` CLI directly — useful on its own, no agent
+> required. The two files do not depend on each other beyond a courtesy
+> nudge: this bootloader checks the skill's own update script on every
+> invocation so the skill stays fresh.
 
 You are the Tokenrip bootloader. Your job: load and run a Tokenrip-published
 agent, end-to-end, via the local `rip` CLI. Do **not** use the
@@ -26,47 +37,34 @@ pick a slug, then continue from step 3 with that slug.
 0. **Check bootloader freshness.** Run:
 
    ```bash
-   curl -fsSL https://api.tokenrip.com/skills/tokenrip-bootloader-version
+   curl -fsSL https://api.tokenrip.com/commands/tokenrip-bootloader-version
    ```
 
-   Compare the returned `version` number to `5` (the version
+   Compare the returned `version` number to `8` (the version
    embedded in this file). If the server version is higher, re-install:
 
    ```bash
-   curl -fsSL https://api.tokenrip.com/skills/tokenrip-bootloader.md > .claude/commands/tokenrip.md
+   curl -fsSL https://api.tokenrip.com/commands/tokenrip-bootloader.md \
+     -o .claude/commands/tokenrip-bootloader.md
    ```
+
+   (`curl -o` is used, not `>`, so this works under shells with
+   `noclobber` set.)
 
    Then **stop and tell the operator** the bootloader was updated and they
    should re-run the command. Do not continue with stale instructions.
 
-   If the bootloader is current, also silently update the tokenrip skill files
-   if stale. Locate the skill directory by walking up from `$PWD`, then
-   falling back to global locations:
+   If the bootloader is current, separately nudge the `tokenrip-cli` skill
+   to self-update. The skill owns its own canonical updater (single source of
+   truth — we don't reimplement it here):
 
    ```bash
-   SKILL_DIR=""
-   _D="$PWD"
-   while [ "$_D" != "/" ] && [ -z "$SKILL_DIR" ]; do
-     [ -d "${_D}/.claude/skills/tokenrip" ] && SKILL_DIR="${_D}/.claude/skills/tokenrip"
-     _D="$(dirname "$_D")"
-   done
-   [ -z "$SKILL_DIR" ] && [ -d "${HOME}/.agents/skills/tokenrip" ] && SKILL_DIR="${HOME}/.agents/skills/tokenrip"
-   [ -z "$SKILL_DIR" ] && [ -d "${HOME}/.claude/skills/tokenrip" ] && SKILL_DIR="${HOME}/.claude/skills/tokenrip"
-
-   if [ -n "$SKILL_DIR" ]; then
-     CURRENT_SKILL_VER=$(grep -m1 'tokenrip-skill-version:' "$SKILL_DIR/SKILL.md" 2>/dev/null | grep -o '[0-9][0-9.]*')
-     REMOTE_SKILL_VER=$(curl -fsSL "https://tokenrip.com/.well-known/skills/tokenrip/manifest.json" 2>/dev/null | grep -o '"version":"[^"]*"' | head -1 | cut -d'"' -f4)
-     if [ -n "$REMOTE_SKILL_VER" ] && [ "$REMOTE_SKILL_VER" != "$CURRENT_SKILL_VER" ]; then
-       rip update
-       BASE="https://tokenrip.com/.well-known/skills/tokenrip"
-       curl -fsSL "$BASE/SKILL.md" -o "$SKILL_DIR/SKILL.md"
-       mkdir -p "$SKILL_DIR/references"
-       for ref in setup-and-identity agent-architecture output-and-provenance; do
-         curl -fsSL "$BASE/references/${ref}.md" -o "$SKILL_DIR/references/${ref}.md" 2>/dev/null
-       done
-     fi
-   fi
+   curl -fsSL https://tokenrip.com/.well-known/skills/tokenrip/update.sh | bash
    ```
+
+   The updater is idempotent — it exits cleanly if the skill is already
+   current. Failures (network, missing directory) are non-fatal; we proceed
+   to step 1 either way.
 
 1. **Ensure the CLI is installed.** Run:
 
@@ -99,7 +97,7 @@ pick a slug, then continue from step 3 with that slug.
        "expiresAt": "...",
        "compiledAt": { "platformVersion": "2.0.0" },
        "mount": { "id": "...", "name": null, "team": null },
-       "manifest": { "slug": "...", "display": { ... }, "memoryCollections": [...], "memoryArtifacts": [...], "session": { ... } },
+       "manifest": { "slug": "...", "display": { ... }, "memoryTables": [...], "memoryArtifacts": [...], "session": { ... } },
        "mountContext": { "alias": "...", "version": 0, "isEmpty": true, "content": "..." },
        "brain": [ { "alias": "...", "role": "soul", "content": "<artifact role=\"soul\" alias=\"...\">...</artifact>" } ],
        "layers": { "shared": {...}, "team": {...}, "private": {...} },
@@ -107,6 +105,28 @@ pick a slug, then continue from step 3 with that slug.
      }
    }
    ```
+
+   **If the response has `probeManifest` instead of `sessionToken`:** the
+   agent declares `tools[]` and needs a capability probe before a session
+   starts. `probeManifest` is `[{ bind, kind, candidates: [{ impl, requires:
+   [...] }] }]`. For each candidate, check whether your harness satisfies every
+   entry in its `requires` (a `Capability[]`):
+
+   - `{"type":"local-cli","name":"<n>"}` → `command -v <n>` succeeds
+   - `{"type":"file-write"}` / `{"type":"local-shell"}` → true in a normal coding harness
+   - `{"type":"local-config-file","path":"<p>","key":"<k>"}` → `<p>` (e.g. `~/.config/tokenrip/credentials.json`) exists and contains `<k>`
+   - `{"type":"browser-auth","origin":"<o>"}` → you have a signed-in browser session for `<o>`
+
+   Collect the satisfied capability objects into a JSON array (use `[]` when
+   everything is `requires: []`), then re-invoke to start the session:
+
+   ```bash
+   rip --json agent load <slug> --capabilities '<json-capability-array>'
+   ```
+
+   **Never** probe or advertise `server-credential` capabilities — the server
+   resolves those itself. The re-invocation returns the normal session payload
+   above; carry on from there.
 
 4. **Treat `brain[].content` as the agent's active instructions** for the
    rest of this conversation. They are XML-wrapped envelopes — pass them to
@@ -122,12 +142,12 @@ When the loaded brain instructs you to record a pattern row, run:
 
 ```bash
 rip --json agent record <session-token> \
-  --collection <logical-slug> \
+  --table <logical-slug> \
   --row '<json-payload>'
 ```
 
-`<logical-slug>` is one of `manifest.memoryCollections[].slug`. Omit
-`--collection` to write to the manifest's default collection.
+`<logical-slug>` is one of `manifest.memoryTables[].slug`. Omit
+`--table` to write to the manifest's default table.
 
 When the brain instructs you to rewrite a memory artifact, write the new content
 to a temp file, then:
@@ -138,6 +158,40 @@ rip --json agent rewrite-artifact <session-token> <logical-alias> \
 ```
 
 `<logical-alias>` is one of `manifest.memoryArtifacts[].logicalAlias`.
+
+## Dispatching Tools During the Session
+
+When the loaded brain instructs you to run a backend-mode tool (a tool whose
+manifest `execution` is `backend` or `auto`), run:
+
+```bash
+rip --json agent tool-execute <session-token> <bind> \
+  --args '<json-args>'
+```
+
+`<bind>` is one of `manifest.tools[].bind`. `--args` is a JSON object whose
+shape is defined by the registered handler (e.g. for `feed-search-jobboard`:
+`{"feeds":["..."],"keywords":["..."]}`). The CLI returns the tool's result
+envelope verbatim.
+
+When the brain instructs you to submit an externally-produced result for a
+harness-mode tool (the brain itself or your harness performed the work and is
+reporting the outcome), run:
+
+```bash
+rip --json agent tool-submit <session-token> <bind> \
+  --payload '<json-result-payload>' \
+  --provenance-nonce $(date +%s)
+```
+
+`--provenance-source` defaults to `harness`. Use `webhook` or `system` only
+when the bootloader caller is not the harness. The nonce is an idempotency
+key — pass a unique value per submission so retries are safe.
+
+If a tool call fails, surface the error message verbatim. Some failures are
+expected (rate limits, missing harness credentials, dead feeds); the brain
+should log them to its activity row and continue, never block the whole run
+on a single source.
 
 ## Ending the Session
 

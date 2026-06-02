@@ -1,6 +1,6 @@
 # Current Context
 
-*Last updated: 2026-05-23*
+*Last updated: 2026-05-31*
 
 ## The ONE Thing
 
@@ -8,9 +8,10 @@ What matters most right now?
 
 > **Get a sale.** A design partner, a paid pilot, a recurring-revenue customer — even a fully custom consulting engagement. 0 → 1 momentum is the unblock. Revenue is the forcing function; momentum stacks from there. Anything that doesn't compound toward this is a distraction.
 
-## Sequencing (May 23-30 — Simon-owned-deal-manufacturing week)
+## Sequencing (May 31 – Jun 7 — lock-the-first-paid-dollar week)
 
 ### Completed (prior weeks)
+- [x] ~~Simon-owned most-progressable deal manufactured — Stephanie/AICAP, Upwork-sourced~~ (May 26)
 - [x] ~~YC application submitted~~ (May 5)
 - [x] ~~a16z Speedrun application submitted~~ (~May 18)
 - [x] ~~Homepage / positioning shipped~~
@@ -21,11 +22,12 @@ What matters most right now?
 - [x] ~~Luai proposal sent (Alek) — $5K 90-day file-readiness pilot~~
 - [x] ~~Paul (DECA Dental) call — non-fit (RAG-grade)~~
 
-### Active (May 23-30)
-- [ ] **Simon**: LinkedIn pipeline → start real conversations from accepted connections. Manufacture the most-progressable deal that doesn't exist yet. (P0)
-- [ ] **Simon**: Demand-scout v1 deployed on Reddit. Discovery + demand-validation loop. Measure by *conversations engaged*, not posts/artifacts. (P0)
-- [ ] **Simon**: Upwork on maintenance — bid when alerts fire, no daily target. (P2)
-- [ ] **Simon**: Support Alek on Luai close where useful. (P1)
+### Active (May 31 – Jun 7)
+- [ ] **Simon**: Lock a paid engagement — pre-scope/price/date Stephanie's discovery phase tomorrow; walk out paid + convertible to MVP. **THE one thing.** (P0)
+- [ ] **Simon**: Hold the line on price under Stephanie's warmth (call-2 praise will be louder than call-1's). (P0)
+- [ ] **Simon/Alek**: Stauss — feel it out this week. No forced tactics. Graduation marker to watch: a buyer voice that isn't Stauss's. (P1 — dating / Path-B bridge)
+- [ ] **Simon**: Rebalance off LinkedIn → the Upwork motion that's producing. Mirror Alek or diagnose non-conversion. (P0 channel)
+- [ ] **Simon**: Demand-scout (Reddit) — keep listening; engage sharp painkiller posts, don't just log. (P1)
 - [ ] **Background**: Building own audience as long compounding layer (NOT Motion E — Tokenrip's audience, not a creator's; Make.com pattern not Substack pattern).
 
 ### Deferred
@@ -94,15 +96,17 @@ Current state:
 | LinkedIn insurance discovery | **Channel killed** (May 18) | Buyers inactive on platform |
 | Motion E | **Killed — vitamin confirmed** (May 18) | 3-4 conversations |
 | Job-req outreach | **Channel killed** (May 23) | All AI agent jobs are AI-coding jobs |
-| Upwork | **Demoted to maintenance** (May 23) | Supply ceiling 2-5 biddable/day |
+| Upwork | **Re-promoted — producing channel** (May 31) | Sourced Stephanie/AICAP; producing for Alek. "Lottery" framing reversed. |
 | Discovery calls completed | **~3-4** | Vijay (intel), Luai (Alek proposal sent), Paul (non-fit), Alek's call |
-| Live deals | **1** (Luai — Alek owns) | $5K 90-day pilot proposal sent |
+| Live deals | **2** — Stephanie/AICAP (Simon; proposal out, paid discovery call next) · Luai (Alek; stalled) | AICAP is the strongest deal in the log |
+| Stauss / equipment finance | **Dating** (May 28-31) | Unpaid insider; feeling-out stage. Path-B bridge candidate. Not yet a buyer. |
 | MRR | **$0** | Revenue is the forcing function |
 | Demand-scout agent | **Deployed on Reddit May 23** | Discovery + demand-validation loop |
 | Co-founder | **Aligned** | Simon: LinkedIn pipeline + demand-scout. Alek: Luai close. |
 
 ## Recent Wins
 
+- **Simon-owned most-progressable deal manufactured — Stephanie/AICAP (healthcare credentialing).** Strongest deal in the BD log: ~$22K/day pain, Harvard/Duke/MD Anderson design partners, architecture-fit, urgency, founder-to-founder. Proposal out; paid discovery call next. **The May 23 assignment is complete** — and it came via Upwork, not LinkedIn.
 - **First real proposal out** (Luai, via Alek) — substrate-yield deal: document recognition, multi-app-type generalization, Phase 2 multi-tenant.
 - **Three clean channel kills on record.** Discovery sprint is producing decisions, not oscillation.
 - **Strong positioning intel from Vijay call** — portability validated by an insider as the monetizable angle.
@@ -110,9 +114,10 @@ Current state:
 
 ## Current Concerns
 
-- **No Simon-owned most-progressable deal yet.** Luai is Alek's. Simon needs to manufacture one from the LinkedIn pipeline this week or the "0 → 1" lands in Alek's column only.
-- **Demand-scout watch.** Signal that it's working = conversations engaged from Reddit pain-posts. Signal that it's drifting into infrastructure work = posts/dashboards/agents shipped with no conversations had. Watch the right number.
-- **Yoda calibration this session was poor** — three flags pushed back (Motion E conflation, architecture-filter at conversation level, consulting-trap at zero revenue) and one bad deal proposal (Paul re-engagement on the work Paul himself diagnosed as not-fit). Pattern: Yoda needs to re-read recent insight notes before opening flags or proposals.
+- **Stephanie/AICAP — don't let it slip into free discovery.** The deal exists; the risk is the discovery phase going unscoped/unpriced and becoming unpaid forward work that informs an MVP she hasn't bought. Pre-scope/price it as Simon's own offer. First paid dollar is the unlock.
+- **Attention-drift watch.** Simon led his week-update with Stauss (vision, zero buyers) over Stephanie (the actual sale). Watch that build-time *and* narration follow the closeable deal, not the exciting one.
+- **Demand-scout watch.** Signal it's working = conversations engaged from Reddit pain-posts. Drift signal = posts/dashboards with no conversations. Watch the right number.
+- **Yoda calibration this session — over-applied Stauss skepticism twice** (read an aspirational "ideal scenario" as over-investment; prescribed inserting Simon into Stauss's buyer calls at the day-one stage). Lesson: peak-emotion insights carry tactical urgency that decays — re-check a prescribed tactic against the relationship's *current* stage before opening it.
 
 ---
 

@@ -7,6 +7,8 @@
 - building for agents: https://x.com/heymikasagi/status/2032130574270554426?s=20
 - learning/evolving agents: https://github.com/HKUDS/OpenSpace
 - security / auditor skills: https://github.com/0xiehnnkta/nemesis-auditor
+- ai projects list: https://github.com/Shubhamsaboo/awesome-llm-apps
+- memory palace: https://github.com/MemPalace/mempalace
 - 
 
 

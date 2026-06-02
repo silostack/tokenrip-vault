@@ -3,7 +3,7 @@
 > Unified pipeline across both motions. Closer updates this at the end of every session.
 > Health: 🟢 Green (on track) · 🟡 Yellow (gap forming, needs action) · 🔴 Red (stalled or at risk).
 
-**Last updated**: 2026-05-25 (Alex Khadempour added — first pull-shaped firm-direct call; portfolio pack scoped, Bill C-3 bot identified as lead proposal wedge)
+**Last updated**: 2026-05-30 (Stephanie Williamson / AICAP — proposal sent, then she requested a PAID integration discovery prior to MVP build. Buying signal, not stall. Closer move: say yes today, scope + price discovery Monday.)
 
 **Operating phase**: Conversation Volume. Goal is replies and learning, not winning bids. Bid wide, triage advisory-only. See `upwork-proposal-playbook.md` → Current Phase.
 
@@ -18,6 +18,7 @@ Per `bd/firm-direct-strategy/gameplan.md`. Phases: Outreach → Discovery → Pa
 | Mohammad "Sultan" Ahmed (NY Coverage / SkR Agency) | Insurance | Simon | Outreach | 🟡 | Bucket B outreach message sent; watch for reply. Possible sub-ICP (small/specialist shop) — reply ≠ validation | 2026-05-19 |
 | Luai Walid El Haj (Get In Canada) | Immigration | Alek (lead) + Simon (technical) | Proposal Drafted | 🟡 | Run proposal + cover email through `/humanizer`; publish to Tokenrip; Alek sends cover email | 2026-05-22 |
 | Alex Khadempour (CICS Immigration) | Immigration | Alek (lead) + Simon (technical) | Discovery → Portfolio | 🟢 | Send portfolio email (CoS + Moa links + Loom) Fri; tailored proposal Bill C-3 bot Mon | 2026-05-29 (proposal) |
+| Stephanie Williamson (AICAP Access) | Healthcare credentialing | Simon | Proposal sent → Paid discovery requested | 🟢 | Reply today (yes to discovery); Mon call = scope + price discovery sprint ($3.5K–$5K fixed, 1–2 wk, integration map + revised Phase 1). Foot-in-door before $12K build. | 2026-06-01 (Mon call) |
 
 Outreach motion now runs off `agents/closer/insurance-linkedin-outreach.md` (A/B/Fallback bucketing rubric).
 

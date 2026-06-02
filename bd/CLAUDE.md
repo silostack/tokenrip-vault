@@ -6,7 +6,7 @@
 
 **Current motion (locked 2026-05-23)**: forward-deployed engineer (Palantir / AWS pattern). Sell the solution, build the substrate behind it.
 
-**Owners**: Simon (LinkedIn warm pipeline + Reddit demand-scout). Alek (Luai close).
+**Owners**: Simon (Upwork bidding + Stephanie/AICAP close + Stauss). Alek (Upwork bidding + Luai). New process (2026-05-31): initial calls handled individually first.
 
 ## Where to look
 
@@ -17,6 +17,7 @@
 | **LinkedIn warm-pipeline playbook** | [[get-a-sale/linkedin-pipeline]] |
 | **Reddit demand-scout agent spec** | [[get-a-sale/demand-scout-spec]] |
 | **Live opportunities + call notes** | `calls/` (contacts, notes, transcripts, proposals) |
+| **Per-deal living briefings + opportunity clusters** | [[bd/deals/CLAUDE.md]] — e.g. equipment-finance (Stauss-channel + Bevel/DCF/VFI) |
 | **This-week KPI tracker** | [[weekly-kpi-scorecard]] |
 | **Call insight library** | `learnings/` |
 
@@ -39,7 +40,7 @@
 | **A — firm-direct vertical pilots** | Deprecated 2026-05-01 (failed architectural-requirement test; hostile to Motion B downstream) | `__ARCHIVE/bd-motion-a-firm-direct-2026-05-01/` |
 | **E — audience-led creator recruitment** | Killed 2026-05-18 (3-4 conversations, all vitamin-grade) | `__ARCHIVE/bd-motion-e-audience-led-2026-05-18/` |
 | **Job-req outreach** | Killed 2026-05-23 (all AI-agent jobs are AI-coding jobs as of May 2026) | `__ARCHIVE/bd-channel-job-req-2026-05-23.md` |
-| **Upwork bidding (analysis)** | Demoted to maintenance 2026-05-23 (2-5/day supply ceiling) | `__ARCHIVE/bd-channel-upwork-2026-05-23/` |
+| **Upwork bidding** | Demoted 2026-05-23 → **reversed 2026-05-31** (now Primary — outcome data overruled the supply-ceiling read; sourced Stephanie/AICAP) | analysis: `__ARCHIVE/bd-channel-upwork-2026-05-23/` · current: [[get-a-sale/channel-verdicts]] |
 
 Reference docs from Motion A that are still actively used (vertical-selection-rubric, lead-gen-sales-navigator, term-sheet-template) were hoisted to `bd/reference/` before the rest of the folder was archived. See [[get-a-sale/channel-verdicts]] for the kill log.
 
@@ -49,8 +50,9 @@ Reference docs from Motion A that are still actively used (vertical-selection-ru
 - **2026-05-08**: Pain-proximity test added (both founders independently flag E/D as vitamin-grade). Vertical discovery sprint begins.
 - **2026-05-18**: Motion E killed. LinkedIn-insurance cold killed. Channel reallocated to active-demand interception (Upwork + job-reqs).
 - **2026-05-23**: Job-req killed. Upwork demoted to maintenance. "Get a sale" via LinkedIn warm pipeline + Reddit demand-scout locked as the current motion. Forward-deployed-engineer playbook articulated.
+- **2026-05-31**: First Simon-owned deal live — **Stephanie/AICAP** (healthcare credentialing, Upwork-sourced), strongest in the log. **Upwork verdict reversed** (re-promoted to Primary; outcome data overruled the supply-ceiling read); LinkedIn warm flagged underperforming for Simon. Stauss/equipment-finance opened (dating; Path-B bridge). ONE thing → lock a paid engagement.
 
-Full decision log: `agents/yoda/memory/decisions-log.md`. Recent session: `agents/yoda/memory/sessions/2026-05-23.md`.
+Full decision log: `agents/yoda/memory/decisions-log.md`. Recent session: `agents/yoda/memory/sessions/2026-05-31.md`.
 
 ## Related
 

@@ -1,15 +1,15 @@
 # Focus Dashboard
-*Updated: 2026-05-23*
+*Updated: 2026-05-31*
 
 **North Star (near-term):** Get a sale. Design partner / paid pilot / recurring-revenue customer — even fully custom consulting. 0 → 1 momentum is the unblock.
-**Direction:** Simon manufactures his own most-progressable deal from the LinkedIn pipeline. Demand-scout on Reddit doubles as discovery + demand-validation. Alek closes Luai. Consulting-as-platform playbook (AWS/Palantir).
+**Direction:** Simon-owned deal manufactured — **Stephanie/AICAP** (healthcare credentialing, Upwork-sourced). Job shifts from *manufacturing* a deal to *converting* one: lock a paid engagement. Alek works the Upwork pipeline + Luai. Stauss/equipment-finance opened (dating stage). Consulting-as-platform playbook (AWS/Palantir).
 **Full strategy:** [[bd/get-a-sale/CLAUDE.md]] | [[bd/reference/motions-and-strategy]] | [[bd/CLAUDE]]
 
 ---
 
 ## The ONE Thing This Week
 
-**Get a sale.** Closest live deal is Luai (Alek-owned, proposal sent). Simon needs to manufacture a Simon-owned deal from the LinkedIn pipeline this week or the "0 → 1" lands in Alek's column only. Anything not compounding toward this is a distraction.
+**Lock a paid engagement.** The Simon-owned deal exists — Stephanie/AICAP (strongest in the log: ~$22K/day pain, Harvard/Duke/MD Anderson design partners, architecture-fit, mid-June urgency). Tomorrow's call scopes a *discovery phase before the MVP.* Walk out with it **defined, priced, paid, and convertible to the MVP** — don't let "discovery" become a free lap. First paid dollar is the 0 → 1 unlock. Anything not compounding toward this is a distraction.
 
 ---
 
@@ -21,6 +21,9 @@
 - **Filtering scales with revenue.** Zero revenue = almost zero filtering (any custom build produces substrate yield). Hard filtering at ~$1M ARR. Don't pre-empt traps that aren't live yet.
 - **Motion E ≠ building our own audience.** Motion E (killed) = recruit existing creators who bring *their* audience. Building our own = brand/inbound/demand-validation that compounds independently (Make.com pattern). Different motions.
 - Signal collection ≠ system building. Demand-scout serves the funnel — measure by conversations engaged, not artifacts shipped.
+- **Pre-scope the paid discovery sprint.** If you don't define discovery (deliverable + price + credit toward MVP), the buyer will — and undefined discovery becomes free forward work. First dollar is the unlock, not the amount.
+- **When the call goes well, hold the line.** Buyer warmth is the signal leverage is *highest* — don't soften on price/stage. (Pre-discounting + volunteering early-stage under praise is a tracked pattern.)
+- **Follow the data, not the plan.** The channel that produced the deal (Upwork) wasn't the one bet on (LinkedIn). Convert the real sale at the one-yard line before generating more top-of-funnel.
 
 ---
 
@@ -29,36 +32,37 @@
 ```
 TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  GET A SALE  →  FUNDRAISING (capital)
      ↑                          ↑                          ↑                ↑
-  Deployed.              Architecture locked.       LinkedIn pipeline   YC + a16z both
-  Homepage shipped.      Chief of Staff =           (Simon direct) +    submitted. Outcomes
-  MOA shipped.           lighthouse imprint.        Reddit demand-     pending.
-  CLI live.              MOA = agent builder.       scout discovery +
-                                                    Luai close (Alek).
+  Deployed.              Architecture locked.       Stephanie/AICAP     YC + a16z both
+  Homepage shipped.      Chief of Staff =           (Simon, closing) +  submitted. Outcomes
+  MOA shipped.           lighthouse imprint.        Upwork pipeline +   pending.
+  CLI live.              MOA = agent builder.       Stauss (dating) +
+                                                    Luai (Alek, stalled).
 ```
 
 **Thesis (unchanged since May 8):** Find painkiller pain the substrate can serve, take engagements, build the platform through them. Consulting-as-platform — AWS/Palantir playbook.
 
-**What changed May 23:** Third channel kill (job-req outreach — all "AI agent" jobs are AI-coding jobs as of May 2026). Upwork demoted to maintenance (real supply ceiling at 2-5 biddable/day). Channel reallocated to LinkedIn pipeline follow-ups + Reddit demand-scout discovery loop. Thesis unchanged; channels keep producing verdicts.
+**What changed May 31:** Simon-owned deal manufactured (Stephanie/AICAP, Upwork-sourced) — the May 23 assignment is complete, and it's the strongest deal in the log. **Upwork verdict reversed:** the channel demoted to "lottery" on May 23 is the one producing the best deals (and booking calls for Alek); LinkedIn warm produced zero calls for Simon. Stauss/equipment-finance opened as a dating-stage insider relationship (Path-B bridge). Thesis unchanged; channels keep producing verdicts.
 
 **Crypto (maintenance):** Separate RebelFi vault. Alek manages.
 
 ---
 
-## This Week (May 23-30)
+## This Week (May 31 – Jun 7)
 
-### Simon — Manufacture a Simon-owned deal
-- [ ] LinkedIn pipeline → start real conversations from accepted connections
-- [ ] Demand-scout v1 deployed on Reddit — discovery + demand-validation loop. Measure by conversations engaged.
-- [ ] Upwork on maintenance — bid when alerts fire, no daily target
-- [ ] Support Alek on Luai close where useful
+### Simon — Lock the first paid dollar
+- [ ] **Stephanie/AICAP:** pre-scope/price/date the discovery phase on tomorrow's call; walk out paid + convertible to MVP. Hold price under her warmth.
+- [ ] Rebalance off LinkedIn → the producing Upwork motion (mirror Alek or diagnose why Simon's bids don't convert)
+- [ ] Stauss — feel it out (no forced tactics). Watch for a non-Stauss buyer voice.
+- [ ] Demand-scout (Reddit) — keep listening; engage sharp painkiller posts, don't just log
 
 ### Alek
-- [ ] Close Luai pilot ($5K 90-day file-readiness, $500/mo after, $1K/add'l app type)
+- [ ] Upwork pipeline — keep booking calls (the producing channel)
+- [ ] Luai — chase the "send to my team" response (soft stall; Alek owns)
 
 ### Background (long compounding, do not let displace ONE thing)
 - [ ] Building Tokenrip's own audience — demand-scout doubles as discovery; brand/inbound surface compounds independently (Make.com pattern)
 
-**KPI this week:** Conversations had this week (LinkedIn + demand-scout-sourced). Luai progress. Any Simon-owned deal materially advanced.
+**KPI this week:** First paid engagement locked (Stephanie discovery). Upwork-booked calls. Stauss producing any non-Stauss buyer signal.
 
 ---
 
@@ -66,9 +70,11 @@ TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  GET A SALE  →  FUND
 
 | Project | What | Status | Key Docs |
 |---------|------|--------|----------|
-| **Get a Sale** | Simon: LinkedIn pipeline + Reddit demand-scout. Alek: Luai close. | **Active (P0)** | [[bd/get-a-sale/CLAUDE.md]] |
-| **Luai Pilot (Live Deal)** | $5K 90-day file-readiness pilot, immigration vertical. Proposal sent. | **Active — Alek owns** | [[bd/calls/proposals/luai-elhaj-2026-05-20-final]] |
-| **Demand-Scout Agent** | Reddit discovery + demand-validation loop. Find stated problems → engage. | **Deployed (P0)** | — |
+| **Get a Sale** | Simon: convert Stephanie/AICAP + Upwork pipeline. Alek: Upwork + Luai. | **Active (P0)** | [[bd/get-a-sale/CLAUDE.md]] |
+| **Stephanie / AICAP (Live Deal — Simon)** | Healthcare credentialing. Strongest deal in the log. Proposal out; paid discovery phase next. | **Active — Simon owns (P0)** | [[bd/calls/proposals/stephanie-williamson-2026-05-27-final]] · [[active/call-prep-stephanie-williamson-clarification-2026-05-30]] |
+| **Luai Pilot (Live Deal — Alek)** | $5K 90-day file-readiness pilot, immigration. Proposal sent to his team — soft stall. | **Stalled — Alek owns** | [[bd/calls/proposals/luai-elhaj-2026-05-20-final]] |
+| **Stauss / Equipment Finance** | Now a Stauss-channeled cluster — first intros landed: **Bevel** (Ted Craver, arm's-length, MD gate ~6/2) + **DCF** (discovery 6/1). Dating; Path-B bridge. | **Dating (P1)** | [[bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing]] · [[bd/deals/equipment-finance/equipment-finance-domain-primer-2026-05-30]] |
+| **Demand-Scout Agent** | Reddit discovery + demand-validation loop. A few messages in; strong signal source. | **Live (P1)** | — |
 | **Building Own Audience** | Long compounding brand/inbound/SEO layer. Make.com pattern. NOT Motion E. | **Background (P1)** | [[product/tokenrip/make-com-playbook-analysis-2026-05-21]] |
 | **Fundraising** | YC + a16z Speedrun submitted. | **Submitted (P2)** | [[yc-strategy]] |
 | **Tokenrip Platform** | Mounted-agent substrate. Five-layer architecture. | **Shipped** | [[product/tokenrip/CLAUDE]] |
@@ -84,11 +90,11 @@ TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  GET A SALE  →  FUND
 
 | Metric | Current | This Week Target | Notes |
 |--------|---------|------------------|-------|
-| Sale closed | 0 | Materially progress 1 | The forcing function |
-| Live deals | 1 (Luai — Alek) | +1 Simon-owned | Manufacture from LinkedIn |
-| Conversations had | ~3-4 done (Vijay, Luai, Paul, Alek's call) | Real conversations from LinkedIn pipeline | Quality > count |
-| Demand-scout deployed | Yes (May 23) | Conversations engaged from Reddit | Measure engagements, not posts |
-| Paid engagements | 0 | — | — |
+| Sale closed | 0 | Lock 1 paid engagement | The forcing function |
+| Paid engagements | 0 | **1 (Stephanie discovery)** | First dollar = the 0 → 1 unlock |
+| Live deals | 2 — Stephanie/AICAP (Simon), Luai (Alek, stalled) | Convert Stephanie to paid | AICAP is the strongest in the log |
+| Conversations had | ~7-8 across the sprint (Vijay, Luai, Paul, Alex, Gautham, Stephanie, Stauss) | Upwork-booked calls | Quality > count |
+| Demand-scout | Live (Reddit) | Conversations engaged, not logged | A few messages in |
 | MRR | $0 | — | — |
 
 ---
@@ -100,9 +106,9 @@ TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  GET A SALE  →  FUND
 | Motion E (creator recruitment) | **Killed** | May 18 | 3-4 conversations, all vitamin. Creator pitched Simon on paying *her*. |
 | LinkedIn cold (insurance) | **Killed** | May 18 | Buyers structurally inactive on the platform. |
 | Job-req outreach | **Killed** | May 23 | All "AI agent" jobs are AI-coding jobs as of May 2026. No biddable supply. Periodic monitor. |
-| Upwork bidding | **Maintenance** | May 23 | Real supply ceiling 2-5 biddable/day. Lottery, not motion. Bid on alerts. |
-| LinkedIn warm pipeline | **Active** | May 23 | Accepted connections → real conversations. Simon direct. |
-| Reddit demand-scout | **Active** | May 23 | Discovery + demand-validation loop. Find stated pain → engage. |
+| Upwork bidding | **Primary — producing** | May 31 (re-promoted) | Sourced Stephanie/AICAP; booking calls for Alek. Funded job posts = painkiller-grade. "Lottery" framing reversed. |
+| LinkedIn warm pipeline | **Underperforming for Simon** | May 31 | Zero calls booked for Simon. Verticals or bid-copy suspect — rebalance toward Upwork. |
+| Reddit demand-scout | **Active** | May 23 | Discovery + demand-validation loop. A few messages in; strong signal source. |
 
 ---
 
@@ -114,9 +120,9 @@ TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  GET A SALE  →  FUND
 | **MOA** | **Shipped + producing** | Content agent, reply-guy agents, demand-scout deployed |
 | **Chief of Staff** | **Shipped** | Team-scoped, layered memory, public reference deploy |
 | **Blog/Content** | **Post 9 live, ~10+ posts total** | Secondary priority |
-| **Distribution** | **LinkedIn pipeline + demand-scout discovery** | Simon primary |
+| **Distribution** | **Upwork pipeline + demand-scout discovery** | Upwork is the producing channel |
 | **SEO** | **Google + Bing indexed** | |
-| **Co-founder** | **Aligned** | Simon: LinkedIn + demand-scout. Alek: Luai close. |
+| **Co-founder** | **Aligned** | New process: initial calls handled individually first. Simon: Stephanie/AICAP + Stauss. Alek: Upwork + Luai. |
 
 ---
 
@@ -132,31 +138,30 @@ TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  GET A SALE  →  FUND
 
 ---
 
-## Recent (May 18 - May 23)
+## Recent (May 23 - May 31)
 
 ### What Happened
-- [x] **Vijay (Liberate) call completed** — portability thesis validated by an insider, but non-buyer. Strong positioning intel: Travelers 12K/30K on Claude with zero migration path.
-- [x] **Luai (Get In Canada) proposal sent** by Alek — $5K 90-day file-readiness pilot, immigration vertical. Substrate-yielding work (document recognition, multi-app-type generalization, Phase 2 multi-tenant).
-- [x] **Paul (DECA Dental) call** — real CIO/CEO pain, but the one opportunity he surfaced (PMS migration training agent) is RAG-grade. Non-fit.
-- [x] **Job-req channel killed** — third clean kill. No biddable supply.
-- [x] **Upwork demoted to maintenance** — supply ceiling 2-5 biddable/day acknowledged.
-- [x] **Demand-scout agent deployed on Reddit** — discovery + demand-validation loop active.
-- [x] **Two strategic memos written** — Make.com playbook + Substack/Roblox playbook (custom interface primitive + lighthouse imprint sequencing as future activators).
+- [x] **Stephanie/AICAP — discovery → proposal in one Upwork-sourced call (May 26).** Healthcare credentialing. Strongest deal in the BD log: ~$22K/day pain, Harvard/Duke/MD Anderson design partners, 5-module MVP maps ~1:1 onto the substrate, mid-June urgency, founder-to-founder. Proposal sent May 27; she requested a discovery-phase call (next).
+- [x] **Alex Khadempour call (May 25)** — first pull-shaped firm-direct call; offered three deal shapes unprompted (application review, Bill C-3 citizenship-by-descent chatbot, RCIC Discord hub). Demo plan drafted.
+- [x] **Gautham Kolluri call (May 26)** — immigration vertical confirmed in structural decline (free CAPIC tooling, $200/mo offshore labor, 75% student drop). Willingness-to-pay ceiling near zero except marketing.
+- [x] **Stauss/VFI re-engaged (May 28-29)** — crypto-era insider, high energy. Dating stage; requirements + intro calls incoming. Flagged: enthusiastic advisor ≠ sale; don't let him author the wedge toward his brokerage economics.
+- [x] **Upwork verdict reversed** — the channel demoted to "lottery" is the one producing the best deals (and booking calls for Alek).
 
 ### Key Insights
-- **Sell the solution, not the architecture.** Customer describes problems; we build substrate behind. Architecture-fit is judged on built work, not on call vocabulary.
-- **Filtering scales with revenue.** At zero revenue, almost any custom build produces substrate yield. Hard-filter at ~$1M ARR.
-- **Motion E ≠ building our own audience** — structurally different motions; surface vocabulary overlaps. The creator's audience (Motion E, killed) vs. the platform's audience (Make.com pattern, active background).
-- **Channel reallocation off null results is healthy** — three clean kills + one demotion = the discovery sprint working as designed.
-- **Cross-vertical vendor reuse pattern** validates mounted-agent thesis on the supply side (Paul, unprompted: "DSO solutions translate to optometry and vet").
+- **Simon manufactured his own most-progressable deal (Stephanie/AICAP)** — the May 23 assignment is complete, via Upwork not LinkedIn. Follow the data, not the plan.
+- **Pre-scope the paid discovery sprint** or undefined discovery becomes free forward work. First dollar is the unlock.
+- **When the call goes well, hold the line** — buyer warmth is when leverage is highest (Simon pre-discounted + volunteered early-stage under Stephanie's praise on call 1).
+- **An unpaid domain insider will author your wedge toward his economics if you let him** (Stauss). Receive domain input as gold; own the synthesis. Dating, not married.
+- **Immigration vertical is low-yield** — real pain (lead conversion) but near-zero willingness-to-pay for operational tooling; market in structural decline. Alex's Bill C-3 wedge the possible exception.
 
-### Prior (May 11 - May 18)
-- a16z Speedrun submitted. LinkedIn-insurance channel killed. Motion E killed. Capital reallocated to active-demand interception. 2 conversations booked heading into the new channel.
+### Prior (May 18 - May 23)
+- Vijay call (portability validated by insider non-buyer). Luai proposal sent (Alek). Paul (DECA) non-fit (RAG-grade). Job-req channel killed (third kill). Upwork demoted (later reversed May 31). Demand-scout deployed on Reddit. Two strategic memos (Make.com + Substack playbooks).
 
 ---
 
 ## Update Log
 
+- **2026-05-31**: Yoda weekly review. Simon-owned deal manufactured — **Stephanie/AICAP** (healthcare credentialing, Upwork-sourced), strongest in the log; the May 23 assignment is complete. ONE thing → **lock a paid engagement** (Stephanie discovery phase). **Upwork verdict reversed** (producing channel, not lottery); LinkedIn warm underperforming for Simon. Stauss/equipment-finance opened (dating; Path-B bridge). Luai stalled (sent to his team). Two Yoda self-corrections logged: over-applied Stauss skepticism (aspirational ideal read as over-investment; premature "be on his calls"). New process: founders handle initial calls individually first.
 - **2026-05-23**: Yoda weekly review. Third clean channel kill (job-reqs — all AI agent jobs are AI-coding jobs). Upwork demoted to maintenance (supply ceiling 2-5/day). Channel reallocated to LinkedIn pipeline (Simon direct) + Reddit demand-scout discovery loop. Luai proposal sent (Alek). Three Yoda calibration corrections recorded: Motion E vs. own-audience conflation, architecture-filter wrong level, consulting-trap rule-4 repeat-violation. New ONE thing: **get a sale**.
 - **2026-05-18**: Discovery sprint resolved early with two clean kills (LinkedIn-insurance, Motion E). Channel reallocated to active-demand interception (Upwork + job reqs). Yoda operating instructions updated: no premature guardrails.
 - **2026-05-11**: Executing discovery sprint. ~100 connects, ~25 accepted. Maha declined. a16z back on schedule.

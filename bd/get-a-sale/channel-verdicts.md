@@ -6,10 +6,11 @@
 
 | Channel | Status | Set | Owner | Notes |
 |---|---|---|---|---|
-| **LinkedIn warm pipeline** | Active (P0) | 2026-05-23 | Simon | Accepted connections → real conversations. Goal: manufacture a Simon-owned most-progressable deal. |
-| **Reddit demand-scout** | Active (P0) | 2026-05-23 | Simon | Discovery + demand-validation. Find stated pain → engage. See [[demand-scout-spec]]. |
-| **Luai pilot (live deal)** | Active | 2026-05-20 | Alek | $5K 90-day file-readiness; proposal sent. |
-| **Upwork bidding** | Maintenance | 2026-05-23 | Simon | Real supply ceiling 2-5 biddable/day. Bid on alerts; no daily target. |
+| **Upwork bidding** | **Primary (P0)** | 2026-05-31 (reversed) | Simon + Alek | Active-demand interception. Sourced Stephanie/AICAP + Alek's booked calls. Funded job posts are painkiller-grade by construction. Re-promoted from maintenance (see Demoted note). |
+| **Reddit demand-scout** | Active (P1) | 2026-05-23 | Simon | Discovery + demand-validation. Find stated pain → engage. A few messages in. See [[demand-scout-spec]]. |
+| **LinkedIn warm pipeline** | **Underperforming** | 2026-05-31 | Simon | 0 calls booked for Simon. Rebalance toward Upwork or diagnose verticals/bid-copy. Not yet a kill — a flag. |
+
+**Live deals** (full board in [[CLAUDE#Active Opportunities]]): Stephanie/AICAP (🟢 Simon — strongest in log; paid discovery next) · Stauss/VFI (🟡 dating) · Luai (🟡 Alek — stalled).
 
 ## Killed
 
@@ -24,11 +25,11 @@
 
 | Channel | Demoted | Reason |
 |---|---|---|
-| **Upwork bidding** | 2026-05-23 | Real supply ceiling 2-5 biddable/day. Not a pipeline motion — lottery. Bid when alerts fire; no daily target. Channel kept open because cost-to-bid is near zero. Files: `__ARCHIVE/bd-channel-upwork-2026-05-23/`. |
+| **Upwork bidding** | 2026-05-23 → **REVERSED 2026-05-31** | Demoted on a supply-ceiling read (2-5 biddable/day). **Reversal:** the supply-ceiling read measured *volume* and missed *quality* — funded job posts are painkiller-grade by construction. Upwork went on to source the best deal in the sprint (Stephanie/AICAP) and books calls for Alek. Now **Primary (P0)** — see Current. Archived analysis: `__ARCHIVE/bd-channel-upwork-2026-05-23/`. |
 
 ## Read
 
-Three clean kills + one demotion in two weeks. The discovery sprint is working as designed: it produces verdicts. The thesis (get a sale) is unchanged; channels are the things being tested.
+Three clean kills, one demotion-then-reversal, and the first live deal in five weeks. The discovery sprint is working as designed: it produces verdicts, and verdicts update on new data. The thesis (get a sale) is unchanged; channels are the things being tested. **Lesson from the Upwork reversal:** a verdict set on a *proxy* metric (supply volume) is weaker than one set on *outcome* data (deals produced) — hold proxy-based verdicts loosely and let outcomes overrule them.
 
 ## How verdicts get set
 
@@ -37,4 +38,6 @@ A channel earns a kill when:
 2. **Supply** — there is no biddable supply for the work we do (job-reqs); OR
 3. **Pain test failed** — engagements that happen confirm vitamin, not painkiller (Motion E).
 
-A channel earns a demotion when supply exists but is rate-limited below pipeline-motion economics (Upwork at 2-5/day).
+A channel earns a demotion when supply exists but is rate-limited below pipeline-motion economics (the 2026-05-23 Upwork call).
+
+A channel earns a **re-promotion** when outcome data overrules an earlier proxy-based verdict — Upwork was demoted on supply *volume* (2-5/day) but produced the best deal in the sprint, so deal *outcomes* overruled the volume read (2026-05-31).

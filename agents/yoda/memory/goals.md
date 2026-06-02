@@ -60,8 +60,8 @@
 
 ### Goal 10: Get a Sale — Design Partner / Paid Pilot / Recurring Revenue
 - **Success criteria**: First paid engagement (design partner, pilot, or consulting) closed. 0 → 1 momentum to stack from.
-- **Progress**: Luai (Get In Canada) proposal sent by Alek — $5K 90-day file-readiness pilot, $500/mo after, Phase 2 = B2B back-office. Live deal. Simon's direct pipeline: LinkedIn pipeline loaded, no most-progressable deal yet — needs to manufacture one. Three completed discovery calls (Vijay, Luai, Paul) yielded one substrate-fit deal (Luai), one strong intel (Vijay non-buyer), one non-fit (Paul/DSO PMS-migration is RAG-grade).
-- **This week target (May 23-30)**: LinkedIn pipeline → real conversations started; demand-scout v1 deployed on Reddit (discovery + demand-validation loop, NOT audience-building); Luai close supported by Simon.
+- **Progress**: **Simon-owned most-progressable deal manufactured — Stephanie/AICAP (healthcare credentialing), Upwork-sourced.** Strongest deal in the BD log: ~$22K/day pain, Harvard/Duke/MD Anderson design partners, architecture-fit, urgency, founder-to-founder. Proposal sent (May 27); she requested a clarification/discovery call (next). The May 23 assignment ("manufacture a Simon-owned deal") is complete. Luai (Alek) stalled — sent to his team for review. Stauss/equipment-finance opened as a dating-stage insider relationship (Path-B bridge; not yet a buyer).
+- **This week target (May 31 – Jun 7)**: **Lock a paid engagement** — pre-scope/price/date Stephanie's discovery phase, walk out paid + convertible to MVP. Hold price under her warmth. Feel out Stauss (no forced tactics). Rebalance off LinkedIn toward the producing Upwork motion.
 - **Status**: Executing — **P0** (Simon primary)
 - **KPI**: Conversations had, deals progressed, first paid engagement closed.
 - **Architecture-fit rule (refined 2026-05-23)**: Filter applies to *the work that gets built*, not the words in the conversation. Customers describe problems; the engineering call is whether solving them builds reusable substrate. At zero revenue, run with minimal filtering — almost any custom build produces substrate yield. Filtering tightens with revenue; hard-filter at ~$1M ARR.
@@ -73,10 +73,10 @@
 - **Re-evaluation trigger**: Periodic monitoring — when "AI agent" job postings start including non-coding workflow automation, re-open.
 - **Status**: **Killed — P3 (periodic monitor only)**
 
-### Goal 10c: Upwork Bidding — DEMOTED to Maintenance
-- **Outcome**: Demoted 2026-05-23. Channel has a real supply ceiling at ~2-5 biddable jobs/day. Even at perfect execution, max ~25 submissions/week. Not a pipeline-building motion — lottery-style channel.
-- **Mode**: Bid when mobile alerts fire (Simon is now first-to-bid). No daily target.
-- **Status**: **Maintenance — P2**
+### Goal 10c: Upwork Bidding — RE-PROMOTED (producing channel)
+- **Outcome**: Demoted 2026-05-23 on a supply-ceiling read. **Reversed 2026-05-31:** Upwork (active-demand interception) sourced the best deal in the entire sprint (Stephanie/AICAP) and is producing booked calls for Alek. The "lottery, not a motion" framing was wrong — a *funded* job post is painkiller-grade by construction (budget allocated, urgency real).
+- **Mode**: Primary bidding effort. Open question: Simon's bids aren't converting to calls while Alek's are — mirror Alek's motion or diagnose the gap (verticals? bid copy? profile?).
+- **Status**: **Primary producing channel — P0**
 
 ### Goal 10d: Building Our Own Audience — Long Compounding Layer
 - **Success criteria**: Brand/inbound/community surface that compounds independently of any single sales motion. Make.com pattern — own audience built over time, not creator-recruited.
@@ -129,10 +129,13 @@
 | 2026-05-18 | Book 5 conversations (10 stretch) | **~3-4 completed** | Vijay, Luai (Alek), Paul, Alek's call |
 | 2026-05-18 | Demand-scout agent operational | **Done** | Deployed on Reddit May 23 |
 | 2026-05-18 | May 22 verdict call — lock channel mix, set next test | **Done (1 day late)** | Held implicitly in May 23 review session |
-| 2026-05-23 | LinkedIn pipeline → real conversations started | **Committed** | By end of week |
-| 2026-05-23 | Demand-scout v1 deployed on Reddit (discovery + demand-validation loop) | **Committed** | Measure by conversations engaged, not artifacts |
-| 2026-05-23 | Upwork on maintenance (bid when alerts fire) | **Committed** | No daily target |
-| 2026-05-23 | Support Alek on Luai close where useful | **Committed** | Don't take ownership |
+| 2026-05-23 | LinkedIn pipeline → real conversations started | **Missed via LinkedIn; deal made via Upwork** | LinkedIn = 0 calls for Simon. Stephanie/AICAP manufactured via Upwork instead. Assignment met by a different route. |
+| 2026-05-23 | Demand-scout v1 deployed on Reddit (discovery + demand-validation loop) | **Done** | Reddit-only scope; a few messages; strong signal/learning source |
+| 2026-05-23 | Upwork on maintenance (bid when alerts fire) | **Upgraded** | Became Simon's primary effort; channel re-promoted (Goal 10c) |
+| 2026-05-23 | Support Alek on Luai close where useful | **Stalled** | Luai sent proposal to his team for review (likely his dev) |
+| 2026-05-31 | Lock a paid engagement — pre-scope/price/date Stephanie's discovery phase | **Committed** | THE one thing. Hold price under her warmth. |
+| 2026-05-31 | Stauss — feel it out (no forced tactics) | **Committed** | Watch for the graduation marker: a non-Stauss buyer voice |
+| 2026-05-31 | Rebalance off LinkedIn → the producing Upwork motion | **Committed** | Mirror Alek or diagnose non-conversion |
 
 ---
 

@@ -28,6 +28,18 @@ Moves that feel persuasive but backfire in cold proposals.
 - **De-risk comes from structure, not from a low price.** The instinct on a $10K fixed job is to make the first milestone tiny ($0, then $1K) so the buyer says yes. Wrong lever. A serious buyer is committing to the full amount conceptually regardless; a cheaper first milestone doesn't de-risk him more, it just devalues the work and signals hunger (same family as the free-POC tell). The de-risk the buyer actually feels comes from the *shape*: a small first milestone, a kill-switch, proof on his real data before the big commit. Price milestone 1 *fairly* and frame it as "deliberately small — a cheap, fast look at the highest-risk part."
 - **The riskiest-scope milestone should never be the cheapest.** Milestone 1 is where the unknowns live (how messy is the real data?). If it's underpriced *and* carries the most uncertainty, every overrun gets eaten. A fairly-priced first milestone is also fixed-price insurance: if the sample reveals a nightmare, that's learned cheaply, and re-scope happens before the next milestone instead of mid-commitment.
 
+## Prospect Requests A Paid Discovery — Take It Fast (the AICAP pattern)
+
+**Seen in:** Stephanie / AICAP — after the proposal landed, she asked for a paid "integration discovery" before committing to the MVP build ("I'd like to discuss the discovery scope so you can give me a proposal for that").
+
+**What it really means:** Not a stall — a *smaller, faster, lower-risk first yes.* A domain-expert buyer de-risking her own build before spending real money. The first dollar is the hardest; a paid discovery clears it and makes the bigger build easier, not harder. It's the forward-deployed-engineer playbook in its purest form: customer names the problem, you sell the discovery, the deliverable is reusable substrate.
+
+**The counter (which is to say yes, fast):**
+- Reply same-day with an enthusiastic yes; reinforce her instinct — her technical partner independently agreeing it's the smart move builds trust.
+- Scope it tight: one deliverable (a map/report + revised build scope), one timebox (1-2 wks), one fixed fee ($3.5K-$5K range at this stage). Deliverable is hers to keep either way.
+- Hold a credit-toward-build sweetener in reserve — deploy only if she balks on price.
+- Guard against: free-discovery creep (the scoping call is NOT the discovery), timeline evaporation (keep the build window alive), and scope swamp (map only what the design partners actually run).
+
 ## Structural Anchors For Risk-Removal Deals
 
 When a deal is intentionally structured for maximum customer risk-removal (e.g. full no-conditions refund, design-partner pricing well below standard floor), the close-rate gain is real but two failure modes show up:
