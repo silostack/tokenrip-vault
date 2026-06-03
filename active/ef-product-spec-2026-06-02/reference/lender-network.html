@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Northbeam // Lender Partnership Network</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0e14;
+    --bg-2: #11161f;
+    --bg-3: #161d28;
+    --line: #1f2937;
+    --line-2: #2a3441;
+    --text: #d7e1ec;
+    --text-2: #8a98ab;
+    --text-3: #5b6678;
+    --amber: #ffb454;
+    --amber-dim: #b07d3a;
+    --green: #7fdb8b;
+    --red: #ff5f5f;
+    --blue: #6bb6ff;
+    --violet: #b48cff;
+    --gold: #d4af37;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.5; min-height: 100vh; }
+  body {
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(255,180,84,0.04), transparent),
+      radial-gradient(900px 500px at -10% 110%, rgba(107,182,255,0.03), transparent),
+      var(--bg);
+  }
+  ::selection { background: var(--amber); color: var(--bg); }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-2);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+  .brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--amber);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--amber);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--amber);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 50% { opacity: 0.4; } }
+  .brand-sub {
+    color: var(--text-3);
+    font-weight: 400;
+    margin-left: 4px;
+  }
+  .topbar-stats {
+    display: flex;
+    gap: 28px;
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-2);
+  }
+  .topbar-stat strong {
+    color: var(--text);
+    margin-left: 6px;
+    font-weight: 600;
+  }
+  .ts {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-3);
+    font-size: 11px;
+  }
+
+  /* ============ HEADER ============ */
+  .header {
+    padding: 36px 24px 24px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--bg-2), var(--bg));
+  }
+  .header-inner { max-width: 1600px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: end; }
+  .h-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 42px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .h-title em { font-style: italic; color: var(--amber); font-weight: 400; }
+  .h-sub {
+    color: var(--text-2);
+    margin-top: 12px;
+    font-size: 14px;
+    max-width: 620px;
+  }
+  .h-seed {
+    background: var(--bg-3);
+    border: 1px solid var(--line-2);
+    padding: 14px 16px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .h-seed-label { color: var(--amber); letter-spacing: 0.08em; text-transform: uppercase; font-size: 10px; margin-bottom: 8px; }
+  .h-seed-name { color: var(--text); font-weight: 600; font-size: 13px; }
+  .h-seed-line { color: var(--text-2); margin-top: 4px; }
+  .h-seed-line a { color: var(--blue); text-decoration: none; }
+  .h-seed-line a:hover { text-decoration: underline; }
+
+  /* ============ FILTERS ============ */
+  .filters {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-2);
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 41px;
+    z-index: 90;
+    backdrop-filter: blur(8px);
+  }
+  .filter-group { display: flex; gap: 8px; align-items: center; }
+  .filter-label {
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 10px;
+    color: var(--text-3);
+    margin-right: 4px;
+  }
+  .chip {
+    border: 1px solid var(--line-2);
+    background: transparent;
+    color: var(--text-2);
+    padding: 6px 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.15s;
+  }
+  .chip:hover { color: var(--text); border-color: var(--text-3); }
+  .chip.active {
+    background: var(--amber);
+    color: var(--bg);
+    border-color: var(--amber);
+    font-weight: 600;
+  }
+  .chip.tier1.active { background: var(--gold); border-color: var(--gold); }
+  .chip.tier2.active { background: var(--blue); border-color: var(--blue); }
+  .search-input {
+    background: var(--bg-3);
+    border: 1px solid var(--line-2);
+    color: var(--text);
+    padding: 8px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    border-radius: 2px;
+    width: 260px;
+    margin-left: auto;
+  }
+  .search-input:focus { outline: 1px solid var(--amber); border-color: var(--amber); }
+
+  /* ============ MAIN ============ */
+  .main {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  .tier-block { margin-bottom: 48px; }
+  .tier-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 20px;
+  }
+  .tier-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-3);
+  }
+  .tier-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .tier-title.tier1 { color: var(--gold); }
+  .tier-title.tier2 { color: var(--blue); }
+  .tier-thesis {
+    color: var(--text-2);
+    font-size: 12px;
+    margin-left: auto;
+    max-width: 560px;
+    text-align: right;
+    font-style: italic;
+  }
+
+  /* ============ GRID ============ */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 12px;
+  }
+  .card {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    padding: 16px 18px;
+    border-radius: 2px;
+    transition: all 0.2s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--line-2);
+    transition: all 0.2s;
+  }
+  .card[data-cat="abl"]::before { background: var(--green); }
+  .card[data-cat="wc"]::before { background: var(--amber); }
+  .card[data-cat="senior"]::before { background: var(--blue); }
+  .card[data-cat="bridge"]::before { background: var(--violet); }
+  .card:hover {
+    background: var(--bg-3);
+    border-color: var(--line-2);
+    transform: translateX(2px);
+  }
+  .card:hover::before { width: 4px; }
+
+  .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+  .card-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .card-firm {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-2);
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .card-cat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border: 1px solid;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .card-cat.abl { color: var(--green); border-color: var(--green); }
+  .card-cat.wc { color: var(--amber); border-color: var(--amber); }
+  .card-cat.senior { color: var(--blue); border-color: var(--blue); }
+  .card-cat.bridge { color: var(--violet); border-color: var(--violet); }
+
+  .card-title {
+    font-size: 12px;
+    color: var(--text-2);
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  .card-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+  .card-meta-label { color: var(--text-3); text-transform: uppercase; letter-spacing: 0.06em; }
+  .card-meta-val { color: var(--text); font-weight: 500; }
+  .card-meta-row { display: flex; flex-direction: column; gap: 2px; }
+  .card-foot {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+  .card-foot a {
+    color: var(--text-2);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .card-foot a:hover { color: var(--amber); }
+  .card-foot a::before { content: '→ '; color: var(--text-3); }
+
+  /* ============ MODAL ============ */
+  .modal-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 12, 0.85);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: var(--bg-2);
+    border: 1px solid var(--line-2);
+    max-width: 720px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 2px;
+    position: relative;
+  }
+  .modal-head {
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    background: var(--bg-2);
+  }
+  .modal-name { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 600; }
+  .modal-title-line { color: var(--text-2); margin-top: 4px; }
+  .modal-close {
+    background: transparent;
+    border: 1px solid var(--line-2);
+    color: var(--text-2);
+    width: 32px; height: 32px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    border-radius: 2px;
+  }
+  .modal-close:hover { color: var(--amber); border-color: var(--amber); }
+  .modal-body { padding: 24px 28px; }
+  .modal-section { margin-bottom: 24px; }
+  .modal-section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+  }
+  .modal-grid { display: grid; grid-template-columns: 140px 1fr; gap: 10px 16px; font-size: 13px; }
+  .modal-grid-k { color: var(--text-3); font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 2px; }
+  .modal-grid-v { color: var(--text); }
+  .modal-grid-v a { color: var(--blue); text-decoration: none; }
+  .modal-grid-v a:hover { text-decoration: underline; }
+  .modal-fit { background: var(--bg-3); padding: 14px 16px; border-left: 2px solid var(--amber); font-size: 13px; color: var(--text); }
+  .modal-hook { background: rgba(255,180,84,0.06); padding: 14px 16px; border: 1px dashed var(--amber-dim); font-size: 13px; font-style: italic; color: var(--text); }
+  .modal-actions { padding: 16px 28px; border-top: 1px solid var(--line); display: flex; gap: 10px; background: var(--bg-2); position: sticky; bottom: 0; }
+  .modal-btn {
+    background: transparent;
+    border: 1px solid var(--line-2);
+    color: var(--text-2);
+    padding: 10px 16px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-radius: 2px;
+    transition: all 0.15s;
+  }
+  .modal-btn:hover { color: var(--amber); border-color: var(--amber); }
+  .modal-btn.primary { background: var(--amber); color: var(--bg); border-color: var(--amber); }
+  .modal-btn.primary:hover { background: #ffc77a; }
+
+  /* ============ EMPTY ============ */
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    border-top: 1px solid var(--line);
+    padding: 24px;
+    color: var(--text-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-align: center;
+    margin-top: 60px;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    .header-inner { grid-template-columns: 1fr; }
+    .h-title { font-size: 32px; }
+    .topbar-stats { display: none; }
+    .filters { position: static; }
+    .tier-thesis { display: none; }
+    .search-input { width: 100%; margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="brand">Northbeam <span class="brand-sub">// LENDER NETWORK</span></div>
+  <div class="topbar-stats">
+    <div class="topbar-stat">CONTACTS<strong id="stat-total">—</strong></div>
+    <div class="topbar-stat">SHOWING<strong id="stat-showing">—</strong></div>
+    <div class="topbar-stat">TIER 1<strong id="stat-t1">—</strong></div>
+    <div class="topbar-stat">TIER 2<strong id="stat-t2">—</strong></div>
+    <div class="ts" id="ts">—</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div>
+      <h1 class="h-title">Lender Partnership <em>Network</em></h1>
+      <p class="h-sub">Curated outreach targets across ABL, working capital, senior secured, and bridge/mezzanine. Tier 1 = complementary lenders (off-criteria deal swaps). Tier 2 = peer co-lenders (participations, club deals, referrals). Built on the Dana Whitfield seed model — find counterparties who see deals you can't fund, and vice versa.</p>
+    </div>
+    <div class="h-seed">
+      <div class="h-seed-label">— Seed Contact</div>
+      <div class="h-seed-name">Dana Whitfield · CRO</div>
+      <div class="h-seed-line">Brightwater Capital Group</div>
+      <div class="h-seed-line"><a href="mailto:dana@brightwater.example.com">dana@brightwater.example.com</a></div>
+      <div class="h-seed-line"><a href="tel:2125550142">+1 (212) 555-0142</a></div>
+    </div>
+  </div>
+</header>
+
+<!-- FILTERS -->
+<div class="filters">
+  <div class="filter-group">
+    <span class="filter-label">Tier</span>
+    <button class="chip tier-filter active" data-tier="all">All</button>
+    <button class="chip tier-filter tier1" data-tier="1">Tier 1</button>
+    <button class="chip tier-filter tier2" data-tier="2">Tier 2</button>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Category</span>
+    <button class="chip cat-filter active" data-cat="all">All</button>
+    <button class="chip cat-filter" data-cat="abl">ABL</button>
+    <button class="chip cat-filter" data-cat="wc">Working Capital</button>
+    <button class="chip cat-filter" data-cat="senior">Senior Secured</button>
+    <button class="chip cat-filter" data-cat="bridge">Bridge / Mezz</button>
+  </div>
+  <input type="text" class="search-input" id="search" placeholder="Search firm, name, geography..." />
+</div>
+
+<!-- MAIN -->
+<main class="main">
+  <div id="tier1-block" class="tier-block">
+    <div class="tier-header">
+      <span class="tier-num">— TIER 01</span>
+      <h2 class="tier-title tier1">Complementary Lenders</h2>
+      <p class="tier-thesis">Deal sizes, products, or risk appetites that <em>don't overlap</em> with Northbeam's $3M–$50M equipment-backed box. Send them deals you decline; they send you deals they decline.</p>
+    </div>
+    <div class="grid" id="tier1-grid"></div>
+  </div>
+
+  <div id="tier2-block" class="tier-block">
+    <div class="tier-header">
+      <span class="tier-num">— TIER 02</span>
+      <h2 class="tier-title tier2">Peer Co-Lenders</h2>
+      <p class="tier-thesis">Overlapping deal size and middle-market focus. Targets for <em>participations, club deals, and senior/junior pairings</em> on transactions that exceed single-lender appetite.</p>
+    </div>
+    <div class="grid" id="tier2-grid"></div>
+  </div>
+
+  <div class="empty" id="empty" style="display:none;">— No contacts match the current filter —</div>
+</main>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal" id="modal"></div>
+</div>
+
+<footer class="footer">
+  Northbeam CORPORATE FINANCE · LENDER PARTNERSHIP INTEL · OUTREACH WORKSPACE · ALL CONTACT DATA SOURCED FROM PUBLIC FIRM WEBSITES & PRESS RELEASES — VERIFY BEFORE OUTREACH
+</footer>
+
+<script>
+const CONTACTS = [
+  // ============ SYNTHETIC DEMO DATA — all lenders below are fictional / illustrative ============
+  // ============ TIER 1: COMPLEMENTARY LENDERS ============
+
+  // Working Capital / MCA (sub-$3M, no audit, fast money)
+  {
+    tier: 1, cat: 'wc',
+    name: 'Dana Whitfield', firm: 'Brightwater Capital Group',
+    title: 'Chief Revenue Officer (Co-Founder)',
+    email: 'dana@brightwater.example.com',
+    phone: '+1 (212) 555-0142',
+    website: 'brightwater.example.com',
+    linkedin: 'linkedin.com/company/brightwater-capital',
+    geo: 'New York / Miami',
+    dealSize: '$50K – $2M',
+    product: 'MCA, receivables, working capital',
+    industries: 'Industry agnostic, SMB',
+    fit: 'Brightwater lives in the sub-$2M, fast-money, no-audit zone where Northbeam never plays. Refer borrowers Northbeam declines on size or financials; ask Dana to send any merchants whose growth pushes them past $30M revenue into equipment-backed needs.',
+    hook: 'Mutual deal flow. Specifically: graduating clients who outgrow MCA and need a $3M–$10M equipment facility — that handoff is gold for both sides.',
+    seed: true
+  },
+  {
+    tier: 1, cat: 'wc',
+    name: 'Marcus Lindqvist', firm: 'Evercrest Receivables Corp.',
+    title: 'Chief Executive Officer',
+    email: 'info@evercrest.example.com',
+    phone: '+1 (866) 555-0188',
+    website: 'evercrest.example.com',
+    linkedin: 'linkedin.com/company/evercrest-receivables',
+    geo: 'Miami, FL (US/CA/UK)',
+    dealSize: '$1M – $50M',
+    product: 'Factoring, AR financing, ABL, payroll funding',
+    industries: 'Healthcare, transportation, staffing, consumer goods',
+    fit: 'Evercrest does the AR/factoring/payroll work Northbeam explicitly excludes. Refer deals where the borrower needs receivables financing alongside equipment — Northbeam takes the equipment, Evercrest takes the AR.',
+    hook: 'Carve-up partnership: Northbeam funds the iron, Evercrest funds the float. Clean lien-priority story, two happy lenders, one happy borrower.'
+  },
+  {
+    tier: 1, cat: 'wc',
+    name: 'Tobias Renner', firm: 'Halevy & Stone, Inc.',
+    title: 'EVP / Chief Lending Officer',
+    email: 'info@halevystone.example.com',
+    phone: '+1 (212) 555-0119',
+    website: 'halevystone.example.com',
+    linkedin: 'linkedin.com/company/halevy-stone',
+    geo: 'New York, NY',
+    dealSize: '$1M – $30M',
+    product: 'Factoring, PO financing, ABL',
+    industries: 'Consumer products, apparel, manufacturing',
+    fit: 'Family-owned, deep factoring and PO finance bench — both areas Northbeam excludes. They see manufacturers all day who need term debt against equipment. Natural reciprocal referral relationship.',
+    hook: 'Consumer/apparel manufacturers buying packaging or production equipment — they finance the inventory and receivables, Northbeam finances the line.'
+  },
+
+  // Bridge / special situations (smaller, distressed, faster)
+  {
+    tier: 1, cat: 'bridge',
+    name: 'Priya Nandakumar', firm: 'Sablefield Credit Partners',
+    title: 'Co-Founder, Head of Originations',
+    email: 'priya@sablefield.example.com',
+    phone: '+1 (949) 555-0173',
+    website: 'sablefield.example.com',
+    linkedin: 'linkedin.com/company/sablefield-credit',
+    geo: 'Newport Beach, CA',
+    dealSize: '$2M – $25M',
+    product: 'Collateral-based / non-conforming / bridge',
+    industries: 'Industry agnostic, special situations',
+    fit: 'Sablefield positions as a complement to ABL providers — they take the esoteric collateral and bridge situations banks will not touch. Perfect for deals where Northbeam declines for credit but real collateral exists.',
+    hook: 'You see a deal with a special situation (turnaround, covenant breach, bankruptcy exit) plus hard equipment — Sablefield covers the messy middle, Northbeam takes out the cleaner equipment piece on exit.'
+  },
+  {
+    tier: 1, cat: 'bridge',
+    name: 'Aaron Delgado', firm: 'Cobalt Ridge Capital Management',
+    title: 'Managing Director, Originations',
+    email: 'adelgado@cobaltridge.example.com',
+    phone: '+1 (312) 555-0156',
+    website: 'cobaltridge.example.com',
+    linkedin: 'linkedin.com/company/cobalt-ridge-capital',
+    geo: 'Chicago, IL',
+    dealSize: '$5M – $40M',
+    product: 'Structured credit, rescue financing, mezzanine',
+    industries: 'Industrials, niche manufacturing',
+    fit: 'Cobalt Ridge plays in structured and rescue capital above Northbeam credit appetite. Refer the leverage piece on growth deals where the equipment slice is clean but the overall structure needs mezzanine.',
+    hook: 'Sponsor-backed industrials adding a line — Cobalt Ridge takes the junior capital, Northbeam takes the senior equipment collateral.'
+  },
+
+  // Senior / cash-flow (larger, cleaner, complementary structure)
+  {
+    tier: 1, cat: 'senior',
+    name: 'Helena Marsh', firm: 'Irongate Senior Lending',
+    title: 'Partner',
+    email: 'hmarsh@irongate.example.com',
+    phone: '+1 (617) 555-0164',
+    website: 'irongate.example.com',
+    linkedin: 'linkedin.com/company/irongate-senior',
+    geo: 'Boston, MA',
+    dealSize: '$10M – $75M',
+    product: 'Senior secured / cash-flow term loans',
+    industries: 'Established middle-market, sponsor-backed',
+    fit: 'Irongate writes the cash-flow senior tranche; Northbeam carves out the equipment collateral as a complementary facility rather than competing on the same dollars.',
+    hook: 'Co-structure: Irongate on enterprise cash flow, Northbeam on the hard-asset line — split the credit, share the borrower.'
+  },
+  {
+    tier: 1, cat: 'abl',
+    name: 'Victor Osei', firm: 'Tradewind Asset Finance',
+    title: 'Head of Vendor Programs',
+    email: 'vosei@tradewind.example.com',
+    phone: '+1 (704) 555-0131',
+    website: 'tradewind.example.com',
+    linkedin: 'linkedin.com/company/tradewind-asset-finance',
+    geo: 'Charlotte, NC',
+    dealSize: '$250K – $5M',
+    product: 'Small-ticket equipment, vendor finance',
+    industries: 'Construction, transportation, light industrial',
+    fit: 'Tradewind handles the small-ticket app-only paper below Northbeam middle-market focus. Send them the sub-$250K splinters; they send up anything that grows into a structured facility.',
+    hook: 'Overflow lane: Tradewind clears the small-ticket volume fast, Northbeam keeps the structured middle-market deals.'
+  },
+
+  // ============ TIER 2: PEER CO-LENDERS (same box — participations, club, co-lend) ============
+
+  {
+    tier: 2, cat: 'abl',
+    name: 'Rebecca Stahl', firm: 'Meridian Crossing ABL',
+    title: 'SVP, Capital Markets',
+    email: 'rstahl@meridiancrossing.example.com',
+    phone: '+1 (646) 555-0108',
+    website: 'meridiancrossing.example.com',
+    linkedin: 'linkedin.com/company/meridian-crossing-abl',
+    geo: 'New York, NY',
+    dealSize: '$10M – $60M',
+    product: 'Middle-market ABL, participations',
+    industries: 'Manufacturing, distribution',
+    fit: 'Same box as Northbeam on middle-market ABL — natural participation partner on deals that exceed a single hold limit. Club the larger tickets rather than passing them.',
+    hook: 'Hold-limit relief: when a deal runs past your single-name cap, Meridian Crossing takes a participation and the deal still closes.'
+  },
+  {
+    tier: 2, cat: 'abl',
+    name: 'Daniel Cho', firm: 'Northpine Commercial Credit',
+    title: 'Managing Director',
+    email: 'dcho@northpine.example.com',
+    phone: '+1 (213) 555-0177',
+    website: 'northpine.example.com',
+    linkedin: 'linkedin.com/company/northpine-commercial-credit',
+    geo: 'Los Angeles, CA',
+    dealSize: '$5M – $50M',
+    product: 'ABL, equipment, inventory',
+    industries: 'Industrials, food and beverage',
+    fit: 'Overlapping appetite with Northbeam — best used for co-lend and reciprocal referrals when one side is full on an industry bucket.',
+    hook: 'Bucket swap: when you are capped on an industry, route the deal to Northpine and take their overflow in return.'
+  },
+  {
+    tier: 2, cat: 'abl',
+    name: 'Sofia Marchetti', firm: 'Granite Harbor Capital',
+    title: 'Director, Originations',
+    email: 'smarchetti@graniteharbor.example.com',
+    phone: '+1 (415) 555-0190',
+    website: 'graniteharbor.example.com',
+    linkedin: 'linkedin.com/company/granite-harbor-capital',
+    geo: 'San Francisco, CA',
+    dealSize: '$8M – $55M',
+    product: 'Asset-based revolvers, equipment term',
+    industries: 'Technology hardware, advanced manufacturing',
+    fit: 'Peer ABL shop with a West Coast tech-hardware bench Northbeam lacks. Co-lend on deals that need local presence plus equipment structuring.',
+    hook: 'Geography split: Granite Harbor fronts the West Coast relationship, Northbeam structures the equipment tranche.'
+  },
+  {
+    tier: 2, cat: 'senior',
+    name: 'James Okonkwo', firm: 'Lattice Credit Co.',
+    title: 'Partner, Capital Markets',
+    email: 'jokonkwo@lattice.example.com',
+    phone: '+1 (469) 555-0125',
+    website: 'lattice.example.com',
+    linkedin: 'linkedin.com/company/lattice-credit',
+    geo: 'Dallas, TX',
+    dealSize: '$15M – $80M',
+    product: 'Senior secured, unitranche',
+    industries: 'Energy services, industrials',
+    fit: 'Peer on larger senior deals — club the unitranche and let Northbeam hold the equipment-secured slice.',
+    hook: 'Unitranche club: Lattice leads, Northbeam takes the hard-asset carve-out at a tighter advance rate.'
+  },
+  {
+    tier: 2, cat: 'senior',
+    name: 'Nora Bergstrom', firm: 'Summit Arc Lending',
+    title: 'SVP',
+    email: 'nbergstrom@summitarc.example.com',
+    phone: '+1 (303) 555-0149',
+    website: 'summitarc.example.com',
+    linkedin: 'linkedin.com/company/summit-arc-lending',
+    geo: 'Denver, CO',
+    dealSize: '$10M – $65M',
+    product: 'Cash-flow senior, equipment term',
+    industries: 'Mountain West middle-market',
+    fit: 'Regional peer for the Mountain West expansion lane — reciprocal referrals where local relationships win the mandate.',
+    hook: 'Regional handshake: Summit Arc sources the Mountain West borrower, Northbeam co-structures the equipment facility.'
+  },
+  {
+    tier: 2, cat: 'bridge',
+    name: 'Felix Ambrose', firm: 'Drawbridge Special Situations',
+    title: 'Co-Head of Originations',
+    email: 'fambrose@drawbridge.example.com',
+    phone: '+1 (917) 555-0162',
+    website: 'drawbridge.example.com',
+    linkedin: 'linkedin.com/company/drawbridge-special-situations',
+    geo: 'New York, NY',
+    dealSize: '$5M – $45M',
+    product: 'Special situations, mezzanine, bridge',
+    industries: 'Industrials, transportation',
+    fit: 'Peer on the messier middle-market structures — partner on deals that pair a special situation with clean equipment collateral.',
+    hook: 'Two-tranche close: Drawbridge takes the junior special-sit risk, Northbeam holds the senior equipment lien.'
+  },
+  {
+    tier: 2, cat: 'abl',
+    name: 'Yuki Tanaka', firm: 'Beacon Mill Finance',
+    title: 'Director',
+    email: 'ytanaka@beaconmill.example.com',
+    phone: '+1 (312) 555-0137',
+    website: 'beaconmill.example.com',
+    linkedin: 'linkedin.com/company/beacon-mill-finance',
+    geo: 'Chicago, IL',
+    dealSize: '$6M – $50M',
+    product: 'ABL, equipment, supply-chain finance',
+    industries: 'Manufacturing, logistics',
+    fit: 'Peer ABL lender with a logistics bench — reciprocal co-lend where supply-chain and equipment needs sit on the same borrower.',
+    hook: 'Combined facility: Beacon Mill on the supply-chain line, Northbeam on the equipment term — one borrower, two clean liens.'
+  }
+];
+
+// ============ STATE ============
+let activeTier = 'all';
+let activeCat = 'all';
+let searchQ = '';
+
+// ============ RENDER ============
+function render() {
+  const filtered = CONTACTS.filter(c => {
+    if (activeTier !== 'all' && c.tier !== parseInt(activeTier)) return false;
+    if (activeCat !== 'all' && c.cat !== activeCat) return false;
+    if (searchQ) {
+      const hay = (c.name + c.firm + c.geo + c.title + c.industries + c.product).toLowerCase();
+      if (!hay.includes(searchQ.toLowerCase())) return false;
+    }
+    return true;
+  });
+
+  const t1 = filtered.filter(c => c.tier === 1);
+  const t2 = filtered.filter(c => c.tier === 2);
+
+  document.getElementById('tier1-grid').innerHTML = t1.map(cardHTML).join('');
+  document.getElementById('tier2-grid').innerHTML = t2.map(cardHTML).join('');
+
+  document.getElementById('tier1-block').style.display = t1.length ? '' : 'none';
+  document.getElementById('tier2-block').style.display = t2.length ? '' : 'none';
+  document.getElementById('empty').style.display = filtered.length ? 'none' : '';
+
+  document.getElementById('stat-showing').textContent = String(filtered.length).padStart(2, '0');
+
+  document.querySelectorAll('.card').forEach(el => {
+    el.addEventListener('click', () => openModal(parseInt(el.dataset.idx)));
+  });
+}
+
+function cardHTML(c) {
+  const catLabel = { abl: 'ABL', wc: 'WORKING CAP', senior: 'SENIOR', bridge: 'BRIDGE/MEZZ' }[c.cat];
+  const idx = CONTACTS.indexOf(c);
+  return `
+    <div class="card" data-cat="${c.cat}" data-idx="${idx}">
+      <div class="card-head">
+        <div>
+          <div class="card-name">${c.name}${c.seed ? ' <span style="color:var(--amber);font-size:10px;">◆ SEED</span>' : ''}</div>
+          <div class="card-firm">${c.firm}</div>
+        </div>
+        <span class="card-cat ${c.cat}">${catLabel}</span>
+      </div>
+      <div class="card-title">${c.title}</div>
+      <div class="card-meta">
+        <div class="card-meta-row">
+          <span class="card-meta-label">Deal Size</span>
+          <span class="card-meta-val">${c.dealSize}</span>
+        </div>
+        <div class="card-meta-row">
+          <span class="card-meta-label">Geography</span>
+          <span class="card-meta-val">${c.geo}</span>
+        </div>
+        <div class="card-meta-row" style="grid-column:1/-1;">
+          <span class="card-meta-label">Product</span>
+          <span class="card-meta-val">${c.product}</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a href="mailto:${c.email.replace(/[()]/g,'').replace('via firm','').replace('via corporate contact','').trim()}" onclick="event.stopPropagation()">Email</a>
+        <a href="tel:${c.phone.replace(/[^\d+]/g,'')}" onclick="event.stopPropagation()">Call</a>
+        <a href="https://${c.linkedin}" target="_blank" onclick="event.stopPropagation()">LinkedIn</a>
+      </div>
+    </div>
+  `;
+}
+
+function openModal(idx) {
+  const c = CONTACTS[idx];
+  const catLabel = { abl: 'Asset-Based Lending', wc: 'Working Capital / Receivables', senior: 'Senior Secured / Cash Flow', bridge: 'Bridge / Mezzanine / Special Sit' }[c.cat];
+  const cleanEmail = c.email.replace(/[()]/g,'').replace('via firm','').replace('via corporate contact','').trim();
+
+  document.getElementById('modal').innerHTML = `
+    <div class="modal-head">
+      <div>
+        <div class="modal-name">${c.name}</div>
+        <div class="modal-title-line">${c.title} · ${c.firm}</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-section-label">— Contact</div>
+        <div class="modal-grid">
+          <div class="modal-grid-k">Email</div><div class="modal-grid-v"><a href="mailto:${cleanEmail}">${c.email}</a></div>
+          <div class="modal-grid-k">Phone</div><div class="modal-grid-v"><a href="tel:${c.phone.replace(/[^\d+]/g,'')}">${c.phone}</a></div>
+          <div class="modal-grid-k">Website</div><div class="modal-grid-v"><a href="https://${c.website}" target="_blank">${c.website}</a></div>
+          <div class="modal-grid-k">LinkedIn</div><div class="modal-grid-v"><a href="https://${c.linkedin}" target="_blank">${c.linkedin}</a></div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">— Firm Profile</div>
+        <div class="modal-grid">
+          <div class="modal-grid-k">Category</div><div class="modal-grid-v">${catLabel}</div>
+          <div class="modal-grid-k">Deal Size</div><div class="modal-grid-v">${c.dealSize}</div>
+          <div class="modal-grid-k">Products</div><div class="modal-grid-v">${c.product}</div>
+          <div class="modal-grid-k">Industries</div><div class="modal-grid-v">${c.industries}</div>
+          <div class="modal-grid-k">Geography</div><div class="modal-grid-v">${c.geo}</div>
+          <div class="modal-grid-k">Tier</div><div class="modal-grid-v">${c.tier === 1 ? 'Tier 1 — Complementary Lender' : 'Tier 2 — Peer Co-Lender'}</div>
+        </div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">— Partnership Fit</div>
+        <div class="modal-fit">${c.fit}</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">— Opening Hook</div>
+        <div class="modal-hook">${c.hook}</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <a class="modal-btn primary" href="mailto:${cleanEmail}?subject=${encodeURIComponent('Northbeam Corporate Finance — Reciprocal Deal Flow')}&body=${encodeURIComponent(draftEmail(c))}">Draft Email</a>
+      <a class="modal-btn" href="https://${c.linkedin}" target="_blank">Open LinkedIn</a>
+      <button class="modal-btn" onclick="copyContact(${idx})">Copy Contact</button>
+      <button class="modal-btn" onclick="closeModal()" style="margin-left:auto;">Close</button>
+    </div>
+  `;
+  document.getElementById('modal-bg').classList.add('open');
+}
+
+function draftEmail(c) {
+  return `${c.name.split(' ')[0]},
+
+A. Rivera here — EVP of Sales at Northbeam Corporate Finance in Salt Lake City. We're a 35+ year direct private credit lender focused on equipment-backed and project-based financing for middle market borrowers ($30M–$1B+ revenue, $3M–$50M deal size, USA & Canada). Northbeam 2025 ABS was $150M, 9-11x oversubscribed.
+
+Reaching out because ${c.firm} sits in a complementary spot to us — ${c.cat === 'wc' ? 'you cover working capital and receivables in a zone we explicitly exclude' : c.cat === 'abl' ? 'we both touch the same middle-market borrowers from different sides of the cap stack' : c.cat === 'senior' ? 'you operate above our typical single-name limit' : 'you handle structured / special-situation capital that complements our equipment-secured product'}. The opening I see: ${c.hook}
+
+Open to a 20-minute call to compare deal criteria and see if there's a reciprocal flow worth building?
+
+A. Rivera
+EVP of Sales
+Northbeam Corporate Finance
+a.rivera@northbeam.example.com | house.net`;
+}
+
+function copyContact(idx) {
+  const c = CONTACTS[idx];
+  const text = `${c.name}\n${c.title}\n${c.firm}\n${c.email}\n${c.phone}\n${c.website}`;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
+
+function closeModal() {
+  document.getElementById('modal-bg').classList.remove('open');
+}
+
+document.getElementById('modal-bg').addEventListener('click', e => {
+  if (e.target.id === 'modal-bg') closeModal();
+});
+
+// ============ FILTERS ============
+document.querySelectorAll('.tier-filter').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.tier-filter').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    activeTier = b.dataset.tier;
+    render();
+  });
+});
+document.querySelectorAll('.cat-filter').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.cat-filter').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    activeCat = b.dataset.cat;
+    render();
+  });
+});
+document.getElementById('search').addEventListener('input', e => {
+  searchQ = e.target.value;
+  render();
+});
+
+// ============ STATS ============
+document.getElementById('stat-total').textContent = String(CONTACTS.length).padStart(2, '0');
+document.getElementById('stat-t1').textContent = String(CONTACTS.filter(c => c.tier === 1).length).padStart(2, '0');
+document.getElementById('stat-t2').textContent = String(CONTACTS.filter(c => c.tier === 2).length).padStart(2, '0');
+
+function updateTs() {
+  const d = new Date();
+  document.getElementById('ts').textContent = d.toISOString().replace('T',' ').slice(0,19) + ' UTC';
+}
+updateTs(); setInterval(updateTs, 1000);
+
+render();
+</script>
+</body>
+</html>

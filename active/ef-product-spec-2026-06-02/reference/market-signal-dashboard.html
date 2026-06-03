@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Northbeam Market Signal Desk — Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Robinhood light palette */
+    --bg: #ffffff;
+    --bg-soft: #fafafa;
+    --bg-card: #ffffff;
+    --bg-hover: #f6f7f8;
+    --border: #e5e7eb;
+    --border-2: #d1d5db;
+    --ink: #0a0e13;
+    --ink-2: #4b5563;
+    --ink-3: #6b7280;
+    --ink-4: #9ca3af;
+    --green: #00c805;       /* Robinhood signature */
+    --green-dim: #06a004;
+    --green-bg: rgba(0,200,5,0.08);
+    --green-bg-strong: rgba(0,200,5,0.14);
+    --red: #ff5000;         /* Robinhood loss orange-red */
+    --red-bg: rgba(255,80,0,0.08);
+    --amber: #ff9500;
+    --amber-bg: rgba(255,149,0,0.10);
+    --blue: #0066ff;
+    --blue-bg: rgba(0,102,255,0.08);
+    --gold: #b8860b;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 20px rgba(0,0,0,0.06), 0 4px 8px rgba(0,0,0,0.04);
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+  .wrap { max-width: 1480px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* === HEADER === */
+  .header { padding: 18px 0; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 50; }
+  .hdr-left { display: flex; align-items: center; gap: 12px; }
+  .logo-mark { width: 32px; height: 32px; border-radius: 8px; background: var(--ink); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; letter-spacing: -0.02em; }
+  .logo-text { font-weight: 700; font-size: 15px; letter-spacing: -0.01em; color: var(--ink); }
+  .logo-sub { font-size: 11px; color: var(--ink-3); margin-top: 1px; letter-spacing: 0.02em; }
+  .hdr-center { display: flex; align-items: center; gap: 10px; }
+  .live-pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; background: var(--green-bg); border-radius: 100px; font-size: 11px; font-weight: 600; color: var(--green-dim); letter-spacing: 0.04em; }
+  .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 1.8s ease-in-out infinite; box-shadow: 0 0 0 0 rgba(0,200,5,0.6); }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .hdr-right { display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
+  .icon-btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 12px; background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--ink-2); font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s; gap: 6px; }
+  .icon-btn:hover { background: var(--bg-hover); color: var(--ink); border-color: var(--border-2); }
+  .icon-btn.primary { background: var(--green); color: white; border-color: var(--green); }
+  .icon-btn.primary:hover { background: var(--green-dim); color: white; border-color: var(--green-dim); }
+  .icon-btn:disabled { opacity: 0.6; cursor: wait; }
+  .icon-btn.refresh.spinning svg { animation: spin 1s linear infinite; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .clock { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-3); font-weight: 500; }
+
+  /* === TICKER === */
+  .ticker-wrap { border-bottom: 1px solid var(--border); background: var(--bg-soft); overflow: hidden; }
+  .ticker { display: flex; white-space: nowrap; animation: ticker 130s linear infinite; padding: 11px 0; gap: 28px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .tk { display: inline-flex; align-items: center; gap: 8px; }
+  .tk-label { color: var(--ink-3); letter-spacing: 0.02em; font-weight: 500; }
+  .tk-val { color: var(--ink); font-weight: 600; }
+  .tk-chg { font-weight: 600; font-size: 11px; }
+  .tk-chg.up { color: var(--green-dim); }
+  .tk-chg.dn { color: var(--red); }
+  .tk-chg.neu { color: var(--amber); }
+  .tk-sep { color: var(--border-2); }
+
+  /* === HERO === */
+  .hero { padding: 56px 0 40px; display: grid; grid-template-columns: 1fr 280px; gap: 56px; align-items: end; border-bottom: 1px solid var(--border); }
+  .hero-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; color: var(--green-dim); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px; background: var(--green-bg); padding: 5px 10px; border-radius: 100px; }
+  .hero-headline { font-family: 'DM Serif Display', serif; font-size: 56px; line-height: 1.04; font-weight: 400; letter-spacing: -0.025em; color: var(--ink); }
+  .hero-headline em { font-style: italic; color: var(--green-dim); }
+  .hero-deck { font-size: 16px; line-height: 1.6; color: var(--ink-2); margin-top: 22px; max-width: 760px; }
+  .hero-deck strong { color: var(--ink); font-weight: 600; }
+  .hero-meta { font-size: 12px; color: var(--ink-3); line-height: 1.9; padding-left: 18px; border-left: 2px solid var(--green); }
+  .hero-meta strong { color: var(--ink); font-weight: 600; display: block; margin-top: 8px; }
+  .hero-meta strong:first-child { margin-top: 0; }
+
+  /* === KPI HERO ROW === */
+  .kpi-hero { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px; }
+  .kpi-h { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; transition: all 0.18s; cursor: pointer; }
+  .kpi-h:hover { border-color: var(--green); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .kpi-h-label { font-size: 11px; color: var(--ink-3); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
+  .kpi-h-pill { padding: 2px 8px; border-radius: 100px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .kpi-h-pill.green { background: var(--green-bg); color: var(--green-dim); }
+  .kpi-h-pill.red { background: var(--red-bg); color: var(--red); }
+  .kpi-h-pill.amber { background: var(--amber-bg); color: var(--amber); }
+  .kpi-h-pill.blue { background: var(--blue-bg); color: var(--blue); }
+  .kpi-h-value { font-family: 'DM Serif Display', serif; font-size: 38px; font-weight: 400; line-height: 1; margin-top: 14px; letter-spacing: -0.02em; color: var(--ink); }
+  .kpi-h-value .u { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--ink-3); font-weight: 500; margin-left: 4px; }
+  .kpi-h-delta { font-family: 'JetBrains Mono', monospace; font-size: 12px; margin-top: 10px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+  .kpi-h-delta.up { color: var(--green-dim); }
+  .kpi-h-delta.dn { color: var(--red); }
+  .kpi-h-delta.neu { color: var(--amber); }
+  .kpi-h-name { font-size: 13px; color: var(--ink-2); margin-top: 10px; line-height: 1.4; }
+  .kpi-h-src { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-4); margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .live-mini { display: inline-flex; align-items: center; gap: 5px; color: var(--green-dim); font-weight: 600; }
+  .live-mini-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
+
+  /* === SECTION HEAD === */
+  .section { margin-top: 56px; }
+  .section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 22px; }
+  .sh-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--green-dim); font-weight: 600; letter-spacing: 0.08em; }
+  .sh-title { font-family: 'DM Serif Display', serif; font-size: 30px; font-weight: 400; letter-spacing: -0.015em; color: var(--ink); }
+  .sh-title em { font-style: italic; color: var(--green-dim); }
+  .sh-meta { margin-left: auto; font-size: 12px; color: var(--ink-3); display: flex; align-items: center; gap: 12px; }
+  .sh-pulse { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 100px; font-size: 11px; color: var(--ink-2); }
+
+  /* === MACRO TILE GRID === */
+  .tile-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .tile { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; transition: all 0.18s; cursor: pointer; position: relative; overflow: hidden; }
+  .tile:hover { border-color: var(--border-2); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .tile.expanded { box-shadow: var(--shadow-lg); border-color: var(--green); }
+  .tile-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .tile-label { font-size: 11px; color: var(--ink-3); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+  .tile-tag { padding: 2px 8px; border-radius: 100px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .tile-tag.green { background: var(--green-bg); color: var(--green-dim); }
+  .tile-tag.red { background: var(--red-bg); color: var(--red); }
+  .tile-tag.amber { background: var(--amber-bg); color: var(--amber); }
+  .tile-tag.blue { background: var(--blue-bg); color: var(--blue); }
+  .tile-val { font-family: 'DM Serif Display', serif; font-size: 36px; font-weight: 400; line-height: 1; margin-top: 14px; letter-spacing: -0.02em; color: var(--ink); }
+  .tile-val .u { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--ink-3); font-weight: 500; margin-left: 4px; }
+  .tile-delta { font-family: 'JetBrains Mono', monospace; font-size: 12px; margin-top: 8px; font-weight: 600; }
+  .tile-delta.up { color: var(--green-dim); }
+  .tile-delta.dn { color: var(--red); }
+  .tile-delta.neu { color: var(--amber); }
+  .tile-name { font-size: 13px; color: var(--ink-2); margin-top: 10px; line-height: 1.4; }
+  .tile-name em { color: var(--ink); font-weight: 600; font-style: normal; }
+  .tile-src { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-4); margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .tile-expand { display: none; margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); }
+  .tile.expanded .tile-expand { display: block; animation: fadeIn 0.25s ease-out; }
+  .tile-expand p { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+  .tile-expand .label { font-size: 10px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 10px; margin-bottom: 4px; }
+  .tile-expand .label:first-child { margin-top: 0; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* === FLEET VINTAGE STRIP === */
+  .stat-strip { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+  .stat-cell { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 8px; transition: all 0.18s; }
+  .stat-cell:hover { border-color: var(--green); box-shadow: var(--shadow); transform: translateY(-1px); }
+  .stat-eyebrow { font-size: 10px; color: var(--ink-3); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+  .stat-big { font-family: 'DM Serif Display', serif; font-size: 36px; font-weight: 400; line-height: 1; color: var(--ink); letter-spacing: -0.02em; }
+  .stat-big em { color: var(--green-dim); font-style: italic; }
+  .stat-big .u { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--ink-3); margin-left: 3px; font-weight: 500; }
+  .stat-caption { font-size: 12.5px; color: var(--ink-2); line-height: 1.4; }
+  .stat-caption strong { color: var(--green-dim); font-weight: 600; }
+  .stat-src { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-4); margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border); }
+
+  /* === USED EQUIPMENT === */
+  .used-wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .used-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; transition: all 0.18s; }
+  .used-card:hover { box-shadow: var(--shadow-md); }
+  .uc-eyebrow { font-size: 10px; color: var(--blue); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .uc-title { font-family: 'DM Serif Display', serif; font-size: 19px; font-weight: 400; line-height: 1.25; margin-bottom: 16px; color: var(--ink); }
+  .uc-title em { color: var(--green-dim); font-style: italic; }
+  .uc-row { display: grid; grid-template-columns: 1fr auto; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13px; align-items: baseline; }
+  .uc-row:last-of-type { border: 0; }
+  .uc-k { color: var(--ink-3); }
+  .uc-v { font-family: 'JetBrains Mono', monospace; color: var(--ink); font-weight: 600; font-size: 12.5px; }
+  .uc-v.pos { color: var(--green-dim); }
+  .uc-v.neg { color: var(--red); }
+  .uc-takeaway { font-size: 12.5px; line-height: 1.55; color: var(--ink-2); margin-top: 14px; padding: 12px 14px; background: var(--bg-soft); border-radius: var(--radius-sm); border-left: 3px solid var(--green); }
+  .uc-takeaway strong { color: var(--green-dim); font-weight: 700; }
+  .uc-src { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-4); margin-top: 10px; }
+
+  /* === PMI TABLE === */
+  .table-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .table-head { padding: 22px 26px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .table-h-title { font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 400; color: var(--ink); }
+  .table-h-title em { color: var(--green-dim); font-style: italic; }
+  .table-h-sub { font-size: 11px; color: var(--ink-3); margin-top: 4px; }
+  .table-h-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--green-dim); font-weight: 600; }
+  .pmi-row { display: grid; grid-template-columns: 50px 1fr 80px 80px 110px 1.4fr; gap: 18px; padding: 14px 26px; align-items: center; border-bottom: 1px solid var(--border); font-size: 13px; transition: background 0.15s; }
+  .pmi-row:last-child { border: 0; }
+  .pmi-row:hover { background: var(--bg-soft); }
+  .pmi-row.hd { background: var(--bg-soft); color: var(--ink-3); font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 12px 26px; }
+  .pmi-row.hd:hover { background: var(--bg-soft); }
+  .pmi-rank { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--green-dim); font-weight: 400; }
+  .pmi-name { font-weight: 600; color: var(--ink); }
+  .pmi-name em { color: var(--green-dim); font-style: italic; font-weight: 400; }
+  .pmi-val { font-family: 'JetBrains Mono', monospace; color: var(--ink); font-weight: 600; }
+  .pmi-chg { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+  .pmi-chg.pos { color: var(--green-dim); }
+  .pmi-chg.neg { color: var(--red); }
+  .pmi-chg.flat { color: var(--ink-3); }
+  .pmi-tag { padding: 3px 9px; border-radius: 100px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; display: inline-block; }
+  .pmi-tag.exp { background: var(--green-bg); color: var(--green-dim); }
+  .pmi-tag.con { background: var(--red-bg); color: var(--red); }
+  .pmi-tag.flat { background: var(--amber-bg); color: var(--amber); }
+  .pmi-note { color: var(--ink-3); font-size: 12px; line-height: 1.4; }
+
+  /* === OBBBA TAX === */
+  .tax-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: start; position: relative; overflow: hidden; }
+  .tax-wrap::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--blue); }
+  .tax-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--blue); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; background: var(--blue-bg); padding: 5px 10px; border-radius: 100px; }
+  .tax-title { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; line-height: 1.2; letter-spacing: -0.015em; margin-bottom: 16px; color: var(--ink); }
+  .tax-title em { font-style: italic; color: var(--green-dim); }
+  .tax-deck { font-size: 15px; line-height: 1.65; color: var(--ink-2); }
+  .tax-deck p { margin-bottom: 12px; }
+  .tax-deck strong { color: var(--ink); font-weight: 600; }
+  .tax-numbers { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tn-cell { background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; }
+  .tn-label { font-size: 10px; color: var(--ink-3); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+  .tn-value { font-family: 'DM Serif Display', serif; font-size: 26px; font-weight: 400; line-height: 1.1; color: var(--ink); }
+  .tn-value em { color: var(--green-dim); font-style: italic; }
+  .tn-note { font-size: 11px; color: var(--ink-3); margin-top: 6px; }
+  .tax-strip { grid-column: 1 / -1; margin-top: 24px; padding: 18px 22px; background: var(--green-bg); border-radius: var(--radius-sm); font-size: 13px; color: var(--ink); line-height: 1.65; }
+  .tax-strip strong { color: var(--green-dim); font-weight: 700; }
+
+  /* === LEAD TIMES === */
+  .lt-row { display: grid; grid-template-columns: 220px 1fr 100px 130px 130px; gap: 16px; padding: 14px 26px; align-items: center; border-bottom: 1px solid var(--border); font-size: 13px; transition: background 0.15s; }
+  .lt-row:last-child { border: 0; }
+  .lt-row:hover { background: var(--bg-soft); }
+  .lt-row.hd { background: var(--bg-soft); color: var(--ink-3); font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .lt-row.hd:hover { background: var(--bg-soft); }
+  .lt-cat { font-weight: 600; color: var(--ink); }
+  .lt-cat em { color: var(--green-dim); font-style: italic; font-weight: 400; }
+  .lt-desc { color: var(--ink-3); font-size: 12px; }
+  .lt-weeks { font-family: 'JetBrains Mono', monospace; color: var(--ink); font-weight: 600; font-size: 14px; }
+  .lt-bar { height: 6px; background: var(--bg-soft); border: 1px solid var(--border); border-radius: 100px; position: relative; overflow: hidden; }
+  .lt-bar-fill { height: 100%; border-radius: 100px; transition: width 0.6s ease-out; }
+  .lt-bar-fill.green { background: var(--green); }
+  .lt-bar-fill.amber { background: var(--amber); }
+  .lt-bar-fill.red { background: var(--red); }
+  .lt-trend { font-size: 11px; color: var(--ink-3); font-weight: 500; text-align: right; }
+
+  /* === SECTOR HEAT === */
+  .sector-wrap { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
+  .sector-grid { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: grid; grid-template-columns: repeat(2, 1fr); }
+  .sector-row { padding: 16px 22px; display: grid; grid-template-columns: 1fr auto auto; gap: 16px; align-items: center; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); cursor: pointer; transition: background 0.15s; }
+  .sector-row:nth-child(2n) { border-right: 0; }
+  .sector-row:hover { background: var(--bg-soft); }
+  .sec-name { font-weight: 600; font-size: 14px; color: var(--ink); }
+  .sec-name em { color: var(--green-dim); font-style: italic; font-weight: 400; }
+  .sec-sub { font-size: 11px; color: var(--ink-3); margin-top: 4px; }
+  .sec-signal { font-size: 10px; font-weight: 700; padding: 5px 10px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.04em; min-width: 92px; text-align: center; }
+  .sec-signal.go { background: var(--green-bg); color: var(--green-dim); }
+  .sec-signal.watch { background: var(--amber-bg); color: var(--amber); }
+  .sec-signal.fire { background: var(--red-bg); color: var(--red); }
+  .sec-score { font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 400; color: var(--ink); width: 44px; text-align: right; letter-spacing: -0.02em; }
+
+  .top-actions { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+  .ta-title { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; margin-bottom: 4px; color: var(--ink); }
+  .ta-title em { color: var(--green-dim); font-style: italic; }
+  .ta-sub { font-size: 11px; color: var(--ink-3); margin-bottom: 16px; }
+  .action-item { padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .action-item:last-child { border-bottom: 0; padding-bottom: 0; }
+  .ai-rank { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--green-dim); font-weight: 600; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .ai-target { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+  .ai-why { font-size: 12px; color: var(--ink-2); margin-top: 6px; line-height: 1.5; }
+  .ai-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-4); margin-top: 8px; font-weight: 500; }
+
+  /* === REGULATORY === */
+  .reg-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .reg-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; transition: all 0.18s; }
+  .reg-card:hover { box-shadow: var(--shadow-md); border-color: var(--border-2); }
+  .reg-eyebrow { display: inline-flex; font-size: 10px; color: var(--green-dim); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; background: var(--green-bg); padding: 4px 10px; border-radius: 100px; }
+  .reg-title { font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 400; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink); }
+  .reg-title em { font-style: italic; color: var(--green-dim); }
+  .reg-body { font-size: 13px; color: var(--ink-2); margin-top: 14px; line-height: 1.6; }
+  .reg-stats { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .reg-stat { background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; }
+  .rs-label { font-size: 9px; color: var(--ink-3); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+  .rs-value { font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 400; color: var(--ink); margin-top: 4px; }
+  .rs-value em { color: var(--green-dim); font-style: italic; }
+
+  /* === BDO PLAYBOOK === */
+  .pb-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .pb-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; transition: all 0.18s; }
+  .pb-card:hover { box-shadow: var(--shadow-md); border-color: var(--border-2); transform: translateY(-1px); }
+  .pb-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--green-dim); font-weight: 600; letter-spacing: 0.06em; margin-bottom: 12px; }
+  .pb-sector { font-family: 'DM Serif Display', serif; font-size: 19px; font-weight: 400; line-height: 1.2; color: var(--ink); }
+  .pb-sector em { color: var(--green-dim); font-style: italic; }
+  .pb-quote { font-size: 13px; line-height: 1.55; color: var(--ink-2); margin: 14px 0; padding: 14px 16px; background: var(--bg-soft); border-radius: var(--radius-sm); border-left: 3px solid var(--green); font-style: italic; }
+  .pb-pain-label { font-size: 10px; color: var(--ink-3); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; margin-top: 6px; }
+  .pb-pain { font-size: 12.5px; color: var(--ink-2); padding: 8px 0; border-bottom: 1px dashed var(--border); line-height: 1.45; }
+  .pb-pain:last-of-type { border: 0; }
+  .pb-assign { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--ink-3); margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border); }
+  .pb-assign strong { color: var(--green-dim); font-weight: 700; }
+
+  /* === COMPETITIVE === */
+  .compete-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .compete-head-bar { padding: 24px 28px; border-bottom: 1px solid var(--border); }
+  .compete-title { font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 400; color: var(--ink); }
+  .compete-title em { color: var(--green-dim); font-style: italic; }
+  .compete-sub { font-size: 11px; color: var(--ink-3); margin-top: 4px; }
+  .compete-grid { display: grid; grid-template-columns: 1.1fr 1.4fr 1.3fr; }
+  .ch, .cc { padding: 16px 24px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); font-size: 13px; line-height: 1.55; }
+  .ch { font-size: 10.5px; font-weight: 700; color: var(--ink-3); letter-spacing: 0.06em; text-transform: uppercase; background: var(--bg-soft); }
+  .compete-grid > div:nth-child(3n) { border-right: 0; }
+  .cc.label { font-weight: 600; color: var(--ink); background: var(--bg-soft); }
+  .cc.house { color: var(--ink); font-weight: 500; background: rgba(0,200,5,0.02); }
+  .cc.house em { color: var(--green-dim); font-style: italic; font-weight: 700; }
+
+  /* === BRIEF === */
+  .brief { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px 44px; position: relative; overflow: hidden; }
+  .brief::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(to bottom, var(--green), var(--green-dim)); }
+  .brief-eyebrow { display: inline-flex; font-size: 11px; color: var(--green-dim); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; background: var(--green-bg); padding: 5px 12px; border-radius: 100px; }
+  .brief-title { font-family: 'DM Serif Display', serif; font-size: 32px; font-weight: 400; line-height: 1.2; letter-spacing: -0.015em; margin-bottom: 20px; color: var(--ink); }
+  .brief-title em { font-style: italic; color: var(--green-dim); }
+  .brief-body { font-size: 15.5px; line-height: 1.75; color: var(--ink-2); columns: 2; column-gap: 40px; }
+  .brief-body p { margin-bottom: 14px; break-inside: avoid; }
+  .brief-body p:first-child::first-letter { font-family: 'DM Serif Display', serif; font-size: 56px; float: left; line-height: 0.85; padding: 6px 10px 0 0; color: var(--green-dim); font-weight: 400; }
+  .brief-sig { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-4); margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border); }
+
+  /* === MARITIME SECTION === */
+  .maritime-wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; }
+  .maritime-main { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; position: relative; overflow: hidden; }
+  .maritime-main::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(to bottom, #0066ff, #003a99); }
+  .mar-eyebrow { display: inline-flex; font-size: 11px; color: var(--blue); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; background: var(--blue-bg); padding: 5px 12px; border-radius: 100px; }
+  .mar-title { font-family: 'DM Serif Display', serif; font-size: 28px; font-weight: 400; line-height: 1.2; letter-spacing: -0.015em; margin-bottom: 16px; }
+  .mar-title em { color: var(--green-dim); font-style: italic; }
+  .mar-deck { font-size: 15px; line-height: 1.65; color: var(--ink-2); }
+  .mar-deck p { margin-bottom: 12px; }
+  .mar-deck strong { color: var(--ink); font-weight: 600; }
+  .mar-side { display: flex; flex-direction: column; gap: 14px; }
+  .mar-stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; transition: all 0.18s; }
+  .mar-stat-card:hover { box-shadow: var(--shadow-md); border-color: var(--green); }
+  .msc-label { font-size: 10px; color: var(--ink-3); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+  .msc-big { font-family: 'DM Serif Display', serif; font-size: 32px; font-weight: 400; line-height: 1; color: var(--ink); letter-spacing: -0.02em; }
+  .msc-big em { color: var(--green-dim); font-style: italic; }
+  .msc-big .u { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--ink-3); margin-left: 3px; font-weight: 500; }
+  .msc-caption { font-size: 12.5px; color: var(--ink-2); line-height: 1.45; margin-top: 6px; }
+  .msc-src { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-4); margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); }
+
+  /* Maritime equipment ledger */
+  .mar-equip-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-top: 18px; }
+  .mar-equip-head { padding: 22px 26px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: baseline; }
+  .mar-eh-title { font-family: 'DM Serif Display', serif; font-size: 20px; }
+  .mar-eh-title em { color: var(--green-dim); font-style: italic; }
+  .mar-eh-sub { font-size: 11px; color: var(--ink-3); margin-top: 4px; }
+  .mar-eh-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 600; }
+  .mar-row { display: grid; grid-template-columns: 220px 1fr 110px 130px 130px; gap: 16px; padding: 14px 26px; align-items: center; border-bottom: 1px solid var(--border); font-size: 13px; transition: background 0.15s; }
+  .mar-row:last-child { border: 0; }
+  .mar-row:hover { background: var(--bg-soft); }
+  .mar-row.hd { background: var(--bg-soft); color: var(--ink-3); font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .mar-row.hd:hover { background: var(--bg-soft); }
+  .mar-vessel { font-weight: 600; color: var(--ink); }
+  .mar-vessel em { color: var(--green-dim); font-style: italic; font-weight: 400; }
+  .mar-desc { color: var(--ink-3); font-size: 12px; }
+  .mar-ticket { font-family: 'JetBrains Mono', monospace; color: var(--ink); font-weight: 700; font-size: 13px; }
+  .mar-bank { display: inline-block; padding: 3px 9px; border-radius: 100px; font-size: 10px; font-weight: 700; }
+  .mar-bank.no { background: var(--red-bg); color: var(--red); }
+  .mar-bank.maybe { background: var(--amber-bg); color: var(--amber); }
+  .mar-bank.yes { background: var(--green-bg); color: var(--green-dim); }
+  .mar-house { display: inline-block; padding: 3px 9px; border-radius: 100px; font-size: 10px; font-weight: 700; background: var(--green-bg-strong); color: var(--green-dim); }
+
+  /* === FOOTER === */
+  .footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 11px; color: var(--ink-4); line-height: 1.8; }
+  .footer strong { color: var(--ink-3); font-weight: 600; }
+
+  /* === TOAST === */
+  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--ink); color: white; padding: 14px 20px; border-radius: var(--radius); box-shadow: var(--shadow-lg); font-size: 13px; font-weight: 500; z-index: 200; display: none; align-items: center; gap: 10px; }
+  .toast.show { display: flex; animation: slideUp 0.3s ease-out; }
+  .toast.success::before { content: '✓'; color: var(--green); font-weight: 700; }
+  .toast.error::before { content: '!'; color: var(--red); font-weight: 700; }
+  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 1240px) {
+    .hero { grid-template-columns: 1fr; }
+    .kpi-hero, .tile-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-strip { grid-template-columns: repeat(3, 1fr); }
+    .used-wrap, .reg-grid, .pb-grid { grid-template-columns: repeat(2, 1fr); }    .sector-wrap, .tax-wrap { grid-template-columns: 1fr; }
+    .brief-body { columns: 1; }
+    .pmi-row { grid-template-columns: 40px 1fr 70px 70px 100px; }
+    .pmi-row > .pmi-note { display: none; }
+    .lt-row { grid-template-columns: 180px 1fr 80px 100px 100px; font-size: 12px; }
+    .compete-grid { grid-template-columns: 1fr; }
+    .compete-grid > div { border-right: 0 !important; }
+    .maritime-wrap { grid-template-columns: 1fr; }
+    .mar-row { grid-template-columns: 180px 1fr 90px 110px 110px; font-size: 12px; }
+  }
+  @media (max-width: 720px) {
+    .wrap { padding: 0 14px 40px; }
+    .header { grid-template-columns: auto auto; gap: 12px; }
+    .hdr-center { display: none; }
+    .hero-headline { font-size: 38px; }
+    .kpi-hero, .tile-grid, .pb-grid, .sector-grid { grid-template-columns: 1fr; }
+    .stat-strip { grid-template-columns: repeat(2, 1fr); }
+    .lt-row { grid-template-columns: 1fr 1fr; padding: 14px 18px; }
+    .lt-row > .lt-desc, .lt-row > .lt-trend { display: none; }
+    .pmi-row { grid-template-columns: 32px 1fr 60px 80px; padding: 12px 16px; }
+    .pmi-row > .pmi-chg { display: none; }
+    .mar-row { grid-template-columns: 1fr 1fr; padding: 14px 18px; }
+    .mar-row > .mar-desc, .mar-row > .mar-bank-col, .mar-row > .mar-desc-col { display: none; }
+    .tax-wrap { padding: 24px; }
+    .brief { padding: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="hdr-left">
+      <div class="logo-mark">V</div>
+      <div>
+        <div class="logo-text">Northbeam Market Signal</div>
+        <div class="logo-sub">Equipment CapEx Intelligence</div>
+      </div>
+    </div>
+    <div class="hdr-center">
+      <span class="live-pill">
+        <span class="live-dot"></span>
+        <span id="liveStatus">LIVE</span>
+      </span>
+    </div>
+    <div class="hdr-right">
+      <span class="clock" id="clock">--:--:-- MT</span>
+      <button class="icon-btn primary refresh" id="refreshBtn" title="Refresh live FRED data (or press R)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10"/><path d="M20.49 15A9 9 0 015.64 18.36L1 14"/></svg>
+        Refresh
+      </button>
+    </div>
+  </header>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap"><div class="ticker" id="ticker"></div></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <span class="hero-label">
+        <span class="live-dot"></span>
+        The Replacement Bell Has Rung
+      </span>
+      <h1 class="hero-headline">
+        Fleet age is at <em>a decade high</em>, used values are rising, and 100% bonus depreciation is now <em>permanent</em>.
+      </h1>
+      <p class="hero-deck">
+        The U.S. Class 8 tractor fleet averages <strong>6.3 years old</strong> — the highest in over a decade — while 69% of vocational fleets report being past their normal replacement cycle. Used Class 8 retail prices rose to <strong>$56,128 in March</strong> (+2.0% YoY) with sales volume at a nearly five-year high. OBBBA permanently restored 100% bonus depreciation in July 2025, eliminating the year-end tax phasedown and shifting the urgency from <em>tax timing</em> to <em>delivery timing</em>. Build slots are filling.
+      </p>
+    </div>
+    <div class="hero-meta">
+      <strong>REPORT WINDOW</strong>
+      May 12, 2026, 09:15 MT
+      <strong>NEXT CATALYSTS</strong>
+      G.17 Industrial Production — May 15
+      ELFA CFI April — May 27
+      Durable Goods April — May 28
+      <strong>PREPARED FOR</strong>
+      Northbeam Corporate Finance
+      S. Rivera · EVP Sales
+    </div>
+  </section>
+
+  <!-- KPI HERO ROW (LIVE FRED) -->
+  <div class="kpi-hero">
+    <div class="kpi-h" data-fred="NAPM">
+      <div class="kpi-h-label">ISM Mfg PMI <span class="kpi-h-pill green">EXPAND</span></div>
+      <div class="kpi-h-value" data-val>52.7<span class="u">pts</span></div>
+      <div class="kpi-h-delta up" data-delta>↑ 18th mo above 47.5</div>
+      <div class="kpi-h-name">Strongest factory print <em>since Aug 2022</em></div>
+      <div class="kpi-h-src">
+        <span>ISM · Apr 2026</span>
+        <span class="live-mini" data-livestat><span class="live-mini-dot"></span>STATIC</span>
+      </div>
+    </div>
+
+    <div class="kpi-h" data-fred="NEWORDER">
+      <div class="kpi-h-label">Core Capex Orders <span class="kpi-h-pill green">BREAKOUT</span></div>
+      <div class="kpi-h-value" data-val>+9.4<span class="u">% y/y</span></div>
+      <div class="kpi-h-delta up" data-delta>↑ +3.3% m/m vs +0.5% cons.</div>
+      <div class="kpi-h-name">Nondefense ex-aircraft — <em>3-yr high</em></div>
+      <div class="kpi-h-src">
+        <span>Census M3 · Mar 2026</span>
+        <span class="live-mini" data-livestat><span class="live-mini-dot"></span>STATIC</span>
+      </div>
+    </div>
+
+    <div class="kpi-h" data-fred="MCUMFN">
+      <div class="kpi-h-label">Mfg Capacity Utilization <span class="kpi-h-pill amber">SLACK</span></div>
+      <div class="kpi-h-value" data-val>75.3<span class="u">%</span></div>
+      <div class="kpi-h-delta neu" data-delta>2.9pp below long-run avg</div>
+      <div class="kpi-h-name">Runway remains, <em>output +3.0% Q1</em></div>
+      <div class="kpi-h-src">
+        <span>FRB G.17 · Mar 2026</span>
+        <span class="live-mini" data-livestat><span class="live-mini-dot"></span>STATIC</span>
+      </div>
+    </div>
+
+    <div class="kpi-h" data-fred="INDPRO">
+      <div class="kpi-h-label">Industrial Production <span class="kpi-h-pill green">+0.7%</span></div>
+      <div class="kpi-h-value" data-val>101.8<span class="u">idx</span></div>
+      <div class="kpi-h-delta up" data-delta>↑ Mfg +3.0% annualized Q1</div>
+      <div class="kpi-h-name">Total IP <em>vs. 2017 = 100</em></div>
+      <div class="kpi-h-src">
+        <span>FRB G.17 · Mar 2026</span>
+        <span class="live-mini" data-livestat><span class="live-mini-dot"></span>STATIC</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: SECONDARY TILES -->
+  <section class="section">
+    <div class="section-head">
+      <span class="sh-num">— 01</span>
+      <h2 class="sh-title">Equipment Finance <em>Signals</em></h2>
+      <span class="sh-meta"><span class="sh-pulse"><span class="live-dot"></span>Click any tile to expand</span></span>
+    </div>
+
+    <div class="tile-grid">
+      <div class="tile" data-tile>
+        <div class="tile-top">
+          <span class="tile-label">ELFA CFI Q1</span>
+          <span class="tile-tag green">RECORD</span>
+        </div>
+        <div class="tile-val">$10.8<span class="u">B SA</span></div>
+        <div class="tile-delta up">↑ +18.6% YTD · +12.5% YoY</div>
+        <div class="tile-name">Q1 2026 — <em>strongest qtr on record</em></div>
+        <div class="tile-src">
+          <span>ELFA CFI · Mar 2026 · Apr 28</span>
+        </div>
+        <div class="tile-expand">
+          <div class="label">Why it matters</div>
+          <p>Total NBV at $10.8B SA in March, with YTD up 18.6% vs. 2025 — the strongest opening quarter ELFA has ever recorded. Equipment finance is leading the macro cycle, not lagging it.</p>
+          <div class="label">Action</div>
+          <p>Origination pipeline targets should be revised upward. Even if confidence cools, real bookings are at record pace.</p>
+        </div>
+      </div>
+
+      <div class="tile" data-tile>
+        <div class="tile-top">
+          <span class="tile-label">ELFA Confidence MCI</span>
+          <span class="tile-tag amber">COOLING</span>
+        </div>
+        <div class="tile-val">54.6<span class="u">pts</span></div>
+        <div class="tile-delta dn">↓ -6.4 m/m · -13 from Feb peak</div>
+        <div class="tile-name">Iran war <em>dragging forward sentiment</em></div>
+        <div class="tile-src">
+          <span>ELFA Foundation · Apr 2026</span>
+        </div>
+        <div class="tile-expand">
+          <div class="label">The dissent</div>
+          <p>Forward sentiment dropped 13pts from February's 67.6 peak as geopolitical risk widened. 29% of respondents expect worsening conditions vs. 16.7% in March.</p>
+          <div class="label">Read</div>
+          <p>Gap between record real volume and softening forward view is the story. Q3 will show whether volume converges down or sentiment converges up.</p>
+        </div>
+      </div>
+
+      <div class="tile" data-tile>
+        <div class="tile-top">
+          <span class="tile-label">Class 8 Orders</span>
+          <span class="tile-tag green">SURGE</span>
+        </div>
+        <div class="tile-val">24.8<span class="u">k units</span></div>
+        <div class="tile-delta up">↑ +201% YoY (April prelim)</div>
+        <div class="tile-name">EPA 2027 pre-buy + <em>aging fleet</em></div>
+        <div class="tile-src">
+          <span>ACT Research · Apr 2026 prelim</span>
+        </div>
+        <div class="tile-expand">
+          <div class="label">Driving demand</div>
+          <p>Firmer freight rates, tighter capacity, replacement need on 6.3-yr avg fleet, EPA 2027 NOx pre-buy. 2026 YTD orders +110% YoY.</p>
+          <div class="label">Capacity</div>
+          <p>OEM H2 2026 build slots already substantially booked. 2027 orderboards open in September.</p>
+        </div>
+      </div>
+
+      <div class="tile" data-tile>
+        <div class="tile-top">
+          <span class="tile-label">Used Class 8 Retail</span>
+          <span class="tile-tag green">FIRMING</span>
+        </div>
+        <div class="tile-val">$56.1<span class="u">k avg</span></div>
+        <div class="tile-delta up">↑ +2.0% YoY · sales 5-yr high</div>
+        <div class="tile-name">Secondary market <em>normalizing</em></div>
+        <div class="tile-src">
+          <span>ACT / J.D. Power · Mar 2026</span>
+        </div>
+        <div class="tile-expand">
+          <div class="label">Lender significance</div>
+          <p>Firmer used market = better trade values for borrowers = cleaner residual underwriting for Northbeam. Auction +25% m/m, wholesale +40% m/m.</p>
+          <div class="label">Action</div>
+          <p>Residual-based lease structures get more aggressive room. Underwriting risk on aged collateral has eased materially.</p>
+        </div>
+      </div>
+
+      <div class="tile" data-tile>
+        <div class="tile-top">
+          <span class="tile-label">ISM Prices Paid</span>
+          <span class="tile-tag red">HOT</span>
+        </div>
+        <div class="tile-val">78.3<span class="u">pts</span></div>
+        <div class="tile-delta dn">↑ Highest since Jun 2022</div>
+        <div class="tile-name">Steel + tariffs — <em>cost pressure</em></div>
+        <div class="tile-src">
+          <span>ISM Prices · Mar 2026</span>
+        </div>
+        <div class="tile-expand">
+          <div class="label">Translation</div>
+          <p>Equipment input costs rising sharply on steel, aluminum, and tariff pass-through. Buyers who order later pay more.</p>
+          <div class="label">Pitch angle</div>
+          <p>"Lock pricing now" is back as a legitimate close. Not a tax-driven urgency — a real cost-of-waiting urgency.</p>
+        </div>
+      </div>
+
+      <div class="tile" data-tile>
+        <div class="tile-top">
+          <span class="tile-label">PMI New Orders</span>
+          <span class="tile-tag green">EXPAND</span>
+        </div>
+        <div class="tile-val">54.1<span class="u">pts</span></div>
+        <div class="tile-delta up">↑ +0.6 m/m · 4 mo expansion</div>
+        <div class="tile-name">Forward demand <em>steady</em></div>
+        <div class="tile-src">
+          <span>ISM April 2026</span>
+        </div>
+        <div class="tile-expand">
+          <div class="label">Leads</div>
+          <p>New orders lead production by ~60–90 days. Sustained reading above 50 forecasts equipment finance new business 1–2 quarters out.</p>
+        </div>
+      </div>
+
+      <div class="tile" data-tile>
+        <div class="tile-top">
+          <span class="tile-label">Supplier Deliveries</span>
+          <span class="tile-tag amber">SLOWING</span>
+        </div>
+        <div class="tile-val">58.9<span class="u">pts</span></div>
+        <div class="tile-delta neu">↑ +3.8 m/m · 4th month slower</div>
+        <div class="tile-name">Supply chain <em>tightening</em></div>
+        <div class="tile-src">
+          <span>ISM April 2026</span>
+        </div>
+        <div class="tile-expand">
+          <div class="label">Translation</div>
+          <p>A reading above 50 means deliveries are slower, which historically signals demand outpacing supply. Build-slot urgency for buyers.</p>
+        </div>
+      </div>
+
+      <div class="tile" data-tile>
+        <div class="tile-top">
+          <span class="tile-label">Durable Goods Orders</span>
+          <span class="tile-tag green">REBOUND</span>
+        </div>
+        <div class="tile-val">+0.8<span class="u">% m/m</span></div>
+        <div class="tile-delta up">↑ vs. +0.5% consensus</div>
+        <div class="tile-name">Comp/electronics led <em>+3.7%</em></div>
+        <div class="tile-src">
+          <span>Census · Mar 2026 · Apr 29</span>
+        </div>
+        <div class="tile-expand">
+          <div class="label">Breakdown</div>
+          <p>Up 11 of last 12 months for computers & electronics. Rebound after three consecutive monthly declines. Transportation equipment led with +0.3% to $189B.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: FLEET VINTAGE -->
+  <section class="section">
+    <div class="section-head">
+      <span class="sh-num">— 02</span>
+      <h2 class="sh-title">The Fleet <em>Vintage Bulge</em></h2>
+      <span class="sh-meta">Replacement economics · the macro misses this</span>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat-cell">
+        <div class="stat-eyebrow">Avg Class 8 age (US)</div>
+        <div class="stat-big">6.3<span class="u">yrs</span></div>
+        <div class="stat-caption">Highest in <strong>over a decade</strong></div>
+        <div class="stat-src">— ACT Research, Feb 2026</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-eyebrow">Fleets past cycle</div>
+        <div class="stat-big">69<span class="u">%</span></div>
+        <div class="stat-caption">Of vocational fleets surveyed</div>
+        <div class="stat-src">— NTEA Fleet Outlook</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-eyebrow">Fleets &gt; 10 yrs avg</div>
+        <div class="stat-big">29<span class="u">%</span></div>
+        <div class="stat-caption">Deferred replacement backlog</div>
+        <div class="stat-src">— NTEA, Q1 2026</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-eyebrow">Parts & labor since '20</div>
+        <div class="stat-big">+27<span class="u">%</span></div>
+        <div class="stat-caption">Maintenance pressure on aged units</div>
+        <div class="stat-src">— Finloc, Mar 2026</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-eyebrow">Insurance premium YoY</div>
+        <div class="stat-big">+12.5<span class="u">%</span></div>
+        <div class="stat-caption">Penalty on older / high-CSA fleets</div>
+        <div class="stat-src">— Industry composite</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-eyebrow">Dry van trade cycle</div>
+        <div class="stat-big">12.6<span class="u">yrs</span></div>
+        <div class="stat-caption">Reefers 12.8 · flats 17.5 · tanks 18</div>
+        <div class="stat-src">— NPTC 2022</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: USED EQUIPMENT -->
+  <section class="section">
+    <div class="section-head">
+      <span class="sh-num">— 03</span>
+      <h2 class="sh-title">Used Equipment <em>Pulse</em></h2>
+      <span class="sh-meta">The lender's leading indicator · residuals firming</span>
+    </div>
+
+    <div class="used-wrap">
+      <div class="used-card">
+        <div class="uc-eyebrow">— CLASS 8 RETAIL</div>
+        <div class="uc-title">Used Class 8 <em>retail market</em></div>
+        <div class="uc-row"><span class="uc-k">Avg retail price (Mar)</span><span class="uc-v">$56,128</span></div>
+        <div class="uc-row"><span class="uc-k">m/m change</span><span class="uc-v pos">+1.6%</span></div>
+        <div class="uc-row"><span class="uc-k">y/y change</span><span class="uc-v pos">+2.0%</span></div>
+        <div class="uc-row"><span class="uc-k">Same-dealer vol m/m</span><span class="uc-v pos">+9.8%</span></div>
+        <div class="uc-row"><span class="uc-k">Sales volume</span><span class="uc-v">5-yr high</span></div>
+        <div class="uc-takeaway"><strong>Lender read:</strong> Firmer secondary market = better trade values = healthier replacement decisions. Residual underwriting risk has eased materially.</div>
+        <div class="uc-src">— ACT Research, Mar 2026 · CCJ April</div>
+      </div>
+
+      <div class="used-card">
+        <div class="uc-eyebrow">— AUCTION + WHOLESALE</div>
+        <div class="uc-title">Auction &amp; <em>wholesale velocity</em></div>
+        <div class="uc-row"><span class="uc-k">Auction volume m/m</span><span class="uc-v pos">+25%</span></div>
+        <div class="uc-row"><span class="uc-k">Wholesale dealer m/m</span><span class="uc-v pos">+40%</span></div>
+        <div class="uc-row"><span class="uc-k">Wholesale price m/m</span><span class="uc-v pos">+3.5%</span></div>
+        <div class="uc-row"><span class="uc-k">Total mkt vol m/m</span><span class="uc-v pos">+29%</span></div>
+        <div class="uc-row"><span class="uc-k">YTD wholesale price</span><span class="uc-v pos">+3.6%</span></div>
+        <div class="uc-takeaway"><strong>Lender read:</strong> Dealers competing for inventory. Market transitioning from oversupply to normalized. Residual-based Northbeam structures get more aggressive room.</div>
+        <div class="uc-src">— ACT / J.D. Power Commercial Truck Guidelines</div>
+      </div>
+
+      <div class="used-card">
+        <div class="uc-eyebrow">— CONSTRUCTION + AERIAL</div>
+        <div class="uc-title">Construction <em>equipment</em> (Ritchie Bros.)</div>
+        <div class="uc-row"><span class="uc-k">U.S. construction Q1</span><span class="uc-v neg">Lower vs Q4</span></div>
+        <div class="uc-row"><span class="uc-k">Aerial / boom &amp; scissor</span><span class="uc-v">Stable</span></div>
+        <div class="uc-row"><span class="uc-k">Transportation Q1</span><span class="uc-v pos">Slightly higher</span></div>
+        <div class="uc-row"><span class="uc-k">Avg age at sale</span><span class="uc-v">Rising</span></div>
+        <div class="uc-row"><span class="uc-k">Avg usage at sale</span><span class="uc-v">Rising</span></div>
+        <div class="uc-takeaway"><strong>Lender read:</strong> Construction softer than trucking — be selective. Aerial and rental-fleet sectors hold residuals best. Avoid speculative private CRE-tied gear.</div>
+        <div class="uc-src">— Ritchie Bros. Market Trends Report, Q1 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: MARITIME & JONES ACT (NEW) -->
+  <section class="section">
+    <div class="section-head">
+      <span class="sh-num">— 04</span>
+      <h2 class="sh-title">Maritime &amp; <em>Jones Act</em> Fleet</h2>
+      <span class="sh-meta">SHIPS Act tailwind · aged fleet · specialty residuals · underserved by banks</span>
+    </div>
+
+    <div class="maritime-wrap">
+      <div class="maritime-main">
+        <span class="mar-eyebrow">— On Water · Underserved Vertical</span>
+        <h3 class="mar-title">A <em>651K-job</em> industry where the average OSV is over 14 years old — and the SHIPS Act of 2025 just lit a match.</h3>
+        <div class="mar-deck">
+          <p>The U.S. domestic maritime industry runs on a <strong>41,000-vessel Jones Act fleet</strong> — roughly 5,500 tugs, 31,500 barges, plus tankers, OSVs, dredges, ferries, and fishing vessels. The law requires every vessel moving cargo between U.S. ports to be U.S.-built, U.S.-owned, U.S.-flagged, and U.S.-crewed.</p>
+          <p>That captive-market structure has aged badly. The active Jones Act <strong>OSV fleet averages over 14 years old</strong>. The government-owned sealift fleet averages <strong>44 years old</strong>. Replacement isn't optional — Subchapter M compliance, Coast Guard inspection failures, and rising maintenance costs are forcing operator decisions every quarter.</p>
+          <p>The <strong>SHIPS Act of 2025</strong> (Shipbuilding and Harbor Infrastructure for Prosperity and Security for America Act) is the regulatory forcing function. Bipartisan support, Trump administration backing, private equity entering aggressively. It's the maritime version of EPA 2027 for trucking — a known, dated, capital-mobilizing event.</p>
+          <p>The financing wall is the same story you read in tier-2 AI infra: <strong>banks finance the hulls they understand</strong> (oceangoing tankers, big-name containerships) but back off on the long tail — workboats, push boats, OSVs, dredging equipment, marine cranes, propulsion repowers. Limited shipyard capacity (Edison Chouest built 63% of the DP2-class PSV fleet) means pricing power sits with a few yards, and build times of 3+ years require capital that moves before the yard slot closes.</p>
+          <p>This is exactly Northbeam's lane. <strong>Residual-based leasing on specialty marine assets, full project financing including soft costs, 2-4 week deal turnaround.</strong> Most equipment lenders don't touch it. Wells Fargo and a small handful play in the larger tickets — Northbeam's $3-30M sweet spot at the workboat / push-boat / OSV refit / dredge level is wide open.</p>
+        </div>
+      </div>
+
+      <div class="mar-side">
+        <div class="mar-stat-card">
+          <div class="msc-label">Jones Act OSV fleet — avg age</div>
+          <div class="msc-big">14+<span class="u">years</span></div>
+          <div class="msc-caption">Newbuilding prices high · shipyard capacity limited · 3+ year build times</div>
+          <div class="msc-src">— Clarksons Platou (Offshore) · IPF 2025</div>
+        </div>
+        <div class="mar-stat-card">
+          <div class="msc-label">U.S. sealift fleet — avg age</div>
+          <div class="msc-big">44<span class="u">years</span></div>
+          <div class="msc-caption">Many vessels need repair · insufficient dry docks · safety-inspection failures</div>
+          <div class="msc-src">— Congressional Research Service</div>
+        </div>
+        <div class="mar-stat-card">
+          <div class="msc-label">Total Jones Act fleet</div>
+          <div class="msc-big">41<span class="u">k vessels</span></div>
+          <div class="msc-caption">5,499 tugs · 31,524 barges · plus tankers, OSVs, dredges, ferries</div>
+          <div class="msc-src">— Transportation Institute · AWO</div>
+        </div>
+        <div class="mar-stat-card">
+          <div class="msc-label">Industry economic output</div>
+          <div class="msc-big">$154<span class="u">B</span></div>
+          <div class="msc-caption">650,000 American jobs · 80M passengers annually</div>
+          <div class="msc-src">— American Waterways Operators</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Maritime equipment ledger -->
+    <div class="mar-equip-wrap">
+      <div class="mar-equip-head">
+        <div>
+          <div class="mar-eh-title">Northbeam <em>marine ticket map</em></div>
+          <div class="mar-eh-sub">Where banks lend · where they don't · where Northbeam sits in the middle</div>
+        </div>
+        <div class="mar-eh-meta">Underserved at $3–30M ticket</div>
+      </div>
+
+      <div class="mar-row hd">
+        <div>VESSEL / EQUIPMENT</div>
+        <div class="mar-desc-col">DESCRIPTION</div>
+        <div>TICKET RANGE</div>
+        <div>BANK FINANCES?</div>
+        <div>Northbeam FIT</div>
+      </div>
+
+      <div class="mar-row">
+        <div class="mar-vessel">Inland <em>push boat</em></div>
+        <div class="mar-desc mar-desc-col">2,000-6,000 HP towboat · river commerce · grain, coal, chemicals</div>
+        <div class="mar-ticket">$3–18M</div>
+        <div class="mar-bank-col"><span class="mar-bank maybe">MAYBE</span></div>
+        <div><span class="mar-house">CORE WIN</span></div>
+      </div>
+
+      <div class="mar-row">
+        <div class="mar-vessel">Harbor / <em>tractor tug</em></div>
+        <div class="mar-desc mar-desc-col">3,000-8,000 HP · ship-assist · ATB tugs · ports &amp; terminals</div>
+        <div class="mar-ticket">$5–25M</div>
+        <div class="mar-bank-col"><span class="mar-bank maybe">MAYBE</span></div>
+        <div><span class="mar-house">CORE WIN</span></div>
+      </div>
+
+      <div class="mar-row">
+        <div class="mar-vessel">Platform supply <em>vessel (PSV)</em></div>
+        <div class="mar-desc mar-desc-col">DP2-class · offshore oil &amp; gas · wind farm SOVs</div>
+        <div class="mar-ticket">$15–50M</div>
+        <div class="mar-bank-col"><span class="mar-bank no">NO · niche</span></div>
+        <div><span class="mar-house">CORE WIN</span></div>
+      </div>
+
+      <div class="mar-row">
+        <div class="mar-vessel">Tank <em>barge</em></div>
+        <div class="mar-desc mar-desc-col">Inland or coastal · liquid bulk · petroleum, chemical, asphalt</div>
+        <div class="mar-ticket">$3–15M</div>
+        <div class="mar-bank-col"><span class="mar-bank maybe">MAYBE</span></div>
+        <div><span class="mar-house">FIT</span></div>
+      </div>
+
+      <div class="mar-row">
+        <div class="mar-vessel">Dry cargo <em>barge</em></div>
+        <div class="mar-desc mar-desc-col">Hopper, deck, or covered · ~20,000 in fleet</div>
+        <div class="mar-ticket">$1–4M</div>
+        <div class="mar-bank-col"><span class="mar-bank yes">YES · standard</span></div>
+        <div><span class="mar-house">FIT</span></div>
+      </div>
+
+      <div class="mar-row">
+        <div class="mar-vessel">Dredging <em>equipment</em></div>
+        <div class="mar-desc mar-desc-col">Cutter suction · hopper · clamshell · port deepening boom</div>
+        <div class="mar-ticket">$8–30M</div>
+        <div class="mar-bank-col"><span class="mar-bank no">NO · specialty</span></div>
+        <div><span class="mar-house">CORE WIN</span></div>
+      </div>
+
+      <div class="mar-row">
+        <div class="mar-vessel">Marine <em>cranes / lifts</em></div>
+        <div class="mar-desc mar-desc-col">Heavy-lift · offshore wind · port equipment · derricks</div>
+        <div class="mar-ticket">$3–20M</div>
+        <div class="mar-bank-col"><span class="mar-bank no">NO · novel residual</span></div>
+        <div><span class="mar-house">CORE WIN</span></div>
+      </div>
+
+      <div class="mar-row">
+        <div class="mar-vessel">Engine <em>repowers / propulsion</em></div>
+        <div class="mar-desc mar-desc-col">EPA Tier 4 retrofits · hybrid &amp; LNG conversions · Subchapter M-driven</div>
+        <div class="mar-ticket">$1–6M</div>
+        <div class="mar-bank-col"><span class="mar-bank no">NO · improvement</span></div>
+        <div><span class="mar-house">CORE WIN</span></div>
+      </div>
+
+      <div class="mar-row">
+        <div class="mar-vessel">Commercial <em>fishing fleet</em></div>
+        <div class="mar-desc mar-desc-col">Trawlers, longliners, crabbers · most dangerous occupation in US</div>
+        <div class="mar-ticket">$2–12M</div>
+        <div class="mar-bank-col"><span class="mar-bank no">NO · risk profile</span></div>
+        <div><span class="mar-house">FIT</span></div>
+      </div>
+
+      <div class="mar-row">
+        <div class="mar-vessel">Ferry / <em>passenger vessel</em></div>
+        <div class="mar-desc mar-desc-col">Inland &amp; coastal · municipal &amp; private operators · Subchapter T/K</div>
+        <div class="mar-ticket">$4–25M</div>
+        <div class="mar-bank-col"><span class="mar-bank maybe">MAYBE · muni only</span></div>
+        <div><span class="mar-house">FIT</span></div>
+      </div>
+
+      <div class="mar-row">
+        <div class="mar-vessel">Workboat / <em>crew transfer</em></div>
+        <div class="mar-desc mar-desc-col">Offshore wind CTV · supply boats · utility vessels</div>
+        <div class="mar-ticket">$2–8M</div>
+        <div class="mar-bank-col"><span class="mar-bank maybe">MAYBE</span></div>
+        <div><span class="mar-house">CORE WIN</span></div>
+      </div>
+
+      <div class="mar-row">
+        <div class="mar-vessel">Marine <em>electronics package</em></div>
+        <div class="mar-desc mar-desc-col">Bridge nav · DP systems · safety · Subchapter M compliance kits</div>
+        <div class="mar-ticket">$0.5–3M</div>
+        <div class="mar-bank-col"><span class="mar-bank no">NO · soft cost</span></div>
+        <div><span class="mar-house">SOFT COST</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: PMI BREAKDOWN -->
+  <section class="section">
+    <div class="section-head">
+      <span class="sh-num">— 05</span>
+      <h2 class="sh-title">ISM PMI <em>Sub-Indices</em> · April</h2>
+      <span class="sh-meta">Where the expansion is loudest · component breakdown</span>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-head">
+        <div>
+          <div class="table-h-title">April 2026 <em>ISM Manufacturing Report</em></div>
+          <div class="table-h-sub">Composite PMI 52.7 (vs 52.7 prior) · 18th month of overall expansion</div>
+        </div>
+        <div class="table-h-meta">Released May 1 · ISM</div>
+      </div>
+
+      <div class="pmi-row hd">
+        <div>RANK</div>
+        <div>SUB-INDEX</div>
+        <div>APRIL</div>
+        <div>VS PRIOR</div>
+        <div>STATUS</div>
+        <div>READ-ACROSS</div>
+      </div>
+
+      <div class="pmi-row">
+        <div class="pmi-rank">01</div>
+        <div class="pmi-name">New <em>Orders</em></div>
+        <div class="pmi-val">54.1</div>
+        <div class="pmi-chg pos">+0.6</div>
+        <div><span class="pmi-tag exp">Expand · 4 mo</span></div>
+        <div class="pmi-note">Forward demand strong · drives equipment finance new business 60–90 days out</div>
+      </div>
+      <div class="pmi-row">
+        <div class="pmi-rank">02</div>
+        <div class="pmi-name">Production</div>
+        <div class="pmi-val">53.4</div>
+        <div class="pmi-chg neg">-1.7</div>
+        <div><span class="pmi-tag exp">Expand</span></div>
+        <div class="pmi-note">Slower expansion but still positive · steady output supports replacement cycle</div>
+      </div>
+      <div class="pmi-row">
+        <div class="pmi-rank">03</div>
+        <div class="pmi-name">Supplier <em>Deliveries</em></div>
+        <div class="pmi-val">58.9</div>
+        <div class="pmi-chg pos">+3.8</div>
+        <div><span class="pmi-tag flat">Slowing</span></div>
+        <div class="pmi-note">Slower deliveries = tightening supply = build-slot urgency for buyers</div>
+      </div>
+      <div class="pmi-row">
+        <div class="pmi-rank">04</div>
+        <div class="pmi-name">Prices <em>Paid</em></div>
+        <div class="pmi-val">78.3</div>
+        <div class="pmi-chg neg">+7.8</div>
+        <div><span class="pmi-tag con">Hot</span></div>
+        <div class="pmi-note">Highest since Jun '22 · steel + aluminum + tariff pass-through</div>
+      </div>
+      <div class="pmi-row">
+        <div class="pmi-rank">05</div>
+        <div class="pmi-name">Employment</div>
+        <div class="pmi-val">48.7</div>
+        <div class="pmi-chg neg">-0.1</div>
+        <div><span class="pmi-tag con">Contract</span></div>
+        <div class="pmi-note">Capex over labor — buyers automating, not hiring · favors equipment</div>
+      </div>
+      <div class="pmi-row">
+        <div class="pmi-rank">06</div>
+        <div class="pmi-name">Inventories</div>
+        <div class="pmi-val">48.8</div>
+        <div class="pmi-chg flat">0.0</div>
+        <div><span class="pmi-tag con">Contract</span></div>
+        <div class="pmi-note">Lean inventories + rising orders = production must scale = equipment demand</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: OBBBA -->
+  <section class="section">
+    <div class="section-head">
+      <span class="sh-num">— 06</span>
+      <h2 class="sh-title">The <em>OBBBA</em> Tax Shift</h2>
+      <span class="sh-meta">100% bonus depreciation now permanent · changes the pitch</span>
+    </div>
+
+    <div class="tax-wrap">
+      <div>
+        <span class="tax-eyebrow">— §168(k) · §168(n) · §179</span>
+        <h3 class="tax-title">The year-end tax urgency pitch is <em>dead</em>. The equipment urgency pitch is <em>louder</em>.</h3>
+        <div class="tax-deck">
+          <p>The One Big Beautiful Bill Act (signed July 4, 2025) <strong>permanently restored 100% bonus depreciation</strong> for property placed in service after January 19, 2025 — reversing the TCJA phasedown that would have hit 20% in 2026 and zero in 2027.</p>
+          <p>What this means for Northbeam's sales motion: <strong>do not lead with year-end tax urgency.</strong> Customers who wait six months get the same 100% deduction. The urgency now is structural — delivery lead times, EPA 2027 deadlines, capacity locks, and rising used values. <strong>That's a stronger story</strong>, not a weaker one.</p>
+          <p>The new <strong>Section 168(n) Qualified Production Property</strong> is the sleeper for foreign-OEM and reshoring deals: manufacturers can immediately expense the production-floor portion of new facility costs that previously depreciated over 39 years.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="tax-numbers">
+          <div class="tn-cell">
+            <div class="tn-label">Bonus depreciation 2026</div>
+            <div class="tn-value"><em>100</em>%</div>
+            <div class="tn-note">Permanent · new + used assets</div>
+          </div>
+          <div class="tn-cell">
+            <div class="tn-label">§179 limit 2026</div>
+            <div class="tn-value">$2.56<em>M</em></div>
+            <div class="tn-note">Phaseout starts at $4.09M</div>
+          </div>
+          <div class="tn-cell">
+            <div class="tn-label">Pre-OBBBA path</div>
+            <div class="tn-value">20<em>%</em></div>
+            <div class="tn-note">TCJA · would have been 0% in 2027</div>
+          </div>
+          <div class="tn-cell">
+            <div class="tn-label">Heavy SUV §179 max</div>
+            <div class="tn-value">$32<em>k</em></div>
+            <div class="tn-note">6,001–14,000 lb GVWR</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tax-strip">
+        <strong>NEW PITCH FRAMEWORK</strong> — "The tax deduction will be there in Q1 2027 just like it is today. What won't be there: your EPA 2026 build slot, your aged fleet's residual value, the spec on your foreign OEM's first-US facility. Time it for the equipment, not the calendar."
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: LEAD TIMES -->
+  <section class="section">
+    <div class="section-head">
+      <span class="sh-num">— 07</span>
+      <h2 class="sh-title">Delivery <em>Lead Times</em></h2>
+      <span class="sh-meta">The new urgency · spec-to-ship by equipment category</span>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-head">
+        <div>
+          <div class="table-h-title">Current <em>spec-to-ship</em> windows</div>
+          <div class="table-h-sub">OEM build slot tracking · standard configurations · May 2026</div>
+        </div>
+        <div class="table-h-meta">Compiled from OEM commentary + channel checks</div>
+      </div>
+
+      <div class="lt-row hd">
+        <div>CATEGORY</div>
+        <div>NOTES</div>
+        <div>WEEKS</div>
+        <div>UTILIZATION</div>
+        <div>TREND</div>
+      </div>
+
+      <div class="lt-row">
+        <div class="lt-cat">Class 8 <em>tractor</em></div>
+        <div class="lt-desc">Standard OTR sleeper · most major OEMs</div>
+        <div class="lt-weeks">28–36</div>
+        <div class="lt-bar"><div class="lt-bar-fill red" style="width: 95%"></div></div>
+        <div class="lt-trend">H2 '26 closing</div>
+      </div>
+      <div class="lt-row">
+        <div class="lt-cat">Data center <em>switchgear</em></div>
+        <div class="lt-desc">Medium-voltage, custom configuration</div>
+        <div class="lt-weeks">50–80+</div>
+        <div class="lt-bar"><div class="lt-bar-fill red" style="width: 100%"></div></div>
+        <div class="lt-trend">Critical</div>
+      </div>
+      <div class="lt-row">
+        <div class="lt-cat">Liquid <em>cooling</em> systems</div>
+        <div class="lt-desc">CDU + manifold + plumbing for AI racks</div>
+        <div class="lt-weeks">32–52</div>
+        <div class="lt-bar"><div class="lt-bar-fill red" style="width: 92%"></div></div>
+        <div class="lt-trend">Extending</div>
+      </div>
+      <div class="lt-row">
+        <div class="lt-cat">Industrial <em>BESS</em></div>
+        <div class="lt-desc">Battery energy storage · grid + DC</div>
+        <div class="lt-weeks">36–60</div>
+        <div class="lt-bar"><div class="lt-bar-fill red" style="width: 88%"></div></div>
+        <div class="lt-trend">Tight</div>
+      </div>
+      <div class="lt-row">
+        <div class="lt-cat">Process <em>chemical pkg</em></div>
+        <div class="lt-desc">Reactor + skid · reshoring demand</div>
+        <div class="lt-weeks">26–40</div>
+        <div class="lt-bar"><div class="lt-bar-fill amber" style="width: 75%"></div></div>
+        <div class="lt-trend">Rising</div>
+      </div>
+      <div class="lt-row">
+        <div class="lt-cat">CNC <em>5-axis</em> mill</div>
+        <div class="lt-desc">Mazak / Okuma / DMG class machines</div>
+        <div class="lt-weeks">20–32</div>
+        <div class="lt-bar"><div class="lt-bar-fill amber" style="width: 70%"></div></div>
+        <div class="lt-trend">Stable</div>
+      </div>
+      <div class="lt-row">
+        <div class="lt-cat">CAT <em>excavator</em> (large)</div>
+        <div class="lt-desc">374 / 390 class · construction &amp; mining</div>
+        <div class="lt-weeks">18–28</div>
+        <div class="lt-bar"><div class="lt-bar-fill amber" style="width: 65%"></div></div>
+        <div class="lt-trend">Improving</div>
+      </div>
+      <div class="lt-row">
+        <div class="lt-cat">Reefer <em>trailer</em></div>
+        <div class="lt-desc">Standard 53' · trailer market still soft</div>
+        <div class="lt-weeks">8–14</div>
+        <div class="lt-bar"><div class="lt-bar-fill green" style="width: 35%"></div></div>
+        <div class="lt-trend">Open</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: SECTOR HEAT -->
+  <section class="section">
+    <div class="section-head">
+      <span class="sh-num">— 08</span>
+      <h2 class="sh-title">Sector <em>Heat Map</em></h2>
+      <span class="sh-meta">Where upgrade pressure is loudest · Northbeam deal fit weighted</span>
+    </div>
+
+    <div class="sector-wrap">
+      <div class="sector-grid">
+        <div class="sector-row">
+          <div><div class="sec-name">AI <em>Infrastructure</em> &amp; Data</div><div class="sec-sub">$650B hyperscaler · soft cost gap</div></div>
+          <div class="sec-score">94</div>
+          <span class="sec-signal fire">Upgrade now</span>
+        </div>
+        <div class="sector-row">
+          <div><div class="sec-name">Trucking · <em>Class 8 Fleets</em></div><div class="sec-sub">6.3yr fleet · EPA '27 · +201% orders</div></div>
+          <div class="sec-score">93</div>
+          <span class="sec-signal fire">Upgrade now</span>
+        </div>
+        <div class="sector-row">
+          <div><div class="sec-name">Maritime &amp; <em>Jones Act</em></div><div class="sec-sub">SHIPS Act tailwind · OSV avg 14+ yrs · underserved</div></div>
+          <div class="sec-score">89</div>
+          <span class="sec-signal fire">Upgrade now</span>
+        </div>
+        <div class="sector-row">
+          <div><div class="sec-name">Transportation <em>Equipment</em></div><div class="sec-sub">PMI new orders #1 · 4mo expansion</div></div>
+          <div class="sec-score">88</div>
+          <span class="sec-signal fire">Upgrade now</span>
+        </div>
+        <div class="sector-row">
+          <div><div class="sec-name">Computer &amp; <em>Electronic</em></div><div class="sec-sub">Up 11 of 12 mo · semis + networking</div></div>
+          <div class="sec-score">86</div>
+          <span class="sec-signal fire">Upgrade now</span>
+        </div>
+        <div class="sector-row">
+          <div><div class="sec-name">Industrial <em>Machinery</em></div><div class="sec-sub">+1.5% m/m · CNC, fabrication</div></div>
+          <div class="sec-score">79</div>
+          <span class="sec-signal go">Finance</span>
+        </div>
+        <div class="sector-row">
+          <div><div class="sec-name">Chemical <em>Products</em></div><div class="sec-sub">PMI top 4 · process eq cycle</div></div>
+          <div class="sec-score">73</div>
+          <span class="sec-signal go">Finance</span>
+        </div>
+        <div class="sector-row">
+          <div><div class="sec-name">Primary <em>Metals</em></div><div class="sec-sub">Tariff protected · domestic capex</div></div>
+          <div class="sec-score">71</div>
+          <span class="sec-signal go">Finance</span>
+        </div>
+        <div class="sector-row">
+          <div><div class="sec-name">Textile <em>Mills</em></div><div class="sec-sub">PMI Apr leader · reshoring</div></div>
+          <div class="sec-score">68</div>
+          <span class="sec-signal go">Finance</span>
+        </div>
+        <div class="sector-row">
+          <div><div class="sec-name">Fabricated <em>Metal</em></div><div class="sec-sub">+0.6% m/m · machinery proxy</div></div>
+          <div class="sec-score">66</div>
+          <span class="sec-signal watch">Watch</span>
+        </div>
+        <div class="sector-row">
+          <div><div class="sec-name">Construction <em>Equipment</em></div><div class="sec-sub">Muni strong · CRE soft</div></div>
+          <div class="sec-score">61</div>
+          <span class="sec-signal watch">Watch</span>
+        </div>
+        <div class="sector-row">
+          <div><div class="sec-name">Oil &amp; Gas <em>Equipment</em></div><div class="sec-sub">Iran spike · capex returning</div></div>
+          <div class="sec-score">59</div>
+          <span class="sec-signal watch">Watch</span>
+        </div>
+        <div class="sector-row">
+          <div><div class="sec-name">Aerospace <em>&amp; Defense</em></div><div class="sec-sub">Defense up · civil -28.6%</div></div>
+          <div class="sec-score">57</div>
+          <span class="sec-signal watch">Watch</span>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <div class="ta-title">Priority <em>Outreach</em></div>
+        <div class="ta-sub">— BDO assignment · 30-day window —</div>
+
+        <div class="action-item">
+          <div class="ai-rank">▲ 01</div>
+          <div class="ai-target">Tier-2 AI infra ops ($30–500M)</div>
+          <div class="ai-why">Soft-cost gap outside bank perimeter. Lead times 50–80wk switchgear, 32–52 cooling.</div>
+          <div class="ai-tag">Brent · Spencer · $3–30M</div>
+        </div>
+        <div class="action-item">
+          <div class="ai-rank">▲ 02</div>
+          <div class="ai-target">Regional Class 8 fleets (50–500 PUs)</div>
+          <div class="ai-why">Fleet at decade-high age. EPA '27 in 8mo. OEM H2 '26 slots filling.</div>
+          <div class="ai-tag">Clint · Brady · dealer channel</div>
+        </div>
+        <div class="action-item">
+          <div class="ai-rank">▲ 03</div>
+          <div class="ai-target">Jones Act maritime operators</div>
+          <div class="ai-why">OSV avg 14+ yrs · SHIPS Act tailwind · Wells Fargo only major bank in space. $3–30M tickets on push boats, OSVs, dredges, marine cranes.</div>
+          <div class="ai-tag">New vertical · target Gulf Coast + Great Lakes</div>
+        </div>
+        <div class="action-item">
+          <div class="ai-rank">▲ 04</div>
+          <div class="ai-target">Foreign OEM first-US facility</div>
+          <div class="ai-why">Reshoring + §168(n). Banks struggle on parent guarantees.</div>
+          <div class="ai-tag">Partner-intro · machinery/metals</div>
+        </div>
+        <div class="action-item">
+          <div class="ai-rank">▲ 05</div>
+          <div class="ai-target">CNC distributors &amp; tool dealers</div>
+          <div class="ai-why">Industrial machinery accelerating. April 40-vendor playbook re-engaged.</div>
+          <div class="ai-tag">Jimey · Horn · 7-touch sequence</div>
+        </div>
+        <div class="action-item">
+          <div class="ai-rank">▲ 06</div>
+          <div class="ai-target">Muni fleets / TELP lease-purchase</div>
+          <div class="ai-why">Mountain West launch. Sourcewell / OMNIA cooperative purchasing.</div>
+          <div class="ai-tag">SBA adj. · Sam · John</div>
+        </div>
+        <div class="action-item">
+          <div class="ai-rank">▲ 07</div>
+          <div class="ai-target">BESS / power infra developers</div>
+          <div class="ai-why">36–60wk lead times. Tax credit + bonus dep stack.</div>
+          <div class="ai-tag">New vertical · pair w/ AI</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: REGULATORY -->
+  <section class="section">
+    <div class="section-head">
+      <span class="sh-num">— 09</span>
+      <h2 class="sh-title">Regulatory <em>Forcing Functions</em></h2>
+      <span class="sh-meta">Hard-coded triggers · known dates · named industries</span>
+    </div>
+
+    <div class="reg-grid">
+      <div class="reg-card">
+        <span class="reg-eyebrow">— Trigger 01 / Trucking</span>
+        <h3 class="reg-title">EPA 2027 <em>Low-NOx</em> Rule</h3>
+        <p class="reg-body">EPA confirmed Nov 2025. Technology mandate takes effect Jan 2027, adding an est. $8–12K per Class 8 tractor. Pre-buy window is ~8 months. OEM build slots filling through H2 2026 — capacity rationing already underway.</p>
+        <div class="reg-stats">
+          <div class="reg-stat"><div class="rs-label">Deadline</div><div class="rs-value"><em>Jan</em> '27</div></div>
+          <div class="reg-stat"><div class="rs-label">Apr orders</div><div class="rs-value">+201<em>%</em></div></div>
+        </div>
+      </div>
+
+      <div class="reg-card">
+        <span class="reg-eyebrow">— Trigger 02 / Data Center</span>
+        <h3 class="reg-title">AI <em>CapEx</em> Buildout</h3>
+        <p class="reg-body">Top 4 hyperscalers deploying $650B in 2026 (~2x 2025). Chips + racks are well-funded; switchgear, cooling, BESS, networking are the soft-cost gap. Lead times 32–80+ weeks. Northbeam's sweet spot is tier-2 operators, $3–30M ticket.</p>
+        <div class="reg-stats">
+          <div class="reg-stat"><div class="rs-label">2026 capex</div><div class="rs-value"><em>$650</em>B</div></div>
+          <div class="reg-stat"><div class="rs-label">Cool/SWG LT</div><div class="rs-value">32–80<em>wk</em></div></div>
+        </div>
+      </div>
+
+      <div class="reg-card">
+        <span class="reg-eyebrow">— Trigger 03 / Tax</span>
+        <h3 class="reg-title">OBBBA <em>168(k) &amp; 168(n)</em></h3>
+        <p class="reg-body">Permanent 100% bonus depreciation removes year-end calendar pressure but adds capex-cycle confidence. §168(n) lets manufacturers expense production-floor portion of new facility — a new wedge into foreign OEM and reshoring deals.</p>
+        <div class="reg-stats">
+          <div class="reg-stat"><div class="rs-label">Bonus dep.</div><div class="rs-value">100<em>%</em></div></div>
+          <div class="reg-stat"><div class="rs-label">§179 limit</div><div class="rs-value">$2.56<em>M</em></div></div>
+        </div>
+      </div>
+
+      <div class="reg-card">
+        <span class="reg-eyebrow">— Trigger 04 / Maritime</span>
+        <h3 class="reg-title">SHIPS <em>Act</em> of 2025</h3>
+        <p class="reg-body">Shipbuilding and Harbor Infrastructure for Prosperity and Security for America Act — bipartisan support, Trump admin backing, PE entering aggressively. Targets US shipbuilding revitalization. Aging Jones Act OSV fleet (avg 14+ yrs) is direct beneficiary. Mirrors EPA 2027 trucking dynamic: known deadline, regulatory protection, capital mobilization.</p>
+        <div class="reg-stats">
+          <div class="reg-stat"><div class="rs-label">OSV avg age</div><div class="rs-value">14+<em>yrs</em></div></div>
+          <div class="reg-stat"><div class="rs-label">Fleet size</div><div class="rs-value">41<em>k</em></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 10: BDO PLAYBOOK -->
+  <section class="section">
+    <div class="section-head">
+      <span class="sh-num">— 10</span>
+      <h2 class="sh-title">BDO <em>Playbook</em></h2>
+      <span class="sh-meta">Sandler-grade opener · 60-second qualifier · prospect-facing</span>
+    </div>
+
+    <div class="pb-grid">
+      <div class="pb-card">
+        <div class="pb-num">— TARGET 01 / FIRE</div>
+        <div class="pb-sector">Class 8 <em>Fleets</em> (50–500)</div>
+        <div class="pb-quote">"What does your fleet age look like vs. the industry average of 6.3 years? If you're at or above, every month past the EPA 2027 deadline costs you $8–12K per truck."</div>
+        <div class="pb-pain-label">— Top pain questions</div>
+        <div class="pb-pain">"How many of your trucks were ordered in 2018–2020? Those are hitting major-component failure now."</div>
+        <div class="pb-pain">"What's your maintenance cost as a % of residual? Over 30% means the math is broken."</div>
+        <div class="pb-pain">"When you talked to your dealer, what build slot did they quote?"</div>
+        <div class="pb-assign"><strong>BDOs:</strong> Clint · Brady · dealers</div>
+      </div>
+
+      <div class="pb-card">
+        <div class="pb-num">— TARGET 02 / FIRE</div>
+        <div class="pb-sector">AI <em>Infrastructure</em> Tier-2</div>
+        <div class="pb-quote">"Hyperscalers have GPU financing covered. Where the cap stack breaks is power, cooling, BESS, networking — and that's a 12–18 month gap to revenue."</div>
+        <div class="pb-pain-label">— Top pain questions</div>
+        <div class="pb-pain">"How is your project capitalizing the non-GPU equipment? Banks won't lend at the LTV you need."</div>
+        <div class="pb-pain">"What's your contracted revenue ramp vs. the equipment delivery timeline?"</div>
+        <div class="pb-pain">"Who's underwriting your residual on liquid cooling? Few do."</div>
+        <div class="pb-assign"><strong>BDOs:</strong> Brent · Spencer · $3–30M</div>
+      </div>
+
+      <div class="pb-card">
+        <div class="pb-num">— TARGET 03 / FIRE</div>
+        <div class="pb-sector">Foreign OEM <em>First-US</em> Plants</div>
+        <div class="pb-quote">"Your parent-guarantee structure doesn't fit US bank credit boxes. We've done this for foreign companies before — speed and cross-border residual are what we lead with."</div>
+        <div class="pb-pain-label">— Top pain questions</div>
+        <div class="pb-pain">"How did your bank respond when you asked them to size off your parent's foreign financials?"</div>
+        <div class="pb-pain">"What's your timeline to first commercial production — and what equipment is the long pole?"</div>
+        <div class="pb-pain">"Are you considering §168(n) for your facility? Worth a tax-advisor conversation."</div>
+        <div class="pb-assign"><strong>BDOs:</strong> Partner-intro · machinery</div>
+      </div>
+
+      <div class="pb-card">
+        <div class="pb-num">— TARGET 04 / GO</div>
+        <div class="pb-sector">CNC &amp; <em>Machine Tool</em> Buyers</div>
+        <div class="pb-quote">"PMI machinery new orders have expanded four straight months and core capex is up 9.4% YoY. Your buyers are ready — what's killing deals is financing closure, not appetite."</div>
+        <div class="pb-pain-label">— Top pain questions</div>
+        <div class="pb-pain">"How many proposals from last quarter died at the financing stage vs. closed?"</div>
+        <div class="pb-pain">"What's your typical bank turnaround vs. customer urgency? Northbeam runs 2-4 weeks."</div>
+        <div class="pb-pain">"Are your customers maxing out §179 — or do they need the unlimited bonus depreciation?"</div>
+        <div class="pb-assign"><strong>BDOs:</strong> Jimey · Horn · vendor channel</div>
+      </div>
+
+      <div class="pb-card">
+        <div class="pb-num">— TARGET 05 / FIRE</div>
+        <div class="pb-sector">Jones Act <em>Maritime</em> Operators</div>
+        <div class="pb-quote">"Average OSV in your fleet is over 14 years old. The SHIPS Act is the most pro-shipbuilding regulatory environment in 30 years. The bank you've used for years won't underwrite a residual on a new tractor tug. We will."</div>
+        <div class="pb-pain-label">— Top pain questions</div>
+        <div class="pb-pain">"What's your fleet replacement schedule looking like over the next 36 months — and where are you on yard capacity?"</div>
+        <div class="pb-pain">"Are you running into Wells Fargo as the only bank that'll touch your kind of asset? What rate are they quoting?"</div>
+        <div class="pb-pain">"How are you financing the Subchapter M / Tier 4 repowers — separate from the hull capex?"</div>
+        <div class="pb-assign"><strong>BDOs:</strong> New vertical · Gulf + GL focus</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 11: COMPETITIVE -->
+  <section class="section">
+    <div class="section-head">
+      <span class="sh-num">— 11</span>
+      <h2 class="sh-title">Competitive <em>Positioning</em></h2>
+      <span class="sh-meta">When Northbeam wins · vs. banks · captives · brokers</span>
+    </div>
+
+    <div class="compete-wrap">
+      <div class="compete-head-bar">
+        <div class="compete-title">When the deal looks like this — <em>Northbeam is the right call</em></div>
+        <div class="compete-sub">Decision matrix for BDOs · qualifier in &lt; 90 seconds</div>
+      </div>
+
+      <div class="compete-grid">
+        <div class="ch">DEAL CHARACTERISTIC</div>
+        <div class="ch">Northbeam'S RIGHT-TO-WIN</div>
+        <div class="ch">WHY BANK / CAPTIVE LOSES</div>
+
+        <div class="cc label">Foreign parent, first US facility</div>
+        <div class="cc house"><em>Strong win</em> · Cross-border parent-guarantee structures · speed · residual on imported equipment</div>
+        <div class="cc">Bank credit boxes demand US financials. Captives won't lend on full plant.</div>
+
+        <div class="cc label">Specialty residual (CNC, medical, telecom)</div>
+        <div class="cc house"><em>Strong win</em> · Residual-based lease · ABS-funded · 40-yr equipment expertise</div>
+        <div class="cc">Banks underwrite to liquidation value, not productive value.</div>
+
+        <div class="cc label">Deal must close in &lt; 90 days</div>
+        <div class="cc house"><em>Strong win</em> · fast in-house approval · in-house credit · no syndication waterfall</div>
+        <div class="cc">Banks: 4–6 months. Captives: tied to OEM cycles.</div>
+
+        <div class="cc label">$3M–$50M ticket, equipment-backed</div>
+        <div class="cc house"><em>Strong win</em> · Northbeam sweet spot · 2025 ABS was 8x oversubscribed</div>
+        <div class="cc">Banks prefer larger. Broker channel less competitive here.</div>
+
+        <div class="cc label">Project-based / pre-revenue</div>
+        <div class="cc house"><em>Win</em> · Equipment-collateral structures bypass project finance complexity</div>
+        <div class="cc">Project finance too slow. Banks require contracted revenue.</div>
+
+        <div class="cc label">Aged-fleet replacement, mid-market</div>
+        <div class="cc house"><em>Win</em> · Trade-in residual analysis · lease-to-own and TRAC structures</div>
+        <div class="cc">Captives push their own brand. Banks generic underwriting.</div>
+
+        <div class="cc label">Muni / tax-exempt lease-purchase</div>
+        <div class="cc house"><em>Emerging</em> · Mountain West launch · cooperative purchasing channels</div>
+        <div class="cc">Most equipment lenders don't do §103/§265 properly.</div>
+
+        <div class="cc label">AR / inventory / real estate as collateral</div>
+        <div class="cc house"><em>Decline</em> · Outside Northbeam deal box · refer out</div>
+        <div class="cc">Bank ABL or RE shop is the right home.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRIEF -->
+  <section class="section">
+    <div class="brief">
+      <span class="brief-eyebrow">— Desk Brief · 12 May 2026</span>
+      <h2 class="brief-title">The replacement cycle <em>arrived</em>. The tax timer <em>vanished</em>. Now sell on delivery, not deduction.</h2>
+      <div class="brief-body">
+        <p>Three things changed in the last 60 days that should re-anchor every BDO's pitch deck. First, OBBBA made 100% bonus depreciation permanent — the December tax-rush close is gone. Second, the average Class 8 tractor in the US is now 6.3 years old, the highest in over a decade, and 69% of vocational fleets report being past their normal replacement cycle. Third, used Class 8 retail prices ticked up to $56,128 in March — the first sustained sign that the secondary market is firming.</p>
+        <p>The macro signals on this dashboard — PMI 52.7, core capex +9.4% YoY, ELFA CFI at a record quarter — describe the <em>destination</em>. The vintage and used-equipment data describe the <em>mechanism</em>. The 2018–2020 buy bulge is hitting its 6-year mark exactly when EPA 2027 raises the cost of waiting and when AI-related capex is locking up OEM build slots. That's not a forecast; that's a pipeline.</p>
+        <p>What changes operationally: BDOs should retire any pitch that leads with "close before year-end for the tax benefit." It's empirically wrong now and customers' CFOs will know it. The new lead should be lead time — switchgear at 50–80 weeks, BESS at 36–60, Class 8 tractors at 28–36 with H2 2026 OEM slots already 60% gone, CNC at 20–32. Whoever finances first locks the slot.</p>
+        <p>The risk being tracked: Iran war knocked ELFA confidence 13 points off February's peak even while real volume sits at record. If volume converges down to sentiment in Q3 rather than sentiment converging up to volume, the regulatory-forced cohort (EPA fleets, AI infra) holds up while discretionary expansion capex cools. Northbeam is structurally protected here — our deal box is already weighted toward regulatory and replacement-driven deals. Lean into that, not against it.</p>
+      </div>
+      <div class="brief-sig">— Market Desk · S. Rivera · Northbeam Corporate Finance · Distribution: BDO Team, Sales Managers, Leadership</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <strong>SOURCES:</strong> Institute for Supply Management (ISM Manufacturing PMI &amp; Sub-Indices, Apr 2026) · U.S. Census Bureau M3 Survey (Durable Goods, Mar 2026) · Federal Reserve Board G.17 (Industrial Production &amp; Capacity Utilization, Mar 2026) · Equipment Leasing &amp; Finance Association CapEx Finance Index &amp; Monthly Confidence Index (Mar/Apr 2026) · ACT Research &amp; FTR Transportation Intelligence (Class 8 Orders &amp; Used Truck Pricing, Apr 2026) · J.D. Power Commercial Truck Guidelines (Apr 2026) · NTEA Fleet Purchasing Outlook · NPTC Trade Cycle Data · IRS Notice 2026-11, OBBBA §168(k), §168(n), §179 · Ritchie Bros. Market Trends Report Q1 2025 · ELFA 2026 Equipment Leasing &amp; Finance U.S. Economic Outlook · Clarksons Platou Offshore Marine Assets (IPF 2025) · Congressional Research Service R45725 (Jones Act Legislative Background) · American Waterways Operators · Transportation Institute · MARAD U.S. Flag Privately-Owned Merchant Fleet (Jan 2026) · Holland &amp; Knight (SHIPS Act of 2025 Insights) · Wells Fargo Commercial Marine Financing.<br><br>
+    <strong>LIVE DATA:</strong> The four KPI hero tiles auto-refresh on page load and on click of the Refresh button (or press R). Data pulled directly from FRED's public fredgraph CSV endpoint — no API key required. Series tracked: ISM PMI (NAPM), Core Capex Orders (NEWORDER), Manufacturing Capacity Utilization (MCUMFN), Industrial Production (INDPRO). All other tiles are static, sourced to primary releases above.<br><br>
+    <strong>CONFIDENTIAL — INTERNAL USE ONLY.</strong> Not for external distribution. Forward-looking statements based on publicly available macroeconomic data; not a forecast of individual deal outcomes. Tax commentary is not advice.
+  </footer>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // =============================================
+  // CLOCK
+  // =============================================
+  function tick() {
+    const d = new Date();
+    const opts = { timeZone: 'America/Denver', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    document.getElementById('clock').textContent = d.toLocaleTimeString('en-US', opts) + ' MT';
+  }
+  tick(); setInterval(tick, 1000);
+
+  // =============================================
+  // TICKER
+  // =============================================
+  const tickerItems = [
+    { label: 'ISM PMI', val: '52.7', chg: 'EXPANSION', dir: 'up' },
+    { label: 'NEW ORDERS', val: '54.1', chg: '+0.6', dir: 'up' },
+    { label: 'PRODUCTION', val: '53.4', chg: '-1.7', dir: 'neu' },
+    { label: 'PRICES PAID', val: '78.3', chg: 'HIGHEST SINCE JUN 22', dir: 'dn' },
+    { label: 'EMPLOYMENT', val: '48.7', chg: 'CONTRACT', dir: 'dn' },
+    { label: 'CORE CAPEX YoY', val: '+9.4%', chg: '3YR HIGH', dir: 'up' },
+    { label: 'CORE CAPEX m/m', val: '+3.3%', chg: 'vs +0.5% cons', dir: 'up' },
+    { label: 'CAP UTIL MFG', val: '75.3%', chg: '-2.9pp LR AVG', dir: 'neu' },
+    { label: 'IND PROD YoY', val: '+0.7%', chg: 'MFG +3.0% Q1', dir: 'up' },
+    { label: 'ELFA CFI Q1', val: '$10.8B', chg: '+18.6% YTD', dir: 'up' },
+    { label: 'ELFA CFI YoY', val: '+12.5%', chg: 'RECORD Q1', dir: 'up' },
+    { label: 'ELFA MCI', val: '54.6', chg: '-6.4 m/m', dir: 'dn' },
+    { label: 'CLASS 8 APR', val: '24.8K', chg: '+201% YoY', dir: 'up' },
+    { label: 'CLASS 5-7', val: '16.4K', chg: '+26% YoY', dir: 'up' },
+    { label: 'CL8 USED RET', val: '$56,128', chg: '+2.0% YoY', dir: 'up' },
+    { label: 'CL8 SALES VOL', val: '5-YR HIGH', chg: '+9.8% m/m', dir: 'up' },
+    { label: 'AUCTION VOL', val: '+25% m/m', chg: 'normalizing', dir: 'up' },
+    { label: 'WHOLESALE VOL', val: '+40% m/m', chg: 'dealers bidding', dir: 'up' },
+    { label: 'CL8 AVG AGE', val: '6.3 YRS', chg: 'DECADE HIGH', dir: 'dn' },
+    { label: 'FLEETS PAST CYCLE', val: '69%', chg: 'NTEA', dir: 'dn' },
+    { label: 'BONUS DEPR', val: '100%', chg: 'PERMANENT', dir: 'up' },
+    { label: '§179 LIMIT 26', val: '$2.56M', chg: '+inflation', dir: 'up' },
+    { label: 'AI CAPEX 26E', val: '$650B', chg: 'TOP-4 ~2x', dir: 'up' },
+    { label: 'EPA 2027', val: 'JAN', chg: '8 MO OUT', dir: 'neu' },
+    { label: 'SWITCHGEAR LT', val: '50–80wk', chg: 'CRITICAL', dir: 'dn' },
+    { label: 'CL8 BUILD LT', val: '28–36wk', chg: 'H2 CLOSING', dir: 'dn' },
+    { label: 'BESS LT', val: '36–60wk', chg: 'TIGHT', dir: 'dn' },
+    { label: 'CNC LT', val: '20–32wk', chg: 'STABLE', dir: 'neu' },
+    { label: 'Northbeam 2025 ABS', val: '$150M', chg: '8x OVERSUB', dir: 'up' },
+    { label: 'JONES ACT FLEET', val: '41K', chg: 'VESSELS', dir: 'neu' },
+    { label: 'OSV AVG AGE', val: '14+ YRS', chg: 'AGED', dir: 'dn' },
+    { label: 'SEALIFT FLEET AGE', val: '44 YRS', chg: 'CRITICAL', dir: 'dn' },
+    { label: 'SHIPS ACT', val: '2025', chg: 'BIPARTISAN', dir: 'up' },
+    { label: 'MARITIME OUTPUT', val: '$154B', chg: '650K JOBS', dir: 'up' },
+    { label: 'JA TUGS', val: '5,499', chg: 'AWO', dir: 'neu' },
+    { label: 'JA BARGES', val: '31,524', chg: 'AWO', dir: 'neu' },
+    { label: 'OSV BUILD TIME', val: '3+ YRS', chg: 'YARD CAP TIGHT', dir: 'dn' }
+  ];
+  function buildTicker() {
+    const ticker = document.getElementById('ticker');
+    const set = tickerItems.map(t => `
+      <span class="tk"><span class="tk-label">${t.label}</span><span class="tk-val">${t.val}</span><span class="tk-chg ${t.dir}">${t.chg}</span></span><span class="tk-sep">·</span>
+    `).join('');
+    ticker.innerHTML = set + set;
+  }
+  buildTicker();
+
+  // =============================================
+  // INTERACTIVE TILE EXPAND
+  // =============================================
+  document.querySelectorAll('[data-tile]').forEach(tile => {
+    tile.addEventListener('click', () => {
+      tile.classList.toggle('expanded');
+    });
+  });
+
+  // =============================================
+  // TOAST
+  // =============================================
+  function toast(msg, type = 'success', duration = 2400) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast ' + type + ' show';
+    setTimeout(() => { t.className = 'toast'; }, duration);
+  }
+
+  // =============================================
+  // LIVE FRED REFRESH — fredgraph CSV, no API key
+  // =============================================
+  // FRED's public fredgraph CSV endpoint serves CORS-friendly data with no auth.
+  // Format: https://fred.stlouisfed.org/graph/fredgraph.csv?id=SERIESID
+  // Returns: "observation_date,SERIESID\n2026-03-01,52.7\n..."
+
+  const FRED_SERIES = {
+    'NAPM': {
+      label: 'ISM Mfg PMI',
+      unit: 'pts',
+      thresholdNeutral: 50,
+      thresholdGood: 50,
+      formatter: (latest, prior, yearAgo) => {
+        const chg = prior !== null ? (latest - prior) : null;
+        const dir = chg !== null && chg >= 0 ? '↑' : '↓';
+        const delta = chg !== null ? `${dir} ${chg >= 0 ? '+' : ''}${chg.toFixed(1)} m/m · ${latest >= 50 ? 'expansion' : 'contraction'}` : `${latest >= 50 ? 'Expansion' : 'Contraction'}`;
+        const cls = latest >= 50 ? 'up' : (latest >= 47.5 ? 'neu' : 'dn');
+        return { val: latest.toFixed(1), unit: 'pts', delta, deltaClass: cls };
+      }
+    },
+    'NEWORDER': {
+      label: 'Core Capex Orders',
+      unit: '$M',
+      formatter: (latest, prior, yearAgo) => {
+        const yoy = yearAgo !== null ? ((latest - yearAgo) / yearAgo * 100) : null;
+        const mom = prior !== null ? ((latest - prior) / prior * 100) : null;
+        let val, unit, delta, cls;
+        if (yoy !== null) {
+          val = (yoy >= 0 ? '+' : '') + yoy.toFixed(1);
+          unit = '% y/y';
+          cls = yoy >= 0 ? 'up' : 'dn';
+        } else {
+          val = '$' + (latest / 1000).toFixed(1);
+          unit = 'B';
+          cls = 'up';
+        }
+        delta = mom !== null ? `${mom >= 0 ? '↑' : '↓'} ${mom >= 0 ? '+' : ''}${mom.toFixed(1)}% m/m` : '';
+        return { val, unit, delta, deltaClass: cls };
+      }
+    },
+    'MCUMFN': {
+      label: 'Mfg Capacity Utilization',
+      unit: '%',
+      formatter: (latest, prior, yearAgo) => {
+        const chg = prior !== null ? (latest - prior) : null;
+        const delta = chg !== null
+          ? `${chg >= 0 ? '↑' : '↓'} ${chg >= 0 ? '+' : ''}${chg.toFixed(1)}pp m/m · LR avg ~78`
+          : `Long-run avg ~78`;
+        const cls = latest >= 78 ? 'up' : 'neu';
+        return { val: latest.toFixed(1), unit: '%', delta, deltaClass: cls };
+      }
+    },
+    'INDPRO': {
+      label: 'Industrial Production',
+      unit: 'idx',
+      formatter: (latest, prior, yearAgo) => {
+        const mom = prior !== null ? ((latest - prior) / prior * 100) : null;
+        const yoy = yearAgo !== null ? ((latest - yearAgo) / yearAgo * 100) : null;
+        const delta = mom !== null
+          ? `${mom >= 0 ? '↑' : '↓'} ${mom >= 0 ? '+' : ''}${mom.toFixed(2)}% m/m${yoy !== null ? ' · ' + (yoy >= 0 ? '+' : '') + yoy.toFixed(1) + '% y/y' : ''}`
+          : '2017=100';
+        const cls = (mom !== null && mom >= 0) ? 'up' : 'dn';
+        return { val: latest.toFixed(1), unit: 'idx', delta, deltaClass: cls };
+      }
+    }
+  };
+
+  function parseCSV(text) {
+    // Lightweight CSV parser for fredgraph format: date,value\ndate,value\n...
+    const lines = text.trim().split('\n');
+    const rows = [];
+    for (let i = 1; i < lines.length; i++) {
+      const parts = lines[i].split(',');
+      if (parts.length >= 2) {
+        const date = parts[0].trim();
+        const val = parts[1].trim();
+        if (val !== '.' && val !== '' && !isNaN(parseFloat(val))) {
+          rows.push({ date, value: parseFloat(val) });
+        }
+      }
+    }
+    return rows;
+  }
+
+  function formatDate(s) {
+    const [y, m] = s.split('-');
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${months[parseInt(m)-1]} ${y.slice(2)}`;
+  }
+
+  async function fetchFredCSV(seriesId) {
+    // Multi-tier fetching strategy to maximize success regardless of how the page is loaded:
+    // 1. Direct (works when page served over HTTP/HTTPS from same scheme as FRED)
+    // 2. corsproxy.io (works for file:// origins and most cross-origin cases)
+    // 3. allorigins.win (secondary backup)
+
+    const directUrl = `https://fred.stlouisfed.org/graph/fredgraph.csv?id=${seriesId}&cosd=2023-01-01&_=${Date.now()}`;
+    const isFile = window.location.protocol === 'file:';
+
+    const endpoints = isFile
+      ? [
+          `https://corsproxy.io/?${encodeURIComponent(directUrl)}`,
+          `https://api.allorigins.win/raw?url=${encodeURIComponent(directUrl)}`
+        ]
+      : [
+          directUrl,
+          `https://corsproxy.io/?${encodeURIComponent(directUrl)}`,
+          `https://api.allorigins.win/raw?url=${encodeURIComponent(directUrl)}`
+        ];
+
+    let lastErr;
+    for (const url of endpoints) {
+      try {
+        const r = await fetch(url, { cache: 'no-cache' });
+        if (!r.ok) { lastErr = new Error('HTTP ' + r.status); continue; }
+        const text = await r.text();
+        const rows = parseCSV(text);
+        if (rows.length) return rows.sort((a, b) => b.date.localeCompare(a.date));
+        lastErr = new Error('Empty CSV');
+      } catch (e) {
+        lastErr = e;
+      }
+    }
+    throw lastErr || new Error('All endpoints failed');
+  }
+
+  async function updateTile(seriesId) {
+    const tile = document.querySelector(`[data-fred="${seriesId}"]`);
+    if (!tile) return;
+    const ls = tile.querySelector('[data-livestat]');
+    ls.innerHTML = `<span class="live-mini-dot"></span>FETCHING…`;
+    ls.style.color = 'var(--amber)';
+
+    try {
+      const rows = await fetchFredCSV(seriesId);
+      const latest = rows[0];
+      const prior = rows[1] || null;
+
+      // Find observation ~12 months ago
+      const yearAgo = rows.find(r => {
+        const d1 = new Date(latest.date);
+        const d2 = new Date(r.date);
+        const diff = (d1.getFullYear() - d2.getFullYear()) * 12 + (d1.getMonth() - d2.getMonth());
+        return diff >= 11 && diff <= 13;
+      }) || null;
+
+      const cfg = FRED_SERIES[seriesId];
+      const out = cfg.formatter(latest.value, prior ? prior.value : null, yearAgo ? yearAgo.value : null);
+
+      tile.querySelector('[data-val]').innerHTML = `${out.val}<span class="u">${out.unit}</span>`;
+      const d = tile.querySelector('[data-delta]');
+      d.textContent = out.delta;
+      d.className = 'kpi-h-delta ' + out.deltaClass;
+
+      const srcSpan = tile.querySelector('.kpi-h-src > span:first-child');
+      if (srcSpan) srcSpan.textContent = `FRED ${seriesId} · ${formatDate(latest.date)}`;
+
+      ls.innerHTML = `<span class="live-mini-dot"></span>LIVE`;
+      ls.style.color = 'var(--green-dim)';
+      return { ok: true, seriesId, date: latest.date };
+    } catch (e) {
+      console.error(seriesId, e);
+      ls.innerHTML = `<span class="live-mini-dot"></span>ERROR`;
+      ls.style.color = 'var(--red)';
+      return { ok: false, seriesId, error: e.message };
+    }
+  }
+
+  async function refreshLive() {
+    const btn = document.getElementById('refreshBtn');
+    const liveStatus = document.getElementById('liveStatus');
+    btn.classList.add('spinning');
+    btn.disabled = true;
+    if (liveStatus) liveStatus.textContent = 'FETCHING';
+
+    const seriesIds = ['NAPM', 'NEWORDER', 'MCUMFN', 'INDPRO'];
+    const start = Date.now();
+
+    const results = await Promise.all(seriesIds.map(id => updateTile(id)));
+    const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+    const ok = results.filter(r => r.ok).length;
+
+    btn.classList.remove('spinning');
+    btn.disabled = false;
+
+    if (liveStatus) {
+      if (ok === seriesIds.length) liveStatus.textContent = 'LIVE';
+      else if (ok > 0) liveStatus.textContent = `${ok}/${seriesIds.length}`;
+      else liveStatus.textContent = 'OFFLINE';
+    }
+
+    if (ok === seriesIds.length) {
+      toast(`✓ ${ok}/${seriesIds.length} live · ${elapsed}s`, 'success');
+    } else if (ok > 0) {
+      toast(`${ok}/${seriesIds.length} updated · ${elapsed}s`, 'success');
+    } else {
+      toast(`Refresh failed · check connection`, 'error', 3500);
+    }
+  }
+
+  document.getElementById('refreshBtn').addEventListener('click', refreshLive);
+
+  // Auto-refresh on page load (debounced 600ms after DOM ready)
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(refreshLive, 600);
+  });
+
+  // Keyboard shortcut: R
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'r' && !e.metaKey && !e.ctrlKey) {
+      const tag = (e.target.tagName || '').toLowerCase();
+      if (tag !== 'input' && tag !== 'textarea') {
+        e.preventDefault();
+        refreshLive();
+      }
+    }
+  });
+</script>
+</body>
+</html>

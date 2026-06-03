@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEALBOARD — Deal Intelligence & Sales Command</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#0f3a2c; --pine2:#16513b; --fairway:#2f7a55; --moss:#4f8f6a;
+    --gold:#c39a3e; --gold2:#a6802c; --sand:#e9e0c9;
+    --cream:#f6f3ea; --paper:#fffdf7; --paper2:#f1ede0;
+    --ink:#19201b; --ink2:#41493f; --muted:#727a6e;
+    --line:#dcd6c4; --line2:#c9c2ab;
+    --red:#a8392f; --amber:#b8791f; --green:#2f7a55; --slate:#5a6b7a;
+    --shadow:0 1px 2px rgba(15,58,44,.06),0 8px 24px -12px rgba(15,58,44,.18);
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--cream);color:var(--ink);font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.5}
+  body{background-image:radial-gradient(circle at 12% -8%,rgba(47,122,85,.07),transparent 42%),radial-gradient(circle at 92% 0%,rgba(195,154,62,.06),transparent 38%)}
+  ::selection{background:var(--gold);color:#fff}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,select,textarea{font-family:inherit;font-size:14px}
+
+  /* ---------- Header ---------- */
+  header{background:linear-gradient(135deg,var(--pine),var(--pine2));color:#f4efe1;position:sticky;top:0;z-index:30;border-bottom:2px solid var(--gold)}
+  .head-in{max-width:1180px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:12px;flex:1;min-width:220px}
+  .mark{width:38px;height:38px;border:1.5px solid var(--gold);border-radius:9px;display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:700;font-size:20px;color:var(--gold);flex-shrink:0;background:rgba(0,0,0,.12)}
+  .brand h1{font-family:'Fraunces',serif;font-weight:600;font-size:21px;letter-spacing:.04em;line-height:1}
+  .brand .sub{font-size:11px;color:#cdc7b3;letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
+  .lane{display:flex;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:3px;gap:2px}
+  .lane button{padding:6px 12px;border-radius:7px;font-size:12px;font-weight:600;color:#cdc7b3;letter-spacing:.03em;white-space:nowrap}
+  .lane button.on{background:var(--gold);color:#23200f}
+
+  /* ---------- Nav ---------- */
+  nav{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:67px;z-index:25}
+  .nav-in{max-width:1180px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+  .nav-in::-webkit-scrollbar{display:none}
+  .nav-in button{padding:13px 14px;font-size:13px;font-weight:500;color:var(--muted);white-space:nowrap;border-bottom:2px solid transparent;display:flex;align-items:center;gap:7px}
+  .nav-in button .ct{font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--paper2);color:var(--ink2);padding:1px 6px;border-radius:20px}
+  .nav-in button.on{color:var(--pine);border-bottom-color:var(--gold);font-weight:600}
+  .nav-in button.on .ct{background:var(--sand);color:var(--pine)}
+
+  main{max-width:1180px;margin:0 auto;padding:22px 20px 80px}
+  .view{display:none;animation:fade .3s ease}
+  .view.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  h2.vt{font-family:'Fraunces',serif;font-weight:600;font-size:24px;color:var(--pine);letter-spacing:.01em}
+  .vh{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+  .vsub{color:var(--muted);font-size:13.5px;margin-bottom:20px;max-width:680px}
+
+  /* ---------- Buttons ---------- */
+  .btn{background:var(--pine);color:#f4efe1;padding:9px 15px;border-radius:9px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:7px;transition:.15s;border:1px solid var(--pine)}
+  .btn:hover{background:var(--pine2)}
+  .btn.gold{background:var(--gold);color:#23200f;border-color:var(--gold)}
+  .btn.gold:hover{background:var(--gold2)}
+  .btn.ghost{background:transparent;color:var(--pine);border:1px solid var(--line2)}
+  .btn.ghost:hover{background:var(--paper)}
+  .btn.sm{padding:6px 11px;font-size:12px}
+
+  /* ---------- Cards / grid ---------- */
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:26px}
+  .stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .stat::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold)}
+  .stat .n{font-family:'Fraunces',serif;font-size:30px;font-weight:600;color:var(--pine);line-height:1}
+  .stat .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:7px}
+  .stat .d{font-size:11.5px;color:var(--ink2);margin-top:3px}
+
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden}
+  .panel-h{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .panel-h h3{font-family:'Fraunces',serif;font-weight:600;font-size:16px;color:var(--pine)}
+  .panel-h .hint{font-size:12px;color:var(--muted)}
+  .panel-b{padding:8px 0}
+
+  /* ---------- Ledger rows ---------- */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+  .filters select,.search{background:var(--paper);border:1px solid var(--line2);border-radius:8px;padding:7px 10px;color:var(--ink);font-size:13px}
+  .search{flex:1;min-width:160px}
+  .node{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:flex-start;transition:.12s}
+  .node:last-child{border-bottom:none}
+  .node:hover{background:#fbf9f1}
+  .node .body{flex:1;min-width:0}
+  .node .top{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .node .name{font-weight:600;font-size:15px;color:var(--ink)}
+  .node .verdict{font-size:13px;color:var(--ink2);margin-top:5px;line-height:1.45}
+  .node .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px;align-items:center}
+  .node .flag{font-size:11.5px;color:var(--amber);margin-top:8px;display:flex;gap:6px;align-items:flex-start}
+  .node .flag svg{flex-shrink:0;margin-top:1px}
+  .node .lesson{font-size:12px;color:var(--muted);font-style:italic;margin-top:7px;padding-left:10px;border-left:2px solid var(--line2)}
+  .node .acts{display:flex;flex-direction:column;gap:5px;flex-shrink:0}
+  .node .acts button{font-size:11px;color:var(--muted);padding:3px 7px;border-radius:6px;border:1px solid transparent}
+  .node .acts button:hover{background:var(--paper2);color:var(--pine);border-color:var(--line)}
+
+  .tag{font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:20px;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap}
+  .tag.lane{background:#eef2ec;color:var(--pine);border:1px solid #d6e0d2}
+  .tag.cat{background:var(--paper2);color:var(--ink2);border:1px solid var(--line)}
+  .dot{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0}
+  .st-active{color:var(--green)} .st-active .dot,.dot.active{background:var(--green)}
+  .st-fix{color:var(--amber)} .dot.fix{background:var(--amber)}
+  .st-fold{color:var(--slate)} .dot.fold{background:var(--slate)}
+  .st-parked{color:var(--muted)} .dot.parked{background:var(--muted)}
+  .st-killed{color:var(--red)} .dot.killed{background:var(--red)}
+  .st-archived{color:var(--muted)} .dot.archived{background:#b3ac96}
+  .status-chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+
+  /* ---------- Player rows ---------- */
+  .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;padding:14px 18px}
+  .player{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fffefb}
+  .player .pn{font-weight:600;font-size:15px}
+  .player .pr{font-size:12.5px;color:var(--ink2);margin-top:2px}
+  .player .pgood{font-size:12.5px;color:var(--ink2);margin-top:9px;line-height:1.45}
+  .player .pv{margin-top:11px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .vbar{flex:1;height:6px;background:var(--paper2);border-radius:4px;overflow:hidden;min-width:80px}
+  .vbar i{display:block;height:100%;background:linear-gradient(90deg,var(--fairway),var(--gold))}
+  .vstat{font-size:11px;font-weight:600;padding:2px 7px;border-radius:20px}
+  .v-verified{background:#e7f0e9;color:var(--green)}
+  .v-unverified{background:#fbeee0;color:var(--amber)}
+  .v-watch{background:#eef1f3;color:var(--slate)}
+
+  /* ---------- Signal log ---------- */
+  .sig{padding:13px 18px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start}
+  .sig:last-child{border-bottom:none}
+  .sig .src{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;padding:3px 7px;border-radius:6px;background:var(--pine);color:#f4efe1;white-space:nowrap;flex-shrink:0;margin-top:1px}
+  .sig .src.t2{background:var(--slate)} .sig .src.t3{background:var(--amber)}
+  .sig .st{font-weight:600;font-size:14px}
+  .sig .sd{font-size:13px;color:var(--ink2);margin-top:3px;line-height:1.45}
+  .sig .sm{font-size:11px;color:var(--muted);margin-top:6px;font-family:'IBM Plex Mono',monospace}
+
+  .band{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.02em;white-space:nowrap;display:inline-block}
+  .band-hot{background:#f6e1de;color:#a8392f}.band-warm{background:#fbf0db;color:#9a6914}.band-watch{background:#eef1f3;color:#5a6b7a}.band-filed{background:#efece2;color:#9a937f}
+  .databar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
+  .spill{font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:20px}
+  .spill.live{background:#e7f0e9;color:var(--green)}.spill.warn{background:#fbf0db;color:var(--amber)}
+  .bs{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap}
+  .bs-live{background:#e7f0e9;color:#2f7a55}.bs-free{background:#e3edf1;color:#3a6b86}.bs-manual{background:#fbf0db;color:#9a6914}.bs-tabled{background:#efece2;color:#9a937f}
+  .qadd{display:flex;gap:8px;margin-bottom:14px}.qadd input{flex:1}
+  .qbtn{font-size:11px;font-weight:600;padding:4px 9px;border-radius:7px;border:1px solid var(--line2);color:var(--ink2);background:var(--paper);cursor:pointer}
+  .qbtn:hover{background:var(--paper2);color:var(--pine)}
+  .qbtn.go{background:var(--pine);color:#f4efe1;border-color:var(--pine)}.qbtn.go:hover{background:var(--pine2)}
+  .tstat{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .ts-open{background:#eef1f3;color:#5a6b7a}.ts-doing{background:#fbf0db;color:#9a6914}.ts-done{background:#e7f0e9;color:#2f7a55}
+  .tdone .name{text-decoration:line-through;color:var(--muted)}
+  .dotbtn{font-size:18px;line-height:1;color:var(--muted);padding:2px 10px;border-radius:7px;border:1px solid transparent;background:var(--paper);cursor:pointer}
+  .dotbtn:hover{background:var(--paper2);color:var(--pine);border-color:var(--line)}
+  .menu{position:fixed;z-index:80;background:var(--paper);border:1px solid var(--line2);border-radius:12px;box-shadow:0 14px 44px rgba(15,32,27,.24);min-width:210px;max-width:246px;padding:6px;animation:pop .14s ease}
+  .menu-item{display:block;width:100%;text-align:left;padding:9px 11px;border-radius:8px;font-size:13px;color:var(--ink);cursor:pointer}
+  .menu-item:hover{background:var(--paper2)}
+  .menu-item.danger{color:var(--red)}
+  .menu-sep{height:1px;background:var(--line);margin:5px 4px}
+  .src-block{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--gold2);font-weight:700;padding:7px 11px 4px}
+  .req{padding:12px 18px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+  .req:last-child{border-bottom:none}
+  .reqtype{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;padding:3px 7px;border-radius:6px;background:var(--gold);color:#23200f;white-space:nowrap;margin-top:1px}
+  .ts-review{background:#e9eef7;color:#3a5a86}
+  .tile-click{cursor:pointer;transition:.12s}.tile-click:hover{border-color:var(--gold);transform:translateY(-1px)}
+  .nm{padding:12px 18px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;justify-content:space-between}.nm:last-child{border-bottom:none}
+  .nm .nmt{font-size:13px;color:var(--ink2);line-height:1.4}
+  .prog{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .prog-bar{flex:1;height:8px;background:var(--paper2);border-radius:5px;overflow:hidden;border:1px solid var(--line)}
+  .prog-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--fairway),var(--gold))}
+  .prog-l{font-size:12px;font-weight:600;color:var(--ink2);white-space:nowrap;font-family:'IBM Plex Mono',monospace}
+  .board{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .col{background:var(--paper2);border:1px solid var(--line);border-radius:12px;padding:10px;min-height:90px}
+  .col-h{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--pine);padding:2px 4px 9px}
+  .col-ct{font-family:'IBM Plex Mono',monospace;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:0 7px;color:var(--ink2)}
+  .col-empty{text-align:center;color:var(--line2);font-size:18px;padding:8px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px;box-shadow:0 1px 2px rgba(15,58,44,.05)}
+  .card.tdone .card-title{text-decoration:line-through;color:var(--muted)}
+  .card-top{display:flex;gap:7px;align-items:flex-start}
+  .card-title{font-size:13px;font-weight:500;line-height:1.35}
+  .card-link{font-size:11px;color:var(--muted);margin-top:6px;padding-left:14px}
+  .card-acts{display:flex;gap:5px;align-items:center;margin-top:9px}
+  .mv{font-size:13px;font-weight:700;width:30px;height:27px;border-radius:7px;border:1px solid var(--line2);background:var(--paper2);color:var(--pine);cursor:pointer}
+  .mv:hover:not([disabled]){background:var(--pine);color:#f4efe1}.mv[disabled]{opacity:.3;cursor:default}
+  .dotbtn.sm2{font-size:15px;padding:1px 8px;margin-left:auto}
+  @media(max-width:720px){.board{grid-template-columns:1fr}}
+
+  /* ---------- Query templates ---------- */
+  .qt{padding:14px 18px;border-bottom:1px solid var(--line)}
+  .qt:last-child{border-bottom:none}
+  .qt .qh{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .qt .qn{font-weight:600;font-size:14px}
+  .qt .qcode{font-family:'IBM Plex Mono',monospace;font-size:12px;background:#1d2a22;color:#cfe6d8;padding:10px 12px;border-radius:8px;margin-top:9px;white-space:pre-wrap;word-break:break-word;line-height:1.5}
+  .qt .qwhy{font-size:12px;color:var(--muted);margin-top:7px}
+
+  /* ---------- Cadence ---------- */
+  .cad{padding:13px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .cad:last-child{border-bottom:none}
+  .cad .cn{font-weight:600;font-size:14px}
+  .cad .cf{font-size:12px;color:var(--muted);margin-top:2px}
+  .cad .cright{display:flex;align-items:center;gap:10px}
+  .due{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px}
+  .due.ok{background:#e7f0e9;color:var(--green)} .due.soon{background:#fbf2e0;color:var(--amber)} .due.over{background:#f6e3e0;color:var(--red)}
+
+  /* ---------- Macro ---------- */
+  .macro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;padding:16px 18px}
+  .mcard{border:1px solid var(--line);border-radius:11px;padding:13px;background:#fffefb}
+  .mcard .mq{font-size:12px;color:var(--ink2);line-height:1.35;min-height:34px}
+  .mcard .mp{font-family:'Fraunces',serif;font-size:27px;font-weight:600;color:var(--pine);margin-top:8px}
+  .mcard .mt{font-size:10.5px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
+  .banner{margin:0 18px 4px;padding:11px 14px;background:#f3efe2;border:1px solid var(--line2);border-radius:10px;font-size:12.5px;color:var(--ink2);display:flex;gap:9px;align-items:flex-start}
+  .banner svg{flex-shrink:0;margin-top:1px;color:var(--gold2)}
+
+  .empty{padding:40px 20px;text-align:center;color:var(--muted);font-size:14px}
+
+  /* ---------- Modal ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(15,32,27,.5);backdrop-filter:blur(3px);z-index:50;display:none;align-items:flex-start;justify-content:center;padding:30px 16px;overflow-y:auto}
+  .overlay.open{display:flex}
+  .modal{background:var(--cream);border-radius:16px;max-width:560px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);border:1px solid var(--line2);animation:pop .2s ease}
+  @keyframes pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+  .modal-h{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  .modal-h h3{font-family:'Fraunces',serif;font-weight:600;font-size:18px;color:var(--pine)}
+  .modal-b{padding:18px 20px;max-height:64vh;overflow-y:auto}
+  .modal-f{padding:14px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:9px}
+  .fld{margin-bottom:14px}
+  .fld label{display:block;font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+  .fld input,.fld select,.fld textarea{width:100%;background:var(--paper);border:1px solid var(--line2);border-radius:8px;padding:9px 11px;color:var(--ink)}
+  .fld textarea{resize:vertical;min-height:62px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .x{font-size:22px;color:var(--muted);line-height:1;padding:0 4px}
+  .x:hover{color:var(--ink)}
+
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--pine);color:#f4efe1;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:500;z-index:60;opacity:0;transition:.25s;box-shadow:var(--shadow);border:1px solid var(--gold)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media(max-width:600px){
+    main{padding:18px 12px 80px}
+    .node{flex-direction:column;gap:8px}
+    .node .acts{flex-direction:row;flex-wrap:wrap}
+    .row2{grid-template-columns:1fr}
+    .brand h1{font-size:18px}
+    nav{top:64px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="head-in">
+    <div class="brand">
+      <div class="mark">D</div>
+      <div>
+        <h1>DEALBOARD</h1>
+        <div class="sub">Deal Intelligence &middot; Network &middot; Sales Command</div>
+      </div>
+    </div>
+    <div class="lane" id="laneToggle">
+      <button data-lane="all" class="on">All Lanes</button>
+      <button data-lane="V1">V1 · Small Ticket</button>
+      <button data-lane="V2">V2 · Middle Market</button>
+    </div>
+  </div>
+</header>
+
+<nav><div class="nav-in" id="navBar"></div></nav>
+
+<main>
+  <section class="view on" id="v-dash"></section>
+  <section class="view" id="v-ledger"></section>
+  <section class="view" id="v-tasks"></section>
+  <section class="view" id="v-snoozed"></section>
+  <section class="view" id="v-players"></section>
+  <section class="view" id="v-intel"></section>
+  <section class="view" id="v-cascade"></section>
+  <section class="view" id="v-buildseq"></section>
+  <section class="view" id="v-cadence"></section>
+  <section class="view" id="v-macro"></section>
+  <section class="view" id="v-archive"></section>
+</main>
+
+<div class="overlay" id="overlay"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ============================================================
+   DEALBOARD — single-file command center
+   Storage: window.storage (persists in Claude) w/ in-memory fallback
+   ============================================================ */
+const MEM = {};
+const Store = {
+  async get(k){ try{ if(typeof window!=='undefined' && window.storage){ const r=await window.storage.get(k); return r?r.value:null; } }catch(e){} return (k in MEM)?MEM[k]:null; },
+  async set(k,v){ try{ if(typeof window!=='undefined' && window.storage){ await window.storage.set(k,v); } }catch(e){} MEM[k]=v; return true; }
+};
+const KEY='dealboard_state_v1';
+const todayISO=()=> new Date().toISOString().slice(0,10);
+const daysAgo=n=>{const d=new Date();d.setDate(d.getDate()-n);return d.toISOString().slice(0,10);};
+const daysAhead=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10);};
+const uid=()=> 'n'+Math.random().toString(36).slice(2,9);
+
+/* ---------- SEED: the real triage ---------- */
+function seedState(){
+  // ============ SYNTHETIC DEMO DATA — all entities below are fictional / illustrative ============
+  return {
+   nodes:[
+    // ACTIVE — keep
+    {id:uid(),name:"Telematics Wallet",cat:"Service / Telematics / Protection",lane:"V1",status:"active",
+     verdict:"Most-developed asset. Closed-loop prepaid maintenance wallet, wear-prediction, vehicle data layer, pilot underway.",
+     flag:"Closed-loop prepaid posture; partner-overlap review gates any lender-adjacency.",lesson:"",reviewed:daysAgo(8)},
+    {id:uid(),name:"Underwriting Engine",cat:"Underwriting / Analysis",lane:"both",status:"active",
+     verdict:"Credit engine: DSCR/LTV/cap, multi-stage workflow, multiple lending programs. Tested clean.",
+     flag:"",lesson:"",reviewed:daysAgo(15)},
+    {id:uid(),name:"Intake Router",cat:"Deal Ops / Workflow",lane:"V2",status:"active",
+     verdict:"Doc checklist + intake workflow. Logic sound.",
+     flag:"Routes to licensed lenders, not direct lending.",lesson:"",reviewed:daysAgo(15)},
+    {id:uid(),name:"Credential One-Pager",cat:"Trust Asset / Content",lane:"V2",status:"active",
+     verdict:"Credential doc with an illustrative securitization track record. Strong trust asset.",
+     flag:"",lesson:"",reviewed:daysAgo(20)},
+    {id:uid(),name:"Contact Research",cat:"Network",lane:"both",status:"active",
+     verdict:"Vetted referral and lender contacts feeding the Player Network.",
+     flag:"Role turnover — re-verify each contact before any outreach.",lesson:"",reviewed:daysAgo(4)},
+    // FIX
+    {id:uid(),name:"Lender Profile Router v3",cat:"Origination / Routing",lane:"V2",status:"fix",
+     verdict:"Neutral-brand lender-profile router (this IS your v2). Solid, but monolithic: routing/scoring/copy tangled, zero instrumentation.",
+     flag:"Position as routing to licensed lenders (connector, not principal). Refactor config-driven; add instrumentation.",lesson:"",reviewed:daysAgo(6)},
+    {id:uid(),name:"CapEx Prospecting Feed",cat:"Discovery / Intelligence",lane:"both",status:"fix",
+     verdict:"Strong concept + real seed research (cold chain, specialty contractors). Folds into the Discovery engine here.",
+     flag:"External-API-in-artifact dependency is brittle. Move scanning in-session + Signal Log.",lesson:"",reviewed:daysAgo(6)},
+    // FOLD
+    {id:uid(),name:"Warranty Tracker",cat:"Protection",lane:"V1",status:"fold",
+     verdict:"Same coverage/warranty function built twice. Fold into the telematics node.",flag:"",lesson:"Do not rebuild a function that already lives in a bigger node.",reviewed:daysAgo(30)},
+    {id:uid(),name:"Overlapping Command Centers",cat:"Deal Ops / Workflow",lane:"both",status:"fold",
+     verdict:"Several tools all run pipeline/deal-ops with duplicated intake. Fold into one shell.",flag:"",lesson:"Fragmentation hides in 'just one more tool.'",reviewed:daysAgo(12)},
+    // KILLED-TRACKED (license-gated)
+    {id:uid(),name:"Securities Token",cat:"Secondary Market / Capital",lane:"V2",status:"killed",
+     verdict:"Securities issuance — license/compliance heavy. Out of core.",
+     flag:"Regulatory path unresolved — parked with the node.",
+     lesson:"Revive only as 'connect a deal to a licensed issuer/platform,' never as principal.",reviewed:daysAgo(10)},
+    {id:uid(),name:"Direct Lending Venture",cat:"Lending",lane:"both",status:"killed",
+     verdict:"Capital + licensing heavy. Out of core.",flag:"",
+     lesson:"You are the connector. Route deals to licensed lenders.",reviewed:daysAgo(10)},
+    {id:uid(),name:"Crypto-Gated Payments",cat:"Infra",lane:"both",status:"killed",
+     verdict:"Money-transmission exposure. Out of core.",flag:"",lesson:"",reviewed:daysAgo(10)},
+    // ARCHIVE
+    {id:uid(),name:"Stale Dated Content",cat:"Content",lane:"both",status:"archived",
+     verdict:"Expired countdown content. Refresh or shelve.",flag:"",
+     lesson:"Date-stamped content needs a refresh trigger or it lies.",reviewed:daysAgo(40)},
+   ],
+   drift:[
+    {t:"Funding-time metric",fix:"Standardized to a single end-to-end definition across all views and docs."},
+    {t:"Duplicate intake nodes",fix:"Several overlapping intake tools collapsed into one shell."},
+    {t:"Naming sprawl",fix:"Collapsed redundant project names to a single label per function (collapse rule: under 2 names)."},
+   ],
+   players:[
+    {id:uid(),name:"Rena Tobin",role:"Cascade Mutual Bank · VP Commercial",good:"Bank declines on equipment-heavy deals = your inbound. Warm-intro path via local chamber.",vstat:"unverified",score:55,reviewed:daysAgo(4)},
+    {id:uid(),name:"Owen Park",role:"Summit Arc Lending · Director of BD",good:"PE-adjacent BD, local. Platform acquisitions create recurring equipment-finance need.",vstat:"verified",score:70,reviewed:daysAgo(4)},
+    {id:uid(),name:"Marcus Lindqvist",role:"Evercrest Receivables · CEO",good:"Factoring/AR path that complements equipment lending. Reciprocal referral.",vstat:"watch",score:60,reviewed:daysAgo(4)},
+    {id:uid(),name:"Lee Okafor — Irongate Senior Lending",role:"DIRECT equipment-finance lender · healthcare / industrial / IT",good:"VERIFIED FIRM (irongate.example.com · info@irongate.example.com · +1 (574) 555-0166). Direct lender: structured/flexible equipment capital, fast execution. Sectors: clinical healthcare equipment, material handling, general IT/infrastructure — all non-titled. CONFIRM: deal-size range, revenue/EBITDA mins, credit box, syndication appetite.",vstat:"verified",score:72,reviewed:daysAgo(0)},
+   ],
+   signals:[
+    {id:uid(),src:"EDGAR",tier:1,fit:"V2",urgency:"high",verified:"corroborated",created:daysAgo(1),
+     title:"Mid-market mfg names private fabrication supplier in 8-K (Item 1.01)",
+     detail:"Public filer disclosed a multi-year supply agreement naming a private metal-fab supplier — equipment-intensive, fits V2. Pull the private co's UCC + registry next.",
+     meta:"logged "+daysAgo(1)+" · EDGAR full-text",link:""},
+    {id:uid(),src:"USASPEND",tier:1,fit:"both",urgency:"med",verified:"single",created:daysAgo(4),
+     title:"Private contractor wins $6.2M equipment-heavy federal award (NAICS 238)",
+     detail:"Specialty-trade contractor; award implies fleet + working-capital need. Corroborate revenue band before promoting to Hot.",
+     meta:"logged "+daysAgo(4)+" · USAspending",link:""},
+    {id:uid(),src:"REDDIT",tier:3,fit:"both",urgency:"low",verified:"unverified",created:daysAgo(2),
+     title:"Forum rumor: regional hauler 'expanding fleet'",
+     detail:"Tier-3 chatter, no corroboration. Engine files this as junk until a Tier-1 source confirms.",
+     meta:"logged "+daysAgo(2)+" · lead-only",link:""},
+   ],
+   queries:[
+    {n:"EDGAR — material agreements naming private cos",code:'efts.sec.gov full-text search:\n"supply agreement" OR "purchase order" OR "strategic partnership"\nForm types: 8-K (Item 1.01), 10-K\nDate: last 72h  ·  free, no key, User-Agent header required',
+     why:"Public filer must disclose material contracts — and routinely names the private counterparty. That name is the lead."},
+    {n:"USAspending — equipment-heavy contractors",code:'api.usaspending.gov/api/v2/search/spending_by_award\nfilters: naics_codes:[237,238,3xx,484] , award_amounts: > $1M , time_period: last 30d\nfree public API, no auth',
+     why:"Every federal award >$25K is public. Find private contractors by sector + award size = capex/working-capital need."},
+    {n:"UCC-1 — targeted lien lookup",code:'State Secretary of State UCC search (per debtor)\nLook for: secured party, collateral description, filing date\n(state-by-state; most require an account/fee — targeted, not bulk)',
+     why:"Reveals who financed what equipment, when. Filing date → lease maturity → refi-timing window."},
+    {n:"Macro overlay — prediction markets",code:'Public prediction-market API (CFTC-regulated)\nMarkets: Fed target rate, CPI, GDP, unemployment, recession prob.\nRead as risk-neutral odds, not gospel',
+     why:"Rate-path + recession odds drive lease-vs-buy math and deal urgency. Monthly + around FOMC/CPI dates."},
+   ],
+   cadence:[
+    {id:uid(),n:"Session sweep — EDGAR 8-K (Item 1.01 / 2.01) + breaking news",freq:"Each working session",intervalDays:1,last:todayISO()},
+    {id:uid(),n:"Weekly lead list — USAspending awards + exec moves + trade press",freq:"Weekly (Mon)",intervalDays:7,last:daysAgo(3)},
+    {id:uid(),n:"Monthly macro + maintenance sweep — re-verify, archive, dedupe, bug check",freq:"Monthly",intervalDays:30,last:daysAgo(12)},
+    {id:uid(),n:"Player network re-verification",freq:"Monthly",intervalDays:30,last:daysAgo(35)},
+   ],
+   requests:[
+    {id:uid(),type:"similar",kind:"signal",refLabel:"Mid-market mfg / private metal-fab supplier",note:"Find companies similar to the metal-fab supplier named in the 8-K — same NAICS, $50MM–$1Bn revenue, equipment-heavy; verified + contact targets.",status:"open",created:daysAgo(1)},
+   ],
+   tasks:[
+    {id:uid(),title:"Re-verify Rena Tobin role + email before any outreach",status:"open",priority:"high",link:{type:"player",label:"Rena Tobin"},created:daysAgo(2)},
+    {id:uid(),title:"Refactor Lender Profile Router → config-driven + add instrumentation",status:"doing",priority:"med",link:{type:"node",label:"Lender Profile Router v3"},created:daysAgo(5)},
+    {id:uid(),title:"Run weekly USAspending sweep (equipment NAICS)",status:"open",priority:"med",link:null,created:daysAgo(1)},
+    {id:uid(),title:"Confirm Irongate deal-size range + revenue/EBITDA mins + credit box + syndication appetite",status:"open",priority:"high",link:{type:"player",label:"Lee Okafor — Irongate Senior Lending"},created:daysAgo(0)},
+   ],
+   cascades:[
+    {project:"Data Center Build-Out", range:"One project → 30+ financeable line items across 6 phases",
+     trigger:"Hyperscaler/colo capex 8-K · utility interconnection request · EC/MC contract award (USAspending/press) · 'VP Data Center Ops' hire · building permit filing",
+     note:"Hyperscaler owners sit above the lane — the lane's borrowers are the tier-2 AI-infra operators, regional colos, and the electrical/mechanical contractors + integrators building it ($50MM–$1Bn for V2; $1MM–$25MM for V1). This is the soft-cost-gap thesis in motion.",
+     phases:[
+       {phase:"1 · Shell & Interior Build-out", inbox:false, lane:"Route out", range:"varies",
+        items:["Raised access flooring","Containment & fire-rated partitions","Structural load reinforcement","Loading docks","Security build (mantraps, access control)"],
+        structure:"TI / leasehold — outside the equipment box", route:"Real estate & leasehold → route to CRE / SBA partner"},
+       {phase:"2 · Power & Energy", inbox:true, lane:"V1 / V2", range:"$1M–$25M+",
+        items:["Switchgear & transformers","UPS systems","PDUs","Standby generators + fuel systems","Battery energy storage (BESS)","Automatic transfer switches"],
+        structure:"Equipment loan · FMV lease · sale-leaseback (high residual, long life)", route:""},
+       {phase:"3 · Cooling / Thermal", inbox:true, lane:"V1 / V2", range:"$500K–$15M",
+        items:["CRAC / CRAH units","Chillers + cooling towers","Liquid cooling (AI/GPU density)","Pumps, economizers, piping"],
+        structure:"Equipment loan · lease", route:""},
+       {phase:"4 · IT / Compute (racks & servers)", inbox:true, lane:"V1 / V2", range:"$250K–$25M+",
+        items:["Server racks & cabinets","Servers + GPUs","Switches & routers","Structured cabling & fiber","Storage arrays"],
+        structure:"FMV / short-term lease — fast depreciation + residual risk, structure tight", route:""},
+       {phase:"5 · Monitoring, Safety & Ancillary", inbox:true, lane:"V1", range:"$100K–$3M",
+        items:["DCIM systems","Clean-agent fire suppression","Leak & environmental sensors","Physical security","Spare-parts inventory"],
+        structure:"Equipment loan · lease (telematics ties to predictive maintenance — the telematics node)", route:""},
+       {phase:"6 · Services & Soft Costs (the gap nobody covers)", inbox:true, lane:"Both", range:"recurring + soft cost",
+        items:["Install & commissioning","Maintenance contracts","Extended warranty","Equipment breakdown insurance","Decommissioning / remarketing"],
+        structure:"Wrap soft costs into the facility; recurring revenue", route:"Insurance & warranty = licensed players → connect, don't sell"},
+     ]},
+    {project:"Manufacturing Line / Plant Expansion", range:"Sequenced capex chain",
+     trigger:"Capex 8-K · new contract/PO award · facility permit · 'VP Operations / Plant Manager' hire · utility rebate filing",
+     note:"V1/V2 manufacturers ($1MM–$1Bn). Equipment-heavy; audited financials at the top of the band.",
+     phases:[
+       {phase:"1 · Facility prep & process utilities", inbox:false, lane:"Route out", range:"varies",
+        items:["Building improvements","Compressed air / water / gas systems"], structure:"Leasehold — route to CRE/SBA", route:"Structure/RE → route out"},
+       {phase:"2 · Primary production equipment", inbox:true, lane:"V1 / V2", range:"$500K–$25M+",
+        items:["CNC / machining centers","Robotics & automation cells","Presses, extruders, lines"], structure:"Equipment loan · sale-leaseback", route:""},
+       {phase:"3 · Material handling & logistics", inbox:true, lane:"V1", range:"$100K–$5M",
+        items:["Conveyors","Forklifts / lift trucks","ASRS & racking","Packaging lines"], structure:"Lease · TRAC (titled rolling stock)", route:""},
+       {phase:"4 · QA, monitoring & tooling", inbox:true, lane:"V1", range:"$50K–$2M",
+        items:["Inspection / metrology","Environmental & safety systems","Tooling"], structure:"Equipment loan · lease", route:""},
+       {phase:"5 · Services & soft costs", inbox:true, lane:"Both", range:"recurring",
+        items:["Install / integration","Maintenance & warranty","Breakdown insurance"], structure:"Wrap + recurring", route:"Insurance/warranty = licensed players"},
+     ]},
+    {project:"Cold-Chain / Logistics Facility", range:"Pharma & food cold-chain tailwind",
+     trigger:"Lease/expansion announcement · pharma distribution contract · refrigeration OEM PO · 'VP Fleet / Operations' hire",
+     note:"Underserved by equipment lenders — the CapEx-feed thesis (cold chain / pharma). V1/V2 operators.",
+     phases:[
+       {phase:"1 · Facility & refrigeration build", inbox:true, lane:"V1 / V2", range:"$500K–$15M",
+        items:["Refrigeration units & racks","Blast freezers","Temperature monitoring","Dock equipment"], structure:"Equipment loan · lease", route:""},
+       {phase:"2 · Fleet & rolling stock", inbox:true, lane:"V1 / V2", range:"$250K–$10M",
+        items:["Refrigerated trailers / reefers","Box trucks","Telematics / temp sensors"], structure:"TRAC lease (titled) · loan", route:""},
+       {phase:"3 · Power & backup", inbox:true, lane:"V1", range:"$100K–$3M",
+        items:["Generators","Switchgear","BESS"], structure:"Equipment loan · lease", route:""},
+       {phase:"4 · Services & soft costs", inbox:true, lane:"Both", range:"recurring",
+        items:["Maintenance contracts","Warranty","Breakdown insurance"], structure:"Wrap + recurring", route:"Insurance/warranty = licensed players"},
+     ]},
+   ],
+   buildseq:[
+    {status:"live",cap:"In-session scanning (vs always-on feed)",
+     free:"Free EDGAR + USAspending APIs, free SEC RSS/Atom feeds, alerts. Run the sweep per session and log finds to the Signal Log.",
+     paid:"Server + cron + paid news/data API for 24/7 auto-ingest.",
+     lift:"Done. The free path covers it — only buy automation once deal volume justifies it."},
+    {status:"free",cap:"AI work outside the app",
+     free:"Do analysis outside the artifact so the app never calls an API key and can't break on auth.",
+     paid:"A dedicated API key wired into the app.",
+     lift:"Worth it now: keep AI out of the artifact permanently."},
+    {status:"free",cap:"Backup & cross-device durability",
+     free:"Local storage + Export to JSON → drop in free cloud storage. Re-import anywhere.",
+     paid:"Hosted backend for real-time sync.",
+     lift:"Worth it now (export discipline). True multi-device sync → table until you have a team."},
+    {status:"manual",cap:"UCC lien monitoring",
+     free:"Targeted lookups on free state SoS portals when a named lead surfaces. SOP: name → state → secured party / collateral / filing date.",
+     paid:"UCC aggregator subscription for bulk national monitoring.",
+     lift:"Manual is worth it per-lead. Bulk monitoring → table (low ROI solo)."},
+    {status:"manual",cap:"Company data enrichment",
+     free:"SEC filings, company sites, state registries + in-session research.",
+     paid:"Paid enrichment data providers.",
+     lift:"Manual now. Paid enrichment → table until research time exceeds the cost."},
+    {status:"tabled",cap:"Hosting / multi-user access",
+     free:"Run the single HTML locally — no hosting needed for solo use.",
+     paid:"Hosting + auth for a shared team app.",
+     lift:"Table entirely until someone other than you needs login access."},
+   ],
+   macro:{
+     asOf:"2026-05-30",
+     cards:[
+       {q:"Fed holds at next meeting",p:"~97%",t:"prediction markets"},
+       {q:"Zero Fed cuts across all of 2026",p:"~57%",t:"aggregated odds"},
+       {q:"NBER recession call (12-mo horizon)",p:"watch",t:"prediction markets"},
+       {q:"Next CPI print vs threshold",p:"event",t:"prediction markets"},
+     ]
+   }
+  };
+}
+
+/* ---------- STATE ---------- */
+var S=null, lane='all', view='dash', storageLive=false;
+
+/* ---------- STATE NORMALIZATION (migration / crash-proofing) ---------- */
+function normalizeState(s){
+  s=(s&&typeof s==='object')?s:{};
+  const seed=seedState();
+  ['nodes','players','signals','queries','cadence','cascades','drift','buildseq','tasks','requests'].forEach(k=>{ if(!Array.isArray(s[k])) s[k]=seed[k]; });
+  if(!s.macro||typeof s.macro!=='object'||!Array.isArray(s.macro.cards)) s.macro=seed.macro;
+  s.nodes.forEach(n=>{ if(!n.id)n.id=uid(); if(!n.status)n.status='active'; if(!n.lane)n.lane='both'; if(!n.cat)n.cat='Discovery / Intelligence'; if(n.verdict==null)n.verdict=''; if(n.flag==null)n.flag=''; if(n.lesson==null)n.lesson=''; });
+  s.players.forEach(p=>{ if(!p.id)p.id=uid(); if(typeof p.score!=='number'||isNaN(p.score))p.score=50; if(!p.vstat)p.vstat='unverified'; if(p.role==null)p.role=''; if(p.good==null)p.good=''; });
+  s.signals.forEach(g=>{ if(!g.id)g.id=uid(); if(typeof g.tier!=='number')g.tier=2; if(!g.fit)g.fit='both'; if(!g.urgency)g.urgency='med'; if(!g.verified)g.verified='single'; if(!g.created)g.created=todayISO(); if(!g.meta)g.meta='logged '+todayISO(); if(g.detail==null)g.detail=''; if(g.link==null)g.link=''; });
+  s.cadence.forEach(c=>{ if(!c.id)c.id=uid(); if(typeof c.intervalDays!=='number')c.intervalDays=7; if(!c.last)c.last=todayISO(); });
+  s.tasks.forEach(t=>{ if(!t.id)t.id=uid(); if(!t.status)t.status='open'; if(!t.priority)t.priority='med'; if(!t.created)t.created=todayISO(); if(t.link===undefined)t.link=null; });
+  return s;
+}
+
+async function load(){
+  const raw=await Store.get(KEY);
+  if(raw){ try{ S=normalizeState(JSON.parse(raw)); }catch(e){ S=seedState(); } }
+  else { S=normalizeState(seedState()); await save(); }
+  if(!S||!Array.isArray(S.nodes)) S=seedState();
+}
+async function save(){ await Store.set(KEY, JSON.stringify(S)); }
+
+/* ---------- HELPERS ---------- */
+const STATUS={active:'Active',fix:'Fix',fold:'Fold',parked:'Parked',killed:'Killed · tracked',archived:'Archived'};
+const CATS=["Lending","Origination / Routing","Underwriting / Analysis","Deal Ops / Workflow","Discovery / Intelligence","Network","Marketplace","Service / Telematics / Protection","Protection","Secondary Market / Capital","Infra","Trust Asset / Content","Content"];
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function laneMatch(l){ return lane==='all' || l===lane || l==='both'; }
+function activeNodes(){ return S.nodes.filter(n=>['active','fix','fold','parked'].includes(n.status) && laneMatch(n.lane)); }
+function archivedNodes(){ return S.nodes.filter(n=>['killed','archived'].includes(n.status) && laneMatch(n.lane)); }
+function laneTag(l){ return l==='both'?'Both':l; }
+function dueState(c){
+  const days=Math.floor((Date.now()-new Date(c.last).getTime())/86400000);
+  if(days>=c.intervalDays) return {cls:'over',txt:'Overdue',days};
+  if(days>=c.intervalDays*0.7) return {cls:'soon',txt:'Due soon',days};
+  return {cls:'ok',txt:'Fresh',days};
+}
+const ICON_WARN='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>';
+const ICON_INFO='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>';
+
+/* ---------- NAV ---------- */
+const VIEWS=[
+  ['dash','Dashboard',()=>''],
+  ['ledger','Project Ledger',()=>activeNodes().length],
+  ['tasks','Workflow',()=>S.tasks.filter(t=>t.status!=='done'&&!isSnoozed(t)).length||''],
+  ['players','Player Network',()=>S.players.filter(p=>true).length],
+  ['intel','Deal Intelligence',()=>S.signals.length],
+  ['cascade','Cascade Map',()=>''],
+  ['cadence','Cadence',()=>S.cadence.filter(c=>dueState(c).cls!=='ok').length||''],
+  ['macro','Macro Overlay',()=>''],
+  ['buildseq','Build Sequence',()=>''],
+  ['archive','Archive',()=>archivedNodes().length],
+];
+function renderNav(){
+  document.getElementById('navBar').innerHTML=VIEWS.map(([id,label,ct])=>{
+    const c=ct(); const badge=c!==''&&c!=null?`<span class="ct">${c}</span>`:'';
+    return `<button data-v="${id}" class="${view===id?'on':''}">${label}${badge}</button>`;
+  }).join('');
+}
+
+/* ---------- RENDER: DASHBOARD ---------- */
+function renderDash(){
+  const a=activeNodes();
+  const byStatus=s=>S.nodes.filter(n=>n.status===s&&laneMatch(n.lane)).length;
+  const dueCt=S.cadence.filter(c=>dueState(c).cls==='over').length;
+  const flags=a.filter(n=>n.flag).length;
+  const total=S.tasks.length, done=S.tasks.filter(t=>t.status==='done').length, pct=total?Math.round(done/total*100):0;
+  const openReq=S.requests.filter(r=>r.status==='open').length;
+  const hot=S.signals.filter(s=>!isSnoozed(s)&&scoreSignal(s).band==='hot').length;
+  const moves=nextMoves();
+  const el=document.getElementById('v-dash');
+  el.innerHTML=`
+    <div class="vh"><h2 class="vt">Command Center</h2></div>
+    <div class="vsub">Your master control. The next move surfaces here — act in one tap and the board updates. Built to flow, not to manage.</div>
+    ${dataBar()}
+    <div class="stat-grid">
+      <div class="stat tile-click" onclick="setView('tasks')"><div class="n">${S.tasks.filter(t=>t.status!=='done'&&!isSnoozed(t)).length}</div><div class="l">Open Tasks</div><div class="d">${S.tasks.filter(t=>t.status==='doing'||t.status==='review').length} in motion · ${pct}% done</div></div>
+      <div class="stat tile-click" onclick="setView('intel')"><div class="n">${hot}</div><div class="l">Hot Signals</div><div class="d">${S.signals.length} logged · ${openReq} open requests</div></div>
+      <div class="stat tile-click" onclick="setView('ledger')"><div class="n">${a.length}</div><div class="l">Live Nodes</div><div class="d">${byStatus('active')} active · ${byStatus('fix')} fix</div></div>
+      <div class="stat tile-click" onclick="setView('players')"><div class="n">${S.players.length}</div><div class="l">Players</div><div class="d">${S.players.filter(p=>p.vstat==='verified').length} verified</div></div>
+      <div class="stat tile-click" onclick="setView('cadence')"><div class="n">${dueCt}</div><div class="l">Sweeps Overdue</div><div class="d">${S.cadence.length} tracked</div></div>
+      <div class="stat tile-click" onclick="setView('archive')"><div class="n">${archivedNodes().length}</div><div class="l">Archived</div><div class="d">tracked, not deleted</div></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>Next moves</h3><span class="hint">the assumptive flow — one tap advances it</span></div>
+      <div class="panel-b">${moves.length?moves.map(m=>`<div class="nm"><span class="nmt">${esc(m.txt)}</span><button class="qbtn go" onclick="${m.act}">${esc(m.label)}</button></div>`).join(''):'<div class="empty">Nothing pending — you are ahead.</div>'}</div>
+    </div>
+
+    <div class="panel pinbox">
+      <div class="panel-h"><h3>Priority Inbox — screened</h3><span class="hint">Hot / Warm float up, junk filed</span></div>
+      <div class="panel-b">${priorityInbox()}</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>Needs attention</h3><span class="hint">flags + overdue sweeps</span></div>
+      <div class="panel-b">
+        ${[...a.filter(n=>n.flag).map(n=>`<div class="node"><div class="body"><div class="top"><span class="dot ${n.status}"></span><span class="name">${esc(n.name)}</span></div><div class="flag">${ICON_WARN}<span>${esc(n.flag)}</span></div></div></div>`),
+           ...S.cadence.filter(c=>dueState(c).cls==='over').map(c=>`<div class="node"><div class="body"><div class="top"><span class="name">${esc(c.n)}</span></div><div class="verdict">Sweep overdue — ${dueState(c).days}d since last run.</div></div><div class="acts" style="flex-direction:row"><button class="qbtn go" onclick="markRun('${c.id}')">Mark run</button></div></div>`)
+          ].join('') || '<div class="empty">All clear in this lane.</div>'}
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>Drift corrected</h3><span class="hint">lost-in-translation log</span></div>
+      <div class="panel-b">${S.drift.map(d=>`<div class="node"><div class="body"><div class="top"><span class="name">${esc(d.t)}</span></div><div class="verdict">${esc(d.fix)}</div></div></div>`).join('')}</div>
+    </div>`;
+}
+function nextMoves(){
+  const m=[];
+  S.signals.filter(s=>!isSnoozed(s)&&scoreSignal(s).band==='hot').slice(0,2).forEach(s=>m.push({txt:'Hot signal not yet actioned: '+s.title,act:`sigToTask('${s.id}')`,label:'→ Task'}));
+  S.tasks.filter(t=>t.status==='review').slice(0,2).forEach(t=>m.push({txt:'In review, ready to close: '+t.title,act:`cycleTask('${t.id}')`,label:'Complete'}));
+  S.cadence.filter(c=>dueState(c).cls==='over').slice(0,2).forEach(c=>m.push({txt:'Sweep overdue: '+c.n,act:`markRun('${c.id}')`,label:'Mark run'}));
+  S.players.filter(p=>p.vstat==='unverified').slice(0,2).forEach(p=>m.push({txt:'Player needs verification: '+p.name,act:`playerToTask('${p.id}')`,label:'Spawn task'}));
+  if(S.requests.filter(r=>r.status==='open').length) m.push({txt:S.requests.filter(r=>r.status==='open').length+' open sourcing request(s) for me to run',act:`setView('intel')`,label:'Open'});
+  return m.slice(0,6);
+}
+
+/* ---------- RENDER: LEDGER ---------- */
+let ledgerFilter={status:'',cat:'',q:''};
+function renderLedger(){
+  let list=activeNodes();
+  if(ledgerFilter.status) list=list.filter(n=>n.status===ledgerFilter.status);
+  if(ledgerFilter.cat) list=list.filter(n=>n.cat===ledgerFilter.cat);
+  if(ledgerFilter.q){const q=ledgerFilter.q.toLowerCase();list=list.filter(n=>(n.name+n.verdict+n.cat).toLowerCase().includes(q));}
+  const order={active:0,fix:1,fold:2,parked:3};
+  list.sort((a,b)=>(order[a.status]-order[b.status])||a.name.localeCompare(b.name));
+  const el=document.getElementById('v-ledger');
+  el.innerHTML=`
+    <div class="vh"><h2 class="vt">Project Ledger</h2><button class="btn gold" onclick="openNode()">+ New Node</button></div>
+    <div class="vsub">The spine. Every venture and asset as a node with a lifecycle status. Nothing gets deleted — killed and archived items stay tracked with the lesson attached.</div>
+    <div class="filters">
+      <input class="search" id="ledQ" placeholder="Search nodes…" value="${esc(ledgerFilter.q)}" oninput="ledgerFilter.q=this.value;renderLedger();document.getElementById('ledQ').focus()">
+      <select onchange="ledgerFilter.status=this.value;renderLedger()">
+        <option value="">All statuses</option>
+        ${['active','fix','fold','parked'].map(s=>`<option value="${s}" ${ledgerFilter.status===s?'selected':''}>${STATUS[s]}</option>`).join('')}
+      </select>
+      <select onchange="ledgerFilter.cat=this.value;renderLedger()">
+        <option value="">All categories</option>
+        ${CATS.map(c=>`<option value="${c}" ${ledgerFilter.cat===c?'selected':''}>${c}</option>`).join('')}
+      </select>
+    </div>
+    <div class="panel"><div class="panel-b">
+      ${list.length?list.map(nodeRow).join(''):'<div class="empty">No nodes match. Adjust filters or add one.</div>'}
+    </div></div>`;
+  const s=document.getElementById('ledQ'); if(s&&ledgerFilter.q){s.focus();s.setSelectionRange(s.value.length,s.value.length);}
+}
+function nodeRow(n){
+  return `<div class="node">
+    <div class="body">
+      <div class="top">
+        <span class="status-chip st-${n.status}"><span class="dot ${n.status}"></span>${STATUS[n.status]}</span>
+        <span class="name">${esc(n.name)}</span>
+        <span class="tag lane">${laneTag(n.lane)}</span>
+        <span class="tag cat">${esc(n.cat)}</span>
+      </div>
+      <div class="verdict">${esc(n.verdict)}</div>
+      ${n.flag?`<div class="flag">${ICON_WARN}<span>${esc(n.flag)}</span></div>`:''}
+      ${n.lesson?`<div class="lesson">Lesson: ${esc(n.lesson)}</div>`:''}
+    </div>
+    <button data-menu-btn class="dotbtn" onclick="openMenu(event,'node','${n.id}')">⋯</button>
+  </div>`;
+}
+const STATUS_CYCLE=['active','fix','fold','parked','killed','archived'];
+async function cycleStatus(id){const n=S.nodes.find(x=>x.id===id);if(!n)return;const i=STATUS_CYCLE.indexOf(n.status);n.status=STATUS_CYCLE[(i+1)%STATUS_CYCLE.length];n.reviewed=todayISO();await save();renderAll();toast(`${n.name} → ${STATUS[n.status]}`);}
+
+/* ---------- RENDER: PLAYERS ---------- */
+function renderPlayers(){
+  const list=S.players.slice().sort((a,b)=>b.score-a.score);
+  const el=document.getElementById('v-players');
+  el.innerHTML=`
+    <div class="vh"><h2 class="vt">Player Network</h2><button class="btn gold" onclick="openPlayer()">+ Add Player</button></div>
+    <div class="vsub">Real players for real deals. Vetting bar: verified track record + references, or anything you can corroborate from a public filing. Nobody enters as "trusted" until the evidence does.</div>
+    <div class="banner">${ICON_INFO}<span>Reliability score reflects strength of verification, not a guarantee. "Unverified" = re-confirm role/contact before any outreach (people move).</span></div>
+    <div class="panel"><div class="pgrid">
+      ${list.length?list.map(playerCard).join(''):'<div class="empty">No players yet.</div>'}
+    </div></div>`;
+}
+function playerCard(p){
+  const v={verified:['v-verified','Verified'],unverified:['v-unverified','Unverified'],watch:['v-watch','Watch']}[p.vstat]||['v-watch','Watch'];
+  return `<div class="player">
+    <div class="pn">${esc(p.name)}</div>
+    <div class="pr">${esc(p.role)}</div>
+    <div class="pgood">${esc(p.good)}</div>
+    <div class="pv">
+      <span class="vstat ${v[0]}">${v[1]}</span>
+      <div class="vbar"><i style="width:${p.score}%"></i></div>
+      <span class="mono" style="font-size:11px;color:var(--muted)">${p.score}</span>
+    </div>
+    <div style="margin-top:11px"><button data-menu-btn class="dotbtn" onclick="openMenu(event,'player','${p.id}')">⋯ Actions</button></div>
+  </div>`;
+}
+
+/* ---------- RENDER: INTEL ---------- */
+function renderIntel(){
+  const el=document.getElementById('v-intel');
+  el.innerHTML=`
+    <div class="vh"><h2 class="vt">Deal Intelligence</h2><button class="btn gold" onclick="openSignal()">+ Log Signal</button></div>
+    <div class="vsub">Two engines: find private companies that hide from lead lists, and screen public companies whose filings expose them. The app stores and organizes — I run the scans live and log verified finds here. No autonomous feed that silently dies.</div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>Sourcing requests &amp; questions</h3><span class="hint">queued from any ⋯ dropdown — I run these in-session</span></div>
+      <div class="panel-b">${S.requests.length?S.requests.slice().reverse().map(reqRow).join(''):'<div class="empty">No requests yet. Use any ⋯ menu → Source &amp; qualify.</div>'}</div>
+    </div>
+
+    <div class="filters">
+      <select onchange="signalFilter.band=this.value;renderIntel()"><option value="">All bands</option>${['hot','warm','watch','filed'].map(b=>`<option value="${b}" ${signalFilter.band===b?'selected':''}>${BANDS[b][1]} ${BANDS[b][0]}</option>`).join('')}</select>
+      <select onchange="signalFilter.src=this.value;renderIntel()"><option value="">All sources</option>${[...new Set(S.signals.map(s=>s.src))].map(sr=>`<option value="${esc(sr)}" ${signalFilter.src===sr?'selected':''}>${esc(sr)}</option>`).join('')}</select>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>Signal Log</h3><span class="hint">screened &amp; sorted by score</span></div>
+      <div class="panel-b">
+        ${(function(){let l=S.signals.filter(s=>!isSnoozed(s)).sort((a,b)=>scoreSignal(b).score-scoreSignal(a).score);if(signalFilter.band)l=l.filter(s=>scoreSignal(s).band===signalFilter.band);if(signalFilter.src)l=l.filter(s=>s.src===signalFilter.src);return l.length?l.map(sigRow).join(''):'<div class="empty">No signals match this filter.</div>';})()}
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>Query templates</h3><span class="hint">the exact reliable searches</span></div>
+      <div class="panel-b">
+        ${S.queries.map(qtRow).join('')}
+      </div>
+    </div>
+
+    <div class="banner" style="margin:0">${ICON_INFO}<span><b>Tier discipline:</b> EDGAR &amp; USAspending = Tier 1 (free, verifiable). UCC = Tier 1 value, targeted lookup only. IR/press/LinkedIn/trade = Tier 2. Reddit/Discord = Tier 3, lead-only, never cited as fact.</span></div>`;
+}
+function sigRow(s){
+  const t=s.tier===1?'':(s.tier===2?'t2':'t3');
+  const sc=scoreSignal(s);
+  return `<div class="sig">
+    <span class="src ${t}">${esc(s.src)}</span>
+    <div style="flex:1;min-width:0">
+      <div class="st">${bandChip(sc.band)} ${esc(s.title)}</div>
+      <div class="sd">${esc(s.detail)}</div>
+      <div class="sm">${esc(s.meta)} · score ${sc.score}${s.link?` · <a href="${esc(s.link)}" target="_blank" rel="noopener" style="color:var(--fairway)">source</a>`:''}</div>
+    </div>
+    <button data-menu-btn class="dotbtn" onclick="openMenu(event,'signal','${s.id}')">⋯</button>
+  </div>`;
+}
+function qtRow(q){
+  return `<div class="qt">
+    <div class="qh"><span class="qn">${esc(q.n)}</span><button class="btn ghost sm" onclick='copyText(${JSON.stringify(q.code)})'>Copy</button></div>
+    <div class="qcode">${esc(q.code)}</div>
+    <div class="qwhy">${esc(q.why)}</div>
+  </div>`;
+}
+
+/* ---------- RENDER: CADENCE ---------- */
+function renderCadence(){
+  const el=document.getElementById('v-cadence');
+  el.innerHTML=`
+    <div class="vh"><h2 class="vt">Cadence &amp; Freshness</h2></div>
+    <div class="vsub">The trigger is automated; the scan is me, live and verified. Each stream is stamped last-run + due/overdue so nothing rots quietly. Mark a sweep done when we run it.</div>
+    <div class="panel"><div class="panel-b">
+      ${S.cadence.map(cadRow).join('')}
+    </div></div>
+    <div class="banner" style="margin:0">${ICON_INFO}<span>Pair these with recurring reminders / calendar holds on your device so the cadence fires on schedule even when we're not in session.</span></div>`;
+}
+function cadRow(c){
+  const d=dueState(c);
+  return `<div class="cad">
+    <div><div class="cn">${esc(c.n)}</div><div class="cf">${esc(c.freq)} · last run ${esc(c.last)} (${d.days}d ago)</div></div>
+    <div class="cright">
+      <span class="due ${d.cls}">${d.txt}</span>
+      <button class="btn ghost sm" onclick="markRun('${c.id}')">Mark run</button>
+    </div>
+  </div>`;
+}
+async function markRun(id){const c=S.cadence.find(x=>x.id===id);if(!c)return;c.last=todayISO();await save();renderAll();toast(`"${c.n}" marked run today`);}
+
+/* ---------- RENDER: MACRO ---------- */
+function renderMacro(){
+  const el=document.getElementById('v-macro');
+  el.innerHTML=`
+    <div class="vh"><h2 class="vt">Macro Overlay</h2></div>
+    <div class="vsub">Prediction-market read on the rate &amp; risk environment — Kalshi (CFTC-regulated) for Fed/CPI/GDP/recession. This is a macro lens for the monthly sweep, never a deal source. Risk-neutral odds, not gospel.</div>
+    <div class="panel">
+      <div class="panel-h"><h3>Current readings</h3><span class="hint">as of ${esc(S.macro.asOf)} · ask me to refresh live</span></div>
+      <div class="macro-grid">
+        ${S.macro.cards.map(m=>`<div class="mcard"><div class="mq">${esc(m.q)}</div><div class="mp">${esc(m.p)}</div><div class="mt">${esc(m.t)}</div></div>`).join('')}
+      </div>
+    </div>
+    <div class="banner" style="margin:0">${ICON_INFO}<span>Where it bites your business: rate path drives lease-vs-buy math; fiscal/tax markets (bonus depreciation, §179) and tariff odds are real capex-timing triggers for borrowers.</span></div>`;
+}
+
+/* ---------- RENDER: ARCHIVE ---------- */
+function renderArchive(){
+  const list=archivedNodes().sort((a,b)=>a.status.localeCompare(b.status)||a.name.localeCompare(b.name));
+  const el=document.getElementById('v-archive');
+  el.innerHTML=`
+    <div class="vh"><h2 class="vt">Archive &amp; Graveyard</h2></div>
+    <div class="vsub">Killed and archived, not deleted. The expirations got you here — they stay tracked with the lesson, in case something resurfaces. License-gated nodes live here by your call.</div>
+    <div class="panel"><div class="panel-b">
+      ${list.length?list.map(nodeRow).join(''):'<div class="empty">Nothing archived in this lane.</div>'}
+    </div></div>`;
+}
+
+/* ---------- ACTION MENU (dropdowns) ---------- */
+var menuEl=null;
+function closeMenu(){ if(menuEl){menuEl.remove();menuEl=null;} }
+function openMenu(ev,kind,id){
+  ev.stopPropagation(); closeMenu();
+  const items=menuItems(kind,id);
+  menuEl=document.createElement('div'); menuEl.className='menu';
+  menuEl.innerHTML=items.map(it=>{
+    if(it.sep)return '<div class="menu-sep"></div>';
+    if(it.hdr)return `<div class="src-block">${esc(it.l)}</div>`;
+    return `<button class="menu-item ${it.danger?'danger':''}" onclick="closeMenu();${it.f}">${esc(it.l)}</button>`;
+  }).join('');
+  document.body.appendChild(menuEl);
+  const r=ev.target.getBoundingClientRect(), mw=230;
+  let left=Math.max(10,Math.min(r.right-mw, window.innerWidth-mw-10));
+  let top=r.bottom+6; const mh=menuEl.offsetHeight||320;
+  if(top+mh>window.innerHeight-10) top=Math.max(10,r.top-mh-6);
+  menuEl.style.left=left+'px'; menuEl.style.top=top+'px';
+}
+function menuItems(kind,id){
+  let items=[];
+  if(kind==='signal'){
+    items=[{l:'Convert to task',f:`sigToTask('${id}')`},{l:'Merge into…',f:`openMergeSignal('${id}')`},{l:'Snooze to date…',f:`openSnooze('signal','${id}')`},{l:'Remove / kill',f:`delSignal('${id}')`,danger:true}];
+  }else if(kind==='task'){
+    const t=S.tasks.find(x=>x.id===id)||{};
+    items=[{l:t.status==='done'?'Reopen':(t.status==='open'?'Start':'Complete'),f:`cycleTask('${id}')`},{l:'Bump priority',f:`bumpTask('${id}')`},{l:'Edit',f:`openTask('${id}')`},{l:'Snooze to date…',f:`openSnooze('task','${id}')`},{l:'Remove / kill',f:`delTask('${id}')`,danger:true}];
+  }else if(kind==='node'){
+    items=[{l:'Edit',f:`openNode('${id}')`},{l:'Advance status',f:`cycleStatus('${id}')`},{l:'Spawn task',f:`nodeToTask('${id}')`},{l:'Remove / kill',f:`delNode('${id}')`,danger:true}];
+  }else if(kind==='player'){
+    items=[{l:'Edit',f:`openPlayer('${id}')`},{l:'Spawn task',f:`playerToTask('${id}')`},{l:'Remove / kill',f:`delPlayer('${id}')`,danger:true}];
+  }
+  items.push({sep:true},{hdr:true,l:'Source & qualify'});
+  items.push({l:'⌕ Find similar qualified targets',f:`queueRequest('similar','${kind}','${id}')`});
+  items.push({l:'＋ Queue sourcing request',f:`queueRequest('source','${kind}','${id}')`});
+  items.push({l:'? Ask a question',f:`queueRequest('ask','${kind}','${id}')`});
+  return items;
+}
+function itemLabel(kind,id){
+  let x;
+  if(kind==='signal')x=S.signals.find(s=>s.id===id),x=x&&x.title;
+  else if(kind==='task')x=S.tasks.find(s=>s.id===id),x=x&&x.title;
+  else if(kind==='node')x=S.nodes.find(s=>s.id===id),x=x&&x.name;
+  else if(kind==='player'){const p=S.players.find(s=>s.id===id);x=p&&(p.name+' · '+p.role);}
+  return x||'';
+}
+/* ---------- SNOOZE ---------- */
+function isSnoozed(x){ return !!(x&&x.snoozeUntil&&x.snoozeUntil>todayISO()); }
+function openSnooze(kind,id){
+  ov.innerHTML=`<div class="modal"><div class="modal-h"><h3>Snooze to a future date</h3><button class="x" onclick="closeModal()">×</button></div>
+    <div class="modal-b">
+      <div class="vsub" style="margin-bottom:12px">Moves it to the <b>Snoozed</b> tab and out of your inbox until the date — then it resurfaces automatically.</div>
+      <div class="fld"><label>Resurface on</label><input type="date" id="sz_date" value="${daysAhead(7)}" min="${todayISO()}"></div>
+    </div>
+    <div class="modal-f"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn gold" onclick="setSnooze('${kind}','${id}')">Snooze</button></div></div>`;
+  ov.classList.add('open');
+}
+async function setSnooze(kind,id){
+  const date=document.getElementById('sz_date').value; if(!date){toast('Pick a date');return;}
+  const coll=kind==='task'?S.tasks:S.signals; const x=coll.find(o=>o.id===id); if(!x){toast('Not found');return;}
+  x.snoozeUntil=date; await save();closeModal();renderAll();toast('Snoozed to '+date);
+}
+async function unsnooze(kind,id){
+  const coll=kind==='task'?S.tasks:S.signals; const x=coll.find(o=>o.id===id); if(!x)return;
+  delete x.snoozeUntil; await save();renderAll();toast('Resurfaced');
+}
+function renderSnoozed(){
+  const el=document.getElementById('v-snoozed'); if(!el)return;
+  const all=[...S.signals.filter(isSnoozed).map(s=>({kind:'signal',id:s.id,label:s.title,until:s.snoozeUntil,src:s.src})),
+             ...S.tasks.filter(isSnoozed).map(t=>({kind:'task',id:t.id,label:t.title,until:t.snoozeUntil,src:'task'}))].sort((a,b)=>a.until.localeCompare(b.until));
+  el.innerHTML=`
+    <div class="vh"><h2 class="vt">Snoozed</h2></div>
+    <div class="vsub">Held out of your inbox until their resurface date, then they return automatically. Nothing lost — just deferred.</div>
+    <div class="panel"><div class="panel-b">
+      ${all.length?all.map(x=>`<div class="node"><div class="body"><div class="top"><span class="tag cat">${esc(x.src)}</span><span class="name">${esc(x.label)}</span></div><div class="sm" style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);margin-top:6px">resurfaces ${esc(x.until)}</div></div><div class="acts" style="flex-direction:row"><button class="qbtn go" onclick="unsnooze('${x.kind}','${x.id}')">Resurface now</button></div></div>`).join(''):'<div class="empty">Nothing snoozed.</div>'}
+    </div></div>`;
+}
+/* ---------- REQUESTS (bottom-of-menu actions) ---------- */
+function queueRequest(type,kind,id){
+  const label=itemLabel(kind,id);
+  if(type==='ask'){ openAsk(kind,id,label); return; }
+  const note=type==='similar'
+    ? 'Find companies similar to: '+label+' — same sector/NAICS, revenue band ($1MM–$25MM V1 / $50MM–$1Bn V2), equipment profile; verified + contact targets.'
+    : 'Source new qualified targets like: '+label+' — log verified candidates + contacts.';
+  S.requests.push({id:uid(),type,kind,refLabel:label,note,status:'open',created:todayISO()});
+  save().then(()=>{renderAll();toast("Queued — I'll run it in our session");});
+}
+function openAsk(kind,id,label){
+  ov.innerHTML=`<div class="modal"><div class="modal-h"><h3>Ask a question</h3><button class="x" onclick="closeModal()">×</button></div>
+    <div class="modal-b">
+      <div class="vsub" style="margin-bottom:10px">About: <b>${esc(label)}</b>. I'll answer it in our session and log it back here.</div>
+      <div class="fld"><label>Your question</label><textarea id="ask_q" placeholder="What do you want to know before building / deciding?"></textarea></div>
+    </div>
+    <div class="modal-f"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn gold" onclick="saveAsk('${kind}','${id}')">Queue question</button></div></div>`;
+  ov.classList.add('open');
+}
+async function saveAsk(kind,id){
+  const q=document.getElementById('ask_q').value.trim(); if(!q){toast('Type a question');return;}
+  S.requests.push({id:uid(),type:'ask',kind,refLabel:itemLabel(kind,id),note:q,status:'open',created:todayISO()});
+  await save();closeModal();renderAll();toast('Question queued');
+}
+async function resolveRequest(id){const r=S.requests.find(x=>x.id===id);if(!r)return;r.status=r.status==='open'?'answered':'open';await save();renderAll();}
+async function delRequest(id){S.requests=S.requests.filter(x=>x.id!==id);await save();renderAll();toast('Request removed');}
+function reqRow(r){
+  const TY={similar:'FIND',source:'SOURCE',ask:'ASK'};
+  return `<div class="req"><span class="reqtype">${TY[r.type]||esc(r.type)}</span><div style="flex:1;min-width:0"><div style="font-size:13px;color:var(--ink)">${esc(r.note)}</div><div class="sm" style="font-size:11px;color:var(--muted);margin-top:4px">${esc(r.refLabel||'')} · ${esc(r.created)} · ${r.status==='answered'?'answered':'open'}</div></div><div class="acts" style="flex-direction:row;gap:5px"><button class="qbtn ${r.status==='open'?'go':''}" onclick="resolveRequest('${r.id}')">${r.status==='open'?'Mark answered':'Reopen'}</button><button class="qbtn" onclick="delRequest('${r.id}')">✕</button></div></div>`;
+}
+async function nodeToTask(id){const n=S.nodes.find(x=>x.id===id);if(!n)return;S.tasks.push({id:uid(),title:'Follow up: '+n.name,status:'open',priority:'med',link:{type:'node',label:n.name},created:todayISO()});await save();renderAll();toast('Task spawned');}
+async function playerToTask(id){const p=S.players.find(x=>x.id===id);if(!p)return;S.tasks.push({id:uid(),title:'Follow up: '+p.name,status:'open',priority:p.vstat==='unverified'?'high':'med',link:{type:'player',label:p.name},created:todayISO()});await save();renderAll();toast('Task spawned');}
+
+/* ---------- RENDER: TASKS + quick actions ---------- */
+var taskFilter={status:'',pri:''}, signalFilter={band:'',src:''};
+const TPRI={high:['High','#a8392f'],med:['Med','#9a6914'],low:['Low','#5a6b7a']};
+const TSTAT={open:'Backlog',doing:'Doing',review:'Review',done:'Done'};
+function renderTasks(){
+  const el=document.getElementById('v-tasks'); if(!el)return;
+  let all=S.tasks.filter(t=>!isSnoozed(t));
+  if(taskFilter.pri) all=all.filter(t=>t.priority===taskFilter.pri);
+  const cols=[['open','Backlog'],['doing','Doing'],['review','Review'],['done','Done']];
+  const total=S.tasks.length, done=S.tasks.filter(t=>t.status==='done').length, pct=total?Math.round(done/total*100):0;
+  const snz=[...S.signals.filter(isSnoozed).map(s=>({kind:'signal',id:s.id,label:s.title,until:s.snoozeUntil,src:s.src})),...S.tasks.filter(isSnoozed).map(t=>({kind:'task',id:t.id,label:t.title,until:t.snoozeUntil,src:'task'}))].sort((a,b)=>a.until.localeCompare(b.until));
+  el.innerHTML=`
+    <div class="vh"><h2 class="vt">Workflow Board</h2></div>
+    <div class="vsub">Move work to completion — slide each card right as it progresses. Backlog → Doing → Review → Done.</div>
+    <div class="qadd">
+      <input class="search" id="taskQuick" placeholder="Quick-add to Backlog… (Enter)" onkeydown="if(event.key==='Enter')addTask()">
+      <button class="btn gold" onclick="addTask()">+ Add</button>
+      <select onchange="taskFilter.pri=this.value;renderTasks()" style="background:var(--paper);border:1px solid var(--line2);border-radius:8px;padding:7px 10px;font-size:13px"><option value="">All priorities</option>${Object.keys(TPRI).map(p=>`<option value="${p}" ${taskFilter.pri===p?'selected':''}>${TPRI[p][0]}</option>`).join('')}</select>
+    </div>
+    <div class="prog"><div class="prog-bar"><i style="width:${pct}%"></i></div><span class="prog-l">${done}/${total} done · ${pct}%</span></div>
+    <div class="board">
+      ${cols.map(([st,label])=>{const items=all.filter(t=>t.status===st);return `<div class="col"><div class="col-h"><span>${label}</span><span class="col-ct">${items.length}</span></div>${items.length?items.map(taskCard).join(''):'<div class="col-empty">—</div>'}</div>`;}).join('')}
+    </div>
+    ${snz.length?`<div class="panel" style="margin-top:18px"><div class="panel-h"><h3>Snoozed</h3><span class="hint">resurface automatically on date</span></div><div class="panel-b">${snz.map(x=>`<div class="node"><div class="body"><div class="top"><span class="tag cat">${esc(x.src)}</span><span class="name">${esc(x.label)}</span></div><div class="sm" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:5px">resurfaces ${esc(x.until)}</div></div><div class="acts" style="flex-direction:row"><button class="qbtn go" onclick="unsnooze('${x.kind}','${x.id}')">Resurface</button></div></div>`).join('')}</div></div>`:''}
+  `;
+  const q=document.getElementById('taskQuick'); if(q&&taskFilter._focus){q.focus();taskFilter._focus=false;}
+}
+function taskCard(t){
+  const pr=TPRI[t.priority]||TPRI.med; const i=['open','doing','review','done'].indexOf(t.status);
+  return `<div class="card ${t.status==='done'?'tdone':''}">
+    <div class="card-top"><span class="dot" style="background:${pr[1]};margin-top:4px"></span><span class="card-title">${esc(t.title)}</span></div>
+    ${t.link&&t.link.label?`<div class="card-link">${esc(t.link.label)}</div>`:''}
+    <div class="card-acts">
+      <button class="mv" ${i<=0?'disabled':''} onclick="moveTask('${t.id}',-1)">←</button>
+      <button class="mv" ${i>=3?'disabled':''} onclick="moveTask('${t.id}',1)">→</button>
+      <button data-menu-btn class="dotbtn sm2" onclick="openMenu(event,'task','${t.id}')">⋯</button>
+    </div>
+  </div>`;
+}
+async function addTask(){
+  const inp=document.getElementById('taskQuick'); const v=inp&&inp.value.trim(); if(!v){toast('Type a task first');return;}
+  S.tasks.push({id:uid(),title:v,status:'open',priority:'med',link:null,created:todayISO()});
+  taskFilter._focus=true; await save();renderAll();toast('Task added');
+}
+async function cycleTask(id){const t=S.tasks.find(x=>x.id===id);if(!t)return;const o=['open','doing','review','done'];t.status=o[(o.indexOf(t.status)+1)%4];await save();renderAll();toast('Task → '+TSTAT[t.status]);}
+async function moveTask(id,dir){const t=S.tasks.find(x=>x.id===id);if(!t)return;const o=['open','doing','review','done'];let i=o.indexOf(t.status);i=Math.max(0,Math.min(3,i+dir));t.status=o[i];await save();renderAll();toast('Moved → '+TSTAT[t.status]);}
+async function bumpTask(id){const t=S.tasks.find(x=>x.id===id);if(!t)return;t.priority=t.priority==='low'?'med':(t.priority==='med'?'high':'low');await save();renderAll();}
+async function delTask(id){const t=S.tasks.find(x=>x.id===id);if(!t)return;S.tasks=S.tasks.filter(x=>x.id!==id);await save();renderAll();toast('Task removed');}
+function openTask(id){
+  const t=id?S.tasks.find(x=>x.id===id):{id:'',title:'',status:'open',priority:'med'};
+  ov.innerHTML=`<div class="modal"><div class="modal-h"><h3>${id?'Edit task':'New task'}</h3><button class="x" onclick="closeModal()">×</button></div>
+    <div class="modal-b">
+      <div class="fld"><label>Task</label><input id="t_title" value="${esc(t.title)}"></div>
+      <div class="row2">
+        <div class="fld"><label>Status</label><select id="t_status">${Object.keys(TSTAT).map(s=>`<option value="${s}" ${t.status===s?'selected':''}>${TSTAT[s]}</option>`).join('')}</select></div>
+        <div class="fld"><label>Priority</label><select id="t_pri">${Object.keys(TPRI).map(p=>`<option value="${p}" ${t.priority===p?'selected':''}>${TPRI[p][0]}</option>`).join('')}</select></div>
+      </div>
+    </div>
+    <div class="modal-f"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn gold" onclick="saveTask('${t.id}')">Save</button></div></div>`;
+  ov.classList.add('open');
+}
+async function saveTask(id){
+  const title=document.getElementById('t_title').value.trim(); if(!title){toast('Task text required');return;}
+  const data={title,status:document.getElementById('t_status').value,priority:document.getElementById('t_pri').value};
+  if(id){Object.assign(S.tasks.find(x=>x.id===id),data);}else{S.tasks.push({id:uid(),link:null,created:todayISO(),...data});}
+  await save();closeModal();renderAll();toast('Task saved');
+}
+/* signal quick actions: convert + merge */
+async function sigToTask(id){const s=S.signals.find(x=>x.id===id);if(!s)return;const band=scoreSignal(s).band;S.tasks.push({id:uid(),title:'Follow up: '+s.title,status:'open',priority:band==='hot'?'high':(band==='warm'?'med':'low'),link:{type:'signal',label:s.src},created:todayISO()});await save();renderAll();toast('Converted to task');}
+function openMergeSignal(id){
+  const s=S.signals.find(x=>x.id===id);if(!s)return;
+  const others=S.signals.filter(x=>x.id!==id);
+  if(!others.length){toast('Need another signal to merge into');return;}
+  ov.innerHTML=`<div class="modal"><div class="modal-h"><h3>Merge signal</h3><button class="x" onclick="closeModal()">×</button></div>
+    <div class="modal-b">
+      <div class="vsub" style="margin-bottom:12px">Fold "<b>${esc(s.title)}</b>" into another signal. Source is removed; its detail is appended to the target, and the stronger tier/verification wins.</div>
+      <div class="fld"><label>Merge into</label><select id="mg_target">${others.map(o=>`<option value="${o.id}">${esc(o.title)}</option>`).join('')}</select></div>
+    </div>
+    <div class="modal-f"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn gold" onclick="mergeSignals('${id}',document.getElementById('mg_target').value)">Merge</button></div></div>`;
+  ov.classList.add('open');
+}
+async function mergeSignals(srcId,tgtId){
+  const src=S.signals.find(x=>x.id===srcId), tgt=S.signals.find(x=>x.id===tgtId);
+  if(!src||!tgt){toast('Merge failed');return;}
+  tgt.detail=(tgt.detail||'')+' | merged: '+src.title+(src.detail?(' — '+src.detail):'');
+  const vRank={unverified:0,single:1,corroborated:2};
+  if((vRank[src.verified]||0)>(vRank[tgt.verified]||0)) tgt.verified=src.verified;
+  if(typeof src.tier==='number' && src.tier<tgt.tier) tgt.tier=src.tier;
+  S.signals=S.signals.filter(x=>x.id!==srcId);
+  await save();closeModal();renderAll();toast('Signals merged');
+}
+
+/* ---------- RENDER: CASCADE MAP ---------- */
+var cascadeSel=0;
+function renderCascade(){
+  const el=document.getElementById('v-cascade');
+  if(!S.cascades||!S.cascades.length){el.innerHTML='<div class="empty">No cascade templates.</div>';return;}
+  if(cascadeSel>=S.cascades.length)cascadeSel=0;
+  const c=S.cascades[cascadeSel];
+  el.innerHTML=`
+    <div class="vh"><h2 class="vt">Cascade Map</h2></div>
+    <div class="vsub">Anticipatory needs-assessment. One detected project fans out into a sequenced chain of financeable needs — map it early, pre-assemble the solution, and fill the gap before the parties issue an RFP.</div>
+    <div class="filters">
+      <select onchange="cascadeSel=parseInt(this.value,10);renderCascade()">
+        ${S.cascades.map((x,i)=>`<option value="${i}" ${i===cascadeSel?'selected':''}>${esc(x.project)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>${esc(c.project)}</h3><span class="hint">${esc(c.range||'')}</span></div>
+      <div class="banner">${ICON_INFO}<span><b>Catch it early:</b> ${esc(c.trigger)}</span></div>
+      <div class="banner" style="margin-top:0">${ICON_INFO}<span>${esc(c.note)}</span></div>
+      <div class="panel-b">${c.phases.map(phaseRow).join('')}</div>
+    </div>`;
+}
+function phaseRow(p){
+  const tag=p.inbox?'<span class="tag lane">In your box</span>':'<span class="band band-watch">Route to partner</span>';
+  return `<div class="node"><div class="body">
+    <div class="top"><span class="name">${esc(p.phase)}</span> ${tag} <span class="tag cat">${esc(p.lane)}</span></div>
+    <div class="verdict">${esc(p.items.join('  ·  '))}</div>
+    <div class="sm" style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);margin-top:7px">${esc(p.range)} · ${esc(p.structure)}</div>
+    ${p.route?`<div class="flag">${ICON_WARN}<span>${esc(p.route)}</span></div>`:''}
+  </div></div>`;
+}
+
+/* ---------- RENDER: BUILD SEQUENCE (the $0 roadmap) ---------- */
+function renderBuildSeq(){
+  const el=document.getElementById('v-buildseq');
+  if(!el)return;
+  const LABEL={live:'Live now',free:'Free workaround',manual:'Manual SOP',tabled:'Tabled'};
+  el.innerHTML=`
+    <div class="vh"><h2 class="vt">Build Sequence</h2></div>
+    <div class="vsub">$0 budget beyond our sessions. Every capability that would normally cost money, with the free or manual bridge — and an honest worth-the-lift call. When cash frees up, buy in this order.</div>
+    <div class="panel"><div class="panel-b">
+      ${S.buildseq.map(b=>`<div class="node"><div class="body">
+        <div class="top"><span class="bs bs-${b.status}">${LABEL[b.status]||b.status}</span><span class="name">${esc(b.cap)}</span></div>
+        <div class="verdict"><b>Free / bridge:</b> ${esc(b.free)}</div>
+        <div class="sm" style="font-size:12px;color:var(--muted);margin-top:6px"><b>Paid (when funded):</b> ${esc(b.paid)}</div>
+        <div class="flag" style="color:var(--ink2)">${ICON_INFO}<span><b>Lift:</b> ${esc(b.lift)}</span></div>
+      </div></div>`).join('')}
+    </div></div>`;
+}
+
+/* ---------- MODALS ---------- */
+const ov=document.getElementById('overlay');
+function closeModal(){ov.classList.remove('open');ov.innerHTML='';}
+ov.addEventListener('click',e=>{if(e.target===ov)closeModal();});
+
+function openNode(id){
+  const n=id?S.nodes.find(x=>x.id===id):{id:'',name:'',cat:'Discovery / Intelligence',lane:'both',status:'active',verdict:'',flag:'',lesson:''};
+  ov.innerHTML=`<div class="modal"><div class="modal-h"><h3>${id?'Edit node':'New node'}</h3><button class="x" onclick="closeModal()">×</button></div>
+    <div class="modal-b">
+      <div class="fld"><label>Name</label><input id="f_name" value="${esc(n.name)}"></div>
+      <div class="row2">
+        <div class="fld"><label>Lane</label><select id="f_lane"><option value="both" ${n.lane==='both'?'selected':''}>Both</option><option value="V1" ${n.lane==='V1'?'selected':''}>V1 · Small Ticket</option><option value="V2" ${n.lane==='V2'?'selected':''}>V2 · Middle Market</option></select></div>
+        <div class="fld"><label>Status</label><select id="f_status">${Object.keys(STATUS).map(s=>`<option value="${s}" ${n.status===s?'selected':''}>${STATUS[s]}</option>`).join('')}</select></div>
+      </div>
+      <div class="fld"><label>Category</label><select id="f_cat">${CATS.map(c=>`<option ${n.cat===c?'selected':''}>${c}</option>`).join('')}</select></div>
+      <div class="fld"><label>Verdict / summary</label><textarea id="f_verdict">${esc(n.verdict)}</textarea></div>
+      <div class="fld"><label>Compliance / re-verify flag (optional)</label><textarea id="f_flag">${esc(n.flag)}</textarea></div>
+      <div class="fld"><label>Lesson / why shelved (optional)</label><textarea id="f_lesson">${esc(n.lesson)}</textarea></div>
+    </div>
+    <div class="modal-f"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn gold" onclick="saveNode('${n.id}')">Save</button></div></div>`;
+  ov.classList.add('open');
+}
+async function saveNode(id){
+  const g=k=>document.getElementById(k).value.trim();
+  const name=g('f_name'); if(!name){toast('Name required');return;}
+  const data={name,lane:g('f_lane'),status:g('f_status'),cat:g('f_cat'),verdict:g('f_verdict'),flag:g('f_flag'),lesson:g('f_lesson'),reviewed:todayISO()};
+  if(id){Object.assign(S.nodes.find(x=>x.id===id),data);}
+  else{S.nodes.push({id:uid(),...data});}
+  await save();closeModal();renderAll();toast('Node saved');
+}
+async function delNode(id){const n=S.nodes.find(x=>x.id===id);if(!n)return;if(!confirm(`Delete "${n.name}"? (Tip: set status to Archived to keep it tracked instead.)`))return;S.nodes=S.nodes.filter(x=>x.id!==id);await save();renderAll();toast('Node deleted');}
+
+function openPlayer(id){
+  const p=id?S.players.find(x=>x.id===id):{id:'',name:'',role:'',good:'',vstat:'unverified',score:50};
+  ov.innerHTML=`<div class="modal"><div class="modal-h"><h3>${id?'Edit player':'Add player'}</h3><button class="x" onclick="closeModal()">×</button></div>
+    <div class="modal-b">
+      <div class="fld"><label>Name</label><input id="p_name" value="${esc(p.name)}"></div>
+      <div class="fld"><label>Role / firm</label><input id="p_role" value="${esc(p.role)}"></div>
+      <div class="fld"><label>What they're good for</label><textarea id="p_good">${esc(p.good)}</textarea></div>
+      <div class="row2">
+        <div class="fld"><label>Verification</label><select id="p_vstat"><option value="verified" ${p.vstat==='verified'?'selected':''}>Verified</option><option value="unverified" ${p.vstat==='unverified'?'selected':''}>Unverified</option><option value="watch" ${p.vstat==='watch'?'selected':''}>Watch</option></select></div>
+        <div class="fld"><label>Reliability score (0–100)</label><input id="p_score" type="number" min="0" max="100" value="${p.score}"></div>
+      </div>
+    </div>
+    <div class="modal-f"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn gold" onclick="savePlayer('${p.id}')">Save</button></div></div>`;
+  ov.classList.add('open');
+}
+async function savePlayer(id){
+  const g=k=>document.getElementById(k).value.trim();
+  const name=g('p_name'); if(!name){toast('Name required');return;}
+  let score=parseInt(document.getElementById('p_score').value,10); if(isNaN(score))score=50; score=Math.max(0,Math.min(100,score));
+  const data={name,role:g('p_role'),good:g('p_good'),vstat:g('p_vstat'),score,reviewed:todayISO()};
+  if(id){Object.assign(S.players.find(x=>x.id===id),data);}else{S.players.push({id:uid(),...data});}
+  await save();closeModal();renderAll();toast('Player saved');
+}
+async function delPlayer(id){const p=S.players.find(x=>x.id===id);if(!p)return;if(!confirm(`Remove "${p.name}"?`))return;S.players=S.players.filter(x=>x.id!==id);await save();renderAll();toast('Player removed');}
+
+function openSignal(){
+  ov.innerHTML=`<div class="modal"><div class="modal-h"><h3>Log a signal</h3><button class="x" onclick="closeModal()">×</button></div>
+    <div class="modal-b">
+      <div class="row2">
+        <div class="fld"><label>Source</label><select id="s_src"><option>EDGAR</option><option>USASPEND</option><option>UCC</option><option>IR/PRESS</option><option>LINKEDIN</option><option>TRADE</option><option>KALSHI</option><option>OTHER</option></select></div>
+        <div class="fld"><label>Tier</label><select id="s_tier"><option value="1">1 · verifiable</option><option value="2">2 · reliable</option><option value="3">3 · lead-only</option></select></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>Fit to criteria</label><select id="s_fit"><option value="both">Both lanes</option><option value="V1">V1 · small ticket</option><option value="V2">V2 · middle market</option><option value="off">Off-criteria</option></select></div>
+        <div class="fld"><label>Urgency / decay</label><select id="s_urgency"><option value="high">High — act now</option><option value="med">Medium — this week</option><option value="low">Low</option><option value="evergreen">Evergreen</option></select></div>
+      </div>
+      <div class="fld"><label>Verification</label><select id="s_verified"><option value="corroborated">Corroborated (2+ sources / filing)</option><option value="single">Single source</option><option value="unverified">Unverified</option></select></div>
+      <div class="fld"><label>Headline</label><input id="s_title" placeholder="e.g. Public co X names private supplier Y in 8-K"></div>
+      <div class="fld"><label>Detail</label><textarea id="s_detail" placeholder="What it means / the lead"></textarea></div>
+      <div class="fld"><label>Source link (optional)</label><input id="s_link" placeholder="https://"></div>
+    </div>
+    <div class="modal-f"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn gold" onclick="saveSignal()">Log it</button></div></div>`;
+  ov.classList.add('open');
+}
+async function saveSignal(){
+  const g=k=>document.getElementById(k).value.trim();
+  const title=g('s_title'); if(!title){toast('Headline required');return;}
+  const sig={id:uid(),src:g('s_src'),tier:parseInt(g('s_tier'),10),fit:g('s_fit'),urgency:g('s_urgency'),verified:g('s_verified'),created:todayISO(),title,detail:g('s_detail'),meta:'logged '+todayISO(),link:g('s_link')};
+  S.signals.push(sig);
+  await save();closeModal();renderAll();
+  const sc=scoreSignal(sig);toast('Signal logged → '+BANDS[sc.band][0]+' (score '+sc.score+')');
+}
+async function delSignal(id){S.signals=S.signals.filter(x=>x.id!==id);await save();renderAll();toast('Signal removed');}
+
+/* ---------- UTIL ---------- */
+function copyText(t){
+  try{ navigator.clipboard.writeText(t); toast('Copied'); }
+  catch(e){ toast('Copy not available here'); }
+}
+let toastTimer;
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2200);}
+
+/* ---------- SIGNAL TRIAGE / ANTI-JUNK SCORING ---------- */
+const BANDS={hot:['Hot','🔴'],warm:['Warm','🟡'],watch:['Watch','⚪'],filed:['Filed','🗑']};
+function daysSince(iso){ if(!iso) return 0; return Math.max(0,Math.floor((Date.now()-new Date(iso).getTime())/86400000)); }
+function scoreSignal(s){
+  let base=s.tier===1?40:(s.tier===2?25:8);
+  let fit; if(s.fit==='off')fit=-40; else if(s.fit==='both')fit=20; else if(s.fit==='V1'||s.fit==='V2')fit=18; else fit=0;
+  const uMap={high:30,med:18,low:8,evergreen:2}; let urg=uMap[s.urgency]!=null?uMap[s.urgency]:12;
+  const vMap={corroborated:20,single:5,unverified:-8}; let ver=vMap[s.verified]!=null?vMap[s.verified]:0;
+  let decay=-Math.min(daysSince(s.created)*1.2,30);
+  let total=Math.round(base+fit+urg+ver+decay);
+  if(s.fit==='off') return {score:Math.max(total,0),band:'filed'};
+  if(s.tier===3 && s.verified!=='corroborated') total=Math.min(total,35); // Tier-3 can't go Hot without corroboration
+  const band=total>=70?'hot':total>=45?'warm':total>=22?'watch':'filed';
+  return {score:Math.max(total,0),band};
+}
+function bandChip(b){const x=BANDS[b];return `<span class="band band-${b}">${x[1]} ${x[0]}</span>`;}
+function laneFitOK(s){ if(lane==='all')return true; if(s.fit==='both')return true; return s.fit===lane; }
+function priorityInbox(){
+  const scored=S.signals.map(s=>({s,...scoreSignal(s)})).filter(x=>laneFitOK(x.s)&&!isSnoozed(x.s));
+  const hot=scored.filter(x=>x.band==='hot').sort((a,b)=>b.score-a.score);
+  const warm=scored.filter(x=>x.band==='warm').sort((a,b)=>b.score-a.score);
+  const watchCt=scored.filter(x=>x.band==='watch').length, filedCt=scored.filter(x=>x.band==='filed').length;
+  const show=[...hot,...warm];
+  if(!show.length) return `<div class="empty">No Hot or Warm signals in this lane. ⚪ ${watchCt} on watch · 🗑 ${filedCt} filed.</div>`;
+  return show.map(x=>`<div class="node"><div class="body"><div class="top">${bandChip(x.band)}<span class="name">${esc(x.s.title)}</span><span class="tag cat">${esc(x.s.src)}</span></div><div class="verdict">${esc(x.s.detail)}</div><div class="sm" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:6px">score ${x.score} · ${esc(x.s.meta)}</div></div></div>`).join('')
+    + `<div style="padding:11px 18px;color:var(--muted);font-size:12px">⚪ ${watchCt} on watch · 🗑 ${filedCt} filed as low-fit / junk</div>`;
+}
+function dataBar(){
+  const pill=storageLive?'<span class="spill live">● Saved to this device</span>':'<span class="spill warn">● Session only — export to keep</span>';
+  return `<div class="databar">${pill}<button class="btn ghost sm" onclick="exportState()">⤓ Export backup</button><button class="btn ghost sm" onclick="document.getElementById('importFile').click()">⤒ Import</button><input type="file" id="importFile" accept="application/json" style="display:none" onchange="importState(event)"></div>`;
+}
+async function checkStorage(){
+  try{ if(typeof window!=='undefined' && window.storage){ const p='dealboard_probe_'+Date.now(); await window.storage.set(p,'1'); const r=await window.storage.get(p); storageLive=!!(r&&r.value==='1'); try{await window.storage.delete(p);}catch(e){} } else storageLive=false; }
+  catch(e){ storageLive=false; }
+}
+function exportState(){
+  try{ const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='dealboard-backup-'+todayISO()+'.json'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000); toast('Backup exported'); }
+  catch(e){ toast('Export failed'); }
+}
+function importState(ev){
+  const f=ev.target.files&&ev.target.files[0]; if(!f)return;
+  const rd=new FileReader();
+  rd.onload=async()=>{ try{ const obj=JSON.parse(rd.result); if(!obj||(!Array.isArray(obj.nodes)&&!Array.isArray(obj.signals)))throw new Error('not Dealboard'); S=normalizeState(obj); await save(); renderAll(); toast('Backup imported'); }catch(e){ toast('Import failed — not a valid Dealboard backup'); } };
+  rd.readAsText(f);
+}
+
+/* ---------- ROUTER ---------- */
+function setView(v){view=v;document.querySelectorAll('.view').forEach(s=>s.classList.remove('on'));document.getElementById('v-'+v).classList.add('on');renderNav();window.scrollTo({top:0,behavior:'smooth'});}
+const RENDER={dash:renderDash,ledger:renderLedger,tasks:renderTasks,snoozed:renderSnoozed,players:renderPlayers,intel:renderIntel,cascade:renderCascade,cadence:renderCadence,macro:renderMacro,buildseq:renderBuildSeq,archive:renderArchive};
+function renderAll(){
+  try{ renderNav(); }catch(e){}
+  for(const k in RENDER){ try{ RENDER[k](); }catch(e){ const el=document.getElementById('v-'+k); if(el) el.innerHTML='<div class="empty">This view hit an error and was isolated so the rest keeps working.<br><span class="mono" style="font-size:11px">'+esc(e.message)+'</span></div>'; } }
+}
+
+document.getElementById('navBar').addEventListener('click',e=>{const b=e.target.closest('button[data-v]');if(b)setView(b.dataset.v);});
+document.getElementById('laneToggle').addEventListener('click',e=>{const b=e.target.closest('button[data-lane]');if(!b)return;lane=b.dataset.lane;document.querySelectorAll('#laneToggle button').forEach(x=>x.classList.toggle('on',x===b));renderAll();});
+document.addEventListener('click',e=>{ if(menuEl && !menuEl.contains(e.target) && !(e.target.closest&&e.target.closest('[data-menu-btn]'))) closeMenu(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape')closeMenu(); });
+window.addEventListener('scroll',()=>closeMenu(),true);
+
+/* ---------- BOOT ---------- */
+(async function boot(){
+  await load();
+  await checkStorage();
+  renderAll();
+  setView('dash');
+})();
+</script>
+</body>
+</html>

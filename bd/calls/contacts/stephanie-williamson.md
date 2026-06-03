@@ -2,8 +2,8 @@
 contact: Stephanie Williamson
 company: AICAP Access
 call_type: firm-direct
-status: warm — scope reopened; discovery-first; proposal shelved pending integration feasibility
-last_contact: 2026-05-30
+status: warm — discovery contracted via Upwork; feasibility study scoped; discovery proposal drafted (pending send)
+last_contact: 2026-06-02
 ---
 
 # Stephanie Williamson — AICAP Access
@@ -28,6 +28,7 @@ CPCS-certified credentialing and privileging operations leader with 20+ years in
 - **2026-05-27**: Proposal sent — [[bd/calls/proposals/stephanie-williamson-2026-05-27-final]] ($12K Phase 1 application-completion pipeline, 30-day refund, ~7 weeks, Phase 2 privileging deferred).
 - **2026-05-30**: [[bd/calls/transcripts/stephanie-williamson-2026-05-30]] · [[bd/calls/notes/stephanie-williamson-2026-05-30]]
   — firm-direct (clarification, Call 2): She requested the call to clarify the proposal. Did **not** close to a kickoff — instead reopened scope. She killed her own "non-integrated PDF pilot" option (legacy software is instance-based; a coordinator can't enter data without unethically logging in as the provider — integration is mandatory). Did her own AI-assisted discovery of Symplr's database. Now wants a technical **feasibility study** across Symplr / MD-Staff / VerityStream to determine which integration path is real before committing to a build. $12K proposal effectively shelved; a discovery proposal is the next deliverable. No commitment, no kickoff date. Momentum → flat (relationship warm, deal-stage sideways).
+- **2026-06-02**: Upwork engagement accepted; Stephanie sent a formal **discovery scope doc** ("AICAP Legacy System Integration Discovery" — feasibility of transferring AICAP application data into Symplr / MD-Staff / VerityStream; cost & timeline left to contractor). Discovery proposal drafted + humanized — [[bd/calls/proposals/stephanie-williamson-2026-06-02-discovery]] ($1,000 feasibility study, credited toward the build, ~5 business days, billed against the live Upwork contract). **The paid-discovery question is resolved: scoped, priced ($1,000), first-dollar conversion of the strongest deal in the pipeline.** Contract is live (hourly @ $110/hr), so research kicks off immediately — no wait on her materials (public docs first; her brain-dump folds in).
 
 ## Running Intelligence
 
@@ -86,7 +87,7 @@ She built this on Replit by herself. "Burnt out Replit with reiterations." Her o
 
 **Warm, but the deal moved sideways on Call 2.** Still highly engaged — did her own discovery, killed her own bad option, offered screen-shares and documentation. But the $12K proposal did not get signed: she reopened the foundational integration question and inserted a technical-discovery gate ahead of any build. Relationship temperature ↑; deal-stage →/↓.
 
-**Pipeline stage (updated 2026-05-30)**: **Pre-build integration feasibility / scoping.** The $12K Phase 1 proposal is effectively shelved pending the feasibility answer. Next deliverable is a *discovery proposal*, not a kickoff. Mid-June MVP start is now at risk (a discovery phase precedes it).
+**Pipeline stage (updated 2026-06-02)**: **Paid feasibility study — first-dollar conversion in motion.** Stephanie engaged Simon via Upwork and sent a formal discovery scope doc; the discovery proposal is drafted + humanized ($1,000, credited toward the build), the contract is live, and the research is kicking off now. This is the first paid engagement of the strongest deal in the pipeline. The $12K Phase 1 proposal is superseded — the discovery's *recommended-next-steps* deliverable re-baselines the now-larger (integration-mandatory) build with a fresh quote; the stale $12K stays out of the discovery message. Mid-June MVP start gated on the feasibility answer.
 
 **Authority**: Founder, decision-maker for vendor selection on her side. Sole technical decision-maker for the build.
 
@@ -102,10 +103,11 @@ She built this on Replit by herself. "Burnt out Replit with reiterations." Her o
 - Lighthouse-imprint potential — substrate-density wedge in regulated healthcare
 
 **Watch**:
-- **THE one to watch: price the discovery.** Simon did not establish on Call 2 whether the integration feasibility study is paid. A paid, scoped discovery sprint is the cleanest first-dollar entry in the FDE playbook; an unscoped one quietly becomes free forward work that scopes an MVP she hasn't bought. (Yoda insight 2026-05-31, line 165.) Pre-package it: fixed deliverable + a number + credited toward the build.
+- **✅ RESOLVED 2026-06-02: discovery is priced, scoped, and live** — $1,000, credited toward the build, billed against the live hourly Upwork contract ($110/hr). The work is billable from the first minute, so the "free forward work" trap is closed: research starts now. (Because it's an hourly contract, the $1,000 is a soft target, not an escrow milestone — track honest time and land near it.)
+- **Certainty trap.** The deliverable promises a documentation- and screenshare-grounded verdict, not a guaranteed working integration (live API write-access is partner-gated at all three vendors). Hold that line in the writeup — don't let "looks feasible from the docs" harden into a promise she holds him to.
 - **Scope just grew.** The PDF-export mode dying means integration is mandatory — likely beyond the $12K Phase 1 scope. Don't let the old $12K number anchor a now-larger build. Re-baseline scope off what the feasibility study reveals.
 - **Positioning gap is confirmed buyer-side.** She read the website and said the offer "seems bigger than what's on Tokenrip," then couldn't tell if it's a product or a service. Simon's "doesn't use Tokenrip at all" answer removed the differentiation. Fix the 15-second "why us, not a freelancer" answer before next contact.
-- **Don't let the $12K proposal evaporate silently.** Pin down whether it stands behind the discovery or is superseded — ambiguity here loses the deal by drift.
+- **✅ RESOLVED: $12K Phase 1 is superseded, not evaporated.** The discovery's recommended-next-steps deliverable re-baselines the now-larger (integration-mandatory) build with a fresh quote; the stale $12K stays out of the discovery message. Watch that the next-steps section actually does this — **converting the study into a build quote is the real prize, not the $1,000.**
 - Privileging (Phase 2) is still the larger compression opportunity and per Stephanie *easier to build* (more deterministic). Keep staged; don't lump into MVP.
 
 ## Open Commitments
@@ -114,16 +116,17 @@ She built this on Replit by herself. "Burnt out Replit with reiterations." Her o
 |---|--------|-------|-----|--------|
 | 1 | Send written proposal ($12K Phase 1, 30-day refund) | Simon | 2026-05-27 | ✅ Done (sent 2026-05-27) |
 | 2 | Run proposal through `/humanizer` | Simon | 2026-05-27 | ✅ Done |
-| 3 | Go/no-go after reviewing proposal | Stephanie | 2026-05-30 | ↪️ Superseded — she requested a clarification call (Call 2, 2026-05-30) instead of deciding; reopened scope |
+| 3 | Go/no-go after reviewing proposal | Stephanie | 2026-05-30 | ↪️ Superseded — clarification call instead; reopened scope |
 | 4 | Second call | Both | — | ✅ Done (Call 2, 2026-05-30) |
 | 5 | Stall-risk gate | Closer | — | ✅ N/A — she engaged |
 | 6 | If accepted: get on MedCal executive committee meeting (free observer) | Simon | TBD | Pending — Stephanie's standing offer |
-| 7 | **Decide + frame discovery as a paid, scoped sprint before doing the work** | Simon | 2026-06-02 | 🔴 Open — top priority |
-| 8 | Research Symplr / MD-Staff / VerityStream integration surface | Simon | 2026-06-03 | Pending — blocked on her docs (#11–14) |
-| 9 | Send discovery proposal (scope + deliverable + price) | Simon | 2026-06-04 (inferred) | Pending |
-| 10 | Clarify whether $12K Phase 1 proposal stands behind discovery or is superseded | Simon | 2026-06-04 | Pending — fold into #9 |
-| 11 | Send overview doc: problem + what discovery should uncover | Stephanie | 2026-05-30 ("today") | Pending |
-| 12 | Send target-system list + per-system question list | Stephanie | 2026-05-30 | Pending |
-| 13 | Send prior integration/install documentation | Stephanie | 2026-05-30 | Pending |
-| 14 | Brain-dump Symplr AI-exploration session + screenshots | Stephanie | 2026-05-30 | Pending |
-| 15 | System screen-share walkthrough (MD-Staff / Symplr) | Both | Post-discovery | Deferred — Stephanie's offer |
+| 7 | **Decide + frame discovery as a paid, scoped sprint** | Simon | 2026-06-02 | ✅ Resolved — $1,000, credited to build, billed against live hourly Upwork contract (proposal drafted + humanized 2026-06-02) |
+| 8 | Capped sizing scan of the three systems' integration surface | Simon | 2026-06-02 | ✅ Done — all three expose an integration surface; live write-access partner-gated; sized at ~1–2 days |
+| 9 | Send discovery proposal (scope + deliverable + price) | Simon | 2026-06-02 | 🟢 Finalized 2026-06-02 — send-ready ($1,000, cover message included); Simon to send via Upwork |
+| 10 | Confirm $12K Phase 1 status | Simon | 2026-06-03 | ✅ Resolved — superseded; discovery's next-steps re-baselines the build; $12K kept out of discovery message |
+| 11 | Re-request her materials (Symplr brain-dump + screenshots, prior integration docs) | Simon | 2026-06-02 | 🟢 Folded into the proposal-send message (no separate ack — sending scope+price and starting now) |
+| 12 | Overview doc + target-system list | Stephanie | 2026-05-30 | ✅ Received 2026-06-02 (discovery scope doc covers both) |
+| 13 | Send prior integration/install documentation | Stephanie | pending | Re-requested in 2026-06-02 send |
+| 14 | Brain-dump Symplr AI-exploration session + screenshots | Stephanie | pending | Re-requested in 2026-06-02 send |
+| 15 | Deliver the feasibility study (the actual deliverable) | Simon | ~5 business days from kickoff | 🟡 In progress — public-docs read done 2026-06-02 (first-pass draft: [[active/aicap-discovery/aicap-integration-feasibility-findings-2026-06-02]]); pending Simon's validation + her materials |
+| 16 | System screen-share walkthrough (MD-Staff / Symplr) | Both | Post-discovery | Deferred — Stephanie's offer |
