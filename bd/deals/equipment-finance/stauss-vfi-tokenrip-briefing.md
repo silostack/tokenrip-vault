@@ -193,8 +193,10 @@ The spec is the **first real read on whether Stauss is a force-multiplier or a b
 
 ## 12. Key Artifacts & Links
 
+- **Product home — Quintel** (the equipment-finance product, powered by Tokenrip; quintel.ai): [[product/quintel/CLAUDE|Quintel product index]]. Product/build docs now live in `product/quintel/`; this briefing remains the *deal/relationship* layer.
 - **Companion — EF Domain Primer** (the *industry*, durable across the vertical): [[equipment-finance-domain-primer-2026-05-30]] (sibling in this folder).
-- **Companion — Build Architecture** (the *build*: one engine / hands / deal-graph + roadmap): [[equipment-finance-build-architecture-2026-06-02]] (in `active/`, → `product/tokenrip/` after review).
+- **Companion — Build Architecture** (the *build*: one engine / hands / deal-graph + roadmap): [[equipment-finance-build-architecture-2026-06-02]] (in `product/quintel/`).
+- **Engineering spec** — Quintel V1 build spec: `product/quintel/ef-product-spec-2026-06-02/SPEC.md`.
 - **Call 1 transcript:** `bd/calls/transcripts/stauss-paulos-2026-05-28.md`
 - **Call 2 transcript:** `bd/calls/transcripts/stauss-paulos-2026-05-29.md`
 - **Bevel / Ted Craver (channel intro #1):** [[bd/calls/contacts/ted-craver]] · [[bd/calls/notes/ted-craver-2026-06-01]] · [[bd/calls/transcripts/ted-craver-2026-06-01]]

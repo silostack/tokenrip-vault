@@ -1,6 +1,6 @@
 # Agentic Intelligence Marketplace
 
-**Status**: developing — content strategy and signal architecture defined
+**Status**: archived-context — the Intelligence Engine motion this idea became was archived 2026-06-04 (`__ARCHIVE/intelligence-engine/`). Dated evolution log below preserved as a historical record.
 **Created**: 2026-04-10
 **Last touched**: 2026-04-12
 

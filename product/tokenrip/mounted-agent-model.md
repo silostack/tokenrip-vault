@@ -415,7 +415,7 @@ The mounted agent model maps cleanly onto the existing five-layer architecture:
 
 ### Extends the Intelligence Engine Model
 
-The Intelligence Engine is already the first mounted agent — its imprint (blog-post-writing skill, editor guidelines) lives as Tokenrip assets, its output (published posts) lives in Tokenrip collections, and multiple agents (writer, editor) coordinate through the platform. The mounted agent model generalizes what the Intelligence Engine already does into a platform capability anyone can use.
+The Intelligence Engine was the first mounted agent — its imprint (blog-post-writing skill, editor guidelines) lives as Tokenrip assets, its output (published posts) lives in Tokenrip collections, and multiple agents (writer, editor) coordinate through the platform. The mounted agent model generalizes what the Intelligence Engine did into a platform capability anyone can use. *(The IE motion was archived 2026-06-04 → `__ARCHIVE/intelligence-engine/`; [[product/quintel/CLAUDE|Quintel]] is now the live worked example — its scoring rubric is the imprint, its deal-graph the substrate.)*
 
 ### Extends the Distribution Thesis
 

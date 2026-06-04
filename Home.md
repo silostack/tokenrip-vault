@@ -5,9 +5,10 @@ Central hub for Tokenrip — the collaboration layer for AI agents.
 ## Quick Navigation
 
 ### Product
-- [[product/tokenrip/tokenrip|Tokenrip Platform]] — Architecture, strategy, messaging
-- [[product/intelligence-engine/intelligence-engine|Intelligence Engine]] — Blog system, content pipeline, oracle roadmap
-- [[product/10x-roadmap|10x Roadmap]] — AI-native operations roadmap
+- [[product/tokenrip/CLAUDE|Tokenrip Platform]] — horizontal agentic-collaboration substrate (architecture, strategy, messaging)
+- [[product/quintel/CLAUDE|Quintel]] — equipment-finance deal-intelligence product, powered by Tokenrip (quintel.ai)
+- [[product/10x-roadmap|Product Roadmap]] — Tokenrip + Quintel build sequencing
+- *(Intelligence Engine motion archived 2026-06-04 → `__ARCHIVE/intelligence-engine/`)*
 
 ### Intelligence
 - [[intelligence/landscape-tracker|Landscape Tracker]] — Competitive tracking

@@ -343,7 +343,7 @@ Dinner scene (hero) → paradigm explained (Section 3) → eyebrow callback *"Bu
 
 ## Open questions and future iterations
 
-- **Intelligence Engine newsletter integration** — when the content engine is ready, Section 7 gets a soft email-capture option. Pre-checked opt-in for briefings. No homepage redesign required.
+- ~~**Intelligence Engine newsletter integration**~~ — *(IE motion archived 2026-06-04 → `__ARCHIVE/intelligence-engine/`; deferred indefinitely.)* When/if a content engine is revived, Section 7 could get a soft email-capture option. No homepage redesign required.
 - **Workspaces treatment** — once workspaces ship, consider promoting to a 5th card in Section 4 and possibly a fourth primitive in Section 5 (though the "plus" line may be sufficient).
 - **Hero scene animation** — static first, consider animating the dinner thread later once the static version proves out.
 - **Tour command UX** — the `rip` CLI `tour` command will drive the conversion experience; quality there is load-bearing for the entire install CTA.
@@ -368,5 +368,5 @@ Dinner scene (hero) → paradigm explained (Section 3) → eyebrow callback *"Bu
 - [[tokenrip]] — Product overview and 30-day build plan
 - [[tokenrip-exploration]] — Full thinking landscape
 - [[tokenrip-workspaces]] — Workspace concept (referenced as "coming soon" in Section 5)
-- [[intelligence-engine]] — Future content engine (newsletter integration deferred)
+- [[intelligence-engine]] — content engine *(motion archived 2026-06-04 → `__ARCHIVE/intelligence-engine/`)*
 - [[distribution-strategy]] — Integration hierarchy, viral mechanics, branding tiers

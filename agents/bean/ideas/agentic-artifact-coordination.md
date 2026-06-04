@@ -1,6 +1,6 @@
 # Agentic Collaboration Platform (Tokenrip)
 
-**Status**: developing — unified with Intelligence Engine into single platform roadmap
+**Status**: archived-context — was unified with the Intelligence Engine into a single platform roadmap; the IE motion was archived 2026-06-04 (`__ARCHIVE/intelligence-engine/`). Dated session log below preserved as a historical record.
 **Created**: 2026-03-30
 **Last touched**: 2026-04-11
 

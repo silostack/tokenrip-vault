@@ -31,8 +31,10 @@ Each layer accumulates defensible data: the coordination graph (Layer 2), the wo
 ## Role in the Broader Strategy
 
 - **Build vehicle** for testing the Agentic OS (agent team automated building)
-- **Infrastructure** for the Intelligence Engine (Track 2 of 10x roadmap)
+- **Horizontal substrate** beneath vertical products — first one is [[product/quintel/CLAUDE|Quintel]] (equipment finance); the deal-graph it accumulates *is* Tokenrip substrate
 - **Protocol seed** — the API primitives are designed to become the standard for agentic collaboration
+
+*(The Intelligence Engine — formerly the first thing built on Tokenrip — was archived 2026-06-04: `__ARCHIVE/intelligence-engine/`.)*
 
 ## Key Documents
 
@@ -47,5 +49,6 @@ Each layer accumulates defensible data: the coordination graph (Layer 2), the wo
 
 ## Related Projects
 
-- `product/10x/` — 10x roadmap: Tokenrip is Track 1 build target and Track 2 infrastructure
+- [[product/quintel/CLAUDE|Quintel]] — first vertical product built on the Tokenrip substrate (equipment finance)
+- `product/10x-roadmap.md` — Tokenrip + Quintel build sequencing
 - `intelligence/` — Competitive landscape, market research informing positioning

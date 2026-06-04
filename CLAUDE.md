@@ -51,7 +51,8 @@ Forward-deployed engineer = sell the solution, build the substrate behind it (Pa
 | Project                                   | What                                                                                              | Key Docs                                                                                                                 |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | **BD: Get a Sale (P0)**                   | LinkedIn warm pipeline (Simon) + Reddit demand-scout (Simon) + Luai close (Alek)                  | `bd/CLAUDE.md` · `bd/get-a-sale/CLAUDE.md` · `bd/get-a-sale/channel-verdicts.md` · `bd/calls/`                           |
-| **Tokenrip Platform**                     | Mounted-agent substrate. Five-layer architecture. Substrate roadmap paused pending live customer. | `product/tokenrip/CLAUDE.md` · `product/tokenrip/mounted-agent-model.md` · `product/tokenrip/mounted-agent-synthesis.md` |
+| **Tokenrip Platform**                     | Mounted-agent substrate (horizontal). Five-layer architecture. Substrate roadmap paused pending live customer. | `product/tokenrip/CLAUDE.md` · `product/tokenrip/mounted-agent-model.md` · `product/tokenrip/mounted-agent-synthesis.md` |
+| **Quintel (equipment finance)**           | First vertical product on Tokenrip (quintel.ai). Deal-sourcing engine + underwriting/structuring. "One engine, three consumers — sell the hands." Bevel-first. | `product/quintel/CLAUDE.md` · `product/quintel/equipment-finance-build-architecture-2026-06-02.md` · `bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing.md` |
 | **Building Own Audience (P1 background)** | Brand/inbound/SEO/community compounding layer. Make.com pattern. NOT Motion E.                    | `product/tokenrip/make-com-playbook-analysis-2026-05-21.md`                                                              |
 | **Distribution**                          | Registry listings, community seeding, agent platform presence.                                    | `distribution/`                                                                                                          |
 
@@ -119,9 +120,9 @@ tokenrip-vault/
 ├── _inbox/                 # Raw inputs, processing queue
 ├── active/                 # WIP staging area
 ├── distribution/           # Distribution plans, registry checklists, experiment tracking
-├── product/                # Tokenrip platform + Intelligence Engine
-│   ├── tokenrip/           # Core platform docs
-│   └── intelligence-engine/# Blog system, content pipeline
+├── product/                # Tokenrip (substrate) + Quintel (vertical)
+│   ├── tokenrip/           # Horizontal agentic-collaboration substrate
+│   └── quintel/            # Equipment-finance deal-intelligence product (powered by Tokenrip)
 ├── intelligence/           # Competitive research, landscape, analysis
 ├── content/                # Blog posts, content strategy
 ├── _system/                # Vault meta, instructions
@@ -148,8 +149,8 @@ tokenrip-vault/
 ### Document Organization
 
 **Where does this file go?**
-- Tokenrip product docs → `product/tokenrip/`
-- Intelligence Engine docs → `product/intelligence-engine/`
+- Tokenrip (substrate) product docs → `product/tokenrip/`
+- Quintel / equipment-finance product + build docs → `product/quintel/`
 - Distribution plans, checklists, experiment tracking → `distribution/`
 - Competitive research / analysis → `intelligence/`
 - Blog content → `content/`
@@ -167,7 +168,7 @@ tokenrip-vault/
 
 **Competitive positioning**: Track the agentic infrastructure landscape. Who's building what, where the gaps are, how Tokenrip differentiates. The intelligence/ folder has deep competitive analysis. Use it.
 
-**Content strategy**: Help plan and refine blog content. The Intelligence Engine's blog is both product and distribution. Content quality matters — it's the first impression.
+**Content strategy**: Help plan and refine blog content. The Tokenrip blog is both product and distribution; content quality matters — it's the first impression. *(The "Intelligence Engine" framing for the content motion was archived 2026-06-04 → `__ARCHIVE/intelligence-engine/`; the blog tooling still functions.)*
 
 **Distribution**: Help think through how to get Tokenrip into users' hands. Claude Code is the beachhead. What's next? Agent platforms, developer communities, partnerships.
 

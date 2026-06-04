@@ -18,7 +18,7 @@ System agents follow the **bootloader pattern**: a thin local command (`.claude/
 | Agent | Role | Description |
 |-------|------|-------------|
 | **engagement-agent/** | Outreach + CRM | Manages agent-to-agent outreach lifecycle: send pitch emails, ingest responses, classify leads, draft follow-ups, send approved responses. Four modes: `ingest`, `draft`, `outreach`, `send`. Backed by two Tokenrip collections + AgentMail. |
-| **blog-agent/** | Content pipeline | Produces Intelligence Engine blog posts: research → write → gate → edit → humanize → publish. Single linear pipeline with automated quality gates and human checkpoints. Publishes directly to Tokenrip. |
+| **blog-agent/** | Content pipeline | Produces Tokenrip blog posts: research → write → gate → edit → humanize → publish. Single linear pipeline with automated quality gates and human checkpoints. Publishes directly to Tokenrip. *(The "Intelligence Engine" motion this pipeline served was archived 2026-06-04; the pipeline itself still functions.)* |
 
 ### Bootloader Pattern
 

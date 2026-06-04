@@ -1,6 +1,6 @@
 # Content Folder
 
-Blog posts and supporting research for Tokenrip's Intelligence Engine.
+Blog posts and supporting research for the Tokenrip blog. *(The "Intelligence Engine" motion that framed this content pipeline was archived 2026-06-04 → `__ARCHIVE/intelligence-engine/`; the blog tooling itself still functions.)*
 
 ## Layout
 
@@ -73,6 +73,6 @@ The blog post framework (`blog-post-framework.md`) defines post types and struct
 
 ## What does NOT belong here
 
-- Product/platform docs → `product/tokenrip/` or `product/intelligence-engine/`
+- Product/platform docs → `product/tokenrip/` or `product/quintel/`
 - Branding/positioning → `product/tokenrip/`
 - WIP non-content → `active/`

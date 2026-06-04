@@ -1,9 +1,10 @@
 # Focus Dashboard
-*Updated: 2026-05-31*
+*Updated: 2026-06-04*
 
 **North Star (near-term):** Get a sale. Design partner / paid pilot / recurring-revenue customer — even fully custom consulting. 0 → 1 momentum is the unblock.
 **Direction:** Simon-owned deal manufactured — **Stephanie/AICAP** (healthcare credentialing, Upwork-sourced). Job shifts from *manufacturing* a deal to *converting* one: lock a paid engagement. Alek works the Upwork pipeline + Luai. Stauss/equipment-finance opened (dating stage). Consulting-as-platform playbook (AWS/Palantir).
 **Full strategy:** [[bd/get-a-sale/CLAUDE.md]] | [[bd/reference/motions-and-strategy]] | [[bd/CLAUDE]]
+**Operating gameplan:** [[active/operating-gameplan-2026-06-04|Foreground deals · autonomous machine · one build]] — how the two deals, the background machine (demand-scout / postmill / blog), and new builds fit together so the compounding layer runs without stealing deal hours (Bean session, 2026-06-04).
 
 ---
 
@@ -161,6 +162,7 @@ TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  GET A SALE  →  FUND
 
 ## Update Log
 
+- **2026-06-04**: Bean session → **operating gameplan** created: [[active/operating-gameplan-2026-06-04|Foreground deals · autonomous machine · one build]]. Core reframe — it's a *running* problem, not a building problem: the leverage is **autonomy** (schedule the agents already built — postmill is the "content engine" you wanted, fully wired with zero uses), not more agents. Foreground = the two deals (AICAP + Quintel/Bevel) on Simon's hands; machine = built agents on a schedule, reviewed weekly inside the Chief of Staff Friday Review; one capped build = the research agent, anchored to Quintel's signal engine (EDGAR/USAspending/UCC). Avoids Trap #4 because a live deal pulls on it.
 - **2026-05-31**: Yoda weekly review. Simon-owned deal manufactured — **Stephanie/AICAP** (healthcare credentialing, Upwork-sourced), strongest in the log; the May 23 assignment is complete. ONE thing → **lock a paid engagement** (Stephanie discovery phase). **Upwork verdict reversed** (producing channel, not lottery); LinkedIn warm underperforming for Simon. Stauss/equipment-finance opened (dating; Path-B bridge). Luai stalled (sent to his team). Two Yoda self-corrections logged: over-applied Stauss skepticism (aspirational ideal read as over-investment; premature "be on his calls"). New process: founders handle initial calls individually first.
 - **2026-05-23**: Yoda weekly review. Third clean channel kill (job-reqs — all AI agent jobs are AI-coding jobs). Upwork demoted to maintenance (supply ceiling 2-5/day). Channel reallocated to LinkedIn pipeline (Simon direct) + Reddit demand-scout discovery loop. Luai proposal sent (Alek). Three Yoda calibration corrections recorded: Motion E vs. own-audience conflation, architecture-filter wrong level, consulting-trap rule-4 repeat-violation. New ONE thing: **get a sale**.
 - **2026-05-18**: Discovery sprint resolved early with two clean kills (LinkedIn-insurance, Motion E). Channel reallocated to active-demand interception (Upwork + job reqs). Yoda operating instructions updated: no premature guardrails.

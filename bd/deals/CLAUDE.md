@@ -22,11 +22,11 @@ Keep filenames descriptive and unique so Obsidian bare wiki-links (`[[slug]]`) r
 ## Current clusters & briefings
 
 ### `equipment-finance/` — the first dense substrate cluster (Stauss-channeled)
-The opportunity Stauss Paulos opened. He functions as the **channel** (distribution partner), not a single customer; sub-deals flow through him. The vertical is the "first dense substrate cluster / lighthouse vertical."
+The opportunity Stauss Paulos opened. He functions as the **channel** (distribution partner), not a single customer; sub-deals flow through him. The vertical is the "first dense substrate cluster / lighthouse vertical." The **product** built for it is **Quintel** (quintel.ai), powered by Tokenrip — product/build docs live in `product/quintel/` ([[product/quintel/CLAUDE|index]]); this folder holds the *deal/relationship* layer.
 
 - **Living briefing:** [[bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing|stauss-vfi-tokenrip-briefing]] — deal / relationship / strategy / risks / decisions.
 - **Domain primer:** [[equipment-finance-domain-primer-2026-05-30]] — the *industry* (durable across the vertical).
-- **Build architecture:** [[equipment-finance-build-architecture-2026-06-02]] — the *build* (one engine / hands / deal-graph + spine-first roadmap).
+- **Build architecture (in `product/quintel/`):** [[equipment-finance-build-architecture-2026-06-02]] — the *build* (one engine / hands / deal-graph + spine-first roadmap).
 - **Nodes** (interaction record lives in `bd/calls/`):
   - **Stauss Paulos / VFI** — channel + would-be operating partner. [[bd/calls/contacts/stauss-paulos]]
   - **Bevel — Ted Craver** — arm's-length placement firm; first live intro; cleaner first customer than VFI (no employment conflict-of-interest). [[bd/calls/contacts/ted-craver]]

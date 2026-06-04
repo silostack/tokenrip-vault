@@ -37,6 +37,6 @@ The answer was yes. See `gameplan.md` for the full hypothesis testing results.
 
 ## Related Projects
 
-- `__PROJECTS/agent-cli/` — Primary product informed by this research
-- `__PROJECTS/tokenrip/` — Secondary product with adjacent strategic positioning
-- `__PROJECTS/10x/intelligence-engine.md` — Intelligence Engine is the evolved form of the research capability built here
+- `product/tokenrip/` — horizontal substrate product informed by this research
+- `product/quintel/` — equipment-finance vertical product (powered by Tokenrip)
+- *(The Intelligence Engine, once the evolved form of this research capability, was archived 2026-06-04 → `__ARCHIVE/intelligence-engine/`.)*
