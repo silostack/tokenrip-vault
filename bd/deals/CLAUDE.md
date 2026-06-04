@@ -1,0 +1,39 @@
+# BD — Deals (Living Briefings & Opportunity Clusters)
+
+> **What lives here:** per-deal and per-opportunity **living briefings** — the synthesis layer that answers *"what are we building, what could go wrong, and what do we need to decide?"* across a whole opportunity. These are working documents that evolve as the deal moves; they are **not** snapshots and **not** archives.
+
+## How this differs from `bd/calls/`
+
+| Folder | Answers | Granularity | Lifespan |
+|---|---|---|---|
+| **`bd/calls/contacts/`** | *Who is this person? Is the pain real? What stage?* | one file per contact | permanent, across the deal's life |
+| **`bd/calls/{notes,transcripts,proposals}/`** | *What happened on each call? What did we send?* | one file per interaction | permanent record |
+| **`bd/deals/` (here)** | *What are we building if we win? What's the moat / risk / decision?* | one briefing per opportunity (may span several contacts) | active while the opportunity is live; archive when won/dead |
+
+The contact docs and the briefing are **complementary, not redundant.** A briefing assumes you've read the contact docs and points back at them; it does not re-list a contact's commitments or background. Don't duplicate state — link it.
+
+## Filing rule
+
+- **Single-deal, single-artifact** → a flat file: `bd/deals/<slug>-briefing.md` (e.g. a future `bd/deals/aicap-credentialing-briefing.md`).
+- **Multi-deal vertical opportunity (a cluster)** → a subfolder: `bd/deals/<vertical>/` holding the living briefing + companion artifacts (domain primer, spec, deal-graph schema…). Promote a flat briefing into a subfolder once it grows a second artifact.
+
+Keep filenames descriptive and unique so Obsidian bare wiki-links (`[[slug]]`) resolve regardless of path.
+
+## Current clusters & briefings
+
+### `equipment-finance/` — the first dense substrate cluster (Stauss-channeled)
+The opportunity Stauss Paulos opened. He functions as the **channel** (distribution partner), not a single customer; sub-deals flow through him. The vertical is the "first dense substrate cluster / lighthouse vertical."
+
+- **Living briefing:** [[bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing|stauss-vfi-tokenrip-briefing]] — deal / relationship / strategy / risks / decisions.
+- **Domain primer:** [[equipment-finance-domain-primer-2026-05-30]] — the *industry* (durable across the vertical).
+- **Build architecture:** [[equipment-finance-build-architecture-2026-06-02]] — the *build* (one engine / hands / deal-graph + spine-first roadmap).
+- **Nodes** (interaction record lives in `bd/calls/`):
+  - **Stauss Paulos / VFI** — channel + would-be operating partner. [[bd/calls/contacts/stauss-paulos]]
+  - **Bevel — Ted Craver** — arm's-length placement firm; first live intro; cleaner first customer than VFI (no employment conflict-of-interest). [[bd/calls/contacts/ted-craver]]
+  - **DCF / Direct Credit Funding — Jason Ames (owner) + Devan Phillips (BD, ex-VFI)** — ⚠️ identity unconfirmed: prep'd as a balance-sheet direct lender, but Devan described it as "a larger broker" on the 6/1 call; Jason no-showed. [[bd/calls/contacts/devan-phillips]] *(Call 2026-06-01 processed; reconcile direct-lender-vs-broker before treating as the moat-layer customer.)*
+  - **NED / National Equipment Dealers — Andy Cooper (VP Retail Finance)** — dealer captive-finance desk (3rd archetype); pain = consolidate 31 lenders → 5–6 + route every deal; same matching hand as Bevel → the architecture's extensibility test. Sequenced behind Bevel. [[bd/calls/contacts/andy-cooper]]
+  - **VFI** — Stauss's employer; institutional full-stack (Product B); conflict-of-interest-encumbered — kept in parallel, not the clean first deal.
+
+---
+
+*Add a new briefing when an opportunity passes discovery and warrants a build/strategy synthesis. Archive (move to `__ARCHIVE/`) when the deal is won-and-handed-off or dead.*

@@ -28,6 +28,8 @@ So the honest verdict is not "yes it works" or "no it doesn't." It's: **integrat
 | **Q4 — Auth / governance gate** | Mandatory **Certified Partner Program** | Username + access key; "contact sales" — no self-serve | **"Request Access" wall**; `/apis` returns HTTP 403 anonymously — most gated of the three |
 | **Q5 — Best path (A/B/C)** | **B** (certified-partner bridge); A unproven | **A plausible** (create + trigger via API) pending live test; **B** = hospital issues the key | **B** (partner/hospital-authorized bridge); A unproven |
 
+> **Path C isn't in the cells above on purpose** — it operates at the UI layer, so it behaves the same regardless of vendor. It's reframed in its own section below ("Path C reframed: front-door assist"), because "overlay" undersells what it actually is and where it fits.
+
 ## Per-system detail
 
 ### MD-Staff — most promising
@@ -55,6 +57,26 @@ HealthStream publicly confirms a REST + webhook Credentialing API on the hStream
 
 4. **The precedented way into these systems is the certified-partner handoff — and it carries *verified results*, not *completed applications*.** ([[aicap-path-d-and-credsimple-analysis-2026-06-02|full analysis]] — CredSimple/Andros study.) The one proven third-party integration (CredSimple ↔ symplr) is a CVO returning *verified* data at the *end* of the pipeline, on the *payer* side (Cactus/Vistar). AICAP wants the opposite: push a *completed-but-unverified* application in at the *front*, on the *hospital* side. That flow has no clear precedent — exactly what the vendor emails need to confirm. Implication: the realistic route is land a design-partner hospital → build on its license → certify after (forward-deployed), and AICAP may need a verification/NCQA partner (Andros is a natural one) to be trusted.
 
+## Path C reframed: front-door assist (the unilateral fallback)
+
+AICAP's Path C — described on the discovery call as "some sort of screen or layer over the existing application" — is not a distinct, vague "overlay." It is **front-door assist**: instead of pushing data in at the back (Paths A/B), AICAP accelerates the provider's own submission through the system's *native* portal (MD-App, the Hub, Symplr's provider intake). Browser automation is the concrete implementation. Three flavors:
+
+- **Headless RPA** — a bot logs in and fills *and submits*. Fastest to prototype, and the dead end (see below).
+- **Browser extension / true overlay** — injects into the provider's own logged-in session and pre-fills the fields they'd otherwise type by hand; the provider reviews and submits.
+- **Proxy / iframe wrapper** — AICAP's app fronts the vendor's app. Avoid: X-Frame-Options, auth, and CORS make it brittle and insecure; the extension dominates it.
+
+**The dividing line is the attest step, not the fill step.** Automating the *fill* is legitimate; automating the *attestation* is fraud. A headless bot that submits on the provider's behalf is functionally identical to "a coordinator logs in as the provider" — the exact practice AICAP already ruled out as unethical. So the only viable form keeps the provider in their own session for the final review-and-attest, which structurally resembles a browser extension, not a headless bot.
+
+**The strategic upside (the non-obvious part): front-door assist dissolves both walls the API paths run into.** Because the provider goes through the system's native portal:
+- The workflow-trigger crux is moot — it is a real front-door submission, so the instance opens and PSV fires natively. No "does the API drive the case?" question.
+- Attestation is clean — the provider attests in the system, exactly where it must legally happen.
+
+And it needs **zero vendor cooperation**: no Certified Partner Program, no API credentials, no gate. It is the one path no vendor can block. It also maps directly onto the Phase 1 autofill experience already proposed — delivered *inside* the vendor portal instead of in AICAP's own UI.
+
+**The downside (AICAP's "not reliable" instinct was right):** it is brittle in production. Selector/DOM drift breaks it on every vendor UI release; each hospital instance is customized; MFA, session timeouts, and bot-detection fight it; there is no SLA and no support. Fast to demo, expensive to maintain.
+
+**Net:** Path C is the **unilateral fallback** — the thing AICAP can ship without anyone's permission, and the only path where attestation is unambiguous. Paths A/B are cleaner *if* AICAP gets through the gate; Path C is the path nobody can block but nobody will support. In practice it is also likely the **fastest route to a working demo** for a design-partner hospital, which makes it valuable even if the production architecture ends up being an API path.
+
 ## The single highest-leverage next step
 
 One precise question to each vendor's partnership team resolves the crux faster than any further public research:
@@ -67,6 +89,7 @@ One precise question to each vendor's partnership team resolves the crux faster 
 2. **Prioritize MD-Staff for a live test** — it has the most complete documented inbound + trigger surface, so it's the fastest path to a proof.
 3. **Treat CAQH (Path D) as a complementary completion + attestation layer**, not a substitute for hospital-system integration — it solves attestation cleanly but feeds the payer lane (see analysis).
 4. **Scope the build off Path B as the base case** — integration rides the hospital's license, with provider attestation handled explicitly. *(This is where the re-baselined build scope + quote attach — replacing the stale $12K Phase 1, which assumed a PDF/API-optional output that's now off the table.)*
+5. **Hold Path C (front-door assist) as the unilateral fallback and fastest demo route.** It needs no vendor cooperation and is the only path where attestation is unambiguous. Prototype it against a sandbox/portal to put a working demo in front of a design-partner hospital quickly — even while the API paths are still gated — accepting its production brittleness as a known trade-off.
 
 ## Confirmable now vs. needs live access
 

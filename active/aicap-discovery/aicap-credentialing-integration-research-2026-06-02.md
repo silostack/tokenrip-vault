@@ -133,6 +133,31 @@ In MD-Staff, the **Appointment record is the credentialing/privileging unit** �
 Send this to each vendor's partnership team:
 > *"Does an inbound API call (creating a provider/appointment record, or firing a webhook) initiate a credentialing case and trigger primary source verification — or does it only create a record that a specialist must then open and process manually? And how is provider attestation handled for externally-submitted application data?"*
 
+### Thread D — Path C / front-door assist (browser automation)
+
+AICAP's "overlay" (Path C) is really **front-door assist**: accelerate the provider's submission through the vendor's *own* portal rather than pushing data in at the back. Browser automation is the implementation. (Full reframe in the findings doc.)
+
+**Three flavors, by who controls the attest step:**
+- **Headless RPA** (Playwright/Puppeteer) — fills + submits unattended. Dead end: submitting on the provider's behalf = acting as the provider = the practice AICAP already ruled out.
+- **Browser extension / overlay** — injects into the provider's logged-in session, pre-fills, provider reviews + attests. The viable form.
+- **Proxy / iframe wrapper** — avoid (X-Frame-Options / CORS / auth).
+
+**Why it's strategically clean:** the native portal handles workflow-trigger and attestation for free, and the path needs no partner program or API key — unbypassable by the vendor gate. It is the unilateral fallback and likely the fastest path to a demo.
+
+**Why it's operationally fragile (verify before relying on it):**
+- Selector/DOM drift — breaks on every vendor UI release; no versioned contract like an API.
+- Per-instance customization — each hospital deployment may differ; an automation built for Vanderbilt's MD-Staff may not transfer.
+- Auth/session — MFA, SSO, idle timeouts; the automation must run inside the provider's own session for attestation to hold.
+- Bot-detection / ToS — vendors may detect or prohibit automated UI interaction; check the terms.
+- PHI in the browser — the extension handles PHI client-side; security review needed.
+
+**What to confirm:**
+- Do the provider portals (MD-App, the Hub, Symplr provider intake) tolerate a pre-filled session, and is there any ToS clause against automated assistance?
+- Can the provider's attest action be cleanly preserved while everything upstream is automated?
+- Is the autofill defensible as "the provider reviewed and attested," not "software attested"?
+
+**Substrate angle (Tokenrip):** a browser overlay that fills a form in the user's own session from structured data is a generic mounted-agent capability, reusable well beyond credentialing. Genuine substrate yield — but per the build discipline it's a by-product, not a reason to favor Path C over a cleaner API path if one proves out.
+
 ### Vendor contacts / access routes
 - **Symplr:** partners@symplr.com (Certified Partner Program)
 - **MD-Staff:** account / sales rep (no public developer contact); a customer hospital's MD-Staff admin can issue an API key
@@ -152,3 +177,5 @@ Send this to each vendor's partnership team:
 | Access is partner/customer-gated everywhere | High | Explicit at all three |
 | Attestation is a structural blocker | Med–High | Built into how credentialing works; not vendor-specific docs |
 | CAQH ProView is a viable alternative path | Unverified | Plausible from references; needs its own dig |
+| Path C (front-door assist) needs no vendor cooperation | High | UI-level; independent of partner programs and API keys |
+| Path C is robust enough for production | Low | Brittle by nature — DOM drift, per-instance customization, bot-detection |

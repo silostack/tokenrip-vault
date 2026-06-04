@@ -122,7 +122,7 @@ She built this on Replit by herself. "Burnt out Replit with reiterations." Her o
 | 6 | If accepted: get on MedCal executive committee meeting (free observer) | Simon | TBD | Pending — Stephanie's standing offer |
 | 7 | **Decide + frame discovery as a paid, scoped sprint** | Simon | 2026-06-02 | ✅ Resolved — $1,000, credited to build, billed against live hourly Upwork contract (proposal drafted + humanized 2026-06-02) |
 | 8 | Capped sizing scan of the three systems' integration surface | Simon | 2026-06-02 | ✅ Done — all three expose an integration surface; live write-access partner-gated; sized at ~1–2 days |
-| 9 | Send discovery proposal (scope + deliverable + price) | Simon | 2026-06-02 | 🟢 Finalized 2026-06-02 — send-ready ($1,000, cover message included); Simon to send via Upwork |
+| 9 | Send discovery proposal (scope + deliverable + price) | Simon | 2026-06-02 | 🟢 Finalized 2026-06-02 — send-ready ($1,000, cover message included). Refined same day with transcript-grounded edits (her "instance" vocabulary, attestation crux tied to her PDF-pilot realization, her 7 inspection artifacts, clean-handoff principle, 4th-path + customer-routed-unlock teasers — verdicts reserved). Simon to send via Upwork |
 | 10 | Confirm $12K Phase 1 status | Simon | 2026-06-03 | ✅ Resolved — superseded; discovery's next-steps re-baselines the build; $12K kept out of discovery message |
 | 11 | Re-request her materials (Symplr brain-dump + screenshots, prior integration docs) | Simon | 2026-06-02 | 🟢 Folded into the proposal-send message (no separate ack — sending scope+price and starting now) |
 | 12 | Overview doc + target-system list | Stephanie | 2026-05-30 | ✅ Received 2026-06-02 (discovery scope doc covers both) |
