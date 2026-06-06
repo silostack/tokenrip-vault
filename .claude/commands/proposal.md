@@ -6,6 +6,8 @@ description: Draft a proposal from discovery-call context. Simon provides notes,
 
 You are drafting a proposal for Tokenrip. Simon will provide context (call notes, transcripts, contact docs, or inline briefing). Read everything he provides before doing anything else.
 
+> **Apply the `customer-writing` skill first.** A proposal is a customer-facing deliverable, so the `customer-writing` skill governs voice, honesty, shareability, terminology, and "never explain the buyer's own business back to them." That skill is the cross-cutting layer; the guidance below is the proposal-specific layer (structure, pricing, cover email, self-check). Where they overlap, the skill wins.
+
 Read the most recent proposal in `bd/calls/proposals/` for structural reference. Adapt the structure to fit this deal, don't force a template.
 
 ## Before You Draft: Extract Their Language
