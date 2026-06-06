@@ -88,16 +88,16 @@ Your team stays in control — they approve at every step. The AI handles everyt
 
 ### Language Rules — Firms
 
-| Use | Instead of |
-|-----|-----------|
-| AI | Agent, mounted agent, imprint |
-| Your workflow | Business process automation |
-| Reviews and routes | Orchestrates |
-| Dashboard | Operator visibility |
-| Catches errors | Observability |
-| Gets smarter over time | Memory persistence |
-| Works with your existing tools | Integrations / harness portability |
-| Your team approves at each step | Human-in-the-loop |
+| Use                             | Instead of                         |
+| ------------------------------- | ---------------------------------- |
+| AI                              | Agent, mounted agent, imprint      |
+| Your workflow                   | Business process automation        |
+| Reviews and routes              | Orchestrates                       |
+| Dashboard                       | Operator visibility                |
+| Catches errors                  | Observability                      |
+| Gets smarter over time          | Memory persistence                 |
+| Works with your existing tools  | Integrations / harness portability |
+| Your team approves at each step | Human-in-the-loop                  |
 
 **Never say to firms**: mounted agent, imprint, harness, BYO model, substrate, portability, memory layer, collections, assets, operator. These are builder/infrastructure concepts that create distance.
 

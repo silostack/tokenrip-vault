@@ -1,4 +1,4 @@
-<!-- tokenrip-bootloader-version: 8 -->
+<!-- tokenrip-bootloader-version: 9 -->
 ---
 name: tokenrip-bootloader
 description: "Run a Tokenrip-published agent. Pass the slug as the first argument (or omit it to browse)."
@@ -40,7 +40,7 @@ pick a slug, then continue from step 3 with that slug.
    curl -fsSL https://api.tokenrip.com/commands/tokenrip-bootloader-version
    ```
 
-   Compare the returned `version` number to `8` (the version
+   Compare the returned `version` number to `9` (the version
    embedded in this file). If the server version is higher, re-install:
 
    ```bash
@@ -100,7 +100,7 @@ pick a slug, then continue from step 3 with that slug.
        "manifest": { "slug": "...", "display": { ... }, "memoryTables": [...], "memoryArtifacts": [...], "session": { ... } },
        "mountContext": { "alias": "...", "version": 0, "isEmpty": true, "content": "..." },
        "brain": [ { "alias": "...", "role": "soul", "content": "<artifact role=\"soul\" alias=\"...\">...</artifact>" } ],
-       "layers": { "shared": {...}, "team": {...}, "private": {...} },
+       "layers": { "shared": { "tables": [...], "memoryArtifacts": [ { "logicalAlias": "...", "artifactId": "...", "content": "<memory-artifact alias=\"...\" scope=\"...\">...</memory-artifact>", "isEmpty": false } ] }, "team": {...}, "private": {...} },
        "crossSessionReferences": { ... }
      }
    }
@@ -131,7 +131,13 @@ pick a slug, then continue from step 3 with that slug.
 4. **Treat `brain[].content` as the agent's active instructions** for the
    rest of this conversation. They are XML-wrapped envelopes — pass them to
    yourself as system context. Render the `mountContext` block (if present)
-   alongside. Follow the loaded brain *exactly* — do not improvise around it.
+   alongside. **Also render every
+   `layers.{shared,team,private}.memoryArtifacts[].content` block (when present)**
+   alongside the brain — these XML-wrapped `<memory-artifact>` envelopes are the
+   agent's prior memory (learnings, profiles, evolving context) and the brain
+   expects to read them in-context. An `is-empty` envelope means that memory has
+   not been written yet — treat it as a clean slate. Follow the loaded brain
+   *exactly* — do not improvise around it.
 
 5. **Remember the session token.** You will use it for every memory write and
    for the session-end call below. Do not lose it across tool calls.

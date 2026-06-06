@@ -30,16 +30,16 @@ Seven criteria, weighted to total 100. Ordered by weight (heaviest first).
 
 Scoring is Yoda's read based on vault context. Alek and Simon: recalibrate any cell where you have ground truth I don't.
 
-| Criterion | Wt | Real Estate | Tax/Acctng | Insurance | Consulting | Bookkeeping | M&A Boutique | Construction |
-|---|---|---|---|---|---|---|---|---|
-| Sales cycle | 30 | **8** | 5 | 3 | 7 | 7 | 5 | 6 |
-| Warm leads | 20 | **8** | 6 | 2 | 5 | 4 | 3 | 3 |
-| Demo legibility | 15 | **10** | 6 | 6 | 5 | 8 | 7 | 7 |
-| Domain knowledge | 15 | **8** | 5 | 4 | 6 | 5 | 5 | 3 |
-| Procurement | 10 | **8** | 7 | 3 | 8 | 8 | 7 | 7 |
-| Adjacency reuse | 5 | 6 | **8** | 7 | 5 | 6 | 6 | 6 |
-| DM accessibility | 5 | 7 | 6 | 5 | 7 | 7 | 6 | 5 |
-| **TOTAL (1000)** | | **815** | **575** | **370** | **615** | **630** | **520** | **515** |
+| Criterion        | Wt  | Real Estate | Tax/Acctng | Insurance | Consulting | Bookkeeping | M&A Boutique | Construction |
+| ---------------- | --- | ----------- | ---------- | --------- | ---------- | ----------- | ------------ | ------------ |
+| Sales cycle      | 30  | **8**       | 5          | 3         | 7          | 7           | 5            | 6            |
+| Warm leads       | 20  | **8**       | 6          | 2         | 5          | 4           | 3            | 3            |
+| Demo legibility  | 15  | **10**      | 6          | 6         | 5          | 8           | 7            | 7            |
+| Domain knowledge | 15  | **8**       | 5          | 4         | 6          | 5           | 5            | 3            |
+| Procurement      | 10  | **8**       | 7          | 3         | 8          | 8           | 7            | 7            |
+| Adjacency reuse  | 5   | 6           | **8**      | 7         | 5          | 6           | 6            | 6            |
+| DM accessibility | 5   | 7           | 6          | 5         | 7          | 7           | 6            | 5            |
+| **TOTAL (1000)** |     | **815**     | **575**    | **370**   | **615**    | **630**     | **520**      | **515**      |
 
 ---
 

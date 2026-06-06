@@ -139,7 +139,7 @@
 **Stat row**:
 
 - **6 weeks** — since founding
-- **April 2026** — founded
+- **June 2026** — first revenue
 - **Live** — substrate, CLI, Moa
 - **MCP-native** — from day one
 
@@ -149,11 +149,11 @@
 - CLI shipped. MCP-compatible. BYO inference.
 - Moa, our agent-building agent — describe a workflow in chat, get a persistent, portable agent the whole team can use.
 
-**Next 90 days**:
+**Live now — first revenue**:
 
-- Moa turns more workflows into published, portable agents — target 25-40.
-- Upwork-as-discovery: paid agent builds that become reusable patterns.
-- First teams sharing agents on the paid tier.
+- **Healthcare credentialing** — paid discovery engagement, converting to a build.
+- **Quintel (equipment finance)** — vertical product in active build with an embedded 40-year-industry partner channeling a customer pipeline.
+- Each forward-deployed build deposits reusable agents + a vertical deal-graph — **equipment finance is our first dense substrate cluster.**
 
 **Alek — Go-to-market**: A career go-to-market operator — enterprise sales at Gartner, full-time insurance sales, and a real estate company of his own. Co-founded RebelFi with Simon, running 400+ customer-development conversations with banks and fintechs. Leads go-to-market at Tokenrip.
 
