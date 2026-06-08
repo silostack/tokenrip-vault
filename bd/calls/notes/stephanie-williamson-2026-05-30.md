@@ -3,13 +3,13 @@
 ## Follow-Up Actions
 
 ### What WE Need to Do
-| # | Action | Owner | Due |
-|---|--------|-------|-----|
-| 1 | **Decide whether the integration discovery is a paid, scoped sprint or free pre-sales — before doing the work.** Pre-package it: fixed deliverable (feasibility doc per system + firm MVP quote), a number, credited toward the build. | Simon | 2026-06-02 (before sending the discovery proposal) |
-| 2 | Research the three target systems (Symplr, MD-Staff, VerityStream) for integration surface — public vs. account-gated APIs, write-into-instance capability, documentation availability | Simon | 2026-06-03 (after her docs land) |
-| 3 | Send Stephanie a **discovery proposal** (scope + deliverable + price for the feasibility study) | Simon | 2026-06-04 (inferred) |
-| 4 | Clarify deal structure: does the $12K Phase 1 proposal still stand behind the discovery, or is it superseded? Don't let it evaporate silently. | Simon | 2026-06-04 (fold into discovery proposal) |
-| 5 | Archive both prep files (`call-prep-stephanie-williamson-aicap-2026-05-27.md`, `call-prep-stephanie-williamson-clarification-2026-05-30.md`) to `__ARCHIVE/` | Simon | 2026-06-02 |
+| #   | Action                                                                                                                                                                                                                                 | Owner | Due                                                |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- | -------------------------------------------------- |
+| 1   | **Decide whether the integration discovery is a paid, scoped sprint or free pre-sales — before doing the work.** Pre-package it: fixed deliverable (feasibility doc per system + firm MVP quote), a number, credited toward the build. | Simon | 2026-06-02 (before sending the discovery proposal) |
+| 2   | Research the three target systems (Symplr, MD-Staff, VerityStream) for integration surface — public vs. account-gated APIs, write-into-instance capability, documentation availability                                                 | Simon | 2026-06-03 (after her docs land)                   |
+| 3   | Send Stephanie a **discovery proposal** (scope + deliverable + price for the feasibility study)                                                                                                                                        | Simon | 2026-06-04 (inferred)                              |
+| 4   | Clarify deal structure: does the $12K Phase 1 proposal still stand behind the discovery, or is it superseded? Don't let it evaporate silently.                                                                                         | Simon | 2026-06-04 (fold into discovery proposal)          |
+| 5   | Archive both prep files (`call-prep-stephanie-williamson-aicap-2026-05-27.md`, `call-prep-stephanie-williamson-clarification-2026-05-30.md`) to `__ARCHIVE/`                                                                           | Simon | 2026-06-02                                         |
 
 ### What THEY Need to Do
 | # | Action | Who | Due |

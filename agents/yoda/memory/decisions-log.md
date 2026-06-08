@@ -133,6 +133,34 @@ Simon named the core insight: **pain vs. vitamin is a dimension missing from the
 
 **Captured in**: `DASHBOARD.md`, `agents/yoda/memory/sessions/2026-05-18.md`.
 
+### Revenue Becomes the Primary KPI — "No Month Without Revenue"
+**Date**: 2026-06-08
+**Context**: First paid engagement landed (Stephanie/AICAP discovery, dollars in escrow). After 3+ years to first meaningful revenue, Simon declared: "From now on, we don't go another month without revenue." The prior KPI regime tracked leading indicators (conversations had, deals progressed) with revenue as a forcing function but no recurring gate.
+
+**Options Considered**:
+- Keep leading-indicator KPIs (conversations/deals progressed) with revenue as a loose forcing function — rejected (now that revenue exists, leading indicators are no longer the binding constraint)
+- "We have revenue" as the bar — rejected (gameable by a single deal; one escrowed engagement doesn't make next month's revenue)
+- **≥1 new revenue event per calendar month, trending to MRR** — adopted
+
+**Decision**:
+- **Primary KPI: ≥1 *new* revenue event every calendar month, trending toward MRR.** New = a new engagement closed *or* a recurring payment landed — not the same deal counted twice.
+- June covered by Stephanie's escrow (pending release — escrow ≠ bank; confirm release triggers).
+- Leading indicator stays: real buyer conversations (now EF brokers/lenders + Stephanie's return).
+- The 90-day substrate-density North Star (`bd/kpis.md`) is unchanged but subordinate to the monthly revenue gate at this stage.
+
+**Rationale**:
+1. **First revenue inverts the optimization function** (parallel to the 2026-05-01 capital-assumption inversion). With a paid dollar on the board, the binding question shifts from "are we having the right conversations?" to "is revenue recurring and growing?"
+2. **Un-gameable definition prevents one-deal complacency.** "A new revenue event per month" forces next month's revenue to be manufactured *this* month — making the KPI and the weekly ONE-thing the same arrow.
+3. **Healthy revenue-as-forcing-function** (insights 5/8), not panic-driven: it produces customer proximity and pipeline discipline, not "anything for anyone who pays."
+
+**Risks Yoda flagged:**
+- A monthly-revenue gate can pull toward any revenue (one-off agency/consulting) over substrate-building revenue. At current scale this is *fine* per Simon's own rubric (near-zero filtering at zero/low revenue; filtering scales with revenue; hard-filter ~$1M ARR) — do NOT flag the consulting trap here (rule 4).
+- Escrow ≠ received. June's revenue isn't real until the escrow releases.
+
+**Outcome**: [To be evaluated monthly. July's revenue event is the first live test — candidates are Stephanie's MVP (on her return) and a non-Stauss EF buyer.]
+
+**Captured in**: `agents/yoda/memory/sessions/2026-06-08.md`, `agents/yoda/context.md`, `agents/yoda/memory/goals.md`.
+
 ---
 
 *Full historical decisions log archived in `__ARCHIVE/yoda-decisions-log.md`*

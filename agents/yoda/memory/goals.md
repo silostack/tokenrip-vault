@@ -58,15 +58,23 @@
 - **Status**: **Paused** — vitamin-grade signal. Playbook exists if signal changes. — **P2**
 - **KPI**: Non-founder MOA-built agents published (target was 1+ by May 12 — unlikely to hit)
 
-### Goal 10: Get a Sale — Design Partner / Paid Pilot / Recurring Revenue
-- **Success criteria**: First paid engagement (design partner, pilot, or consulting) closed. 0 → 1 momentum to stack from.
-- **Progress**: **Simon-owned most-progressable deal manufactured — Stephanie/AICAP (healthcare credentialing), Upwork-sourced.** Strongest deal in the BD log: ~$22K/day pain, Harvard/Duke/MD Anderson design partners, architecture-fit, urgency, founder-to-founder. Proposal sent (May 27); she requested a clarification/discovery call (next). The May 23 assignment ("manufacture a Simon-owned deal") is complete. Luai (Alek) stalled — sent to his team for review. Stauss/equipment-finance opened as a dating-stage insider relationship (Path-B bridge; not yet a buyer).
-- **This week target (May 31 – Jun 7)**: **Lock a paid engagement** — pre-scope/price/date Stephanie's discovery phase, walk out paid + convertible to MVP. Hold price under her warmth. Feel out Stauss (no forced tactics). Rebalance off LinkedIn toward the producing Upwork motion.
-- **Status**: Executing — **P0** (Simon primary)
-- **KPI**: Conversations had, deals progressed, first paid engagement closed.
+### Goal 10: Get a Sale → Recurring Revenue — FIRST DOLLAR LANDED
+- **Success criteria**: First paid engagement closed ✅ (2026-06-08). Now: **≥1 new revenue event per calendar month, trending to MRR.**
+- **Progress**: **First paid engagement LANDED — Stephanie/AICAP discovery, dollars in Upwork escrow awaiting release (June 8).** First meaningful revenue after 3+ years. Discovery surfaced a hard hospital-integration blocker that may redraw her MVP strategy — she's on vacation 2 weeks, reviewing the research; AICAP next steps on her return. Luai (Alek) stalled. Stauss/EF escalated into a vertical thrust → see Goal 11 (EF Vertical / Quintel).
+- **This week target (Jun 8 – ~21)**: **Get July's revenue event in motion.** ONE thing: one non-Stauss EF buyer describing their own pain + a path to dollars (Goal 11). Confirm Stephanie's escrow *releases* (escrow ≠ bank). Upwork → maintenance/opportunistic.
+- **Status**: First dollar landed — converting to recurring — **P0** (Simon primary)
+- **KPI (regime change 2026-06-08)**: **≥1 new revenue event per calendar month, trending to MRR** (new = a new engagement closed *or* a recurring payment landed — not the same deal counted twice). Leading indicator: real buyer conversations. See decisions-log 2026-06-08.
 - **Architecture-fit rule (refined 2026-05-23)**: Filter applies to *the work that gets built*, not the words in the conversation. Customers describe problems; the engineering call is whether solving them builds reusable substrate. At zero revenue, run with minimal filtering — almost any custom build produces substrate yield. Filtering tightens with revenue; hard-filter at ~$1M ARR.
 
 *History: Began May 8 as vertical discovery via LinkedIn Sales Nav (Insurance/Tax/Real Estate). May 18: LinkedIn-insurance found structurally dead — channel reallocated to active-demand interception (Upwork + job reqs). May 23: Job-req channel killed (third clean kill — supply structurally absent: all 'AI agent' jobs are AI-coding jobs as of May 2026). Upwork demoted to maintenance (supply ceiling 2-5 biddable/day). Channel reallocated again to: LinkedIn pipeline follow-ups (Simon's direct conversations) + demand-scout/Reddit discovery loop + supporting Alek on Luai close. Thesis unchanged throughout: get to first sale.*
+
+### Goal 11: Equipment-Finance Vertical (Quintel) — Buyer-Discovery Test
+- **Success criteria**: One non-Stauss EF buyer (broker or lender) describes their own pain in their own words and engages on a path to dollars. That verdict — yes or no — decides whether EF is a real vertical or a Stauss-shaped hypothesis.
+- **Progress**: **quintel.ai stood up (initial version)** — demo/portfolio to earn the conversation; Alek's mockups landed on a call. Stauss delivered a large EF brain-dump + booked 2 calls. Simon **decoupling EF from Stauss** (named his unreliability cold; building a Stauss-independent GTM — LinkedIn broker list, finding lenders, players identified: brokers/lenders/borrowers; initial outlook = broker platform or lender/VFI platform). No non-Stauss budget-holder has described their own pain yet (Bevel = gated + Stauss-sourced).
+- **This fortnight (Jun 8 – ~21)**: ONE thing — get one non-Stauss EF buyer on a call describing their own pain + a path to dollars. Keep quintel.ai at **demo-depth** until a buyer pulls it deeper.
+- **Discipline**: Run as a **time-boxed buyer-discovery test, platform depth gated on a real pull** — same channel-produces-a-verdict method that gave three clean kills + one real sale. "Figure out the EF motion" must cash out as a buyer on the phone, not a market map or more building.
+- **Status**: Active hypothesis under test — **P0** (Simon primary; Path-B → now a direct thrust). The July revenue candidate.
+- **Watch**: (1) quintel.ai creeping from demo into platform-build ahead of a buyer (CLAUDE.md Trap #4); (2) "identified players" substituting for a heard buyer voice.
 
 ### Goal 10b: Job-Req Outreach Channel — KILLED
 - **Outcome**: Killed 2026-05-23. All 'AI agent' job postings are AI-coding jobs as of May 2026. Channel has no biddable supply for substrate-relevant work.
@@ -133,9 +141,13 @@
 | 2026-05-23 | Demand-scout v1 deployed on Reddit (discovery + demand-validation loop) | **Done** | Reddit-only scope; a few messages; strong signal/learning source |
 | 2026-05-23 | Upwork on maintenance (bid when alerts fire) | **Upgraded** | Became Simon's primary effort; channel re-promoted (Goal 10c) |
 | 2026-05-23 | Support Alek on Luai close where useful | **Stalled** | Luai sent proposal to his team for review (likely his dev) |
-| 2026-05-31 | Lock a paid engagement — pre-scope/price/date Stephanie's discovery phase | **Committed** | THE one thing. Hold price under her warmth. |
-| 2026-05-31 | Stauss — feel it out (no forced tactics) | **Committed** | Watch for the graduation marker: a non-Stauss buyer voice |
-| 2026-05-31 | Rebalance off LinkedIn → the producing Upwork motion | **Committed** | Mirror Alek or diagnose non-conversion |
+| 2026-05-31 | Lock a paid engagement — pre-scope/price/date Stephanie's discovery phase | **Done ✅** | First paid dollar — escrowed June 8. THE one thing, closed. |
+| 2026-05-31 | Stauss — feel it out (no forced tactics) | **Done — escalated** | 2 calls + brain-dump; Simon decoupling EF from Stauss, standing up quintel.ai. Non-Stauss buyer voice still outstanding. |
+| 2026-05-31 | Rebalance off LinkedIn → the producing Upwork motion | **Obsolete** | Premise wrong — Alek runs LinkedIn, not Upwork. Simon sole bidder ($5–60/bid). No mirror to run. |
+| 2026-06-08 | One non-Stauss EF buyer on a call describing their own pain + a path to dollars | **Committed** | THE one thing. The July revenue candidate. A buyer on the phone — not a market map. |
+| 2026-06-08 | Keep quintel.ai at demo-depth until a buyer pulls it deeper | **Committed** | Portfolio to earn the conversation, not the platform for an unsigned customer. |
+| 2026-06-08 | Confirm Stephanie's escrow releases | **Committed** | First dollar isn't in until escrow clears. |
+| 2026-06-08 | Upwork → maintenance/opportunistic | **Committed** | Produced the first dollar; repeatability unproven. Not primary while EF is the frontier. |
 
 ---
 
