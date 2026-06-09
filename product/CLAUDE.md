@@ -27,7 +27,8 @@ Tokenrip is the rendering engine; Quintel is what the market comes for. Both mat
 | Tokenrip product reference | [[tokenrip-context]] · [[tokenrip-positioning]] |
 | Mounted-agent model (imprint/memory/harness) | [[mounted-agent-model]] · [[mounted-agent-synthesis]] |
 | Tokenrip business model + tool layer | [[business-model]] · [[tool-layer]] |
-| Quintel build architecture | [[equipment-finance-build-architecture-2026-06-02]] |
+| Quintel build + GTM roadmap (current, broker-first) | [[quintel-build-and-gtm-roadmap-2026-06-08]] |
+| Quintel build architecture (superseded) | [[equipment-finance-build-architecture-2026-06-02]] |
 | Quintel V1 engineering spec | `quintel/ef-product-spec-2026-06-02/SPEC.md` |
 | Quintel deal/relationship context (in BD) | [[bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing]] |
 | Build sequencing across both products | [[10x-roadmap]] |
