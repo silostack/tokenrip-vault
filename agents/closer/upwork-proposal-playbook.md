@@ -99,7 +99,13 @@ End with one low-friction next step that's easy to say yes to. The goal is a rep
 
 A question they can answer in one line beats a polished sign-off. The proposal ends with a door held open, not a bow.
 
-**Standard LinkedIn sign-off line.** After the close + signature, append one final line: *"Also, feel free to look me up on LinkedIn for some more information about me: Simon Pettibone."* It's a low-friction trust signal — a real name, a real person, easily verifiable. Goes on every cover letter.
+**A warm call-offer is allowed as a secondary line (updated 2026-06-09).** The close still *leads* with the owned, leading next step (the execution-forward question). A friendly add-on after it — *"Happy to hop on a call any time to discuss before committing to anything."* — is fine and reads human; Simon prefers it. The thing to keep killing is a call-offer that *is* the entire close (burden-shifting, no leading step before it).
+
+**Standard signature + LinkedIn line.** Close the letter with `Thanks,` on its own line, then `Simon`. After the signature, append one final line, verbatim:
+
+> Also, feel free to look me up on LinkedIn if you'd like to check my background a bit more: Simon Pettibone
+
+It's a low-friction trust signal, a real name and a real person, easily verifiable. Goes on every cover letter.
 
 ---
 
@@ -117,6 +123,12 @@ Three short paragraphs, signed with a name. Not four ceremonial stages — three
 - Every sentence either shows you get their problem, proves you can help, or makes replying easier. Cut anything else.
 - Buyers skim. Every line earns its place; filler is the enemy, not length.
 
+**Voice — write like Simon, not like a strategist (added 2026-06-09, Simon's direct feedback).**
+- **Use contractions.** "I'll," "you're," "that's," "I'd," "it's." Reads friendly and human-written, not like a memo. This is the single biggest tell that a person wrote it.
+- **Cut the high-horse pushback paragraph.** The standalone "one piece of senior advice up front..." sermon (telling the buyer how teams get burned, what the disciplined path is) is *not effective* and reads as preachy. A genuine point of view (§3, principle 5) belongs in **one compressed sentence**, not a paragraph that lectures. When in doubt, cut it and get to the point.
+- **Get to the point.** Shorter beats more. The opener names the hard part and the close asks the question; everything between is the minimum proof, nothing more.
+- **Lean on attachments now.** Simon attaches screenshots of Tokenrip and Quintel to relevant bids. Reference them lightly ("see portfolio + attached file") instead of describing the proof in prose. The picture carries the weight the paragraph used to.
+
 ---
 
 ## §9. Humanize Before It Ships
@@ -124,3 +136,49 @@ Three short paragraphs, signed with a name. Not four ceremonial stages — three
 Every proposal (and every Closer-written message) goes through the `humanizer` skill before it's final. No exceptions. AI tells kill credibility on Upwork.
 
 Watch hardest for: em dashes (use commas and periods), boldface, rule-of-three rhythm, and paragraphs that are all the same tidy length. Run the humanizer's full pass, including the "what makes this obviously AI generated?" audit, and present the final version.
+
+Keep genuine enumerations that mirror the buyer's posted checklist (§5) — those read as attention, not as AI rhythm. The rule-of-three to kill is the *rhetorical* triad ("fast, reliable, and scalable"), not a real list of their five named tools.
+
+---
+
+## §10. Pricing & Milestone Breakdowns
+
+Many postings include a milestone field and ask for a breakdown. The breakdown is where pricing discipline shows. The full pricing library is in `memory/patterns.md`; the rules that govern an Upwork bid:
+
+- **De-risk comes from structure, not a low price.** A milestone sequence that proves value early beats a cheap number. Never compete on being cheapest. On a sophisticated buyer (detailed spec, "reliability over a demo"), the cheap bid reads as junior and *loses* — the serious price with a smart structure signals you're the real one. Price seriously, structure tightly.
+- **The riskiest-scope milestone is never the cheapest.** The most uncertain work (open-ended scraping, an unproven accuracy bar, undefined document messiness) must not be priced as a throwaway. The cheapest milestone should be the lowest-risk one: docs, handover, polish.
+- **No hunger tells.** No $0 milestones, no free proof-of-concept, no trivially cheap "demo" rung. Every milestone delivers real value at a real price. A giveaway to seem eager reads junior.
+- **Milestone 1 as paid discovery — the default for ambiguous or $5K+ jobs.** When scope is underspecified or can't be quoted blind, make M1 a paid discovery that ships a real deliverable: define the scope/schema with them, prove the core on a slice of their real data, and come out with a confirmed architecture and price for the rest. It de-risks them (they see something working before committing the full budget) and de-risks you (you never fixed-price against unknowns). It is paid and substantial, not a freebie. Confirm later milestones at the end of M1 once scope is settled, and say so honestly.
+- **Undefined scope → one discovery milestone, not a fabricated plan.** When the posting is genuinely open ("idea to production," no deliverables list), do not invent a tidy four-milestone plan. A single paid-discovery milestone that picks the highest-pain wedge and takes it live is more honest and reads more senior. A buyer who said "no demos" will smell a fake breakdown.
+- **Land-and-expand.** Price the first milestone for close-rate (often the highest-value, easy-yes deliverable) and defer the rest. When the posting itself promises ongoing work, don't pitch it; nail the first milestone and the relationship opens.
+- **The breakdown goes in the milestone fields, not the letter.** The cover letter gets one line ("I've put a milestone breakdown in the milestones"); the detail lives in the platform's milestone fields. Keep the letter short.
+- **Anchor the total honestly.** Pick a reference total that matches the real scope and signals senior, then note it's a reference, scalable to their budget signals. State a number; let it set expectations.
+
+---
+
+## §11. Honesty & Confidentiality Guardrails
+
+Every claim must survive a skeptical buyer clicking through, and every client reference must respect confidentiality.
+
+**Confidential engagements — industry abstraction only.** The equipment-finance and healthcare-credentialing engagements are confidential. Reference them at the industry level, never by name:
+- Equipment finance → "a company in equipment finance" / "the equipment finance space." Never name the client, the partner, or any cluster node.
+- Healthcare credentialing → "a regulated, document-heavy workflow in healthcare credentialing." Never name the client.
+- Never disclose deal specifics, PII, or partner identities in any external artifact.
+
+**Own products are nameable, within limits.**
+- **quintel.ai** — Simon's product; may be named and shown (portfolio, screenshots). It is v1/demo with mixed real and synthetic data. Do **not** describe it as having a signed or paying customer, or as running live production deals.
+- **Tokenrip** — nameable; "a platform / memory layer I built for running AI agents in production." Don't link tokenrip.com/agents in a cold proposal (§4).
+
+**The honesty checkpoint before sending.** Any framework or stack claim Simon can't back hands-on is a credibility risk to a buyer who researched the tools. For each named technology, ask: shipped it, or just *could*? If a claim is thinner than the rest, soften it to a capability ("models served on your own GPUs") rather than a specific tool ("vLLM with quantization"), or let the discovery milestone make it the thing you *measure* rather than assert. Never state an unverifiable specific — a deprecation date, an accuracy number you haven't measured on their data.
+
+---
+
+## §12. Lead With the Right Proof
+
+Same person, different lead. Match the opening credential to what the posting names as the hard part:
+
+- **Memory / persistence / "consistent, not forgetful" / context across sessions** → lead with **Tokenrip**, the memory and shared-context layer. Attach the Tokenrip screenshot.
+- **Document extraction / validation / RAG / structured data / human-in-the-loop / eval** → lead with the **healthcare-credentialing extraction engine** (abstracted): the extract → validate → route-low-confidence-to-a-human system in progress now.
+- **Full product build / "idea to production" / agents over internal docs / ops automation** → lead with the **production-system** framing plus **quintel.ai** as the document-heavy build reference; name the stack only if the posting asks (§5).
+
+Attach the screenshot that matches the lead (Tokenrip for memory/agent-infra, Quintel for document/full-build). The matching picture carries proof the prose used to. Use one credential per letter — the closest-fit one. The sharpest single match beats a résumé of all of them.

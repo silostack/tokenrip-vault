@@ -50,17 +50,17 @@ Residual honesty: today the substrate spans the boundary on one side and hands a
 
 ## The spine & the headline-only test
 
-Beat order: **hook (2) → wedge (3) → proof (4) → moat (5)**, wrapped by title (1), team (6), ask (7). Because the moat is (correctly) a *future* state, **proof is its own beat** — slide 4 is the only present-tense evidence and carries the most weight. Read in sequence, the headlines alone tell the whole story:
+Beat order: **hook (2) → wedge (3) → proof (4) → moat (5)**, wrapped by title (1), team (6), and a vision close (7). Because the moat is (correctly) a *future* state, **proof is its own beat** — slide 4 is the only present-tense evidence and carries the most weight. Headlines are stand-alone claims (each must read without the slide before it). Read in sequence, they tell the whole story:
 
 1. Coding agents have git. For everything else, there's Tokenrip.
-2. Every operational domain wants coding's agents. None has coding's substrate.
-3. Tokenrip is that substrate. We forge it inside vertical products, not by selling it cold.
-4. Two very different verticals. One substrate.
-5. The moat isn't the outcome. It's the record of how you got there.
+2. AI agents work for code because code has git. *(Every other kind of work is still missing that layer.)*
+3. Tokenrip is the GitHub for operational agent work.
+4. If it works for a lender and a hospital, it works anywhere.
+5. We're building a data moat out of *why* — the reasoning behind every decision.
 6. Forward deployment brings us domain experts — as partners, not hires.
-7. What Speedrun accelerates.
+7. *(close)* Coding agents have git. For everything else, there's Tokenrip. → vision + demo.
 
-*Proven demand across a huge market → blocked by one missing ingredient → we are that ingredient (and here's the clever GTM) → proof it generalizes → why that becomes a moat → why we have unfair access → the ask.*
+*Proven demand across a huge market → blocked by one missing ingredient → we are that ingredient (and here's the clever GTM) → proof it generalizes → why that becomes a moat → why we have unfair access → the vision.*
 
 ## Objections this deck pre-answers (rehearse 1 and 5 first)
 
@@ -78,10 +78,9 @@ Beat order: **hook (2) → wedge (3) → proof (4) → moat (5)**, wrapped by ti
 
 ## Open risks to pressure-test (the second opinion is most valuable here)
 
-1. **The insight is ahead of the evidence.** Neither vertical has shipped the acting-agent + why-loop. The deck mitigates by claiming *position*, not a finished moat. **The highest-leverage move before submitting is not deck polish — it's landing one acting-agent artifact (one live hand or one signature).** That single artifact flips slide 4 from "position" to "proof." **The AICAP proposal window closes 2026-06-10 — confirm the engagement is still warm.**
-2. **The cross-party "one substrate" claim is the boldest and earliest** — architecture + thesis today, not demonstrated network usage. Defend as a mechanism, or soften "every operational domain" to a beachhead.
-3. **Two verticals = focus risk** for an accelerator. The answer: two *maximally different* verticals are the minimum proof the substrate generalizes (one is a point solution). Decide if that lands or if a single-vertical narrative is tighter.
-4. **Unsourced/precision claims to lock:** the tool count (verify or omit), "deployed" = dashboard only, enterprise-calls-booked (substantiate), AICAP "MVP next" (confirm).
+1. **The cross-party "one substrate" claim is the boldest and earliest** — architecture + thesis today, not demonstrated network usage. Defend as a mechanism, or soften "every operational domain" to a beachhead.
+2. **Two verticals = focus risk** for an accelerator. The answer: two *maximally different* verticals are the minimum proof the substrate generalizes (one is a point solution). Decide if that lands or if a single-vertical narrative is tighter.
+3. **Unsourced/precision claims to lock:** the tool count (verify or omit), "deployed" = dashboard only, enterprise-calls-booked (substantiate), AICAP "MVP next" (confirm).
 
 ## Proof points (sourced)
 
@@ -97,6 +96,7 @@ Beat order: **hook (2) → wedge (3) → proof (4) → moat (5)**, wrapped by ti
 | Regulatory clock | NCQA primary-source-verification window: 120 days (since July 2025) | `bd/calls/contacts/stephanie-williamson.md` |
 | Credentialing status | AICAP — paid discovery (~$1K, credited toward the build); MVP next | `bd/calls/contacts/stephanie-williamson.md` |
 | Team | Simon: 20-yr eng, founding engineer at RealtyCrunch (acquired, NASDAQ: REAX), $1M solo NFT launch, substrate solo in 6 wks. Alek: Gartner, $250K policies/6mo, real-estate company, 300+ customer-dev conversations | `pitch/a16z-pitch-deck.md`; founder relevant-experience |
+| Demo asset (closing slide) | Watch the demo → `youtu.be/U1U4ej2XW34` · `tokenrip.com` — a "show-me" artifact; **confirm the URL is current before send** | `a16z-deck.html` slide 07 |
 
 ## Form-field copy (a16z application)
 
