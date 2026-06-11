@@ -42,6 +42,8 @@ The **deal-graph *is* Tokenrip substrate**, and Quintel's artifacts (dashboards,
 | [[quintel-build-and-gtm-roadmap-2026-06-08]] | **Current** build + GTM roadmap (broker-first) — one engine, demo→sale motion, phased build, Deal Object |
 | [[quintel-demo-shape-2026-06-08]] | The demo — screens (Pipeline / Deal Detail hero / Package), storyboard, real-vs-faked build order |
 | [[quintel-intake-design-2026-06-09]] | **Intake / deal-creation** design (working product) — the `ingest` stage as a surface; one intake for broker + lender; channels, tray, hard problems |
+| [[quintel-engine-build-roadmap-2026-06-09]] | **Engine build roadmap** to "completed bones" — current real-vs-stub state + the P0–P5 sequence (account-scoping → real extraction → config layer → email loop → feedback loop); customizations = config on top |
+| [[quintel-lender-build-roadmap-2026-06-10]] | **Lender-surface roadmap** (VFI/Stauss demo) — L0–L3 sequence mapping the VFI 9-stage lifecycle onto the engine spine; companion to the engine roadmap (P0+P1 done); CoI boundary as build constraint |
 | [[equipment-finance-build-architecture-2026-06-02]] | *Superseded* (three-archetype / Stauss-channeled) — retained for the core schemas (§10) + data edge (§9) |
 | `ef-product-spec-2026-06-02/SPEC.md` | Build-ready V1 engineering spec (self-contained, synthetic/public data only) + scrubbed design-reference HTML in `reference/` |
 

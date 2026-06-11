@@ -5,7 +5,6 @@
 **Company**: Tokenrip  
 **Status**: Live (deployed Apr 13, 2026)  
 **Founders**: Simon Pettibone, Alek (co-founder)  
-**Stage**: Pre-seed. YC application submitted (S26). Fundraising active.  
 **Domain**: tokenrip.com  
 
 ---

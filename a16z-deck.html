@@ -26,6 +26,7 @@
     font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
     font-size: 11pt; line-height: 1.5; -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
   .mono { font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace; }
   .acc  { color: var(--accent); }
@@ -116,13 +117,6 @@
   .member .bio  { font-size: 11pt; line-height: 1.55; margin-top: 9pt; color: var(--ink-soft); }
   .member .bio b { color: var(--ink); font-weight: 600; }
 
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); margin-top: 14pt; }
-  .stat { padding: 14pt 18pt; border-right: 1px solid var(--line); }
-  .stat:last-child { border-right: none; }
-  .stat .v { font-size: 19pt; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; line-height: 1; }
-  .stat .v.acc { color: var(--accent); }
-  .stat .k { font-family: "IBM Plex Mono", monospace; font-size: 8pt; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 7pt; line-height: 1.4; }
-
   /* ---- cover ---- */
   .wordmark { font-size: 116pt; font-weight: 700; letter-spacing: -0.04em; line-height: 0.95; color: var(--ink); }
   .rule-accent { width: 60pt; height: 3pt; background: var(--accent); margin: 22pt 0; }
@@ -155,16 +149,16 @@
 <section class="slide">
   <div class="rail top"><span class="lbl">The Insight</span><span class="idx">02 <b>/</b> 08</span></div>
   <div class="stage">
-    <h2 class="h">Coding agents work because code has git.</h2>
-    <div class="clause">Every other kind of work is still missing that layer.</div>
+    <h2 class="h">Coding agents work because code has a memory.</h2>
+    <div class="clause">Everything else forgets.</div>
     <ul class="points">
-      <li><b>Code has git:</b> versioned, reviewed — and it records <i>why.</i></li>
-      <li><b>AI can finally do the work</b> — finance, healthcare, ops — but nothing records <i>why</i> it decided.</li>
-      <li><b>The blocker was never intelligence</b> — it's the missing substrate.</li>
+      <li><b>Code records everything</b> — every change, every review, every <i>why</i>: git, PRs, blame.</li>
+      <li><b>That record is why agents work there</b> — it's the substrate <i>and</i> the training corpus.</li>
+      <li><b>Finance, healthcare, ops:</b> the work happens in email and silos, then it's forgotten.</li>
     </ul>
-    <div class="payoff">Whoever builds that substrate owns the position GitHub owns for code — across every operational domain.</div>
+    <div class="payoff">Whoever gives operational work a memory owns the position GitHub owns for code.</div>
   </div>
-  <div class="foot"><span>Tokenrip</span><span>git for operational work</span></div>
+  <div class="foot"><span>Tokenrip</span><span>the missing memory</span></div>
 </section>
 
 <!-- ====================== 03 — THE SUBSTRATE ====================== -->
@@ -175,7 +169,7 @@
     <ul class="points">
       <li><b>What it is:</b> versioning, review, provenance, permissions, outcome capture — live across REST, CLI, MCP.</li>
       <li><b>It works like git:</b> <span class="mono map">artifacts → commits · forking → branches · review → PRs · <b class="acc">lineage → blame</b></span></li>
-      <li><b>How it spreads:</b> we deploy into a vertical and ship the acting agent; the substrate forms underneath — the Palantir Foundry playbook.</li>
+      <li><b>How it spreads:</b> we forward-deploy into a vertical and ship the agent; the substrate forms underneath — the Palantir Foundry playbook.</li>
     </ul>
   </div>
   <div class="foot"><span>Tokenrip</span><span>one engine · three consumers</span></div>
@@ -185,52 +179,53 @@
 <section class="slide">
   <div class="rail top"><span class="lbl">Proof</span><span class="idx">04 <b>/</b> 08</span></div>
   <div class="stage">
-    <h2 class="h">If it works for a hospital and a lender, it works anywhere.</h2>
+    <h2 class="h"><span class="acc">Two months in:</span> a paying healthcare customer and a live finance deployment.</h2>
     <ul class="points">
-      <li><b>Healthcare credentialing</b> — <span class="hot">signed, paid, in build.</span> A case ricochets between provider, verification, and committee. <i>The trail lives in email, not a ledger.</i></li>
-      <li><b>Equipment finance (Quintel)</b> — live dashboard, built with a 20-yr industry partner; lenders in active pipeline. A deal touches 5+ parties across 3 silos. <i>The broker never learns what funded.</i></li>
-      <li><b>Same primitives, zero rebuild:</b> extraction, ingestion, rubric-as-config scoring, operator review, provenance logging.</li>
+      <li><b>Healthcare credentialing</b> — <span class="hot">signed, paying, in build:</span> an agent that chases verifications across provider, verifiers, and committee. <i>Today the trail lives in email, not a ledger.</i></li>
+      <li><b>Equipment finance (Quintel)</b> — <b>live dashboard</b>, built with a 20-yr industry partner; lenders in active pipeline. Next: an agent that pre-qualifies deals across 5+ parties and 3 silos. <i>The broker never learns what funded.</i></li>
+      <li><b>Two industries that share nothing, one substrate</b> — same primitives, zero rebuild: extraction, rubric-as-config scoring, operator review, provenance logging.</li>
     </ul>
     <div class="note"><span class="k">Status</span><span class="t">A signed, paying healthcare customer (in build) + a live equipment-finance deployment with a domain partner and active pipeline. The acting agent + why-loop ships next — by config, not rebuild.</span></div>
   </div>
-  <div class="foot"><span>Tokenrip</span><span>two maximally different verticals</span></div>
+  <div class="foot"><span>Tokenrip</span><span>two months from founding</span></div>
 </section>
 
-<!-- ====================== 05 — BUSINESS MODEL ====================== -->
+<!-- ====================== 05 — THE MOAT ====================== -->
 <section class="slide">
-  <div class="rail top"><span class="lbl">Business Model</span><span class="idx">05 <b>/</b> 08</span></div>
+  <div class="rail top"><span class="lbl">The Moat</span><span class="idx">05 <b>/</b> 08</span></div>
   <div class="stage">
-    <h2 class="h">Git is free. The platform on top isn't.</h2>
-    <div class="clause">GitHub sold for $7.5B on top of it — we're building both.</div>
+    <h2 class="h">Every decision we touch leaves a record of <i>why.</i></h2>
+    <div class="clause">No one else captures it.</div>
     <ul class="points">
-      <li><b>Now — vertical builds.</b> Customers pay us to build the agent; each build hardens the substrate.</li>
-      <li><b>Next — the platform.</b> Free to publish and collaborate; paid for teams, governance, enterprise.</li>
-      <li><b>The edge — we don't pay for inference.</b> Operators bring their own models; margins expand with scale.</li>
-    </ul>
-  </div>
-  <div class="foot"><span>Tokenrip</span><span>free protocol · paid platform</span></div>
-</section>
-
-<!-- ====================== 06 — THE MOAT ====================== -->
-<section class="slide">
-  <div class="rail top"><span class="lbl">The Moat</span><span class="idx">06 <b>/</b> 08</span></div>
-  <div class="stage">
-    <h2 class="h">We're building a data moat out of <i>why</i> — the reasoning behind every decision.</h2>
-    <ul class="points">
-      <li><b>The why-graph:</b> every deal and case records what changed and <i>why</i> — git-blame for operational work. Proprietary; can't be reconstructed from outside.</li>
-      <li><b>It compounds:</b> the reasoning feeds back into scoring — the product gets smarter with use and harder to leave.</li>
-      <li><b>The network:</b> multi-party work, one agent identity across verticals — depth per vertical, network across all.</li>
+      <li><b>The why-graph:</b> what changed and <i>why</i>, per deal, per case — git-blame for operational work. It can't be rebuilt from the outside.</li>
+      <li><b>Not an audit log:</b> logs are siloed, unstructured, single-party. The why-graph spans the handoffs and feeds the agent.</li>
+      <li><b>It compounds:</b> reasoning feeds back into scoring — smarter with use, harder to leave.</li>
     </ul>
     <div class="payoff">Because the <i>why</i> is the same primitive everywhere, operational work converges on one substrate — the way every codebase converged on git.</div>
   </div>
   <div class="foot"><span>Tokenrip</span><span>the why compounds</span></div>
 </section>
 
+<!-- ====================== 06 — BUSINESS MODEL ====================== -->
+<section class="slide">
+  <div class="rail top"><span class="lbl">Business Model</span><span class="idx">06 <b>/</b> 08</span></div>
+  <div class="stage">
+    <h2 class="h">Git is free. The platform on top isn't.</h2>
+    <div class="clause">GitHub sold for $7.5B on top of it — we're building both.</div>
+    <ul class="points">
+      <li><b>Now — vertical builds.</b> Customers pay us to build the agent; each build hardens the substrate.</li>
+      <li><b>Next — the platform.</b> Free to publish and collaborate; paid for teams, governance, enterprise.</li>
+      <li><b>The edge — we don't pay for inference.</b> Customers bring their own models; margins expand with scale.</li>
+    </ul>
+  </div>
+  <div class="foot"><span>Tokenrip</span><span>free protocol · paid platform</span></div>
+</section>
+
 <!-- ====================== 07 — WHY US ====================== -->
 <section class="slide">
   <div class="rail top"><span class="lbl">Why Us</span><span class="idx">07 <b>/</b> 08</span></div>
   <div class="stage">
-    <h2 class="h">Forward deployment brings us domain experts <span class="acc">— as partners, not hires.</span></h2>
+    <h2 class="h">Six weeks to build the substrate. <span class="acc">Two months to a paying customer.</span></h2>
     <div class="team">
       <div class="member">
         <div class="role">Simon · Builds</div>
@@ -243,16 +238,9 @@
         <div class="bio">Enterprise sales at <b>Gartner</b>. <b>$250K</b> in policies in six months. <b>300+</b> customer-development conversations across four continents.</div>
       </div>
     </div>
-    <div style="margin-top:auto;">
-      <div class="payoff" style="margin-top:24pt;">The experts walk in. A 20-year equipment-finance partner with the rolodex; a credentialing veteran's two decades of expertise. We don't hire domain expertise — it co-builds with us.</div>
-      <div class="stats">
-        <div class="stat"><div class="v"><span class="acc">6</span> wks</div><div class="k">substrate shipped</div></div>
-        <div class="stat"><div class="v acc">Live</div><div class="k">Quintel dashboard</div></div>
-        <div class="stat"><div class="v acc">Signed</div><div class="k">paying healthcare customer · in build</div></div>
-      </div>
-    </div>
+    <div class="payoff" style="margin-top:auto;">The experts walk in. A 20-year equipment-finance partner with the rolodex; a credentialing veteran's two decades of expertise. We don't hire domain expertise — it co-builds with us.</div>
   </div>
-  <div class="foot"><span>Tokenrip</span><span>~2 months from founding</span></div>
+  <div class="foot"><span>Tokenrip</span><span>substrate live · dashboard live · customer signed + paying</span></div>
 </section>
 
 <!-- ====================== 08 — THE CLOSE ====================== -->

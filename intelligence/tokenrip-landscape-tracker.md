@@ -20,6 +20,8 @@ The competitive landscape is currently split into three camps, none of which dir
 
 The "agentic collaboration" label is now being used by at least two companies (Tokenrip, Alike). Watch for more entrants using this vocabulary in 2026.
 
+4. **Enterprise "context layer" platforms** (Zaro, Dust, Microsoft IQ, Snowflake Cortex Sense, Atlan) — shared context for internal agents, anti-vendor-lock-in positioning. Three funded entrants in 30 days (Dust $40M, Nessie YC, Zaro $5.1M) validate the category. "Shared context layer" is now a commodity phrase; "mounted agents" remains Tokenrip's alone.
+
 ---
 
 ## Companies
@@ -171,18 +173,68 @@ AI infrastructure platform for revenue teams. Started as inbound lead routing (C
 4. Default raises a large round with "platform" positioning beyond revenue teams
 5. Default acquires or partners with an outbound intelligence company
 
-**Full analysis**: [[active/research-default-com-2026-05-27]]
+**Full analysis**: [[research-default-com-2026-05-27]]
+
+---
+
+### Zaro
+**URL**: https://zaro.ai/
+**Raised**: $5.1M pre-seed (Cherry Ventures lead; angels: Thomas Wolf / Hugging Face, Thomas Dohmke / GitHub CEO, Charlie Songhurst, Convergence co-founders Marvin Purtorab & Andy Toulis)
+**Team**: 8 people. CEO Michael Bajwa (Convergence hire #1, Head of Product & Growth). CTO Qian Zheng. 5 of 8 from Convergence → Salesforce Agentforce.
+**Stage**: Emerged from stealth 2026-06-09. Claims to dogfood internally (HR, finance, facilities).
+**Category**: Enterprise AI workspace / shared context layer / anti-vendor-lock-in
+**Tagline**: *"Build intelligence for your company. Not your vendor."*
+**First tracked**: 2026-06-09
+
+Enterprise AI-native workspace consolidating multiple AI tools. Shared context layer connects company data, decisions, workflows, and operational history. Marketplace of pre-built workflows. Multi-model routing (routine tasks to cheaper models; claims ~10x cost reduction). Application-building tools for custom solutions. Export/portability rights on accumulated context.
+
+**The positioning collision**: Zaro uses "shared context layer" (same phrase as Nessie, Microsoft, Atlan) and an anti-vendor-lock-in thesis that mirrors Tokenrip's published five-layer lock-in analysis almost verbatim. CEO quote: *"Context compounds. Models commoditise."* — this is Tokenrip's thesis stated by someone else with Salesforce-insider credibility.
+
+**Architecture comparison**:
+- Zaro = hosted workspace platform. Context lives on Zaro's infrastructure, with export rights. A better vendor — not the absence of one.
+- Tokenrip = architectural decomposition (imprint/memory/harness). Intelligence never enters a vendor's infrastructure. Structurally different, not incrementally better.
+- Zaro solves layers 1-3 of Tokenrip's five-layer lock-in model (model, orchestration, data). Promises exportability at layer 4 (governance). Does not address layer 5 (behavioral lock-in) — the layer Tokenrip's mounted-agent architecture structurally solves.
+
+**Why the Convergence/Agentforce pedigree matters**: The Convergence co-founders (Purtorab, Toulis) investing in Zaro = Salesforce insiders shorting Salesforce's architecture. Confirms that single-org, vendor-controlled context is structurally limited. But the team's demonstrated expertise is agent *execution* (dynamic UI navigation, adaptive interfaces), not enterprise *context infrastructure* (governance, compliance, behavioral portability).
+
+**Threat level by Tokenrip layer**:
+- **Layer 1 (Asset Routing)**: **None** — Zaro routes context to agents, not agent-produced assets to audiences
+- **Layer 2 (Collaboration)**: **Low** — workspace collaboration exists but enterprise-internal only; no cross-org, no agent-to-agent artifact sharing
+- **Layer 3 (Deliverable Rails)**: **None** — no transaction/escrow/milestone delivery layer
+- **Layer 4 (Workspaces)**: **Medium** — shared organizational context is Zaro's core product. Single-org (like Dust). Tokenrip's workspace layer is cross-org by design.
+- **Layer 5 (Agent Runtime)**: **Low-Medium** — multi-model routing + context layer creates a runtime. But agents are platform-hosted, not decomposed/portable.
+- **Positioning / Vocabulary**: **High** — "shared context layer," "context compounds," "anti-vendor" framing all overlap with Tokenrip's published content. However, "mounted agents" and "synced minds" remain unclaimed.
+
+**Key tripwire signals**:
+1. Zaro announces cross-org context sharing → competitive surface widens significantly
+2. Zaro targets financial services / equipment finance verticals → Quintel collision
+3. Zaro's "app store" includes vertical-specific agent workflows → platform expansion
+4. Cherry Ventures funds another "context layer" company → portfolio conflict for Tokenrip fundraise
+5. Zaro publishes technical architecture details → reveals whether "context layer" is deep infrastructure or unified data platform with AI features
+6. Zaro closes Salesforce-refugee enterprise customers → validates the anti-Agentforce pain signal
+7. Zaro hires enterprise sales team → signals GTM acceleration
+8. Zaro raises Series A → execution acceleration; watch for headcount and vertical expansion
+
+**What this validates for Tokenrip**:
+- "Context compounds, models commoditize" is now a funded thesis from multiple directions — use as category-validation proof
+- Anti-vendor-lock-in positioning resonates with investors (Cherry, Wolf, Dohmke all bought it)
+- The "mounted agents" vocabulary is the strongest remaining differentiator — "shared context layer" is now generic
+- Cross-org capability is Tokenrip's clearest architectural moat — every context-layer competitor (Dust, Zaro, Microsoft, Nessie) is single-org or personal
+
+**Full analysis**: [[research-zaro-competitive-analysis-2026-06-09]]
 
 ---
 
 ## Observations
 
-- **"Agentic collaboration" as a label is being claimed.** Alike is using it explicitly. Tokenrip's blog content (post-1-agentic-collaboration) should publish before this vocabulary gets attached to the bolt-on interpretation. The window is narrow — Alike is at Demo Day right now.
+- **"Shared context layer" is now a commodity phrase.** Microsoft (Fabric IQ), Snowflake (Cortex Sense), Atlan, Zaro, and Nessie all use it. "Agentic collaboration" is claimed by Alike, gitlawb, and Tokenrip. The only unclaimed vocabulary of strategic value: **"mounted agents," "synced minds," "layer 5 portability."** Blog Series 3 (mounted agents) and Series 4 (lock-in trap) are now category-defining stakes, not just content.
+- **Three funded entrants in 30 days validate the category.** Dust ($40M, Sequoia), Nessie (YC F25), Zaro ($5.1M, Cherry/Wolf/Dohmke). All make the "context > models" argument. None occupies Tokenrip's architectural position (decomposed, cross-org, mounted agents). Use all three as category-validation proof — the "name them head-on" strategy scales.
 - **Alike's threat is vocabulary, not product.** There is no live product to compete with today. The risk is that a funded company with a16z backing uses the same category label and defines it toward human-team coordination, leaving Tokenrip fighting to reclaim the AI-native definition.
 - **The bolt-on vs AI-native fork is a durable positioning asset.** Simon's read is right. Companies starting AI-native from day one (new startups, vibe coders, agent framework builders) are categorically different from existing enterprises adding AI to their workflows. Tokenrip owns the former; Alike targets the latter. These don't need to compete.
-- **Alike's academic pedigree is double-edged.** Max Van Kleek's work on the Solid project (decentralized personal data) and semantic common ground suggests Alike may be more ambitious than their marketing reveals. But academic founders often ship slower than commercial founders. Tokenrip is already deployed; Alike is pre-launch.
-- **No current competitor occupies Layer 2.** Neither publish.new nor Alike touches versioning, comments, lifecycle states, or provenance. Tokenrip's collaboration layer is uncontested.
-- **The vocabulary gap is the urgent risk.** Not product competition. If "agentic collaboration" gets defined as "AI that handles your Slack threads," Tokenrip needs to clearly own the "agent-produced artifacts" definition first. The blog post is the mechanism for that.
+- **Every context-layer competitor is single-org or personal.** Dust (enterprise-internal), Zaro (enterprise-internal), Microsoft IQ (enterprise-internal), Nessie (personal/team). None builds cross-organization context sharing. Tokenrip's mounted agents are structurally cross-org. Quintel's deal-graph (shared across broker/lender/vendor) is the proof point. This is the strongest architectural moat in the landscape.
+- **No current competitor occupies Layer 2.** Neither publish.new, Alike, Zaro, nor Dust touches agent-to-agent artifact collaboration with versioning, comments, lifecycle states, or provenance. Tokenrip's collaboration layer is uncontested.
+- **Zaro's Agentforce pedigree is double-edged.** Credibility from building Salesforce's flagship AI product. But the team's expertise is agent execution (dynamic UI navigation), not enterprise context infrastructure. The gap between "built agents that work" and "built the enterprise context layer that makes agents trustworthy" is the gap Zaro's marketing papers over.
+- **The vocabulary window is narrowing.** Not because anyone is claiming "mounted agents," but because the broader "context layer" narrative is hardening into a shape (platform-hosted, exportable context) that may not leave room for architectural nuance. Publishing the mounted-agent thesis while the category is forming is time-sensitive.
 
 ---
 
@@ -198,6 +250,11 @@ AI infrastructure platform for revenue teams. Started as inbound lead routing (C
 | publish.new adds programmatic POST /publish API | Layer 1 commoditization risk for Tokenrip increases materially |
 | publish.new adds versioning or annotation | Layer 2 competition begins — currently uncontested |
 | Any new entrant uses "agentic collaboration" as product category | Vocabulary congestion signal — blog post urgency increases |
+| Zaro announces cross-org context sharing | Competitive surface widens — architectural moat claim weakens |
+| Zaro targets financial services verticals | Quintel collision — monitor immediately |
+| Zaro closes Salesforce-refugee enterprise customers | Validates anti-Agentforce pain; watch for case studies |
+| Cherry Ventures funds another "context layer" company | Portfolio conflict for Tokenrip fundraise |
+| Zaro raises Series A | Execution acceleration — watch for vertical expansion |
 | Notion, Linear, or GitHub launches "agent-native" mode | Legacy tooling entering from above with distribution advantage |
 | LangGraph or CrewAI launches artifact/output management | Orchestration frameworks entering from below with developer mindshare |
 | gitlawb Playground evolves to non-code asset publishing | Layer 1 threat activates — gitlawb enters Tokenrip's space |
