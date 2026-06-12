@@ -15,6 +15,8 @@ Read `agents/closer/upwork-proposal-playbook.md` in full — the canonical rules
 - §10: pricing & milestone breakdowns
 - §11: honesty & confidentiality guardrails
 - §12: which credential to lead with
+- §13: the first six lines are the hero — inline the greeting, get proof links / Loom up top before "Show more" truncates; below the fold stays usable
+- §14: differentiators (below the fold) — the one that fits the job: ownership-not-dependency, full-stack range, US/real-time loop
 
 Read `agents/closer/memory/patterns.md` for the deeper pricing library when a bid needs a milestone breakdown or a real pricing call.
 
@@ -33,14 +35,15 @@ Optionally give Simon a one-line read of the buyer (real buyer / vague, expect a
 
 Follow the playbook. The envelope:
 
-- **Open:** `Hi,` (newline) `I'm Simon. <one concrete, relevant first sentence>` (§3).
-- **Body:** lead with the right credential (§12); no ceremony; name their checklist back only if they asked (§5); keep it short (§8). **Use contractions; cut the high-horse pushback paragraph; get to the point (§8 Voice).** Reference attachments lightly ("see portfolio + attached file") and the matching screenshot (§12).
-- **Close:** one leading, owned next step (§7); an optional warm call-offer as a *secondary* line; then:
+- **Open:** inline the greeting — `Hi, <one concrete, relevant first sentence>` on one line; no `Hi,` alone, no "I'm Simon" self-intro (§3). Use the client's name if it's visible (`Hi [Name],`).
+- **Above the fold (§13):** get the strongest clickable proof — a Loom link if Simon supplied one, else `tokenrip.com` / `quintel.ai` — into the first few lines, before "Show more" truncates. Don't bury proof in a closing paragraph.
+- **Body (below the fold):** lead with the right credential (§12); no ceremony; name their checklist back only if they asked (§5); add the one differentiator that fits the posting — ownership, full-stack range, or US/real-time loop (§14). Keep the hero tight and the whole thing ~150–300 words (§8). **Use contractions liberally; cut the high-horse pushback paragraph; get to the point (§8 Voice).** Reference attachments lightly ("see portfolio + attached file") and the matching screenshot (§12).
+- **Close:** one leading, owned next step (§7); then a warm one-line call-offer covering requirements / short pre-discovery / fit-check before they commit to anything (§7); then:
   ```
   Thanks,
   Simon
 
-  Also, feel free to look me up on LinkedIn if you'd like to check my background a bit more: Simon Pettibone
+  P.S. - Feel free to look me up on LinkedIn for more information: Simon Pettibone
   ```
 
 ## Step 4: Milestone breakdown (if the posting supports one)
@@ -62,3 +65,5 @@ After the letter + milestones, give Simon a short, tough-advisor note: the one t
 ## Arguments
 
 If Simon pastes a posting, go straight to drafting. If he adds a steer (e.g. "lead with Tokenrip", "make it a partnership play", "skip the milestones"), apply it.
+
+If Simon supplies a Loom/demo link for this bid, it leads the proof and goes above the fold (§4, §13). Default-assume the posting is US-based when the real-time-loop differentiator fits (§14); if Simon says it isn't, drop that line.

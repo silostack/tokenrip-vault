@@ -1,0 +1,40 @@
+# Semantic Search as Shared Memory
+
+**Status**: developing
+**Created**: 2026-06-11
+**Last touched**: 2026-06-11
+
+## Thesis
+
+Semantic search is not a feature upgrade to Tokenrip — it is the mechanism that converts shared *storage* into shared *memory*. Storage you can recall by meaning is the difference between an archive and a mind. That recall layer is the missing primitive separating **collaboration** (two parties converging on an output that doesn't exist yet) from **coordination** (agents executing a known spec) — which reframes the moat (write-side → read-side flywheel), names the GTM problem (substrate-invisibility), and dictates the single 60-second demo that makes the thesis legible.
+
+Canonical write-up: `active/tokenrip-semantic-substrate-canonical-2026-06-11.md` (merge of two session lenses). Source lenses retained: `active/tokenrip-shared-memory-gtm-and-magic-demo-2026-06-11.md` (recall-flywheel + magic-demo + epistemics) and `active/semantic-workspaces-multiplayer-and-gtm-2026-06-11.md` (addressing-system + influence-graph + GTM-wrappers).
+
+## Evolution
+
+- **2026-06-11**: Idea originated from Simon enabling semantic search on Tokenrip workspaces ("company brain"). Session moved through three arcs: (1) **the reframe** — semantic search is the *read* side of the moat the a16z deck only sells from the *write* side; the why-graph is write-only without recall. "Memory you can't recall is an archive." (2) **what it unlocks** — intra-org (kills the 30-year-dead legal-KM problem: capture-as-byproduct + recall-by-meaning fix both failure modes), cross-org (the coordination-vs-collaboration mechanism: *coordination passes context, collaboration retrieves it*), and new capability classes (brain-as-mountable-tool, agents-with-colleagues, federated/projected/revocable brain access). (3) **GTM + demo** — diagnosed the real problem as *substrate-invisibility* not "no consumer product"; the load-bearing test; four ranked walk-forward motions; the strategic incoherence (deck claims a substrate-visible category, motion is substrate-invisible consultancy); and the 60-second magic demo (memory-as-boundary-crossing, colleague-not-database, the unprompted catch).
+- **2026-06-11 (merge of a parallel capture)**: A second model's take on the same seed produced a stronger *why-now* and one genuinely new idea; merged into the canonical doc. Three things upgraded the framing: (a) **the addressing-system frame** — code has a symbol table and retrieves itself; knowledge work has none, so meaning is its only address. This is the *mechanism* under my "associative recall," plus the why-now: KM died on two unpaid bills — *finding* and *filing* — and both went to zero in ~18 months (embeddings zeroed finding, agents zeroed filing). (b) **The influence graph / read-side provenance** — every agent query records "this knowledge informed that work," so the *reads are themselves a new write*; this closes my one-way "read-side" arrow into a two-way **flywheel** (record feeds recall, recall feeds record). Quietly load-bearing, not a pitch slide. (c) **Vendor-neutrality as a structural disqualification** — the model owners *cannot* be the neutral cross-org layer (the vendor is a party), so neutrality is an exclusive position, not a feature — and the vendor-crossing magic demo *is* that moat dramatized. GTM reframed from "fix substrate-invisibility" to "infrastructure is wrapped, not sold" (four wrappers, one deposited brain each) — with my "pick one, measure independent pull" as the sequencing discipline the four-wrapper frame lacks. **Shared crux surfaced:** both lenses bottom out on *zero-ceremony ingestion*, and beat 1 of the magic demo (mention-while-working, no save step) is the acceptance test for it.
+
+## Key Challenges Surfaced
+
+- **Semantic search is commodity — don't pitch it.** The differentiator is *what it runs over* (shared, cross-org, cross-tool, versioned, provenance-carrying corpus), not the search. *Open as a discipline — easy to violate.*
+- **Fuzzy recall vs. exact provenance are in tension.** Semantic recall returns plausible-but-superseded neighbors; a brain surfacing an overruled precedent as current is malpractice-grade. *Resolution: recall-by-meaning, verify-by-lineage — they compose only if retrieval is provenance-aware. This may be the real technical wedge.*
+- **Cross-org permission model is the product and is hard.** Embeddings can leak what an ACL hides. This is the boldest deck claim (cross-party network) and where it could die. *Open.*
+- **Collaboration may be irreducibly social.** Reframe from "remove the collaboration" to "remove the context-reconstruction tax so the humans do judgment, not catch-up." *Resolved as a framing.*
+- **Walk-backward proves "people pay," not "people want Tokenrip."** Only a walk-forward experiment tests independent substrate pull. *Open — the unvalidated assumption under the whole company.*
+
+## Open Questions
+
+- Can the 60-second demo be shot today? (The fork: if yes, GTM is real; if no, "the magic isn't legible yet" was correct and the smallest build is the next move.)
+- Is "the brain" the canonical product noun (vs. "workspace")? Reshapes the vocabulary tree — worth an imprint-vs-soul-style naming pass.
+- What does substrate-visible delivery look like for Quintel — does the EF broker get a login and see their deal-brain?
+- How is "substrate pull without a sales call" measured cleanly (mount / share / expand events), and what threshold counts as validation?
+
+## Non-Obvious Connections
+
+- **Memory-as-boundary-crossing (the Dropbox move).** Persistence is slow and invisible; cross-tool/agent/person is an instant, visible *space* crossing. Demo the boundary, not the persistence. Generalizable demo-design principle for any temporal-value product.
+- **Coordination passes context; collaboration retrieves it.** A crisp mechanism under the coordination/collaboration distinction — collaboration is structurally gated on associative recall over large private corpora, which is *why* inter-company collaboration was never software and can be now.
+- **Agents-with-colleagues = the real definition of multiplayer AI.** Not agents messaging — agents *recalling from each other's accumulated context* on demand, across tools and orgs. Extends "agents as nodes, Tokenrip as edges" — the edges now carry semantic queries, so the graph is a network of queryable brains.
+- **The brain as a mountable tool** — a semantically-queryable workspace is functionally an MCP capability; one agent's brain is another agent's tool. Connects to [[mounted-agent-model]] (BYO-model + now BYO-context) and [[ui-surface-infra]] (one-primitive-multiple-motions).
+- **Substrate-visible FDE delivery fuses walk-back and walk-forward** — deliver the custom build *on* the substrate, visibly; the second sale becomes substrate-expansion, converting consultancy-treadmill into land-and-expand. Connects to [[equipment-finance-broker-first]] (Quintel as the test case).
+- **The magic demo is the product's acceptance test** — if it can't be shot in an afternoon, the magic isn't real yet. The demo precedes and validates the product, not the reverse. Connects to the build-reflex blind spot (build vs. demo vs. run).

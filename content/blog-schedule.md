@@ -22,7 +22,7 @@ One post per week. Series 4 and Series 5 interleaved by news-cycle priority, not
 | 2 ✅        | published 2026-05-29 | ~~**Post 16: Your AI Vendor Is Your Competitor**~~ ([live](https://tokenrip.com/s/82ce553c-0a9b-4bbe-9b0f-602067f2a945)) | Series 4                    | Shipped ahead of window. $5.5B raises still warm. Chamath references cut at publish (too inside-baseball); diagnosis kept in our own words.                            |
 | 3 ✅        | published 2026-06-01 | ~~**Post 20: How We Actually Work With Agents**~~ ([live](https://tokenrip.com/s/360afe8c-bc90-46fe-89c3-7f97afe4a0aa)) | Series 5                    | Shipped ahead of window. Existence proof for Post 19. Deal arc anonymized; no screenshots needed — workflow narrated in prose. |
 | 4 ✅        | published 2026-06-09 | ~~**Post 17: You Can't Put Your Data in Someone Else's Cage**~~ ([live](https://tokenrip.com/s/5aa78afd-37be-45d4-939e-1448a250e21e)) | Series 4                    | Shipped ahead of window. Buyer-defense duo with Post 16. Anonymization held — private source paraphrased, generic carrier/lab framing throughout.                     |
-| 5           | Jun 30 – Jul 6 | **Post 15: Workflows Are Eating Apps** (`workflows-eat-apps`)                       | Series 4                    | Broadest, least time-sensitive. Evergreen entry-point post. (Distinct from the Week-0 standalone draft — operator-specific reframing.)                                |
+| 5 ✅        | published 2026-06-12 | ~~**Post 15: Workflows Are Eating Apps**~~ ([live](https://tokenrip.com/s/dfee8381-54f9-4c55-aa7d-1e32f6446a6e)) | Series 4                    | Shipped ahead of window. Broadest operator-facing entry point for Series 4.                                                                                           |
 | 6           | Jul 7–13       | **Post 18: The Control Plane Spectrum** (`control-plane-spectrum`)                  | Series 4                    | Capstone — references all three buyer posts, must ship last in Series 4.                                                                                              |
 | Conditional | TBD            | **Post 21: Co-Agentic Work** (`co-agentic-work`)                                    | Series 5                    | Ships only if "co-agentic" gets pickup signal between Posts 19 and 20 (partner mentions, reader emails, inbound using the term). Otherwise defer indefinitely.        |
 
@@ -57,7 +57,7 @@ Full plan: `plans/blog-series-4-lock-in-trap-plan.md`
 |---|-------|------|--------------|---------------|--------|
 | 16 | Your AI Vendor Is Your Competitor | `ai-vendor-is-competitor` | Services firms / consultancies | Week 2 | ✅ Published 2026-05-29 |
 | 17 | You Can't Put Your Data in Someone Else's Cage | `ai-data-sovereignty` | Regulated enterprises | Week 4 | ✅ Published 2026-06-09 |
-| 15 | Workflows Are Eating Apps | `workflows-eat-apps` | Operators / knowledge workers | Week 5 | Brief complete |
+| 15 | Workflows Are Eating Apps | `workflows-eat-apps` | Operators / knowledge workers | Week 5 | ✅ Published 2026-06-12 |
 | 18 | The Control Plane Spectrum | `control-plane-spectrum` | Cross-buyer (architectural capstone) | Week 6 | Brief complete |
 
 **Note on Post 15:** The Week-0 draft ("Your AI Vendor Lock-In Is Five Layers Deep") was written standalone before the Series 4 plan was finalized. It ships separately as a general-audience entry. The plan's Post 15 ("Workflows Eat Apps") is the operator-specific reframing and is still to be drafted.
@@ -76,8 +76,9 @@ Full plan: `plans/blog-series-5-co-agentic-work-plan.md`
 
 ## Published
 
-19 posts live. Full list in `published/`. Most recent:
+20 posts live. Full list in `published/`. Most recent:
 
+- **Post 15: Workflows Are Eating Apps** (`workflows-eat-apps`) — published 2026-06-12
 - **Post 17: You Can't Put Your Data in Someone Else's Cage** (`ai-data-sovereignty`) — published 2026-06-09
 - **Post 20: How We Actually Work With Agents** (`how-we-work-with-agents`) — published 2026-06-01
 - **Post 16: Your AI Vendor Is Your Competitor** (`ai-vendor-is-competitor`) — published 2026-05-29

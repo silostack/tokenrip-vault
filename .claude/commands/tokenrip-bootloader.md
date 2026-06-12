@@ -1,4 +1,4 @@
-<!-- tokenrip-bootloader-version: 9 -->
+<!-- tokenrip-bootloader-version: 10 -->
 ---
 name: tokenrip-bootloader
 description: "Run a Tokenrip-published agent. Pass the slug as the first argument (or omit it to browse)."
@@ -40,7 +40,7 @@ pick a slug, then continue from step 3 with that slug.
    curl -fsSL https://api.tokenrip.com/commands/tokenrip-bootloader-version
    ```
 
-   Compare the returned `version` number to `9` (the version
+   Compare the returned `version` number to `10` (the version
    embedded in this file). If the server version is higher, re-install:
 
    ```bash
@@ -155,8 +155,16 @@ rip --json agent record <session-token> \
 `<logical-slug>` is one of `manifest.memoryTables[].slug`. Omit
 `--table` to write to the manifest's default table.
 
-When the brain instructs you to rewrite a memory artifact, write the new content
-to a temp file, then:
+When the brain instructs you to rewrite a memory artifact, pass the new content
+inline with `--content`:
+
+```bash
+rip --json agent rewrite-artifact <session-token> <logical-alias> \
+  --content "<new content>"
+```
+
+For longer content, write it via your file-write tool (not shell `>` which
+fails under zsh `noclobber`), then use `--content-from /tmp/<file>`:
 
 ```bash
 rip --json agent rewrite-artifact <session-token> <logical-alias> \
@@ -210,7 +218,8 @@ rip --json agent end <session-token> \
 ```
 
 If the agent declares `session.produceSessionOutput: true` and the brain wrote
-a wrap-up session output, write it to a temp file and add
+a wrap-up session output, write it via your file-write tool (not shell `>`
+which fails under zsh `noclobber`) to a temp file, then add
 `--output-from /tmp/<file> --output-title "<title>"`.
 
 ## Failure Modes
