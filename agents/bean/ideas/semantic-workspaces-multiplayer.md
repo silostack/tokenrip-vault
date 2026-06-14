@@ -2,7 +2,7 @@
 
 **Status**: developing
 **Created**: 2026-06-11
-**Last touched**: 2026-06-11
+**Last touched**: 2026-06-12
 
 ## Thesis
 
@@ -11,6 +11,8 @@ Semantic search converts a Tokenrip workspace from storage into a context layer 
 ## Evolution
 
 - **2026-06-11**: Idea born from Simon's prompt (semantic search shipped; what does it open for Cowork-class knowledge workers, multiplayer, and the a16z pitch?). Built the addressing-system frame, the two-costs-to-zero why-now, the same-firm scenario (ambient precedent, handoff dissolves, influence graph, departure residue), the cross-org scenario (asymmetric private brains + shared deal-scoped brain; neutrality as a structural position model owners can't occupy — the email pattern), and the 5-stage multiplayer map. Sharpened Simon's coordination-vs-collaboration distinction: cross-org collaboration *exists* but is unrecorded and agent-inaccessible — the gap is the substrate, not the activity. Captured to `active/semantic-workspaces-multiplayer-and-gtm-2026-06-11.md`.
+- **2026-06-11 (canonical merge)**: Reconciled with the parallel session's capture ([[semantic-search-shared-memory]]: recall-completes-memory, substrate-invisibility, magic demo) into the canonical doc (now `active/tokenrip-shared-memory-canonical-fable-2026-06-11.md`). New in the merge: the corrected **boundary-crossing load-bearing test**, the **closed-loop moat** (lineage validates recall ∥ recall logs extend lineage), and **two acceptance tests** (demo = read-side, zero-ceremony ingestion = write-side).
+- **2026-06-12 (v2 — third independent review folded in)**: Three upgrades. (1) **Dependency graph beats symbol table** — code *declares* its relationships (imports, call sites); knowledge's graph is latent; embeddings are the **linker for link-less artifacts**. Combined with retrieval logs: latent → recovered (embeddings hypothesize) → confirmed (retrieval events) → recorded (why-graph) — *embeddings are scaffolding; the graph is the moat*. (2) **Stigmergy** names the artifact-as-channel thesis and derives zero-ceremony from first principles; its tension with divergent interests resolves via **the PR as gated stigmergy** — "a pull request between companies" is the structurally necessary cross-org shape, and LLM semantic diff/merge un-concedes spine objection 1 (the merge *ritual* generalizes; only the *algorithm* was code-specific). (3) **Principal-count / sovereignty** — context isn't just too large to pass, it's *private*; retrieval is a sovereignty mechanism, promoting the private/shared boundary to THE multiplayer primitive. Added **acceptance test 3** (org-boundary expressiveness: identity, permissions, scoped embeddings across the line) and the **demo ladder** (tool → person → org, each rung gated on one more primitive).
 
 ## Key Challenges Surfaced
 

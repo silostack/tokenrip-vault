@@ -1,11 +1,13 @@
 ---
 title: "Shared Memory — The Canonical Synthesis: What Semantic Search Unlocks, the Moat It Completes, the GTM It Implies, and the Demo That Proves It"
-status: canonical draft v1 — merges two 2026-06-11 Bean session captures
+status: canonical draft v2 — two session captures merged 2026-06-11; third independent review folded in 2026-06-12
 created: 2026-06-11
+updated: 2026-06-12
 owner: Simon
 merges:
   - active/tokenrip-shared-memory-gtm-and-magic-demo-2026-06-11.md (recall flywheel · substrate-invisibility · magic demo)
   - active/semantic-workspaces-multiplayer-and-gtm-2026-06-11.md (addressing system · neutrality · wrapper economics)
+  - third independent review, inline 2026-06-12 (latent dependency graph / linker · stigmergy · principal-count definition · the boundary primitive · PR-between-companies)
 related:
   - pitch/a16z-fused-2026-06-08/spine.md
   - product/tokenrip/mounted-agent-model.md
@@ -18,20 +20,20 @@ note: >
 
 # Shared Memory: The Canonical Synthesis
 
-> **The throughline:** semantic search converts shared *storage* into shared *memory* — and memory, not storage, is what the entire thesis was missing. Recording the why (the deck's claim) is half a memory; associative recall is the other half, and it is the primitive that separates collaboration from coordination. This completes the moat (a closed read/write loop), names the GTM problem precisely (substrate-invisibility, not absence of a consumer product), supplies the governing wedge filter (the boundary-crossing test), and dictates the two artifacts that prove the thesis is real today: a 60-second magic demo and zero-ceremony ingestion. Both are acceptance tests, not marketing.
+> **The throughline:** semantic search converts shared *storage* into shared *memory* — and memory, not storage, is what the entire thesis was missing. Recording the why (the deck's claim) is half a memory; associative recall is the other half, and it is the primitive that separates collaboration from coordination. This completes the moat (a closed read/write loop), names the GTM problem precisely (substrate-invisibility, not absence of a consumer product), supplies the governing wedge filter (the boundary-crossing test), and dictates the three acceptance tests that prove the thesis is real today: the 60-second magic demo (read-side), zero-ceremony ingestion (write-side), and org-boundary expressiveness (the multiplayer side). All three are product gates, not marketing.
 
 ---
 
 ## Executive summary
 
 1. **The claim: recall completes memory.** The a16z spine sells "we record the *why*" — a write-side claim, and recording is half a memory. Memory's defining property is **associative recall**: the relevant past surfaced at the moment of the next decision. Semantic search is that recall layer. *Memory you can't recall is an archive.*
-2. **The why-now: knowledge work never had an addressing system, and its two fatal costs just went to zero.** Code has a symbol table; knowledge work's only address is *meaning*. Embeddings made meaning addressable (finding → free) and agents made filing free — both within the same eighteen months. This is why no incumbent did it in twenty years of sync and versioning.
-3. **The mechanism: coordination passes context; collaboration retrieves it.** Large implicit context distributed across private histories cannot be passed — only retrieved. Collaboration is therefore structurally gated on associative recall over shared memory: the primitive that did not exist. This is why inter-company collaboration was never software, and why it can be now.
-4. **The moat: a closed loop.** Provenance validates recall (recall by meaning, verify by lineage); recall logs extend provenance (every read records "this knowledge informed that work"). *Every read makes the record smarter; every record makes reads safer.* Neither side alone is defensible; the loop is.
+2. **The why-now: knowledge work never had an addressing system, and its two fatal costs just went to zero.** Code has a symbol table *and declares its own dependency graph* (imports, symbols, call sites); knowledge work has neither — a brief doesn't import the three precedent memos it depends on; that graph is latent, in heads. Embeddings made meaning addressable and act as the **linker for link-less artifacts** (finding → free), and agents made filing free — both within the same eighteen months. This is why no incumbent did it in twenty years of sync and versioning.
+3. **The mechanism: coordination passes context; collaboration retrieves it.** Large implicit context distributed across private histories cannot be passed — and, between principals with divergent interests, *won't* be: the context is private, disclosed selectively. Retrieval is a sovereignty mechanism, not just an efficiency one. Collaboration is therefore structurally gated on associative recall over shared memory **plus a private/shared boundary** — two primitives that did not exist. This is why inter-company collaboration was never software, and why it can be now.
+4. **The moat: a closed loop with a destination.** Provenance validates recall (recall by meaning, verify by lineage); recall logs extend provenance (every read records "this knowledge informed that work"). *Every read makes the record smarter; every record makes reads safer.* And the loop converges: embeddings *hypothesize* the latent dependency graph, retrieval events *confirm* edges, the why-graph *records* them — the corpus graduates from fuzzy similarity to an explicit graph. Embeddings are scaffolding; the graph is the moat.
 5. **The GTM diagnosis: the problem is substrate-invisibility, not "no consumer product."** The current FDE motion delivers into a black box. The highest-leverage fix needs no new motion: make the deliverable substrate-visible. ⊕
 6. **The GTM shape: infrastructure is never sold; it's wrapped.** Agents are the funnel, the brain is the product, autonomy and multiplayer are the paywalls. Every motion is the same sentence with a different buyer: somebody wraps the substrate in a nameable product, and a workspace gets deposited that compounds.
 7. **The governing filter: the boundary-crossing test.** Delete Tokenrip — can the user get this by pointing an agent at a folder? If yes, wrong wedge. The wedge must cross a boundary local files can't: tool, device, person, or organization.
-8. **Two acceptance tests decide whether this is real today:** the 60-second magic demo (read-side — does the unprompted catch work across a vendor boundary, configurable in an afternoon?) and zero-ceremony ingestion (write-side — does a Cowork session's output land in the workspace with no manual step?). If either fails, that failure *is* the backlog.
+8. **Three acceptance tests decide whether this is real today:** the 60-second magic demo (read-side — does the unprompted catch work across a vendor boundary, configurable in an afternoon?), zero-ceremony ingestion (write-side — does a Cowork session's output land in the workspace with no manual step?), and the **boundary test** (can the workspace model express two orgs, one shared workspace, each side's private context informing but never leaking — identity, permissions, scoped embeddings across an org boundary?). Any failure *is* the backlog — and the boundary test gates the deck's boldest claim.
 
 ---
 
@@ -50,6 +52,8 @@ The pitch-ready extension of the deck's metaphor:
 Code has a symbol table. Every function has a name, every file a path, and programmers maintain that structure *as part of the work* — which is why git + grep is sufficient retrieval for code. Git never solved retrieval because code retrieves itself.
 
 Knowledge work has no symbol table. A law firm's 5,000 files have no names anyone remembers and no paths anyone maintains, and the writers will never do the filing — forty years of failed KM systems prove it. **Meaning is the only address knowledge work has. Embeddings make meaning addressable.** The index was always the unbuildable part: taxonomies are write-time labor humans won't perform. Embeddings move indexing from write-time (human discipline) to read-time (machine retrieval). The index builds itself.
+
+The deeper version: code doesn't just have names — its artifacts **declare their own relationships**. Imports, symbols, and call sites mean an agent in a codebase can navigate the dependency graph without embeddings; code's explicit structure made retrieval cheap enough that git never had to solve it. Knowledge-work artifacts have the same dependency structure — a brief depends on three precedent memos — but the graph is *latent*, living in the heads of the people who wrote them. **Embeddings are the linker for link-less artifacts: they recover the latent graph.** So "git for non-code" is understated as a port — git alone was never going to work for knowledge, because the port would carry the storage and the history without the thing that makes a corpus navigable. Semantic search is not a feature on the substrate; it is the component that makes the substrate viable outside code at all.
 
 Knowledge management died on two unpaid-labor bills, and both just went to zero from different directions:
 
@@ -73,11 +77,15 @@ This is the armor against "why hasn't Dropbox / Notion / SharePoint done this": 
 
 A large implicit context cannot be passed — there is too much of it, and which slice matters is unknown until the moment arrives. Collaboration is therefore structurally gated on **associative recall over large private corpora** — the missing primitive. This is *why* agent-to-agent coordination exists as software while inter-company collaboration never has. The sharpened claim for the pitch: cross-company collaboration exists today (email, calls, docs) — but it is **unrecorded and agent-inaccessible**. The gap is the substrate, not the activity.
 
+The definition sharpens further on *who* is collaborating. Coordination is **one principal's** intent decomposed across many agents — a task graph; solved (CrewAI, every swarm demo). Collaboration is **multiple principals with divergent interests and private context** converging on a shared artifact — and nobody has built for it, because every AI platform assumes one tenant, one brain. Divergent interests add a second reason context can't be passed: it isn't only too large — it is **private**, disclosed selectively. Retrieval is therefore a *sovereignty* mechanism, not just an efficiency one: each side's agent reads from its own brain and chooses what crosses the line. This promotes the private/shared boundary from a capability-class bullet to **the** load-bearing primitive of multiplayer (see "The boundary primitive" below).
+
 One reframe to carry everywhere: the value is **not** "remove the human collaboration" — negotiation, alignment, and ratification are often the point. The value is **removing the context-reconstruction tax** ("per my last email," "as we discussed," "let me forward the thread") so the human collaboration is about judgment, not catching up. Each session pays O(query) instead of O(corpus).
 
 ### Intra-organization: the thirty-year-dead legal-KM problem, solved as a side effect
 
-The unit of collaboration shifts from the document to the corpus — colleagues stop collaborating *on documents* and start feeding *the same brain*. Concretely, for two lawyers on Claude Cowork:
+The unit of collaboration shifts from the document to the corpus — colleagues stop collaborating *on documents* and start feeding *the same brain*. The right name for this mode is **stigmergy**: collaboration through the environment rather than through messages. Termites don't message each other; they modify the mound and respond to modifications. Git is exactly this for code — nobody emails diffs around; the repo is the channel. (This is the long-standing "the artifact IS the communication channel" thesis, which turns out to have sixty years of literature behind it — Wikipedia is the canonical human example. Use it at explanatory tier, not as a category name: it fails the vocabulary-tree test.) Stigmergy also *derives* the zero-ceremony requirement from first principles: it only works when modifying the environment is the **same act** as doing the work — termites don't file reports about the mound; building is the signal. If publishing is a separate act from working, it isn't stigmergy, it's a filing system (acceptance test 2, §VI).
+
+Concretely, for two lawyers on Claude Cowork:
 
 - **Ambient precedent.** Lawyer B writes a novel argument Tuesday; Lawyer A's agent surfaces it Thursday on an unrelated matter, without B ever telling A it exists. Knowledge moves between people without a meeting. Precedent is literally the firm's product, and today it is locked in a DMS behind matter numbers and filename guesses.
 - **The handoff dissolves.** Nobody briefs anybody — the colleague's agent briefs itself, lazily, at query time. Onboarding a new associate becomes "mount the firm brain"; ramp time becomes a retrieval problem.
@@ -89,6 +97,16 @@ The unit of collaboration shifts from the document to the corpus — colleagues 
 Inside a company a platform can be mandated. **Between companies it can't** — which is why email won: the neutral substrate nobody controlled. And it is why the cross-org layer is one the AI platforms are **structurally disqualified** from serving: a vendor who is also a *party* cannot be the neutral layer. Anthropic cannot bridge an Anthropic shop and an OpenAI shop. Vendor-neutrality is not a feature; it is an exclusive position no model owner can occupy.
 
 The shape: **asymmetric private brains, one shared deal-scoped brain.** Side A on Claude Cowork, Side B on OpenAI Codex, meeting on the neutral substrate. A's agent drafting the term sheet pulls from A's private brain (past deals, standard red-lines) *and* the shared room (what's agreed, B's counters, the why behind each redline). B never asks "what did we agree on indemnity?" — B's agent asks the room. Today this lives in email attachments and virtual data rooms (Datasite, Intralinks — dumb storage with permissions). *The deal room that thinks* is a concrete, buyable product shape — and it is the **horizontal generalization of the deck's multi-party claim**: EF's broker → dealer → borrower → lender chain is the vertical instance; "two firms on one proposal" is the same mechanism deverticalized.
+
+### The boundary primitive: a pull request between companies
+
+Stigmergy and sovereignty are in productive tension: stigmergy assumes anyone can modify the shared environment; divergent interests forbid exactly that. The resolution is already inside git: **the pull request is how stigmergy crosses a trust boundary.** Open source solved this precise problem — strangers can't write to your repo (your mound); they fork, work privately with their own context, and propose a modification that enters only through review. Intra-org collaboration is open-mound stigmergy (the two lawyers). Cross-org collaboration is *gated* stigmergy — and the gate is the PR.
+
+The cross-company shape, in git-native vocabulary: each side **branches the proposal privately**, works it against its own private brain (past deals, standard red-lines), and **merges through review**. A pull request between companies. Every element maps: branch = private working copy informed by private context; PR = the proposed change crossing the boundary; review = the negotiation; merge = agreement — and the why-graph records who proposed what and which reasoning was shareable.
+
+This un-concedes something the deck currently gives away. Spine objection 1 concedes line-level merge as code-specific. Split the concession: the merge **ritual** (branch → propose → review → merge, why recorded) generalizes perfectly — only the merge **algorithm** was code-specific. And that gap just closed: **an LLM is a semantic diff/merge engine for prose.** "Deals aren't diff-able" was true until about two years ago; a model can now diff two term-sheet drafts and explain the delta. Semantic diff/merge over versioned knowledge artifacts is a primitive Tokenrip can own outright — the merge tooling code got from its compilers, supplied to everything else.
+
+What the boundary primitive must express, concretely: two orgs, one shared workspace, each side with private context its agents **read from but never leak** into the shared space — identity, permissions, and **scoped embeddings** across an org boundary (exactly where embedding-leakage bites — §IV pressure point 2). Whether the workspace model can express this today is acceptance test 3 (§VI). If yes, the cross-company story is demo-able now and is the sharpest multiplayer artifact available. If no, this boundary is the next primitive — the difference between "shared folder with search" and a collaboration substrate.
 
 ### What multiplayer AI actually is
 
@@ -127,6 +145,8 @@ The two halves are in tension, and the tension resolved is the moat:
 - **Recall extends lineage** (write direction): every retrieval is a recorded edge — *this knowledge informed that work*. Read-side provenance: usage analytics for knowledge, a graph that grows from *reads* rather than writes, accruing even when nobody contributes. No organization knows which of its knowledge is load-bearing; the workspace would. Git-blame for influence.
 
 > **Every read makes the record smarter; every record makes reads safer.**
+
+And the loop has a destination. Combining the linker (§II) with read-side provenance: **embeddings *hypothesize* the latent dependency graph** (similarity suggests an edge), **retrieval events *confirm* it** (B's draft actually pulled A's memo — the edge is real), **the why-graph *records* it.** Latent → recovered → confirmed → recorded. The substrate progressively converts knowledge work's invisible dependency graph into an explicit one — the graph code got for free from its compiler, built post-hoc and automatically. Embeddings are scaffolding; **the graph is the moat.**
 
 This is also the legal-vertical answer in disguise: legal text is hard mode for vanilla embeddings (boilerplate dominates similarity; opposite-conclusion motions embed near-identically). Hybrid retrieval over *structure* — versions, threads, review history, lineage — is the rescue, and the structure is the product.
 
@@ -176,9 +196,9 @@ Catalog discipline: every piece of content ships a mountable agent (the build vi
 
 Every row is the same sentence with a different buyer: **somebody wraps the substrate in a nameable product, and a workspace gets deposited that compounds.** The substrate is never sold; it accumulates underneath products that are — and shared memory is what makes every deposited brain worth keeping, which is what makes every motion renew.
 
-## VI. The two acceptance tests
+## VI. The three acceptance tests
 
-The wedge filter and the demo share one acceptance criterion — **a boundary crossing**. The demo is the load-bearing test made visible. Both tests are afternoon-scale, and a failure on either *is* the real backlog.
+The wedge filter and the demo share one acceptance criterion — **a boundary crossing**. The demo is the load-bearing test made visible. Tests 1 and 2 are afternoon-scale; test 3 is an architecture question with a yes/no answer today. A failure on any of them *is* the real backlog.
 
 ### Test 1 (read-side): the 60-second magic demo
 
@@ -204,14 +224,32 @@ The wedge filter and the demo share one acceptance criterion — **a boundary cr
 
 ### Test 2 (write-side): zero-ceremony ingestion
 
-The demo proves recall; this proves the brain *fills*. A Cowork session's output must land in the workspace with **no manual step** — workspace-as-working-directory (mount semantics) or default-on agent auto-checkpoint at session end, with summaries and metadata attached by the agent (the librarian whose labor is free). If today this requires a deliberate `rip publish`, the brain starves and every downstream claim is theater. Same standard as the demo: if it isn't config today, that gap is the backlog.
+The demo proves recall; this proves the brain *fills*. A Cowork session's output must land in the workspace with **no manual step** — workspace-as-working-directory (mount semantics) or default-on agent auto-checkpoint at session end, with summaries and metadata attached by the agent (the librarian whose labor is free). If today this requires a deliberate `rip publish`, the brain starves and every downstream claim is theater. Same standard as the demo: if it isn't config today, that gap is the backlog. (The stigmergy frame makes this a defining condition, not a UX preference: modifying the environment must be the same act as doing the work — §III.)
+
+### Test 3 (boundary-side): org-boundary expressiveness
+
+Can the workspace model **today** express: two orgs, one shared workspace, each side with private context their agents read from but never leak into the shared space — identity, permissions, and scoped embeddings across the org boundary? This is the load-bearing question for the cross-party network claim (the deck's boldest), for the PR-between-companies product shape (§III), and for the strongest rung of the demo ladder below. If yes, the cross-company collaboration story is demo-able now. If no, that boundary is the next primitive — ahead of anything on the consumer side.
+
+### The demo ladder
+
+The three boundaries sequence into a ladder — each rung dramatizes a bigger claim and requires one more primitive to be real:
+
+| Rung | Boundary | The whoa | Gated on |
+|---|---|---|---|
+| 1 | **Tool** (Cowork ↔ Codex) | Two vendors, one brain — your agents stop being strangers | Test 1 (shootable now?) |
+| 2 | **Person** | One agent caught what another *person's* agent knew — knowledge moved with no meeting | Test 2 (the shared brain actually fills) |
+| 3 | **Organization** | A pull request between companies — private brains, shared deal room, nothing leaks | Test 3 (the boundary primitive) |
+
+One beat, one whoa, per cut — never two boundaries in one 60-second artifact.
 
 ## VII. Pitch implications (a16z spine)
 
 - **Slot-in:** slide 2's memory claim pays off at training scale (the record as corpus — years out). Semantic recall makes the same record load-bearing **on day one**. One asset, two payoff horizons: *the memory works from day one and compounds into the moat.*
 - **The why-now in one breath:** blocked for decades on addressability (no symbol table) and filing (no librarian); embeddings solved the first, agents the second, both in the last eighteen months.
 - **The moat sentence:** *every read makes the record smarter; every record makes reads safer.*
-- **The unique-capability stack** (each defensible alone; the intersection empty):
+- **The objection-1 answer, upgraded** (spine objection 1: "code is diff-able, mergeable, testable — why does a git-equivalent hold?"): three legs now. (1) What generalizes: versioning, provenance, multi-party review — plus **a linker for link-less artifacts** (code declares its dependency graph; knowledge's is latent; embeddings recover it — the component git never needed because compilers supplied it). (2) The merge **ritual** generalizes; only the merge **algorithm** was code-specific — and LLMs now supply semantic diff/merge for prose. (3) The why-graph (unchanged). The answer moves from defense ("merge isn't the load-bearing part") to offense ("merge generalizes now too — we supply the tooling code got from its compilers").
+- **The three-axis compression** (for a slide — tighter than the five-part stack): every AI platform is building a better *single-player* brain. Multiplayer requires a memory that is **shared across people, neutral across tools, and boundaried across organizations** — and the platforms can't provide it because *they are the tool*. The substrate has to sit underneath all of them: the position git/GitHub holds for code.
+- **The unique-capability stack** (the detailed version; each defensible alone, the intersection empty):
   1. **Vendor-neutral** — the position the model owners structurally can't take.
   2. **Born-recorded** — provenance at creation, vs. indexed exhaust.
   3. **Meaning-addressable** — the index builds itself; no taxonomy.
@@ -226,8 +264,9 @@ The demo proves recall; this proves the brain *fills*. A Cowork session's output
 4. **What does substrate-visible delivery look like for Quintel specifically?** Does the EF broker get a Tokenrip login and see their deal-brain? If not, why not — this is where walk-backward and walk-forward fuse on a deal already in motion.
 5. **Provenance-aware retrieval** (recall by meaning, verify by lineage) — scope the build; it is simultaneously the legal-vertical rescue, the anti-RAG-bolt-on technical wedge, and one half of the closed-loop moat.
 6. **Launch wedge for the catalog:** the relationship-brain outreach agent (largest demand pool, made load-bearing), or an inherently-shared first agent closer to the multiplayer story? Apply the boundary-crossing test before committing.
-7. **Index-layer permissioning:** how early does ACL-respecting retrieval (ethical walls, cross-org isolation, embedding-leakage handling) need to exist — and is it a Phase-1 requirement for the cross-org claims in the deck?
+7. **The boundary test — now the load-bearing question:** can the workspace model today express two orgs / one shared workspace / private context that informs but never leaks — identity, permissions, scoped embeddings across the org boundary? (Subsumes index-layer permissioning: ethical walls, cross-org isolation, embedding leakage.) Yes → shoot rung 3 of the demo ladder; no → this is the next primitive, ahead of anything consumer-side.
+8. **Semantic diff/merge for knowledge artifacts:** scope the primitive — LLM-powered diff of two versions of a prose artifact with an explained delta. It completes the PR-between-companies workflow and is the offensive half of the objection-1 answer.
 
 ---
 
-*Canonical synthesis of two independent Bean session captures, 2026-06-11. Source documents preserved unchanged alongside this one. Claims marked ⊕ were derived independently in both sessions — treat as the most-validated claims in the document.*
+*Canonical synthesis of two independent Bean session captures (2026-06-11) plus a third independent review (2026-06-12). Source documents preserved unchanged alongside this one. Claims marked ⊕ were derived independently more than once — treat as the most-validated claims in the document.*
