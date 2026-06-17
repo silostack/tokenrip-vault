@@ -25,6 +25,7 @@ VAULT_ROOT="$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel)"
 BRAIN_DIR="$SCRIPT_DIR"
 CONFIG="$BRAIN_DIR/config.yaml"
 SNAPSHOT="$BRAIN_DIR/snapshot.json"
+CSV_SEED="$BRAIN_DIR/seed-set.csv"
 WORK="$BRAIN_DIR/.work"
 CRED="$HOME/.config/tokenrip/config.json"
 
@@ -138,13 +139,20 @@ sync() {
   echo "==> ensure brain + folder + link"
   ensure
 
-  # resolve current seed-set -> list of relpaths (unique, excludes applied)
-  echo "==> resolving seed-set ($([ $tier_full = 1 ] && echo 'cornerstone+full' || echo 'cornerstone'))"
-  local globs; { globs_for cornerstone; [ $tier_full = 1 ] && globs_for full; } > "$WORK/globs.txt"
-  exclude_globs > "$WORK/excludes.txt" || true
-  ( cd "$VAULT_ROOT" && shopt -s nullglob
-    while read -r g; do for p in $g; do [ -f "$p" ] && echo "$p"; done; done < "$WORK/globs.txt"
-  ) | sort -u | filter_excludes > "$WORK/current.txt"
+  # resolve current seed-set -> list of relpaths (unique).
+  # Precedence: seed-set.csv (include=yes rows) if present, else config globs.
+  if [ -f "$CSV_SEED" ]; then
+    echo "==> resolving seed-set from seed-set.csv (include=yes rows)"
+    awk -F, 'NR>1 && tolower($1) ~ /^(yes|y|true|1|x)$/ {print $2}' "$CSV_SEED" \
+      | while read -r p; do [ -n "$p" ] && [ -f "$VAULT_ROOT/$p" ] && echo "$p"; done | sort -u > "$WORK/current.txt"
+  else
+    echo "==> resolving seed-set from config globs ($([ $tier_full = 1 ] && echo 'cornerstone+full' || echo 'cornerstone'))"
+    { globs_for cornerstone; [ $tier_full = 1 ] && globs_for full; } > "$WORK/globs.txt"
+    exclude_globs > "$WORK/excludes.txt" || true
+    ( cd "$VAULT_ROOT" && shopt -s nullglob
+      while read -r g; do for p in $g; do [ -f "$p" ] && echo "$p"; done; done < "$WORK/globs.txt"
+    ) | sort -u | filter_excludes > "$WORK/current.txt"
+  fi
   echo "    $(wc -l < "$WORK/current.txt" | tr -d ' ') source docs in seed-set"
 
   # previous snapshot: path -> {publicId, sha256}

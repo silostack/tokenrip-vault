@@ -5,9 +5,11 @@ our **Doctrine** layer — the durable opinions, vision, platform context, produ
 and voice that every Tokenrip agent should draw on so its output stays on-message instead
 of being re-derived each session.
 
+- **Full operations reference:** [`OPERATIONS.md`](./OPERATIONS.md) — read this to run or extend the brain
 - **Brain slug:** `tokenrip-brain`
 - **Source folder:** `tokenrip-brain-vault` (whole seed docs, filed + linked into the brain)
-- **Config:** [`config.yaml`](./config.yaml) — seed-set globs, slugs, options
+- **Seed-set:** [`seed-set.csv`](./seed-set.csv) — every candidate vault doc + an `include` decision (the source of truth for what's in the brain)
+- **Config:** [`config.yaml`](./config.yaml) — slugs, zone, seed-set precedence
 - **State:** [`snapshot.json`](./snapshot.json) — what the brain holds + the git SHA it reflects (the diff baseline)
 
 ## How it works
@@ -21,21 +23,25 @@ Two content kinds, both searched:
 Recall = `recall by meaning, verify by lineage`: search surfaces atoms; each atom links
 back to its source for the full argument.
 
+## Choosing what's in the brain
+
+The seed-set lives in [`seed-set.csv`](./seed-set.csv). Generate/refresh it with
+**`/brain-crawl`** (runs `brain-crawl.sh`): it inventories the vault and recommends an
+`include` (yes/no) per doc. Edit the `include` column to curate, then sync.
+
 ## Keeping it current
 
-Run **`/brain-sync`** (see `.claude/commands/brain-sync.md`). It diffs the seed-set against
-`snapshot.json` (content hash, with git assisting rename/change detection), then:
+Run **`/brain-sync`**. It diffs the `include=yes` rows against `snapshot.json` (content
+hash, with git assisting rename/change detection), then:
 
 - **new** doc → publish artifact, atomize into claim-notes
 - **changed** doc → publish a new artifact version (auto-cues re-atomization), reconcile atoms
 - **renamed** doc (same content) → re-file only, no re-atomize
-- **deleted** doc → archive the source + its atoms
+- **deleted / flipped to `no`** → archive the source + its atoms
 - **unchanged** → skip
 
 It is idempotent: re-running with no doc changes is a no-op. After each run it rewrites
 `snapshot.json` (and commits it, recording the vault git SHA the brain now reflects).
-
-`/brain-sync` ingests the **cornerstone** seed-set by default; pass `--full` to widen.
 
 ## Recall contract (for consuming agents)
 
