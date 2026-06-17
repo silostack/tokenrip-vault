@@ -1,0 +1,51 @@
+# Tokenrip Brain — sync configuration
+# Consumed by .claude/commands/brain-sync.md
+#
+# The brain is a Tokenrip workspace with semantic search on. It holds the
+# DOCTRINE layer: our durable opinions, vision, platform context, product
+# truth, and voice. Seeded by atomizing the docs matched below.
+
+brain_slug: tokenrip-brain
+brain_name: "Tokenrip Brain"
+folder_slug: tokenrip-brain-vault   # source folder; every seed doc is filed here
+team: null                          # personal brain (no team). Set a team slug to share.
+
+api_base: https://api.tokenrip.com  # overridden by ~/.config/tokenrip/config.json apiUrl
+# Auth: the tr_ API key is read at runtime from ~/.config/tokenrip/config.json (.apiKey).
+# Never hard-code or commit the token.
+
+zone: doctrine                      # all v1 atoms land here (trust-boosted at recall)
+
+commit_snapshot: true               # git add + commit snapshot.json after each run
+
+# ---------------------------------------------------------------------------
+# Seed-set: the curated DOCTRINE subset of the vault (NOT the whole vault).
+# Paths are globs, relative to the vault root. Add globs to widen coverage.
+#
+# Lazy seeding: `tier: cornerstone` is the prove-the-loop set (~8-10 docs).
+# `tier: full` widens to the rest once recall is verified. brain-sync ingests
+# `cornerstone` by default; pass `--full` to include both.
+# ---------------------------------------------------------------------------
+seed_set:
+  cornerstone:
+    - active/tokenrip-vision-and-roadmap-2026-06-09.md
+    - active/workspace-brain-architecture-2026-06-14.md
+    - product/tokenrip/mounted-agent-model.md
+    - product/tokenrip/tokenrip-positioning.md
+    - product/tokenrip/external-positioning.md
+    - product/tokenrip/business-model.md
+    - content/published/agent-native-operations.md
+    - content/published/ai-vendor-lock-in-five-layers.md
+    - content/published/portable-ai-agents.md
+    - content/published/two-agents-better-than-one.md
+  full:
+    - content/published/*.md
+    - product/tokenrip/mounted-agent-synthesis.md
+    - product/tokenrip/distribution-strategy.md
+    - product/tokenrip/tokenrip-branding.md
+    - product/tokenrip/custom-interfaces-on-artifacts-thesis-2026-05-21.md
+
+# Files matched by an exclude glob are never ingested, even if a seed glob
+# would otherwise catch them.
+exclude:
+  - "**/README.md"
