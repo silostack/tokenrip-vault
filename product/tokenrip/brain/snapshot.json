@@ -1,0 +1,198 @@
+{
+  "brain_slug": "tokenrip-brain",
+  "folder_slug": "tokenrip-brain-vault",
+  "ingested_at": "2026-06-17T01:38:27Z",
+  "git_sha": "0a080f2ce6c80818f9e86f949d0df049492403ba",
+  "git_dirty": true,
+  "search_mode": "hybrid",
+  "sources": {
+    "active/tokenrip-vision-and-roadmap-2026-06-09.md": {
+      "publicId": "376e48a2-5cc6-45cd-842f-8f87f6395b67",
+      "sha256": "cfbd4ea38c8a096a1caff96eb646e95c3687598d4fc483a09fe427b6285c1c5d",
+      "atom_slugs": [
+        "2026-06-17-the-convergence-milestone-acting-agent-in-both-verticals-every-decision-recorded",
+        "2026-06-17-why-two-maximally-different-verticals",
+        "2026-06-17-credentialing-pain-the-trail-lives-in-email-not-a-ledger",
+        "2026-06-17-equipment-finance-pain-the-broker-never-learns-what-funded",
+        "2026-06-17-aicap-signed-paying-credentialing-customer-integration-is-mandatory",
+        "2026-06-17-quintel-honest-status-dashboard-deployed-acting-agent-unsigned",
+        "2026-06-17-quintel-sell-the-hands-not-the-dashboard",
+        "2026-06-17-provenance-and-human-in-the-loop-are-mandatory-never-optional",
+        "2026-06-17-one-shared-engine-pattern-across-both-verticals-terminus",
+        "2026-06-17-anti-consulting-answer-is-config-not-code",
+        "2026-06-17-forward-deployed-model-forge-the-substrate-inside-vertical-products",
+        "2026-06-17-forward-deployed-verticals-are-the-gtm-creator-audience-gtm-is-dead",
+        "2026-06-17-business-model-git-is-free-the-platform-on-top-isn-t",
+        "2026-06-17-two-distinct-network-claims-kept-disciplined",
+        "2026-06-17-the-why-graph-is-not-an-audit-log",
+        "2026-06-17-the-moat-is-the-why-graph-not-the-outcome-graph",
+        "2026-06-17-whoever-gives-operational-work-a-memory-owns-github-s-position",
+        "2026-06-17-tokenrip-is-git-for-operational-work",
+        "2026-06-17-coding-agents-work-because-code-has-a-memory"
+      ],
+      "status": "atomized"
+    },
+    "active/workspace-brain-architecture-2026-06-14.md": {
+      "publicId": "ea16f456-d04f-420c-9f2e-f87459422bb3",
+      "sha256": "5248663486d38cea5856eaea456f483120f651e768b1d9d419423e17e5c4eda0",
+      "atom_slugs": [
+        "2026-06-17-every-channel-must-terminate-in-a-deposit-not-a-pageview",
+        "2026-06-17-the-marketing-brain-is-product-dogfood-and-distribution-at-once",
+        "2026-06-17-the-moat-accrues-from-reads-not-just-writes",
+        "2026-06-17-the-brain-is-the-product-semantic-search-is-commodity",
+        "2026-06-17-seed-the-brain-lazily-not-exhaustively",
+        "2026-06-17-embeddings-can-leak-what-an-acl-hides-the-cross-org-hard-part",
+        "2026-06-17-cross-org-neutrality-is-structural-barring-party-vendors",
+        "2026-06-17-cross-organization-is-the-same-architecture-plus-a-trust-boundary",
+        "2026-06-17-folders-are-the-composable-unit-brains-are-views-of-linked-folders",
+        "2026-06-17-provenance-aware-retrieval-over-a-contested-corpus",
+        "2026-06-17-atomic-claim-notes-carry-a-context-envelope",
+        "2026-06-17-decompose-semantically-never-by-positional-auto-chunking",
+        "2026-06-17-storage-granularity-and-retrieval-granularity-should-differ-two-tier",
+        "2026-06-17-the-consolidation-loop-is-what-makes-a-brain-get-smarter-not-just-bigger",
+        "2026-06-17-the-anatomy-three-storage-zones-two-operations",
+        "2026-06-17-recording-is-half-a-memory-recall-is-the-defining-property",
+        "2026-06-17-a-workspace-brain-is-shared-memory-not-shared-storage"
+      ],
+      "status": "atomized"
+    },
+    "content/published/agent-native-operations.md": {
+      "publicId": "80c58f2a-93f0-4615-ac9b-04db15632bfc",
+      "sha256": "32ca3121c90edede6d03d8e3cf5d7c5289e99aa574bbe28b7f9733ab61c5cfcf",
+      "atom_slugs": [
+        "2026-06-17-when-the-operator-changes-value-migrates-from-the-bundle-to-the-primitives",
+        "2026-06-17-orchestration-is-not-operations",
+        "2026-06-17-the-operations-layer-is-an-empty-category-nobody-is-filling",
+        "2026-06-17-the-inversion-one-data-layer-agent-operates-human-views",
+        "2026-06-17-every-business-operation-decomposes-into-three-agent-primitives",
+        "2026-06-17-human-tools-exist-for-human-limitations-agents-don-t-have",
+        "2026-06-17-ai-native-captured-78-of-new-enterprise-contract-value-where-it-competed",
+        "2026-06-17-an-agent-doesn-t-need-stages-or-opportunities-just-rows-and-a-next-action-column",
+        "2026-06-17-ai-enhanced-saas-solves-the-wrong-problem"
+      ],
+      "status": "atomized"
+    },
+    "content/published/ai-vendor-lock-in-five-layers.md": {
+      "publicId": "a970c06a-d2f5-4b56-ba19-3eefe26596d4",
+      "sha256": "9e1fb2095ad5df8265ad5261e3fefb90ec1b554a7c2742929762b3ff231bbf51",
+      "atom_slugs": [
+        "2026-06-17-architecting-across-all-five-layers-up-front-saves-60-80-on-migration",
+        "2026-06-17-three-way-separation-of-intelligence-memory-and-execution-fixes-layer-5",
+        "2026-06-17-a-hyperscaler-abstraction-layer-is-a-deeper-integration-point",
+        "2026-06-17-the-portability-stack-has-a-gap-in-the-middle-and-bottom",
+        "2026-06-17-layer-5-behavioral-lock-in-cannot-be-exported",
+        "2026-06-17-layer-4-governance-evidence-doesn-t-transfer-between-vendors",
+        "2026-06-17-layer-3-data-integration-is-the-first-real-wall",
+        "2026-06-17-layer-2-orchestration-traps-workflows-in-proprietary-formats",
+        "2026-06-17-layer-1-model-is-solved-and-the-shallowest-portability",
+        "2026-06-17-enterprise-ai-lock-in-is-five-layers-deep-not-a-model-problem"
+      ],
+      "status": "atomized"
+    },
+    "content/published/portable-ai-agents.md": {
+      "publicId": "fd77a52c-a052-4c24-96e5-bdc632a20d04",
+      "sha256": "03ea7936980cb06ba5eb04fe86fc4e294c44abc540c7a077f9696b0a986930e3",
+      "atom_slugs": [
+        "2026-06-17-model-intelligence-improves-on-someone-else-s-roadmap-memory-identity-and-tools-",
+        "2026-06-17-five-question-diagnostic-mounted-agent-or-session-with-a-name",
+        "2026-06-17-if-the-value-is-in-the-instructions-any-competitor-who-reads-them-has-the-whole-",
+        "2026-06-17-a-portable-prompt-is-not-a-mounted-agent-persistence-is-what-makes-a-product",
+        "2026-06-17-a-mounted-agent-is-like-a-container-but-it-ships-cognition-not-compute",
+        "2026-06-17-five-durable-parts-die-every-time-the-session-ends",
+        "2026-06-17-software-solved-durable-vs-ephemeral-separation-agent-intelligence-is-the-last-a",
+        "2026-06-17-today-s-ai-agents-are-trapped-in-the-runtime-that-executes-them"
+      ],
+      "status": "atomized"
+    },
+    "content/published/two-agents-better-than-one.md": {
+      "publicId": "0a9656ad-c3d4-4afb-9f1b-67c3f6f35235",
+      "sha256": "22fc85aeb9e21f8d46155192bbe40c60230558c51ba5b3ec8560e771da0efb94",
+      "atom_slugs": [
+        "2026-06-17-four-questions-to-diagnose-any-agent-product-s-ceiling",
+        "2026-06-17-the-neutral-shared-layer-must-be-a-third-party",
+        "2026-06-17-model-providers-structurally-can-t-host-the-shared-surface",
+        "2026-06-17-app-bound-workspaces-can-t-be-the-shared-surface",
+        "2026-06-17-a2a-and-mcp-are-messaging-and-tool-access-not-shared-state",
+        "2026-06-17-once-agents-talk-the-bottleneck-moves-to-shared-state",
+        "2026-06-17-the-real-unlock-two-agents-transfer-context-faster-than-you-can-type",
+        "2026-06-17-the-ai-productivity-paradox-is-structural",
+        "2026-06-17-single-player-ai-s-ceiling-is-the-operator-s-typing-speed"
+      ],
+      "status": "atomized"
+    },
+    "product/tokenrip/business-model.md": {
+      "publicId": "0c9210ce-2677-4c34-96b6-10749e76a49d",
+      "sha256": "9d5508e0639c519a888b1e701bd512e5236c08f8d503121ebd5251224ff6afe9",
+      "atom_slugs": [
+        "2026-06-17-business-model-anti-patterns-to-avoid",
+        "2026-06-17-margins-expand-with-scale-instead-of-compressing-the-fundraising-story",
+        "2026-06-17-the-resolution-layer-is-the-future-fourth-revenue-line-premature-today",
+        "2026-06-17-never-ship-a-standalone-third-party-wrapper-as-first-party",
+        "2026-06-17-don-t-monetize-inference-imprint-hosting-or-raw-api-wrappers",
+        "2026-06-17-builder-observability-is-a-separate-buyer-and-a-data-flywheel",
+        "2026-06-17-substrate-tooling-tiers-are-capability-based-not-seat-or-inference-based",
+        "2026-06-17-three-monetization-lines-substrate-tiers-composed-bundles-builder-observability",
+        "2026-06-17-bypassable-vs-non-bypassable-test-for-monetization",
+        "2026-06-17-charge-for-the-substrate-not-the-wrapper"
+      ],
+      "status": "atomized"
+    },
+    "product/tokenrip/external-positioning.md": {
+      "publicId": "58f3d41a-33c6-499b-9d2d-af65a9799b71",
+      "sha256": "8757a98cfc6c6e37ffc7b105fe7808c5298b1125defb4667c77ed6616b1ccfc8",
+      "atom_slugs": [
+        "2026-06-17-competitive-differentiation-responses-by-category",
+        "2026-06-17-external-vocabulary-ban-internal-investor-terms-create-distance",
+        "2026-06-17-the-two-doors-platform-story-connecting-firms-and-builders",
+        "2026-06-17-builder-facing-message-build-agents-that-get-used-not-demos",
+        "2026-06-17-firm-facing-message-ai-handles-coordination-team-handles-decisions",
+        "2026-06-17-tokenrip-s-two-icps-firms-and-builders",
+        "2026-06-17-core-external-positioning-ai-that-does-the-work-not-chat"
+      ],
+      "status": "atomized"
+    },
+    "product/tokenrip/mounted-agent-model.md": {
+      "publicId": "56e74188-1a33-4e40-bd82-879573f226b4",
+      "sha256": "4735e88bd7b446df9d279825ef0073100b676c19b0cc5a72f2333209782d9820",
+      "atom_slugs": [
+        "2026-06-17-the-moat-is-memory-tools-and-inter-agent-connections-not-the-imprint",
+        "2026-06-17-layered-memory-model-shared-knowledge-layer-plus-private-context-layer",
+        "2026-06-17-mounted-agents-have-post-company-existence",
+        "2026-06-17-mounted-agents-are-uniquely-auditable-observability-is-a-wedge-into-regulated-in",
+        "2026-06-17-agent-mediated-products-need-no-ui-the-user-s-agent-is-the-interface",
+        "2026-06-17-tokenrip-is-the-nervous-system-between-the-inference-engine-and-the-world",
+        "2026-06-17-charge-for-the-hands-tooling-not-the-imprint-or-inference",
+        "2026-06-17-token-efficiency-becomes-a-competitive-differentiator",
+        "2026-06-17-incentive-alignment-token-usage-becomes-a-data-source-not-a-cost-center",
+        "2026-06-17-mounted-agents-inherit-model-price-drops-as-free-upgrades",
+        "2026-06-17-mounted-agents-are-structurally-more-capable-than-hosted-agents",
+        "2026-06-17-byo-model-inversion-flips-ai-unit-economics",
+        "2026-06-17-mounted-agents-separate-imprint-memory-and-harness"
+      ],
+      "status": "atomized"
+    },
+    "product/tokenrip/tokenrip-positioning.md": {
+      "publicId": "f3833974-2159-4ff6-8250-2b1c013ab45f",
+      "sha256": "f0d62191336a44d3f765f3a612d356ed1d2db0037070991d3e52e691b8125b8a",
+      "atom_slugs": [
+        "2026-06-17-which-positioning-angle-to-lead-with-by-context",
+        "2026-06-17-positioning-language-rules-and-brand-voice",
+        "2026-06-17-audience-filter-do-you-use-an-agent-then-this-is-for-you",
+        "2026-06-17-asset-graph-becomes-the-work-graph-the-behavioral-record-of-the-agent-economy",
+        "2026-06-17-the-asset-graph-is-the-moat-relationships-not-files",
+        "2026-06-17-layer-1-is-the-door-not-the-product-defense-against-incumbent-absorption",
+        "2026-06-17-skill-vs-mounted-agent-session-grade-vs-relationship-grade",
+        "2026-06-17-don-t-compare-features-compare-design-premises",
+        "2026-06-17-figma-analogy-the-link-is-the-collaboration-surface",
+        "2026-06-17-mounted-agent-model-charge-for-the-hands-not-the-imprint-or-inference",
+        "2026-06-17-deliverable-rails-everyone-builds-money-rails-nobody-builds-what-the-money-is-fo",
+        "2026-06-17-visibility-gap-operators-can-t-see-what-their-agents-are-doing",
+        "2026-06-17-design-premise-gap-agent-first-not-human-first",
+        "2026-06-17-warehouse-to-factory-why-agent-infrastructure-must-exist",
+        "2026-06-17-collaboration-vs-coordination-the-blue-ocean-distinction",
+        "2026-06-17-tokenrip-is-the-collaboration-layer-for-ai-agents"
+      ],
+      "status": "atomized"
+    }
+  }
+}
