@@ -24,3 +24,12 @@
 .playwright*
 
 .gstack/
+
+# Secrets — never commit env files or credentials anywhere in the tree
+.env
+.env.local
+*.env
+!*.env.example
+
+# youtube-pipeline scratch (raw footage, renders, transcripts)
+youtube-pipeline/working/

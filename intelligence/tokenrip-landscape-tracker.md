@@ -225,16 +225,98 @@ Enterprise AI-native workspace consolidating multiple AI tools. Shared context l
 
 ---
 
+### Lyzr
+**URL**: https://www.lyzr.ai/
+**Raised**: $14.5M Series A+ (Mar 2026) led by Accenture via Accenture Ventures, at a **$250M valuation** — 5x step-up from $8M Series A (Oct 2025). Rocketship VC participating.
+**Team**: Founded 2023. CEO Siva Surendira. 30,000+ developer community.
+**Stage**: Scaling. Claims 1M+ agents in production, 500+ enterprises, 85% project-to-production rate.
+**Category**: Full-stack enterprise agent infrastructure / "Agentic Operating System" / control plane
+**Tagline**: *"Take your AI agents to production, faster."*
+**First tracked (this depth)**: 2026-06-18 (previously filed only as a "headless agent" vocabulary note, 2026-04-28 — that framing is now stale)
+
+Enterprise platform that bridges the POC→production gap for AI agents. 7-layer governance-first stack: framework-agnostic connection, any-LLM, **Simulation Engine** (JEPA-inspired, 20K+ sims/agent pre-deployment), observability, hallucination/PII guard, RBAC/SSO governance, immutable audit. Products: Agent Studio (low-code), Architect (no-code/plain-English), SuperFlow (orchestration canvas), GitAgent (version control + CI/CD for agents), ShadowLM (distillation). Runs in customer VPC/on-prem; data never leaves the boundary. SOC 2 + ISO 27001. Vision: "Organizational General Intelligence" — a private AI workforce sharing context via a central knowledge graph. ICP: BFSI (70% of customers), insurance, healthcare, telco, BPO. Named customers: WTW, Hitachi, Verifone, First Source, Accenture Ventures.
+
+**The collision is motion, not vocabulary**: Lyzr's flagship "Co-Build" deployment — embedding "Applied AI architects" with the customer team to ship 3+ agents to production — is a capitalized, Accenture-channel-backed instance of the **forward-deployed-engineer motion Tokenrip is staking its first sale on.** They have validated the FDE thesis at enterprise scale and put a Big-4 SI engine behind it.
+
+**Architecture comparison**:
+- Lyzr = closed, governance-first, enterprise-internal. Agents are a "private AI workforce inside your firewall." Top-down, IT-org buyer, compliance procurement.
+- Tokenrip = open, audience-led, creator-first. Agents are published products that external audiences mount. Same decomposed-agent primitive, **opposite go-to-market.**
+- Lyzr's Simulation Engine + audit layer answer "prove the agent before production" — a regulated-buyer trust gate Tokenrip does not yet address.
+
+**Threat level by Tokenrip layer**:
+- **Layer 1 (Asset Routing)**: **None** — Lyzr deploys agents into internal workflows, not agent-produced assets to audiences
+- **Layer 2 (Collaboration)**: **Low** — multi-agent orchestration exists but enterprise-internal; no cross-org agent-to-agent artifact sharing
+- **Layer 3 (Deliverable Rails)**: **None** — no transaction/escrow/milestone delivery layer
+- **Layer 4 (Workspaces)**: **Low-Medium** — central knowledge graph is single-org (like Dust/Zaro). Tokenrip's workspace layer is cross-org by design.
+- **Layer 5 (Agent Runtime)**: **Medium** — genuine production runtime + governance + simulation. But agents are platform-hosted/internal, not decomposed/portable/published.
+- **Positioning / Vocabulary**: **High** — "agentic OS," "control plane," "agent infrastructure" are a land-grab on the whole "enterprise agent platform" category, with $250M + Accenture behind it. "Mounted agents," "synced minds," "published agents for audiences" remain unclaimed.
+
+**Key tripwire signals**:
+1. Lyzr/Accenture announce a vertical **equipment-finance or broker-facing** agent → Quintel collision goes live. *(Note: as of 2026-06-18, **F2 is the more probable source of the Quintel collision** — a funded vertical-FS underwriting product one segment up. See the F2 entry above.)*
+2. Lyzr moves down-market (SMB/broker pricing or self-serve vertical templates) → buyer-mismatch defense erodes
+3. Accenture begins actively *reselling* Lyzr into named accounts (vs. Ventures stake) → channel threat compounds fast
+4. Lyzr ships cross-organization / agent-to-agent capability → architectural moat claim narrows
+5. Any entrant builds the *open, creator-led, audience-mounted* version of Lyzr → the real Tokenrip competitor
+
+**What this validates for Tokenrip**:
+- The agent-infrastructure thesis is venture-real and large — $250M + Accenture is the strongest category-validation proof to date. Strongest member of the "name them head-on" panel.
+- The forward-deployed-engineer motion works at scale — de-risks Tokenrip's own get-a-sale motion. Keep going.
+- The posture wedge is clean: Lyzr builds the private AI workforce *inside* the firewall; Tokenrip builds the public agent economy *outside* it. Different buyer, no motion overlap.
+- "Prove the agent before publish" (Lyzr's simulation engine) is the regulated-buyer trust gate — Tokenrip's answer is the MOA "pressure-tested before publish" discipline; elevate it as positioning, do not pre-build.
+
+**Full analysis**: [[research-lyzr-competitive-analysis-2026-06-18]]
+
+---
+
+### F2
+**URL**: https://f2.ai/
+**Raised**: $24M total — $10M spinout round (Sept 2025; NFX, Left Lane, Y Combinator, RevTek, ~50 Arc investors) + $14M seed (June 2026; led by HighlandX, with Left Lane, NFX, YC, Torch). Arc+F2 combined ≈ $200M.
+**Team**: CEO Don Muir (ex-private credit / PE). Spun out of Arc Technologies (cash-management + capital-markets platform) Sept 2025; inherited Arc's base of hundreds of private-markets clients + Arc's lender network.
+**Stage**: Scaling. "Hundreds of active users across dozens of" funds/banks; "100+ funds and banks globally." Battle-tested across "thousands of deals."
+**Category**: **Vertical financial-services AI — underwriting / diligence.** First entrant tracked in a *new competitor class* for Tokenrip, distinct from the context-layer cluster (Dust/Zaro/Nessie) and the agent-infrastructure cluster (Lyzr). This is the class that collides with **Quintel**, not Tokenrip.
+**Tagline**: *"Compounding Intelligence for Private Markets"* · *"the Bloomberg Terminal for private markets — but AI-native from day one."*
+**First tracked**: 2026-06-18
+
+AI-native underwriting workspace for private credit funds, commercial banks, and PE deal teams. Uploads a data room (PDFs, Excel, CIMs, decks) → extracts and reconciles financials → computes credit metrics (EBITDA, leverage, coverage) with source-cell/page traceability ("Audit Mode") → benchmarks each deal vs. the firm's deal library + public comps → drafts firm-formatted IC memos. Real multi-sheet Excel engine (claims #1 on SpreadsheetBench); zero data retention / no training on user data. Agent: **Adam**, "an AI deal team associate" (launched June 2026 with the seed). "60% faster from diligence to decision"; customers cite ~45 hrs/week saved (≈ a $250K+ FTE).
+
+**Why F2 matters to Quintel, not Tokenrip**: F2 is a vertical product one segment up the same value chain. Its pipeline (ingest → extract → metrics → benchmark → memo → audit) is near-identical to Quintel's (ingest → structure → decide → match → review → capture) and to the Terminus engine shape. The single stage F2 lacks is **`match` / lender-placement** — because it serves the *investor/lender* side, not the *broker/placement* side. That seam is Quintel's wedge.
+
+**The uncomfortable validation**: F2 already ships, as marketed features, three theses Tokenrip treats as differentiating — *"5x token efficiency, 60% better than generic agents"* (token-efficiency-as-feature), *"multi-model, LLM-agnostic architecture (Opus, ChatGPT, Gemini)"* (model-agnostic harness), and *"product augmented service… tailored to your end customer"* (the FDE motion). "Model-agnostic" and "token-efficient" are **no longer ownable claims** — a $24M peer uses the identical language.
+
+**Architecture comparison**:
+- F2 = hosted SaaS, **single-firm** knowledge ("your firm's deal history + comps"), F2 routes/pays inference. Enterprise pricing (demo-only).
+- Quintel = vertical product whose differentiation is segment (placement brokers) + `match` + a **cross-org** deal-graph (broker↔lender↔vendor). The mounted-agent/BYO-model substrate inversion is **invisible to a broker buyer** and does not help Quintel win here.
+- F2's compounding "Institutional Knowledge System" is the single-firm analog of Quintel's deal-graph: F2 deepens intra-firm intelligence; Quintel makes the placement *market* legible. Different shape — but F2 has hundreds of firms already, while Quintel's cross-org moat is unrealized at one customer (Bevel).
+
+**Threat level**: **Quintel — Medium now, High on trajectory.** Not live today (different segment; no lender-matching). But F2 is explicitly in commercial banks and moving down-market, with $24M and an "everything changes in 36 months" thesis; equipment finance is an *adjacent segment*, not a category pivot. **Tokenrip (horizontal) — Low** (opposite architecture; no substrate overlap).
+
+**Key tripwire signals**:
+1. F2 ships lender-matching / placement, or targets equipment-finance lessors or brokers → the seam closes; Quintel collision goes live
+2. Arc's lender network is shown to include equipment-finance lessors → distance-to-collision shortens materially
+3. F2 productizes Adam for smaller shops / self-serve / down-market pricing → broker-segment exposure rises
+4. A broker/EF prospect (Bevel, NED, Stauss) reports evaluating F2 or an F2-like tool → demand-side signal; act immediately
+
+**What this validates for Quintel/Tokenrip**:
+- "Vertical AI beats horizontal LLMs on last-mile accuracy" is now a funded, fast-moving thesis in the adjacent segment — validates Quintel's bet and adds urgency.
+- F2's content engine ("best AI underwriting software," "private-credit screening-memo template," "AI-augmented operating model") executes the build-own-audience motion in the adjacent vertical — a template for Quintel's broker-vertical content, where no incumbent exists yet.
+- Differentiation must move off architecture properties (agnostic/efficient — now table-stakes) onto segment + `match` + cross-org placement data + owner-buyer speed/price.
+
+**Full analysis**: [[research-f2-ai-private-markets-2026-06-18]]
+
+---
+
 ## Observations
 
 - **"Shared context layer" is now a commodity phrase.** Microsoft (Fabric IQ), Snowflake (Cortex Sense), Atlan, Zaro, and Nessie all use it. "Agentic collaboration" is claimed by Alike, gitlawb, and Tokenrip. The only unclaimed vocabulary of strategic value: **"mounted agents," "synced minds," "layer 5 portability."** Blog Series 3 (mounted agents) and Series 4 (lock-in trap) are now category-defining stakes, not just content.
 - **Three funded entrants in 30 days validate the category.** Dust ($40M, Sequoia), Nessie (YC F25), Zaro ($5.1M, Cherry/Wolf/Dohmke). All make the "context > models" argument. None occupies Tokenrip's architectural position (decomposed, cross-org, mounted agents). Use all three as category-validation proof — the "name them head-on" strategy scales.
 - **Alike's threat is vocabulary, not product.** There is no live product to compete with today. The risk is that a funded company with a16z backing uses the same category label and defines it toward human-team coordination, leaving Tokenrip fighting to reclaim the AI-native definition.
 - **The bolt-on vs AI-native fork is a durable positioning asset.** Simon's read is right. Companies starting AI-native from day one (new startups, vibe coders, agent framework builders) are categorically different from existing enterprises adding AI to their workflows. Tokenrip owns the former; Alike targets the latter. These don't need to compete.
-- **Every context-layer competitor is single-org or personal.** Dust (enterprise-internal), Zaro (enterprise-internal), Microsoft IQ (enterprise-internal), Nessie (personal/team). None builds cross-organization context sharing. Tokenrip's mounted agents are structurally cross-org. Quintel's deal-graph (shared across broker/lender/vendor) is the proof point. This is the strongest architectural moat in the landscape.
+- **Every context-layer competitor is single-org or personal.** Dust (enterprise-internal), Zaro (enterprise-internal), Microsoft IQ (enterprise-internal), Nessie (personal/team). None builds cross-organization context sharing. Tokenrip's mounted agents are structurally cross-org. Quintel's deal-graph (shared across broker/lender/vendor) is the proof point. This is the strongest architectural moat in the landscape. **The vertical-AI entrants are single-firm too** — F2's "Institutional Knowledge System" deepens *one fund's* deal history; Quintel's cross-org placement graph is structurally different. Caveat: the moat is *unrealized* (one customer) while F2 already seeds intra-segment network effects across hundreds of firms — cross-org wins only if Quintel reaches placement-network density first.
 - **No current competitor occupies Layer 2.** Neither publish.new, Alike, Zaro, nor Dust touches agent-to-agent artifact collaboration with versioning, comments, lifecycle states, or provenance. Tokenrip's collaboration layer is uncontested.
 - **Zaro's Agentforce pedigree is double-edged.** Credibility from building Salesforce's flagship AI product. But the team's expertise is agent execution (dynamic UI navigation), not enterprise context infrastructure. The gap between "built agents that work" and "built the enterprise context layer that makes agents trustworthy" is the gap Zaro's marketing papers over.
 - **The vocabulary window is narrowing.** Not because anyone is claiming "mounted agents," but because the broader "context layer" narrative is hardening into a shape (platform-hosted, exportable context) that may not leave room for architectural nuance. Publishing the mounted-agent thesis while the category is forming is time-sensitive.
+- **Lyzr is the heavyweight that proves the category — and mirrors the motion.** $250M, Accenture, 1M+ agents in production. Unlike the context-layer cluster (Dust/Zaro/Nessie), Lyzr is a full-stack agent-infrastructure / "agentic OS" play. Its "Co-Build" deployment *is* the forward-deployed-engineer motion Tokenrip is betting its sale on — validated at enterprise scale with a Big-4 channel. Treat as the strongest category-validation proof and the sharpest motion-mirror, not a head-to-head product rival. The defense is posture: Lyzr builds the private AI workforce inside the firewall; Tokenrip builds the public agent economy outside it.
+- **Lyzr widens the moat-by-posture argument while exposing a governance gap.** Every serious competitor (Dust, Zaro, Lyzr) is enterprise-internal and single-org — Tokenrip's cross-org/published-agent position is uncontested. But Lyzr's simulation engine sets a "prove the agent before production" expectation that Tokenrip has no answer to for regulated buyers. Positioning answer: MOA "pressure-tested before publish." Do not pre-build a simulation engine (substrate-without-customer trap).
 
 ---
 
@@ -255,6 +337,13 @@ Enterprise AI-native workspace consolidating multiple AI tools. Shared context l
 | Zaro closes Salesforce-refugee enterprise customers | Validates anti-Agentforce pain; watch for case studies |
 | Cherry Ventures funds another "context layer" company | Portfolio conflict for Tokenrip fundraise |
 | Zaro raises Series A | Execution acceleration — watch for vertical expansion |
+| **F2 ships lender-matching/placement or targets equipment-finance lessors/brokers** | **Primary Quintel collision watch** — seam closes; act immediately |
+| F2 productizes Adam for smaller shops / self-serve / down-market pricing | Broker-segment exposure rises — Quintel time-window narrows |
+| A broker/EF prospect (Bevel, NED, Stauss) reports evaluating F2 or an F2-like tool | Demand-side collision signal — act immediately |
+| Lyzr/Accenture ship a vertical equipment-finance or broker agent | Secondary Quintel collision watch (F2 is the more probable source) |
+| Lyzr moves down-market (SMB/broker self-serve) | Buyer-mismatch defense erodes — Quintel exposure rises |
+| Accenture actively resells Lyzr into named accounts | Channel threat compounds — category-capture clock speeds up |
+| Any entrant builds open, creator-led, audience-mounted agents | The real Tokenrip competitor — read immediately |
 | Notion, Linear, or GitHub launches "agent-native" mode | Legacy tooling entering from above with distribution advantage |
 | LangGraph or CrewAI launches artifact/output management | Orchestration frameworks entering from below with developer mindshare |
 | gitlawb Playground evolves to non-code asset publishing | Layer 1 threat activates — gitlawb enters Tokenrip's space |

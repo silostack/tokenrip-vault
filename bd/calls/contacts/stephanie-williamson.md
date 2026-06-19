@@ -2,8 +2,8 @@
 contact: Stephanie Williamson
 company: AICAP Access
 call_type: firm-direct
-status: warm — discovery contracted via Upwork; feasibility study scoped; discovery proposal drafted (pending send)
-last_contact: 2026-06-02
+status: warm — feasibility delivered; deeply engaged but unconverted; MVP kickoff gated behind her early-stage lead calls; co-pilot fallback killed; stall risk rising
+last_contact: 2026-06-17
 ---
 
 # Stephanie Williamson — AICAP Access
@@ -29,8 +29,19 @@ CPCS-certified credentialing and privileging operations leader with 20+ years in
 - **2026-05-30**: [[bd/calls/transcripts/stephanie-williamson-2026-05-30]] · [[bd/calls/notes/stephanie-williamson-2026-05-30]]
   — firm-direct (clarification, Call 2): She requested the call to clarify the proposal. Did **not** close to a kickoff — instead reopened scope. She killed her own "non-integrated PDF pilot" option (legacy software is instance-based; a coordinator can't enter data without unethically logging in as the provider — integration is mandatory). Did her own AI-assisted discovery of Symplr's database. Now wants a technical **feasibility study** across Symplr / MD-Staff / VerityStream to determine which integration path is real before committing to a build. $12K proposal effectively shelved; a discovery proposal is the next deliverable. No commitment, no kickoff date. Momentum → flat (relationship warm, deal-stage sideways).
 - **2026-06-02**: Upwork engagement accepted; Stephanie sent a formal **discovery scope doc** ("AICAP Legacy System Integration Discovery" — feasibility of transferring AICAP application data into Symplr / MD-Staff / VerityStream; cost & timeline left to contractor). Discovery proposal drafted + humanized — [[bd/calls/proposals/stephanie-williamson-2026-06-02-discovery]] ($1,000 feasibility study, credited toward the build, ~5 business days, billed against the live Upwork contract). **The paid-discovery question is resolved: scoped, priced ($1,000), first-dollar conversion of the strongest deal in the pipeline.** Contract is live (hourly @ $110/hr), so research kicks off immediately — no wait on her materials (public docs first; her brain-dump folds in).
+- **2026-06-06**: Feasibility study **delivered** — [[active/aicap-discovery/aicap-integration-discovery-deliverable-draft-2026-06-05]]. Verdict: integration is technically plausible into all three platforms but hospital-gated and per-hospital; the value is the completion engine, route-independent; recommended sequence is MVP demo first, pilot in parallel, then per-hospital deployment.
+- **2026-06-17**: [[bd/calls/transcripts/stephanie-williamson-2026-06-17]] · [[bd/calls/notes/stephanie-williamson-2026-06-17]]
+  — firm-direct (discovery debrief). Warm, substantive, **did not convert**. Stephanie **killed the co-pilot / no-integration fallback** (design conflict + "won't be widely accepted") and chose an **integration-required** posture (disqualify hospitals that won't enable it). Gated the MVP build behind her own (early-stage) lead calls and gated config/integration behind a signed, paid pilot. Offered to bring Simon into hospital lead calls. Momentum → flat, stall risk rising.
 
 ## Running Intelligence
+
+**⚠️ UPDATE 2026-06-17 — co-pilot fallback killed; integration-required posture; pipeline softer than logged**
+- **No-integration fallback is dead, by her choice.** She rejected the provider co-pilot because (a) her guided-question *context* won't map onto a hospital's differently-worded fields, and (b) a matching-field experience contradicts her core design (the applicant sees only what they must answer, never the raw form). Posture: **require integration; disqualify hospitals that won't enable it.** "If a hospital really saw the value they'd buy whatever license is needed… they absorb the burden on behalf of the physician. Longer sales cycle is part of the deal." Consequence: every deal now contingent on an integration-capable hospital — narrower funnel, longer cycle, no unblockable floor.
+- **Pipeline is earlier/softer than previously logged.** "Harvard" ≈ **Boston Children's** — most engaged but a "hard shell, taken a long time to crack." **Duke** — nurturing a non-decision-maker (data-integrity program manager) to champion upward. **MD Anderson** — went cold, warming back. Plus early "expressed interest" leads. None near a pilot decision.
+- **Her stated sequence is backwards:** lead calls → start MVP → "wait for the money." She wants to sell hard-shell leads with nothing to show. The re-sequence to drive: MVP demo *first* (route-independent, no pilot needed) as the door-opener that cracks the leads.
+- **Her configuration assumptions** (the per-hospital layer): own forms / logo / application / attestation questions, state-specific forms, variable history windows (7–10 yrs), hospital affiliation, malpractice, distance-from-hospital requirements (sometimes specialty-specific). She wants a *narrow, configurable* scope, no bespoke customization.
+- **Incumbent-speed intel:** symplr quoted her day-job **nine months** to migrate a sixth hospital's already-owned data — a concrete contrast point for AICAP's speed pitch.
+- **Validated the spec-sheet idea** (a per-hospital integration/config intake questionnaire) as the discovery starting point.
 
 **The pain (quantified)**
 - $22,000/day in lost revenue per applicant sitting in credentialing at Vanderbilt. ~500 initial applicants in process at any time.
@@ -89,7 +100,7 @@ She built this on Replit by herself. "Burnt out Replit with reiterations." Her o
 
 **Warm, but the deal moved sideways on Call 2.** Still highly engaged — did her own discovery, killed her own bad option, offered screen-shares and documentation. But the $12K proposal did not get signed: she reopened the foundational integration question and inserted a technical-discovery gate ahead of any build. Relationship temperature ↑; deal-stage →/↓.
 
-**Pipeline stage (updated 2026-06-02)**: **Paid feasibility study — first-dollar conversion in motion.** Stephanie engaged Simon via Upwork and sent a formal discovery scope doc; the discovery proposal is drafted + humanized ($1,000, credited toward the build), the contract is live, and the research is kicking off now. This is the first paid engagement of the strongest deal in the pipeline. The $12K Phase 1 proposal is superseded — the discovery's *recommended-next-steps* deliverable re-baselines the now-larger (integration-mandatory) build with a fresh quote; the stale $12K stays out of the discovery message. Mid-June MVP start gated on the feasibility answer.
+**Pipeline stage (updated 2026-06-17)**: **Feasibility delivered; relationship deep; still unconverted.** No signed proposal, no kickoff date, no payment trigger. The $12K Phase 1 is unsigned and in flux (her edits pending); the MVP build is un-started and gated behind her early-stage lead calls; config/integration is gated behind a signed, paid pilot. Co-pilot fallback killed → integration-required posture. **Recurring pattern: deep advisory engagement without commitment** (3rd deep call + paid discovery, still no committed build). The unlock: start the (paid) route-independent MVP now as the demo that wins her pilots, send a discovery-updated proposal proactively (reclaim the document), and get Simon into her lead calls. Momentum → flat, stall risk rising.
 
 **Authority**: Founder, decision-maker for vendor selection on her side. Sole technical decision-maker for the build.
 
@@ -132,3 +143,9 @@ She built this on Replit by herself. "Burnt out Replit with reiterations." Her o
 | 14 | Brain-dump Symplr AI-exploration session + screenshots | Stephanie | pending | ✅ Superseded by the Cactus package (#13) — far more useful than a brain-dump; symplr's own import spec + data dictionary |
 | 15 | Deliver the feasibility study (the actual deliverable) | Simon | ~5 business days from kickoff | 🟡 In progress — public-docs read done 2026-06-02 (first-pass draft: [[active/aicap-discovery/aicap-integration-feasibility-findings-2026-06-02]]); pending Simon's validation + her materials |
 | 16 | System screen-share walkthrough (MD-Staff / Symplr) | Both | Post-discovery | Deferred — Stephanie's offer |
+| 17 | Send discovery-updated proposal (pilot-ready prototype; $1K credited → $11K net; integration as a separate per-hospital deployment) — proactively, before her edits | Simon | 2026-06-20 | 🔴 New — reclaim the document |
+| 18 | Drive MVP kickoff now, decoupled from a pilot, as the demo that cracks her leads | Simon | Next contact | 🔴 New — the conversion move |
+| 19 | Lock lead-call access — name a specific call (Boston Children's / Duke) to sit in on | Simon | Next contact | 🔴 New — path to a pilot |
+| 20 | Send her proposal recommendations/changes | Stephanie | Open | 🟡 Pending |
+| 21 | Schedule lead calls; decide whether to bring Simon in | Stephanie | From 2026-06-17 | 🟡 In motion |
+| 22 | Give the go / "clear check" before config + integration work begins | Stephanie | Gated on a pilot | ⏳ Gated |

@@ -161,6 +161,28 @@ Simon named the core insight: **pain vs. vitamin is a dimension missing from the
 
 **Captured in**: `agents/yoda/memory/sessions/2026-06-08.md`, `agents/yoda/context.md`, `agents/yoda/memory/goals.md`.
 
+### EF: Go Direct on Outreach (Stauss → "Bonus"); Distribution Adopted as Explicit #2
+**Date**: 2026-06-14
+**Context**: Simon + Alek had committed (6/8) to a Stauss-independent EF motion. Instead they held off on their own broker outreach for a week to "see what Stauss turned up first." Stauss returned a doc and no meetings. Separately, Simon proposed elevating distribution ("build the loop / GTM systems," Distribution Engineer thesis) to a standing #2 priority.
+
+**Decision**:
+- **EF outreach goes direct, now.** Alek + Simon hit phones + LinkedIn off Alek's drafted list. Stauss demoted to "any action from him is a bonus" — no longer a gating dependency.
+- **Distribution is adopted as priority #2, behind booking sales** — but **capped, time-boxed, and measured by conversations engaged, not systems shipped (Trap #5).** It cannot consume the founder-hours the EF buyer-voice needs. Framing held: *right now distribution ≈ the sale.*
+- **Upwork → genuinely maintenance** (it drifted to "hard" this week and must step back behind EF).
+
+**Rationale**:
+1. The week proved the 6/8 diagnosis: Stauss is an unreliable dependency. A week of a two-week revenue window was spent waiting on a doc + no meetings.
+2. The independent-buyer-voice has been the unresolved ONE thing for ~3 weeks; it's gated on dials the founders control, not on a partner's follow-through.
+3. Distribution is real and on-thesis (Make.com pattern, Goal 10d) but premature as a primary investment at one escrowed dollar + zero validated substrate pull — keep it second and conversation-measured.
+
+**Risks Yoda flagged:**
+- Distribution-systems work absorbing the EF hours (system-building's newest costume — insights 6/14). Mitigation: hard cap + conversations-not-artifacts metric.
+- The re-coupling could recur — any future "wait for Stauss / a warm intro" before doing direct outreach is the avoidance tell.
+
+**Outcome**: [To be evaluated next session. Watch: dials made, ≥1 non-Stauss budget-holder pain conversation, and whether the week's time finally matched the stated ranking.]
+
+**Captured in**: `agents/yoda/memory/sessions/2026-06-14.md`, `agents/yoda/context.md`, `agents/yoda/memory/goals.md`.
+
 ---
 
 *Full historical decisions log archived in `__ARCHIVE/yoda-decisions-log.md`*

@@ -79,14 +79,25 @@ Screenshots of Tokenrip and Quintel still attach as secondary proof (§8), but t
 
 ---
 
-## §5. Implementation Details — Only If They Ask
+## §5. Tools and the Customer Journey — Suppress, Name, or Ban (journey-first guidance merged in 2026-06-16)
 
-Assume the buyer does **not** care about tools, frameworks, or architecture **unless the posting explicitly asks** (e.g. "must have CrewAI experience," or a posted tech checklist).
+**Lead with the customer journey and the business outcome, not the tool stack.** The default bid on an automation posting opens with tools: "I'd build a Make.com + GoHighLevel + AI-agent funnel." The buyer skims a dozen of these, all interchangeable. Leading instead with *what actually happens to the customer* and *what gets measured* — strategy before technology — is one of the strongest differentiators available, and it reads senior. It's the forward-deployed-engineer muscle applied to a bid: customers describe problems, not architectures; sell the solution and treat the tools as an implementation detail.
 
-- Posting names specific tech → name it back, briefly and confidently. Match their checklist; it signals no ramp-up.
-- Posting doesn't → say nothing about implementation. Talk about their result.
+How loud the tools get is set by the posting. Three modes:
 
-Never volunteer an architecture explanation. It reads as a lecture and buries the one thing they want to hear: "I can solve your problem."
+**1. Suppress (the default).** Assume the buyer does **not** care about tools, frameworks, or architecture. Say nothing about implementation; talk about their result. Never volunteer an architecture explanation — it reads as a lecture and buries the one thing they want to hear: "I can solve your problem." Run the journey-first open:
+- Describe, in plain English and specific to *their* business, what actually happens: how a prospect first discovers the offer, what makes them raise a hand, what happens immediately after, what happens over the following weeks, what finally makes them convert.
+- Name **what you'd build first and what you'd deliberately not build yet.** The restraint is the signal — it proves you're not a tool-stacker reaching for a giant machine.
+- Define success as **the funnel metrics that matter** (opt-ins → consults booked → showed → sold → cost per paying customer), never as "leads" and never as a tool that's live.
+- The thinking is the proof.
+
+**2. Name (tooling-explicit postings — many of them).** When the posting names specific tools (n8n, Make.com, GHL, LangGraph, CrewAI) or asks "which tools / which framework and why," you **do** name them, confidently and briefly. Match their checklist; it signals no ramp-up. Going pure-journey on a posting that explicitly wants a stack reads as dodging the question. The move is to **frame the tool choice around the outcome**: "for X I'd use Y, because Z" — a specific recommendation with reasoning beats "it depends," which is a copout to a buyer who screened for systems thinking. The journey-first lens still sits underneath: establish what happens to the customer, then let the tool be the answer to "how." Tools as the consequence of the thinking, not the opening line.
+
+**3. Ban (the anti-tool screening filter — full playbook inversion).** A recurring archetype: the posting says "systems thinker, not a software expert," "no tool lists," "no copy-paste proposals," "no portfolios / videos / diagrams," and "answer these N questions only," often with a word cap. These are filters, and they reward a different game:
+- **The proof is the quality of the thinking, not a link.** Suspend §4 / §13 (proof above the fold), §10 (milestones), and §14 (differentiators) — all of it is banned by the posting, and including it signals you didn't read it.
+- **Follow the instructions literally.** Answer only the questions asked, respect the word cap, plain English. Instruction-following *is* the differentiator here; most applicants fail on it alone.
+- **Drop the standard close, the call-offer, and the LinkedIn P.S. (§7).** "Answer these N questions only" means a bolted-on P.S. or "happy to hop on a call" reads as template and as not following the brief. End on the substance, usually the "what success looks like" answer. The buyer has already named the next step ("if it's thoughtful, we'll discuss implementation"); don't solicit one.
+- **Don't echo their example back.** If they hand you a sample answer (e.g. a cold gift-card funnel), bring a *better* mechanic that fits the business — for high-trust local services, warm-list-and-referrals-first beats a cold offer. Mimicry reads as low-effort; an independent, better-fit answer is the whole point of the test.
 
 ---
 
@@ -120,7 +131,7 @@ It sits after the leading next step and before `Thanks,`. Vary the wording per b
 
 > P.S. - Feel free to look me up on LinkedIn for more information: Simon Pettibone
 
-It's a low-friction trust signal, a real name and a real person, easily verifiable. The "P.S." reads personal and human, which is the point. Goes on every cover letter. (Leave the hyphen as a hyphen — never let the humanizer convert it to an em dash, §9.)
+It's a low-friction trust signal, a real name and a real person, easily verifiable. The "P.S." reads personal and human, which is the point. Goes on every cover letter — with one exception: the anti-tool screening filters in §5 mode 3 ("answer these N questions only," word-capped, "no copy-paste proposals"), where the P.S. and the call-offer both come off entirely, because a bolted-on extra reads as not following the brief. (Leave the hyphen as a hyphen — never let the humanizer convert it to an em dash, §9.)
 
 ---
 

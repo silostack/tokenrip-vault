@@ -19,11 +19,11 @@ build_doc: "terminus → apps/deal-engine/docs/plans/2026-06-09-ef-build-roadmap
 
 ## The two decisions that set the destination
 
-| Decision | Choice |
-|---|---|
+| Decision                        | Choice                                                                                                                                                                     |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Config scope** at "completed" | **Shared deploy + Account entity** — a real multi-tenant foundation (account-scoped storage + config + auth), *not* one-deployment-per-customer and *not* self-serve SaaS. |
-| **Moat depth** at "completed" | **Full feedback loop** — outcomes are not just recorded; they re-weight match ranking and calibrate the rubric. |
-| **Sequencing** | **Hybrid** — account-scope *insurance* early (cheap, kills the retrofit); feature work *value-first*; full multi-account *deferred* until a 2nd account pulls. |
+| **Moat depth** at "completed"   | **Full feedback loop** — outcomes are not just recorded; they re-weight match ranking and calibrate the rubric.                                                            |
+| **Sequencing**                  | **Hybrid** — account-scope *insurance* early (cheap, kills the retrofit); feature work *value-first*; full multi-account *deferred* until a 2nd account pulls.             |
 
 **"Completed" = end of Phase 4.** Phase 5 (full multi-account activation) is gated on a second customer — its bones are already in, so it's activation, not a rewrite.
 

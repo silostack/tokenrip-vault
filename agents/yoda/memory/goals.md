@@ -60,7 +60,7 @@
 
 ### Goal 10: Get a Sale → Recurring Revenue — FIRST DOLLAR LANDED
 - **Success criteria**: First paid engagement closed ✅ (2026-06-08). Now: **≥1 new revenue event per calendar month, trending to MRR.**
-- **Progress**: **First paid engagement LANDED — Stephanie/AICAP discovery, dollars in Upwork escrow awaiting release (June 8).** First meaningful revenue after 3+ years. Discovery surfaced a hard hospital-integration blocker that may redraw her MVP strategy — she's on vacation 2 weeks, reviewing the research; AICAP next steps on her return. Luai (Alek) stalled. Stauss/EF escalated into a vertical thrust → see Goal 11 (EF Vertical / Quintel).
+- **Progress**: **First paid engagement LANDED AND PAID — Stephanie/AICAP discovery deliverable out, dollar banked (confirmed Jun 14; escrow released).** First meaningful revenue after 3+ years, now actually collected. Discovery surfaced a hard hospital-integration blocker that may redraw her MVP strategy — she was offline on a cruise (no comms possible); AICAP next steps on her ~Jun 22 return. Luai (Alek) stalled. Stauss/EF escalated into a vertical thrust → see Goal 11 (EF Vertical / Quintel).
 - **This week target (Jun 8 – ~21)**: **Get July's revenue event in motion.** ONE thing: one non-Stauss EF buyer describing their own pain + a path to dollars (Goal 11). Confirm Stephanie's escrow *releases* (escrow ≠ bank). Upwork → maintenance/opportunistic.
 - **Status**: First dollar landed — converting to recurring — **P0** (Simon primary)
 - **KPI (regime change 2026-06-08)**: **≥1 new revenue event per calendar month, trending to MRR** (new = a new engagement closed *or* a recurring payment landed — not the same deal counted twice). Leading indicator: real buyer conversations. See decisions-log 2026-06-08.
@@ -71,7 +71,8 @@
 ### Goal 11: Equipment-Finance Vertical (Quintel) — Buyer-Discovery Test
 - **Success criteria**: One non-Stauss EF buyer (broker or lender) describes their own pain in their own words and engages on a path to dollars. That verdict — yes or no — decides whether EF is a real vertical or a Stauss-shaped hypothesis.
 - **Progress**: **quintel.ai stood up (initial version)** — demo/portfolio to earn the conversation; Alek's mockups landed on a call. Stauss delivered a large EF brain-dump + booked 2 calls. Simon **decoupling EF from Stauss** (named his unreliability cold; building a Stauss-independent GTM — LinkedIn broker list, finding lenders, players identified: brokers/lenders/borrowers; initial outlook = broker platform or lender/VFI platform). No non-Stauss budget-holder has described their own pain yet (Bevel = gated + Stauss-sourced).
-- **This fortnight (Jun 8 – ~21)**: ONE thing — get one non-Stauss EF buyer on a call describing their own pain + a path to dollars. Keep quintel.ai at **demo-depth** until a buyer pulls it deeper.
+- **Jun 8–14 update**: **The buyer-voice did not move — and was actively deferred.** Simon + Alek *held off on their own broker outreach to "see what Stauss turned up first"* (a re-coupling to Stauss, the exact dependency the fortnight was meant to break). Stauss returned a doc + no meetings. They've now (a week late) flipped to going hard themselves — Alek drafted an outreach list, hitting phones + LinkedIn; Stauss demoted to "any action is a bonus." Net non-Stauss budget-holder conversations this week: **zero.** A week of the two-week July-revenue window burned. (See insights 6/14.)
+- **This fortnight (Jun 8 – ~21)**: ONE thing — get one non-Stauss EF buyer on a call describing their own pain + a path to dollars. Keep quintel.ai at **demo-depth** until a buyer pulls it deeper. **Now at the midpoint with the leading indicator at zero — urgent, dials not planning.**
 - **Discipline**: Run as a **time-boxed buyer-discovery test, platform depth gated on a real pull** — same channel-produces-a-verdict method that gave three clean kills + one real sale. "Figure out the EF motion" must cash out as a buyer on the phone, not a market map or more building.
 - **Status**: Active hypothesis under test — **P0** (Simon primary; Path-B → now a direct thrust). The July revenue candidate.
 - **Watch**: (1) quintel.ai creeping from demo into platform-build ahead of a buyer (CLAUDE.md Trap #4); (2) "identified players" substituting for a heard buyer voice.
@@ -83,14 +84,15 @@
 
 ### Goal 10c: Upwork Bidding — RE-PROMOTED (producing channel)
 - **Outcome**: Demoted 2026-05-23 on a supply-ceiling read. **Reversed 2026-05-31:** Upwork (active-demand interception) sourced the best deal in the entire sprint (Stephanie/AICAP) and is producing booked calls for Alek. The "lottery, not a motion" framing was wrong — a *funded* job post is painkiller-grade by construction (budget allocated, urgency real).
-- **Mode**: Primary bidding effort. Open question: Simon's bids aren't converting to calls while Alek's are — mirror Alek's motion or diagnose the gap (verticals? bid copy? profile?).
-- **Status**: **Primary producing channel — P0**
+- **Mode**: Demoted to maintenance/opportunistic 2026-06-08 (Simon sole bidder, $5–60/bid, repeatability unproven; not primary while EF is the frontier). **Jun 8–14: Simon went *hard* anyway** (inverting the demotion) — but the week surfaced real profile/approach problems he found + fixed by Thursday. Bidding was sub-optimal most of the week; landed nothing. The profile fix partially resolves the standing "Simon's bids don't convert while Alek's do" thread (insights 5/31).
+- **Status**: **Maintenance/opportunistic — P2** (frontier is EF buyer-discovery; Upwork must not eat the EF hours)
 
 ### Goal 10d: Building Our Own Audience — Long Compounding Layer
 - **Success criteria**: Brand/inbound/community surface that compounds independently of any single sales motion. Make.com pattern — own audience built over time, not creator-recruited.
 - **Distinction from Motion E**: This is *Tokenrip's* audience, not a creator's. Motion E recruited creators who'd bring their audience to deploy mounted agents. Building our own audience is brand/inbound/SEO/community/demand-validation work that funnels to whatever we sell. Structurally different motion.
 - **This-quarter expression**: Demand-scout on Reddit doubles as discovery + demand-validation loop (find stated problems, engage, learn what people would pay for). Watch: don't let it become infrastructure work — the signal it's working is *conversations had*, not posts/dashboards built.
-- **Status**: Active background — **P1** (compounds regardless of sales motion; cannot displace ONE thing)
+- **Jun 14: Simon reframed this as a "marketing push / build the loop," then sharpened it to "reach / personal brand / audience" that fuels "literally any endeavor"** (Distribution Engineer thesis + semantic-workspaces §6: infrastructure must be wrapped; agents are the funnel, the brain is the product). He ranked it #2 behind booking sales — correct on paper — and **had not started building it** (a realization, not yet hours; the milder attention-leak version of the pattern). **Conceded:** reach ≠ untested-demand distribution; audience is the scarce AI-age asset; §6 is strong. **Held:** (1) renaming distribution "reach" changes the label not the sequencing math — same founder-hours, longest payback on the board; (2) personal brand is the most *seductive* avoidance asset (no deadline, vanity artifacts, 12–24mo payback); (3) his own §6.1 calls the catalog play "a standing marketing operation… a different muscle than delivery work," and the cheapest reach available now is a closed EF deal. **"Fuels any endeavor" is hedge-shaped.** **Resolution: already correctly ranked HERE (P1 background, cannot displace ONE thing); a re-realization doesn't promote it past the sale.** Guardrails when it starts: catalog/build-in-public version (reach as byproduct of the work, not a competing track); measured by inbound/conversations, never followers (Trap #5).
+- **Status**: Active background — **P1** (compounds regardless of sales motion; cannot displace ONE thing; capped so it can't eat EF hours)
 
 ### Goal 9: Distribution / Registry — Continue Low-Touch
 - **Success criteria**: Tokenrip listed on 6+ registries/directories. Onboarding polish complete. Warm leads re-engaged.
@@ -147,7 +149,13 @@
 | 2026-06-08 | One non-Stauss EF buyer on a call describing their own pain + a path to dollars | **Committed** | THE one thing. The July revenue candidate. A buyer on the phone — not a market map. |
 | 2026-06-08 | Keep quintel.ai at demo-depth until a buyer pulls it deeper | **Committed** | Portfolio to earn the conversation, not the platform for an unsigned customer. |
 | 2026-06-08 | Confirm Stephanie's escrow releases | **Committed** | First dollar isn't in until escrow clears. |
-| 2026-06-08 | Upwork → maintenance/opportunistic | **Committed** | Produced the first dollar; repeatability unproven. Not primary while EF is the frontier. |
+| 2026-06-08 | Upwork → maintenance/opportunistic | **Inverted** | Went *hard* instead; found + fixed real profile/approach problems by Thursday; landed nothing. |
+| 2026-06-08 | One non-Stauss EF buyer on a call (their pain + path to dollars) | **Missed — deferred** | Held off on own outreach to wait on Stauss (doc + no meetings). Zero non-Stauss budget-holder conversations. Now going hard themselves, a week late. |
+| 2026-06-08 | Confirm Stephanie's escrow releases | **✅ Done** | **Paid — first dollar banked** (not just escrowed). |
+| 2026-06-08 | Stephanie deliverable frames blocker as decision-options | **✅ Done** | Deliverable out + paid; she was offline on a cruise (no comms possible). |
+| 2026-06-14 | ≥10 EF contacts (phone + LinkedIn) off Alek's list → ≥1 budget-holder pain conversation | **Committed** | THE one thing; "10 minimum" (Simon). Midpoint of July-revenue fortnight, leading indicator at zero. |
+| 2026-06-14 | Stephanie — be re-engagement-ready for ~Jun 22 return (integration-blocker MVP pre-thinking) | **Committed** | Dollar banked; she's back from the cruise ~Jun 22. |
+| 2026-06-14 | Reach/personal-brand — parked, NOT started this fortnight | **Committed** | Already Goal 10d (P1 background). When it starts: catalog/build-in-public version, measured by inbound not followers. Doesn't jump the queue. |
 
 ---
 

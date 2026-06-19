@@ -1,14 +1,14 @@
 # Current Context
 
-*Last updated: 2026-06-08*
+*Last updated: 2026-06-14*
 
 ## The ONE Thing
 
 What matters most right now?
 
-> **No month without revenue — manufacture the second dollar.** First paid engagement landed (Stephanie/AICAP discovery, escrowed June 8) — the 0→1 is done; the next unlock is recurring. This fortnight (Stephanie out 2 weeks, blocked on a hospital-integration decision): **get one non-Stauss EF buyer on a call describing their own pain + a path to dollars** — the July revenue candidate and the test of whether equipment finance is real without Stauss.
+> **No month without revenue — manufacture the second dollar.** First paid engagement landed AND **paid — Stephanie/AICAP discovery deliverable out, dollar banked (confirmed Jun 14)** — the 0→1 is done and collected; the next unlock is recurring. **Get one non-Stauss EF buyer on a call describing their own pain + a path to dollars** — the July revenue candidate and the test of whether equipment finance is real without Stauss. **Now urgent: the fortnight is half gone, the first week was spent waiting on Stauss (re-coupling to the dependency it was meant to break), and the leading indicator is still zero. ≥10 EF contacts this week — dials, not planning.**
 
-## Sequencing (Jun 8 – ~21 — manufacture-the-second-dollar fortnight)
+## Sequencing (Jun 14 – ~21 — second half of the manufacture-the-second-dollar fortnight)
 
 ### Completed (prior weeks)
 - [x] ~~Simon-owned most-progressable deal manufactured — Stephanie/AICAP, Upwork-sourced~~ (May 26)
@@ -24,8 +24,10 @@ What matters most right now?
 - [x] ~~**FIRST PAID DOLLAR** — Stephanie/AICAP discovery, escrowed~~ (Jun 8) — THE May 31 one thing, closed
 - [x] ~~quintel.ai stood up (demo/portfolio) + Stauss EF brain-dump + 2 calls~~ (Jun 8)
 
-### Active (Jun 8 – ~21)
-- [ ] **Simon**: Get one **non-Stauss EF buyer** on a call describing their own pain + a path to dollars. **THE one thing** — July revenue candidate, test of EF-without-Stauss. (P0)
+### Active (Jun 14 – ~21)
+- [ ] **Simon**: Get one **non-Stauss EF buyer** on a call describing their own pain + a path to dollars. **THE one thing** — July revenue candidate, test of EF-without-Stauss. **Week 1 lost to waiting on Stauss; ≥10 contacts this week off Alek's list, phone + LinkedIn, Stauss demoted to "bonus."** (P0)
+- [ ] **Simon**: Stephanie — dollar banked + deliverable out; be re-engagement-ready for her ~Jun 22 return with the integration-blocker MVP pre-thinking. (P0)
+- [ ] **Simon**: Reach/personal-brand ("build my own audience") — **parked, not started this fortnight.** Already Goal 10d (P1 background); doesn't jump the queue. When it starts: catalog/build-in-public (reach as byproduct of the work), measured by inbound not followers. Right now reach ≈ the sale (a closed EF deal is the best content). (P1/P2)
 - [ ] **Simon**: Keep quintel.ai at **demo-depth** until a buyer pulls it deeper (don't build the platform for an unsigned customer — Trap #4). (P0)
 - [ ] **Simon**: Confirm Stephanie's escrow **releases** (escrow ≠ bank); deliverable frames the integration blocker as decision-options. (P0)
 - [ ] **Simon**: Build the Stauss-independent EF GTM — broker list, lenders, players → buyer conversations (means to a call, not a market map). (P0)
@@ -87,7 +89,7 @@ Current state:
 
 *(Replaces the former wellbeing section — Simon opted out of routine wellbeing checks 2026-05-18. Watch execution quality instead.)*
 
-> Simon closed the first paid dollar and is maturing as an operator: he led the week with the sale (not the vision), corrected three Yoda flags with real operational facts, and decoupled EF from Stauss unprompted. Decision-making fast and self-correcting. The standing tripwire is unchanged in *shape*, new in *costume*: the system-building instinct now expresses as quintel.ai — legitimate as a demo, a Trap-#4 risk if it deepens into a platform ahead of a buyer. The watch: does the EF fortnight produce a buyer *on the phone*, or a market map and more build? Revenue work (a buyer voice) before platform work.
+> **Jun 14 — a regression week to watch, not a crisis.** Last week's standout move (decoupling EF from Stauss) reversed: Simon + Alek held off on their own outreach to wait on Stauss, who delivered a doc and no meetings. THE one thing — a non-Stauss buyer voice — wasn't just missed, it was *actively deferred*, and a week of the two-week July-revenue window is gone. The self-correction muscle still works (they flipped to going hard themselves, Stauss → "bonus") but it fired late. Two tells fired together: (1) the hard direct work (cold broker calls) deferred behind a comfortable wait-on-the-partner option — avoidance in a sequencing costume; (2) a surge of distribution-systems enthusiasm (Distribution Engineer thesis) arriving exactly as the EF work stalled — system-building's newest costume. Simon ranked distribution #2 correctly *on paper*; the gap to watch is whether his *week* matches the ranking. The watch for next session: did the dials happen and a buyer get on the phone, or did distribution + Upwork-profile + Stauss-waiting absorb the founder-hours again? Revenue work (a buyer voice) before loop-building.
 
 ## Key Numbers
 

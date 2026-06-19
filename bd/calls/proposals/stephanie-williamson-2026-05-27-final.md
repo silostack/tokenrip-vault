@@ -180,23 +180,4 @@ A 30-minute scoping call to confirm direction and lock the Phase 1 start date. T
 
 ---
 
-## Cover Email Draft
-
-**Subject:** Proposal: AICAP Phase 1 pilot
-
-Stephanie,
-
-Thank you for the walkthrough yesterday. The five sections in the proposal line up with the five modules you walked through, but I've reframed them from the technical side (CV ingestion, inference, etc.) to the product side (autofill, smart intake, etc.). If those don't match how you think about it, we'll align at the scoping call. At $22K/day per applicant sitting in credentialing, Phase 1 pays for itself on the first physician through.
-
-Proposal attached. Short version: a ~7-week Phase 1 (flexible — that's a baseline) that stands up the application-completion pipeline end-to-end across specialties, priced at $12,000 with a full no-questions-asked refund in the first 30 days. After Phase 1 delivers, the engagement shifts into a background-build mode through your sales window so the product keeps moving alongside your hospital conversations, with Phase 2 (privileging) re-igniting once a paying customer pulls on it.
-
-A lot of this is starting hypothesis from yesterday's conversation. A short scoping call before kickoff is where it gets refined.
-
-Suggested next step: a 30-minute scoping call to confirm direction and figure out what sample applications you can share. Tuesday or Wednesday next week works on my end. Name a time and I'll send the invite.
-
-Best,
-Simon
-
----
-
 *Anonymized sample applications are processed in isolated environments. A short reference-rights letter (logo, case study) is shared at kickoff.*
