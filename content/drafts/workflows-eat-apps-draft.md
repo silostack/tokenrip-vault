@@ -10,6 +10,8 @@ meta_description: "AI workflows are replacing $49/seat SaaS tools. But the workf
 tokenrip_id: dfee8381-54f9-4c55-aa7d-1e32f6446a6e
 ---
 
+![Hand-drawn crayon illustration: a colorful kid drawing showing arrows and chaos around a computer screen with a face, stick figures, and money — representing workflows eating apps while creating new vendor dependency](../images/workflows-eat-apps-hero.png)
+
 # Workflows Are Eating Apps
 
 Software stocks just posted their [worst valuation compression in a decade](https://www.saastr.com/the-saas-rout-of-2026-is-even-worse-than-you-think-for-the-first-time-ever-software-now-trades-at-a-discount-to-the-sp-500/). Forward P/E multiples fell from 84x in 2021 to 23x by March 2026 — the lowest absolute level since 2014, and for the first time in the modern era, software trades at a discount to the S&P 500. Hedge funds have cut software to its [lowest portfolio weight since 2019](https://fortune.com/2026/05/26/goldman-sachs-saaspocalypse-hedge-funds-software-exit/). Mutual funds are carrying their widest underweight since 2012. Two trillion dollars in software sector value disappeared, and a quarter of it vanished in a [single February trading session](https://www.bettercloud.com/monitor/saas-industry/) after Anthropic shipped enterprise agent plugins.

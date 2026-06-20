@@ -116,6 +116,18 @@ last_contact: [YYYY-MM-DD]
  For firm-direct: stage, authority, budget, timeline.
  For fundraising: investor stage, conviction signals.]
 
+## Load-Bearing Assumptions (ranked — test, don't assume)
+[The reads driving our motion with this contact that are NOT yet confirmed by their own
+ words. Rank by how much the plan breaks if each is wrong. For each: state it, tag
+ fact|inferred + confidence, and name the cheapest disconfirming test (usually the next
+ call). The top item is the #1 thing to surface on next contact — a thing to TEST, never to
+ design around. This exists because over-indexing on an unconfirmed read has burned us before
+ (e.g. assuming a buyer's pain, then designing the demo to exclude what they actually wanted).
+ See CLAUDE.md "Challenge Your Own Convergence."]
+
+| Rank | Assumption | fact/inferred + conf. | Cheapest test |
+|------|-----------|----------------------|---------------|
+
 ## Open Commitments
 | # | Action | Owner | Due | Status |
 |---|--------|-------|-----|--------|

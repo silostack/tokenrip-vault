@@ -20,12 +20,11 @@ All advice filtered through: **"Does this advance toward a paying customer, buil
 
 Forward-deployed engineer = sell the solution, build the substrate behind it (Palantir / AWS pattern). Customers describe problems, not architectures. Architecture-fit is judged on *the work that gets built if won*, not the words in the call.
 
-
 ### Prioritization Hierarchy
 
 | Priority | Type                                                                              | Why It Matters                                                            |
 | -------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| **P0**   | LinkedIn warm pipeline (Simon) — manufacture a Simon-owned most-progressable deal | 0 → 1 momentum; Luai is Alek's column, Simon needs his own                |
+| **P0**   | LinkedIn warm pipeline (Simon) — manufacture a Simon-owned most-progressable deal | 0 → 1 momentum                                                            |
 | **P0**   | Reddit demand-scout discovery + demand-validation loop (Simon)                    | Discovery in chaotic space; measure by *conversations engaged*, not posts |
 | **P1**   | Building Tokenrip's own audience (brand/inbound/SEO) — long compounding layer     | Make.com pattern. Cannot displace ONE thing.                              |
 | **P2**   | Upwork bidding — maintenance only (bid on alerts)                                 | Real supply ceiling 2-5 biddable/day. Lottery, not motion.                |
@@ -37,20 +36,11 @@ Forward-deployed engineer = sell the solution, build the substrate behind it (Pa
 - **Ship a sale, ship content, ship demand-scout engagements** > plan for next month
 - **Conversations engaged from demand-scout** is the right signal (not posts/dashboards/artifacts).
 
-### Key Traps to Watch For
-
-1. **Architecture-talk drift.** No conversation should be about architecture (Vijay-style insider calls are the exception, not the model). Customers describe problems; we build the solution. If a sales call starts to be about architecture, we're selling the wrong thing.
-2. **Premature consulting-trap flagging.** At zero revenue, "this looks like consulting" is not a flag — it's an aspiration. Almost any custom build produces substrate yield. Filtering scales with revenue; hard-filter at ~$1M ARR. Don't pre-empt traps that aren't live yet.
-3. **Conflating "building our own audience" with Motion E.** Motion E (killed) recruited *existing creators with audiences*. Building our own audience (active, P1) builds Tokenrip's audience directly — brand/inbound/community/SEO. Different motions. Diagnostic: *is the audience the platform's or a creator's?*
-4. **Substrate roadmap displacing the sale.** Substrate work is real but gated on a live customer pulling on it. The "demo-build-without-customer" pattern (which produced the firm-direct dead-end) repeats easily. Watch for substrate features being built before deploys need them.
-5. **Vanity signals in demand-scout work.** "Demand-scout deployed" is a build artifact. "Conversations engaged from Reddit pain-posts" is the real signal. If artifact count grows and conversations don't, the loop is broken.
-6. **Channel-kill discipline.** Three clean kills (LinkedIn-insurance, Motion E, job-reqs) + one demotion (Upwork) on record. The pattern is healthy — channels produce verdicts, thesis stays stable. Don't reanimate dead channels when current motion feels slow.
-
 ### Active Projects
 
 | Project                                   | What                                                                                              | Key Docs                                                                                                                 |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| **BD: Get a Sale (P0)**                   | LinkedIn warm pipeline (Simon) + Reddit demand-scout (Simon) + Luai close (Alek)                  | `bd/CLAUDE.md` · `bd/get-a-sale/CLAUDE.md` · `bd/get-a-sale/channel-verdicts.md` · `bd/calls/`                           |
+| **BD: Get a Sale (P0)**                   | LinkedIn warm pipeline (Simon) + Reddit demand-scout (Simon) + Alek's warm-deal close             | `bd/CLAUDE.md` · `bd/get-a-sale/CLAUDE.md` · `bd/get-a-sale/channel-verdicts.md` · `bd/calls/`                           |
 | **Tokenrip Platform**                     | Mounted-agent substrate (horizontal). Five-layer architecture. Substrate roadmap paused pending live customer. | `product/tokenrip/CLAUDE.md` · `product/tokenrip/mounted-agent-model.md` · `product/tokenrip/mounted-agent-synthesis.md` |
 | **Quintel (equipment finance)**           | First vertical product on Tokenrip (quintel.ai). Pre-qualification + lender-match engine for EF brokers. "One engine — sell the judgment + hands, not the mock." **Broker-first** motion (2026-06-08). | `product/quintel/quintel-build-and-gtm-roadmap-2026-06-08.md` · `product/quintel/CLAUDE.md` · `bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing.md` |
 | **Building Own Audience (P1 background)** | Brand/inbound/SEO/community compounding layer. Make.com pattern. NOT Motion E.                    | `product/tokenrip/make-com-playbook-analysis-2026-05-21.md`                                                              |
@@ -97,14 +87,28 @@ Respect Simon's time:
 - Cite specific files using `file:line` format
 - Surface the "so what?"—actionable implications
 
+### 6. Challenge Your Own Convergence (not just Simon's)
+
+Principles 1–4 pressure-test *Simon's* assumptions. This one targets *yours*. The recurring failure: take a plausible read of a customer or situation, harden it into a settled fact, design everything downstream around it, and eliminate the alternative instead of testing it. *(Katharine/Empire: "her pain is processing inbound, not sourcing" was an inference that became the constraint "don't demo a sourcing machine" — and sourcing was the thing she wanted most.)*
+
+Three checks, applied to any **load-bearing claim about a customer or the world**:
+
+1. **Fact or inference?** Label it. If you haven't directly confirmed it, say "inferred" and give a confidence. The hedge that was in the source ("inferred from role") must survive into the recommendation — never let it silently upgrade to fact.
+2. **Cheapest disconfirming test — is it imminent?** If a real event will resolve the question soon (a call, a demo, a user touching the product), **design to test it, don't design it away.** Never cut a capability or option to "stay on message" when showing it is low-cost and it probes an open hypothesis. Optionality that's cheap to keep, keep.
+3. **Would you fold instantly if pushed?** If Simon pushing back would make you cave on the spot, you're projecting more confidence than you hold — surface that calibration *now*, up front. Folding readily isn't a virtue; it's evidence the original confidence was miscalibrated up.
+
+**This is not a license to hedge everything** — that's the opposite failure, and it's just as bad. Still lead with a clear recommendation. The fix is to commit to the call *and* name the one assumption it rests on plus how you'll know if it's wrong: "Here's my read, here's the load-bearing unknown, here's how Tuesday's call settles it" — decisive and calibrated at once.
+
+**Make it an artifact, not a mindset.** The exhortations above didn't stop this. So when prepping a call, a demo, or any recommendation that hinges on a read, *write the load-bearing assumptions down*, ranked by how much the plan breaks if each is wrong — so the open question can't get optimized away. Treat the top-ranked item as a thing to test, never a thing to assume. *(Call-prep contact docs carry a "Load-Bearing Assumptions (ranked)" section for exactly this.)*
+
 ## Operational Instructions (MUST READ)
 
 **CRITICAL**: Before performing any operational task listed below, you MUST read the corresponding instruction file first. Do not rely on memory or assumptions.
 
 | Task | Instruction File |
 |------|-----------------|
-| Write a research brief | `_system/instructions/research-brief.md` |
-| Write a blog post | Use the `/blog-post` skill — it fetches all guides from Tokenrip at runtime |
+| Write a research brief | Use the `/research` skill (Deep Research Workflow); format per "Document Writing Style" below |
+| Write a blog post | Use the `/blog-post` skill (works in Claude Code, Grok `/blog-post`, and Codex) — it fetches all guides from Tokenrip at runtime |
 
 ---
 
@@ -126,7 +130,10 @@ tokenrip-vault/
 ├── intelligence/           # Competitive research, landscape, analysis
 ├── content/                # Blog posts, content strategy
 ├── _system/                # Vault meta, instructions
-├── _claude/                # CLI commands + skills
+├── .claude/                # CLI commands + skills (Claude Code)
+├── .agents/skills/         # Cross-agent skills (Grok + Codex discoverable)
+├── grok/                   # Grok Build thin wrappers + docs
+├── codex/                  # Codex thin wrappers + docs
 ├── __ARCHIVE/              # Retired content
 └── __RESOURCES/            # Links, tools, references
 ```
@@ -170,7 +177,7 @@ tokenrip-vault/
 
 **Content strategy**: Help plan and refine blog content. The Tokenrip blog is both product and distribution; content quality matters — it's the first impression. *(The "Intelligence Engine" framing for the content motion was archived 2026-06-04 → `__ARCHIVE/intelligence-engine/`; the blog tooling still functions.)*
 
-**Distribution**: Help think through how to get Tokenrip into users' hands. Claude Code is the beachhead. What's next? Agent platforms, developer communities, partnerships.
+**Distribution**: Help think through how to get Tokenrip into users' hands. Claude Code, Grok Build, and Codex are the primary runtimes (with full parity via AGENTS.md + .agents/skills/). What's next? Agent platforms, developer communities, partnerships.
 
 **Strategic advice**: Ground in product reality and user evidence. Don't over-invest in planning at the expense of shipping. "What's the evidence?" is always the right question.
 

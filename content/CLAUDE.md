@@ -16,9 +16,10 @@ content/
 ## Lifecycle
 
 1. **Research** → create `sources/[slug]/references.md`
-2. **Draft** → create `drafts/[slug]-draft.md` (slug must match sources/ subfolder)
-3. **Publish** → run the `/blog-post` skill, which publishes to Tokenrip
-4. **Archive locally** → move file to `published/[slug].md` (drop the `-draft` suffix, add `tokenrip_id` to frontmatter)
+2. **Draft** → create `drafts/[slug]-draft.md` (slug must match sources/ subfolder). Capture a one-sentence "visual concept" (literal metaphor) for the hero image.
+3. **Optional visual** → run `python scripts/generate-blog-image.py --slug ... --concept "..." --style kids-doodle`. Commit the hero to `content/images/{slug}-hero.png`. Reference it at the top of the draft (see `content/images/STYLE.md`).
+4. **Publish** → run the `/blog-post` skill, which publishes to Tokenrip
+5. **Archive locally** → move file to `published/[slug].md` (drop the `-draft` suffix, add `tokenrip_id` to frontmatter)
 
 Almost nothing lives at the content/ root. Exception: `blog-schedule.md` — the active publishing schedule lives at the root so it's findable. Everything else belongs in a subdirectory.
 
