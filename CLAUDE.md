@@ -38,13 +38,13 @@ Forward-deployed engineer = sell the solution, build the substrate behind it (Pa
 
 ### Active Projects
 
-| Project                                   | What                                                                                              | Key Docs                                                                                                                 |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| **BD: Get a Sale (P0)**                   | LinkedIn warm pipeline (Simon) + Reddit demand-scout (Simon) + Alek's warm-deal close             | `bd/CLAUDE.md` · `bd/get-a-sale/CLAUDE.md` · `bd/get-a-sale/channel-verdicts.md` · `bd/calls/`                           |
-| **Tokenrip Platform**                     | Mounted-agent substrate (horizontal). Five-layer architecture. Substrate roadmap paused pending live customer. | `product/tokenrip/CLAUDE.md` · `product/tokenrip/mounted-agent-model.md` · `product/tokenrip/mounted-agent-synthesis.md` |
-| **Quintel (equipment finance)**           | First vertical product on Tokenrip (quintel.ai). Pre-qualification + lender-match engine for EF brokers. "One engine — sell the judgment + hands, not the mock." **Broker-first** motion (2026-06-08). | `product/quintel/quintel-build-and-gtm-roadmap-2026-06-08.md` · `product/quintel/CLAUDE.md` · `bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing.md` |
-| **Building Own Audience (P1 background)** | Brand/inbound/SEO/community compounding layer. Make.com pattern. NOT Motion E.                    | `product/tokenrip/make-com-playbook-analysis-2026-05-21.md`                                                              |
-| **Distribution**                          | Registry listings, community seeding, agent platform presence.                                    | `distribution/`                                                                                                          |
+| Project                                   | What                                                                                                                                                                       | Key Docs                                                                                                                 |
+| ----------------------------------------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------------------------------------------------------------------------------------------------------------------------ |
+| **BD: Get a Sale (P0)**                   | LinkedIn warm pipeline (Simon) + Reddit demand-scout (Simon) + Alek's warm-deal close                                                                                      | `bd/CLAUDE.md` · `bd/get-a-sale/CLAUDE.md` · `bd/get-a-sale/channel-verdicts.md` · `bd/calls/`                           |
+| **Tokenrip Platform**                     | Mounted-agent substrate (horizontal). Five-layer architecture. Substrate roadmap paused pending live customer.                                                             | `product/tokenrip/CLAUDE.md` · `product/tokenrip/mounted-agent-model.md` · `product/tokenrip/mounted-agent-synthesis.md` |
+| **Quintel (equipment finance)**           | First vertical product on Tokenrip (quintel.ai). Pre-qualification + lender-match engine for EF brokers / lenders. "One engine — sell the judgment + hands, not the mock." | `product/quintel/quintel-build-and-gtm-roadmap-2026-06-08.md` · `product/quintel/CLAUDE.md` · `bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing.md` |
+| **Building Own Audience (P1 background)** | Brand/inbound/SEO/community compounding layer. Make.com pattern. NOT Motion E.                                                                                             | `product/tokenrip/make-com-playbook-analysis-2026-05-21.md`                                                              |
+| **Distribution**                          | Registry listings, community seeding, agent platform presence.                                                                                                             | `distribution/`                                                                                                          |
 
 ---
 
@@ -89,7 +89,7 @@ Respect Simon's time:
 
 ### 6. Challenge Your Own Convergence (not just Simon's)
 
-Principles 1–4 pressure-test *Simon's* assumptions. This one targets *yours*. The recurring failure: take a plausible read of a customer or situation, harden it into a settled fact, design everything downstream around it, and eliminate the alternative instead of testing it. *(Katharine/Empire: "her pain is processing inbound, not sourcing" was an inference that became the constraint "don't demo a sourcing machine" — and sourcing was the thing she wanted most.)*
+Principles 1–4 pressure-test *Simon's* assumptions. This one targets *yours*. The recurring failure: take a plausible read of a customer or situation, harden it into a settled fact, design everything downstream around it, and eliminate the alternative instead of testing it.
 
 Three checks, applied to any **load-bearing claim about a customer or the world**:
 

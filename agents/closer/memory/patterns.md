@@ -88,6 +88,31 @@ Used on Luai El Haj proposal 2026-05-20 (Phase 1 = his consultancy, Phase 2 = hi
 - **Bucket before you draft — A/B/Fallback.** One generic "grind line" for every prospect is spray-and-pray; a wrong-but-specific guess (e.g. "COI grind" sent to a technical underwriting specialist) reads worse than no guess and tells the prospect you skimmed. Sort each profile into Bucket A (volume brokerage), B (technical specialist/principal), or Fallback (can't tell → fully open question). Rubric: `agents/closer/insurance-linkedin-outreach.md`.
 - **Offer more than you ask.** First-touch close is "happy to trade notes on what we're seeing across other brokerages" — gives the prospect something worth more than the reply it asks for, and leads instead of leaving the ball in their court. No call ask on first touch; the question is the ask.
 
+## Exclusivity Framing — Don't Promise "One Per Buy Box"
+
+**Seen in:** Quintel sourcing pitches to Katharine (Empire) and Mike (36th Street).
+
+The instinct on "are you working with my competitors?" is to promise category exclusivity ("one company per buy box"). It feels like a strong differentiator and Katharine accepted it. **It backfires three ways:**
+1. **Self-imposed revenue cap.** If two prospects' boxes overlap (both EF mid-market, industry-agnostic), you can only ever serve one. Promised to Katharine *and* Mike — their boxes overlap — so it's already unkeepable.
+2. **Plants the zero-sum fear it's trying to soothe.** Telling a buyer "only one per box" tells them the intel is rivalrous. Mike grabbed it and ran ("level playing field," "leads dry up").
+3. **"Buy box" is undefinable** as a unit — the promise has no enforceable boundary.
+
+**The fix:** default to **personalization-as-moat** ("two lenders looking at the same signal don't get the same list — it ranks against *your* box, history, relationships"). Keep exclusivity as a **paid premium tier**, not a free universal promise. Flips a scaling cap into a price-anchoring lever. Logged in `bd/calls/quintel-sales-tear-sheet.md` §5.
+
+## Predictive-Product Buyers Will Demand a "Hit Rate" — Reframe to Net-New, Lead With It
+
+**Seen in:** Mike Ryan (36th Street), asked the "batting average" question 3x; Alek dodged ("too early") before the buyer reframed it for us.
+
+Any predictive/inference product draws the accuracy question from a sophisticated buyer. Dodging reads as evasive. **Never quote a fake accuracy number.** Lead with the reframe before they ask: **net-new funded deals you'd otherwise miss, asymmetric payoff (cheap misses, huge hits — venture math), measured on their real box in the refundable pilot.** Anchor cost against a sales hire (~$110k all-in), not against SaaS tools. The buyer handed Alek this exact frame — own it from the front. Logged in tear sheet §2–3.
+
+## Sales Tear Sheet — Living Objection/Framing Library
+
+When a motion produces repeated objections and value-language across calls, maintain a **tear sheet**: objection bank (objection → best answer → why), the value language that closes (in buyers' own words), framing decisions log, pricing, proof-asset gaps, and an ICP self-proves-vs-stalls table. Prevents improvising the hard answers cold every call (which is how the hit-rate answer got fumbled). First one: `bd/calls/quintel-sales-tear-sheet.md`, seeded from the Katharine + Mike calls. Update after every lender call.
+
+## Buyer-Shape Read — Self-Proves vs. Stalls (Quintel sourcing)
+
+Same demo, opposite temperature: Katharine self-closed ("I don't need a new HubSpot, I need this"), Mike interrogated and committed to nothing. The differentiator is buyer shape, not pitch quality. **Self-proves:** higher deal flow (pilot shows deals in 60 days) + budget authority + already shopping for it. **Stalls:** big-ticket ($50M+, ~1 deal/couple months = unfalsifiable for a quarter) + no authority (must sell up to a skeptical board) + AI-skeptical principals. Prioritize lenders whose flow makes the pilot self-evident inside the refund window. Big-ticket institutional buyers aren't worth heavy Simon-time until the board-ready asset exists.
+
 ## Recurring Objections
 
 Objections that come up repeatedly, and the responses that work.

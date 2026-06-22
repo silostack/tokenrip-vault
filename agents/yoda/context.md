@@ -1,14 +1,14 @@
 # Current Context
 
-*Last updated: 2026-06-14*
+*Last updated: 2026-06-21*
 
 ## The ONE Thing
 
 What matters most right now?
 
-> **No month without revenue — manufacture the second dollar.** First paid engagement landed AND **paid — Stephanie/AICAP discovery deliverable out, dollar banked (confirmed Jun 14)** — the 0→1 is done and collected; the next unlock is recurring. **Get one non-Stauss EF buyer on a call describing their own pain + a path to dollars** — the July revenue candidate and the test of whether equipment finance is real without Stauss. **Now urgent: the fortnight is half gone, the first week was spent waiting on Stauss (re-coupling to the dependency it was meant to break), and the leading indicator is still zero. ≥10 EF contacts this week — dials, not planning.**
+> **No month without revenue — convert the live deals.** The regime flipped from *manufacturing* a buyer to *converting* two live ones. **(1) Stephanie/AICAP came back with redlines — she's in the contract. THE ONE thing: turn the redlines around → a signed / dated next step before momentum cools (Simon's own deal).** **(2) Empire/Katharine — the independent buyer voice the whole EF hypothesis was waiting for finally spoke (zero-CoI direct lender, painkiller pain, asked pricing unprompted). Very close #2: deliver Simon's technical surface — product-surface decision + HubSpot integration answer + redacted-deal packet — so the team call (Rick/Mike) gets scheduled.** Record the magic demo (now shootable) **as the Empire surface** — capped at an afternoon, not a build. Cold-dial grind → light/secondary this week: conversion beats manufacturing when deals sit at the one-yard line.
 
-## Sequencing (Jun 14 – ~21 — second half of the manufacture-the-second-dollar fortnight)
+## Sequencing (Jun 21 – ~28 — convert the live deals: Stephanie redlines + Empire team call)
 
 ### Completed (prior weeks)
 - [x] ~~Simon-owned most-progressable deal manufactured — Stephanie/AICAP, Upwork-sourced~~ (May 26)
@@ -24,17 +24,16 @@ What matters most right now?
 - [x] ~~**FIRST PAID DOLLAR** — Stephanie/AICAP discovery, escrowed~~ (Jun 8) — THE May 31 one thing, closed
 - [x] ~~quintel.ai stood up (demo/portfolio) + Stauss EF brain-dump + 2 calls~~ (Jun 8)
 
-### Active (Jun 14 – ~21)
-- [ ] **Simon**: Get one **non-Stauss EF buyer** on a call describing their own pain + a path to dollars. **THE one thing** — July revenue candidate, test of EF-without-Stauss. **Week 1 lost to waiting on Stauss; ≥10 contacts this week off Alek's list, phone + LinkedIn, Stauss demoted to "bonus."** (P0)
-- [ ] **Simon**: Stephanie — dollar banked + deliverable out; be re-engagement-ready for her ~Jun 22 return with the integration-blocker MVP pre-thinking. (P0)
-- [ ] **Simon**: Reach/personal-brand ("build my own audience") — **parked, not started this fortnight.** Already Goal 10d (P1 background); doesn't jump the queue. When it starts: catalog/build-in-public (reach as byproduct of the work), measured by inbound not followers. Right now reach ≈ the sale (a closed EF deal is the best content). (P1/P2)
-- [ ] **Simon**: Keep quintel.ai at **demo-depth** until a buyer pulls it deeper (don't build the platform for an unsigned customer — Trap #4). (P0)
-- [ ] **Simon**: Confirm Stephanie's escrow **releases** (escrow ≠ bank); deliverable frames the integration blocker as decision-options. (P0)
-- [ ] **Simon**: Build the Stauss-independent EF GTM — broker list, lenders, players → buyer conversations (means to a call, not a market map). (P0)
-- [ ] **Simon**: Upwork → maintenance/opportunistic only (real-cost bids $5–60; repeatability unproven). (P2)
-- [ ] **Simon**: Demand-scout (Reddit) — keep listening; engage sharp painkiller posts, don't just log. (P1)
-- [ ] **Hold**: Stephanie/AICAP — blocked on her hospital-integration decision; out 2 weeks. Re-engage on her return with MVP pre-thinking ready. (P0, paused)
-- [ ] **Background**: Building own audience as long compounding layer (NOT Motion E — Tokenrip's audience, not a creator's; Make.com pattern not Substack pattern).
+### Active (Jun 21 – ~28)
+- [ ] **Simon (ONE thing)**: **Stephanie — turn the redlines around → signed / dated next step.** She re-engaged Jun 21 with redlines (in the contract); momentum fragile. His own deal. (P0)
+- [ ] **Simon (close #2)**: **Empire/Katharine — deliver the technical surface so the team call (Rick/Mike) gets scheduled:** product-surface decision, HubSpot integration answer (hard requirement), redacted-deal packet (with Alek). The independent buyer voice spoke — convert it. (P0)
+- [ ] **Simon**: **Record the magic demo (now shootable) AS the Empire product surface** — capped at an afternoon; must not expand into a build. (P0)
+- [ ] **Simon**: Keep a **light EF dial cadence** so the engine stays warm — explicitly secondary; conversion over manufacturing this week. (P1)
+- [ ] **Broker-first → lender-first**: Katharine's signal pulls toward lender-first. Serve Empire hard (= lender-first in practice); hold the *generalization* loosely until the team call + a 2nd lender confirm. Don't re-architect the vertical on one call.
+- [ ] **Simon**: Keep quintel.ai at **demo-depth** until a buyer pulls it deeper (Trap #4). (P0)
+- [ ] **Simon**: Reach/personal-brand — still **parked** (Goal 10d, P1 background); doesn't jump the queue. When it starts: catalog/build-in-public, measured by inbound not followers. (P1/P2)
+- [ ] **Simon**: Demand-scout (Reddit) — keep listening; engage sharp painkiller posts. (P1)
+- [ ] **Debra Silas (Questor)** — courteous "no" on US product; intel + warm contact. Follow-up email (research gift + US-broker-referral ask). Canada-native wedge flagged + parked (Trap #4). (P2)
 
 ### Deferred
 - [ ] Series 3 post 10 — draft exists, secondary.
@@ -89,7 +88,7 @@ Current state:
 
 *(Replaces the former wellbeing section — Simon opted out of routine wellbeing checks 2026-05-18. Watch execution quality instead.)*
 
-> **Jun 14 — a regression week to watch, not a crisis.** Last week's standout move (decoupling EF from Stauss) reversed: Simon + Alek held off on their own outreach to wait on Stauss, who delivered a doc and no meetings. THE one thing — a non-Stauss buyer voice — wasn't just missed, it was *actively deferred*, and a week of the two-week July-revenue window is gone. The self-correction muscle still works (they flipped to going hard themselves, Stauss → "bonus") but it fired late. Two tells fired together: (1) the hard direct work (cold broker calls) deferred behind a comfortable wait-on-the-partner option — avoidance in a sequencing costume; (2) a surge of distribution-systems enthusiasm (Distribution Engineer thesis) arriving exactly as the EF work stalled — system-building's newest costume. Simon ranked distribution #2 correctly *on paper*; the gap to watch is whether his *week* matches the ranking. The watch for next session: did the dials happen and a buyer get on the phone, or did distribution + Upwork-profile + Stauss-waiting absorb the founder-hours again? Revenue work (a buyer voice) before loop-building.
+> **Jun 21 — a genuinely strong week; the regime flipped from manufacturing to converting.** Three real advances: (1) **Empire/Katharine** — the independent buyer voice the whole EF hypothesis was waiting for finally spoke (independent, zero-CoI direct lender, painkiller pain, pricing question unprompted) — the most-repeated unresolved line in memory, resolved; (2) **Stephanie redlines** — strongest deal back in motion (in the contract); (3) **magic demo now shootable** (flow works, tested — answered the GTM doc's acceptance-test fork). "Huge week" is fair. The one accountability point: Simon's *own* ≥10-dial engine still missed volume (3 preps + holiday Friday filled the days; the dial block evaporated — same deferral *shape* as 6/14, milder reason) — and the buyer voice came via Alek + an independent lead, not Simon's outreach. **But pausing the cold grind to convert two one-yard-line deals is correct, not avoidance** (Simon's own 5/31 insight). **The risk flipped:** from "no buyer voice" → "don't fumble the live deals + don't let the magic demo become a build." Watch next session: redlines turned around? Empire team call scheduled? Demo stayed an afternoon? Did Empire advance from champion → economic-buyer signature?
 
 ## Key Numbers
 

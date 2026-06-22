@@ -1,16 +1,16 @@
 # Focus Dashboard
-*Updated: 2026-06-14*
+*Updated: 2026-06-21*
 
-**North Star (near-term):** **No month without revenue.** First paid dollar **banked** (Stephanie/AICAP discovery — deliverable out, paid). The 0→1 is done and collected; the next unlock is recurring — ≥1 new revenue event per calendar month, trending to MRR.
-**Direction:** First paid engagement **closed and paid**. **Equipment finance (Quintel) is the live thrust** — Simon + Alek now going **direct** on EF outreach (phones + LinkedIn off Alek's list); Stauss demoted to "any action is a bonus" after a week's wait returned a doc + no meetings. Stephanie offline on a cruise (no comms); re-engage on her ~Jun 22 return. Consulting-as-platform playbook (AWS/Palantir).
+**North Star (near-term):** **No month without revenue.** First paid dollar **banked** (Stephanie/AICAP discovery). The 0→1 is done; the next unlock is recurring — ≥1 new revenue event per calendar month, trending to MRR.
+**Direction:** **Regime flipped from manufacturing a buyer to converting two live ones.** (1) **Stephanie returned with redlines** — in the contract; turn them around → signed (Simon's deal). (2) **Empire/Katharine** — the independent buyer voice the whole EF hypothesis was waiting for finally spoke (zero-CoI direct lender, painkiller pain, asked pricing unprompted) — deliver the technical surface so the team call (Rick/Mike) gets scheduled. Magic demo now shootable → record it AS the Empire surface. Consulting-as-platform playbook (AWS/Palantir).
 **Full strategy:** [[bd/get-a-sale/CLAUDE.md]] | [[bd/reference/motions-and-strategy]] | [[bd/CLAUDE]]
 **Operating gameplan:** [[active/operating-gameplan-2026-06-04|Foreground deals · autonomous machine · one build]] — how the two deals, the background machine (demand-scout / postmill / blog), and new builds fit together so the compounding layer runs without stealing deal hours (Bean session, 2026-06-04).
 
 ---
 
-## The ONE Thing This Fortnight (Jun 8 – ~21) — second half, now urgent
+## The ONE Thing This Week (Jun 21 – ~28) — convert the live deals
 
-**Get one non-Stauss EF buyer on a call describing their own pain + a path to dollars.** First dollar is banked; the job now is the *second*. **Week 1 of the fortnight was lost waiting on Stauss** (re-coupling to the dependency the fortnight existed to break) — he returned a doc and no meetings, the foreseeable downside. The leading indicator is still **zero**. EF is a hypothesis until a budget-holder who isn't Stauss describes their own pain in their own words. **This week: ≥10 EF contacts (phone + LinkedIn) off Alek's list → ≥1 real pain conversation.** Dials, not planning — not a market map, not quintel.ai getting prettier.
+**Turn Stephanie's redlines around → a signed / dated next step.** She re-engaged with redlines (she's in the contract); momentum is fragile — Simon's own deal, don't let it cool. **Very close #2: deliver Empire's technical surface** (product-surface decision + HubSpot integration answer + redacted-deal packet with Alek) so the team call (Rick/Mike) gets scheduled — the independent buyer voice spoke; convert it. **Record the magic demo (now shootable) AS the Empire surface** — one afternoon, not a build. Conversation beats manufacturing now that two deals sit at the one-yard line; keep only a *light* EF dial cadence so the engine stays warm.
 
 ---
 
@@ -30,6 +30,9 @@
 - **A new revenue event every month — un-gameable.** New engagement closed *or* recurring payment landed; not the same deal twice. Next month's revenue is manufactured *this* month.
 - **Don't wait on Stauss — or any warm intro — before doing the direct work.** A week of the fortnight went to "see what Stauss turned up first" and returned a doc + no meetings. Waiting on a partner you've already diagnosed as unreliable is avoidance in a sequencing costume. Sequencing or avoiding? What does waiting cost you that you can't get back?
 - **Reach/personal-brand doesn't jump the queue.** It's already Goal 10d (P1 background, "cannot displace ONE thing"). Longest payback on the board + most seductive avoidance (no deadline, vanity artifacts). When it earns its turn: build-in-public *byproduct* of the work, measured by inbound/conversations, never followers. **The cheapest reach available now is a closed EF deal — one customer story out-reaches 50 posts.**
+- **Convert, don't fumble — the risk flipped (Jun 21).** With two deals at the one-yard line (Stephanie redlines + Empire), pausing the cold-dial grind to *close* is correct, not avoidance ("converting at the one-yard line beats more top-of-funnel"). New failure modes: a hot deal cooling while your deliverables sit; the magic demo expanding from an afternoon into a build (Trap #4 in demo costume).
+- **Broker-first → lender-first: follow the pull, hold the generalization loosely.** Katharine (a lender) is the engaged buyer — serving Empire hard *is* lender-first in practice. But one excellent call = a most-progressable *deal*, not a *thesis*. Don't re-architect the vertical until the team call + a 2nd lender confirm.
+- **The independent buyer voice spoke (Empire) — but at the champion, not the economic buyer.** Katharine = champion/user; Rick (CEO) + Mike (CCO) sign. It's a hot qualified lead, not a deal, until the team call. And it came via Alek + an independent lead — Simon's *own* dial engine is still unproven.
 
 ---
 
@@ -51,30 +54,33 @@ TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  REVENUE  →  FUNDRAI
 
 **What changed Jun 14:** **First dollar banked** (Stephanie deliverable out + paid; escrow released). **The decoupling slipped, then re-asserted:** Simon + Alek held off on their own broker outreach for a week to "see what Stauss turned up first" (a re-coupling to the exact dependency Jun-8 was meant to break); Stauss returned a doc + no meetings; they've now flipped to going **direct** (≥10 EF contacts this week), Stauss → bonus. Cost: a week of the July-revenue fortnight, leading indicator still zero. **Reach/personal-brand surfaced as a "realization"** (not yet hours) — held at P1 background (Goal 10d); doesn't jump the EF queue.
 
+**What changed Jun 21:** **The independent buyer voice spoke — Empire/Katharine** (independent, NOT Stauss-channeled; zero-CoI direct lender; painkiller pain; asked pricing unprompted — best first-call in the deal log). The most-repeated unresolved line in the memory is **resolved**; EF moved from "Stauss-shaped" to "real." Caveats: champion ≠ economic buyer (team call is the test); came via Alek + independent inbound, not Simon's dial engine. **Stephanie returned with redlines** — strongest deal back in motion. **Magic demo now shootable** (flow works, tested — answered the GTM doc's acceptance-test fork). **Regime flip: manufacturing → converting** two live deals. Risk flipped from "no buyer voice" → "don't fumble the live ones + don't let the demo become a build." Signal: **broker-first → lender-first** (Katharine's pull) — serve Empire, hold the generalization loosely.
+
 **Crypto (maintenance):** Separate RebelFi vault. Alek manages.
 
 ---
 
-## This Fortnight (Jun 8 – ~21)
+## This Week (Jun 21 – ~28)
 
-### Simon — Manufacture the second dollar
-- [ ] **ONE thing:** **≥10 EF contacts** (phone + LinkedIn) off Alek's list → ≥1 **non-Stauss buyer** describing their own pain + a path to dollars
-- [ ] Keep **quintel.ai at demo-depth** — don't build the platform for an unsigned customer (Trap #4)
-- [ ] Be **re-engagement-ready for Stephanie's ~Jun 22 return** — integration-blocker framed as MVP decision-options
-- [x] ~~Confirm Stephanie's escrow releases~~ — **done, dollar banked (paid)**
-- [ ] Upwork → genuinely maintenance/opportunistic (it drifted to "hard" last week; step it back behind EF)
-- [ ] Demand-scout (Reddit) — keep listening; engage sharp painkiller posts, don't just log
-- [ ] Reach/personal-brand — **parked, NOT started this fortnight** (P1 background; doesn't jump the queue)
+### Simon — Convert the two live deals
+- [ ] **ONE thing:** **Stephanie — turn the redlines around → signed / dated next step** (his own deal; momentum fragile)
+- [ ] **Close #2:** **Empire — deliver the technical surface** (product-surface decision + HubSpot integration answer + redacted-deal packet with Alek) → team call (Rick/Mike) scheduled
+- [ ] **Record the magic demo AS the Empire product surface** — one afternoon, must not expand into a build (Trap #4)
+- [ ] Keep a **light EF dial cadence** so the engine stays warm — explicitly secondary to conversion
+- [ ] Keep **quintel.ai at demo-depth** (Trap #4)
+- [ ] Demand-scout (Reddit) — keep listening; engage sharp painkiller posts
+- [ ] Reach/personal-brand — **still parked** (P1 background; doesn't jump the queue)
+- [ ] Debra Silas (Questor) — follow-up email: research gift + US-broker-referral ask (Canada wedge parked)
 
 ### Alek
-- [ ] EF direct outreach with Simon — broker/lender list → phones + LinkedIn (the door to a non-Stauss buyer)
-- [ ] LinkedIn pipeline
-- [ ] Luai — chase the "send to my team" response (soft stall; Alek owns)
+- [ ] Empire — send Katharine the shareable materials + build the redacted-deal packet with Simon
+- [ ] EF direct outreach — broker/lender list → phones + LinkedIn
+- [ ] LinkedIn pipeline · Luai — chase the "send to my team" response (soft stall)
 
 ### Background (long compounding, do not let displace ONE thing)
-- [ ] Building Tokenrip's own audience — demand-scout doubles as discovery; brand/inbound surface compounds independently (Make.com pattern). Reach as *byproduct of the work*, measured by inbound not followers.
+- [ ] Building Tokenrip's own audience — demand-scout doubles as discovery; brand/inbound compounds independently (Make.com pattern). Reach as *byproduct of the work*, measured by inbound not followers.
 
-**KPI this fortnight:** July's revenue event in motion. ≥10 EF contacts → one non-Stauss EF buyer describing their own pain.
+**KPI this week:** Two live deals advanced — Stephanie redlines → signed; Empire team call scheduled. July's revenue event is now a *conversion* problem, not a *manufacturing* one.
 
 ---
 
@@ -83,9 +89,10 @@ TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  REVENUE  →  FUNDRAI
 | Project | What | Status | Key Docs |
 |---------|------|--------|----------|
 | **Revenue (P0)** | First dollar **banked** (Stephanie, paid). Now: second dollar via EF + Stephanie conversion. ≥1 new revenue event/month → MRR. | **Active (P0)** | [[bd/get-a-sale/CLAUDE.md]] |
-| **EF Vertical / Quintel (P0)** | quintel.ai stood up (demo-depth). The live thrust. **ONE thing: one non-Stauss buyer voice — ≥10 contacts this week.** Now going **direct** (Stauss → bonus). Run as a buyer-discovery test, platform gated on a pull. | **Active hypothesis under test — Simon (P0)** | [[bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing]] · [[bd/deals/equipment-finance/equipment-finance-domain-primer-2026-05-30]] · [[active/operating-gameplan-2026-06-04]] |
-| **Stauss / Bevel / DCF (EF channel)** | Stauss = channel, **demoted to "bonus"** after a week's wait returned a doc + no meetings. Intros so far land on non-buyers (Bevel gated, DCF buyer no-showed). Founders now driving EF outreach directly. | **Channel — bonus only (P2)** | [[bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing]] |
-| **Stephanie / AICAP (Live Deal — Simon)** | Healthcare credentialing. **First paid engagement — discovery delivered + PAID (dollar banked).** Offline on a cruise; re-engage on her ~Jun 22 return (integration-blocker → MVP decision-options). | **Paid; paused on her side (P0)** | [[bd/calls/proposals/stephanie-williamson-2026-05-27-final]] · [[active/call-prep-stephanie-williamson-clarification-2026-05-30]] |
+| **Empire / Katharine (Live Deal — Alek-led, Simon owns tech surface) (P0)** | Independent, zero-CoI direct lender. **The independent buyer voice the EF hypothesis was waiting for.** Champion engaged; team call (Rick/Mike) is the gate. Simon owns: product-surface decision + HubSpot integration answer + redacted-deal packet. | **Qualified — converting (P0)** | [[bd/calls/contacts/katharine-rudzitis]] · [[bd/calls/notes/katharine-rudzitis-2026-06-18]] |
+| **EF Vertical / Quintel (P0)** | quintel.ai (demo-depth). **Buyer-voice test PASSED (Empire, independent).** Now in conversion — advance champion → economic-buyer signature. Signal: broker-first → lender-first (hold loosely). | **Hypothesis validated on buyer-voice — converting (P0)** | [[bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing]] · [[bd/deals/equipment-finance/equipment-finance-domain-primer-2026-05-30]] · [[active/operating-gameplan-2026-06-04]] |
+| **Stauss / Bevel / DCF (EF channel)** | Stauss = channel, **"bonus" only.** His intros land on non-buyers (Bevel gated, DCF no-showed); the live buyer (Empire) came independent, not via Stauss. NED (Andy Cooper) held behind Bevel. | **Channel — bonus only (P2)** | [[bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing]] |
+| **Stephanie / AICAP (Live Deal — Simon)** | Healthcare credentialing. **First paid engagement (banked).** **Jun 21: returned with redlines — she's in the contract.** ONE thing: turn redlines → signed / dated next step. | **Converting — redlines in (P0)** | [[bd/calls/proposals/stephanie-williamson-2026-05-27-final]] · [[bd/calls/contacts/stephanie-williamson]] |
 | **Luai Pilot (Live Deal — Alek)** | $5K 90-day file-readiness pilot, immigration. Proposal sent to his team — soft stall. | **Stalled — Alek owns** | [[bd/calls/proposals/luai-elhaj-2026-05-20-final]] |
 | **Demand-Scout Agent** | Reddit discovery + demand-validation loop. A few messages in; strong signal source. | **Live (P1)** | — |
 | **Building Own Audience** | Long compounding brand/inbound/SEO layer. Make.com pattern. NOT Motion E. | **Background (P1)** | [[product/tokenrip/make-com-playbook-analysis-2026-05-21]] |
@@ -103,11 +110,11 @@ TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  REVENUE  →  FUNDRAI
 
 | Metric | Current | This Fortnight Target | Notes |
 |--------|---------|------------------|-------|
-| Paid engagements | **1 — Stephanie discovery (paid, banked)** | Line up #2 | First dollar = the 0 → 1 unlock, **collected** |
-| New revenue event / month | June banked (Stephanie) | **July event in motion** | The new primary KPI |
-| EF buyer voice (non-Stauss) | **0** (week 1 lost to waiting on Stauss) | **≥10 contacts → 1 describing own pain** | The fortnight ONE thing |
-| Live deals | Stephanie (paid, paused) · Luai (stalled) · EF/Quintel (hypothesis) | Convert one to dollars | — |
-| Conversations had | ~10 across sprint (+Ted/Bevel, DCF 6/1) | ≥10 EF contacts → one non-Stauss buyer | Quality > count |
+| Paid engagements | **1 — Stephanie discovery (paid, banked)** | Convert #2 (Stephanie redlines / Empire) | First dollar = the 0 → 1 unlock, **collected** |
+| New revenue event / month | June banked (Stephanie) | **July event = a conversion, not a manufacture** | The new primary KPI |
+| EF buyer voice (non-Stauss) | **✅ 1 — Empire/Katharine (independent, zero-CoI)** | Advance champion → economic-buyer signature (team call) | The most-repeated unresolved line, resolved |
+| Live deals | **Stephanie (redlines in) · Empire (qualified, converting)** · Luai (stalled) | Both → next concrete commitment | Two at the one-yard line |
+| Conversations had | ~13 across sprint (+Empire, Ayman, Debra) | Convert the live two | Quality > count |
 | Demand-scout | Live (Reddit) | Conversations engaged, not logged | Strong signal source |
 | MRR | $0 | trending toward first MRR | — |
 
@@ -121,7 +128,7 @@ TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  REVENUE  →  FUNDRAI
 | LinkedIn cold (insurance) | **Killed** | May 18 | Buyers structurally inactive on the platform. |
 | Job-req outreach | **Killed** | May 23 | All "AI agent" jobs are AI-coding jobs as of May 2026. No biddable supply. Periodic monitor. |
 | Upwork bidding | **Maintenance/opportunistic** | Jun 8 | Sourced the first dollar (Stephanie). But Simon sole bidder, bids cost $5–60 each, repeatability unproven. Not primary while EF is the frontier. |
-| Equipment finance (direct outreach) | **Active — primary frontier** | Jun 14 | Founders going **direct** (phones + LinkedIn off Alek's list). Stauss demoted to "bonus" after a week's wait returned a doc + no meetings — intros so far land on non-buyers (Bevel gated, DCF buyer no-showed). ≥10 contacts this week. |
+| Equipment finance (direct outreach) | **Active — produced the live buyer** | Jun 21 | Empire/Katharine (independent, zero-CoI lender) is the buyer voice the hypothesis waited for — came **direct/independent, not via Stauss**. Now in conversion. Debra Silas (Questor) = courteous "no" + intel. Signal: broker → lender-first (hold loosely). |
 | LinkedIn warm pipeline | **Alek's lane** | Jun 8 | Alek runs it (not Upwork). Not Simon's channel. |
 | Reddit demand-scout | **Active** | May 23 | Discovery + demand-validation loop. A few messages in; strong signal source. |
 
@@ -135,9 +142,9 @@ TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  REVENUE  →  FUNDRAI
 | **MOA** | **Shipped + producing** | Content agent, reply-guy agents, demand-scout deployed |
 | **Chief of Staff** | **Shipped** | Team-scoped, layered memory, public reference deploy |
 | **Blog/Content** | **Post 9 live, ~10+ posts total** | Secondary priority |
-| **Distribution** | **EF buyer-discovery + demand-scout + Upwork maintenance** | Primary motion = EF buyer conversations |
+| **Distribution** | **Converting two live deals (Stephanie + Empire)** | Primary motion = close the deals on the board; light EF dial cadence stays warm |
 | **SEO** | **Google + Bing indexed** | |
-| **Co-founder** | **Aligned** | Simon: EF buyer-discovery + Upwork maintenance + demand-scout. Alek: LinkedIn + EF Plan-B GTM (mockups, broker list) + Luai. |
+| **Co-founder** | **Aligned** | Simon: Stephanie redlines + Empire tech surface + magic demo. Alek: Empire (materials + packet) + EF outreach + LinkedIn + Luai. |
 
 ---
 
@@ -150,6 +157,25 @@ TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  REVENUE  →  FUNDRAI
 - Custom interface primitive — research done; ships when there's a customer to point at.
 - Lighthouse imprint sequencing (Substack pattern) — activates once a sale lands.
 - "Publish our GTM agents for anyone to use" — downstream of demand-scout proving out.
+
+---
+
+## Recent (Jun 14 - Jun 21)
+
+### What Happened
+- [x] **The independent buyer voice spoke — Empire/Katharine** (Alek's call, Jun 18). Independent (NOT Stauss), zero-CoI direct lender, painkiller pain, asked pricing unprompted — best first-call in the deal log. Resolves the most-repeated unresolved line in the memory.
+- [x] **Stephanie returned with redlines** (Jun 21) — strongest deal back in motion; she's in the contract.
+- [x] **Magic demo now shootable** — codebase to where the flow works end-to-end, tested. Answered the GTM doc's acceptance-test fork ("if yes, the magic is real").
+- [x] **Debra Silas (Simon's EF call)** — courteous "no" on US product + market intel + warm contact. One of the contacts; not a buyer voice. Canada wedge flagged + parked.
+- [x] **Ayman/CBS (Alek, Upwork)** — Dubai corporate-services firm; early discovery, blocked on a Zoho migration to ~Sept 2026.
+- [ ] **Simon's own ≥10-dial target missed again** — "some, fewer than hoped" (3 call preps + a surprise holiday Friday). The buyer voice came via Alek/independent, not Simon's engine.
+
+### Key Insights (Yoda review Jun 21)
+- **The most-repeated unresolved line resolved — independent, not Stauss-shaped.** EF moved from "Stauss-shaped" to "real." Caveats: champion ≠ economic buyer (team call is the test); came via Alek + independent inbound, so Simon's own dial engine is still unproven.
+- **The risk flipped: from "manufacture a buyer" to "don't fumble the live ones."** Pausing the cold grind to convert two one-yard-line deals is correct, not avoidance ("converting at the one-yard line beats more top-of-funnel"). New failure modes: a hot deal cooling while deliverables sit; the magic demo expanding into a build.
+- **Dial-deferral *shape* recurs even in a strong week** — "I was prepping for calls" is the comfortable-work tell in a new costume; dials crammed into a block that evaporated. Mattered less because the outcome arrived another way.
+- **"Can the demo be shot today?" = YES** — reclassifies the demo work from "system-building's costume" toward legitimate validation, *on condition* it serves a live deal (the Empire surface) and stays an afternoon.
+- **Broker → lender is evidence-driven pull, NOT oscillation** — serve Empire (= lender-first in practice); hold the generalization loosely until a 2nd lender confirms.
 
 ---
 
@@ -191,6 +217,7 @@ TOKENRIP (substrate)  →  MOUNTED AGENTS (category)  →  REVENUE  →  FUNDRAI
 
 ## Update Log
 
+- **2026-06-21**: Yoda weekly review. **The independent buyer voice spoke — Empire/Katharine** (independent, zero-CoI direct lender; painkiller pain; pricing question unprompted; best first-call in the deal log) — resolves the most-repeated unresolved line in the memory (5/29→6/14). EF moved from "Stauss-shaped" to "real." Caveats: champion ≠ economic buyer (team call is the test); came via Alek + independent inbound, not Simon's dial engine. **Stephanie returned with redlines** (in the contract). **Magic demo now shootable** (acceptance-test fork answered yes). **Regime flip: manufacturing → converting** two live deals — risk flipped to "don't fumble the live ones + don't let the demo become a build." ONE thing → **Stephanie redlines → signed**; close #2 → **Empire team-call surface**; record the demo AS the Empire surface (capped at an afternoon). Cold-dial grind → light/secondary. Signal: broker-first → lender-first (follow the pull, hold the generalization loosely). Accountability point: Simon's own ≥10-dial target missed again (3 preps + holiday Friday) — same deferral shape, milder reason.
 - **2026-06-14**: Yoda weekly review. **First dollar BANKED** (Stephanie deliverable out + paid; escrow released — supersedes the Jun-8 "escrow ≠ bank" flag). **The decoupling slipped, then re-asserted:** Simon + Alek held off on their own broker outreach a full week to "see what Stauss turned up first" (a re-coupling to the dependency Jun-8 was meant to break); Stauss returned a doc + no meetings; cost a week of the July-revenue fortnight, EF buyer-voice still at zero. Corrected to **direct outreach** (≥10 contacts this week), Stauss → bonus. **Reach/personal-brand reframe** ("build my own audience that fuels any endeavor") engaged and held at P1 background (Goal 10d) — longest-payback/most-seductive avoidance, "fuels any endeavor" is hedge-shaped; doesn't jump the EF queue; cheapest reach now = a closed EF deal. Credit: dollar collected, ONE thing confirmed = EF, 10 dials committed, hours *not* yet diverted (attention-leak not action-leak — caught himself). ONE thing unchanged → **one non-Stauss EF buyer describing their own pain**.
 - **2026-06-08**: Yoda weekly review. **FIRST PAID DOLLAR landed** (Stephanie/AICAP discovery, escrowed) — the get-a-sale 0→1 is closed. **KPI regime change → ≥1 new revenue event per calendar month, trending to MRR** ("no month without revenue"). **EF (Quintel) escalated to the live thrust** — quintel.ai stood up (demo-depth); Simon decoupled EF from Stauss (channel, not the deal) and is building a Stauss-independent GTM. New ONE thing → **one non-Stauss EF buyer describing their own pain**. Stephanie blocked on a hospital-integration decision (out 2 wk) — hold, re-engage on return. Upwork re-demoted to maintenance (Simon sole bidder, $5–60/bid). Three Yoda flags corrected by wrong operational facts (quintel-as-trap, Stephanie pre-build, mirror-Alek). Simon led with the sale this time — narration pattern corrected in one week.
 - **2026-06-04**: Bean session → **operating gameplan** created: [[active/operating-gameplan-2026-06-04|Foreground deals · autonomous machine · one build]]. Core reframe — it's a *running* problem, not a building problem: the leverage is **autonomy** (schedule the agents already built — postmill is the "content engine" you wanted, fully wired with zero uses), not more agents. Foreground = the two deals (AICAP + Quintel/Bevel) on Simon's hands; machine = built agents on a schedule, reviewed weekly inside the Chief of Staff Friday Review; one capped build = the research agent, anchored to Quintel's signal engine (EDGAR/USAspending/UCC). Avoids Trap #4 because a live deal pulls on it.

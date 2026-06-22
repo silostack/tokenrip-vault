@@ -21,6 +21,15 @@ Keep filenames descriptive and unique so Obsidian bare wiki-links (`[[slug]]`) r
 
 ## Current clusters & briefings
 
+### `empire/` — clean, independent direct-lender lead (Quintel)
+**Empire Asset Finance** — a direct, balance-sheet equipment lender; subsidiary of Arena Investors, LP ($4.6B). The first **independent, zero-conflict** EF lead — *not* Stauss-channeled, none of the VFI employment/trade-secret exposure. Same vertical as `equipment-finance/`, deliberately a **separate cluster**: Empire is the clean lead; the EF cluster is the Stauss-channeled one. **They are also peers/competitors** (Empire's capital-markets desk trades syndicated deals with VFI-type institutions) — which is why EF-vertical exclusivity is off the table here (see term-sheet draft). Product is **Quintel**; this folder holds the deal/prep layer.
+
+- **Champion:** Katharine Rudzitis (VP Direct Originations) — qualified, asked pricing unprompted, circulating internally for a team call. [[bd/calls/contacts/katharine-rudzitis]]
+- **Deliverable in flight:** redacted prior deal run → packet for the team call. Workflow + gap scope: [[quintel-empire-redacted-deal-run-scope-2026-06-19]]
+- **Team-call close-readiness plan:** [[quintel-empire-team-call-readiness-2026-06-19]]
+- **Deal terms / lever map:** [[quintel-empire-term-sheet-draft-2026-06-20]]
+- **Economic buyers (team call):** Rick Rockhold (CEO), Mike Miroshnikov (COO/CCO, F2 user).
+
 ### `equipment-finance/` — the first dense substrate cluster (Stauss-channeled)
 The opportunity Stauss Paulos opened. He functions as the **channel** (distribution partner), not a single customer; sub-deals flow through him. The vertical is the "first dense substrate cluster / lighthouse vertical." The **product** built for it is **Quintel** (quintel.ai), powered by Tokenrip — product/build docs live in `product/quintel/` ([[product/quintel/CLAUDE|index]]); this folder holds the *deal/relationship* layer.
 

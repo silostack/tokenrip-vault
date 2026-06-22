@@ -3,7 +3,22 @@
 > Unified pipeline across both motions. Closer updates this at the end of every session.
 > Health: 🟢 Green (on track) · 🟡 Yellow (gap forming, needs action) · 🔴 Red (stalled or at risk).
 
-**Last updated**: 2026-05-30 (Stephanie Williamson / AICAP — proposal sent, then she requested a PAID integration discovery prior to MVP build. Buying signal, not stall. Closer move: say yes today, scope + price discovery Monday.)
+**Last updated**: 2026-06-22 (Quintel lender motion now live — Alek running sourcing-product calls to EF lenders. Two processed: Katharine/Empire 🟢 warm-to-hot, Mike/36th Street 🟡 early/gated. Created `bd/calls/quintel-sales-tear-sheet.md` — objection bank + framing library. Key calls: exclusivity reframed off "one per buy box"; hit-rate reframed to net-new deals.)
+
+**Sales reference:** `bd/calls/quintel-sales-tear-sheet.md` — live objection/framing library for lender calls. Update after each one.
+
+---
+
+## Quintel Lender Sourcing (Alek-led)
+
+| Prospect | Firm | Phase | Health | Next Action | Due |
+|----------|------|-------|--------|-------------|-----|
+| Katharine Rudzitis | Empire Asset Finance | Qualified — circulating internally | 🟢 | Run her redacted deal → build team-call packet; force a dated broader call | on receipt of file |
+| Mike Ryan | 36th Street Capital (BlackRock JV) | Early discovery — gated on board sell-up | 🟡 | Send deck (2026-06-24) w/ board-ready framing; force a dated follow-up. No authority, thin big-ticket flow — low-priority vs. Katharine | 2026-06-24 |
+
+---
+
+### (prior) 2026-05-30 context
 
 **Operating phase**: Conversation Volume. Goal is replies and learning, not winning bids. Bid wide, triage advisory-only. See `upwork-proposal-playbook.md` → Current Phase.
 
