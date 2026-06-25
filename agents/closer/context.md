@@ -3,7 +3,9 @@
 > Unified pipeline across both motions. Closer updates this at the end of every session.
 > Health: 🟢 Green (on track) · 🟡 Yellow (gap forming, needs action) · 🔴 Red (stalled or at risk).
 
-**Last updated**: 2026-06-22 (Quintel lender motion now live — Alek running sourcing-product calls to EF lenders. Two processed: Katharine/Empire 🟢 warm-to-hot, Mike/36th Street 🟡 early/gated. Created `bd/calls/quintel-sales-tear-sheet.md` — objection bank + framing library. Key calls: exclusivity reframed off "one per buy box"; hit-rate reframed to net-new deals.)
+**Last updated**: 2026-06-23 (Debra Silas / Questor Financial — warm Canadian-EF intel contact. Crafted a pain-validation follow-up email: open question testing whether "screening junk = #1 broker pain" (the US gameplan assumption) holds in Canada. Canada-native broker feasibility study predicts her #1 pain is structuring/lender-fit instead. Email pending send. New patterns recorded: warm-relationship-follow-up coaching + pain-validation-via-open-question.)
+
+**Prior**: 2026-06-22 (Quintel lender motion now live — Alek running sourcing-product calls to EF lenders. Two processed: Katharine/Empire 🟢 warm-to-hot, Mike/36th Street 🟡 early/gated. Created `bd/calls/quintel-sales-tear-sheet.md` — objection bank + framing library. Key calls: exclusivity reframed off "one per buy box"; hit-rate reframed to net-new deals.)
 
 **Sales reference:** `bd/calls/quintel-sales-tear-sheet.md` — live objection/framing library for lender calls. Update after each one.
 
@@ -34,6 +36,7 @@ Per `bd/firm-direct-strategy/gameplan.md`. Phases: Outreach → Discovery → Pa
 | Luai Walid El Haj (Get In Canada) | Immigration | Alek (lead) + Simon (technical) | Proposal Drafted | 🟡 | Run proposal + cover email through `/humanizer`; publish to Tokenrip; Alek sends cover email | 2026-05-22 |
 | Alex Khadempour (CICS Immigration) | Immigration | Alek (lead) + Simon (technical) | Discovery → Portfolio | 🟢 | Send portfolio email (CoS + Moa links + Loom) Fri; tailored proposal Bill C-3 bot Mon | 2026-05-29 (proposal) |
 | Stephanie Williamson (AICAP Access) | Healthcare credentialing | Simon | Proposal sent → Paid discovery requested | 🟢 | Reply today (yes to discovery); Mon call = scope + price discovery sprint ($3.5K–$5K fixed, 1–2 wk, integration map + revised Phase 1). Foot-in-door before $12K build. | 2026-06-01 (Mon call) |
+| Debra Silas (Questor Financial) | Equipment finance (Canada) | Simon | Warm intel → pain-validation | 🟡 | Send pain-validation email (open Q: is screening the #1 broker pain, or is there a bigger one?). Warm contact, not a buyer; tests the broker gameplan assumption + feeds Canada feasibility study. Listen for "structuring/lender-fit" unprompted. | 2026-06-23 |
 
 Outreach motion now runs off `agents/closer/insurance-linkedin-outreach.md` (A/B/Fallback bucketing rubric).
 
@@ -97,3 +100,4 @@ Rolling list of what's been promised but not yet done. Cleared as completed.
 | Record 90s Loom walkthrough of Chief of Staff for Alex Khadempour portfolio | Simon | 2026-05-27 | Open |
 | Send portfolio email to Alex Khadempour (CoS + Moa links + Loom if recorded) | Alek | 2026-05-27 | Open |
 | Draft + send tailored Bill C-3 chatbot proposal to Alex Khadempour | Alek + Simon | 2026-05-29 | Open |
+| Send pain-validation email to Debra Silas (dsilas@questorfinancial.com) | Simon | 2026-06-23 | Open |

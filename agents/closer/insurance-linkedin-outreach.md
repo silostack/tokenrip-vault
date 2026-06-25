@@ -51,6 +51,10 @@ Swap `[GRIND LINE]` per bucket. Keep it one paragraph, ~60 words.
 
 ## Format — Simon's house style (locked 2026-05-29)
 
+> **Scope:** this is the **cold first-touch** register. Warm 1:1 / relationship
+> follow-ups use a warmer register (casual, self-deprecating, "lol" ok) — see
+> the `simon-writing-voice` vault memory. Don't cross the two.
+
 The four anatomy beats stay, but the *layout* and *compression* follow Simon's
 preferences from the immigration sends. Use these as the default shape:
 

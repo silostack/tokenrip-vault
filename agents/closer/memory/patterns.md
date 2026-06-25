@@ -88,6 +88,23 @@ Used on Luai El Haj proposal 2026-05-20 (Phase 1 = his consultancy, Phase 2 = hi
 - **Bucket before you draft — A/B/Fallback.** One generic "grind line" for every prospect is spray-and-pray; a wrong-but-specific guess (e.g. "COI grind" sent to a technical underwriting specialist) reads worse than no guess and tells the prospect you skimmed. Sort each profile into Bucket A (volume brokerage), B (technical specialist/principal), or Fallback (can't tell → fully open question). Rubric: `agents/closer/insurance-linkedin-outreach.md`.
 - **Offer more than you ask.** First-touch close is "happy to trade notes on what we're seeing across other brokerages" — gives the prospect something worth more than the reply it asks for, and leads instead of leaving the ball in their court. No call ask on first touch; the question is the ask.
 
+## Warm Relationship Follow-Up (≠ cold outreach)
+
+A different lane from the cold LinkedIn first-touch above. For a contact already spoken to (warm intro, a call that happened, a promised follow-up):
+
+- **Recipient-centricity check before drafting.** Ask "what does THIS person actually care about?" and write to that — not to what we know or want to show. The recurring failure (killed three drafts of the Debra Silas email, 2026-06-23): leading with *our* research, **explaining the recipient's own world/market back to them**, parroting their own thesis as if it's news, and a wrong-context ask (asking a Canadian broker for *US* referrals). Show you did the work via a conclusion or a sharp question, never by reciting their knowledge. See `[[writing-no-over-explaining]]`.
+- **Match the warm voice, not the cold template.** Warm 1:1s use Simon's warmer register (casual, self-deprecating, "lol" ok, appreciation-opener, signs Simon) — `[[simon-writing-voice]]`. Don't impose the cold house-style's four-beat compression on a warm email.
+- **A specific, low-burden one-line question is a legitimate close.** The ask IS the question — that's leading, not passive. Don't manufacture a "what I'll do" beat where a clear question already carries the close. (Still banned: the genuinely passive "let me know if useful.")
+
+## Pain-Validation Via An Open Question
+
+When an email/call is doing double duty as **validation of a product assumption** with a domain expert, the goal is their *true* answer, not a confirmation:
+
+- **Present the hypothesis honestly, then ask open.** "What we keep hearing from brokers in the US is [X]. Is that your top pain too, or does [their market] have a bigger one?" — leave the blank for them to fill. Don't claim a bigger corpus than we have (same honesty rule as the cold rubric).
+- **Don't seed the hypothesized answer.** A *seeded* "yes" is near-worthless (acquiescence bias). **Unprompted convergence** — the expert independently naming what our hypothesis or desk research predicted — is the strong signal.
+- **Offer the contrasting hypothesis only as a follow-up probe** if the open question returns something vague.
+- Origin: the Debra Silas email × the Canada-native-broker feasibility study (2026-06-23). The study predicted Canadian brokers' #1 pain is structuring/lender-fit, *not* screening (the US assumption); the email was built to let her confirm or overturn that unprompted.
+
 ## Exclusivity Framing — Don't Promise "One Per Buy Box"
 
 **Seen in:** Quintel sourcing pitches to Katharine (Empire) and Mike (36th Street).
