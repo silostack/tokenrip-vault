@@ -45,7 +45,6 @@ Posts with drafts that need work before they can slot into the schedule.
 | Context Engineering | `context-engineering` | — | `drafts/context-engineering-draft.md` | |
 | Agent-Readable Pages | `agent-readable-pages` | — | `drafts/agent-readable-pages-draft.md` | |
 | Agent-Native CRM | `agent-native-crm` | — | `drafts/agent-native-crm-draft.md` | |
-| Operations as Primitives | `operations-as-primitives` | — | `drafts/operations-as-primitives-draft.md` | |
 
 ---
 
@@ -76,8 +75,9 @@ Full plan: `plans/blog-series-5-co-agentic-work-plan.md`
 
 ## Published
 
-21 posts live. Full list in `published/`. Most recent:
+22 posts live. Full list in `published/`. Most recent:
 
+- **Operations as Primitives** (`operations-as-primitives`) — published 2026-06-26 — *standalone thesis; CRM-build existence proof, de-linked pending `agent-native-crm` publish*
 - **Post 18: The Control Plane Spectrum** (`control-plane-spectrum`) — published 2026-06-20 — *Series 4 complete*
 - **Post 15: Workflows Are Eating Apps** (`workflows-eat-apps`) — published 2026-06-12
 - **Post 17: You Can't Put Your Data in Someone Else's Cage** (`ai-data-sovereignty`) — published 2026-06-09

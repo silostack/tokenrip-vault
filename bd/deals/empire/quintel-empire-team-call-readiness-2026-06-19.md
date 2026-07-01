@@ -9,7 +9,7 @@ related:
   - bd/deals/empire/quintel-empire-redacted-deal-run-scope-2026-06-19.md
   - bd/calls/contacts/katharine-rudzitis.md
   - bd/calls/transcripts/katharine-rudzitis-2026-06-18.md
-  - product/quintel/quintel-lender-build-roadmap-2026-06-10.md
+  - product/quintel/engineering/quintel-lender-build-roadmap-2026-06-10.md
 purpose: >
   What "maximally ready / close-ready" looks like for the Empire broader-team
   call. Defines the target outcome, the room, the demo, pricing, objections,

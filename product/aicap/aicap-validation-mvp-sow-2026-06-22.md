@@ -3,9 +3,10 @@ contact: Stephanie Williamson
 company: AICAP
 date: 2026-06-22
 type: Statement of Work (Validation MVP) — revised after her redline of the 2026-06-17 proposal
-status: draft — for Simon's review before send
+status: approved — the signed SOW governing the AICAP build (moved from bd/calls/proposals/ 2026-07-01)
 owner: Simon Pettibone
 supersedes: bd/calls/proposals/stephanie-williamson-2026-06-17-proposal-updated.md
+build_plan: /Users/si/projects/maxi/aicap/docs/aicap-mvp-gameplan.md
 ---
 
 # AICAP Validation MVP — Statement of Work

@@ -17,6 +17,7 @@
 |----------|------|-------|--------|-------------|-----|
 | Katharine Rudzitis | Empire Asset Finance | Qualified — circulating internally | 🟢 | Run her redacted deal → build team-call packet; force a dated broader call | on receipt of file |
 | Mike Ryan | 36th Street Capital (BlackRock JV) | Early discovery — gated on board sell-up | 🟡 | Send deck (2026-06-24) w/ board-ready framing; force a dated follow-up. No authority, thin big-ticket flow — low-priority vs. Katharine | 2026-06-24 |
+| Mike Louwerse | FS Growth (venture-EF lessor) | Parked — no current pain, referral-sourced, partner-level authority but no trigger | 🔴 | Send timing-edge follow-up email (pre-raise vs. post-raise hook) + half-page one-pager; pin his hiring-timeline question. Low-priority — cheap test, not a deal to invest build time in. | 2026-07-03 |
 
 ---
 
@@ -101,3 +102,4 @@ Rolling list of what's been promised but not yet done. Cleared as completed.
 | Send portfolio email to Alex Khadempour (CoS + Moa links + Loom if recorded) | Alek | 2026-05-27 | Open |
 | Draft + send tailored Bill C-3 chatbot proposal to Alex Khadempour | Alek + Simon | 2026-05-29 | Open |
 | Send pain-validation email to Debra Silas (dsilas@questorfinancial.com) | Simon | 2026-06-23 | Open |
+| Send timing-edge follow-up email + one-pager to Mike Louwerse (FS Growth) | Alek | 2026-07-03 | Open |

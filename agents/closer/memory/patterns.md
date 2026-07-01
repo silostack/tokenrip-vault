@@ -116,6 +116,16 @@ The instinct on "are you working with my competitors?" is to promise category ex
 
 **The fix:** default to **personalization-as-moat** ("two lenders looking at the same signal don't get the same list — it ranks against *your* box, history, relationships"). Keep exclusivity as a **paid premium tier**, not a free universal promise. Flips a scaling cap into a price-anchoring lever. Logged in `bd/calls/quintel-sales-tear-sheet.md` §5.
 
+## Origination/Credit Split Is a Precondition, Not Just Deal Volume (the FS Growth pattern)
+
+**Seen in:** Mike Louwerse / FS Growth (2026-06-30) — a venture-EF lessor that does few, large, referral-sourced deals (post-equity-raise, $1-5M+ tickets), 4-person team, in-house underwriting. Explicit "not needed now."
+
+The PRD's core mechanism (`product/quintel/quintel-customer-data-first-prd-2026-06-29.md` §3) ranks a coarse stated buy box against a credit team's tacit, revealed-preference model — closing the gap *inside the customer's firm* between the originator (who hunts) and credit (who actually decides what funds). **That mechanism requires the split to exist.** At a shop where the same small group of partners sources *and* underwrites (FS Growth: "we do all the underwriting ourselves"), there is no internal information gap to close — the rank-my-list / Demo C wedge doesn't apply even reframed for low ticket volume.
+
+**Don't conflate "no obvious pain" with "just needs a different pricing tier" or "just needs more volume."** Check for the org-chart split before assuming the standard wedge degrades gracefully — it doesn't degrade, it disappears, when origination and credit are the same people.
+
+**What still works when the split is absent:** the bidirectional market-intelligence layer (positioning synthesis §4, §9) doesn't require the split — it requires two parties competing for the same deal at different points in time. For a referral-fed, post-raise lessor, the angle is **timing** (pre-raise vs. post-raise signal), not ranking or volume. Reframe the pitch around getting to deals the customer already wins, earlier — not around sourcing more of them.
+
 ## Predictive-Product Buyers Will Demand a "Hit Rate" — Reframe to Net-New, Lead With It
 
 **Seen in:** Mike Ryan (36th Street), asked the "batting average" question 3x; Alek dodged ("too early") before the buyer reframed it for us.

@@ -35,12 +35,12 @@ The opportunity Stauss Paulos opened. He functions as the **channel** (distribut
 
 - **Living briefing:** [[bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing|stauss-vfi-tokenrip-briefing]] — deal / relationship / strategy / risks / decisions.
 - **Domain primer:** [[equipment-finance-domain-primer-2026-05-30]] — the *industry* (durable across the vertical).
-- **Build architecture (in `product/quintel/`):** [[equipment-finance-build-architecture-2026-06-02]] — the *build* (one engine / hands / deal-graph + spine-first roadmap).
+- **Product + build (in `product/quintel/`):** [[quintel-customer-data-first-prd-2026-06-29]] — the canonical **customer-data-first** PRD (supersedes the archived broker-first / three-archetype build architecture).
 - **Nodes** (interaction record lives in `bd/calls/`):
   - **Stauss Paulos / VFI** — channel + would-be operating partner. [[bd/calls/contacts/stauss-paulos]]
   - **Bevel — Ted Craver** — arm's-length placement firm; first live intro; cleaner first customer than VFI (no employment conflict-of-interest). [[bd/calls/contacts/ted-craver]]
   - **DCF / Direct Credit Funding — Jason Ames (owner) + Devan Phillips (BD, ex-VFI)** — ⚠️ identity unconfirmed: prep'd as a balance-sheet direct lender, but Devan described it as "a larger broker" on the 6/1 call; Jason no-showed. [[bd/calls/contacts/devan-phillips]] *(Call 2026-06-01 processed; reconcile direct-lender-vs-broker before treating as the moat-layer customer.)*
-  - **NED / National Equipment Dealers — Andy Cooper (VP Retail Finance)** — dealer captive-finance desk (3rd archetype); pain = consolidate 31 lenders → 5–6 + route every deal; same matching hand as Bevel → the architecture's extensibility test. Sequenced behind Bevel. [[bd/calls/contacts/andy-cooper]]
+  - **NED / National Equipment Dealers — Andy Cooper (VP Retail Finance)** — dealer captive-finance desk; pain = consolidate 31 lenders → 5–6 + route every deal (a lender-matching use case). Sequenced behind the live leads. [[bd/calls/contacts/andy-cooper]]
   - **VFI** — Stauss's employer; institutional full-stack (Product B); conflict-of-interest-encumbered — kept in parallel, not the clean first deal.
 
 ---

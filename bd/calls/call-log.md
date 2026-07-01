@@ -48,6 +48,9 @@ Chronological view of every equipment-finance contact — the fortnight's primar
 | 06-04 | Stauss Paulos | VFI | Simon | → | Quintel walkthrough impressed; Bevel slipped, re-pivot onto CoI-encumbered VFI; no money/signature. [[notes/stauss-paulos-2026-06-04]] |
 | 06-18 | Katharine Rudzitis | Empire Asset Finance (VP Direct Originations) | Alek + Simon | ↑ | Strongest first-call pull in the log; sourcing/signal pain firsthand; redacted deal + team call promised. [[notes/katharine-rudzitis-2026-06-18]] |
 | 06-19 | Debra Silas | Questor Financial (President) | Simon | 🧊 | Canadian broker; courteous *no* on US product; bank-lender/compliance intel; Canada-native wedge flagged-not-pursued. [[notes/debra-silas-2026-06-19]] |
+| 06-30 | Bo Brauer | Hyland Capital Partners (Partner) | Alek | → | 3rd Stauss channel intro; real unprompted sourcing pain confirmed; $10K/$5K too high for lean 2-person shop, business-partner authority gap, no date set for follow-up. [[notes/bo-brauer-2026-06-30]] |
+| 06-30 | Mike Louwerse | FS Growth (Partner) | Alek | → | LinkedIn cold; venture-EF lessor, referral-sourced, no current sourcing pain; partner-level authority but no trigger; parked for 3-mo nurture. [[notes/mike-louwerse-2026-06-30]] |
+| 06-30 | Zora Mehmi | Mehmi Group (GTM lead, broker, all-Canada) | Alek | → | Independently re-derived the intent-only unbundling (validates tear sheet §1a); real sourcing pain for 5 BDRs; decision-maker ("John") unconfirmed, no next call scheduled. [[notes/zora-mehmi-2026-06-30]] |
 
 ---
 
@@ -72,3 +75,6 @@ Chronological view of every equipment-finance contact — the fortnight's primar
 | 06-18 | Katharine Rudzitis | Empire Asset Finance / equipment finance | Alek + Simon | ↑ | [[notes/katharine-rudzitis-2026-06-18]] |
 | 06-18 | Ayman Al Awadi | CBS / Salesforce→Zoho migration | — | → | [[notes/ayman-alawadhi-2026-06-18]] |
 | 06-19 | Debra Silas | Questor Financial / equipment finance (CA) | Simon | 🧊 | [[notes/debra-silas-2026-06-19]] |
+| 06-30 | Bo Brauer | Hyland Capital Partners / equipment finance | Alek | → | [[notes/bo-brauer-2026-06-30]] — Stauss's 3rd channel intro; real pain, price + authority gap |
+| 06-30 | Mike Louwerse | FS Growth / equipment finance (venture-EF lessor) | Alek | → | [[notes/mike-louwerse-2026-06-30]] — LinkedIn cold; referral-sourced shop, no current pain, parked for nurture |
+| 06-30 | Zora Mehmi | Mehmi Group / equipment finance (broker, all-Canada) | Alek | → | [[notes/zora-mehmi-2026-06-30]] — sourcing-only wedge buyer-validated; decision-maker unconfirmed, no follow-up scheduled |

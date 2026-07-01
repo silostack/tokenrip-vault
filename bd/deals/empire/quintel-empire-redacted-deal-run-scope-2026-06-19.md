@@ -8,9 +8,9 @@ created: 2026-06-19
 related:
   - bd/calls/contacts/katharine-rudzitis.md
   - bd/calls/transcripts/katharine-rudzitis-2026-06-18.md
-  - product/quintel/quintel-lender-build-roadmap-2026-06-10.md
-  - product/quintel/quintel-engine-build-roadmap-2026-06-09.md
-  - product/quintel/quintel-demo-shape-2026-06-08.md
+  - product/quintel/engineering/quintel-lender-build-roadmap-2026-06-10.md
+  - product/quintel/engineering/quintel-engine-build-roadmap-2026-06-09.md
+  - product/quintel/quintel-customer-data-first-prd-2026-06-29.md
 purpose: >
   Self-contained reference for running Empire's redacted prior deal file
   through Quintel's lender surface. Use to compare the workflow + gap list

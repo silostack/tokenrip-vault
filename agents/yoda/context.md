@@ -1,14 +1,14 @@
 # Current Context
 
-*Last updated: 2026-06-21*
+*Last updated: 2026-06-30*
 
 ## The ONE Thing
 
 What matters most right now?
 
-> **No month without revenue — convert the live deals.** The regime flipped from *manufacturing* a buyer to *converting* two live ones. **(1) Stephanie/AICAP came back with redlines — she's in the contract. THE ONE thing: turn the redlines around → a signed / dated next step before momentum cools (Simon's own deal).** **(2) Empire/Katharine — the independent buyer voice the whole EF hypothesis was waiting for finally spoke (zero-CoI direct lender, painkiller pain, asked pricing unprompted). Very close #2: deliver Simon's technical surface — product-surface decision + HubSpot integration answer + redacted-deal packet — so the team call (Rick/Mike) gets scheduled.** Record the magic demo (now shootable) **as the Empire surface** — capped at an afternoon, not a build. Cold-dial grind → light/secondary this week: conversion beats manufacturing when deals sit at the one-yard line.
+> **Run the Stephanie kickoff (Jul 1) and get the escrow FUNDED + delivery schedule locked.** The MVP contract is *created in Upwork but not yet funded* — funding is the conversion that turns it into July's actual revenue event (created ≠ funded ≠ revenue). Until it funds, the pre-kickoff engineering Simon is already doing is speculative work on an uncommitted contract. **Make funding a kickoff outcome, then build.** Two primary threads now: **Stephanie's AICAP build** + **Quintel** (the primary vertical). Quintel v1 = a **customer-data-first intelligence engine** — rank the originator's own prospect list by what their *own* deal history funds (non-commodity by construction; the "sourcing = commodity" worry is resolved — commodity is selling *public* data, the trap Quintel escapes). Same product serves lenders and brokers (different list); sell the *function* (prospect triage / sourcing), not the customer-type. PRD: [[quintel-customer-data-first-prd-2026-06-29]]. Secondary: (1) **Quintel — convert a buyer on the pricing that's landing** ($10k setup + recurring, most not flinching) — move one from interest → *funded*; keep quintel.ai at demo-depth (Trap #4). (2) **Empire re-engagement** — went dark *despite* Simon delivering the surface (buyer-side cooling at the champion→economic-buyer gap, not neglect); one concrete move via Alek, or a clean read on whether Katharine can sell internally. **The magic demo is a Tokenrip *platform* asset (background), correctly behind client work — NOT a Quintel/Empire sales piece.** Watch: don't engineer the AICAP MVP against an unfunded contract, and don't let Quintel platform-build outrun a funded buyer.
 
-## Sequencing (Jun 21 – ~28 — convert the live deals: Stephanie redlines + Empire team call)
+## Sequencing (Jun 28 – ~Jul 5 — fund the Stephanie MVP; shoot the demo; revive Empire)
 
 ### Completed (prior weeks)
 - [x] ~~Simon-owned most-progressable deal manufactured — Stephanie/AICAP, Upwork-sourced~~ (May 26)
@@ -24,12 +24,14 @@ What matters most right now?
 - [x] ~~**FIRST PAID DOLLAR** — Stephanie/AICAP discovery, escrowed~~ (Jun 8) — THE May 31 one thing, closed
 - [x] ~~quintel.ai stood up (demo/portfolio) + Stauss EF brain-dump + 2 calls~~ (Jun 8)
 
-### Active (Jun 21 – ~28)
-- [ ] **Simon (ONE thing)**: **Stephanie — turn the redlines around → signed / dated next step.** She re-engaged Jun 21 with redlines (in the contract); momentum fragile. His own deal. (P0)
-- [ ] **Simon (close #2)**: **Empire/Katharine — deliver the technical surface so the team call (Rick/Mike) gets scheduled:** product-surface decision, HubSpot integration answer (hard requirement), redacted-deal packet (with Alek). The independent buyer voice spoke — convert it. (P0)
-- [ ] **Simon**: **Record the magic demo (now shootable) AS the Empire product surface** — capped at an afternoon; must not expand into a build. (P0)
-- [ ] **Simon**: Keep a **light EF dial cadence** so the engine stays warm — explicitly secondary; conversion over manufacturing this week. (P1)
-- [ ] **Broker-first → lender-first**: Katharine's signal pulls toward lender-first. Serve Empire hard (= lender-first in practice); hold the *generalization* loosely until the team call + a 2nd lender confirm. Don't re-architect the vertical on one call.
+### Active (Jun 28 – ~Jul 5)
+- [ ] **Simon (ONE thing)**: **Stephanie kickoff (Jul 1) → get the escrow FUNDED + delivery schedule locked.** MVP contract created in Upwork but unfunded; funding = July's revenue event + makes the pre-kickoff engineering real not speculative. His own deal. (P0)
+- [ ] **Simon**: **Quintel = primary vertical — sourcing-first.** Shape the product/demo surface around the sourcing functionality buyers ask for; keep quintel.ai at demo-depth, gate deeper build on a *funded* buyer (Trap #4). (P0)
+- [ ] **Alek**: **EF sourcing calls + convert on price** — $10k setup + recurring is landing; move one buyer from "not flinching" → *funding* something. Track funded, not enthusiasm (Empire = live cautionary tale). (P0)
+- [ ] **Simon + Alek**: **Empire re-engagement — one concrete move** (get Rick/Mike on a calendar) OR a clean read on whether Katharine can sell internally. It went dark despite Simon delivering the surface. (P1)
+- [ ] **Watch — building gravity + funding gate**: don't engineer the AICAP MVP against an *unfunded* contract (fund at kickoff, then build); don't let Quintel platform-build outrun a funded buyer.
+- [ ] **Functionality-first, not broker-vs-lender**: the demand is for *sourcing* regardless of who's buying. Focus the wedge on the function drawing interest; hold the customer-segment generalization loosely.
+- [ ] **Magic demo = Tokenrip background** (platform asset, not a deal piece) — ready to shoot, deliberately behind client work.
 - [ ] **Simon**: Keep quintel.ai at **demo-depth** until a buyer pulls it deeper (Trap #4). (P0)
 - [ ] **Simon**: Reach/personal-brand — still **parked** (Goal 10d, P1 background); doesn't jump the queue. When it starts: catalog/build-in-public, measured by inbound not followers. (P1/P2)
 - [ ] **Simon**: Demand-scout (Reddit) — keep listening; engage sharp painkiller posts. (P1)

@@ -17,7 +17,7 @@
 | **LinkedIn warm-pipeline playbook** | [[get-a-sale/linkedin-pipeline]] |
 | **Reddit demand-scout agent spec** | [[get-a-sale/demand-scout-spec]] |
 | **Live opportunities + call notes** | `calls/` (contacts, notes, transcripts, proposals) |
-| **Per-deal living briefings + opportunity clusters** | [[bd/deals/CLAUDE.md]] — e.g. equipment-finance (Stauss-channel + Bevel/DCF/VFI) |
+| **Per-deal living briefings + opportunity clusters** | [[bd/deals/CLAUDE.md]] — e.g. Quintel EF (Empire = live independent lender · Stauss-channel cluster: Bevel/DCF/VFI/NED) |
 | **This-week KPI tracker** | [[weekly-kpi-scorecard]] |
 | **Call insight library** | `learnings/` |
 

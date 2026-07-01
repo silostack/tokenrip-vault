@@ -8,7 +8,7 @@
 Agentic collaboration platform. Gives agent-produced assets persistent identity, structured agent-to-agent messaging, and shared workspaces; hosts artifacts at stable URLs. Five-layer architecture (asset routing → collaboration → deliverable rails → workspaces → agent-native runtime). The moat is the accumulating coordination/work/organizational graph. **Substrate roadmap is paused pending a live customer pulling on it** — the stable-URL artifact primitive is the live piece.
 
 ### [Quintel](quintel/CLAUDE.md) — the first vertical
-Equipment-finance deal-intelligence platform (quintel.ai), **powered by Tokenrip**. Two pieces of one engine: a **deal-sourcing/signal engine** (EDGAR / USAspending / UCC timing signals) + an **underwriting/structuring component**. Thesis: **one engine, three consumers** (interface renders · hands act · deal-graph stores) — **sell the hands, not the dashboard.** First customer: Bevel (clean placement broker). The deal-graph it accumulates *is* Tokenrip substrate — Quintel is how the substrate gets its first dense vertical.
+Equipment-finance deal-intelligence platform (quintel.ai), **powered by Tokenrip**. **Current direction (2026-06-29): a customer-data-first intelligence engine** — a personalized relevance-stream that ranks an equipment-finance originator's own prospect list by what their *own* deal history funds, each item shown with the reason it's relevant. Non-commodity by construction (ranked on the customer's own book, not resold public data); serves both lenders and brokers as one product, pointed at a different list. Architecture = **share the evidence, privatize the score** (owner-tagged evidence; per-customer scoring; structural leak-safety). The per-customer deal-graph it accumulates *is* Tokenrip substrate — Quintel is how the substrate gets its first dense vertical. *(This supersedes the earlier broker-first / "sell the hands" / three-archetype framing — see the [PRD](quintel/quintel-customer-data-first-prd-2026-06-29.md).)*
 
 ## Relationship
 
@@ -27,10 +27,12 @@ Tokenrip is the rendering engine; Quintel is what the market comes for. Both mat
 | Tokenrip product reference | [[tokenrip-context]] · [[tokenrip-positioning]] |
 | Mounted-agent model (imprint/memory/harness) | [[mounted-agent-model]] · [[mounted-agent-synthesis]] |
 | Tokenrip business model + tool layer | [[business-model]] · [[tool-layer]] |
-| Quintel build + GTM roadmap (current, broker-first) | [[quintel-build-and-gtm-roadmap-2026-06-08]] |
-| Quintel build architecture (superseded) | [[equipment-finance-build-architecture-2026-06-02]] |
-| Quintel V1 engineering spec | `quintel/ef-product-spec-2026-06-02/SPEC.md` |
+| **Quintel — canonical PRD (customer-data-first)** | [[quintel-customer-data-first-prd-2026-06-29]] |
+| Quintel current UX framework | [[quintel-ux-framework-2026-07-01]] |
+| Quintel build detail (roadmaps, specs, source queries) | `quintel/engineering/` |
+| Quintel positioning / sell reasoning | [[quintel-positioning-synthesis-2026-06-28]] |
 | Quintel deal/relationship context (in BD) | [[bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing]] |
+| **AICAP** — live FDE credentialing build (client engagement) | [[aicap/CLAUDE]] · [[aicap/aicap-validation-mvp-sow-2026-06-22\|signed SOW]] |
 | Build sequencing across both products | [[10x-roadmap]] |
 
 ## Archived

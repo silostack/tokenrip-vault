@@ -21,7 +21,7 @@ last_contact: 2026-06-18
 **Why she matters to Tokenrip / Quintel:**
 1. **Clean, independent, zero-CoI direct-lender lead** — potentially a **cleaner first lender customer than VFI**. Could let the lender-surface build point at Empire instead of the VFI trade-secret swamp.
 2. **Best-timed buyer in the EF cluster** — 9-month-old, $100M-backed, "technology-driven," ~5 people, and Katharine was hired *specifically to build origination.* No legacy to rip out; real budget; acute pain; a champion whose literal job is the thing Quintel automates.
-3. **Her seat maps to the most-built part of Quintel** — the lender surface ([[product/quintel/quintel-lender-build-roadmap-2026-06-10]]): underwrite against the box → spread → structure → committee package → track to funding.
+3. **Her seat maps to the most-built part of Quintel** — the lender surface ([[product/quintel/engineering/quintel-lender-build-roadmap-2026-06-10]]): underwrite against the box → spread → structure → committee package → track to funding.
 
 ## Call History
 

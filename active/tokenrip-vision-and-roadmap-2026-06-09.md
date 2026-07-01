@@ -293,7 +293,7 @@ Status vocabulary: ✅ built · 🟡 partial · 🔲 stub/scaffold · ❌ missin
 |---|---|---|---|
 | Package publish at stable URL | Lender-tailored package, shareable link, "can't-open-the-file" pain solved | 🟡 package draft screen designed; publishing target should be Tokenrip artifacts — not wired | de-engine `hands/draft`; (intended) Tokenrip artifact API |
 | Email loop (in/out) | Inbound `deals@{account}` live → tray; outbound send/reply (package, stips); reply threads back to deal | 🟡 inbound ingest real per roadmap; outbound ❌ (P3) | de-backend ingest + (missing) outbound |
-| AICAP hospital handoff | Write *into* the hospital system's instance (Cactus XML/API, MD-Staff REST, CAQH routing fallback) | ❌ feasibility-study stage; integration mandatory finding | `active/aicap-discovery/` (vault); no code yet |
+| AICAP hospital handoff | Write *into* the hospital system's instance (Cactus XML/API, MD-Staff REST, CAQH routing fallback) | ❌ feasibility-study stage; integration mandatory finding | `product/aicap/` (vault); build in own repo `~/projects/maxi/aicap/` |
 | Cross-party substrate boundary | Both sides of a handoff eventually *on* the substrate (the network claim) | ❌ one-sided today by design; mechanism only | — |
 
 ### G. The acting agents (the products being sold)
@@ -407,4 +407,4 @@ The substrate roadmap stays **paused pending a live customer pulling on it**. Wh
 
 ---
 
-*Compiled 2026-06-09 from: `pitch/a16z-fused-2026-06-08/` (deck + spine, canon) · `active/tokenrip-context-briefing.md` · `active/tokenrip-shared-context-v2.md` · `product/tokenrip/` (CLAUDE, mounted-agent-model, positioning, business-model, tool-layer, tokenrip-context) · `product/10x-roadmap.md` · `product/quintel/` (CLAUDE, build+GTM roadmap, engine build roadmap, intake design, demo shape, SPEC) · `active/extraction-engine-design-2026-05-30.md` · `active/aicap-discovery/` + `bd/calls/contacts/stephanie-williamson.md` · code survey of both repos.*
+*Compiled 2026-06-09 from: `pitch/a16z-fused-2026-06-08/` (deck + spine, canon) · `active/tokenrip-context-briefing.md` · `active/tokenrip-shared-context-v2.md` · `product/tokenrip/` (CLAUDE, mounted-agent-model, positioning, business-model, tool-layer, tokenrip-context) · `product/10x-roadmap.md` · `product/quintel/` (CLAUDE, build+GTM roadmap, engine build roadmap, intake design, demo shape, SPEC) · `active/extraction-engine-design-2026-05-30.md` · `product/aicap/` + `bd/calls/contacts/stephanie-williamson.md` · code survey of both repos.*
