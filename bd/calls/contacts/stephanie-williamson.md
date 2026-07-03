@@ -2,8 +2,8 @@
 contact: Stephanie Williamson
 company: AICAP Access
 call_type: firm-direct
-status: warm — feasibility delivered; deeply engaged but unconverted; MVP kickoff gated behind her early-stage lead calls; co-pilot fallback killed; stall risk rising
-last_contact: 2026-06-17
+status: CONVERTED — Validation MVP kickoff done 2026-07-01; she committed to fund the Upwork milestone + send sample data; build starting. First committed paid build.
+last_contact: 2026-07-01
 ---
 
 # Stephanie Williamson — AICAP Access
@@ -32,8 +32,18 @@ CPCS-certified credentialing and privileging operations leader with 20+ years in
 - **2026-06-06**: Feasibility study **delivered** — [[product/aicap/deliverables/aicap-integration-discovery-deliverable-2026-06-06]]. Verdict: integration is technically plausible into all three platforms but hospital-gated and per-hospital; the value is the completion engine, route-independent; recommended sequence is MVP demo first, pilot in parallel, then per-hospital deployment.
 - **2026-06-17**: [[bd/calls/transcripts/stephanie-williamson-2026-06-17]] · [[bd/calls/notes/stephanie-williamson-2026-06-17]]
   — firm-direct (discovery debrief). Warm, substantive, **did not convert**. Stephanie **killed the co-pilot / no-integration fallback** (design conflict + "won't be widely accepted") and chose an **integration-required** posture (disqualify hospitals that won't enable it). Gated the MVP build behind her own (early-stage) lead calls and gated config/integration behind a signed, paid pilot. Offered to bring Simon into hospital lead calls. Momentum → flat, stall risk rising.
+- **2026-07-01**: [[bd/calls/transcripts/stephanie-williamson-2026-07-01]] · [[bd/calls/notes/stephanie-williamson-2026-07-01]]
+  — firm-direct (**Validation MVP kickoff — CONVERTED**). Stephanie screen-shared her own Replit prototype (provider flow: CV+ID drop → resolved/unresolved → intelligence layer → guided questions → two-checkbox attestation → flags list → audit trail), which doubles as a concrete spec reference. **Commercially converted:** she said *"I will fund the milestone"* (Upwork) and will upload **de-identified sample applications + sample CV/ID today or tomorrow**; she'll send her GitHub handle for build access. Confirmed **no formal requirements/checklist doc exists — it's "in her head"**; the compliance-checklist + guided-question content will transfer via a **recorded field-by-field walkthrough call** once Simon has samples + a build to walk. She surfaced a load-bearing design constraint: *credentialing collects nothing beyond what's needed — extra data creates a verification obligation.* Momentum → **↑ advancing** (first committed paid build). Not locked on-call: weekly-demo cadence, the 30-day refund clock, and the single baseline pick.
 
 ## Running Intelligence
+
+**✅ UPDATE 2026-07-01 — CONVERTED; how the domain knowledge actually transfers; a hard design constraint**
+- **The deal converted at kickoff.** After weeks flat, Stephanie initiated the commercial close herself: *"I will fund the milestone."* Payment rail = **Upwork milestone** (same platform as the discovery). She'll upload the sample data today/tomorrow and send her GitHub handle. Build = private **GitHub** repo, Simon adds her as collaborator (the AICAP repo, Phase 0 already built).
+- **No requirements document exists — the checklist is "in her head."** This is the single most important process finding. The compliance bar (Joint Commission/CMS/NCQA items) and the guided-question content are **not** a doc she can hand over; they transfer via a **recorded field-by-field walkthrough call** *after* Simon has sample applications and a build to walk through. Her words: *"I'll send you a couple of applications, and once you start building it, we could just walk through each field and I could tell you the different scenarios… you could record it."* → The SOW's "compliance checklist" deliverable is really a working session, not a file.
+- **Design constraint — collect nothing beyond what's required.** *"Generally in credentialing applications we do not ask for anything that is not needed… if it's provided, we're kind of obligated to verify it."* Extra fields create a downstream verification obligation. The MVP must ask for the minimum required set — no "nice to have" fields.
+- **Her Replit prototype is a concrete spec.** She demoed the exact provider flow she wants: CV+optional-ID drop → resolved/unresolved counts → intelligence layer → guided questions (e.g. training-interruption, non-standard-answer explanations) → name-consistency check (app name vs. medical-license name, *without* verification) → employment "rollover" that pre-populates hospital-affiliation fields → CV date-normalization (year-only → month/year) → two-checkbox attestation → items-needing-attention/flags list → audit trail. **Get her Replit export or screenshots** as a build reference.
+- **De-identified data confirmed sufficient** — *"that's not my information… that's fine."* Load-bearing assumption #3 from the gameplan resolved: no real-PII / BAA question for the MVP.
+- **She's relieved to offload the technical setup** — *"Glad you're taking care of all that, because I struggled with how to get [set up]."* Reinforces the premium-for-competence dynamic; delivery credibility is the relationship's load-bearing beam.
 
 **⚠️ UPDATE 2026-06-17 — co-pilot fallback killed; integration-required posture; pipeline softer than logged**
 - **No-integration fallback is dead, by her choice.** She rejected the provider co-pilot because (a) her guided-question *context* won't map onto a hospital's differently-worded fields, and (b) a matching-field experience contradicts her core design (the applicant sees only what they must answer, never the raw form). Posture: **require integration; disqualify hospitals that won't enable it.** "If a hospital really saw the value they'd buy whatever license is needed… they absorb the burden on behalf of the physician. Longer sales cycle is part of the deal." Consequence: every deal now contingent on an integration-capable hospital — narrower funnel, longer cycle, no unblockable floor.
@@ -98,6 +108,10 @@ She built this on Replit by herself. "Burnt out Replit with reiterations." Her o
 
 ## Relationship / Pipeline State
 
+**✅ CONVERTED (2026-07-01).** After three deep calls + a paid discovery with no committed build, the kickoff converted: Stephanie committed to fund the Upwork milestone and send de-identified sample data (today/tomorrow), and granted build access. **Pipeline stage: build starting — first committed paid build in the BD motion.** The "deep advisory engagement without commitment" pattern finally broke. Now the risk shifts from *converting* to *delivering* (weekly-demo cadence + the 30-day refund window not yet locked on-call — do it in the first written follow-up). The rest of this section below predates the conversion; retained for history.
+
+---
+
 **Warm, but the deal moved sideways on Call 2.** Still highly engaged — did her own discovery, killed her own bad option, offered screen-shares and documentation. But the $12K proposal did not get signed: she reopened the foundational integration question and inserted a technical-discovery gate ahead of any build. Relationship temperature ↑; deal-stage →/↓.
 
 **Pipeline stage (updated 2026-06-17)**: **Feasibility delivered; relationship deep; still unconverted.** No signed proposal, no kickoff date, no payment trigger. The $12K Phase 1 is unsigned and in flux (her edits pending); the MVP build is un-started and gated behind her early-stage lead calls; config/integration is gated behind a signed, paid pilot. Co-pilot fallback killed → integration-required posture. **Recurring pattern: deep advisory engagement without commitment** (3rd deep call + paid discovery, still no committed build). The unlock: start the (paid) route-independent MVP now as the demo that wins her pilots, send a discovery-updated proposal proactively (reclaim the document), and get Simon into her lead calls. Momentum → flat, stall risk rising.
@@ -123,6 +137,18 @@ She built this on Replit by herself. "Burnt out Replit with reiterations." Her o
 - **✅ RESOLVED: $12K Phase 1 is superseded, not evaporated.** The discovery's recommended-next-steps deliverable re-baselines the now-larger (integration-mandatory) build with a fresh quote; the stale $12K stays out of the discovery message. Watch that the next-steps section actually does this — **converting the study into a build quote is the real prize, not the $1,000.**
 - Privileging (Phase 2) is still the larger compression opportunity and per Stephanie *easier to build* (more deterministic). Keep staged; don't lump into MVP.
 
+## Load-Bearing Assumptions (ranked — test, don't assume)
+
+Post-kickoff reads driving the build that are **not yet confirmed by hard evidence**. Ranked by how much the plan breaks if wrong. The top item is the #1 thing to watch on next contact.
+
+| Rank | Assumption | fact/inferred + conf. | Cheapest test |
+|------|-----------|----------------------|---------------|
+| 1 | **The milestone actually gets funded** (verbal "I will fund the milestone" → money in Upwork). Building further before it lands repeats the Phase-0 free-work risk. | inferred, high (she initiated it) | Confirm the Upwork milestone is funded before Week-1 work continues — don't extend build on the verbal alone. |
+| 2 | **The field-by-field walkthrough call happens promptly** and actually yields an encodable rubric. Everything past Week 1 depends on it; it's the *only* channel for the checklist + guided-question content (no doc exists). | inferred, med | Schedule the walkthrough the moment samples land + a build exists; if she stalls on it, Weeks 2–3 slip. |
+| 3 | **The sample applications arrive with usable nuance** — real structure + a few flagged/non-standard cases, not just clean happy-path forms. | inferred, med | Inspect the first upload for red-flag / non-standard examples; if thin, ask for 2–3 specific hard cases. |
+| 4 | **One baseline configuration is genuinely enough** for the demo (not yet explicitly picked on-call). | inferred, med | Name the single baseline in the walkthrough; hold second-hospital config as separately-scoped. |
+| 5 | **In-AICAP attestation is the MVP bar** (her prototype captures it; downstream hospital acceptance is a later pilot question). | inferred, high | Confirm in writing she isn't expecting the MVP to prove downstream acceptance. |
+
 ## Open Commitments
 
 | # | Action | Owner | Due | Status |
@@ -143,9 +169,16 @@ She built this on Replit by herself. "Burnt out Replit with reiterations." Her o
 | 14 | Brain-dump Symplr AI-exploration session + screenshots | Stephanie | pending | ✅ Superseded by the Cactus package (#13) — far more useful than a brain-dump; symplr's own import spec + data dictionary |
 | 15 | Deliver the feasibility study (the actual deliverable) | Simon | ~5 business days from kickoff | 🟡 In progress — public-docs read done 2026-06-02 (first-pass draft: [[product/aicap/research/aicap-integration-feasibility-findings-2026-06-02]]); pending Simon's validation + her materials |
 | 16 | System screen-share walkthrough (MD-Staff / Symplr) | Both | Post-discovery | Deferred — Stephanie's offer |
-| 17 | Send discovery-updated proposal (pilot-ready prototype; $1K credited → $11K net; integration as a separate per-hospital deployment) — proactively, before her edits | Simon | 2026-06-20 | 🔴 New — reclaim the document |
-| 18 | Drive MVP kickoff now, decoupled from a pilot, as the demo that cracks her leads | Simon | Next contact | 🔴 New — the conversion move |
-| 19 | Lock lead-call access — name a specific call (Boston Children's / Duke) to sit in on | Simon | Next contact | 🔴 New — path to a pilot |
-| 20 | Send her proposal recommendations/changes | Stephanie | Open | 🟡 Pending |
-| 21 | Schedule lead calls; decide whether to bring Simon in | Stephanie | From 2026-06-17 | 🟡 In motion |
-| 22 | Give the go / "clear check" before config + integration work begins | Stephanie | Gated on a pilot | ⏳ Gated |
+| 17 | Send discovery-updated proposal (pilot-ready prototype; $1K credited → $11K net) | Simon | 2026-06-20 | ✅ Done — became the signed Validation MVP SOW ([[product/aicap/aicap-validation-mvp-sow-2026-06-22]]) |
+| 18 | Drive MVP kickoff now, decoupled from a pilot, as the demo that cracks her leads | Simon | Next contact | ✅ Done — kickoff 2026-07-01, **converted** |
+| 19 | Lock lead-call access — name a specific call (Boston Children's / Duke) to sit in on | Simon | Next contact | ⏸️ Not raised at kickoff — deprioritized (MVP is decoupled from pilots); revisit once the build has something to show |
+| 20 | Send her proposal recommendations/changes | Stephanie | Open | ✅ Resolved — folded into the signed SOW |
+| 21 | Schedule lead calls; decide whether to bring Simon in | Stephanie | From 2026-06-17 | 🟡 Still open — not the current critical path |
+| 22 | Give the go / "clear check" before build begins | Stephanie | — | ✅ Given — "I will fund the milestone" (2026-07-01) |
+| 23 | **Fund the Upwork milestone ($11K net)** | Stephanie | ~2026-07-02 | 🟡 Committed on-call — confirm it lands before Week-1 work continues |
+| 24 | **Upload de-identified sample applications + sample CV + sample government ID** (with a few nuanced/flagged use cases) to Upwork | Stephanie | ~2026-07-02 | 🟡 Committed ("today or tomorrow") |
+| 25 | Send GitHub email/username for repo access | Stephanie | ~2026-07-02 | 🟡 Committed |
+| 26 | Set up the private GitHub repo + add Stephanie as collaborator | Simon | 2026-07-01 | 🔴 New — Simon said "today" |
+| 27 | Begin Week-1 build (autofill on her samples) once inputs land | Simon | On receipt of #24 | 🔴 New |
+| 28 | Schedule the **recorded field-by-field walkthrough call** (transfers the checklist + guided-question content) once samples + a build exist | Both | After Week-1 build stands up | 🔴 New — the mechanism for the compliance rubric |
+| 29 | Lock **weekly-demo cadence + the 30-day refund clock** in the first written follow-up (not set on-call) | Simon | Next contact | 🔴 New — process gap to close |

@@ -6,7 +6,7 @@ tokenrip_id: 5eac860e-a71b-4569-a271-6f1aad2e8e7e
 
 > **Live reference for Alek/Simon on lender calls.** The objection bank, the value language that lands, and the framing decisions — so nobody improvises the hard answers cold. Update after every call: add objections, refine answers, log what closed.
 >
-> **Last updated:** 2026-06-28 (added §1a Hook≠Position≠Price split + spoken-formula rule + negative-signal handling, from `product/quintel/positioning/quintel-positioning-synthesis-2026-06-28.md`. Prior: 2026-06-25 deal-intelligence-engine hero + both-sides shift; seeded from Katharine Rudzitis / Empire 2026-06-18 + Mike Ryan / 36th Street 2026-06-22)
+> **Last updated:** 2026-07-01 (from the Bo Brauer / Hyland + Zora Mehmi calls 2026-06-30 and Alek's live demo mockup: added the on-screen **pre-frame** for "vendors or live deals?" (§1a + §3), the **CRM-replacement** answer (§3), the **augmentation-as-product-copy** framing row (§5), and the **reusable demo artifact** now filling the recurring nothing-to-show gap (§6). Prior: 2026-06-28 §1a Hook≠Position≠Price split + spoken-formula rule + negative-signal handling, from `product/quintel/positioning/quintel-positioning-synthesis-2026-06-28.md`. Earlier: 2026-06-25 deal-intelligence-engine hero + both-sides shift; seeded from Katharine Rudzitis / Empire 2026-06-18 + Mike Ryan / 36th Street 2026-06-22)
 
 ---
 
@@ -52,6 +52,8 @@ The word "signals" was doing three jobs at once. Separate them and the tension d
   - **Default ask = the finished package PDF** (one scrubbable file they already produce) → run **Demo B (Read/Match):** scored read + public-record **enrichment the file didn't have** ("here's what we found on this borrower") + **lender match where their actual funder lands top-3 plus alternatives they didn't try** (net-new, verifiable on a deal they know cold). Light ask, strong for brokers.
   - **Heavier ask = the document set** (the attachments folder, often already bundled) → run **Demo A (Assembly):** extraction-with-provenance → spread → assembled scored package → path-to-fund. Use only when *packaging* is the pain (Scott: "the issue is writing the credit memo"). The magic = provenance on *their* numbers ("$28M EBITDA, pulled from pg 3 of what you sent") — un-pre-bakeable.
   - **Don't ask for the raw blob** (weeks of emails) — too heavy. Sequence: Call 1 = pitch + canned demo on an *anonymized* deal we control → bridge "send one scrubbed closed deal" → Call 2 = run live = the close. Full breakdown: `product/quintel/positioning/quintel-positioning-synthesis-2026-06-28.md` §9.
+
+**Pre-frame the demo BEFORE sharing the screen** *(Bo Brauer, 2026-06-30 — "are those vendors or actual live deals?" cost three back-and-forths mid-demo)*: one line, up front — *"These are businesses that fit your book with public signals they may need financing soon — a smarter cold-call list, not confirmed live deals."* The mockup now carries this frame as **on-screen copy** (surfaced signals read *"a prompt to reach out, not a prediction that a deal will fund"* + *"not in your CRM record"*), so the frame lands before confusion can form. This is the dial-vs-switch discipline made visible: promise the *dial*, public signals are upside, never "live deals."
 
 ### Negative signals ("don't call these") — pressure-tested
 - **Confident negatives = deterministic only** (wrong asset class, too small, out of geography, already financed per a fresh UCC). *Probabilistic* "low-probability" suppression is **more dangerous than a positive signal** — a false negative kills a real $1–100M deal *silently* (nobody calls a suppressed lead, so we never learn). Only suppress what's defensible on a record.
@@ -128,6 +130,10 @@ Lenders are the primary target, but the same engine pitches to **brokers / place
 **Answer:** "Not secret tech — switching cost and compounding intelligence. The system learns *your* box: every signal scored against what you actually funded. Six months in it knows your deals better than any new entrant could, and leaving means restarting that learning. Plus the integration into your stack. The moat is accumulating, customer-specific intelligence — not the algorithm."
 **Why:** A sophisticated buyer doesn't believe in secret-sauce algorithms; switching cost + per-customer learning is credible and true.
 
+### 🟡 "Are those vendors, or actual live deals?" *(demo-comprehension — cost Bo 3 back-and-forths before it landed; pre-empt it)*
+**Answer:** Pre-frame *before* the screen goes up: "These are businesses that fit your book with public signals they may need financing soon — a smarter cold-call list, not confirmed live deals." Let the UI reinforce it: surfaced signals now read *"a prompt to reach out, not a prediction that a deal will fund"* + *"not in your CRM record."*
+**Why:** Every clarifying question is a few seconds of the buyer doubting they understand the product; front-loading the frame (and letting the product repeat it) turns a 3-turn confusion into a non-event. Encodes the dial-vs-switch line — we promise the dial; public signals are upside, never "live deals."
+
 ### 🟢 "Won't the leads dry up / effectiveness drop off over time?" *(handled well — got a "good point")*
 **Answer:** "Two things — companies cycle in and out of your box, and equipment needs are recurring, not one-and-done. New entrants, change-of-control, contract awards, refresh cycles. The pipeline refills." (Bonus: signals compound — the model gets sharper on your box even as raw novelty normalizes.)
 **Deeper answer (the moat beat):** every decision you make re-trains it — fund *or* decline. "Pass, collateral's too specialized" sharpens the box as much as a funded deal does. It doesn't decay over time; it tightens. (This is the homepage "How it learns" section.)
@@ -137,6 +143,10 @@ Lenders are the primary target, but the same engine pitches to **brokers / place
 
 ### 🟢 "What's the setup process / how does it run off our box?" *(handled well)*
 **Answer:** "Backwards equation. We start with your fundbox — what you fund, what makes a good deal, what doesn't — ingest your prior data, then work backwards to the sources and signals that surface those deals. Super tailored; it should operate like another originator on your desk."
+
+### 🟢 "Would Quintel replace our CRM?" *(handled perfectly on Bo's call — instant "got it, yep, great")*
+**Answer:** "AI intelligence on top of your CRM, not a replacement — HubSpot/Salesforce stays; we're the layer that reads and ranks." The product says it too: *"Quintel surfaces and scores — your team works the lead."*
+**Why:** Names the lock-in fear and kills it in one sentence. The augmentation framing — carried in the UI, not just the pitch — is the standing answer to "does it replace our people/tools?" Keep using it verbatim. (Zora/Mehmi independently de-scoped the CRM/underwriting stack for the same reason — brokers who already run HubSpot want the *intent layer*, not a CRM.)
 
 ---
 
@@ -166,10 +176,12 @@ Lenders are the primary target, but the same engine pitches to **brokers / place
 | "Signals vs. intelligence" internal debate | One overloaded word; argued as either/or | **Hook ≠ Position ≠ Price** (§1a): sourcing is the hook, engine-on-their-data is the position, access is the price | The word "signals" was doing three jobs. Split them and the Simon/Alek tension dissolves — lead with sourcing AND position as an engine AND price for access, simultaneously. |
 | Spoken pitch | "Intelligence layer / engine" said abstractly | **Say the formula, never the word "intelligence"** (§1a spoken lines) | The abstract word landed flat ("I don't even know what that means"). The concrete formula ("what closes for you, run against the market") lands. |
 | Tiering axis | Per-signal / signal-count tiers (scarcity) | Tier on **capability module — Sourcing / Underwriting-Packaging / CRM-Intelligence**, never signal count | Per-signal pricing tells the buyer the signal IS the product and it's scarce → re-triggers exclusivity + hit-rate fears. Module axis maps to the engine (source→underwrite→place) + the land-and-expand sequence; keeps the optionality (which-package-not-whether), drops the commodity axis. |
+| Where the positioning discipline lives | In the rep's pitch (remember to say "cold-call list not live deals" / "not a CRM replacement") | As **on-screen product copy** — the disclaimer ("a prompt to reach out, not a prediction it'll fund" / "not in your CRM") and augmentation line ("Quintel surfaces and scores; your team works the lead") live in the UI | A rep forgets, mistimes, or lets the frame surface as the buyer's confusion (Bo's 3-turn "vendors or live deals?"). Product copy fires every time, at the right moment, framed our way — positioning carried by the product beats positioning the rep must remember. |
 
 ---
 
 ## 6. Proof / Asset Gaps (what we keep needing and don't have)
+- **Reusable demo artifact** — ✅ NOW EXISTS: Alek's live mockup — `yourelosingmoney.xyz/quintel-hyland/{rank, timing, underwriting}` (+ a `/lead/…` detail). Closes the single most predictable buyer question ("do you have a demo / an example / a case study?") that landed with **nothing to show on two consecutive firm-direct calls** (Zora/Mehmi 2026-06-30, Alex Khadempour/CICS 2026-05-25). Lead the screen with the **BLIND↔QUINTEL before/after** ("this lead sat at #997 in your export → #103 here") and the **per-item "why"** (scored against their book). Pre-frame it (§1a). The framework behind it: `product/quintel/quintel-ux-framework-2026-07-01.md`.
 - **Backtested sourcing case studies** — ✅ DONE for Empire (4 published: Capital Aggregates, Revere←Eos, NineDot, Tangent — `tokenrip.com/s/525cbde0...`). Real 5–13 month lead times, hidden Tier-1 signals. **Lead the Empire packet with these, not the underwriting mock** — Katharine cares about sourcing. These also spill over to Mike (all in his box) — see §6c.
 - **Board-ready one-pager** for institutional buyers (Mike → BlackRock board): capped downside, design-partner terms, exclusivity option, net-new-deals ROI frame, + a backtested case study in his ticket band. *Recurring blocker — Mike explicitly asked for materials for his board. Only build a 36th-Street-specific backtest after he proves he'll champion upward.*
 - **The deck** Mike was promised (2026-06-24).

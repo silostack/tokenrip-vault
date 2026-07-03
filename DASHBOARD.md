@@ -26,18 +26,16 @@
 - [ ] **EF sourcing calls** — lender/broker list → phones + LinkedIn; quote + close on the pricing that's landing ($10k setup + recurring)
 - [ ] **Convert one buyer from "not flinching" → funding something** — that's the metric, not enthusiasm
 - [ ] **Empire — one concrete re-engagement move** (went dark despite our delivered surface): get Rick/Mike on a calendar, or a clean read on whether Katharine can sell internally
-- [ ] Luai — chase the "send to my team" stall
 
 ---
 
 ## Live Deals & EF Vertical
 
-| Deal / Project | What | Status |
-|---|---|---|
-| **Stephanie / AICAP** (Simon) | Healthcare credentialing. Paid MVP contract created (Upwork); kickoff Jul 1. Fund → build. | **Converting — fund + build (P0)** |
-| **Quintel (EF vertical)** (Simon + Alek) | Primary vertical. **Customer-data-first intelligence engine** — ranks the originator's list by their own book (non-commodity; [[product/quintel/quintel-customer-data-first-prd-2026-06-29\|PRD]]). quintel.ai at demo-depth; pricing landing. | **Active — primary (P0)** |
-| **Empire / Katharine** (Alek + Simon) | Independent zero-CoI lender; surface delivered, then went dark. Re-engage or read the champion. | **Cooled — re-engage (P1)** |
-| **Luai** (Alek) | $5K immigration pilot; with his team. | **Stalled** |
+| Deal / Project                           | What                                                                                                                                                                                                                                           | Status                             |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| **Stephanie / AICAP** (Simon)            | Healthcare credentialing. Paid MVP contract created (Upwork); kickoff Jul 1. Fund → build.                                                                                                                                                     | **Converting — fund + build (P0)** |
+| **Quintel (EF vertical)** (Simon + Alek) | Primary vertical. **Customer-data-first intelligence engine** — ranks the originator's list by their own book (non-commodity; [[product/quintel/quintel-customer-data-first-prd-2026-06-29\|PRD]]). quintel.ai at demo-depth; pricing landing. | **Active — primary (P0)**          |
+| **Empire / Katharine** (Alek + Simon)    | Independent zero-CoI lender; surface delivered, then went dark. Re-engage or read the champion.                                                                                                                                                | **Cooled — re-engage (P1)**        |
 
 ---
 
