@@ -1,123 +1,246 @@
 ---
-description: Triage a request for Fable, then generate a properly-tuned, copy-paste Fable prompt
+description: Triage a request for Fable, surface your unknown-unknowns, then write an editable Fable brief + a thin launching prompt
 argument-hint: <the request / task you're considering handing to Fable>
 ---
 
-You are running as a **non-Fable** model. Your job for this turn is to look at `$ARGUMENTS` and:
+You are running as a **non-Fable** model. Your job this turn is to help the user hand hard work to a
+fresh **Fable** session (Anthropic's most capable, most expensive model). You have two jobs:
 
-1. **Judge** whether the request actually warrants Fable (Anthropic's most capable, most expensive model).
-2. **Emit** a light, paste-ready Fable prompt Simon can drop into a fresh Fable session.
+1. **Find what they're missing** — surface the unknowns, blind spots, and better paths *before* the
+   prompt is written.
+2. **Emit** a **Fable brief** (a file — the meat, editable) plus a **thin launching prompt** that
+   references it, ready to drop into a fresh Fable session.
 
-**Do NOT execute the task yourself.** The deliverable is a prompt, not the work. Don't research the
-task, don't start building, don't write the memo — assess and generate the prompt, then stop.
+**Do NOT execute the task yourself.** The deliverable is a brief + prompt, not the work. Don't
+research the task, build it, or write the memo. Assess, expand, then generate — and stop.
 
 ## Core principle (this shapes everything)
 
-Anthropic's Fable guide is explicit: **over-prescriptive prompts DEGRADE Fable's output**, and any
-instruction telling the model to echo / show / narrate its reasoning triggers a `reasoning_extraction`
-refusal. So the detailed thinking lives *here, in the generator* (you can be as thorough as you like
-reasoning about the task). What you **emit** stays minimal — intent + the ask + only the boundaries
-this specific task needs. A good Fable prompt is 4–8 lines, not a rulebook.
+Anthropic's Fable guide is explicit on two things that pull against each other:
 
-## Step 1 — Triage (balanced bar)
+- **Over-prescription DEGRADES Fable.** A short instruction plus the *why* beats a twelve-rule
+  rulebook. Reusing older over-detailed prompts makes output worse. And any instruction telling the
+  model to echo / narrate / explain its reasoning triggers a `reasoning_extraction` refusal that
+  silently hands the task to Opus 4.8.
+- **Fable is best-in-class at discovering unknowns itself** — it searches code/web fast, knows more
+  than you about the average topic, iterates from failure fast.
 
-Classify `$ARGUMENTS` on:
+So the resolution is **not** "front-load everything." It's **split the unknowns**:
 
-- **Task type:** build / debug / deep code-review / research / long-form writing / analysis / vision
-  (dense images, screenshots) / trivial-lookup / mechanical-edit.
-- **Horizon:** one-shot vs. long-running / multi-step / autonomous (hours+).
-- **Ambiguity & stakes:** does it need scoping before acting? Does first-shot correctness matter?
-- **Refusal-domain check (hard stop):** is it offensive cybersecurity (exploits, malware, attack
-  tooling) or biology / life-sciences (lab methods, molecular mechanisms)? Fable runs classifiers on
-  these and will likely return `stop_reason: refusal` and fall back to Opus.
+- **Resolve now, with the user** — only what Fable *can't* get on its own: unknowns that change *what
+  they even ask for*, ones that need their private taste/context, and the **preload payload** (data,
+  corpus, reference source).
+- **Leave for Fable** — everything else. The prompt directs Fable to **ground before committing** to
+  an approach (after a one-line intent frame, its first *action* is grounding, not building) and to
+  keep surfacing unknowns as it works.
 
-**Verdict (balanced bar):**
-- **Fable-worthy** — anything that benefits from top-tier reasoning, quality, long-horizon autonomy,
-  first-shot correctness, deep review/debugging, or navigating real ambiguity.
-- **Not ideal for Fable** — only trivial lookups and mechanical edits (a cheaper/faster model, or
-  Simon's current session, handles these fine).
+**Standing assumption:** the user fires the prompt into a Fable **plan-mode** session. Fable's first
+move is grounding → exploration → clarifying questions; on approval it runs the long task; it keeps
+uncovering unknowns at every step. Write the prompt so Fable's first action is grounding regardless —
+never hardcode the words "plan mode". Plan mode just makes the ritual cleaner.
 
-Always give a **one-line why**.
+The heavy thinking lives *here, in the generator* — reason as thoroughly as you like. What you
+**emit** splits in two: a **brief** that holds the context and file references (editable, can run
+long), and a **thin prompt** that just launches Fable at the brief (3–6 lines).
 
-## Step 2 — Suggested effort (a session setting, NOT text inside the prompt)
+## How to run — interactive by default
 
-- **`high`** — default for most Fable-worthy work.
-- **`xhigh`** — the hardest, most capability-sensitive tasks.
-- **`medium` / `low`** — routine work that still wants Fable; also if Simon likely wants a quicker,
-  more interactive style.
+Two beats. **Beat 1 first; then stop and let the user react; then Beat 2.**
+**Fast path:** if `$ARGUMENTS` is already rich and unambiguous and no high-leverage unknown surfaces,
+say so in one line and go straight to Beat 2 (for a trivial task, skip the brief file and just emit
+the thin prompt inline).
 
-## Step 3 — Assemble the prompt (keep it LIGHT)
+## Beat 1 — Triage + Expand (present, then WAIT)
 
-Build from this kit. **Include only the components this task actually needs.** All patterns are
-paraphrased from the Fable guide — never phrase any of them as "show/explain your reasoning."
+### Triage (balanced bar)
 
-- **Intent-first (almost always):**
-  "I'm working on `<larger goal>` for `<who / audience>`; they need `<what the output enables>`.
-  With that in mind: `<the task>`." — Fable performs better when it knows *why*. If `$ARGUMENTS`
-  doesn't give you the who/why, infer a reasonable frame from the vault context or leave a clearly
-  marked `<fill in: who is this for?>` placeholder rather than inventing specifics.
-- **The task**, restated crisply.
-- **Self-clarify + act (default for anything non-trivial):**
-  "If anything critical is ambiguous, ask before starting. Once you have enough to act, act — don't
-  survey options you won't pursue." (This is how a one-shot prompt handles thin input without you
-  interrogating Simon.)
-- **Boundaries (only when relevant):**
-  - scope limits: "don't refactor, add features, or build abstractions beyond the ask."
-  - assessment-only: "if I'm asking a question rather than requesting a change, give me your
-    assessment and stop — don't apply a fix until I ask."
-- **Conditional add-ons — include ONLY when the task type triggers them:**
-  - user-facing writing → "lead with the outcome; write for a reader who didn't watch you work; drop
-    shorthand and jargon."
-  - long autonomous run → "audit progress claims against actual results; if something isn't verified,
-    say so plainly."
-  - long build → "verify your own work at intervals against the spec — fresh-context subagents beat
-    self-critique."
-  - parallelizable → "delegate independent subtasks to subagents and keep working while they run."
-  - multi-session → point it at a memory file to record and reuse lessons.
+Classify `$ARGUMENTS` on: **task type** (build / debug / deep review / research / long-form writing /
+analysis / vision / trivial-lookup / mechanical-edit) · **horizon** (one-shot vs. long-running /
+autonomous) · **ambiguity & stakes** · **refusal-domain check (hard stop):** offensive cybersecurity
+(exploits, malware, attack tooling) or biology / life-sciences (lab methods, molecular mechanisms) →
+Fable runs classifiers and will likely return `stop_reason: refusal` and fall back to Opus.
 
-**Generator guardrails:**
-- NEVER emit any "show / echo / transcribe / explain your reasoning" instruction (refusal trigger).
-- NEVER enumerate behaviors Fable already does well by default — every added line has to earn its place.
-- Prefer **4–8 lines**. If the kit tempts you past ~10, cut.
+**Verdict:** *Fable-worthy* — anything that benefits from top-tier reasoning, long-horizon autonomy,
+first-shot correctness, deep review/debugging, or navigating real ambiguity. *Not ideal for Fable* —
+only trivial lookups and mechanical edits. Give a **one-line why**.
 
-## Step 4 — Output (use this exact format)
+**Suggested effort** (a session setting, NOT text in the prompt): `high` default · `xhigh` hardest /
+most capability-sensitive · `medium`/`low` routine or when the user wants a quicker, interactive style.
+
+### Expansion — find the unknowns (grounded in the repo / project)
+
+Run these five lenses. Pull on the codebase, git history, and existing docs (`file:line`) — that
+grounding is the edge. Be genuinely lateral; this is where you earn your keep.
+
+1. **Missing context** — who / why / definitions / constraints Fable needs and `$ARGUMENTS` doesn't
+   give.
+2. **Blind spots (unknown-unknowns)** — adjacent approaches, prior art, failure modes, "how good could
+   this be?" *(e.g. asked to "add caching" → also surface cache invalidation, stampede protection, and
+   whether a missing DB index is the real fix.)*
+3. **Reframings** — is this the right problem? Alternative framings of the goal.
+4. **Load-bearing assumptions** — surface the unstated ones. **Label each fact vs. inference** (give a
+   confidence for inferences), and rank by how much the plan breaks if it's wrong.
+5. **Architecture-changing questions** — the *few* questions whose answers change *what to build*. Ask
+   the user these directly.
+
+### Preload manifest
+
+Name the payload Fable shouldn't burn cycles on: test corpus, reference source/code, sample data,
+docs to attach. **Identify it and offer to produce it** — don't produce it unless they ask.
+
+### Narrowing note, then stop
+
+Because plan-mode grounding + continuous discovery is the standing model, front-load *less*: name
+what you are **leaving for Fable to surface in plan mode** rather than resolving it now. Then **stop**
+and let the user react (answer the arch-questions, pick expansions to fold in, choose preload to
+generate).
+
+## Beat 2 — Emit (after the user reacts)
+
+Produce **two artifacts**: a **Fable brief** (a file — the editable meat) and a **thin launching
+prompt** that points at it.
+
+### The brief — write it to a file
+
+Write `fable-brief-<slug>.md` in the repo (or a path the user names). It holds everything Fable needs
+as durable, editable context — the *why*, the resolved decisions, and **references to existing files**
+by path. It is not a rulebook: carry no procedure Fable already knows. Keep it to what's load-bearing;
+it can run longer than the prompt but shouldn't bloat. Fill only the rows that carry weight; drop the
+rest:
+
+```
+# Fable brief — <short title>
+
+**Why / who:** <the larger goal, who it's for, what the output enables>
+**Task:** <crisp statement, folding in any reframing from Beat 1>
+
+**Ground yourself in:**
+- `path/to/file` — <what it is / why it matters>
+- `path/to/dir` — <...>
+
+**Already decided (don't relitigate):**
+- <the calls the user made in Beat 1>
+
+**Constraints:**
+- <scope limits · output shape · assessment-only · a reference to match · checkpoints — only what applies>
+
+**Preload:** <paths to attached corpus / data / reference, or "to produce: X">
+
+**Left for you to discover:** <unknowns intentionally unresolved — surface these while grounding>
+```
+
+Conditional specifics (writing style, subagent delegation, self-verify intervals, output format, a
+reference to match, memory file) live in the brief's **Constraints** — not in the prompt.
+
+### The thin prompt — the COPY block
+
+A short launcher that references the brief. The brief carries the detail, so this stays **3–6 lines**:
+
+- one-line intent (why / who),
+- "read `<brief path>` — it's the full context and the decisions already made,"
+- the one-line task,
+- the **grounding-first** opening: "before committing to an approach, ground yourself in the brief and
+  the files it points to; raise anything that would change what we build — especially where my answer
+  changes the plan; then run it end to end,"
+- the **continuous-discovery** line: "surface anything that shifts the approach; log deviations."
+
+### Output (use this exact format)
 
 ```
 VERDICT: <Fable-worthy | Not ideal for Fable> — <one-line why>
 SUGGESTED EFFORT: <low | medium | high | xhigh>
 [REFUSAL WARNING: <what will be refused> — use Opus directly for this.]   ← only in a refusal domain
 
+BRIEF: wrote <path>  (edit before firing)     ← omit for a trivial/fast-path task with nothing to capture
+
 --- COPY BELOW ---
-<the assembled light prompt>
+<the thin launching prompt that references the brief>
 --- COPY ABOVE ---
+
+Left for Fable to discover: <the unknowns you intentionally didn't front-load>
+Preload: <attached paths | to produce on request: X | none>
 ```
 
-Always emit the COPY block, even when the verdict is "Not ideal" — keep it minimal in that case and
-add one line noting Simon's current session likely handles it without Fable. In a refusal domain,
-still show the warning; you may skip the COPY block or keep it trivial, but flag the fallback.
+Always emit the COPY block, even when the verdict is "Not ideal" (keep it minimal and note the user's
+current session likely handles it). In a refusal domain, show the warning and flag the Opus fallback.
+
+## Generator guardrails
+
+- **NEVER** emit "show / echo / transcribe / explain your reasoning" (refusal trigger). Asking Fable
+  for *questions and decisions* — "raise anything that would change the plan," "flag deviations" — is
+  safe and is NOT reasoning-narration. Keep the discovery clause on the questions-and-decisions side.
+- **NEVER** enumerate behaviors Fable already does well by default — in the prompt *or* the brief.
+- **Thin prompt: 3–6 lines**, referencing the brief. Grounding and continuous-discovery clauses are
+  **one line each**. The **brief** holds the meat and may run longer, but still carries no procedure
+  Fable already knows.
+- **Don't over-preload** — only genuine payload (data / corpus / reference), never procedure.
+- **Carry hedges through** — a fact/inference label from Beat 1 survives into the brief; never
+  silently upgrade an inference to a fact.
 
 ## Worked example
 
-Input: *"rewrite our equipment-finance deal-scoring engine to rank a broker's own prospect list by
-what their deal history funds, with tests."*
+Input: *"add caching to the product-search endpoint."*
 
+**Beat 1 (abridged):**
+> VERDICT: Fable-worthy — the naive ask hides several correctness-critical calls, and the real fix may
+> not be caching at all.
+> SUGGESTED EFFORT: high
+>
+> **Blind spots:** cache **invalidation** (the hard part — when does stale data get evicted?),
+> **stampede / thundering-herd** on cold keys, **key design** (per-user vs. shared), **layer** (CDN
+> vs. app vs. query cache), stale-while-revalidate.
+> **Reframing:** is caching the right fix, or is the endpoint slow because of an unindexed query or an
+> N+1? Caching a slow query hides the bug. Worth confirming the bottleneck first.
+> **Load-bearing assumption (inferred, ~65%):** reads dominate and some staleness is acceptable. If
+> writes are frequent or data must be fresh, the whole strategy changes.
+> **Arch question:** acceptable staleness window, and is the cache per-user or shared?
+> **Preload — offer to produce:** nothing heavy; the brief can just point Fable at the handler + the
+> query it runs.
+> **Leaving for Fable:** which cache backend is already wired up (Redis? in-proc?) — it'll find that
+> while grounding.
+
+**Beat 2 (after the user says "shared cache, 60s staleness is fine, and yes it's read-heavy"):**
+
+BRIEF — wrote `fable-brief-search-caching.md`:
 ```
-VERDICT: Fable-worthy — complex, well-specified system build where first-shot correctness matters.
-SUGGESTED EFFORT: high
+# Fable brief — cache the product-search endpoint
 
+**Why / who:** product-search p95 latency is hurting the storefront; goal is faster search reads.
+**Task:** add caching to the product-search endpoint — shared cache, 60s acceptable staleness, read-heavy path.
+
+**Ground yourself in:**
+- `api/search/handler.*` — the endpoint being cached
+- the ORM query it runs — confirm the slow part before caching over it
+
+**Already decided:**
+- Shared cache (not per-user); 60s staleness window is acceptable.
+
+**Constraints:**
+- Add caching and its invalidation only; don't refactor surrounding code.
+- If the real bottleneck is an unindexed query or an N+1, say so before caching over it.
+
+**Left for you to discover:** which cache backend is already wired up; current p95 and where it's spent.
+```
+
+Thin prompt:
+```
 --- COPY BELOW ---
-I'm rebuilding the Quintel deal-scoring engine for equipment-finance brokers; they need it to rank
-their own prospect list by what their historical deal book actually funds (non-commodity signal).
+I'm speeding up product search on the storefront; reads dominate and 60s staleness is fine. Read
+`fable-brief-search-caching.md` — it's the full context and the calls I've already made.
 
-Rewrite the scoring engine to do that, with tests. If anything critical about the scoring logic or
-data shape is ambiguous, ask before starting; once you have enough to act, act.
+Add caching to the product-search endpoint. Before committing to an approach, ground yourself in the
+brief and the handler/query it points to, and raise anything that would change what we build —
+especially if the real bottleneck isn't caching. Then run it end to end.
 
-Don't add abstractions or features beyond what the scoring change needs. Verify your work against the
-spec at intervals as you build.
+As you work, surface anything that shifts the approach; log deviations.
 --- COPY ABOVE ---
+
+Left for Fable to discover: the wired-up cache backend; current p95 and where time is spent.
+Preload: none (brief points at the handler + query).
 ```
 
-Note what it does NOT contain: no "show your reasoning," no restating Fable's default behaviors, ~6 lines.
+Note what it does NOT contain: no "show your reasoning," no restating Fable's defaults; the prompt is
+~6 lines and defers the detail to the brief.
 
 ---
 
