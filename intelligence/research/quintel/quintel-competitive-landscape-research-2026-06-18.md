@@ -96,6 +96,16 @@ The competitive field has two open positions — one per buyer type — and one 
 #### NETSOL Check AI — **LOW THREAT** (wrong ICP)
 - Enterprise/up-market (auto OEMs and captives). Launched Oct 2025 with no named production customer. Gated to NETSOL's own platform. Not relevant to Quintel's small/mid-ticket broker ICP.
 
+#### commerciallending.ai — **LOW THREAT** (real but shallow overlap, packaging leg only)
+- **What:** Small-agency-built ops suite (Payoff Agent, Secure Portal, CertDesk, Doc Collection, Packet Builder) for the document-execution phase of a commercial/equipment-finance deal. Owned by Momentum Growth Partners (founder Patrick Hadley — experiential-marketing/lead-gen background, not a funded fintech founder).
+- **Funding:** None disclosed. No customer logos, testimonials, or team-size signals anywhere on the site or the parent company site.
+- **Pricing:** $699/mo (3 seats) + $25/user/mo — below even Tier 4's cheapest sourcing-tool band.
+- **Where it touches Quintel:** Only the *packaging* leg (source → package → underwrite → deal creation). Its Packet Builder "assembles borrower and collateral documentation into organized packages rather than generating original analysis" (verbatim) — completeness-checking and lender-template formatting, explicitly stopping short of structured data extraction, financial spreading, or a 5-C's credit narrative. That analytical depth is exactly what `quintel-deal-packaging-framework-2026-07-05.md` scopes as Quintel's packaging differentiator.
+- **Where it doesn't touch Quintel:** Zero sourcing/prospecting (confirmed on their own equipment-finance-broker page), zero market intelligence/ranking, zero underwriting/credit-decisioning ("stops before credit decision processes").
+- **Sibling product to note:** SalesLeadAgent ($399/mo, same parent company) — generic firmographic outbound prospecting, a live instance of the commodity-prospecting trap the Quintel PRD (§3) explicitly rejects, not a competing mechanism.
+- **Why it matters:** A cheap, real signal that "packaging pain" is monetizable at the shallow end — useful as an objection-handling anchor, and a reminder not to let Quintel's packaging feature regress to "screening depth" (§7 of the packaging framework), where it would look like this tool with a better UI.
+- **Full analysis:** `active/research-commerciallending-ai-2026-07-06.md`
+
 ### Tier 3: Legacy LOS + AI Modules (The "Incumbent Brushoff")
 
 For Quintel's actual buyer (small-ticket independents and small bank desks), the incumbent brushoff is almost entirely hollow today:

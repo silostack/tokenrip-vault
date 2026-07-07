@@ -1,14 +1,20 @@
 # Current Context
 
-*Last updated: 2026-06-30*
+*Last updated: 2026-07-07*
 
 ## The ONE Thing
 
 What matters most right now?
 
-> **Run the Stephanie kickoff (Jul 1) and get the escrow FUNDED + delivery schedule locked.** The MVP contract is *created in Upwork but not yet funded* — funding is the conversion that turns it into July's actual revenue event (created ≠ funded ≠ revenue). Until it funds, the pre-kickoff engineering Simon is already doing is speculative work on an uncommitted contract. **Make funding a kickoff outcome, then build.** Two primary threads now: **Stephanie's AICAP build** + **Quintel** (the primary vertical). Quintel v1 = a **customer-data-first intelligence engine** — rank the originator's own prospect list by what their *own* deal history funds (non-commodity by construction; the "sourcing = commodity" worry is resolved — commodity is selling *public* data, the trap Quintel escapes). Same product serves lenders and brokers (different list); sell the *function* (prospect triage / sourcing), not the customer-type. PRD: [[quintel-customer-data-first-prd-2026-06-29]]. Secondary: (1) **Quintel — convert a buyer on the pricing that's landing** ($10k setup + recurring, most not flinching) — move one from interest → *funded*; keep quintel.ai at demo-depth (Trap #4). (2) **Empire re-engagement** — went dark *despite* Simon delivering the surface (buyer-side cooling at the champion→economic-buyer gap, not neglect); one concrete move via Alek, or a clean read on whether Katharine can sell internally. **The magic demo is a Tokenrip *platform* asset (background), correctly behind client work — NOT a Quintel/Empire sales piece.** Watch: don't engineer the AICAP MVP against an unfunded contract, and don't let Quintel platform-build outrun a funded buyer.
+> **Run Thursday's (2026-07-09) combined Stephanie Week-1 demo + field-by-field walkthrough call, and make sure the compliance rubric actually transfers.** Escrow is funded (full amount paid, confirmed 2026-07-07) and the delivery schedule is locked — the ONE thing from last week is done, in order (fund, then build). Thursday's call is now the highest-stakes single event: it's both the demo AND the only channel for the compliance checklist / guided-question content (no requirements doc exists — it's "in her head," per the contact doc's load-bearing assumption #2). If time-constrained live, the rubric extraction outranks demo polish — the demo can iterate, the walkthrough content can't be recovered if missed.
+>
+> **Empire: killed (2026-07-07).** Katharine went fully dark despite Alek trying several times; Simon's decision — kill it, Alek runs a check-in follow-up in ~3 months (~Oct 2026), no chase until then.
+>
+> **Quintel's demo-depth gate is confirmed dropped, correctly.** Build follows the customer-data-first + sourcing PRD (7/1), driven by the pattern across recent calls generally — not specifically by Stauss. If Stauss goes nowhere, direction doesn't change. (A CoI/dogfooding concern was raised and retired same-session — see persona.md rule 4: don't flag risks more than one step ahead of current execution.)
+>
+> **Tokenrip platform work (magic demo, substrate) is validated-deprioritized, not a new avoidance instance** — it's a platform asset, not a deal piece, and doesn't serve either live build. Don't re-flag this one; the 7/1 correction already settled it.
 
-## Sequencing (Jun 28 – ~Jul 5 — fund the Stephanie MVP; shoot the demo; revive Empire)
+## Sequencing (Jul 7 – ~Jul 14 — Stephanie Week-1 demo/walkthrough; resolve Empire; interrogate the Quintel-Stauss plan)
 
 ### Completed (prior weeks)
 - [x] ~~Simon-owned most-progressable deal manufactured — Stephanie/AICAP, Upwork-sourced~~ (May 26)
@@ -23,14 +29,14 @@ What matters most right now?
 - [x] ~~Paul (DECA Dental) call — non-fit (RAG-grade)~~
 - [x] ~~**FIRST PAID DOLLAR** — Stephanie/AICAP discovery, escrowed~~ (Jun 8) — THE May 31 one thing, closed
 - [x] ~~quintel.ai stood up (demo/portfolio) + Stauss EF brain-dump + 2 calls~~ (Jun 8)
+- [x] ~~**Stephanie MVP escrow FUNDED (full amount) + delivery schedule locked**~~ (Jul 7) — THE Jun 30 one thing, closed
 
-### Active (Jun 28 – ~Jul 5)
-- [ ] **Simon (ONE thing)**: **Stephanie kickoff (Jul 1) → get the escrow FUNDED + delivery schedule locked.** MVP contract created in Upwork but unfunded; funding = July's revenue event + makes the pre-kickoff engineering real not speculative. His own deal. (P0)
-- [ ] **Simon**: **Quintel = primary vertical — sourcing-first.** Shape the product/demo surface around the sourcing functionality buyers ask for; keep quintel.ai at demo-depth, gate deeper build on a *funded* buyer (Trap #4). (P0)
-- [ ] **Alek**: **EF sourcing calls + convert on price** — $10k setup + recurring is landing; move one buyer from "not flinching" → *funding* something. Track funded, not enthusiasm (Empire = live cautionary tale). (P0)
-- [ ] **Simon + Alek**: **Empire re-engagement — one concrete move** (get Rick/Mike on a calendar) OR a clean read on whether Katharine can sell internally. It went dark despite Simon delivering the surface. (P1)
-- [ ] **Watch — building gravity + funding gate**: don't engineer the AICAP MVP against an *unfunded* contract (fund at kickoff, then build); don't let Quintel platform-build outrun a funded buyer.
-- [ ] **Functionality-first, not broker-vs-lender**: the demand is for *sourcing* regardless of who's buying. Focus the wedge on the function drawing interest; hold the customer-segment generalization loosely.
+### Active (Jul 7 – ~Jul 14)
+- [ ] **Simon (ONE thing)**: **Thursday 2026-07-09 — Stephanie Week-1 demo + field-by-field walkthrough call.** Combined into one call; the walkthrough is the only channel for the compliance rubric. If time-constrained, rubric extraction outranks demo polish. (P0)
+- [x] ~~Empire — resolve, don't backburner~~ — **Killed 2026-07-07.** Alek: 3-month check-in (~Oct 2026), no chase until then.
+- [x] ~~Confirm which spec Quintel is being built to~~ — customer-data-first + sourcing (7/1 PRD), set by the pattern across calls generally, not Stauss. Resolved same-session (Jul 7).
+- [ ] **Alek**: **EF sourcing calls + convert on price** — $10k setup + recurring is landing; move one buyer from "not flinching" → *funding* something. Track funded, not enthusiasm (Empire = the live cautionary tale). (P1)
+- [ ] **Watch — Tokenrip backburner is fine, don't re-litigate it**: validated 7/1 — the magic demo is a platform asset, not a deal piece; two live builds already satisfy the substrate-yield doctrine.
 - [ ] **Magic demo = Tokenrip background** (platform asset, not a deal piece) — ready to shoot, deliberately behind client work.
 - [ ] **Simon**: Keep quintel.ai at **demo-depth** until a buyer pulls it deeper (Trap #4). (P0)
 - [ ] **Simon**: Reach/personal-brand — still **parked** (Goal 10d, P1 background); doesn't jump the queue. When it starts: catalog/build-in-public, measured by inbound not followers. (P1/P2)

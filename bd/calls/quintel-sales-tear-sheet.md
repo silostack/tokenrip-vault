@@ -30,11 +30,11 @@ The strongest positioning line came from a buyer, not from us. Use it:
 
 The word "signals" was doing three jobs at once. Separate them and the tension dissolves — full reasoning in `product/quintel/positioning/quintel-positioning-synthesis-2026-06-28.md`.
 
-| Job | What it is | Right answer |
-|---|---|---|
-| **Hook** | What opens the call | **Sourcing / "surface deals"** — it's what they lean in on. Keep leading with it. |
-| **Position** | What the product *is* | **An engine that runs on their data** — not a signal feed (a feed is a commodity news ticker). |
-| **Price basis** | What the invoice is denominated in | **Access / capability tier** — never per-signal. |
+| Job             | What it is                         | Right answer                                                                                   |
+| --------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Hook**        | What opens the call                | **Sourcing / "surface deals"** — it's what they lean in on. Keep leading with it.              |
+| **Position**    | What the product *is*              | **An engine that runs on their data** — not a signal feed (a feed is a commodity news ticker). |
+| **Price basis** | What the invoice is denominated in | **Access / capability tier** — never per-signal.                                               |
 
 **Open with the sourcing hook, deliver an engine that runs on their data, price it for access.** Not in conflict.
 
