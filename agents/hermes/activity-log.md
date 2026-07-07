@@ -5,6 +5,8 @@ Newest entries at the top.
 
 ---
 
+- 2026-07-07: Morning brief published — https://tokenrip.com/s/5e2bfb4b-b503-4538-b14e-1c486fc74451
+
 ## 2026-07-07 — Operator mandate established
 
 Foundation work landed: vault-git-pull SSH fix, `CHARTER.md`, this folder, and the
