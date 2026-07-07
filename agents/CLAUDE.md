@@ -20,6 +20,15 @@ System agents follow the **bootloader pattern**: a thin local command (`.claude/
 | **engagement-agent/** | Outreach + CRM | Manages agent-to-agent outreach lifecycle: send pitch emails, ingest responses, classify leads, draft follow-ups, send approved responses. Four modes: `ingest`, `draft`, `outreach`, `send`. Backed by two Tokenrip collections + AgentMail. |
 | **blog-agent/** | Content pipeline | Produces Tokenrip blog posts: research → write → gate → edit → humanize → publish. Single linear pipeline with automated quality gates and human checkpoints. Publishes directly to Tokenrip. *(The "Intelligence Engine" motion this pipeline served was archived 2026-06-04; the pipeline itself still functions.)* |
 
+## External Agents
+
+Unlike the above, this agent runs as its own process (not invoked via Claude Code) —
+it's included here only because it writes into this vault.
+
+| Agent | Role | Description |
+|-------|------|-------------|
+| **hermes/** | Tokenrip operator | Autonomous distribution-planning, outreach-drafting, and code-pickup for Tokenrip, run by the separate Hermes agent process on this VPS. Read-only elsewhere in this vault — this is its one write exception (activity log + Tokenrip artifact mirror). Full mandate: `/home/dbot/projects/hermes-vault/CHARTER.md`. |
+
 ### Bootloader Pattern
 
 ```
