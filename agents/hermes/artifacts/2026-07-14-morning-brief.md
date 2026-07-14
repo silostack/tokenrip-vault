@@ -1,6 +1,6 @@
-> Canonical: https://tokenrip.com/s/fe7e5b47-127e-43c0-8d0a-1d7ec9b921eb
+> Canonical: https://tokenrip.com/s/f7931c7e-7041-4558-8f42-85ca368748ca
 
-# Morning Brief — 2026-07-13
+# Morning Brief — 2026-07-14
 
 Nothing new since yesterday's brief. Distribution state unchanged since the 2026-07-10 run — same 5 drafted items awaiting your promotion to "queued", same 3 Tier B execution items (Smithery/mcp.so, awesome-list PRs, GitHub topics audit) sitting on the backlog.
 
@@ -16,4 +16,4 @@ Nothing new since yesterday's brief. Distribution state unchanged since the 2026
 
 ## Flags / needs your decision
 
-- ONE-thing reminder: Distribution is P1 background — not this week. Thursday's AICAP demo + walkthrough remains the priority. No drafting churn invented for this run.
+- ONE-thing reminder: Distribution is P1 background — not this week. Quintel v1 building on customer-data-first PRD (Simon, primary P0) + EF sourcing for Alek remains the priority. No drafting churn invented for this run.
