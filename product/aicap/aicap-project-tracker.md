@@ -3,8 +3,8 @@ type: project-tracker
 project: AICAP Validation MVP
 client: AICAP — Stephanie Williamson
 owner: Simon Pettibone
-status: active — Week 1 (knowledge extraction done; architecture session next)
-last_updated: 2026-07-02
+status: active — Week-1 demo delivered (2026-07-09); Week-2 compliance calibration next
+last_updated: 2026-07-09
 canonical:
   scope: product/aicap/aicap-validation-mvp-sow-2026-06-22.md
   build_plan: ~/projects/maxi/aicap/docs/aicap-mvp-gameplan.md
@@ -23,12 +23,14 @@ canonical:
 
 | | |
 |---|---|
-| **Phase** | Phase 0 (foundation + de-risk) ✅ complete · **Week 1 starting** (gated on inputs) |
-| **Momentum** | ↑ Converted at kickoff (2026-07-01) — first committed paid build |
-| **Commercial** | $11K net — ✅ **FULL PAYMENT LANDED 2026-07-02.** (Note: full payment, not a milestone slice — confirm the Upwork arrangement matches.) |
-| **30-day refund clock** | ~**2026-07-31** (30 days from kickoff). *Confirm whether the clock starts at kickoff or at funding.* |
-| **Next milestone** | Week 1 — autofill live · target demo **Fri 2026-07-11**. First step = the credentialing knowledge extraction (below), feeding Simon's repo architecture session. |
-| **Blocking right now** | Only **government-ID samples** (Simon sourcing from the web) + **the walkthrough** (for Week-2 rules). Sample apps + CVs received; payment landed; GitHub access shared. |
+| **Phase** | Phase 0 ✅ · **end-to-end engine built + demoed** (Week-1 demo 2026-07-09) · **Week-2 compliance calibration** active |
+| **Momentum** | ↑↑ Demo landed on the full working journey; app handed to Stephanie (login + issue-filing) |
+| **Commercial** | $11K net — ✅ **paid in full 2026-07-02** (escrow funded 2026-07-07 per DASHBOARD) |
+| **30-day refund clock** | ~**2026-07-31** (30 days from kickoff). Weekly demos fall inside it — visible progress each week is the safety mechanism. |
+| **Next milestone** | **Week-2 compliance calibration** — encode Stephanie's baseline+config compliance model (conditional document requirements, document-property checks, hard/soft stops), seeded by her worked examples. |
+| **Blocking right now** | **Stephanie's compliance examples** (her homework — seeds the Week-2 architecture). Government-ID sourced; samples/CVs received; payment landed; app + repo access shared. |
+
+> **Note on the milestone table below:** the repo built the full end-to-end journey (all five surfaces + admin + PDFs), verified against a running system 2026-07-03 and demoed 2026-07-09. The remaining weeks are **calibration to AICAP's real content** (compliance rules, guided-question wording), not net-new plumbing — the "hard 20%." Build state is authoritative in the repo (`docs/STATUS.md`).
 
 ---
 
@@ -36,11 +38,11 @@ canonical:
 
 Do these roughly in order:
 
-1. **Run the architecture-design session in the AICAP repo** — encode the rules + data model using `knowledge/` (start from the gap table at the end of `knowledge/rules-catalog.md`). This is tracker item **1b** and gates the autofill build.
-2. **Source a sample government ID** (DL or passport) from the web so autofill can be tested on the CV **and** ID inputs.
-3. **Build Week-1 autofill** (CV + ID → extract → persist → pre-fill) once the design lands — target demo **Fri 2026-07-11** (item 1c).
-4. **Send Stephanie the written follow-up** — lock the weekly-demo cadence + 30-day refund-clock start; **request a CV with a disclosed adverse event** (to demo the flag path — all current samples are clean) + her Replit export. Details in [[aicap-project-notes]] → "Items to raise with Stephanie."
-5. **Schedule the field-by-field walkthrough** once autofill stands up — agenda ready at `knowledge/walkthrough-questions.md`.
+1. **Design the Week-2 compliance architecture** — encode the baseline+config model Stephanie described: conditional document requirements (answer → required doc), document-property validation (present / correct type-version / required stamp), hard vs soft stops. Baseline handling first; keep it extensible. (Findings → [[aicap-project-notes]] → "The compliance model.")
+2. **Get Stephanie's compliance examples** (her homework) — the concrete cases that seed the architecture. Chase if they don't arrive.
+3. **Triage her GitHub issues** as she files them (app is public; she has a login).
+4. **Send the written follow-up** — lock the weekly-demo cadence + 30-day refund-clock start (still open). Ask for her Replit export.
+5. **Continue iterative rubric capture** — the field-by-field content now transfers via her examples + working sessions, not one recorded call. Agenda: [[walkthrough-questions]].
 
 ---
 
@@ -48,18 +50,18 @@ Do these roughly in order:
 
 Target demo dates are **anchored to input arrival** — if samples land late, every row shifts. The SOW allows moving the schedule either direction. Legend: ✅ done · 🟡 in progress · ⬜ todo · ⛔ out of scope.
 
-| Wk     | Deliverable                                                                                                       | Target demo     | Status                  |
+| Wk     | Deliverable                                                                                                       | Demo            | Status                  |
 | ------ | ----------------------------------------------------------------------------------------------------------------- | --------------- | ----------------------- |
 | 0      | Kickoff / scoping — inputs, baseline, checklist scope locked                                                      | —               | ✅ 2026-07-01            |
 | **P0** | Stack + `@aicap/core` + backend/frontend foundation + risk spikes (vision extraction; suspend/resume)             | —               | ✅ complete (2026-06-26) |
 | 1a     | **Credentialing knowledge extraction** — field superset + rules catalog from the 3 samples + 4 CVs (`knowledge/`) | —               | ✅ 2026-07-02            |
-| 1b     | **Architecture-design session** (in the AICAP repo) — encode rules + data model, informed by `knowledge/`         | —               | ⬜ Simon, next           |
-| 1c     | **Application autofill** live on sample inputs (CV, ID, extracted+entered numbers); context expansion begins      | Fri 2026-07-11  | ⬜ after 1b              |
-| 2      | **Automated compliance review** calibrated to the checklist; config in place                                      | Fri 2026-07-18  | ⬜ gated on walkthrough  |
-| 3      | **Provider review/confirm + guided intake** live                                                                  | Fri 2026-07-25  | ⬜                       |
-| 4      | **Two PDFs** (completed app + audit trail) generated + emailed on submission; attestation capture                 | Fri 2026-08-01  | ⬜                       |
-| 5      | **Admin operability** (list / status / errors / counts) + full sample-set run                                     | Fri 2026-08-08  | ⬜                       |
-| 6      | Iteration tail / edge cases                                                                                       | Fri 2026-08-15  | ⬜                       |
+| 1b     | **Core rule model + data model** (`@aicap/core` decision engine) — encode rules + data model                      | —               | ✅ 2026-07-02            |
+| 1c     | **Application autofill** live on sample inputs (CV + ID); context expansion                                       | **2026-07-09**  | ✅ built + demoed        |
+| 2      | **Automated compliance review** — engine built; **calibrating to Stephanie's real rules** (baseline+config, document requirements) | ~Fri 2026-07-18 | 🟡 active — Week 2       |
+| 3      | **Provider review/confirm + guided intake** — built (provisional content); calibrating wording                   | —               | ✅ built · 🟡 calibrate  |
+| 4      | **Two PDFs** (completed app + audit trail) + attestation capture                                                  | —               | ✅ built                 |
+| 5      | **Admin operability** (list / status / errors / counts) + full sample-set run                                    | —               | ✅ built                 |
+| 6      | Iteration tail / edge cases                                                                                       | —               | ⬜                       |
 | 7      | **Acceptance + handoff**                                                                                          | ~Fri 2026-08-22 | ⬜                       |
 
 ---
@@ -70,12 +72,13 @@ Target demo dates are **anchored to input arrival** — if samples land late, ev
 
 | Input | Needed for | Delivery mechanism | Committed | Status |
 |-------|-----------|--------------------|-----------|--------|
-| De-identified sample applications (×3, different platforms) + sample CVs (×4) | **Week 1** | Uploaded | 2026-07-02 | ✅ received → `data/`; extracted into `knowledge/` |
-| Sample **government ID** (DL or passport) | Week 1 | Simon sources from the web | — | 🟡 Simon to add |
-| Compliance checklist (Joint Commission / CMS / NCQA items) | Week 2 | **Field-by-field walkthrough call** (recorded) | after build stands up | 🟡 mechanism set; agenda drafted → `knowledge/walkthrough-questions.md` |
-| Baseline configuration (which form; forms/logo/questions/state/history/affiliation/malpractice/distance) | Week 2 | Walkthrough call + sample forms | after Week-1 | 🟡 baseline form still to pick (walkthrough Q1) |
-| Guided-question content (prompts + resource pointers) | Week 3 | Walkthrough call | after Week-1 | 🟡 |
+| De-identified sample applications (×3, different platforms) + sample CVs (×4) | Week 1 | Uploaded | 2026-07-02 | ✅ received → `data/`; extracted into `knowledge/` |
+| Sample **government ID** (DL or passport) | Week 1 | Simon sourced from the web | 2026-07-09 | ✅ sourced; ID extraction demoed |
+| **Compliance rules** (Joint Commission / CMS / NCQA items) | **Week 2** | **Iterative** — model brain-dump (done 07-09) → Stephanie's worked examples (homework) → build | in progress | 🟡 **her examples pending** — the live blocker |
+| Baseline configuration | Week 2 | We set a baseline; Stephanie confirms/adjusts | client checklist sent 07-08 | 🟡 baseline built as superset+config (no single form to "pick") |
+| Guided-question content (prompts + resource pointers) | later | Working sessions + her examples | after Week-2 | 🟡 draft in place |
 | GitHub repo access | Setup | Access shared with Stephanie | 2026-07-02 | ✅ shared |
+| App access (public URL + login) + issue-filing | Handover | Given + shown how to file issues | 2026-07-09 | ✅ done |
 | Milestone funding ($11K net) | Kickoff/start | Upwork | 2026-07-02 | ✅ **paid in full** |
 
 ---
@@ -85,15 +88,13 @@ Target demo dates are **anchored to input arrival** — if samples land late, ev
 ### Ours (Simon / Tokenrip)
 | # | Action | Due | Status |
 |---|--------|-----|--------|
-| 1 | Set up private GitHub repo + share access with Stephanie | 2026-07-01 | ✅ shared 2026-07-02 |
-| 2 | Confirm payment landed | 07-02 | ✅ paid in full |
-| 3 | **Credentialing knowledge extraction** (`knowledge/`) | 2026-07-02 | ✅ done |
-| 4 | Source a sample government ID (DL/passport) from the web | before autofill | ⬜ |
-| 5 | **Architecture-design session** in the AICAP repo (encode rules + data model from `knowledge/`) | next | ⬜ |
-| 6 | Build Week-1 autofill after the design session | ~Fri 07-11 | ⬜ |
-| 7 | First written follow-up: **lock weekly-demo cadence + name the 30-day refund clock start** | next contact | ⬜ |
-| 8 | Schedule the recorded field-by-field walkthrough (agenda ready → `knowledge/walkthrough-questions.md`) | after autofill stands up | ⬜ |
-| 9 | Ask Stephanie for her Replit export/screenshots as a build reference | next contact | ⬜ |
+| 1 | GitHub repo + knowledge extraction + core rule model + autofill | — | ✅ done (through 07-09 demo) |
+| 2 | Source a sample government ID | before autofill | ✅ sourced |
+| 3 | Make app public + give Stephanie a login + show her how to file GitHub issues | 07-09 | ✅ done |
+| 4 | **Design the Week-2 compliance architecture** (baseline+config: conditional document requirements, document-property checks, hard/soft stops) | Week 2 | 🟡 active |
+| 5 | Triage Stephanie's GitHub issues as she files them | ongoing | 🟡 |
+| 6 | First written follow-up: **lock weekly-demo cadence + name the 30-day refund clock start** | next contact | ⬜ |
+| 7 | Ask Stephanie for her Replit export/screenshots | next contact | ⬜ |
 
 ### Theirs (Stephanie / AICAP)
 | # | Action | Due | Status |
@@ -101,7 +102,8 @@ Target demo dates are **anchored to input arrival** — if samples land late, ev
 | 1 | Fund the engagement ($11K net) | 2026-07-02 | ✅ paid in full |
 | 2 | Upload de-identified samples + CVs | 2026-07-02 | ✅ received (3 apps + 4 CVs) |
 | 3 | Send GitHub email/username | 2026-07-02 | ✅ done (access shared) |
-| 4 | Do the field-by-field walkthrough (once a build exists) | after Week-1 | ⬜ |
+| 4 | **Produce a handful of concrete compliance examples** (seeds the Week-2 architecture) | Week 2 | 🟡 homework — the live blocker |
+| 5 | File GitHub issues / bugs as she uses the app | ongoing | 🟡 |
 
 ---
 
@@ -109,11 +111,9 @@ Target demo dates are **anchored to input arrival** — if samples land late, ev
 
 | Blocker                              | Impact                                                            | Owner to clear             | Since      |
 | ------------------------------------ | ----------------------------------------------------------------- | -------------------------- | ---------- |
-| Sample government ID not yet in hand | Autofill covers CV **and** ID; ID extraction untested without one | Simon (source from web) | 2026-07-02 |
-| Baseline form not yet picked | Week-2 config needs one chosen form (S1 vs S3) | Stephanie (walkthrough Q1) | 2026-07-02 |
-| No adverse-event CV sample | Can't demo the red-flag / disclosure path (all 4 samples are clean) | Stephanie (or Simon constructs) | 2026-07-02 |
+| Stephanie's compliance examples not yet in hand | Seeds the Week-2 compliance architecture; without them, calibration runs on inference | Stephanie (homework) | 2026-07-09 |
 
-*(Cleared 2026-07-02: sample apps + CVs received; payment landed in full; GitHub access shared.)*
+*(Cleared 2026-07-09: government ID sourced; adverse-event path solved with synthetic CVs; baseline-form blocker dissolved by the superset+config reframe.)*
 
 ---
 
@@ -128,6 +128,9 @@ Target demo dates are **anchored to input arrival** — if samples land late, ev
 | 2026-07-01 | Compliance-checklist + guided-question content transfer via a **recorded field-by-field walkthrough**, not a document (none exists) | Stephanie's proposed mechanism; most efficient given knowledge lives with her |
 | 2026-07-02 | Week-1 opens with a **credentialing knowledge extraction** (`knowledge/`) — field superset + rules catalog — feeding a **separate architecture-design session** in the repo, *before* wiring autofill | Simon's call; encode-the-rules design is his, and it needs the domain mapped first |
 | 2026-07-02 | Extraction is a **superset across all three sample forms** (+ CVs), architecture-neutral; per-hospital "what to ask" is config over the superset | Samples span 3 different platforms; matches Stephanie's minimalism (superset = knowledge, config = what's shown) |
+| 2026-07-08 | **Reframe: "here's the baseline we built, confirm/adjust"** replaces "which form do you pick" — a sensible baseline superset + per-hospital config, our judgment, she course-corrects | Lower cognitive load for her; stronger FDE posture; client checklist + walkthrough agenda restructured to match |
+| 2026-07-09 | **App made publicly available; Stephanie given a login + shown how to file GitHub issues** | Co-builder handover — she surfaces bugs/spec gaps directly as she uses it |
+| 2026-07-09 | **Compliance = baseline + configuration, via conditional document requirements** (answer → required doc → checked against baseline/hospital rules; e.g. a compliance-body stamp required at some hospitals, not others). Rubric transfers **iteratively** (brain-dump → her examples → build), not one recorded walkthrough | Stephanie's brain-dump at the demo; matches how the knowledge actually surfaces |
 
 ---
 
@@ -149,7 +152,7 @@ Full ranked table lives in the contact doc → [[../bd/calls/contacts/stephanie-
 | 2026-05-30 | Clarification | Reopened integration scope; feasibility gate inserted |
 | 2026-06-17 | Discovery debrief | Killed co-pilot fallback; integration-required posture |
 | 2026-07-01 | **Kickoff** | **Converted** — milestone + samples + access committed; build starting |
-| 2026-07-11 | Week 1 demo (target) | — |
+| 2026-07-09 | **Week-1 demo** | Walked the full working journey; app handed over (login + issue-filing); Stephanie brain-dumped the compliance model + took homework (compliance examples); forwarded an external validation interview (Dean'Na/Care to Care). *Not recorded.* |
 
 *(Full transcripts + notes under `bd/calls/`.)*
 
@@ -184,3 +187,6 @@ Chronological record of what's been done. Newest at the bottom.
 | 2026-07-02 | **Full payment landed.** Sample applications (×3 platforms) + CVs (×4 specialties) received into `data/`. **GitHub access shared** with Stephanie. |
 | 2026-07-02 | **Week-1a: credentialing knowledge extraction** produced → `knowledge/` (README, field-dictionary `.md`/`.yaml`, rules-catalog `.md`/`.yaml`, source-map & nuance cases, walkthrough agenda). Superset of fields + ~78 typed rules across the 3 forms + 4 CVs. |
 | 2026-07-02 | **Project notes** doc created (`aicap-project-notes.md`); tracker updated with next-steps + this log. |
+| 2026-07-02 → 07-03 | **End-to-end journey built + hardened** in the repo (all 5 surfaces + admin + two PDFs; compliance spine + adverse fixtures; extraction eval 10/10). Verified against a running system 2026-07-03 (`docs/STATUS.md`). |
+| 2026-07-08 | `management/` folder created; demo run-sheet, client compliance checklist, and walkthrough agenda authored/reframed. |
+| 2026-07-09 | **Week-1 demo delivered.** App made public + login given to Stephanie + issue-filing shown. Compliance model brain-dumped (baseline+config, conditional document requirements) + her homework set. External validation interview (Dean'Na/Care to Care) captured → [[aicap-project-notes]]. |

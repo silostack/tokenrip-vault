@@ -1,20 +1,24 @@
 # Current Context
 
-*Last updated: 2026-07-07*
+*Last updated: 2026-07-13*
 
 ## The ONE Thing
 
 What matters most right now?
 
-> **Run Thursday's (2026-07-09) combined Stephanie Week-1 demo + field-by-field walkthrough call, and make sure the compliance rubric actually transfers.** Escrow is funded (full amount paid, confirmed 2026-07-07) and the delivery schedule is locked — the ONE thing from last week is done, in order (fund, then build). Thursday's call is now the highest-stakes single event: it's both the demo AND the only channel for the compliance checklist / guided-question content (no requirements doc exists — it's "in her head," per the contact doc's load-bearing assumption #2). If time-constrained live, the rubric extraction outranks demo polish — the demo can iterate, the walkthrough content can't be recovered if missed.
+> **Max Sarango's Quintel demo (2026-07-14) — get a real next step, not just enthusiasm.** Max (Providence Capital Funding) is a second independent EF buyer voice, sourced via Alek's LinkedIn outreach (not Stauss-channeled). He asked to sample the product against a real lead list and proposed his own team→company adoption path — stated intent, unconfirmed. Simon spent most of this week making Quintel functional on real (not synthetic) data specifically for this call. **Success for the call itself is realistically "he's impressed enough to run the list"** — the actual test (does he convert a deal) lands ~1 week out. Simon named this calibration himself, unprompted — don't let "he loved it" get counted as more than that when reviewing next session.
 >
-> **Empire: killed (2026-07-07).** Katharine went fully dark despite Alek trying several times; Simon's decision — kill it, Alek runs a check-in follow-up in ~3 months (~Oct 2026), no chase until then.
+> **AICAP: Thursday's (2026-07-09) demo/walkthrough happened, ran long, surfaced a retainer signal.** Stephanie brain-dumped a large volume of compliance/rules/workflow content Simon hasn't fully processed yet. She also floated a retainer — scope looks like it's exceeding the SOW. Simon reviewing same-day (7/13) to decide gameplan and whether the retainer conversation is immediate or lands end-of-July/August.
 >
-> **Quintel's demo-depth gate is confirmed dropped, correctly.** Build follows the customer-data-first + sourcing PRD (7/1), driven by the pattern across recent calls generally — not specifically by Stauss. If Stauss goes nowhere, direction doesn't change. (A CoI/dogfooding concern was raised and retired same-session — see persona.md rule 4: don't flag risks more than one step ahead of current execution.)
+> **Empire: not actually dead — Katharine re-surfaced (brief reply, hiring bandwidth cited).** The 7/7 "killed" call was premature. No stored contact info exists for Rick (CEO)/Mike (CCO) beyond Katharine — there's no bypass mechanism, only the direct ask for a warm intro. Alek owns that ask this week; if it stalls too, the deal is dead for real.
 >
-> **Tokenrip platform work (magic demo, substrate) is validated-deprioritized, not a new avoidance instance** — it's a platform asset, not a deal piece, and doesn't serve either live build. Don't re-flag this one; the 7/1 correction already settled it.
+> **Pattern to watch, not to punish: Simon's own LinkedIn/demand-scout outreach has taken a back seat to build work two sessions running.** Both of this quarter's live EF buyer voices (Empire, Max) came via Alek's channel. Simon's explanation this session: deliberately backseated to focus on two builds with near-term revenue tests attached (Max's demo, AICAP scoping) — assessed as a legitimate, bounded trade-off, not avoidance. Check next session whether it actually un-backseats once these two items clear.
+>
+> **Quintel's demo-depth gate remains confirmed dropped, correctly** — build follows the customer-data-first + sourcing PRD (7/1). CoI/dogfooding flag stays retired per persona.md rule 4.
+>
+> **Tokenrip platform work (magic demo, substrate) remains validated-deprioritized.** Don't re-flag; the 7/1 correction already settled it.
 
-## Sequencing (Jul 7 – ~Jul 14 — Stephanie Week-1 demo/walkthrough; resolve Empire; interrogate the Quintel-Stauss plan)
+## Sequencing (Jul 13 – ~Jul 20 — Max/Quintel demo; Empire warm-intro ask; AICAP retainer scoping)
 
 ### Completed (prior weeks)
 - [x] ~~Simon-owned most-progressable deal manufactured — Stephanie/AICAP, Upwork-sourced~~ (May 26)
@@ -30,17 +34,18 @@ What matters most right now?
 - [x] ~~**FIRST PAID DOLLAR** — Stephanie/AICAP discovery, escrowed~~ (Jun 8) — THE May 31 one thing, closed
 - [x] ~~quintel.ai stood up (demo/portfolio) + Stauss EF brain-dump + 2 calls~~ (Jun 8)
 - [x] ~~**Stephanie MVP escrow FUNDED (full amount) + delivery schedule locked**~~ (Jul 7) — THE Jun 30 one thing, closed
+- [x] ~~Stephanie Week-1 demo + walkthrough call~~ (Jul 9) — happened, ran long; compliance content captured but unprocessed; retainer signal surfaced
 
-### Active (Jul 7 – ~Jul 14)
-- [ ] **Simon (ONE thing)**: **Thursday 2026-07-09 — Stephanie Week-1 demo + field-by-field walkthrough call.** Combined into one call; the walkthrough is the only channel for the compliance rubric. If time-constrained, rubric extraction outranks demo polish. (P0)
-- [x] ~~Empire — resolve, don't backburner~~ — **Killed 2026-07-07.** Alek: 3-month check-in (~Oct 2026), no chase until then.
-- [x] ~~Confirm which spec Quintel is being built to~~ — customer-data-first + sourcing (7/1 PRD), set by the pattern across calls generally, not Stauss. Resolved same-session (Jul 7).
+### Active (Jul 13 – ~Jul 20)
+- [ ] **Simon (ONE thing)**: **Max Sarango/Providence Capital Funding Quintel demo (Jul 14).** Independent of Stauss, LinkedIn-sourced by Alek. Push for a real next step (him working the real lead list, a dated follow-up) — success for the call itself is realistically "impressed," the real test lands ~1 week out. (P0)
+- [ ] **Simon**: AICAP — process Stephanie's compliance/workflow brain-dump; decide retainer timing (immediate vs. end-July/Aug). Decision expected same day (Jul 13). (P0)
+- [ ] **Alek**: Empire — ask Katharine directly for a warm intro to Rick/Mike (no bypass mechanism exists). If it stalls too, name the deal dead for real. (P1)
 - [ ] **Alek**: **EF sourcing calls + convert on price** — $10k setup + recurring is landing; move one buyer from "not flinching" → *funding* something. Track funded, not enthusiasm (Empire = the live cautionary tale). (P1)
+- [ ] **Watch**: Simon's own LinkedIn/demand-scout outreach — deliberately backseated this week for build work (bounded, not indefinite per Simon). Check next session whether it resumes once Max's demo + AICAP scoping clear.
 - [ ] **Watch — Tokenrip backburner is fine, don't re-litigate it**: validated 7/1 — the magic demo is a platform asset, not a deal piece; two live builds already satisfy the substrate-yield doctrine.
 - [ ] **Magic demo = Tokenrip background** (platform asset, not a deal piece) — ready to shoot, deliberately behind client work.
 - [ ] **Simon**: Keep quintel.ai at **demo-depth** until a buyer pulls it deeper (Trap #4). (P0)
 - [ ] **Simon**: Reach/personal-brand — still **parked** (Goal 10d, P1 background); doesn't jump the queue. When it starts: catalog/build-in-public, measured by inbound not followers. (P1/P2)
-- [ ] **Simon**: Demand-scout (Reddit) — keep listening; engage sharp painkiller posts. (P1)
 - [ ] **Debra Silas (Questor)** — courteous "no" on US product; intel + warm contact. Follow-up email (research gift + US-broker-referral ask). Canada-native wedge flagged + parked (Trap #4). (P2)
 
 ### Deferred
@@ -98,6 +103,8 @@ Current state:
 
 > **Jun 21 — a genuinely strong week; the regime flipped from manufacturing to converting.** Three real advances: (1) **Empire/Katharine** — the independent buyer voice the whole EF hypothesis was waiting for finally spoke (independent, zero-CoI direct lender, painkiller pain, pricing question unprompted) — the most-repeated unresolved line in memory, resolved; (2) **Stephanie redlines** — strongest deal back in motion (in the contract); (3) **magic demo now shootable** (flow works, tested — answered the GTM doc's acceptance-test fork). "Huge week" is fair. The one accountability point: Simon's *own* ≥10-dial engine still missed volume (3 preps + holiday Friday filled the days; the dial block evaporated — same deferral *shape* as 6/14, milder reason) — and the buyer voice came via Alek + an independent lead, not Simon's outreach. **But pausing the cold grind to convert two one-yard-line deals is correct, not avoidance** (Simon's own 5/31 insight). **The risk flipped:** from "no buyer voice" → "don't fumble the live deals + don't let the magic demo become a build." Watch next session: redlines turned around? Empire team call scheduled? Demo stayed an afternoon? Did Empire advance from champion → economic-buyer signature?
 
+> **Jul 13 — real build progress on both live engagements, second independent EF buyer voice surfaced, Simon's own outreach engine stayed dark again.** AICAP demo delivered (ran long, surfaced a retainer signal); Quintel made functional on real data specifically to serve a demo with Max Sarango (Providence Capital Funding) — independent of Stauss, but sourced via **Alek's** LinkedIn work, not Simon's own. This is the second EF buyer voice in a row (after Empire) that came through Alek's channel. Simon named the trade-off directly and unprompted: deliberately backseated his own outreach this week for build work serving two near-term revenue tests. **Assessed as legitimate this time** — bounded, and pointed at real near-term tests, not speculative infrastructure. Watch next session: does the bounded sprint actually end once Max's demo + AICAP scoping clear, or does "I'm building" quietly become the standing excuse for the P0 LinkedIn/demand-scout engine never running? One session of this is a reasonable trade; three in a row would be the pattern reasserting itself under a new name.
+
 ## Key Numbers
 
 | Metric | Value | Notes |
@@ -112,8 +119,8 @@ Current state:
 | Job-req outreach | **Channel killed** (May 23) | All AI agent jobs are AI-coding jobs |
 | Upwork | **Maintenance/opportunistic** (Jun 8) | Sourced the first dollar (Stephanie). Simon sole bidder; bids cost $5–60 each; repeatability unproven. Not primary while EF is the frontier. |
 | Discovery calls completed | **~3-4** | Vijay (intel), Luai (Alek proposal sent), Paul (non-fit), Alek's call |
-| Live deals | **Stephanie/AICAP** (Simon; **first paid engagement — discovery escrowed**; blocked on her hospital-integration decision; out 2 wk) · Luai (Alek; stalled) | AICAP is the strongest deal in the log |
-| EF vertical / Quintel | **Active hypothesis under test** (Jun 8) | quintel.ai stood up (demo-depth). July revenue candidate. Test: one non-Stauss buyer voice. |
+| Live deals | **Stephanie/AICAP** (Simon; MVP funded, Week-1 demo delivered 7/9, retainer signal surfacing) · Empire/Katharine (Alek; stalled, re-surfaced thin) · Luai (Alek; stalled) | AICAP is the strongest deal in the log |
+| EF vertical / Quintel | **Second independent buyer voice: Max Sarango / Providence Capital Funding** (LinkedIn-sourced by Alek, demo 7/14) | Empire was buyer voice #1 (now cooled); Max is #2. Both via Alek's channel, not Simon's own outreach. |
 | Stauss / equipment finance | **Channel, not the deal** (Jun 8) | Simon decoupling EF from him (unreliable: "not hungry," late, day job). Useful door-opener; building Stauss-independent GTM in parallel. |
 | Revenue | **First paid engagement landed — escrowed (Jun 8)** | First meaningful revenue in 3+ years. MRR still $0. New KPI: ≥1 new revenue event/month → MRR. |
 | Demand-scout agent | **Deployed on Reddit May 23** | Discovery + demand-validation loop |

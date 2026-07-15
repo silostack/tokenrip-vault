@@ -78,16 +78,16 @@ To start, the minimum is a 30-minute scoping call and three to five de-identifie
 
 Seven weeks from kickoff, demo-driven, on real example applications throughout.
 
-| Week | What happens |
-|---|---|
-| 0 | Scoping call. Kickoff. Lock inputs, the baseline configuration, and the compliance-checklist scope. |
-| 1 | Application autofill live on sample inputs (CV, ID, extracted and entered numbers), started from the admin view. Context-aware expansion calibrated. |
-| 2 | Automated compliance review calibrated against AICAP's checklist, configurability in place. Demo. |
-| 3 | Provider review step and guided intake live. Demo. |
-| 4 | Both PDFs generated end to end, emailed to the coordinator on submission. Demo. |
-| 5 | Admin view operability: processed-application list, status, errors, basic counts. Full run on the sample set, unresolved items flagged for follow-up. Demo. |
-| 6 | Iteration tail, edge cases. Demo. |
-| 7 | Acceptance and handoff. |
+| Week | What happens                                                                                                                                                |
+| ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | Scoping call. Kickoff. Lock inputs, the baseline configuration, and the compliance-checklist scope.                                                         |
+| 1    | Application autofill live on sample inputs (CV, ID, extracted and entered numbers), started from the admin view. Context-aware expansion calibrated.        |
+| 2    | Automated compliance review calibrated against AICAP's checklist, configurability in place. Demo.                                                           |
+| 3    | Provider review step and guided intake live. Demo.                                                                                                          |
+| 4    | Both PDFs generated end to end, emailed to the coordinator on submission. Demo.                                                                             |
+| 5    | Admin view operability: processed-application list, status, errors, basic counts. Full run on the sample set, unresolved items flagged for follow-up. Demo. |
+| 6    | Iteration tail, edge cases. Demo.                                                                                                                           |
+| 7    | Acceptance and handoff.                                                                                                                                     |
 
 The weekly demos exist so AICAP can spot any slippage as it happens. Move the schedule either direction as needed.
 

@@ -2,8 +2,10 @@
 contact: Stephanie Williamson
 company: AICAP Access
 call_type: firm-direct
-status: CONVERTED — Validation MVP kickoff done 2026-07-01; she committed to fund the Upwork milestone + send sample data; build starting. First committed paid build.
-last_contact: 2026-07-01
+status: BUILDING — paid in full; Week-1 demo delivered 2026-07-09 (full working journey); app handed over; Week-2 compliance calibration active. First committed paid build.
+last_contact: 2026-07-09
+email: stephanie@aicap-access.com
+phone: 804-572-1804
 ---
 
 # Stephanie Williamson — AICAP Access
@@ -34,6 +36,7 @@ CPCS-certified credentialing and privileging operations leader with 20+ years in
   — firm-direct (discovery debrief). Warm, substantive, **did not convert**. Stephanie **killed the co-pilot / no-integration fallback** (design conflict + "won't be widely accepted") and chose an **integration-required** posture (disqualify hospitals that won't enable it). Gated the MVP build behind her own (early-stage) lead calls and gated config/integration behind a signed, paid pilot. Offered to bring Simon into hospital lead calls. Momentum → flat, stall risk rising.
 - **2026-07-01**: [[bd/calls/transcripts/stephanie-williamson-2026-07-01]] · [[bd/calls/notes/stephanie-williamson-2026-07-01]]
   — firm-direct (**Validation MVP kickoff — CONVERTED**). Stephanie screen-shared her own Replit prototype (provider flow: CV+ID drop → resolved/unresolved → intelligence layer → guided questions → two-checkbox attestation → flags list → audit trail), which doubles as a concrete spec reference. **Commercially converted:** she said *"I will fund the milestone"* (Upwork) and will upload **de-identified sample applications + sample CV/ID today or tomorrow**; she'll send her GitHub handle for build access. Confirmed **no formal requirements/checklist doc exists — it's "in her head"**; the compliance-checklist + guided-question content will transfer via a **recorded field-by-field walkthrough call** once Simon has samples + a build to walk. She surfaced a load-bearing design constraint: *credentialing collects nothing beyond what's needed — extra data creates a verification obligation.* Momentum → **↑ advancing** (first committed paid build). Not locked on-call: weekly-demo cadence, the 30-day refund clock, and the single baseline pick.
+- **2026-07-09**: **Week-1 demo — delivered.** Simon walked the full working end-to-end journey (built well ahead of the SOW week plan), framed as a scaffold on placeholder rules. **App made public + Stephanie given a login + shown how to file GitHub issues** (co-builder handover). She **brain-dumped the compliance model** — baseline + configuration via **conditional document requirements** (an answer triggers a required document → checked against baseline/hospital rules; e.g. a compliance-body approval stamp required at some hospitals, not others) — and **took homework to produce concrete compliance examples** that seed the Week-2 architecture. The rubric now transfers *iteratively* (brain-dump → her examples → build), not one recorded call. **Not recorded.** She also **forwarded an external validation interview** (Dean'Na, a credentialing SME at Care to Care LLC / a ~11-hospital NYC system) — strong independent validation of the core premise + product signals (hard/soft stops, document-intelligence, controlled retrieval). Full capture → [[../../../product/aicap/aicap-project-notes]]. Momentum → **↑↑ delivering.**
 
 ## Running Intelligence
 
