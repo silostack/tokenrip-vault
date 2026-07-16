@@ -1,8 +1,8 @@
-> Canonical: https://tokenrip.com/s/bdd1d195-1b48-40ba-b3d9-da626660c0cc
+> Canonical: https://tokenrip.com/s/2fc2c5e1-bc34-469d-bbd9-e89faff668cf
 
-# Morning Brief — 2026-07-15
+# Morning Brief — 2026-07-16
 
-Nothing new since yesterday's brief. Distribution state unchanged since the 2026-07-13 run — same 5 drafted items awaiting your promotion to "queued", same 3 Tier B execution items (Smithery/mcp.so, awesome-list PRs, GitHub topics audit) sitting on the backlog.
+Nothing new since yesterday's brief. Distribution state unchanged since the 2026-07-13 run — same 5 drafted items awaiting your promotion to "queued", same 3 Tier B execution items (Smithery/mcp.so, awesome-list PRs, GitHub topics audit) sitting on the backlog. Outreach-drafting (Phase 2) and code-pickup (Phase 3) state files still don't exist on disk, so those domains are not yet in scope.
 
 ## Distribution
 
