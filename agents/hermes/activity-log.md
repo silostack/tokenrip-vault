@@ -5,6 +5,7 @@ Newest entries at the top.
 
 ---
 
+- 2026-07-18: Morning brief published — https://tokenrip.com/s/715bf4d8-3a23-4f9b-a7e7-fd0814b475ae
 - 2026-07-17: Morning brief published — https://tokenrip.com/s/072664ab-389e-45d2-8d0e-7c392b4550ef
 - 2026-07-16: Morning brief published — https://tokenrip.com/s/2fc2c5e1-bc34-469d-bbd9-e89faff668cf
 - 2026-07-15: Morning brief published — https://tokenrip.com/s/bdd1d195-1b48-40ba-b3d9-da626660c0cc
