@@ -11,6 +11,7 @@
 **Options Considered**: What alternatives were on the table?
 **Decision**: What did Simon decide?
 **Rationale**: Why this choice over others?
+**Revisit if**: What future fact would legitimately reopen this? (A decision without a reopening trigger can't be cleanly revisited — and gets relitigated on vibes instead.)
 **Outcome**: [Updated later] What happened as a result?
 ```
 
@@ -185,4 +186,34 @@ Simon named the core insight: **pain vs. vitamin is a dimension missing from the
 
 ---
 
-*Full historical decisions log archived in `__ARCHIVE/yoda-decisions-log.md`*
+*This log starts at the AI pivot (Option B, 2026-04-13) — no formal decisions were logged in the crypto era. Crypto-era coaching insights extracted 2026-07-16 to `__ARCHIVE/yoda-crypto-era-insights-2026-07-16.md`. (A previous footer pointed at `__ARCHIVE/yoda-decisions-log.md`, which never existed — corrected 2026-07-16.)*
+
+### The 90-Day Sprint — Simon Sells (identity inversion)
+**Date**: 2026-07-14/15 (logged retroactively 2026-07-16; decided in the Fable advisory session — full exhaust log: `fable-log-10x-advisory.md`)
+**Context**: Three months of self-imposed runway. All revenue ever = one customer (Stephanie/AICAP, Simon-closed via written Upwork bids). Quintel: ~15 EF calls since May 28, one pain voice (Katharine 6/18, went dark), zero dollars; Simon's hours going to build work while zero hours went to direct customer-getting. The session named the root belief: building as a stay of execution on "maybe I can't sell" (RebelFi-era verdict on corrupted data). Simon confirmed it directly.
+**Options Considered**: Keep building toward a "ready" platform (rejected — demo-depth falsified by own call log: full demos flat 3x in one week, strongest pulls came pre-product); Alek continues owning sales alone (rejected — 7 weeks of demo-first calls with non-signers, repeated coaching misses, nobody owning revenue); rev-share/equity paths on AICAP instead of cash (rejected for now — runway anxiety, cash first).
+**Decision**: Minimum 5 funded Quintel customers by ~Oct 13, via Simon-led outbound (20 dials + 25 connects/day front-load, decision-makers only, discovery before demo, ONE locked offer). Kill list while the sprint runs: blog engine, Tokenrip blog infra, HubSpot demo integration. Stephanie retainer pursued at product pricing (two-lane structure; SOW never re-traded). Alek realignment via buy-in, not assignment — scoreboard allocates call seats. Full playbook: `active/90day/sales-playbook.md`.
+**Rationale**: (1) The sprint is simultaneously the sales push and the market test — either outcome (customers, or a clean verdict on the wedge) beats another month of building. (2) The one clean data point on "can Simon sell" is a yes ("name your price," 5/26). (3) Revenue is the binding constraint and nothing on the constraint list is fixed in the codebase.
+**Revisit if**: The Aug-25 pre-registered checkpoint (~30 right-title discovery calls) returns 0–2 pain voices — that reopens the vertical/wedge question *with data*. Or: the dial block doesn't survive contact with delivery obligations for 2+ consecutive weeks — that reopens the allocation design, not the goal.
+**Outcome**: [Updated later]
+
+---
+
+### Coaching scope boundary — Simon works his own leads
+**Date**: 2026-07-20
+**Context**: The four Tier 0 warm re-opens (Bo/Hyland · Mike Ryan/36th Street · Katharine/Empire · Scott Rumble) were surfaced by Yoda as Simon action items across multiple consecutive sessions. All four are relationships Alek owns and ran. Simon, directly: *"drop the tier 0 four... those are alek's... stop bringing them up as if I need to act on them."*
+**Decision**: Tier 0 archived out of Simon's active scope in `active/90day/dial-list-2026-07-16.md`. Yoda never raises an Alek-owned deal as a Simon action item; the only permitted form is "worth nudging Alek," on request. Rule written into `context.md` and `playbook.md` so it survives compaction.
+**Rationale**: Same failure shape as the retired Stauss CoI flag — a carried-forward item repeated past usefulness — but worse, because it assigned Simon work outside his lane. Repeated dead flags cost credibility for live ones.
+**Revisit if**: Never as a Simon assignment. Only if Simon explicitly asks about Alek-side pipeline.
+**Outcome**: [Updated later]
+
+---
+
+### `call-log.md` retired as a data file — process over data
+**Date**: 2026-07-20
+**Context**: The vault's daily scoreboard sat empty through sprint W1 — a week in which 60 dials actually happened. Simon tracks call data in a spreadsheet; the vault file was duplicate entry with no reader.
+**Options Considered**: Enforce daily vault logging (rejected — duplicate work, and the empty file had already produced a false read that the week was empty); drop tracking entirely (rejected — the Aug-25 pain-voice checkpoint needs a register).
+**Decision**: Spreadsheet is the call log. `active/90day/call-log.md` restructured to **process only**: script version log, objection log, pain-voice register, live pipeline. W1's result captured as a single record line.
+**Rationale**: The vault's job is process and knowledge that compounds; live operational data belongs where Simon actually works. Rule taken: **an empty tracking file is not evidence of an empty week.**
+**Revisit if**: The Aug-25 checkpoint arrives and the pain-voice register hasn't been maintained — then the register (not the daily data) needs a new home.
+**Outcome**: [Updated later]

@@ -4,9 +4,7 @@ You are Yoda in sparring mode. Simon is bringing an idea or decision to stress-t
 
 ## Step 1: Establish Context
 
-Read:
-1. `agents/yoda/persona.md`
-2. `agents/yoda/context.md`
+**Boot per `agents/yoda/CLAUDE.md`** (canonical read list + hygiene sentinels).
 
 ## Step 2: Understand the Idea
 

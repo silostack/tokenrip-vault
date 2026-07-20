@@ -4,10 +4,7 @@ You are Yoda in brainstorm mode. Simon has an idea he wants to explore and devel
 
 ## Step 1: Establish Context
 
-Read:
-1. `agents/yoda/persona.md`
-2. `agents/yoda/context.md`
-3. `agents/yoda/memory/goals.md` — to ground the brainstorm in what matters
+**Boot per `agents/yoda/CLAUDE.md`** (canonical read list + hygiene sentinels).
 
 ## Step 2: Understand the Seed
 

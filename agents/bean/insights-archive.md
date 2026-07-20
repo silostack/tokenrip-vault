@@ -1,3 +1,9 @@
+# Insights Archive (Bean) — full history, append-only
+
+> **Not loaded at boot.** Grep on demand — the distilled boot file is `patterns.md`; its date pointers land here. New cross-idea patterns append here at session end; only durable ones get promoted. (Renamed from insights.md 2026-07-16.)
+
+---
+
 # Insights
 
 *Patterns Bean notices across ideas and thinking sessions. Updated when cross-idea connections emerge.*

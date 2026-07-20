@@ -1,8 +1,10 @@
 # [Idea Name]
 
-**Status**: raw | developing | tested | parked | killed
+**Status**: raw | developing | tested | parked | killed | graduated
 **Created**: YYYY-MM-DD
 **Last touched**: YYYY-MM-DD
+
+<!-- Status honesty: update Status every time a session touches this idea. graduated = became product canon or moved to execution. Untouched 60+ days → /bean-compact proposes `parked` (Simon ratifies). Use ONLY these six words — vocabulary drift makes the sweep impossible. -->
 
 ## Thesis
 

@@ -1,6 +1,6 @@
-# Closer — Pipeline Context
+# Closer — Pipeline Archive (frozen 2026-07-16)
 
-> Unified pipeline across both motions. Closer updates this at the end of every session.
+> **This is the archived pre-sprint pipeline, frozen as of its last update (2026-06-23). It is NOT boot-loaded and NOT current.** The live boot file is `context.md`; operational truth is `DASHBOARD.md` + `active/90day/call-log.md`. Deals below that don't appear in those files are presumed dead — first `/closer-compact` ratifies each (dead / parked / carry forward).
 > Health: 🟢 Green (on track) · 🟡 Yellow (gap forming, needs action) · 🔴 Red (stalled or at risk).
 
 **Last updated**: 2026-06-23 (Debra Silas / Questor Financial — warm Canadian-EF intel contact. Crafted a pain-validation follow-up email: open question testing whether "screening junk = #1 broker pain" (the US gameplan assumption) holds in Canada. Canada-native broker feasibility study predicts her #1 pain is structuring/lender-fit instead. Email pending send. New patterns recorded: warm-relationship-follow-up coaching + pain-validation-via-open-question.)

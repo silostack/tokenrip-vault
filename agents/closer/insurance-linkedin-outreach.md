@@ -1,9 +1,8 @@
 # Insurance LinkedIn Outreach — Bucketing Rubric
 
-**Owner**: Simon (insurance vertical). **Phase**: Outreach launch → discovery (gameplan Phases 1-2).
-**Purpose**: Turn an accepted LinkedIn connection into a discovery-call reply, fast and at volume (15-20/day), without sounding like every other automation pitch.
+**Purpose**: Turn an accepted LinkedIn connection into a discovery-call reply, fast and at volume, without sounding like every other automation pitch.
 
-Companion to `bd/firm-direct-strategy/gameplan.md`. This is the messaging tactic under [[lead-gen-strategy]].
+> **Built for the insurance vertical (May 2026); the structure is vertical-agnostic** — see "Cross-vertical use" below. For the current motion's own scripts (e.g. the 90-day sprint's EF-lender touches in `active/90day/sales-playbook.md`), those win; this rubric is the structure underneath. *(Original companion gameplan archived: `__ARCHIVE/bd-motion-a-firm-direct-2026-05-01/`.)*
 
 ---
 
@@ -106,7 +105,7 @@ so immigration EB-5 / document-heavy profiles are the strongest ICP fits.
 ## Message anatomy — why each line earns its place
 
 - **"I build AI agents for insurance brokerages."** Who you are, one concrete sentence. No ceremony, no "you're looking for X."
-- **"Not pitching you here. We're in discovery, looking for design partners."** Disarms the sales-radar. Tells him this is a conversation, not a funnel. Honest — it *is* discovery (gameplan Hard Rule #1: no demo before discovery).
+- **"Not pitching you here. We're in discovery, looking for design partners."** Disarms the sales-radar. Tells him this is a conversation, not a funnel. Honest — it *is* discovery (standing rule: no demo before discovery).
 - **"I'd rather hear where the hours actually go than sell anything."** The posture: more interested in the conversation than the sale.
 - **The grind line.** A plausible, bucket-matched guess with options, so he can confirm or correct. Uses his own profile vocabulary where possible.
 - **The offer line.** Gives him something worth more than the reply it asks for, and leads instead of leaving the ball in his court. **Honesty caveat (2026-05-29):** "Happy to trade notes on what we're seeing across other brokerages/firms" claims a cross-firm research corpus we don't yet have — at near-zero conversations it's a fabrication, the one false note in an otherwise honest message. Until there's a real body of firm conversations to trade on, use an honest offer instead: "Happy to share what we're figuring out as we build these, if useful." It offers our genuine learnings without claiming firm research. Once enough real conversations accumulate, the trade-notes line becomes true and can return.
@@ -128,7 +127,7 @@ so immigration EB-5 / document-heavy profiles are the strongest ICP fits.
 
 ## ICP caution
 
-A reply is a reply, not validation. Bucket B specialists and tiny solo shops can reply warmly and still not be ICP — the gameplan's design-partner ICP needs a firm with a team and volume pain (e.g. *22 employees, 30+ CSR hours/week*). Send to everyone who connects; it costs one message. But read replies through the ICP lens before investing call time.
+A reply is a reply, not validation. Bucket B specialists and tiny solo shops can reply warmly and still not be ICP — the design-partner ICP needs a firm with a team and volume pain (e.g. *22 employees, 30+ CSR hours/week*). Send to everyone who connects; it costs one message. But read replies through the ICP lens before investing call time.
 
 ---
 

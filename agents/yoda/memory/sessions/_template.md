@@ -1,46 +1,51 @@
 # Session — YYYY-MM-DD
 
-**Type**: [general / review / sparring / therapy / decision / prioritization]
+**Type**: [general / review / sparring / brainstorm / decision / prioritization / therapy / mindset]
 
-## What Simon Brought
+## Commitment review (reviews and general sessions — do this FIRST, before the narrative)
 
-*What was on Simon's mind at the start of the session?*
+| Committed (from last session / goals.md) | Reality | Verdict |
+|---|---|---|
+| | | ✅ / ⚠️ partial / ❌ |
 
-## Key Discussion Points
+## What Simon brought
 
-*Main topics covered.*
+*One paragraph — what was on his mind, in roughly his words.*
 
-## Insights
+## Pattern named this session
 
-*What emerged from the conversation — new understanding, reframes, clarity.*
+*If a live behavior matched a playbook entry (or a new pattern emerged), name it here with its receipt. If none: "none."*
 
-## Decisions Made
+## Key threads
 
-*Any decisions that were reached or clarified.*
+*The 2–3 threads that mattered. Conclusions, not transcript.*
 
-## Action Items / Promises
+## Decisions made
 
-*What Simon committed to doing.*
+*Each with a one-line rationale. Anything significant also goes to `decisions-log.md` (with its "Revisit if:").*
 
-- [ ]
+## Commitments for this week
 
-## Yoda's Observations
+| Commitment | Owner | Due |
+|---|---|---|
+| | Simon | |
 
-*Patterns noticed, concerns flagged, encouragement offered.*
+## ONE Thing
 
-### Patterns
--
+*The single priority until next session.*
 
-### Concerns
--
+## One thing Simon couldn't see walking in
 
-### Encouragement
--
+*The session-quality bar. What does he now see that he didn't? If the honest answer is "nothing," write "nothing" — and treat a streak of nothings as a flag on session quality itself.*
 
-## Next Session Focus
+## Yoda self-correction (if any)
 
-*What to check in on next time.*
+*Flags withdrawn, calibration misses, rules updated. Honest or omitted — never performative.*
+
+## Next session focus
+
+*What to check first next time.*
 
 ---
 
-*Session note created by Yoda.*
+*Close-out checklist: session note saved → new insights appended to `insights-archive.md` (dated) → playbook promotion only if behavior-changing (cap: demote to promote) → context.md Simon-state reconciled vs DASHBOARD → goals.md promises updated → decisions logged with "Revisit if."*

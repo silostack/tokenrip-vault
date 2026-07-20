@@ -6,7 +6,7 @@ tokenrip_id: 5eac860e-a71b-4569-a271-6f1aad2e8e7e
 
 > **Live reference for Alek/Simon on lender calls.** The objection bank, the value language that lands, and the framing decisions — so nobody improvises the hard answers cold. Update after every call: add objections, refine answers, log what closed.
 >
-> **Last updated:** 2026-07-14 (from the Alex deRosenroll / TFG Financial call: added the **"we already do this ad hoc with Claude" make-vs-buy objection** §3 for the packaging module — new, unaddressed on the call — and reinforced the §4 pricing conflict, now seen on 2 consecutive calls: sector-tiered $1,500/mo/sector sourcing pricing quoted again, plus a new $1,000/mo packaging figure not previously documented. Also flagged a packaging-first ICP counter-example to the "sourcing is the hook" default — see §1a note). Prior: 2026-07-13, from the Allen / Regents Capital call: added the **ZoomInfo Signals** objection §3 — new named competitor, unprompted — and flagged an **unresolved pricing conflict** §4, sector-tiered monthly plan quoted on-call vs. the $10K+$5K model documented here. Prior: 2026-07-01, from the Bo Brauer / Hyland + Zora Mehmi calls 2026-06-30 and Alek's live demo mockup: added the on-screen **pre-frame** for "vendors or live deals?" (§1a + §3), the **CRM-replacement** answer (§3), the **augmentation-as-product-copy** framing row (§5), and the **reusable demo artifact** now filling the recurring nothing-to-show gap (§6). Prior: 2026-06-28 §1a Hook≠Position≠Price split + spoken-formula rule + negative-signal handling, from `product/quintel/positioning/quintel-positioning-synthesis-2026-06-28.md`. Earlier: 2026-06-25 deal-intelligence-engine hero + both-sides shift; seeded from Katharine Rudzitis / Empire 2026-06-18 + Mike Ryan / 36th Street 2026-06-22)
+> **Last updated:** 2026-07-17 (added **§3a — cold-call-stage objection bank**, synced from the 90-day playbook §7: rev-share/pay-per-deal, "send me info," "how much" early, all-referral, "who else uses it," "we have BDRs," "call me in Q4," "not interested," and the referral flip. The **rev-share answer now reflects the rewritten two-way offer** — flat $1,500 **or** $500 base + CRM-attributed rev-share, never stacked; the old "pay full price AND a rev-share on top" model is dead. Added a §4 pointer making the 90-day playbook §3 the canonical current offer. Prior: 2026-07-16 — sharpened the §3 **ZoomInfo Signals** objection answer after reading ZoomInfo's actual product page — the differentiator is now data provenance (inferred web-behavior vs. observed public-record event), not an adjective; see `intelligence/research/quintel/quintel-competitive-landscape-research-2026-06-18.md` §2c for full mechanics). Prior: 2026-07-14, from the Alex deRosenroll / TFG Financial call: added the **"we already do this ad hoc with Claude" make-vs-buy objection** §3 for the packaging module — new, unaddressed on the call — and reinforced the §4 pricing conflict, now seen on 2 consecutive calls: sector-tiered $1,500/mo/sector sourcing pricing quoted again, plus a new $1,000/mo packaging figure not previously documented. Also flagged a packaging-first ICP counter-example to the "sourcing is the hook" default — see §1a note). Prior: 2026-07-13, from the Allen / Regents Capital call: added the **ZoomInfo Signals** objection §3 — new named competitor, unprompted — and flagged an **unresolved pricing conflict** §4, sector-tiered monthly plan quoted on-call vs. the $10K+$5K model documented here. Prior: 2026-07-01, from the Bo Brauer / Hyland + Zora Mehmi calls 2026-06-30 and Alek's live demo mockup: added the on-screen **pre-frame** for "vendors or live deals?" (§1a + §3), the **CRM-replacement** answer (§3), the **augmentation-as-product-copy** framing row (§5), and the **reusable demo artifact** now filling the recurring nothing-to-show gap (§6). Prior: 2026-06-28 §1a Hook≠Position≠Price split + spoken-formula rule + negative-signal handling, from `product/quintel/positioning/quintel-positioning-synthesis-2026-06-28.md`. Earlier: 2026-06-25 deal-intelligence-engine hero + both-sides shift; seeded from Katharine Rudzitis / Empire 2026-06-18 + Mike Ryan / 36th Street 2026-06-22)
 
 ---
 
@@ -142,9 +142,10 @@ Lenders are the primary target, but the same engine pitches to **brokers / place
 
 ### 🟡 "How do you differ from ZoomInfo? They have a thing called Signals." *(NEW 2026-07-13 — Allen/Regents Capital, unprompted, pulled up ZoomInfo's own product live on the call)*
 **Answer used on the call (weak):** "More tailored... you set up your buy box... it learns with every decision... ever-learning model... powered by AI." Landed flat — buyer's own paraphrase back was "buzzword, yeah."
-**Better answer:** Don't reach for "tailored" or "AI" — name the formula (§1a spoken-pitch rule applies here directly). *"ZoomInfo's Signals runs on the same generic public activity every subscriber sees — it's a bigger, better-organized list, but still a list. We start from your last hundred deals — what you funded, what you passed on, and why — and rank the entire public market against that. Two lenders never get the same list from us, and it gets sharper every deal you close. ZoomInfo's doesn't."*
-**Why:** This is the ZoomInfo-specific instance of the "signals vs. intelligence" trap (§1a) — a buyer who already owns a signals product will hear "AI-powered signals" as a feature-parity claim, not a differentiator. The fix is the same one that works everywhere else in this doc: say the formula, never the adjective.
-**Add to objection bank permanently** — this is a named, real competitor a buyer volunteered without prompting; treat as likely to recur, not a one-off.
+**Better answer (v1, 2026-07-13):** Don't reach for "tailored" or "AI" — name the formula (§1a spoken-pitch rule applies here directly). *"ZoomInfo's Signals runs on the same generic public activity every subscriber sees — it's a bigger, better-organized list, but still a list. We start from your last hundred deals — what you funded, what you passed on, and why — and rank the entire public market against that. Two lenders never get the same list from us, and it gets sharper every deal you close. ZoomInfo's doesn't."*
+**Sharper answer (v2, 2026-07-16 — after reading ZoomInfo's own product page):** ZoomInfo's intent signal is not public-record data at all — it's an inference from **anonymized web content-consumption behavior**: article reads, keyword searches, IP-to-device matching across a publisher network, resolved back to "a company is in-market for this topic." *"Worth being precise about what ZoomInfo actually reads — it's someone's browsing history, matched back to a company by IP address. That's an inference, one step removed from anything real happening. We read the public record directly — UCC filings, permits, contract awards — a company physically expanding, winning work, or pledging equipment as collateral. That's not an inference, it's an event. Then we rank it against your last hundred deals, which ZoomInfo has no concept of at all."*
+**Why:** The v1 answer's "generic public activity" line was itself imprecise (ZoomInfo's data isn't public-record, it's aggregated browsing behavior) — worth knowing precisely in case a technical buyer like Allen probes further. The v2 answer replaces an adjective fight ("tailored" vs. "AI-powered," which reads as feature parity to a buyer who already owns a signals product) with a falsifiable claim about data provenance (browsing-behavior inference vs. observed public-record event) — harder to wave off as a buzzword. Full mechanics + sourcing: `intelligence/research/quintel/quintel-competitive-landscape-research-2026-06-18.md` §2c.
+**Add to objection bank permanently** — this is a named, real competitor two buyers have volunteered without prompting (Allen 7/13, Max Sarango 7/14); treat as likely to recur, not a one-off.
 
 ### 🟢 "How / where is the intel sourced? Are these real purchases or AI assumptions?" *(handled well)*
 **Answer:** "Inferred, deliberately — if it's already announced, it's too late for you. We ingest public filings (UCC, etc.), news, even LinkedIn signals, and extrapolate second-order effects: this data-center announcement means *these* companies will need *this* equipment. High-quality assumptions on a trigger of events." Be honest it's inference, not announced fact — buyers respect the candor.
@@ -164,7 +165,51 @@ Lenders are the primary target, but the same engine pitches to **brokers / place
 
 ---
 
+## 3a. Cold-call-stage objections (synced from the 90-day playbook §7, 2026-07-17)
+
+The §3 bank above is discovery/demo-stage. These are the ones that hit in the first 30 seconds of a **cold dial**, before any pain is on record. Answers are the playbook's; keep the two docs in sync.
+
+### 🟡 "We want rev-share / pay per deal" *(Max pattern — commission-culture shops)*
+**Answer:** Risk-frame first — *"The founding deal already carries your risk: $1,500 flat, month-to-month, downside is one month. Fire us if it doesn't produce."* If they push because they genuinely *want* performance comp: *"Then here's the partnership version — a nominal $500 base that just covers the data, plus a share of the revenue on the deals we actually source you, on a 12-month term. We wire into your CRM so it's clean: we only get paid on deals we surfaced that weren't already in your pipeline, and the funding shows up in the public record — no arguing over attribution."* Then either way: *"But structure's the second conversation — first tell me about the last deal you missed."*
+**Why:** Most rev-share asks are risk-aversion in disguise; the risk-frame kills those without touching structure. The clean two-option model (flat **or** low-base+share, never stacked) replaces the old incoherent "pay full freight AND a rev-share." **Never quote a share % on the call — that's Simon's to set.** Attribution rule (net-new-only, CRM-tagged at surface-time, UCC-cross-confirmed) + the runway guardrail (don't let all 5 founding seats pick the low-base option) live in playbook §3.
+
+### 🟢 "Send me some information" *(the brush-off)*
+**Answer:** "Happy to — so I send the right thing, 30 seconds: [the triage/missed-deal question]. … Better yet, the info that matters is what this finds in *your* sectors. 20 minutes and you'll see your own market, not a brochure."
+**Why:** A generic one-pager gets filed and forgotten; converting the brush-off back into a discovery question (or a live look at their own market) is the only thing that advances it.
+
+### 🟢 "How much is it?" *(early, before pain is established)*
+**Answer:** "$1,500 a month, founding rate, no setup fee — and before you anchor on that, it only makes sense if the sourcing gap is real. [Back to the pain question.]"
+**Why:** Confident number, no wobble, no discount on warmth. Answering cleanly then returning to discovery reads as strength; softening the price when the call is going *well* is the documented trap.
+
+### 🟡 "All our business is referral / vendor / repeat"
+**Answer:** Probe once: *"Rough number — what share of your volume is those channels? And if a financeable deal existed in your box outside them, would you even want to see it?"* If genuinely no gap: disqualify cheerfully, ask for a referral, out in 90 seconds.
+**Why:** This is a **segmentation fact** (TFG 7/14, Louwerse, Nicole), not a failure — referral-saturated shops are outside the ICP. A fast, clean no + a referral is a win, not a loss.
+
+### 🟡 "Who else is using it?"
+**Answer:** "You'd be one of the first five — that's exactly why it's $1,500 flat with no setup and why you get founding terms locked for a year. The trade: we work your sectors like it's our own book, you give us the case study when it funds a deal. First-mover pricing ends at five."
+**Why:** Turns thin traction (newness) into scarcity + design-partner leverage instead of a credibility hole. Pairs with the §3 "brand-new company / board comfort" answer for institutional buyers.
+
+### 🟢 "We have BDRs / our reps already do this"
+**Answer:** "Keep them — this is what makes them *dangerous*. Your reps work leads; this decides *which* leads deserve them. It's the research half of an entry-level BDO at a tenth of the cost, feeding the closers you already pay."
+**Why:** Removes the either/or threat (we don't replace their people) and re-frames Quintel as the thing that makes existing headcount more effective — the BDO/headcount budget slot, not the tool slot.
+
+### 🟢 "Call me in Q4 / after [event]"
+**Answer:** "Will do — one thing before I go: is that timing, or is this a polite no? Both are fine, I just track them differently."
+**Why:** Surfaces the real disposition without pressure; buyers respect the question and often tell the truth, which keeps the pipeline honest.
+
+### 🟢 "Not interested" *(instant)*
+**Answer:** "Fair — before I let you go: is that 'we have sourcing solved' or 'bad Tuesday'? … Understood. Who in your world is still hunting cold?"
+**Why:** One disqualify-or-referral probe on the way out costs nothing and occasionally salvages a referral; then log it and next dial, zero rumination.
+
+### The referral flip *(a non-decision-maker is on the line)*
+**Answer:** "This is really a [CCO / head-of-originations] conversation. What's the best way to get 20 minutes with [Name] — and can I say you pointed me right?"
+**Why:** The ICP titles are the only ones that sign (playbook §1). A non-DM who introduces you *up* was a useful call; run the call only to earn that intro.
+
+---
+
 ## 4. Pricing & Packaging *(as quoted — confirm with Simon before treating as fixed)*
+
+> **Canonical current offer (2026-07-17):** the founding-customer offer + the two-way (flat **or** low-base rev-share) structure now lives in the **90-day playbook §3** — treat that as the source of truth. The models below are the *older* quotes kept for history and still need reconciling with Alek (open item).
 - **Setup fee:** $10,000, **refundable** if it doesn't work out (covers custom setup + pilot).
 - **Monthly:** $5,000/mo, unlimited leads.
 - **Annual prepay:** 25% discount.

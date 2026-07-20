@@ -16,6 +16,8 @@ related:
 
 > **Purpose:** the canonical positioning reference for Quintel — what the product *is*, how it is described on a call, and why it is not a commodity signal feed. Companion to the homepage spec (the page) and the sales tear sheet (the live objection bank). Source of truth for sales conversations.
 
+> ⚠️ **Partially superseded (2026-07-16 note).** The 2026-07-14 sourcing-first reframe (canonical PRD `quintel-customer-data-first-prd-2026-06-29.md`, updated in place; adopted in `product/CLAUDE.md` and `product/quintel/CLAUDE.md`) **reverses this memo's §4b ordering**: market data + the reasoning layer now *lead* (valuable at zero deal history), and the customer's book is the *deepening* dial — not "deal history leads, market data is the crank." Everything else here still stands (the commodity trap, the hook/position/price-basis split in §3, the objection lines). Read §4b's ordering as historical; the current sell posture is the mounted-BDO / sourcing-first frame in the PRD and `active/90day/sales-playbook.md` §3.
+
 ---
 
 ## 1. The core distinction

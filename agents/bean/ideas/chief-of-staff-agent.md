@@ -1,6 +1,6 @@
 # Chief of Staff Agent
 
-**Status**: designing
+**Status**: graduated (shipped as Chief of Staff, May 2026; normalized from "designing" 2026-07-16)
 **Created**: 2026-04-27
 **Last touched**: 2026-04-28
 

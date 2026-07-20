@@ -5,12 +5,13 @@ owner: Simon
 type: competitive-research
 product: Quintel
 created: 2026-06-18
-updated: 2026-07-13
+updated: 2026-07-16
 source_material: >
   Alek's competitive brief (tokenrip.com/s/bf608197), Alek's full-stack blueprint
   (tokenrip.com/s/6ce8bf75), SharpEi web research, Empire/Katharine call (2026-06-18),
   prior vault competitive analysis (intelligence/research/quintel/), Fusable/EDA
-  deep-dive research (2026-07-13), TEX Software deep-dive research (2026-07-13)
+  deep-dive research (2026-07-13), TEX Software deep-dive research (2026-07-13),
+  ZoomInfo Intent Data mechanics (zoominfo.com/features/intent-data, 2026-07-16)
 related:
   - product/quintel/quintel-customer-data-first-prd-2026-06-29.md
   - product/quintel/quintel-engine-build-roadmap-2026-06-09.md
@@ -96,7 +97,7 @@ Quintel's redefined core motion — market intelligence scored against a custome
 |---|---|---|---|
 | **Fusable / EDA** | Real-time UCC financing-record monitoring + D&B enrichment, new API/CRM layer (Nov 2025) | Coincident (UCC filed near/at funding) | **The one real infrastructure competitor** — see §2a |
 | **TEX Software (TEX Intel)** | Heavy-equipment ownership/fleet-change intelligence, dealer/broker-facing | Coincident (ownership record, not financing-specific) | Adjacent-not-identical — see §2b; no scoring, no AI, one named customer (a broker) |
-| **ZoomInfo** | Generic B2B contact/signal | No EF topic exists | Evaluated and rejected by Empire — "doesn't do a ton more than a Google alert" |
+| **ZoomInfo** | Generic B2B contact/signal (mechanics confirmed 2026-07-16 — see note below) | Inferred (web content-consumption/keyword behavior), not a public-record event | Evaluated and rejected by Empire — "doesn't do a ton more than a Google alert" |
 | **Affinity / Meridian** | Signal-enriched CRM | PE/VC-focused | Evaluated and rejected by Empire — "not the right tool" |
 | **Bombora / 6sense** | Generic B2B intent | No EF topic exists | Horizontal, not EF-specific — same gap as ZoomInfo |
 | **LeadX** | Searchable UCC/lien data + firmographics | Lagging (UCC = post-funding) | Weaker version of the Fusable/EDA feed, no monitoring/API layer found |
@@ -104,6 +105,10 @@ Quintel's redefined core motion — market intelligence scored against a custome
 | **State DOT lettings** | Contract-award / mobilization | Strongly leading, EF-specific | **Genuine white space** — nobody packages this for EF lenders; construction-vertical-specific |
 | **Shovels.ai / Construction Monitor** | Permit data | Coincident-to-lagging | Sells to suppliers/mortgage/solar, not EF lenders — adjacent, not competing |
 | **SendStrike** | Cold-email infra for MCA teams | Delivery pipe only | Explicitly disclaims intent data — not a signal competitor |
+
+**ZoomInfo Intent — mechanics confirmed 2026-07-16** (`zoominfo.com/features/intent-data`, prompted by Allen/Regents Capital pulling up "Signals" live on the 2026-07-13 call — see [[bd/calls/quintel-sales-tear-sheet]] §3): ZoomInfo's intent signal is **not** a public-record event. It's an inference from aggregated, anonymized **web content-consumption behavior** — "millions of content consumption events across publishers, websites, and research platforms," "210 million IP-to-org pairings," "6 trillion+ keyword-to-device pairings," resolved back to a company and a person via IP/device matching. In plain terms: someone somewhere read an article or searched a keyword, and ZoomInfo infers the *company* is "in-market" for that topic. No EF-specific topic taxonomy exists in it (confirms the existing "no EF topic exists" read), and the accuracy claims (95%+ contact accuracy, "Guided Intent" topic-relevance) are vendor-asserted with no disclosed methodology or third-party verification — flag as marketing claim, not evidence, if it comes up on a call.
+
+This sharpens the existing differentiation (§1a "say the formula, never the adjective," used in the tear-sheet's post-Allen-call answer): the honest contrast isn't "generic vs. tailored," it's **inferred web-behavior vs. observed public-record event**. A UCC-1 filing, a permit, or a contract award is a legally-public, verifiable fact that a specific real-world financeable event occurred. A ZoomInfo intent signal is a probabilistic guess from someone's browsing history, correlated to a company through IP resolution — weaker evidence, one step further removed from the thing that actually indicates financing need. This is a stronger, non-buzzword answer for a technical buyer like Allen because it's a falsifiable claim about data provenance, not an adjective ("tailored," "AI-powered") a ZoomInfo-owning buyer will hear as feature parity.
 
 **Sourcing verdict:** raw signal data is not ownable by anyone in this table, Fusable included. What's ownable is the fusion-plus-box-scoring layer on top — and no player here has built it. Fusable is the only one with the balance sheet and existing pipeline to build it fast if they decide to.
 

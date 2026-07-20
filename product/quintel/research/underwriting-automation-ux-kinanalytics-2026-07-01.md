@@ -22,6 +22,6 @@ Underwriting automation in equipment finance fails not because the models are we
 
 ## Quintel tie-in
 
-This is direct outside validation for the PRD's central design bet in [[quintel-customer-data-first-prd-2026-06-29]] §10 — the ranker is explicitly built to be **explainable by design**, not a black box, and every score decomposes into stated reasons. The article's line — "a system that shows its work gets used" — is close to a verbatim restatement of why §4 frames the demo's job as proving *comprehension*, not accuracy: the customer validates the reasoning on sight, rather than being asked to trust an opaque score.
+This is direct outside validation for the PRD's central design bet in [[quintel-sourcing-intelligence-prd-2026-06-29]] §10 — the ranker is explicitly built to be **explainable by design**, not a black box, and every score decomposes into stated reasons. The article's line — "a system that shows its work gets used" — is close to a verbatim restatement of why §4 frames the demo's job as proving *comprehension*, not accuracy: the customer validates the reasoning on sight, rather than being asked to trust an opaque score.
 
 The 45%-deployed-vs-65%-exploring stat is also useful sales ammunition: it's evidence that the market's blocker is trust/UX, not appetite — which is exactly the gap Quintel's reasoning-first Stream is built to close.

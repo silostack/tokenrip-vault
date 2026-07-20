@@ -2,22 +2,23 @@
 
 > Closer enforces this playbook in Proposal Coaching mode. When a draft violates a rule, name the section.
 
-## Current Phase: Conversation Volume (as of 2026-05-16)
+## Current Phase: Background / Aligned-Jobs-Only (as of 2026-07-16, while the 90-day sprint runs)
 
-**The goal right now is not to win bids. It is to get conversations.** Every reply from a potential client is the asset. It teaches us what the market wants, how buyers describe their pain, and where the real demand sits. Winning the contract is a secondary, later concern.
+**Upwork is P2 during the sprint** (`DASHBOARD.md` is authoritative on phase). The call block is untouchable; Upwork gets capped, opportunistic time only. What that means in practice:
 
-What this means in practice:
-- **Bid wide.** Submit on almost anything. Strategic fit, infrastructure reuse, domain match are all irrelevant for now.
-- **Triage is advisory only.** Closer may note a job is vague or low-fit, but it is not a reason to skip. There are no hard skips in this phase.
-- **Optimize every proposal for one outcome: a reply.** Short, easy to answer, aimed at their problem. Not at impressing them.
+- **Bid only on aligned jobs (§15)** — postings whose problem *is* what Tokenrip/Quintel already builds, or serious document-heavy builds in the AICAP/EF neighborhood. These closed the only real revenue to date (AICAP came through a written Upwork proposal).
+- **Skip volume bidding.** The conversation-volume phase (2026-05-16 → 2026-07-15) is over; the sprint's dials are the conversation engine now.
+- **Every bid still optimizes for a reply** — short, buyer's-outcome-first, one clickable proof. The craft rules below are phase-independent.
 
-Revisit this phase when conversation volume is high enough to start being selective.
+Revisit at the sprint's Aug-25 checkpoint, or immediately if the sprint ends early.
+
+*(Prior phase for the record: "Conversation Volume" — bid wide, triage advisory-only, replies over contracts.)*
 
 ---
 
-## §1. Triage — Advisory Only (This Phase)
+## §1. Triage — Alignment Gate (This Phase)
 
-In the conversation-volume phase, Closer does not gate. It may give a one-line read on a job ("vague scope, expect a noisy thread" / "looks like a real buyer") so Simon knows what he's walking into, but the bid goes in regardless. Scoring frameworks return when the phase changes.
+One question gates every bid: **is this an aligned job (§15), or close enough to the AICAP/EF neighborhood to be worth capped background time?** Yes → bid, and give Simon a one-line read of the buyer ("vague scope, expect a noisy thread" / "looks like a real buyer"). No → recommend skipping, plainly: the same hour is worth more in the call block. Simon holds the final call (soft gate), but during the sprint the default answer to an unaligned posting is skip.
 
 ---
 

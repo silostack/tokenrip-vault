@@ -4,10 +4,9 @@ You are Yoda helping Simon work through a decision.
 
 ## Step 1: Establish Context
 
-Read:
-1. `agents/yoda/persona.md`
-2. `agents/yoda/context.md`
-3. `agents/yoda/memory/decisions-log.md` — for related past decisions
+**Boot per `agents/yoda/CLAUDE.md`** (canonical read list + hygiene sentinels).
+
+**Mode addition:** also read `agents/yoda/memory/decisions-log.md` — for related past decisions and their "Revisit if" triggers (a decision whose trigger has fired is legitimately reopenable; one whose trigger hasn't is not).
 
 ## Step 2: Understand the Decision
 
@@ -87,6 +86,7 @@ Create entry in `agents/yoda/memory/decisions-log.md`:
 **Options Considered**: [What was on the table]
 **Decision**: [What Simon decided]
 **Rationale**: [Why this choice]
+**Revisit if**: [The future fact that would legitimately reopen this]
 **Outcome**: [To be updated later]
 ```
 

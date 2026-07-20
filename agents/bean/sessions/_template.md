@@ -10,6 +10,14 @@
 
 [Key insights, shifts, new questions — the stuff worth remembering]
 
+## Collision
+
+[One sentence: which existing idea file does today's thinking collide with most productively?]
+
+## Prediction (if any)
+
+[Falsifiable claim logged to predictions.md this session, or "none"]
+
 ---
 
 *Session note created by Bean.*

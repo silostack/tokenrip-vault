@@ -35,7 +35,7 @@ The opportunity Stauss Paulos opened. He functions as the **channel** (distribut
 
 - **Living briefing:** [[bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing|stauss-vfi-tokenrip-briefing]] — deal / relationship / strategy / risks / decisions.
 - **Domain primer:** [[equipment-finance-domain-primer-2026-05-30]] — the *industry* (durable across the vertical).
-- **Product + build (in `product/quintel/`):** [[quintel-customer-data-first-prd-2026-06-29]] — the canonical **customer-data-first** PRD (supersedes the archived broker-first / three-archetype build architecture).
+- **Product + build (in `product/quintel/`):** [[quintel-sourcing-intelligence-prd-2026-06-29]] — the canonical **customer-data-first** PRD (supersedes the archived broker-first / three-archetype build architecture).
 - **Nodes** (interaction record lives in `bd/calls/`):
   - **Stauss Paulos / VFI** — channel + would-be operating partner. [[bd/calls/contacts/stauss-paulos]]
   - **Bevel — Ted Craver** — arm's-length placement firm; first live intro; cleaner first customer than VFI (no employment conflict-of-interest). [[bd/calls/contacts/ted-craver]]

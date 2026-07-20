@@ -8,8 +8,9 @@ This directory contains documentation for Tokenrip's operational agents — both
 |-------|------|-------------|
 | **yoda/** | Strategic mentor | Coaching, accountability, pattern tracking. Tracks goals, surfaces patterns, holds Simon accountable. |
 | **bean/** | Thinking partner | Idea exploration, sparring, non-obvious connections. Engages with ideas on their own merits — no priority filtering or execution baggage. |
+| **closer/** | Deal execution | Tactical sales coach: call prep, proposal/outreach coaching, follow-up discipline, pipeline review. Owns what gets sent, to whom, by when. |
 
-Persona agents have their own context files, memory, and session logs. They are invoked via Claude Code commands (`/yoda`, `/bean`).
+Persona agents have their own context files, memory, and session logs. They are invoked via Claude Code commands (`/yoda`, `/bean`, `/closer`). Each has a canonical boot list + hygiene sentinels in `agents/<agent>/CLAUDE.md`, and a consolidation command (`/yoda-compact`, `/bean-compact`, `/closer-compact`).
 
 ## System Agents
 

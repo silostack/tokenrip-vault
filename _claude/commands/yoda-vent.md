@@ -88,4 +88,3 @@ End with:
 Update memory:
 - Session note in `_yoda/memory/sessions/[YYYY-MM-DD].md` (type: therapy)
 - Update `_yoda/memory/insights.md` with patterns observed
-- If this reveals a blindspot, consider adding to `_yoda/memory/blindspots.md`

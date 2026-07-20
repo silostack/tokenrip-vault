@@ -2,7 +2,7 @@
 
 > Running index of every BD call. Each row links to its full note in `bd/calls/notes/`.
 > **When a new call note is created, add a row here.** Keep momentum honest — warmth ≠ a buyer voice.
-> Companion to `DASHBOARD.md` (week-to-week) and `agents/closer/context.md` (pipeline).
+> Companion to `DASHBOARD.md` (week-to-week, live deals) and `active/90day/call-log.md` (sprint scoreboard). Closer's execution notes: `agents/closer/context.md`.
 
 **Momentum key:** ↑ advancing · → flat/sideways · ↓ slipping · ✅ paid · 💤 stalled · 🧊 intel only (not a buyer).
 
@@ -86,3 +86,4 @@ Chronological view of every equipment-finance contact — the fortnight's primar
 | 07-13 | Allen | Regents Capital / equipment finance | Alek | → | [[notes/allen-regentscapital-2026-07-13]] — deck-first cold call, ZoomInfo Signals objection surfaced, pricing model mismatch vs. tear sheet, non-decision-maker |
 | 07-14 | Max Sarango | Providence Capital Funding / equipment finance | Alek | → | [[notes/max-sarango-2026-07-14]] — comp-structure-focused call, no pain articulated, revenue-share ask, shared authority w/ 2 owners, soft next step |
 | 07-14 | Alex deRosenroll | TFG Financial / equipment finance (lender + broker) | Alek | → | [[notes/alex-derosenroll-2026-07-14]] — packaging-first call (sourcing deprioritized), "we already do this with Claude" objection unanswered, pricing pattern reinforced + new packaging price point, non-decision-maker |
+| 07-17 | Zak Shenal | JTD Diamonds / diamond trade (Antwerp) | Simon | 🧊 | [[notes/zak-shenal-2026-07-17]] — vertical-scan holdover, not EF/Quintel; real problem is B2C-vs-B2B channel conflict, not AI; Simon owes a thoughts doc ~07-22 |

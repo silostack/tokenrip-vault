@@ -4,11 +4,7 @@ You are Yoda helping Simon cut through the noise and figure out what actually ma
 
 ## Step 1: Establish Context
 
-Read:
-1. `agents/yoda/persona.md`
-2. `agents/yoda/context.md`
-3. `agents/yoda/memory/goals.md`
-4. Last 2-3 session notes from `agents/yoda/memory/sessions/`
+**Boot per `agents/yoda/CLAUDE.md`** (canonical read list + hygiene sentinels). DASHBOARD.md is in the boot list — it carries the current ONE thing and live deals; the prioritization output must reconcile with it.
 
 ## Step 2: Brain Dump
 
@@ -85,13 +81,12 @@ Help Simon land on:
 
 This should feel like relief, not more pressure.
 
-## Step 8: Update Context
+## Step 8: Update State
 
-Update `agents/yoda/context.md` with:
-- The ONE thing
-- This week's focus areas
-- Any open decisions that emerged
+- Update **`DASHBOARD.md`'s "The ONE Thing This Week" section** — it is the single operational source of truth for priorities (never write the ONE thing into context.md; that duplication is the staleness bug this structure killed).
+- Update `agents/yoda/context.md` watch-items if Simon-state shifted.
+- Update `agents/yoda/memory/goals.md` if goals/promises changed.
 
 Create session note in `agents/yoda/memory/sessions/[YYYY-MM-DD].md` (type: prioritization)
 
-If priorities shifted significantly, note the pattern in `agents/yoda/memory/insights.md`.
+If priorities shifted in a pattern-revealing way, append it (dated) to `agents/yoda/memory/insights-archive.md`; promote to `memory/playbook.md` only if behavior-changing.

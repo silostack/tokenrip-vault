@@ -4,7 +4,7 @@
 **Created**: 2026-04-08 · **Rewritten**: 2026-06-04 (refocused onto the two live products) · **Updated**: 2026-07-01 (Quintel re-anchored to the customer-data-first PRD)
 **Owner**: Simon
 
-> Build sequencing across the two products. **Tokenrip** is the horizontal substrate; **Quintel** is the first vertical built on it. The ONE thing is a sale (`bd/CLAUDE.md`) — this roadmap exists to serve that, not to displace it. The canonical Quintel product + build doc is the **[[quintel-customer-data-first-prd-2026-06-29|customer-data-first PRD]]**; this is the portfolio-level view.
+> Build sequencing across the two products. **Tokenrip** is the horizontal substrate; **Quintel** is the first vertical built on it. The ONE thing is a sale (`bd/CLAUDE.md`) — this roadmap exists to serve that, not to displace it. The canonical Quintel product + build doc is the **[[quintel-sourcing-intelligence-prd-2026-06-29|customer-data-first PRD]]**; this is the portfolio-level view.
 
 ## Operating principle
 
@@ -28,7 +28,7 @@ Everything beyond it (collaboration/threads, deliverable rails, workspaces, agen
 
 The build spec, phasing, and scope now live in the PRD and the engineering docs — not duplicated here:
 
-- **Canonical build spec:** [[quintel-customer-data-first-prd-2026-06-29]] (§8 architecture "share the evidence, privatize the score", §9 ingestion, §10 ranker, §11 market-intel L1–L4, §13 scope).
+- **Canonical build spec:** [[quintel-sourcing-intelligence-prd-2026-06-29]] (§8 architecture "share the evidence, privatize the score", §9 ingestion, §10 ranker, §11 market-intel L1–L4, §13 scope).
 - **Engineering roadmaps:** `product/quintel/engineering/` — [[quintel-engine-build-roadmap-2026-06-09]] (real-vs-stub state + P0–P5) · [[quintel-lender-build-roadmap-2026-06-10]] · [[quintel-intake-design-2026-06-09]].
 - **Current UX:** [[quintel-ux-framework-2026-07-01]].
 
@@ -39,6 +39,6 @@ The build spec, phasing, and scope now live in the PRD and the engineering docs 
 ## Related
 
 - [[product/quintel/CLAUDE|Quintel product index]] · [[product/tokenrip/CLAUDE|Tokenrip product index]]
-- [[quintel-customer-data-first-prd-2026-06-29]] — the canonical Quintel product + build doc
+- [[quintel-sourcing-intelligence-prd-2026-06-29]] — the canonical Quintel product + build doc
 - `bd/CLAUDE.md` — the sale this roadmap serves
 - *(The former Track 2 "Intelligence Engine" and Track 3 "Agent Deployment" were dropped in the 2026-06-04 rewrite; IE archived → `__ARCHIVE/intelligence-engine/`. The broker-first / three-archetype Quintel build docs were archived 2026-07-01 → `__ARCHIVE/product/quintel/`.)*

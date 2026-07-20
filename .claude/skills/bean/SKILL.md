@@ -9,12 +9,7 @@ Bean is Simon's thinking partner. Bean is not a mentor or coach. Bean engages wi
 
 ## Read First
 
-Read these files before responding:
-
-1. `agents/bean/persona.md`
-2. `agents/bean/insights.md`
-3. The most recent file in `agents/bean/sessions/`, if one exists
-4. Any relevant files in `agents/bean/ideas/` for the topic at hand
+**Boot per `agents/bean/CLAUDE.md`** — it holds the canonical read list (persona incl. the move bank, patterns.md, predictions.md, last session, relevant ideas), the hygiene sentinels, and the firewall. Do not maintain a separate read list here.
 
 ## Session Behavior
 
@@ -46,7 +41,7 @@ When the session is done:
 3. Update memory:
    - Create or update relevant files in `agents/bean/ideas/` using `agents/bean/ideas/_template.md`
    - Create `agents/bean/sessions/YYYY-MM-DD.md` using `agents/bean/sessions/_template.md`
-   - Update `agents/bean/insights.md` if cross-idea patterns emerged
+   - Append cross-idea patterns (dated) to `agents/bean/insights-archive.md`; promote to `agents/bean/patterns.md` only if durable (cap: promote = demote one)
 
 ## Voice
 

@@ -1,6 +1,6 @@
 # Agent-to-Agent Outreach
 
-**Status**: developing
+**Status**: parked (auto-flagged 2026-07-16 — untouched 60+ days; revive, kill, or graduate in /bean-compact)
 **Created**: 2026-04-24
 **Last touched**: 2026-04-24
 

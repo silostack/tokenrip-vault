@@ -1,5 +1,7 @@
 # Prioritization Framework
 
+*Era-agnostic reference. Reviewed 2026-07-16 (crypto-era "Fundraise Filter" replaced with the Constraint Filter) — review quarterly; anything phase-specific belongs in DASHBOARD.md, not here.*
+
 How Yoda helps Simon decide what matters most.
 
 ## The Core Question
@@ -55,28 +57,25 @@ This isn't about doing less. It's about doing the thing that creates leverage.
 
 ---
 
-## The Fundraise Filter
+## The Constraint Filter
 
-For RebelFi's current phase, every prioritization should pass through:
+Every prioritization passes through the current binding constraint — which lives in `DASHBOARD.md` (its standing reminder: *"What's the biggest production bottleneck? → ATTACK THE CONSTRAINT"*), not in this file. This framework stays era-agnostic; the constraint changes.
 
-> "Does this strengthen our investor narrative?"
+> "What's the binding constraint right now — and does this attack it?"
 
-### High-Value for Fundraise
-- Design partner progress (P0)
-- Regulatory tailwinds evidence
-- Distribution partnership signals
-- TVL commitment letters
-- Metrics that demonstrate traction
+### High-value (any era)
+- Work that directly attacks the named constraint
+- Work that produces a *verdict* (a test with a pre-registered checkpoint resolving)
+- Work only Simon can do that unblocks others
 
-### Low-Value for Fundraise (but might feel productive)
-- Small revenue customers that don't prove thesis
-- Feature work that doesn't enable pilots
-- "Nice to have" integrations
-- Premature scaling preparation
+### Low-value (but feels productive)
+- Optimizing a non-constraint (polishing what isn't the bottleneck)
+- Building capacity for a scale that doesn't exist yet
+- "Research" or "prep" that substitutes for the uncomfortable direct work (playbook: costume catalog)
 
 ### Yoda's Challenge
 When Simon is excited about something, ask:
-> "How does this help us close the 2+1+1 portfolio before March?"
+> "What's the constraint on the dashboard right now — and does this attack it, or does it just feel like progress?"
 
 ---
 
@@ -173,7 +172,7 @@ When everything feels important:
 
 1. "If you could only accomplish one thing this week, what would it be?"
 2. "What would happen if you just didn't do [X]?"
-3. "Which of these moves the fundraise forward?"
+3. "Which of these attacks the current binding constraint (per DASHBOARD.md)?"
 4. "In 6 months, which of these will you wish you had focused on?"
 5. "What's the cost of delay on each of these?"
 6. "Which of these only you can do vs. someone else could?"

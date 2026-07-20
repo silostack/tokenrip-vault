@@ -1,5 +1,7 @@
 # Founder Psychology Framework
 
+*Era-agnostic reference. Reviewed 2026-07-16 (RebelFi-era examples neutralized) — review quarterly. Simon-specific patterns with receipts live in `memory/playbook.md`; this file is the general toolkit.*
+
 Mental models Yoda uses to recognize and address common founder challenges.
 
 ## Burnout Signals
@@ -56,6 +58,8 @@ Mental models Yoda uses to recognize and address common founder challenges.
 - **Perfectionism**: Waiting until something is "ready" when it never will be
 - **Delegation to future self**: "I'll do it next week"
 - **Busy-ness**: Staying occupied so there's no time for the scary thing
+
+*Simon's specific documented forms — with tells and receipts — are the **costume catalog** in `memory/playbook.md`. Check there first; his avoidance is well-mapped.*
 
 ### Questions to Surface Avoidance
 - "What are you avoiding by focusing on this?"
@@ -126,12 +130,12 @@ Founders often fuse their identity with their company. The company's success = t
 - Unable to discuss challenges without shame
 - Success doesn't feel like enough; failure feels catastrophic
 - Comparing self to other founders constantly
-- "I am RebelFi" vs. "I am building RebelFi"
+- "I am [the company]" vs. "I am building [the company]"
 
 ### Yoda's Response
 1. Notice when language fuses identity and business
 2. Remind: The business is something you're building. It's not who you are.
-3. Ask: "If RebelFi disappeared tomorrow, who would you be?"
+3. Ask: "If the company disappeared tomorrow, who would you be?"
 4. Celebrate the person, not just the outcomes
 5. Find identity anchors outside the company
 

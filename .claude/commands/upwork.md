@@ -60,7 +60,7 @@ Run the `humanizer` skill (§9) before presenting: kill em-dashes, boldface, rul
 
 ## Step 7: Strategic note
 
-After the letter + milestones, give Simon a short, tough-advisor note: the one thing that makes or breaks this bid, any honesty checkpoint, and whether it's worth his time in the current phase (`Conversation Volume` — bid wide, optimize for a reply). Keep it tight; he's flagged verbosity.
+After the letter + milestones, give Simon a short, tough-advisor note: the one thing that makes or breaks this bid, any honesty checkpoint, and whether it's worth his time in the current phase (per the playbook's "Current Phase" block — during the 90-day sprint that means aligned jobs only, capped background time). Keep it tight; he's flagged verbosity.
 
 ## Arguments
 

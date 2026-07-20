@@ -1,6 +1,6 @@
 # Skill Packaging & Tool Layer
 
-**Status**: elevated to product canon (2026-05-10)
+**Status**: graduated (product canon, 2026-05-10; vocabulary normalized 2026-07-16)
 **Created**: 2026-05-08
 **Last touched**: 2026-05-10
 **Elevated to**:

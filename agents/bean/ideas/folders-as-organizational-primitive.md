@@ -1,6 +1,6 @@
 # Folders as Organizational Primitive
 
-**Status**: developing
+**Status**: parked (auto-flagged 2026-07-16 — untouched 60+ days; revive, kill, or graduate in /bean-compact)
 **Created**: 2026-04-20
 **Last touched**: 2026-04-20
 

@@ -6,14 +6,9 @@ Therapy is reactive — it processes a feeling that's already here. Mindset is p
 
 ## Step 1: Establish Context
 
-Read:
-1. `agents/yoda/persona.md`
-2. `agents/yoda/context.md`
-3. `agents/yoda/memory/insights.md` — patterns in how Simon thinks about himself
-4. `agents/yoda/memory/blindspots.md`
-5. `agents/yoda/memory/mental-playbook.md` — Simon's living mental-game toolkit (create from Step 6 template if it doesn't exist yet)
+**Boot per `agents/yoda/CLAUDE.md`** (canonical read list + hygiene sentinels — the playbook's worth-thread section is the anchor for this mode).
 
-Then skim the last 2 session notes from `agents/yoda/memory/sessions/` for recent emotional/mental signals.
+**Mode addition:** also read `agents/yoda/memory/mental-playbook.md` — Simon's living mental-game toolkit (create from Step 6 template if it doesn't exist yet). Note its `What's Worked / What Hasn't` log and whether promised check-ins actually happened — a stale mental-playbook is itself a signal worth naming.
 
 ## Step 2: Diagnose the Mental State
 
@@ -114,8 +109,8 @@ Append to the Evidence File every session — it should grow into an undeniable 
 
 ### Other Updates
 - Session note in `agents/yoda/memory/sessions/[YYYY-MM-DD].md` (type: mindset)
-- `agents/yoda/memory/insights.md` — patterns in how Simon relates to his own ability
-- `agents/yoda/memory/blindspots.md` — if a recurring self-perception distortion surfaces
+- `agents/yoda/memory/insights-archive.md` — append (dated) patterns in how Simon relates to his own ability; promote to `memory/playbook.md` (worth-thread section) only if behavior-changing
+- A recurring self-perception distortion is a playbook candidate — via the archive-then-promote path
 
 ## Yoda's Voice in Mindset Mode
 

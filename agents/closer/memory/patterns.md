@@ -1,18 +1,20 @@
 # Closer — Deal & Bid Patterns
 
-> Cross-deal and cross-bid lessons accumulated over time. Closer updates this when a new pattern emerges.
+> Cross-deal and cross-bid lessons accumulated over time. Closer updates this when a new pattern emerges — **only if it changes future behavior. Cap: 220 lines** — promoting may require demoting (fold or delete the weakest entry). Raw session narrative never lands here; it lives in session notes.
+> *Last compacted: 2026-07-16*
 
 ## Stall Patterns
 
 Patterns that signal a deal or bid is decaying. When Closer sees one, it calls it out on sight and prescribes the follow-up immediately.
 
-- **The silence-after-yes.** Prospect or client signals interest, then days pass with no follow-up from our side. The deal decays in that gap. Closer's response: send the follow-up *now*, with a dated next step. (Inherited from the RebelFi "ForumPay pattern.")
+- **The silence-after-yes.** Prospect or client signals interest, then days pass with no follow-up from our side. The deal decays in that gap. Closer's response: send the follow-up *now*, with a dated next step.
 
 ## Winning Patterns
 
-Proposal hooks, framings, and moves that have won work. _(Populated as evidence accumulates.)_
+Proposal hooks, framings, and moves that have won work.
 
-- _(none yet — no replies confirmed)_
+- **The written-proposal → paid-discovery → funded-build ladder (the only confirmed close).** Stephanie/AICAP: won through Simon's written Upwork proposal, converted via a tightly-scoped paid discovery ($3.5K), then a $12K fixed-price MVP funded in full (escrow 2026-07-07). Written-medium selling is Simon's proven lane; the paid discovery cleared the first (hardest) dollar. Full arc: proposal quality → same-day yes on her discovery ask → structure over discounting.
+- **Demo pull beats demo depth.** The two strongest pulls ever (Katharine 6/18 "I don't need a new HubSpot, I need this"; Stephanie 5/26 "name your price") both came off mockups and a conversation, not a finished product. Sell the problem-understanding; the artifact just has to point at it.
 
 ## Proposal Anti-Patterns
 
@@ -50,7 +52,7 @@ When a deal is intentionally structured for maximum customer risk-removal (e.g. 
 Three structural anchors compensate without softening the customer-facing risk-removal:
 
 - **Files-gate (or equivalent input-gate).** The build doesn't start until the customer delivers a meaningful input — anonymized files, workflow walkthroughs, integration credentials, etc. This is a low-friction customer commitment that proves intent. No input = no work begun = no money owed = no exposure. Used on Luai El Haj proposal 2026-05-20 (20 files in week 1 gates the build).
-- **Reference rights signed at kickoff, persistent past refund.** The economic exchange for the discount is the rights, not the cash. Logo, case study, reference-call commitments, and anonymized pattern reuse all signed before build starts and persist for 12 months even if the customer exercises a refund. Cash refund does not extinguish the rights. Template at `bd/firm-direct-strategy/reference-rights-letter-template.md`.
+- **Reference rights signed at kickoff, persistent past refund.** The economic exchange for the discount is the rights, not the cash. Logo, case study, reference-call commitments, and anonymized pattern reuse all signed before build starts and persist for 12 months even if the customer exercises a refund. Cash refund does not extinguish the rights. Template at `__ARCHIVE/bd-motion-a-firm-direct-2026-05-01/reference-rights-letter-template.md` (kept as a reusable artifact).
 - **Substrate-first work sequencing.** Sequence the build so reusable substrate (vertical workflow templates, document recognition patterns, discrepancy schemas) gets produced *first*, and bespoke customer-specific tuning happens *last*. If the customer refunds mid-pilot, Tokenrip keeps the substrate; only the bespoke layer is lost. The substrate is what makes the next pilot cheaper.
 
 These anchors keep the deal commercially honest at full customer-facing risk-removal. They are non-negotiable when a deal goes below the standard floor.
@@ -69,7 +71,7 @@ Used on Luai El Haj proposal 2026-05-20 (Phase 1 = his consultancy, Phase 2 = hi
 
 ## Proof Framing
 
-- **Reframe the same credential per buyer.** RebelFi is one proof asset, but how it's described flexes to the buyer's domain. For a crypto buyer, lead with the specific DeFi/chain detail — it's the strongest domain-fluency signal. For a non-crypto buyer (e.g. mortgage), strip the crypto jargon to plain "a fintech product that's live in production"; the detail is noise at best and reads as off-topic risk at worst. The credential never changes; the framing always does.
+- **Reframe the same credential per buyer.** One proof asset, described in the buyer's domain language. For an in-domain buyer, lead with the specific technical detail — it's the strongest fluency signal. For an out-of-domain buyer, strip the jargon to plain outcome language ("a fintech product that's live in production"); the detail is noise at best and reads as off-topic risk at worst. The credential never changes; the framing always does.
 - **Platform-as-credential beats portfolio-as-showcase.** tokenrip.com/agents only has ~2 agents — too thin to showcase. The strong move is to make Tokenrip itself the trust signal ("a platform I built for running AI agents") and link tokenrip.com, not /agents. "I built the infrastructure agents run on" outweighs "here are 2 agents I made" — and a platform claim can't be weakened by a low agent count, whereas directing a cold buyer to /agents invites them to count two. In a cold proposal, don't link /agents at all; agent walkthroughs belong on the call.
 - **When the posting is about "agentifying" workflows, lead with Tokenrip as the product built for that.** Generic "I build AI agents" undersells. When the buyer wants to take existing workflows and add AI agent automation, Tokenrip *is* the product — frame it as "I built Tokenrip to do exactly this." Stronger product claim, differentiates from freelancers who assemble tools per project. Especially strong when the posting's industry is one we're already targeting (e.g. real estate lending) — say so, it shows the work isn't speculative. Observed on lending agent bid (2026-05-23).
 
@@ -84,7 +86,7 @@ Used on Luai El Haj proposal 2026-05-20 (Phase 1 = his consultancy, Phase 2 = hi
 
 ## Outreach (Firm-Direct LinkedIn)
 
-- **Don't open with "curious."** Every LinkedIn outreach message opens with "curious..." or "I'd love to." Being the 50th kills the message before it's read. Open instead with the discovery posture: "Not pitching you here. We're in discovery, looking for design partners." It disarms the sales-radar, is honest (gameplan Hard Rule #1: no demo before discovery), and signals conversation over sale.
+- **Don't open with "curious."** Every LinkedIn outreach message opens with "curious..." or "I'd love to." Being the 50th kills the message before it's read. Open instead with the discovery posture: "Not pitching you here. We're in discovery, looking for design partners." It disarms the sales-radar, is honest (discovery before demo is the standing rule), and signals conversation over sale.
 - **Bucket before you draft — A/B/Fallback.** One generic "grind line" for every prospect is spray-and-pray; a wrong-but-specific guess (e.g. "COI grind" sent to a technical underwriting specialist) reads worse than no guess and tells the prospect you skimmed. Sort each profile into Bucket A (volume brokerage), B (technical specialist/principal), or Fallback (can't tell → fully open question). Rubric: `agents/closer/insurance-linkedin-outreach.md`.
 - **Offer more than you ask.** First-touch close is "happy to trade notes on what we're seeing across other brokerages" — gives the prospect something worth more than the reply it asks for, and leads instead of leaving the ball in their court. No call ask on first touch; the question is the ask.
 
@@ -158,6 +160,3 @@ Distinct from the cold Upwork rules. When a warm firm-direct prospect asks to se
 
 Used on Alex Khadempour 2026-05-25 (Chief of Staff + Moa links + planned Loom + AI-receptionist-door-closing sentence + case-managers-vs-solo question).
 
-## Notes
-
-This file starts mostly empty. It earns its weight as Closer runs sessions and observes what actually happens.

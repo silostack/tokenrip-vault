@@ -70,7 +70,7 @@ Then apply the type-specific lens:
 **intel** — What did we learn about the market that we didn't know? Capture verbatim
 quotes. Watch for positioning reactions: every "wait, what is it?" moment is free
 positioning data (Simon's known infrastructure-language trap — see
-`agents/yoda/memory/insights.md`). Assess relationship state: did Simon make a genuine
+`agents/yoda/memory/playbook.md`, named traps; full history in `memory/insights-archive.md`). Assess relationship state: did Simon make a genuine
 ally? Did he avoid pitching/closing when he should have been swapping notes?
 
 **firm-direct** — Pipeline analysis: pain evidence (real pain vs. vitamin), objections

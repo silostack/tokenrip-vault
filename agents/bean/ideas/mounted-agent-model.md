@@ -1,6 +1,6 @@
 # Mounted Agent Model
 
-**Status**: developing
+**Status**: parked (auto-flagged 2026-07-16 — untouched 60+ days; likely graduated to product canon via the mounted-agent synthesis — ratify in /bean-compact)
 **Created**: 2026-04-25
 **Last touched**: 2026-04-30
 
