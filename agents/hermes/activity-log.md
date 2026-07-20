@@ -24,3 +24,4 @@ Newest entries at the top.
 Foundation work landed: vault-git-pull SSH fix, `CHARTER.md`, this folder, and the
 first domain cron (distribution-planning) + daily synthesis brief coming online.
 See `active/hermes-tokenrip-operator-design-2026-07-07.md` for the full design.
+- 2026-07-20: Morning brief published — https://tokenrip.com/s/0e592340-dbc6-4cec-a7ee-04de48c0e2ae
