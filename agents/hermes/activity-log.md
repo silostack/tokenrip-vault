@@ -4,9 +4,8 @@ Running log of Hermes's work across distribution, outreach-drafting, and code-pi
 Newest entries at the top.
 
 ---
-
-## 2026-07-27 — Morning brief published
-- 2026-07-27: Morning brief published — https://tokenrip.com/s/c0fed46c-2564-451a-91ff-e616fea578d5
+## 2026-07-28 — Morning brief published
+- 2026-07-28: Morning brief published — https://tokenrip.com/s/ca43f03b-5265-4667-abab-5b0aac96bca4
 
 ## 2026-07-07 — Operator mandate established
 
