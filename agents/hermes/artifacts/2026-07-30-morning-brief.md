@@ -1,15 +1,15 @@
-> Canonical: https://tokenrip.com/s/85e8a490-8928-4c84-806c-1b55d3479fab
+> Canonical: https://tokenrip.com/s/e9b95a57-9383-47e4-9c86-844498e19675
 
-# Morning Brief — 2026-07-29
+# Morning Brief — 2026-07-30
 
-Nothing new since yesterday's brief. The distribution-planner has not produced new
-work since `last_run = 2026-07-28T20:17:36Z` (a no-op heartbeat, identical to
-the 2026-07-25 run); no new drafts have landed in `ops/drafts/` (newest mtime
-still 2026-07-19 — `blog-post-custom-interfaces-on-artifacts.md`); and the
-backlog of 11 items is unchanged from yesterday (6 drafted, 5 new, 0 queued,
-0 done). `ops/outreach-state.json` and `ops/code-pickup-state.json` still
-don't exist (Phase 2 / Phase 3 not built), so those domains are omitted per
-skill guardrail.
+Nothing new since yesterday's brief. The distribution-planner has not produced
+new work since `last_run = 2026-07-28T20:17:36Z` (a no-op heartbeat, identical
+to the 2026-07-25 run); no new drafts have landed in `ops/drafts/` (newest
+mtime still 2026-07-19 — `blog-post-custom-interfaces-on-artifacts.md`); and
+the backlog of 11 items is unchanged from yesterday (6 drafted, 5 new, 0
+queued, 0 done). `ops/outreach-state.json` and `ops/code-pickup-state.json`
+still don't exist (Phase 2 / Phase 3 not built), so those domains are omitted
+per skill guardrail.
 
 For the full picture, see the activity log at
 `/home/dbot/tokenrip-vault/agents/hermes/activity-log.md` (only today's
