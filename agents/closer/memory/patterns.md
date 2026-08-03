@@ -142,6 +142,48 @@ When a motion produces repeated objections and value-language across calls, main
 
 Same demo, opposite temperature: Katharine self-closed ("I don't need a new HubSpot, I need this"), Mike interrogated and committed to nothing. The differentiator is buyer shape, not pitch quality. **Self-proves:** higher deal flow (pilot shows deals in 60 days) + budget authority + already shopping for it. **Stalls:** big-ticket ($50M+, ~1 deal/couple months = unfalsifiable for a quarter) + no authority (must sell up to a skeptical board) + AI-skeptical principals. Prioritize lenders whose flow makes the pilot self-evident inside the refund window. Big-ticket institutional buyers aren't worth heavy Simon-time until the board-ready asset exists.
 
+## The Frame Sets The Price (Quintel, 2026-07-22)
+
+**Seen in:** the same day, the same engine, two buyers. Vickie/Armada categorized it as *"the least qualified lead in the funnel… it's just a lead"* and her CRO balked at $1,500/mo. Stauss framed it as intelligence ("agentic Bloomberg") and volunteered **$7–15K/mo** unprompted.
+
+Across eighteen EF calls, price drew resistance twice and no reaction six times, plus one buyer who self-anchored a counter. **The number is not the variable — the category the buyer files you under is.** "Ranked lead list" prices against a data tool ($500/mo thinking). "The research half of a BDO that never sleeps" prices against headcount ($4–6K/mo thinking). Hand them the frame deliberately, early, before any number.
+
+Corollary: **never discount before value is established, and never when the call is going well.** Three receipts in four weeks (Bo 6/30, Bill 7/22, Paul 7/28) — all three concessions were made *before* being pushed. Paul wasn't objecting to $3,000; he was testing whether we'd fold, and folding in three seconds repriced every future conversation with him.
+
+## Arm The Champion — "I Don't Need Anything" Is Not An Answer
+
+**Seen in:** Field/Ameris 7/27 — a champion with a dated internal meeting 24 hours out, in front of a marketing director and a sales director, who declined materials and had that accepted. Also Mike Ryan (deck for a BlackRock board), Nicole (packet for her manager), Zora ("John"), Kevin (a quote with no reader), Jerman (an exec forum).
+
+Every deal in this motion routes through a room we are not in, and we have never once put something in the champion's hands. Polite buyers always say they don't need anything; they then re-explain a fifteen-minute demo from memory to people who own the incumbent process.
+
+**The move:** send it anyway, framed as a favour, not a sales asset. *"You probably don't need this — but you'd be re-explaining a demo you saw once. Three screens you can share, plus one paragraph on where this fits with what marketing already does. And I'll hold [time] — if they want five minutes live, just add me."* Offering to join the internal meeting costs nothing and has never once been offered.
+
+**Corollary — model who the champion pitches first.** At a shop with an internal marketing team, marketing *builds the lead lists*, so the first approver owns the artifact our demo implicitly criticises. Reframe as amplification ("we rank yours and add the event-driven names a campaign database can't generate"), in writing, before the meeting.
+
+## Never Build Collateral From Our Own Data Without Checking It Upstream
+
+**Seen in:** the Envision deck, 2026-07-29. A sample-lead slide was built from the top-ranked companies for a small-ticket lender's box. Every one of them was a large federal prime contractor that only *looked* small-ticket because `est_ticket` is `revenue × 0.08` and the revenue came from a name-matched third-party lookup. One resolved to the wrong company entirely — a $27.2M DOT contractor pointed at a gunsmith's website. A second had a signal date 19 months older than our record claimed. Full writeup: `product/quintel/quintel-enrichment-data-defects-2026-07-29.md`.
+
+**The rule:** anything that goes on a slide gets verified against the upstream source, never against our own database. The award API, the filing, the permit office. Our enrichment is the thing being sold, so it is the last thing that should be trusted as evidence for the sale.
+
+**The deeper trap, which generalizes past data:** a filter returning results is not evidence the results fit. When a query lines up suspiciously well with a prospect's buy box, check the mechanism that put them there before believing it. Here the filter was satisfied *by the defect* — the wrongness is what made the companies look in-band.
+
+**And when the verified example does not exist, ship without it.** The slide was pulled rather than softened. A missing artifact is recoverable; a prospect clicking our own evidence link and finding a gun shop is not.
+
+**Then find the dataset where the claim is true by construction.** The rebuild proved the better move is not a safer sentence, it is a different evidence base. For a small-ticket lender, a UCC debtor is in-band *because someone already wrote them that paper* — fundability and band are evidenced by the filing rather than estimated, so the defect that broke the first version cannot reach the second. When a proof asset keeps needing caveats, the caveats are telling you the evidence is wrong for the buyer.
+
+**Proof the buyer can check beats proof the buyer must trust.** Named debtor, named incumbent lender, filing number, "go pull it from the state registry" — that is a different category from a count, a methodology slide, or a promised run. It also inverts the credibility problem of being five months old: we stop asking for belief.
+
+## Don't Volunteer A Weakness Nothing Has Asked About
+
+**Seen in:** the Envision deck, 2026-07-29. A "here's where we're strong and where we're thin" slide listed *dental* and *restaurant* as thin — two of the buyer's own published verticals — and made the deck's climax a promise to deliver a coverage count later. Simon killed it: nothing had asked, so why raise it.
+
+Tear sheet §3.1 says name the limit **when the question comes**, and that is cheap credibility. Volunteering the same limit unasked, in writing, to a room we are not in, is not honesty — it is disqualifying ourselves before anyone objected, and it hands a skeptic their argument. The distinction is who raised it.
+
+**The tell:** more than one card or paragraph in a customer document whose subject is *us* rather than *them*. Same family as the §3 no-ceremony rule.
+
+**What to do instead:** leave it out, and have the answer rehearsed for the conversation the artifact invites. If the deck shows three states of examples, expect "do you cover mine?" and answer it straight when asked.
+
 ## Recurring Objections
 
 Objections that come up repeatedly, and the responses that work.

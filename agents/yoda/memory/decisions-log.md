@@ -217,3 +217,9 @@ Simon named the core insight: **pain vs. vitamin is a dimension missing from the
 **Rationale**: The vault's job is process and knowledge that compounds; live operational data belongs where Simon actually works. Rule taken: **an empty tracking file is not evidence of an empty week.**
 **Revisit if**: The Aug-25 checkpoint arrives and the pain-voice register hasn't been maintained — then the register (not the daily data) needs a new home.
 **Outcome**: [Updated later]
+
+## 2026-07-25 — Quintel commercial structure ratified (rate card v1)
+
+**Decision:** Sector packaging retired. Standard model = base + seats: Core $1,500/mo (avg ticket <$500K) / Institutional $3,000/mo (≥$500K), 3 seats included, +$300/$500 per seat, all sectors, uncapped leads, 250 enrichments/mo at-cost beyond. Rev-share (Institutional only, instead of subscription): 0.5% of funded amount (floor 0.35, internal), 12-mo term, dedicated pod, activity-test eligibility + lead register + public-record checks. Armada exception: call-1 no-seat quote honored; scope + 12-mo term + traded concessions instead. Source of truth: `product/quintel/quintel-pricing-structure-2026-07-23.md`; playbook §3/§7 synced. Rate card changes in founder review only, never on a call.
+
+**Revisit if:** (a) 2+ prospects in a band reject the base as mispriced with a stated reason; (b) rev-share attribution produces a real dispute the register/challenge-window doesn't settle; (c) lead volume grows to where uncapped leads materially changes value per seat; (d) the 3-included-seat pod proves smaller than real starting deployments twice running.

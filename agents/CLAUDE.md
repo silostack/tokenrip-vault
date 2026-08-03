@@ -9,8 +9,11 @@ This directory contains documentation for Tokenrip's operational agents — both
 | **yoda/** | Strategic mentor | Coaching, accountability, pattern tracking. Tracks goals, surfaces patterns, holds Simon accountable. |
 | **bean/** | Thinking partner | Idea exploration, sparring, non-obvious connections. Engages with ideas on their own merits — no priority filtering or execution baggage. |
 | **closer/** | Deal execution | Tactical sales coach: call prep, proposal/outreach coaching, follow-up discipline, pipeline review. Owns what gets sent, to whom, by when. |
+| **pm/** | Project delivery (AICAP only) | Reconciles the three AICAP surfaces — vault tracker, the repo at `~/projects/maxi/aicap`, and GitHub Issues — into one ranked worklist. Detects drift, holds the schedule, triages captured notes. Owns truth and sequence, not strategy or client messaging. |
 
-Persona agents have their own context files, memory, and session logs. They are invoked via Claude Code commands (`/yoda`, `/bean`, `/closer`). Each has a canonical boot list + hygiene sentinels in `agents/<agent>/CLAUDE.md`, and a consolidation command (`/yoda-compact`, `/bean-compact`, `/closer-compact`).
+Persona agents have their own context files, memory, and session logs. They are invoked via Claude Code commands (`/yoda`, `/bean`, `/closer`, `/pm`). Each has a canonical boot list + hygiene sentinels in `agents/<agent>/CLAUDE.md`, and a consolidation command (`/yoda-compact`, `/bean-compact`, `/closer-compact`, `/pm-compact`).
+
+`pm/` adds two modes the others don't have: `/pm-sync` (reconciliation only, no ritual — run mid-week) and `/pm-capture "<note>"` (append-only inbox, zero interpretation; triaged at the next `/pm`).
 
 ## System Agents
 

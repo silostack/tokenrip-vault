@@ -4,287 +4,331 @@ tokenrip_id: 5eac860e-a71b-4569-a271-6f1aad2e8e7e
 
 # Quintel Sourcing — Sales Tear Sheet
 
-> **Live reference for Alek/Simon on lender calls.** The objection bank, the value language that lands, and the framing decisions — so nobody improvises the hard answers cold. Update after every call: add objections, refine answers, log what closed.
+> **Live reference for Simon/Alek on lender calls.** Objection bank, value language, framing decisions. Rebuilt 2026-07-28 against every EF call in the log (Stauss 5/28 → Gentile 7/28, 24 notes) and the ratified rate card. Prior version archived at `__ARCHIVE/tear-sheet-versions/quintel-sales-tear-sheet-pre-2026-07-28.md`.
 >
-> **Last updated:** 2026-07-17 (added **§3a — cold-call-stage objection bank**, synced from the 90-day playbook §7: rev-share/pay-per-deal, "send me info," "how much" early, all-referral, "who else uses it," "we have BDRs," "call me in Q4," "not interested," and the referral flip. The **rev-share answer now reflects the rewritten two-way offer** — flat $1,500 **or** $500 base + CRM-attributed rev-share, never stacked; the old "pay full price AND a rev-share on top" model is dead. Added a §4 pointer making the 90-day playbook §3 the canonical current offer. Prior: 2026-07-16 — sharpened the §3 **ZoomInfo Signals** objection answer after reading ZoomInfo's actual product page — the differentiator is now data provenance (inferred web-behavior vs. observed public-record event), not an adjective; see `intelligence/research/quintel/quintel-competitive-landscape-research-2026-06-18.md` §2c for full mechanics). Prior: 2026-07-14, from the Alex deRosenroll / TFG Financial call: added the **"we already do this ad hoc with Claude" make-vs-buy objection** §3 for the packaging module — new, unaddressed on the call — and reinforced the §4 pricing conflict, now seen on 2 consecutive calls: sector-tiered $1,500/mo/sector sourcing pricing quoted again, plus a new $1,000/mo packaging figure not previously documented. Also flagged a packaging-first ICP counter-example to the "sourcing is the hook" default — see §1a note). Prior: 2026-07-13, from the Allen / Regents Capital call: added the **ZoomInfo Signals** objection §3 — new named competitor, unprompted — and flagged an **unresolved pricing conflict** §4, sector-tiered monthly plan quoted on-call vs. the $10K+$5K model documented here. Prior: 2026-07-01, from the Bo Brauer / Hyland + Zora Mehmi calls 2026-06-30 and Alek's live demo mockup: added the on-screen **pre-frame** for "vendors or live deals?" (§1a + §3), the **CRM-replacement** answer (§3), the **augmentation-as-product-copy** framing row (§5), and the **reusable demo artifact** now filling the recurring nothing-to-show gap (§6). Prior: 2026-06-28 §1a Hook≠Position≠Price split + spoken-formula rule + negative-signal handling, from `product/quintel/positioning/quintel-positioning-synthesis-2026-06-28.md`. Earlier: 2026-06-25 deal-intelligence-engine hero + both-sides shift; seeded from Katharine Rudzitis / Empire 2026-06-18 + Mike Ryan / 36th Street 2026-06-22)
+> **Rules for this doc:** pricing is not decided here — the card is `product/quintel/quintel-pricing-structure-2026-07-23.md`. Cold-call scripts are not decided here — the playbook is `active/90day/sales-playbook.md`. This doc owns **what to say when a buyer pushes back**, and it gets updated the day a new objection appears.
+>
+> **Last updated:** 2026-07-28.
 
 ---
 
-## 1. Positioning — lead with the buyer's words
+## 0. Read this before the call
 
-The strongest positioning line came from a buyer, not from us. Use it:
+Eighteen EF discovery/demo calls are in the log. What they actually say:
 
-> **"You don't need a new HubSpot. You need the intelligence layer that's been missing."** *(Katharine, verbatim.)*
+| Fact | Receipt |
+|---|---|
+| **Price is not the objection.** Two buyers pushed back on price (Bo/Hyland 6/30, Bill/Armada 7/22). Six had zero reaction to the same numbers, one self-anchored a counter, one volunteered $7–15K/mo unprompted. | Civista 7/24, Ameris 7/27, Capteris 7/28, Scott 6/25, Katharine 6/18, Stauss 7/22 |
+| **Coverage is the objection.** "Does your data actually reach my end of the market" has been asked five separate times by five separate firms and has never once been answered with a number. | Bo 6/30 · Michael 7/21 · Bill 7/22 · Kevin 7/24 · Paul 7/28 |
+| **Authority is the real killer.** Eleven of the eighteen calls were run with a non-decision-maker. Almost every flat deal in the log is flat for this reason, not for a product reason. | Allen, Nicole, Max, Michael, Alex, Kevin, Field, Jerman, Zora, Bo, Mike Ryan |
+| **Pain is almost never stated.** Only four calls produced a firsthand pain quote (Katharine, Mike Ryan, Bo, Scott). The rest were feature interrogation. Every one of those four came from discovery *before* the demo. | — |
+| **Deck-first / demo-first calls go flat, without exception.** | Allen 7/13, Max 7/14 |
 
-> **Product spine (homepage + collateral, updated 2026-06-25):** *"The deal intelligence engine for equipment finance. It learns what you fund or who you place to, and reads every deal the way you would."* Lead with the **intelligence/decision** — Bloomberg-style (the engine, not a feature), both-sides by construction (a lender *funds*, a broker *places*). Sourcing is the hook *inside* the demo, not the headline; the product is the three layers on top of the signal, never the raw feed (a feed is a news ticker — the commodity Mike and Katharine both dismiss): **inference** (what others don't assemble), **matching** (ranked to your book), **compounding** (sharper on your book over time — the one input Bloomberg can't claim). The prior spine ("it learns how you lend… another originator on your desk") was retired as lender-only once brokers became near-term — see §5. Full architecture: `product/quintel/positioning/quintel-homepage-positioning-spec-2026-06-24.md` (§10-D).
-
-> **One engine, N boxes (lender ↔ broker):** same engine, both sides. A **lender** points it at **one box (their own)**; a **broker** points it at **many (their lender panel)**. Packaging and the learning loop serve both. Lead lender-first, but it pitches to brokers with no different product — see §2b.
-
-- We are **not** a CRM replacement. HubSpot/Salesforce stays. We layer on top — an operating/intelligence layer.
-- We are **not** an out-of-the-box tool like F2. It operates like *another originator on your desk* — "another Katharine" — tuned to your box, your history, your relationships.
-- One-line frame: *"Real-time deal intelligence, tuned to your book or your panel, surfacing deals before they're public knowledge."*
+**So the job on a cold discovery call is not to explain Quintel.** It is to (1) find out whether this shop is even structurally addressable, (2) get one sentence of pain in the buyer's own words, and (3) leave with a dated next step that costs them something.
 
 ---
 
-## 1a. Hook ≠ Position ≠ Price (the split that ends the "signals vs. intelligence" debate)
+## 1. Qualification — the four questions that decide the call
 
-The word "signals" was doing three jobs at once. Separate them and the tension dissolves — full reasoning in `product/quintel/positioning/quintel-positioning-synthesis-2026-06-28.md`.
+Ask these before anything else. Each one has already cost a call in this log when it went unasked.
 
-| Job             | What it is                         | Right answer                                                                                   |
-| --------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------- |
-| **Hook**        | What opens the call                | **Sourcing / "surface deals"** — it's what they lean in on. Keep leading with it.              |
-| **Position**    | What the product *is*              | **An engine that runs on their data** — not a signal feed (a feed is a commodity news ticker). |
-| **Price basis** | What the invoice is denominated in | **Access / capability tier** — never per-signal.                                               |
+**Q1 — "Where do your deals come from today — vendor programs, referrals, or reps working cold?"**
+This is the single highest-value question in the whole motion. It predicts whether the product is even relevant. Four shops in the log source through vendors/partnerships/referrals and are structurally outside the direct-origination pitch as written: TFG (7/14, partnership + point-of-sale), Louwerse/FS Growth (6/30, referral), Nicole/Navitas (7/7, referral-heavy team), Civista (7/24, *"we don't have a direct sales force… we build from within"*). See §3.9 for what to say when the answer is "vendor" — it is not automatically a disqualify.
 
-**Open with the sourcing hook, deliver an engine that runs on their data, price it for access.** Not in conflict.
+**Q2 — "What's your average ticket?"**
+Sets the band (Core under $500K, Institutional at $500K+) and therefore the price, before price is discussed. It's also how you avoid Capteris (7/28), where a $1M+ ticket buyer got a small-ticket demo example.
 
-**Exception — deal-flow origin flips the hook (2026-07-14, Alex deRosenroll/TFG Financial):** the sourcing hook assumes the buyer's flow depends on cold outreach. TFG sources almost entirely through OEM/dealer/marketplace **partnerships and point-of-sale**, not cold calling — and explicitly deprioritized sourcing ("not a ton" of interest, past online-lead-gen attempts unfruitful) while engaging deeply on the **packaging module** alone. For this buyer type, lead with packaging, not sourcing. Before defaulting to the sourcing hook, ask early how the prospect's deal flow originates (cold outreach vs. partnership/point-of-sale) — it predicts which module is the real hook.
+**Q3 — "Who builds the lead lists your reps work — the reps, or a marketing function?"**
+New as of Ameris 7/27. At bank-owned or marketing-fed shops, an internal marketing team owns the lists — which makes marketing the incumbent we're implicitly attacking, and often the first approver our champion has to face. See §3.4.
 
-**Why "runs on their data" is the whole position — three fuels, fused:** (1) public record (fuzzy, everyone has it — the cheap "signal"), (2) their own book (hard — only they have it), (3) the closed-deal graph (only we have it). The signal is the *cheapest* of the three; we sell the **fusion**, not the fuel. The moment their data is in the engine, the output stops being a feed everyone gets and becomes *theirs* — which is what kills the commodity, "who-else-gets-my-deal," and hit-rate objections in one move. Bidirectional, not just a filter: a customer's hard data point (a known capex event) *retroactively re-weights public signals the engine had discarded as noise* — that's positioning, moat, and the sourcing mechanism in one fact.
+**Q4 — "Who signs for something like this, and what's their process?"**
+Not "is this your decision" (which gets a polite yes). At Civista (7/24) the answer was *"I'm not the decision maker"* with no successor named, and nobody followed up — a quote was written for a document with no reader. At Ameris (7/27) the same question, asked properly, produced two named roles and a dated meeting.
 
-**Buildability discipline (sourcing is the hook, NOT the pilot's success metric):** two very different things hide inside "surface deals from public data." **Capability 1** = rank/resurface *their own* flow + enrich the borrowers they know (built on their hard data, improved by market data) — a **dial** (risk = *how much* lift; floor is positive; definitely buildable). **Capability 2** = cold-surface *net-new* borrowers from public data alone — a **switch** (risk = *whether the signal even exists*; outside our control; backtest found ~4 deals in years → real but sparse). **Lead with sourcing, but deliver + measure the pilot on Capability 1; cold sourcing is upside, proven by the backtest, never the thing the pilot must prove.** Full reasoning: `product/quintel/positioning/quintel-positioning-synthesis-2026-06-28.md` §4a.
+**And the one pain question that works:** *"Walk me through the last deal you found out about too late."* Open, specific, past tense. Closed prompts ("would this be useful?") produce the polite yes that Nicole gave (7/7) and teach nothing.
 
-### The spoken pitch — say the FORMULA, never the word "intelligence"
-"Intelligence" is empty until you name the formula (it's exactly what made Alek say "I don't even know what that means"). Say:
+---
+
+## 2. Positioning — say the formula, never the word "intelligence"
+
+The strongest line in the log came from a buyer:
+
+> **"You don't need a new HubSpot. You need the intelligence layer that's been missing."** — Katharine Rudzitis, Empire, 6/18
+
+The second strongest also came from a buyer:
+
+> **"They're trying to pitch working capital leads that just get farmed out to everybody. This is the first one I've seen taking a different approach."** — Field, Ameris/Balboa, 7/27
+
+**Never say "intelligence" or "AI-powered" or "tailored" on its own.** Those words landed flat on Allen (7/13, buyer's paraphrase back was *"buzzword, yeah"*) and drew Alek's own *"I don't even know what that means."* Say the formula:
 
 - **Opening (hook + position in one breath):** *"We take your last hundred deals — what closed, what didn't, and why — and run the whole public market through that. Instead of a list of 1,000 names, you get the 200 that look like the deals you actually win, and a flag on the ones not worth a dial. It gets sharper every deal you close."*
-- **One-liner:** *"An origination engine that runs on your own book. The market, filtered to how you actually fund — not a list everyone else can buy."*
+- **The 15-second answer** (playbook §3, use verbatim): *"We're like an entry-level BDO who reads the entire public record and never sleeps. Quintel watches UCC filings, permits, and contract awards across your sectors and hands your originators a ranked call list of companies about to need equipment financing — with the why behind every name, before the deal gets shopped."*
 - **Not-a-commodity:** *"A list vendor's job is to give you more names. Ours is to give you the right ones and take the rest away. We bet on your hit rate, not our list size."*
-- **The closer (= the moment we stop being a commodity feed):** *"Let's run it on one of your own deals."* On day one, pre-data, we only have public data — i.e. we *are* the commodity feed; the position only becomes true once their data is in it. So the live-drop is both the closer and the unfakeable demo. **Input ≠ demo — they're coupled:**
-  - **Default ask = the finished package PDF** (one scrubbable file they already produce) → run **Demo B (Read/Match):** scored read + public-record **enrichment the file didn't have** ("here's what we found on this borrower") + **lender match where their actual funder lands top-3 plus alternatives they didn't try** (net-new, verifiable on a deal they know cold). Light ask, strong for brokers.
-  - **Heavier ask = the document set** (the attachments folder, often already bundled) → run **Demo A (Assembly):** extraction-with-provenance → spread → assembled scored package → path-to-fund. Use only when *packaging* is the pain (Scott: "the issue is writing the credit memo"). The magic = provenance on *their* numbers ("$28M EBITDA, pulled from pg 3 of what you sent") — un-pre-bakeable.
-  - **Don't ask for the raw blob** (weeks of emails) — too heavy. Sequence: Call 1 = pitch + canned demo on an *anonymized* deal we control → bridge "send one scrubbed closed deal" → Call 2 = run live = the close. Full breakdown: `product/quintel/positioning/quintel-positioning-synthesis-2026-06-28.md` §9.
 
-**Pre-frame the demo BEFORE sharing the screen** *(Bo Brauer, 2026-06-30 — "are those vendors or actual live deals?" cost three back-and-forths mid-demo)*: one line, up front — *"These are businesses that fit your book with public signals they may need financing soon — a smarter cold-call list, not confirmed live deals."* The mockup now carries this frame as **on-screen copy** (surfaced signals read *"a prompt to reach out, not a prediction that a deal will fund"* + *"not in your CRM record"*), so the frame lands before confusion can form. This is the dial-vs-switch discipline made visible: promise the *dial*, public signals are upside, never "live deals."
+**The single best 40 seconds of product explanation in any transcript** is the second/third-order walk. It has produced spontaneous enthusiasm on four separate calls (Bill/Armada finished the thought himself on a $183M award; Field said *"that's cool, very nice"*; Paul called it the clearest idea on the call; Kevin accepted it conceptually). Use it early, not at minute 37:
 
-### Negative signals ("don't call these") — pressure-tested
-- **Confident negatives = deterministic only** (wrong asset class, too small, out of geography, already financed per a fresh UCC). *Probabilistic* "low-probability" suppression is **more dangerous than a positive signal** — a false negative kills a real $1–100M deal *silently* (nobody calls a suppressed lead, so we never learn). Only suppress what's defensible on a record.
-- **It's the bottom of the ranking, not a standalone product.** We rank their own pipeline; "don't call these" falls out the bottom. Don't sell it as a separate noise-filter (that makes us a feature on someone else's list).
-- **It needs more trust to act on than a positive** (getting a 30-yr broker to *not* call 500 names on a new vendor's say-so is a high bar — loss aversion → they call anyway). Treat as a **phase-2 expansion after trust**, not a phase-1 pitch.
-- **Best use today = proof we're not a list vendor** (the "take the rest away" line). A commodity feed would never cannibalize its own volume metric.
+> *"Tesla announces a facility in Georgia. I'm not financing the $300M plant — but what do they need? The site contractor, the landscapers, the guys hauling material. Those are the ones who suddenly need equipment, and nobody's watching that chain."*
+
+**Match the example to their ticket band.** At Capteris (7/28) the landscaper example was told to a $1M+-ticket buyer. Same story, right size: *"the contractor doing the $40M sitework package."*
+
+**Pre-frame the demo before the screen goes up** (Bo 6/30 cost three back-and-forths on *"are those vendors or actual live deals?"*): *"These are businesses that fit your box with public signals they may need financing soon — a smarter cold-call list, not confirmed live deals."*
+
+**Buildability discipline.** Lead with sourcing, but deliver and measure on **Capability 1** — rank/resurface their own flow and enrich borrowers they already know. That's a dial (how much lift, floor is positive). **Capability 2** — cold-surfacing net-new from public data alone — is a switch (whether the signal exists at all; the backtest found real but sparse hits). Sell the dial, let the switch be upside. Full reasoning: `product/quintel/positioning/quintel-positioning-synthesis-2026-06-28.md` §4a.
 
 ---
 
-## 2. Value metric — net-new deals, NOT batting average
+## 3. Objection bank — ranked by how often it has actually been asked
 
-The single most important reframe. A buyer (Mike) handed it to us after we fumbled the "hit rate" question — own it from the front next time.
+> Format: objection → answer → why. 🔴 = we handle this badly today. 🟡 = mixed. 🟢 = solved, keep using it verbatim.
 
-**Do NOT** get drawn into quoting a prediction-accuracy number. **Reframe to net-new funded deals you'd otherwise miss.**
+### 3.1 🔴 "Does your data actually reach my end of the market?" — **asked 5x, answered with a number 0x**
 
-> "You don't need a high hit rate — you need the misses cheap and the hits huge. A miss costs one wasted outreach. A hit is a $1–100M funded deal. That's venture math. And the comparison isn't perfect accuracy — it's your current process, where most of the companies you grind through aren't in-market either."
+Every variant, same question:
+- Bo/Hyland 6/30: *"Is there additional info on email addresses, BD reps… like PitchBook?"*
+- Michael/Providence 7/21: company-size and contact-richness filters — *"we could do that,"* never shown
+- Bill/Armada 7/22: *"You got a truck driver with a fleet of two. You're not going to have a lot of information on that fella."*
+- Kevin/Civista 7/24: *"I'd like to see, if we got into our industries, how many companies would actually be in that."*
+- Paul/Capteris 7/28: *"Put company revenue 100 million. I just want to see."* — the query never loaded and the call moved on
 
-ROI anchor (Mike's own logic): the tool competes against **a sales hire** (~$110k all-in, may wash out in 6 months), not against ZoomInfo. One incremental funded deal pays for years.
+**Answer:** *"That's the right question and I'm not going to talk around it. Public signal does thin out at the very small end. Here's what I'll do — give me your sectors and ticket band and I'll run your actual box and come back with the count: how many companies surfaced in your verticals in the last 90 days, and how many sit under [their floor]. If the number's thin, you'll hear it from me first."*
+
+**Why:** It converts the one question we cannot currently answer into a delivered commitment and a reason to talk again. Naming a limit and returning with data is the cheapest credibility purchase available to a five-month-old company. Also: one run answers three open deals at once.
+
+**⚠️ Standing gap.** The count does not exist. It is a P0 item on DASHBOARD (*"200 real surfaced companies → email/mobile hit rate by revenue band"*). Until it exists, **every** call ends with this promise and no delivery. Do not make the promise a fifth time without producing it.
+
+### 3.2 🔴 "Are you working with my competitors? Aren't we all getting the same leads?" — **asked 4x, answered three different unkeepable ways**
+
+- Mike Ryan 6/22 → *"one company per buy box"*
+- Katharine 6/18 → same promise, **overlapping box**
+- Field/Ameris 7/27 → *"the lenders we have using this are on the larger ticket side, two to 100 million"* — Armada ($20K–$500K) and Civista ($250–500K) both sit inside Ameris's $75–500K band and will falsify it the moment either signs. Also generalized from n≈1 four days after the honest count was *"two people currently using it."*
+
+**The house answer — use this, nothing else:** *"Two lenders pointed at the same public record don't get the same list. The ranking runs on your box, your history, your funded book — two buyers never get the same output. The edge isn't owning the data, it's that nobody reaches your deals faster or more relevantly than you. If true category exclusivity in a defined segment matters to you, that's a premium tier and we can price it."*
+
+**Rule: never answer exclusivity with a claim about who our other customers are.** Segment separation is the same scarcity promise in a new costume, and it has an expiry date. The personalization answer has none, because it's true.
+
+**The strongest version, when the buyer has a back book:** exclusivity becomes a *fact*. *"Nobody else can be sold which of **your** funded deals are coming up for replacement."* Ameris/Balboa is the archetype — tens of thousands of historical UCC-1s naming them as secured party, and they already run blind reactivation off application age. Applies to any established lender.
+
+### 3.3 🔴 "We already do this ourselves / I'm building my own" — **4x and accelerating, now from a decision-maker**
+
+- Zora/Mehmi 6/30: HubSpot + GPT for the underwriting half
+- Louwerse/FS Growth 6/30: built their own AI raise-tracker — **never probed**
+- Alex/TFG 7/14: *"we're doing this today with Claude, we just haven't created an agent"* — **went unanswered on the call**
+- Paul/Capteris 7/28: *"I had a summer intern build this for me… I gotta work through that process first"* — from the only true economic buyer in the log, and it is the gating factor on the deal. He also clocked the UI: *"you kind of got that Claude accent."*
+- **Rob/Wingspire 7/28: the builder was on the call.** Rob pulled his **VP of Technology onto the line specifically to say "we're already doing that"** — *"he's working with Claude to build accounts that should be targeted… so I don't know if he's already working on something like this."* Spencer then sat through the entire demo **in silence and was never asked a single question.**
+
+**🔴 Rule: when a technical evaluator is in the room, engage them by name in the first two minutes.** Silence is not consent — it is a verdict you haven't heard, and it gets delivered to the economic buyer in a room you aren't in. *"Spencer, that's the question I most want answered — what's it covering today, and where does it break? I'd rather find the overlap now than sell Rob something you're already halfway through."*
+
+**Answer — diagnose first, then name the hard part:** *"What's it doing well so far? … And where does it break — is it the scraping, or is it matching the same company across a permit, a UCC filing and a job posting when the name's spelled three different ways? The scrape is the easy 20%. Entity resolution and scoring against your box is the part that eats months, and it's most of what we've spent six months on. Who maintains it when the intern goes back to school? Want to run a week of your output next to ours on your buy box?"*
+
+**Why:** Any competent shop can now get a plausible-looking scraper and UI out of an LLM in weeks, and buyers know it. **Never argue that the capability is hard to reproduce.** Argue the system layer: corpus depth, entity resolution across sources, scoring tuned to their box, and who owns it in month nine. You cannot displace a competitor you have not diagnosed — and on Capteris nobody asked a single question about it.
+
+### 3.3a 🔴 Never describe a named customer — and never deny a correct guess with a falsehood *(NEW 2026-07-28, Rob Lewis / Wingspire)*
+
+Telling an anonymised customer story, Simon gave enough detail that Rob identified **Katharine at Empire** — a live deal in our own pipeline and a peer institution to Wingspire — then denied it with *"we haven't spoken to Empire,"* which is untrue, to a buyer who had already said *"I think I know who she is."*
+
+**Tell the mechanic, never the identity:** *"One lender we work with keeps a watchlist over a thousand lines long and needs the portfolio watched rather than the list re-read."* No geography, no gender, no first name, no segment.
+
+**When they guess — same sentence whether they're right or wrong:** *"I don't confirm or deny who we work with. That's the same protection you'd get."*
+
+**Why:** it is true in every case, so it never has to be walked back, and it converts a leak into a trust signal. This is the mirror of the VFI name-drop flagged on the Katharine call itself (6/18) — we now have the failure in both directions. Note it also compounds §3.2: a buyer who believes a competitor is a customer has heard an exclusivity answer we never gave.
+
+### 3.4 🟡 "Our marketing team already builds our lists" — **new 7/27, expect it at every bank-owned shop**
+
+Field/Ameris: *"We do have an internal marketing team that basically does a lot of emails, mailers, web traffic — and they create lists based off of those items."* Then he named the **marketing director** as approval stop #1. Our demo had opened by describing exactly that output as the inferior alternative.
+
+**Answer:** *"Marketing keeps producing the list — we don't replace it. We rank it, so your reps work the top of it instead of the middle, and we add the names a campaign database structurally cannot generate. A company that just won a federal contract has never clicked your email. Marketing gets a better-converting list attributed to their function."*
+
+**Why:** A marketing leader who hears "your lists are the problem" secondhand kills the deal in ten minutes and never tells us why. Framed as amplification, marketing becomes the co-buyer instead of the blocker. **This must be in writing before any internal meeting** — a champion cannot be trusted to reconstruct the nuance from memory.
+
+### 3.5 🟡 "How do you differ from ZoomInfo? They have Signals." — **3x unprompted (plus a 6sense variant)**
+
+Allen 7/13 (pulled it up live on his own screen), Max/Providence 7/14 (already under contract), Zora 6/30 (6sense). Katharine 6/18 volunteered the *opposite* — that ZoomInfo *"doesn't do much more than a Google alert could tell me."*
+
+**Answer:** *"Worth being precise about what ZoomInfo actually reads — it's browsing behaviour: article reads and keyword searches, matched back to a company by IP address. That's an inference, one step removed from anything real happening. We read the public record directly — UCC filings, permits, contract awards. A company physically expanding, winning work, or pledging equipment as collateral. That's not an inference, it's an event. Then we rank it against your last hundred deals, which ZoomInfo has no concept of. Most of our conversations are with ZoomInfo customers — it's enrichment, we're detection. What did their intent product actually surface for you last quarter?"*
+
+**Why:** The first version of this answer reached for "tailored" and "AI" and got *"buzzword, yeah"* from Allen. A buyer who already owns a signals product hears adjectives as feature parity. Data provenance is falsifiable and harder to wave off. Full mechanics: `intelligence/research/quintel/quintel-competitive-landscape-research-2026-06-18.md` §2c.
+
+### 3.6 🟡 "We'd want rev-share / pay per funded deal" — **3x, and one buyer rejected subscription outright**
+
+Max/Providence 7/14 (asked three times in one call, offered to share their 27–30% margin), Michael/Providence 7/21 (re-raised, unresolved), Jerman/Onset 7/23 (*"usually it is per deal… when the deal gets funded, then you guys would get paid"* — and Alek accepted it live without founder alignment).
+
+**Answer — risk-frame first:** *"The founding deal already carries your risk: $1,500 flat, month-to-month. Downside is one month. Fire us if it doesn't produce."* If they genuinely want performance comp **and they're Institutional band (avg ticket $500K+)**: *"Half a percent of the funded amount on deals we source, no monthly fee — 12-month term, a dedicated pod of two or three reps working the feed, and attribution runs off a timestamped register cross-checked against the public record, so nobody argues over whose deal it was."* Then either way: *"But structure's the second conversation — first tell me about the last deal you missed."*
+
+**Rules:** Quote 0.5%, never below (floor 0.35% is internal). Small-ticket shops asking for rev-share get the risk-frame and a hold — per-deal comp on $200K tickets doesn't work for either side. Max two rev-share deals in the first ten customers. Never accept a model change live; *"let me come back to you"* is the correct answer. Full terms: `product/quintel/quintel-pricing-structure-2026-07-23.md`.
+
+**Why it keeps coming up:** EF lenders anchor on the broker comp model, not SaaS. Onset pays for essentially nothing on subscription. This is buyer psychology across the vertical, not a quirk.
+
+### 3.7 🟡 "You're a brand-new company — how many customers do you have?" — **3x**
+
+Mike Ryan 6/22 (*"brand-new company with three customers… how do I get the board comfortable?"*), Kevin/Civista 7/24, Paul/Capteris 7/28 (full founder-vetting sequence: age, co-founder, how they met, model stack).
+
+**Answer:** *"Two live, ten onboarding — which is exactly why the rate is what it is and why you'd get direct build access. You're not customer number four, you're a design partner: we configure to your verticals rather than the other way round, and founding terms are locked for a year. And the comparison isn't us versus an established vendor — it's this versus a $110K BDR hire who might wash out in six months."*
+
+**Why:** Honesty scored 4/5 at Civista and held credibility at Capteris (*"so you're fine"*). Do not inflate the count — Paul explicitly checks. Reframe the risk comparison away from established-vs-startup (where we lose) to tool-vs-hire (where we win).
+
+**Do offer the reference call.** VFI is better told as co-build depth than as a logo: *"VFI's a direct lender out of Utah — they've been building this alongside us for six months, which is why the buy-box logic is a lender's logic and not a data vendor's. Happy to set up a call."*
+
+### 3.8 🟡 "What's the batting average / how do you know it's high intent?" — **asked 3x in one call, plus a credibility variant**
+
+Mike Ryan 6/22 (three times, dodged, and the buyer eventually reframed it *for* us). Bill/Armada 7/22 asked the intent version and got an invented 5–6× lift claim in response.
+
+**Answer:** *"I won't quote a batting average — we're five months in, and any vendor who quotes one is guessing. The unit that matters is net-new funded deals you'd otherwise miss. The misses are cheap — one wasted outreach. The hits are a funded deal. And the comparison isn't perfect accuracy, it's your current process, where most of the companies your reps grind through aren't in-market either. What's your reps' current application rate off a self-built list? Put this next to that number after 30 days and you'll know."*
+
+**Why:** Refusing a fake number reads as honest; inventing one ends the relationship the first time it's tested. **Never quote a lift multiple.** With this few customers, credibility is the only asset that doesn't scale down.
+
+**If they ask for the backtest:** it's a *mechanism demonstration, not a counterfactual*. Never say "our engine would have surfaced this." Say *"these signals were public on these dates; assembled, they point to an equipment need; your tools didn't assemble them — check it against your own alert history."* Four published Empire cases exist (Capital Aggregates, Revere←Eos, NineDot, Tangent). For a skeptic lead with the deterministic ones (a filed air permit, an interconnection queue) — a government filing can't be argued with. Save the multi-signal convergence cases for last, and name what the backtest does *not* prove.
+
+### 3.8a 🔴 "My reps will use it for a month and then stop" — the adoption objection *(NEW 2026-07-28, Rob Lewis / Wingspire)*
+
+> *"Reps start using it, they don't stay consistent with it, and then three months go by and it's like, all right, we're no longer going to use Quintel."*
+
+This is not a price objection and it must not be answered with a discount. It was, on this call, and the buyer then **rejected the money-back offer outright** — *"I don't play those games. We either try it, we like it, we use it, or we don't."* A sales leader is not afraid of losing $3,000; he's afraid of buying shelfware and looking careless in front of his CEO.
+
+**Answer with a mechanism:** *"That's the right worry and it isn't a money problem. Here's what I'd do: I onboard your reps personally, and every Friday you get one page — who logged in, how many surfaced companies each rep actually contacted, and what came back. If a rep isn't using it by week three, you'll know before I do. You're not buying a tool, you're buying a number you can check."*
+
+**Corollary — one seat is the worst possible pilot, and say so.** When a buyer floats shrinking to a single rep, don't price it: *"One rep is the weakest test — he gets busy for two weeks and you've learned nothing. Your three grinders across [their named desks] is the real test."* Uses their own team list to argue for the larger deal without discounting.
+
+### 3.9 🟢 "All our business is vendor / referral / repeat" — **4x, and it is not always a disqualify**
+
+Louwerse 6/30, Nicole 7/7, Alex/TFG 7/14, Kevin/Civista 7/24.
+
+**First, probe once:** *"Rough number — what share of your volume is those channels? And if a financeable deal existed in your box outside them, would you even want to see it?"*
+
+**If the answer is a true referral shop where the same partners source and underwrite** (Louwerse: *"we do all the underwriting ourselves"*), disqualify cheerfully, ask for a referral, out in 90 seconds. The product's core mechanism closes an information gap *between* origination and credit — where those are the same people, the wedge doesn't degrade, it disappears.
+
+**If it's a vendor-driven lessor, run the vendor wedge instead** — Kevin/Civista constructed this himself and confirmed it emphatically: *"we did the deal for your customer, why don't we work with you. Going backward."* Say: *"Then let me not pitch you a BDO tool. Pick a dealer you want a program with — we surface the end users buying that equipment in the next 90 days. You fund two of them, then walk into that dealer with two of their own customers already financed. Does that get you a vendor meeting you can't get today?"* The metric changes from deals funded to vendor conversations opened, and the ROI denominator is one recurring vendor relationship, not one ticket.
+
+**Why this matters now:** Civista and Armada are both vendor-majority books. The current script — *"instead of ten BDOs, one good sales guy"* — reads as irrelevant to any shop without a direct sales force.
+
+### 3.10 🟢 "Would this replace our CRM?" — solved, keep verbatim
+
+**Answer:** *"AI intelligence on top of your CRM, not a replacement — HubSpot or Salesforce stays, we're the layer that reads and ranks."* Bo 6/30 scored this 5/5 (*"got it, yep, great"*). The product says it too: *"Quintel surfaces and scores — your team works the lead."*
+
+### 3.11 🟢 "Won't the leads dry up over time?"
+
+**Answer:** *"Two things — companies cycle in and out of your box, and equipment needs are recurring, not one-and-done. New entrants, change of control, contract awards, refresh cycles. The pipeline refills."* Then the moat beat: *"And every decision you make re-trains it, fund or decline. 'Pass, collateral's too specialized' sharpens the box as much as a funded deal does. It doesn't decay, it tightens."* Mike Ryan conceded *"good point"* on this one.
+
+### 3.12 🟢 "Are those vendors, or actual live deals?"
+
+Pre-empt it (§2). If it lands anyway: *"Businesses that fit your box, with public signals they may need financing soon. A prompt to reach out, not a prediction that a deal will fund."* The UI now carries this as on-screen copy.
+
+### 3.13 🟢 "How is the intel sourced — real purchases or AI assumptions?"
+
+**Answer:** *"Inferred, deliberately — if it's already announced, it's too late for you. SEC filings and the 8-Ks that name private counterparties. Federal contract awards from USAspending. UCC lien maturities for refi timing. Permits and regulatory triggers. Utility interconnection queues. Then we extrapolate second-order effects."* Be honest that it's inference — buyers respect the candour, and Katharine specifically punished the vague version of this answer.
+
+**🔴 Corollary — never confirm a buyer's guess about our supply chain.** On Capteris 7/28, Paul guessed *"Hoover's,"* Alek agreed, and Paul then named it as his single biggest reason for interest. Hoover's is a D&B company-profile product, not a UCC bulk-filing source. Provenance answers must be rehearsed, precise, and volunteered. When unsure: *"Let me confirm the exact mechanics and put it in writing — I'd rather be precise than fast."*
+
+### 3.14 🟢 "Send me some information"
+
+**Answer:** *"Happy to — so I send the right thing, 30 seconds: [the missed-deal question]. … Better yet, the info that matters is what this finds in your sectors. Twenty minutes Thursday and you'll see your own market, not a brochure."*
+
+### 3.15 🟢 "How much is it?" (early, before pain is established)
+
+**Answer:** *"$1,500 a month founding rate — every sector, three seats, the whole market ranked against your box. Before you anchor on that, it only makes sense if the sourcing gap is real. [Back to the pain question.]"* Confident number, no wobble, no discount on warmth.
+
+### 3.16 🟢 "We have BDRs / our reps already do this"
+
+**Answer:** *"Keep them — this is what makes them dangerous. Your reps work leads; this decides which leads deserve them. It's the research half of an entry-level BDO at a tenth of the cost, feeding closers you already pay."*
+
+### 3.17 🟢 "Call me in Q4" / "Not interested"
+
+*"Will do — one thing before I go: is that timing, or is this a polite no? Both are fine, I just track them differently."* / *"Fair — before I let you go: is that 'we have sourcing solved' or 'bad Tuesday'? … Understood. Who in your world is still hunting cold?"*
+
+### 3.18 The referral flip (a non-decision-maker is on the line)
+
+*"This is really a [CCO / head of originations] conversation. What's the best way to get 20 minutes with [Name] — and can I say you pointed me right?"* Given that eleven of eighteen calls were with non-buyers, this is the most-needed move in the bank. Run the call only to earn the intro.
+
+### 3.19 IP leakage (brokers specifically)
+
+Scott Rumble 6/25: *"You could give all our information to another brokerage — all our tricks of the trade."* For a premium brokerage the process *is* the moat, and this is the emotional gate the whole deal passes through. Volunteer the answer before they ask twice: *"Before you send a single document I'll sign an NDA. Your agent's memory is single-tenant — yours alone, never pooled or used to train anyone else's. As a new entrant, leaking your IP would end us."*
 
 ---
 
-## 2b. Broker perspective (one engine, N boxes)
+## 4. Pricing — the card, and the five rules for talking about it
 
-Lenders are the primary target, but the same engine pitches to **brokers / placement desks** with no different product — it's just pointed at **many boxes (their lender panel)** instead of one. Grounded in the Bevel/Ted call (placement firm, ~$450M placed last year across ~75 lenders, matched manually off a 1990s unjoinable database; validated the underwrite→match→draft flow hard — "yes, yes, yes, and yes").
+**The card is `product/quintel/quintel-pricing-structure-2026-07-23.md` (ratified 2026-07-25). Quote from it and nothing else.** In one breath:
 
-**How the pitch shifts for a broker:**
-- **Source** — find deals your peers haven't seen yet (same sourcing edge).
-- **Package once, submit to many** — assemble each deal one time, then format it for each lender you submit to. (A lender packages for one credit team; a broker packages for many.)
-- **Match by revealed appetite** — rank your panel by who actually funds this profile, at what price — so you stop guessing and stop re-submitting to lenders who'll decline.
-- **Learn from every lender's answer** — a pass, and the reason for it, sharpens which deals you send that lender next (the broker-side of declines-as-training).
+- **Core** (avg ticket under $500K): **$1,500/mo** founding · 3 seats · +$300/seat · all sectors · uncapped leads · 250 enrichments/mo · month-to-month · **15%** off with a year prepaid
+- **Institutional** (avg ticket $500K+): **$3,000/mo** founding · same structure · +$500/seat · same 15% annual
+- **Rev-share** (Institutional only, instead of not on top): 0.5% of funded amount, floor 0.35% · 12-month term · dedicated 2–3 rep pod
+- **Armada** is the one grandfathered exception (Appendix A). Every new deal is on the card.
 
-**Value metric — NOT the BDR-replacement frame.** A lender compares Quintel to a $110k BDR hire (§2); a broker doesn't. For brokers the metric is **placements: more of them, faster, with less manual matching, and without burning lender relationships on deals outside their box.** ROI anchor: a broker earns ~2–4 points per placement — one extra placement, or a few hours saved per deal across the book, pays for the tool. Immediate win: kill the manual-matching grind (Bevel's 1990s database). Compounding win: a matching engine that knows your panel's real appetite better every month.
+**The five rules, each written from a mistake already made:**
 
-**Broker-specific objections (deltas from the §3 lender bank):**
-- *"I already know my lenders — I have the relationships."* → You do, and we don't replace them. Quintel remembers which lenders funded what, at what price, and why the others passed, so you stop re-pitching a no. The matching runs on **your** placement history, not a generic list. Relationships stay yours; the memory of them gets sharper.
-- *"Are competing brokers getting the same lender intel / the same deals?"* → Personalization-as-moat, broker flavor: the ranking runs on **your** panel, **your** outcomes, **your** relationships — two brokers never get the same list. The edge isn't owning a lender list (everyone has lenders); it's that nobody knows your panel's real appetite better or reaches your deals faster.
-- *"Won't I burn a lender relationship if the tool sends junk?"* → The opposite. It routes deals **to** the lenders that fund them and **away** from the ones that won't, so you protect the relationship instead of spending it.
-- **Exclusivity:** same rule as lenders — personalization-as-moat default, exclusivity only as a paid premium tier (§5). Never "one company per buy box."
+1. **Never quote a number this doc doesn't contain.** Five different structures were quoted in six weeks — $10K setup + $5K/mo, sector-tiered $1,500/$3,000/$5,000, $1,000/mo packaging, flat-or-rev-share, and $3,000 for 3 users. Two prospects comparing notes ends the credibility. Ameris 7/27 was the first call to quote the card correctly — keep that streak.
+2. **The annual discount is 15%.** It was stated as "50% off" on Capteris 7/28 while the buyer computed ~15% and neither corrected the other. Two different deals now exist in two heads.
+3. **Don't discount before value is established, and don't discount when the call is going well.** Four receipts, all four volunteered *before* being pushed: Bo 6/30 (*"what do you think is reasonable?"* → lowball, no counter), Bill/Armada 7/22 (free fourth sector, unprompted, against an objection that hadn't been re-raised), Paul/Capteris 7/28 ($500/mo conceded in under three seconds on a price he'd already called *"reasonable"*), **Rob/Wingspire 7/28** (the $1,500 Core price *plus* "I'm sure there's something we could work out," in reply to a packaging question from an Institutional buyer who had just accepted $3,000 without blinking).
+   **The specific trap: a seat-count question is not a price objection.** *"Could I just do one rep?"* means *how do I test this cheaply*, not *this costs too much*. **Say:** *"The band keys on your average ticket, not on how many reps use it — you're on the $3,000 plan whether that's one seat or three."* Then argue the bigger deal on test quality, not price (§3.8a).
+4. **Bound the CRM integration in writing, every time.** Given away free twice in four days — Civista 7/24 (*"assuming it's not a two-week sprint… no"*) and Ameris 7/27 (*"integration with CRM, all that comes with it"*), the second at a public bank holding company with an enterprise Salesforce org, at $1,500/mo. **Say:** *"Standard export and webhook into your instance is included. Custom objects or a security review get scoped separately."*
+5. **Have the expansion number before it's asked.** Field asked twice, unprompted, about a company-wide rollout and got *"we could work something out"* — which from a $1,500 anchor reads as a discount signal. At card rates 100 seats is ~$31.5K/mo. Frame it as headcount, never as a seat multiple: *"For a hundred reps this isn't a $1,500 decision, it's a headcount decision — the research half of an entry-level BDO, per rep, that never sleeps."*
 
-**Honesty flag:** this section is **anticipatory** — built from the Bevel/Ted call plus the lender calls, not from a closed broker deal. Pressure-test it on the next real placement-firm conversation and log what actually lands.
+**Never invent a commercial term on a call.** A *"30 day, no questions"* money-back offer was improvised at Wingspire 7/28. It is not on the card, and the buyer rejected it as a gimmick — *"I don't play those games. The world will come back and bite your ass for two grand."* Risk-reversal is not the currency every buyer wants; some read it as a tell.
 
----
+**Never affirm an integration or data source you haven't verified.** A direct Salesforce API and ZoomInfo passthrough enrichment were both affirmed instantly on Capteris 7/28. At institutional buyers these get checked by an analyst within a week.
 
-## 3. Objection Bank
-
-> Format: objection → best answer → why it works. Ranked by how badly we currently handle it.
-
-### 🔴 "What's the batting average / success rate of the predictive AI?" *(crux — fumbled on Mike's call, asked 3x)*
-**Answer:** Lead with the §2 reframe. "I won't quote a batting average — we're early, and any vendor who quotes one is guessing. The unit that matters is net-new funded deals. Asymmetric payoff: misses are cheap, hits are huge. The pilot measures your real number on your real box in 60 days, and the setup fee is refundable if it's not surfacing deals." **Then show backtested case studies** (see proof asset below) — "here's a deal that closed in March; here's the signal chain that was public in January; here's what your current tools missed."
-**Why:** Refusing a fake number reads as honest; the asymmetric-payoff frame is the right way to think about a predictive product; the refundable pilot caps the downside; and the backtest converts the promise into evidence *before* any pilot runs.
-**Proof asset:** `active/quintel-signal-backtesting-prd-2026-06-22.md` — the exercise that manufactures these case studies. This is the engineering answer to the hit-rate question. Ship a minimum-viable 1–2 case studies fast; don't wait for the full calibrated set.
-
-### 🟡 "Isn't the backtest just hindsight / survivorship bias? You knew the deal closed." *(NEW — anticipate it; Mike-type buyers will raise it the moment we show backtested case studies)*
-**Answer:** "We're not claiming we'd catch every deal — that's the pilot's job to measure forward. What the backtest shows is that the signal chain was publicly available, dated, and assembled *before* the close, and your current stack didn't surface it. The intelligence was there to be caught; the question the pilot answers is the forward hit rate."
-**Why:** Backtesting is our strongest proof but it *introduces* this objection. Have the answer ready before showing the case studies — otherwise a sharp buyer turns our best asset into a credibility hole. Don't overclaim past "the intelligence was publicly there and your tools missed it."
-
-**The framing rule that resolves the conundrum:** A backtest case study is a **mechanism demonstration, not a counterfactual claim.** Never say "our engine *would have* surfaced this" (unfalsifiable, gets discounted to zero). Say "these signals were public on these dates; assembled, they point to an equipment need; your tools didn't assemble them — verify against your own alert history." The deal closing just lets us pick a clean example; the proof is "this intelligence was publicly assemblable and your stack doesn't assemble it," which is checkable in the present tense.
-
-**The live-proof has a home — don't give it away pre-sale.** The forward, falsifiable proof a buyer really wants ("give me live deals I can verify") **is the refundable pilot itself.** Sell that, don't pre-give it: "I won't ask you to believe a counterfactual — run the pilot, verify the live deals yourself, refund if they're not real." Handing free live leads pre-sale is the free-POC/hunger-tell anti-pattern AND bets the deal on an uncalibrated engine in front of a skeptic (a live false positive proves the product *doesn't* work, live). Exception: ONE hand-assembled live inference for a HOT, high-effort-worthy prospect (Katharine) at the team call — "a live one, on us." Never a basket, never for a low-likelihood buyer.
-
-**The meta-move for skeptical boards:** You can't prove a predictive engine forward without running it. So stop trying to win the proof argument in the deck. Shrink the deck to (1) mechanism (verifiable backtest) + (2) risk-free trial (refundable pilot). The board doesn't need to believe the backtest — it needs to believe it can't lose money testing. That's a far easier sell, and it's true.
-
-### 🔴 "You're a brand-new company with 3 customers — how do I get my board/principals comfortable?" *(weak on Mike's call)*
-**Answer:** "You're not comparing us to an established vendor — you're comparing this to a $110k BDR who might wash out in six months. A refundable pilot is *less* risky than a new hire, and it makes whoever you do hire 5x more effective. And you're not customer #4 — you're a design partner: pricing and product influence that reflect that seat."
-**Why:** Reframes the risk comparison away from "established vs. startup" (where we lose) to "tool vs. hire" (where we win). Design-partner framing turns newness into leverage — institutional buyers understand the anchor-customer position.
-**Asset gap:** needs board-ready one-pager (capped downside + design-partner terms + exclusivity option). See §6.
-
-### 🟡 "Are you working with my competitors? Are we all chasing the same intel?" *(exclusivity — see §5; current framing under review)*
-**Answer (new default):** "Two lenders looking at the same public signal don't get the same list — the system ranks against *your* box, *your* history, *your* relationships. The edge isn't owning the data, it's that nobody reaches your deals faster or more relevant than you. If true category exclusivity in a defined segment matters to you, we offer it as a premium tier."
-**Why:** Personalization-as-moat doesn't plant the zero-sum fear that "one per buy box" does, and it doesn't cap our scaling. Exclusivity becomes a paid lever, not a free universal promise.
-**⚠️ Liability:** "One company per buy box" has been verbally promised to BOTH Katharine (Empire) and Mike (36th Street). Their boxes overlap (EF, mid-market, industry-agnostic). **We cannot honor both.** Stop making the blanket promise until segments are defined.
-
-### 🟡 "Anything proprietary stopping competitors from copying this?" *(thin on Mike's call)*
-**Answer:** "Not secret tech — switching cost and compounding intelligence. The system learns *your* box: every signal scored against what you actually funded. Six months in it knows your deals better than any new entrant could, and leaving means restarting that learning. Plus the integration into your stack. The moat is accumulating, customer-specific intelligence — not the algorithm."
-**Why:** A sophisticated buyer doesn't believe in secret-sauce algorithms; switching cost + per-customer learning is credible and true.
-
-### 🟡 "Are those vendors, or actual live deals?" *(demo-comprehension — cost Bo 3 back-and-forths before it landed; pre-empt it)*
-**Answer:** Pre-frame *before* the screen goes up: "These are businesses that fit your book with public signals they may need financing soon — a smarter cold-call list, not confirmed live deals." Let the UI reinforce it: surfaced signals now read *"a prompt to reach out, not a prediction that a deal will fund"* + *"not in your CRM record."*
-**Why:** Every clarifying question is a few seconds of the buyer doubting they understand the product; front-loading the frame (and letting the product repeat it) turns a 3-turn confusion into a non-event. Encodes the dial-vs-switch line — we promise the dial; public signals are upside, never "live deals."
-
-### 🟢 "Won't the leads dry up / effectiveness drop off over time?" *(handled well — got a "good point")*
-**Answer:** "Two things — companies cycle in and out of your box, and equipment needs are recurring, not one-and-done. New entrants, change-of-control, contract awards, refresh cycles. The pipeline refills." (Bonus: signals compound — the model gets sharper on your box even as raw novelty normalizes.)
-**Deeper answer (the moat beat):** every decision you make re-trains it — fund *or* decline. "Pass, collateral's too specialized" sharpens the box as much as a funded deal does. It doesn't decay over time; it tightens. (This is the homepage "How it learns" section.)
-
-### 🟡 "How do you differ from ZoomInfo? They have a thing called Signals." *(NEW 2026-07-13 — Allen/Regents Capital, unprompted, pulled up ZoomInfo's own product live on the call)*
-**Answer used on the call (weak):** "More tailored... you set up your buy box... it learns with every decision... ever-learning model... powered by AI." Landed flat — buyer's own paraphrase back was "buzzword, yeah."
-**Better answer (v1, 2026-07-13):** Don't reach for "tailored" or "AI" — name the formula (§1a spoken-pitch rule applies here directly). *"ZoomInfo's Signals runs on the same generic public activity every subscriber sees — it's a bigger, better-organized list, but still a list. We start from your last hundred deals — what you funded, what you passed on, and why — and rank the entire public market against that. Two lenders never get the same list from us, and it gets sharper every deal you close. ZoomInfo's doesn't."*
-**Sharper answer (v2, 2026-07-16 — after reading ZoomInfo's own product page):** ZoomInfo's intent signal is not public-record data at all — it's an inference from **anonymized web content-consumption behavior**: article reads, keyword searches, IP-to-device matching across a publisher network, resolved back to "a company is in-market for this topic." *"Worth being precise about what ZoomInfo actually reads — it's someone's browsing history, matched back to a company by IP address. That's an inference, one step removed from anything real happening. We read the public record directly — UCC filings, permits, contract awards — a company physically expanding, winning work, or pledging equipment as collateral. That's not an inference, it's an event. Then we rank it against your last hundred deals, which ZoomInfo has no concept of at all."*
-**Why:** The v1 answer's "generic public activity" line was itself imprecise (ZoomInfo's data isn't public-record, it's aggregated browsing behavior) — worth knowing precisely in case a technical buyer like Allen probes further. The v2 answer replaces an adjective fight ("tailored" vs. "AI-powered," which reads as feature parity to a buyer who already owns a signals product) with a falsifiable claim about data provenance (browsing-behavior inference vs. observed public-record event) — harder to wave off as a buzzword. Full mechanics + sourcing: `intelligence/research/quintel/quintel-competitive-landscape-research-2026-06-18.md` §2c.
-**Add to objection bank permanently** — this is a named, real competitor two buyers have volunteered without prompting (Allen 7/13, Max Sarango 7/14); treat as likely to recur, not a one-off.
-
-### 🟢 "How / where is the intel sourced? Are these real purchases or AI assumptions?" *(handled well)*
-**Answer:** "Inferred, deliberately — if it's already announced, it's too late for you. We ingest public filings (UCC, etc.), news, even LinkedIn signals, and extrapolate second-order effects: this data-center announcement means *these* companies will need *this* equipment. High-quality assumptions on a trigger of events." Be honest it's inference, not announced fact — buyers respect the candor.
-
-### 🟢 "What's the setup process / how does it run off our box?" *(handled well)*
-**Answer:** "Backwards equation. We start with your fundbox — what you fund, what makes a good deal, what doesn't — ingest your prior data, then work backwards to the sources and signals that surface those deals. Super tailored; it should operate like another originator on your desk."
-
-### 🟡 "We already do this ad hoc with [an LLM], just haven't built an agent for it — nothing outside what I'd expect." *(NEW 2026-07-14 — Alex deRosenroll/TFG Financial, packaging module; went unaddressed on the call)*
-**What happened:** Alex disclosed TFG's credit-analyst staff already extract and package deals manually in Claude today. Alek didn't respond to it — pivoted straight to the sourcing pitch instead.
-**Better answer:** Name the gap between one person's ad hoc prompting and a system. *"That's exactly the shape of the problem — most teams have someone doing this by hand in a chat window today. The issue is it lives in one person's browser tab: no consistent output across your whole packaging desk, no audit trail on what got pulled from which document, and it falls over the moment volume outgrows one person manually prompting. We turn that ad hoc habit into infrastructure the whole team runs on, not a trick one analyst knows."*
-**Why:** This is a make-vs-buy objection specific to the **packaging module** (extraction/memo assembly), distinct from the sourcing-side objections above — a sophisticated buyer who's already tried the raw capability in a general LLM needs to hear why a built system beats one person's manual prompting, not why the underlying capability exists at all.
-**Add to objection bank permanently** — as more prospects self-serve extraction with Claude/ChatGPT ad hoc, expect this to recur specifically on packaging-led calls.
-
-### 🟢 "Would Quintel replace our CRM?" *(handled perfectly on Bo's call — instant "got it, yep, great")*
-**Answer:** "AI intelligence on top of your CRM, not a replacement — HubSpot/Salesforce stays; we're the layer that reads and ranks." The product says it too: *"Quintel surfaces and scores — your team works the lead."*
-**Why:** Names the lock-in fear and kills it in one sentence. The augmentation framing — carried in the UI, not just the pitch — is the standing answer to "does it replace our people/tools?" Keep using it verbatim. (Zora/Mehmi independently de-scoped the CRM/underwriting stack for the same reason — brokers who already run HubSpot want the *intent layer*, not a CRM.)
+**On the frame setting the price:** Vickie/Armada categorized the product as *"the least qualified lead in the funnel… it's just a lead"* and her CRO balked at $1,500. Stauss called it intelligence and volunteered $7–15K/mo — **the same day, for the same engine.** Whichever frame you hand them is the one they'll pay against.
 
 ---
 
-## 3a. Cold-call-stage objections (synced from the 90-day playbook §7, 2026-07-17)
+## 5. Framing decisions log
 
-The §3 bank above is discovery/demo-stage. These are the ones that hit in the first 30 seconds of a **cold dial**, before any pain is on record. Answers are the playbook's; keep the two docs in sync.
-
-### 🟡 "We want rev-share / pay per deal" *(Max pattern — commission-culture shops)*
-**Answer:** Risk-frame first — *"The founding deal already carries your risk: $1,500 flat, month-to-month, downside is one month. Fire us if it doesn't produce."* If they push because they genuinely *want* performance comp: *"Then here's the partnership version — a nominal $500 base that just covers the data, plus a share of the revenue on the deals we actually source you, on a 12-month term. We wire into your CRM so it's clean: we only get paid on deals we surfaced that weren't already in your pipeline, and the funding shows up in the public record — no arguing over attribution."* Then either way: *"But structure's the second conversation — first tell me about the last deal you missed."*
-**Why:** Most rev-share asks are risk-aversion in disguise; the risk-frame kills those without touching structure. The clean two-option model (flat **or** low-base+share, never stacked) replaces the old incoherent "pay full freight AND a rev-share." **Never quote a share % on the call — that's Simon's to set.** Attribution rule (net-new-only, CRM-tagged at surface-time, UCC-cross-confirmed) + the runway guardrail (don't let all 5 founding seats pick the low-base option) live in playbook §3.
-
-### 🟢 "Send me some information" *(the brush-off)*
-**Answer:** "Happy to — so I send the right thing, 30 seconds: [the triage/missed-deal question]. … Better yet, the info that matters is what this finds in *your* sectors. 20 minutes and you'll see your own market, not a brochure."
-**Why:** A generic one-pager gets filed and forgotten; converting the brush-off back into a discovery question (or a live look at their own market) is the only thing that advances it.
-
-### 🟢 "How much is it?" *(early, before pain is established)*
-**Answer:** "$1,500 a month, founding rate, no setup fee — and before you anchor on that, it only makes sense if the sourcing gap is real. [Back to the pain question.]"
-**Why:** Confident number, no wobble, no discount on warmth. Answering cleanly then returning to discovery reads as strength; softening the price when the call is going *well* is the documented trap.
-
-### 🟡 "All our business is referral / vendor / repeat"
-**Answer:** Probe once: *"Rough number — what share of your volume is those channels? And if a financeable deal existed in your box outside them, would you even want to see it?"* If genuinely no gap: disqualify cheerfully, ask for a referral, out in 90 seconds.
-**Why:** This is a **segmentation fact** (TFG 7/14, Louwerse, Nicole), not a failure — referral-saturated shops are outside the ICP. A fast, clean no + a referral is a win, not a loss.
-
-### 🟡 "Who else is using it?"
-**Answer:** "You'd be one of the first five — that's exactly why it's $1,500 flat with no setup and why you get founding terms locked for a year. The trade: we work your sectors like it's our own book, you give us the case study when it funds a deal. First-mover pricing ends at five."
-**Why:** Turns thin traction (newness) into scarcity + design-partner leverage instead of a credibility hole. Pairs with the §3 "brand-new company / board comfort" answer for institutional buyers.
-
-### 🟢 "We have BDRs / our reps already do this"
-**Answer:** "Keep them — this is what makes them *dangerous*. Your reps work leads; this decides *which* leads deserve them. It's the research half of an entry-level BDO at a tenth of the cost, feeding the closers you already pay."
-**Why:** Removes the either/or threat (we don't replace their people) and re-frames Quintel as the thing that makes existing headcount more effective — the BDO/headcount budget slot, not the tool slot.
-
-### 🟢 "Call me in Q4 / after [event]"
-**Answer:** "Will do — one thing before I go: is that timing, or is this a polite no? Both are fine, I just track them differently."
-**Why:** Surfaces the real disposition without pressure; buyers respect the question and often tell the truth, which keeps the pipeline honest.
-
-### 🟢 "Not interested" *(instant)*
-**Answer:** "Fair — before I let you go: is that 'we have sourcing solved' or 'bad Tuesday'? … Understood. Who in your world is still hunting cold?"
-**Why:** One disqualify-or-referral probe on the way out costs nothing and occasionally salvages a referral; then log it and next dial, zero rumination.
-
-### The referral flip *(a non-decision-maker is on the line)*
-**Answer:** "This is really a [CCO / head-of-originations] conversation. What's the best way to get 20 minutes with [Name] — and can I say you pointed me right?"
-**Why:** The ICP titles are the only ones that sign (playbook §1). A non-DM who introduces you *up* was a useful call; run the call only to earn that intro.
-
----
-
-## 4. Pricing & Packaging *(as quoted — confirm with Simon before treating as fixed)*
-
-> **Canonical current offer (2026-07-17):** the founding-customer offer + the two-way (flat **or** low-base rev-share) structure now lives in the **90-day playbook §3** — treat that as the source of truth. The models below are the *older* quotes kept for history and still need reconciling with Alek (open item).
-- **Setup fee:** $10,000, **refundable** if it doesn't work out (covers custom setup + pilot).
-- **Monthly:** $5,000/mo, unlimited leads.
-- **Annual prepay:** 25% discount.
-- **Timeline:** ~1 month setup (sourcing-only can be ~2 weeks; sourcing + underwriting is the longer build).
-- **Exclusivity:** see §5 — move to premium tier, stop giving away free.
-- **Tiering axis (if/when we tier):** tier on **capability module — Sourcing / Underwriting-Packaging / CRM-Intelligence (matching)** — **never per-signal-count.** Maps to the engine's own source→underwrite→place decomposition and to the GTM sequence (land on whichever module is their pain, expand into the others; underwriting becomes an *expansion module*, not part of the wedge). Per-signal pricing re-commoditizes us (see §1a + §5). Keeps Alek's "illusion of optionality" without the scarcity tax.
-- ⚠️ **Open question for Simon:** is $10k + $5k/mo right for a lender doing $600M/yr in volume? May be underpriced for institutional big-ticket buyers. Anchor against the cost of a BDR ($110k), not against SaaS.
-- 🔴 **Pricing conflict, unresolved and now reinforced (2026-07-13 → 2026-07-14):** on the Allen/Regents Capital call, Alek quoted a **different, sector-tiered monthly plan** with no setup fee — $1,500/mo (1 sector), $3,000/mo (3 sectors), $5,000/mo (6 sectors), team-wide (not per-license). This does not match the $10K-setup + $5K/mo model above. **This is no longer a one-off** — the very next firm-direct call (Alex deRosenroll/TFG Financial, 07-14) quoted the same $1,500/mo-per-sector figure again. Two consecutive calls with the same number suggests this is Alek's actual working default for lender/broker prospects, not improvisation. Reconcile with Simon and update this section to reflect the real current offer rather than leaving both models in the doc.
-- 🔴 **New, undocumented packaging price point (2026-07-14):** the TFG call also quoted **$1,000/mo flat for the packaging module**, separate from sourcing. This figure doesn't exist anywhere in this tear sheet, which only theorizes module-based tiering (below) without a number. Per-seat vs. per-desk was asked directly by the buyer and never clearly answered — needs a firm rule (e.g. "priced per desk, not per rep") before the next quote.
-
----
-
-## 5. Framing Decisions (the "how we talk about it" log)
-
-| Topic | Old framing | New framing | Why changed |
+| Topic | Old framing | Current framing | Why it changed |
 |---|---|---|---|
-| Competitive overlap | "One company per buy box" (free, universal) | Personalization-as-moat default; exclusivity as **paid premium tier** | Old version caps scale, plants zero-sum fear, and was double-promised to overlapping boxes (Katharine + Mike) |
-| Hit rate | "Too early to say" (dodge) | "Net-new funded deals; asymmetric payoff; pilot measures it" | Dodging read as evasive; buyer reframed it for us |
-| Newness | "You get custom attention because we're new" | "Less risky than a $110k hire; design-partner seat" | Old version can't survive a board; new version turns newness into leverage |
-| Lead positioning | "Source / find deals" (sourcing *is* the product) | **"The deal intelligence engine for equipment finance"** — sourcing is the hook, the decision-ready read (inference + matching + compounding) is the product | Raw sourcing = commodity (Apollo/ZoomInfo parity, the "news ticker" both buyers dismissed). Sell inference + matching + compounding. |
-| What it learns from | (unstated) | Learns from declines as much as funds: "can't fund this, because X" maps the edge of the box | Declines are the richer training signal (they trace the box boundary) and the honest answer to "won't it go stale?" |
-| AI-safety framing | "Never funds, never approves, never sends on its own" (repeated) | "Decision support, not autopilot — your call, we do the homework" | The "AI won't act on its own" strawman answers a fear no buyer holds; reframe to positive decision support (ranked reasons, citations, audit trail) |
-| Broker vs lender | "Place across funders" reads as a broker tool → brokers demoted to a footnote | **One engine, N boxes**: lender = one box (their own), broker = many (their panel); packaging + learning loop serve both. Lender-first, broker a first-class "who it's for" | Dissolves the workflow-identity tension without a separate product; lets us pitch both sides honestly (spec §5a, tear sheet §2b) |
-| Hero / lead axis | Teammate ("another originator") or matching ("how you lend") | **Deal intelligence engine** (Bloomberg-aligned): *"the whole market, focused on the deals you'd actually do"* | Brokers confirmed **near-term** → the hero must not exclude them. "How you lend" excludes brokers; the teammate/leverage axis buries the moat. The intelligence axis is the only one that's both-sides + moat-forward + category-defining (spec §10-D). Out-positions Bloomberg via the input it lacks — *what you've closed*. Make-or-break: name the formula concretely (public record + your book + closed deals → a decision-ready read), never "intelligence" alone. |
-| "Signals vs. intelligence" internal debate | One overloaded word; argued as either/or | **Hook ≠ Position ≠ Price** (§1a): sourcing is the hook, engine-on-their-data is the position, access is the price | The word "signals" was doing three jobs. Split them and the Simon/Alek tension dissolves — lead with sourcing AND position as an engine AND price for access, simultaneously. |
-| Spoken pitch | "Intelligence layer / engine" said abstractly | **Say the formula, never the word "intelligence"** (§1a spoken lines) | The abstract word landed flat ("I don't even know what that means"). The concrete formula ("what closes for you, run against the market") lands. |
-| Tiering axis | Per-signal / signal-count tiers (scarcity) | Tier on **capability module — Sourcing / Underwriting-Packaging / CRM-Intelligence**, never signal count | Per-signal pricing tells the buyer the signal IS the product and it's scarce → re-triggers exclusivity + hit-rate fears. Module axis maps to the engine (source→underwrite→place) + the land-and-expand sequence; keeps the optionality (which-package-not-whether), drops the commodity axis. |
-| Where the positioning discipline lives | In the rep's pitch (remember to say "cold-call list not live deals" / "not a CRM replacement") | As **on-screen product copy** — the disclaimer ("a prompt to reach out, not a prediction it'll fund" / "not in your CRM") and augmentation line ("Quintel surfaces and scores; your team works the lead") live in the UI | A rep forgets, mistimes, or lets the frame surface as the buyer's confusion (Bo's 3-turn "vendors or live deals?"). Product copy fires every time, at the right moment, framed our way — positioning carried by the product beats positioning the rep must remember. |
+| Competitive overlap | "One company per buy box," later "our lenders are in a different band" | Personalization-as-moat; exclusivity as a paid tier; back-book exclusivity as a *fact* | Both scarcity promises are unkeepable and were double-promised to overlapping boxes (Katharine + Mike; Ameris vs. Armada + Civista) |
+| Hit rate | "Too early to say" | Net-new funded deals; asymmetric payoff; measured against their real app rate | Dodging read as evasive; the buyer reframed it for us |
+| Newness | "You get custom attention because we're new" | "Less risky than a $110K hire; design-partner seat, founding terms locked" | The old version can't survive a board |
+| Lead positioning | "We source deals" | The engine: inference + matching + compounding. Sourcing is the hook inside the demo | A raw feed is a commodity — the news ticker both Mike and Katharine dismissed |
+| What it learns from | (unstated) | Declines as much as funds — "can't fund this, because X" maps the edge of the box | Declines trace the box boundary; also the honest answer to "won't it go stale" |
+| AI-safety | "Never funds, never approves, never sends on its own" | "Decision support, not autopilot — your call, we do the homework" | The strawman answers a fear no buyer holds |
+| Broker vs lender | Broker as a footnote | One engine, N boxes: a lender points it at one box, a broker at their panel | Lets us pitch both sides honestly with one product |
+| Broker demo order | Lead with lender-matching | Lead with extraction → populated submission; lender-match OFF by default | Scott Rumble 6/25: lender choice *is* the brokerage's moat, and showing it triggered his IP fear |
+| Vendor-first shops | (no framing — read as a disqualify) | Direct origination as the wedge into vendor relationships; metric is vendor conversations opened | Kevin/Civista built the case himself; Armada is vendor-majority too |
+| Marketing teams | (unmodelled) | Marketing is the incumbent list-builder — amplify, never replace | Ameris 7/27: the first person our champion pitches owns what we criticised |
+| Tiering axis | Per-sector count | Average ticket band (Core / Institutional), all sectors always | Sector tiering was pushed back on by two independent lenders in nine days (Stauss 7/14, Armada 7/22), created a scarcity debate, and invited a discount |
+| Small-ticket lenders | Cold surfacing off awards and permits, same as everyone | Lead the body of the pitch with **replacement timing off UCC filings** | Award and permit signals structurally surface primes; 73% of our signals carrying a capex value are $5M+. A UCC debtor is in-band *by construction* — someone already wrote them small-ticket paper — so fundability and band are evidenced rather than estimated. Origin: the Envision deck, 7/29 |
+| Proving it | "Give us your sectors and we'll come back with a count" | **Named filings the buyer verifies themselves** — debtor, secured party, filing date, filing number | A count is a vanity number nobody funds a deal on, and the promise had been made to five lenders and kept zero times. A filing number is checkable against the state registry without trusting us at all |
+| Spoken pitch | "Intelligence layer" | Say the formula, never the word | The abstract word landed flat, twice, on the record |
+| Where positioning lives | In the rep's memory | As on-screen product copy ("a prompt to reach out, not a prediction it'll fund") | A rep forgets; product copy fires every time |
 
 ---
 
-## 6. Proof / Asset Gaps (what we keep needing and don't have)
-- **Reusable demo artifact** — ✅ NOW EXISTS: Alek's live mockup — `yourelosingmoney.xyz/quintel-hyland/{rank, timing, underwriting}` (+ a `/lead/…` detail). Closes the single most predictable buyer question ("do you have a demo / an example / a case study?") that landed with **nothing to show on two consecutive firm-direct calls** (Zora/Mehmi 2026-06-30, Alex Khadempour/CICS 2026-05-25). Lead the screen with the **BLIND↔QUINTEL before/after** ("this lead sat at #997 in your export → #103 here") and the **per-item "why"** (scored against their book). Pre-frame it (§1a). The framework behind it: `product/quintel/quintel-ux-framework-2026-07-01.md`.
-- **Backtested sourcing case studies** — ✅ DONE for Empire (4 published: Capital Aggregates, Revere←Eos, NineDot, Tangent — `tokenrip.com/s/525cbde0...`). Real 5–13 month lead times, hidden Tier-1 signals. **Lead the Empire packet with these, not the underwriting mock** — Katharine cares about sourcing. These also spill over to Mike (all in his box) — see §6c.
-- **Board-ready one-pager** for institutional buyers (Mike → BlackRock board): capped downside, design-partner terms, exclusivity option, net-new-deals ROI frame, + a backtested case study in his ticket band. *Recurring blocker — Mike explicitly asked for materials for his board. Only build a 36th-Street-specific backtest after he proves he'll champion upward.*
-- **The deck** Mike was promised (2026-06-24).
-- **A real expected-deal-count answer** by ticket band (small-ticket = few/mo; $50M+ = ~1 every couple months). Have this ready — it's the second question after hit-rate.
+## 6. Proof and asset gaps
 
-### Bundle hedge — works for Empire, NOT for Mike
-The sourcing+underwriting bundle (sell underwriting as the price-justifier while sourcing matures) only works where underwriting is wanted. **Empire:** yes — F2 is degrading, underwriting is a live second vector. **36th Street:** no — Mike is BD-only and said underwriting provides "no value" (BlackRock/IC owns credit). For Mike, sourcing carries the *entire* deal with no hedge, which makes the backtested proof even more load-bearing for him than for Empire.
-
----
-
-## 6b. Case-study selection — match the proof to the buyer's box width
-- **Narrow-box buyer (Empire: $3–50M, specific sectors):** box-match itself is impressive — "this fits your exact criteria" carries weight. Lead with in-box + non-obvious cases.
-- **Wide-box buyer (36th Street: $1–100M, industry-agnostic):** box-match proves NOTHING — almost everything is in his box. A merely-in-box case study *confirms* his "we're all chasing the same intel" fear. **Only `hidden` (3rd-order, multi-signal inference) cases land.** Send those or nothing.
-- **Reuse, don't rebuild, for low-likelihood deals.** Run the backtest for the live/narrow-box deal (better proof). A wide-box prospect's box is usually a superset — pull the spillover. Don't run a custom backtest for a low-probability buyer.
-
-## 6c. Case ORDER is a function of buyer temperature (learned from the 4 Empire cases)
-Not all backtested cases are equally bulletproof. Two kinds:
-- **Deterministic / single-trigger (unimpeachable):** one Tier-1 record that IS the buying signal — Capital Aggregates (filed air permit-to-construct), NineDot (138-app Con Ed interconnection queue). A skeptic cannot argue with a government filing; the only claim is "you weren't watching that source." Survives cross-examination.
-- **Convergence / judgment (impressive but exposed):** "the engine should heat up on the accumulation" — Tangent (new CEO + distributor + permit), and partly Revere. The hot-call was made *knowing the outcome*, so it invites the false-positive question ("how many lookalikes did nothing?") which a backtest CANNOT answer. Survivorship bias lives here.
-
-**Ordering rule:**
-- **Believer / warm buyer (Katharine):** lead with the marquee 3rd-order case (Revere←Eos — the lead lives in the *customer's* SEC filings, "resin named, molder missing"). It dazzles and confirms their instinct.
-- **Skeptic / board buyer (Mike):** lead with the deterministic cases (permit, interconnection queue). Earn trust with what can't be disputed; show the marquee last as "the ceiling of the method," never the opener.
-- **Honesty discipline (mandatory for institutional boards):** never let the deck read "4 for 4, the engine is magic." Name what the backtest does NOT prove (forward false-positive rate) and bridge to the refundable pilot. A board that catches overclaiming kills the deal; a board that sees you name your own proof's limit trusts the rest. Tighten any "the engine *would have* surfaced this" line — fine for filed-record cases, overclaim for convergence cases.
-
-## 6d. Mike (36th Street) deck — concrete build from the Empire spillover
-All 4 Empire cases are in Mike's box ($1–100M, industry-agnostic = superset of Empire's). Zero rebuild. To adapt:
-1. **Reorder for skeptic:** Capital Aggregates → NineDot → (Tangent opt.) → Revere as closer.
-2. **Revere number:** show the equipment slice, not the $111M headline (over his $100M ceiling).
-3. **Industry-agnostic = strength:** "four sectors, one method — the engine reads permits/queues/dockets across all of them, not one vertical." Turns his wide box from liability to selling point.
-4. **Pre-empt the false-positive question** (he asked it 3x) and bridge to refund: "a backtest can't claim a false-positive rate — that's what your pilot measures on live deals, at no risk because the setup fee is refundable."
-5. Effort = a few hours of repackaging, not a project. Send once, force one dated step, let him self-select.
-
-## 7. ICP Signal (who self-proves vs. who stalls)
-From Katharine (closed fast) vs. Mike (interrogated, no commit):
-
-| Self-proves fast ✅ | Stalls / hard pilot ❌ |
+| Asset | State |
 |---|---|
-| Higher deal flow (smaller ticket) → pilot shows deals in 60 days | Big-ticket ($50M+) → "one deal every couple months," unfalsifiable for a quarter |
-| Buyer has budget authority | Buyer must sell up to a skeptical board |
-| Already shopping for exactly this | Cold, AI-skeptical principals |
+| **Coverage count by sector / revenue band** | 🔴 **Does not exist. The #1 gap in the motion** — five buyers have asked, none have been answered. P0 on DASHBOARD. **As of 7/29 it cannot honestly be produced off the award corpus at all:** the field defining the ticket band is `revenue × 0.08` off a name-matched third-party revenue guess, so a $357M federal prime shows up as a $280K-ticket prospect. It probably *can* be produced off the UCC renewal data, which needs no ticket estimate. → `product/quintel/quintel-enrichment-data-defects-2026-07-29.md` |
+| **Named verifiable filings (small-ticket proof)** | 🟡 **New 7/29, and the strongest proof asset we have had.** 96,246 UCC filings (FL/CO/CT, 2022–2026) classified by lender type, so a slide can name a real debtor, the competitor holding the paper, the filing date and the filing number, and invite the buyer to pull it from the state registry. Live in the Envision deck. **Gated:** every row must be reconciled against the registry itself before it ships — `validation_outcome='affirmed'` in our table is a business-liveness check, not filing verification, and snapshot provenance is undocumented. |
+| Reusable demo artifact | ✅ Alek's mockup, `yourelosingmoney.xyz/quintel-hyland/{rank,timing,underwriting}`. Lead with the BLIND↔QUINTEL before/after and the per-item why. |
+| Backtested sourcing case studies | ✅ Four published for Empire (`tokenrip.com/s/525cbde0…`). Real 5–13 month lead times. |
+| **Champion leave-behind (screen-shareable)** | 🟡 **Two segment decks built 2026-07-28**, both rendering a hosted HTML page and a 16:9 PDF from one source via `active/collateral/render.py`. **Vendor/dealer** (`vendor-deck-template.html`): *"bring a dealer a customer, not a pitch."* **Direct / large-ticket** (`direct-deck-template.html`, rebuilt 2026-07-29): *"high-intent leads for your origination desks"* — the Providence spine kept intact (cover · why · engine · timing · sample lead · getting started) with two slides swapped in, **build-vs-buy** (§3.3) and **commercials**. 8 slides with pricing, 7 without. Sample lead is a real surfaced company with a linked usaspending.gov award; swap it when a fresher run beats it, and the render script blocks any named deck whose sample is still a placeholder. **The adoption answer (§3.8a) is not in either deck** — offer the weekly usage report in the email body. Nothing published to a Tokenrip URL yet. The old one-off direct decks (Onset, HIL) carry the liabilities listed below and should be retired rather than reused. |
+| Board-ready one-pager | 🔴 Still owed to Mike Ryan since 6/24. Capped downside + design-partner terms + net-new-deals ROI + one in-band backtest. |
+| Expected-deal-count by ticket band | 🔴 Missing. It's the second question after hit rate. |
+| Written pricing sheet | 🔴 Owed to Capteris and Civista. |
 
-**Prioritization rule:** lead with lenders whose deal flow makes the pilot self-evident inside the refund window. Big-ticket institutional buyers need the board-ready asset (§6) before they're worth heavy Simon-time.
+---
 
-**Brokers / placement desks** usually sit in the self-proves-fast column: high daily deal volume, they own the buying decision, and the manual-matching pain is acute and daily (Bevel matched ~$450M across ~75 lenders off a 1990s database). Placement wins show inside the pilot window. See §2b for the broker pitch.
+## 7. ICP signal — who self-proves vs. who stalls
+
+| Self-proves fast ✅ | Stalls ❌ |
+|---|---|
+| Direct origination is a real motion (reps working cold lists) | Vendor-only or referral-only, no direct desk — unless the vendor wedge lands |
+| Origination and credit are **different people** | Same partners source and underwrite — the wedge disappears, it doesn't degrade (FS Growth 6/30) |
+| Higher deal flow / smaller ticket → the pilot shows deals in 60 days | Big-ticket ($50M+) → one deal every couple of months, unfalsifiable for a quarter |
+| Buyer has budget authority in the room | Champion must sell up to a board or a vacant seat (Civista: head-of-sales chair is empty) |
+| Already shopping for exactly this | Novelty interest — *"pretty cool sounding"* with no problem named |
+| No internal marketing list-building function, or marketing framed as co-buyer | Marketing owns the lists and hasn't been reframed |
+
+**Prioritization rule:** lead with lenders whose flow makes the pilot self-evident inside 60 days. Institutional big-ticket buyers need the board asset before they're worth heavy Simon-time.
+
+---
+
+## 8. Rep discipline — the errors that keep repeating
+
+Each of these has cost a call more than once. Read before dialling.
+
+1. **Discovery before demo, always.** Both deck-first calls went flat and neither established pain or buy box.
+2. **Ask, then stop talking.** Civista 7/24: a question was asked and self-answered (*"I guess you'd have one or two people… got it"*) — manufacturing agreement the prospect never gave.
+3. **Never let a flagged objection drop.** Max/Providence started *"so we do have a problem… your system is basically determining—"* and it was never returned to. It's still unresolved two calls later.
+4. **Never invent a number.** No lift multiples, no conversion ratios, no customer counts beyond the true one.
+5. **"We could do that" is not an answer to a technical buyer.** Michael/Providence got three unverifiable yeses in one call. Say instead: *"That's not live in this panel today — it's a buy-box config we set before go-live. Here's what that rule looks like."*
+6. **Take the materials in, even when they say no.** *"I don't think I need anything"* is what polite buyers say. Send it anyway, framed as a favour, and offer to join the internal meeting. Never offered once in the log.
+7. **The next step must cost them something** — data, a signed pilot, a scheduled meeting with the person who signs. Never free build hours. Every flat deal in the log has a free next step.

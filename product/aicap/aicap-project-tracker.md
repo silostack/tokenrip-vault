@@ -3,8 +3,8 @@ type: project-tracker
 project: AICAP Validation MVP
 client: AICAP — Stephanie Williamson
 owner: Simon Pettibone
-status: active — Week-1 demo delivered (2026-07-09); Week-2 compliance calibration next
-last_updated: 2026-07-09
+status: active — first UAT pass closed 2026-07-28 (24 of 38 issues landed); second-pass scope written, unstarted
+last_updated: 2026-07-31
 canonical:
   scope: product/aicap/aicap-validation-mvp-sow-2026-06-22.md
   build_plan: ~/projects/maxi/aicap/docs/aicap-mvp-gameplan.md
@@ -23,12 +23,12 @@ canonical:
 
 | | |
 |---|---|
-| **Phase** | Phase 0 ✅ · **end-to-end engine built + demoed** (Week-1 demo 2026-07-09) · **Week-2 compliance calibration** active |
-| **Momentum** | ↑↑ Demo landed on the full working journey; app handed to Stephanie (login + issue-filing) |
-| **Commercial** | $11K net — ✅ **paid in full 2026-07-02** (escrow funded 2026-07-07 per DASHBOARD) |
-| **30-day refund clock** | ~**2026-07-31** (30 days from kickoff). Weekly demos fall inside it — visible progress each week is the safety mechanism. |
-| **Next milestone** | **Week-2 compliance calibration** — encode Stephanie's baseline+config compliance model (conditional document requirements, document-property checks, hard/soft stops), seeded by her worked examples. |
-| **Blocking right now** | **Stephanie's compliance examples** (her homework — seeds the Week-2 architecture). Government-ID sourced; samples/CVs received; payment landed; app + repo access shared. |
+| **Phase** | Phase 0 ✅ · engine built + demoed (07-09) · **first UAT pass closed 2026-07-28** — 24 of 38 issues landed, client report written, deploy done. Second-pass scope written (`docs/second-pass-2026-07-28.md`), unstarted. |
+| **Momentum** | ↑↑ on build. **↓ on communication** — two finished client-facing artifacts are sitting unsent (the 07-28 client report; the 07-15 pilot instruments). |
+| **Commercial** | $11K net — ✅ **paid in full 2026-07-02** (escrow funded 2026-07-07 per DASHBOARD). Next motion: **GH #3 "Pilot Readiness"**, which Stephanie opened herself. |
+| **30-day refund clock** | ~**2026-07-31 — i.e. today.** ⚠️ Its start date has **never been named to the client in writing** (open for three calls running, action Ours #6). The stated safety mechanism was visible weekly progress; the progress is real, the weekly evidence was never sent. |
+| **Next milestone** | **Wk 6 iteration tail → Wk 7 acceptance + handoff (~2026-08-22, 22 days out).** Gating item is extraction accuracy: **~83% against a self-set 90% bar**, open since 07-17, cause is upstream vision-model drift on unchanged code. |
+| **Blocking right now** | **Nothing is blocked on Stephanie for the build.** The 07-09 "compliance examples" blocker is **resolved by evidence**: she delivered them as 38 GitHub issues, 24 of which are landed and closed. Two content asks remain outstanding but block only individual items — the attestation question set (A3) and her "wow demo" spec (promised 07-24). |
 
 > **Note on the milestone table below:** the repo built the full end-to-end journey (all five surfaces + admin + PDFs), verified against a running system 2026-07-03 and demoed 2026-07-09. The remaining weeks are **calibration to AICAP's real content** (compliance rules, guided-question wording), not net-new plumbing — the "hard 20%." Build state is authoritative in the repo (`docs/STATUS.md`).
 
@@ -38,10 +38,15 @@ canonical:
 
 Do these roughly in order:
 
+0. **🔴 Send the two-option retainer note.** *(Commercial, not build — but it is the highest-value 20 minutes on this project.)* On 2026-07-22 Stephanie opened the money conversation herself and it was declined in the moment; she also named a second commissionable project (AI chief of staff). Instrument is ready: [[../../active/aicap-retainer-tear-sheet-2026-07-15]] — Lane 1 (SOW, funded, no new dollars, no re-trading) / Lane 2 (demo-readiness, the growing queue, beyond-baseline config). Triage the current queue into covered / beyond-scope / ambiguous first, and gift one or two ambiguous items **out loud**.
+0b. **Define the "specific ask" for Matthew / Boston Children's** — he has agreed to test and asked us to come back with one. Pilot scope, price, duration, success criteria. **⚠️ Not raised on the 07-24 call by anyone — still undefined, and the shape has changed.** The gate is now **executive buy-in**, not the medical staff office: Matthew's own framing is *"you're gonna pay $100K/yr for production software, why do you need to pay $10K more for whatever this is?"* Lead the ask with the **metric gap he handed us** — MSOs measure turnaround from *application-submitted*, executives measure from *contract-signed*, and AICAP occupies the unmeasured interval between them. Details → [[../../bd/calls/notes/stephanie-williamson-2026-07-24-boston-childrens]].
+
 1. **Design the Week-2 compliance architecture** — encode the baseline+config model Stephanie described: conditional document requirements (answer → required doc), document-property validation (present / correct type-version / required stamp), hard vs soft stops. Baseline handling first; keep it extensible. (Findings → [[aicap-project-notes]] → "The compliance model.")
-2. **Get Stephanie's compliance examples** (her homework) — the concrete cases that seed the architecture. Chase if they don't arrive.
-3. **Triage her GitHub issues** as she files them (app is public; she has a login).
-4. **Send the written follow-up** — lock the weekly-demo cadence + 30-day refund-clock start (still open). Ask for her Replit export.
+2. **Resolve the compliance-examples ambiguity** — ask whether her GitHub issues *are* the worked examples. If yes, correct this tracker and stop chasing. If no, get 2–3 concrete cases live rather than as homework.
+3. **Triage her GitHub issues** as she files them (app is public; she has a login). **Write the comments for a non-engineer** — as of 2026-07-22 she has been reading them and getting nothing out of them (*"I thought you were more commenting for yourself"*). Three weeks of async communication were effectively lost.
+4. **Send the written follow-up** — lock the weekly-demo cadence + 30-day refund-clock start (**still open for the third call running**; clock nominally ends ~2026-07-31). Ask for her Replit export. Confirm in writing that in-AICAP attestation is the MVP bar (not downstream hospital acceptance).
+4b. **Design notes.** ~~Office address stays configurable, not modeled (unsolvable)~~ — **REVERSED 2026-07-24 by the customer:** Boston Children's uses *"the general hospital address, the general site address, versus any type of specific suite."* → **default to hospital/site-level address; make granularity configurable** for the minority who want suite/floor. **Click count is her north star** (Tesla 116→22 vs. 14 for a pizza) — treat as an acceptance measure. Never describe a *"learning phase"* to customers — the word is **"adapts."** Her "wow demo" spec is inbound homework and will set the demo-readiness bar.
+4c. **New model requirements from 2026-07-24 (Matthew / Boston Children's):** (a) **non-credentialing hospital forms** — IP agreements, HIPAA-compliance forms — are deliberately bundled into the same intake (*"so people aren't being asked by multiple different groups"*); model them as **pass-through collection, explicitly distinct from verifiable credentialing data**, or they will collide with Stephanie's collect-nothing-extra rule. (b) **Foreign- vs domestic-trained branching logic** as a config dimension. (c) **Historical malpractice carrier per prior employer** — his named example of the field that generates repeat chase-ups. (d) Confirmed: *"most of the application will be generic"* — validates the superset+config architecture.
 5. **Continue iterative rubric capture** — the field-by-field content now transfers via her examples + working sessions, not one recorded call. Agenda: [[walkthrough-questions]].
 
 ---
@@ -57,12 +62,12 @@ Target demo dates are **anchored to input arrival** — if samples land late, ev
 | 1a     | **Credentialing knowledge extraction** — field superset + rules catalog from the 3 samples + 4 CVs (`knowledge/`) | —               | ✅ 2026-07-02            |
 | 1b     | **Core rule model + data model** (`@aicap/core` decision engine) — encode rules + data model                      | —               | ✅ 2026-07-02            |
 | 1c     | **Application autofill** live on sample inputs (CV + ID); context expansion                                       | **2026-07-09**  | ✅ built + demoed        |
-| 2      | **Automated compliance review** — engine built; **calibrating to Stephanie's real rules** (baseline+config, document requirements) | ~Fri 2026-07-18 | 🟡 active — Week 2       |
-| 3      | **Provider review/confirm + guided intake** — built (provisional content); calibrating wording                   | —               | ✅ built · 🟡 calibrate  |
+| 2      | **Automated compliance review** — engine built; calibrated against Stephanie's real rules via the UAT board       | ~Fri 2026-07-18 | ✅ first pass closed 2026-07-28 |
+| 3      | **Provider review/confirm + guided intake** — built; wording calibrated through the guided-intake pass (Work log L3–L9) | —               | ✅ built · ✅ calibrated  |
 | 4      | **Two PDFs** (completed app + audit trail) + attestation capture                                                  | —               | ✅ built                 |
 | 5      | **Admin operability** (list / status / errors / counts) + full sample-set run                                    | —               | ✅ built                 |
-| 6      | Iteration tail / edge cases                                                                                       | —               | ⬜                       |
-| 7      | **Acceptance + handoff**                                                                                          | ~Fri 2026-08-22 | ⬜                       |
+| 6      | Iteration tail / edge cases — **second-pass scope written 07-28, unstarted.** Gated on extraction accuracy (83% vs. 90%) | —               | 🟡 scoped, not started   |
+| 7      | **Acceptance + handoff**                                                                                          | ~Fri 2026-08-22 | ⬜ **22 days out**       |
 
 ---
 
@@ -91,10 +96,13 @@ Target demo dates are **anchored to input arrival** — if samples land late, ev
 | 1 | GitHub repo + knowledge extraction + core rule model + autofill | — | ✅ done (through 07-09 demo) |
 | 2 | Source a sample government ID | before autofill | ✅ sourced |
 | 3 | Make app public + give Stephanie a login + show her how to file GitHub issues | 07-09 | ✅ done |
-| 4 | **Design the Week-2 compliance architecture** (baseline+config: conditional document requirements, document-property checks, hard/soft stops) | Week 2 | 🟡 active |
-| 5 | Triage Stephanie's GitHub issues as she files them | ongoing | 🟡 |
-| 6 | First written follow-up: **lock weekly-demo cadence + name the 30-day refund clock start** | next contact | ⬜ |
+| 4 | **Design the Week-2 compliance architecture** (baseline+config: conditional document requirements, document-property checks, hard/soft stops) | Week 2 | ✅ built + calibrated (first pass closed 07-28) |
+| 5 | Triage Stephanie's GitHub issues as she files them | ongoing | 🟡 **#13–#50 triaged into W-modules; #1–#11 never triaged** — an orphaned cohort filed 07-09→07-14 |
+| 6 | First written follow-up: **lock weekly-demo cadence + name the 30-day refund clock start** | **overdue — clock ends today** | 🔴 ⬜ open for the third call running |
 | 7 | Ask Stephanie for her Replit export/screenshots | next contact | ⬜ |
+| 8 | **Send `docs/client-report-2026-07-28.md`** — written and marked ready-to-send 07-28, unsent since | 🔴 now | ⬜ |
+| 9 | **Answer GH #3 "Pilot Readiness"** — she opened the next engagement; instruments ready since 07-15, never deployed | 🔴 now | ⬜ |
+| 10 | **Extraction accuracy 83% → 90%** — the gating item before any demo, and before Wk-7 acceptance | before next demo | 🟡 open since 07-17 |
 
 ### Theirs (Stephanie / AICAP)
 | # | Action | Due | Status |
@@ -111,8 +119,11 @@ Target demo dates are **anchored to input arrival** — if samples land late, ev
 
 | Blocker                              | Impact                                                            | Owner to clear             | Since      |
 | ------------------------------------ | ----------------------------------------------------------------- | -------------------------- | ---------- |
-| Stephanie's compliance examples not yet in hand | Seeds the Week-2 compliance architecture; without them, calibration runs on inference | Stephanie (homework) | 2026-07-09 |
+| **Extraction accuracy ~83% vs. a self-set 90% bar** | Gates every demo and the Wk-7 acceptance. A/B-confirmed as upstream vision-model drift on unchanged code — so it can regress again untouched | Simon (build) | 2026-07-17 |
+| Attestation question set — which of the 21 to keep | Blocks the curation item only; each dropped question retires a red-flag rule. Content, not code | Stephanie | questionnaire A3 |
+| Her "wow demo" spec | Sets the demo-readiness bar | Stephanie (promised 07-24) | 2026-07-24 |
 
+*(Cleared 2026-07-31: **Stephanie's compliance examples** — resolved by evidence, not by chasing. She delivered them as 38 GitHub issues over 07-09 → 07-29; 24 are landed and closed. The blocker had been open since 07-09 while being satisfied through a different channel the whole time.)*
 *(Cleared 2026-07-09: government ID sourced; adverse-event path solved with synthetic CVs; baseline-form blocker dissolved by the superset+config reframe.)*
 
 ---
@@ -153,6 +164,8 @@ Full ranked table lives in the contact doc → [[../bd/calls/contacts/stephanie-
 | 2026-06-17 | Discovery debrief | Killed co-pilot fallback; integration-required posture |
 | 2026-07-01 | **Kickoff** | **Converted** — milestone + samples + access committed; build starting |
 | 2026-07-09 | **Week-1 demo** | Walked the full working journey; app handed over (login + issue-filing); Stephanie brain-dumped the compliance model + took homework (compliance examples); forwarded an external validation interview (Dean'Na/Care to Care). *Not recorded.* |
+| 2026-07-22 | Week-3 check-in | Her agenda. Build report; two commercial openings declined; GitHub channel found unreadable; new intel channels granted. |
+| 2026-07-24 | **Boston Children's / Matthew** | Client-hosted intro; Simon introduced as *"my founding engineer."* **Executive buy-in surfaces as the real gate**; Matthew supplies the ROI metric gap; office-address problem solved (reverses 07-22); new config dimensions (HR/hospital forms, foreign-trained branching). **No pilot motion — the "specific ask" was not raised.** |
 
 *(Full transcripts + notes under `bd/calls/`.)*
 
@@ -190,3 +203,12 @@ Chronological record of what's been done. Newest at the bottom.
 | 2026-07-02 → 07-03 | **End-to-end journey built + hardened** in the repo (all 5 surfaces + admin + two PDFs; compliance spine + adverse fixtures; extraction eval 10/10). Verified against a running system 2026-07-03 (`docs/STATUS.md`). |
 | 2026-07-08 | `management/` folder created; demo run-sheet, client compliance checklist, and walkthrough agenda authored/reframed. |
 | 2026-07-09 | **Week-1 demo delivered.** App made public + login given to Stephanie + issue-filing shown. Compliance model brain-dumped (baseline+config, conditional document requirements) + her homework set. External validation interview (Dean'Na/Care to Care) captured → [[aicap-project-notes]]. |
+| 2026-07-09 → 07-19 | **Stephanie runs UAT directly in the app**, filing GitHub issues #1–#50. Issues #1–#11 (07-09 → 07-14) predate the triage system. Board closed by her own `#25 END OF TERMINUS TESTING/REVIEW` (07-18) and `#50 END OF REVIEW` (07-19). |
+| 2026-07-15 | Pilot instruments authored → `management/`: conversation prep, fit questionnaire handout, cost skeleton. **None deployed since.** |
+| 2026-07-17 | **Extraction accuracy regression opened** — ~83% on field values against a self-set 90% bar, A/B-confirmed as upstream vision-model drift on unchanged code. Still open. |
+| 2026-07-20 | **UAT triage** written (`docs/issue-triage-2026-07-20.md`, 939 lines) — issues #13–#50 grouped into clusters A–E. |
+| 2026-07-22 | Backlog unified into landable modules W1–W13 (`docs/whats-left-2026-07-22.md`), de-duped and re-verified against `develop`. |
+| 2026-07-24 | **Boston Children's call** (Matthew). He agreed to test the product and asked us to come back with a specific ask — still undefined. Introduced non-credentialing form bundling, foreign/domestic branching, per-employer malpractice history. Reversed the office-address design decision. → repo `notes/2026-07-24-boston-childrens-config-call.md` |
+| 2026-07-28 | **First UAT pass closed — 24 of 38 issues landed.** Client report written (`docs/client-report-2026-07-28.md`, ready to send), deploy runbook done, second-pass scope written (`docs/second-pass-2026-07-28.md`), branch state documented. Six issues left open (#16/#27/#34/#35/#37/#45), three of them consequences of the absent per-hospital config layer. |
+| 2026-07-29 | Repo tip `5fda143` (submission bug fix). `feat/github-compliance` merged into `develop`; `develop` clean and pushed. Stephanie last touched **GH #3 "Pilot Readiness"** — she opened the next engagement herself. |
+| 2026-07-31 | **PM agent stood up** (`agents/pm/`, `/pm` · `/pm-sync` · `/pm-capture` · `/pm-compact`). First reconciliation pass closed 4 days of tracker drift and cleared the 22-day-old "compliance examples" blocker as satisfied-by-another-channel. Worklist seeded → [[../../agents/pm/worklist]]. |
