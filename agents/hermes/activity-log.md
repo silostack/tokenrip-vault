@@ -5,8 +5,8 @@ Newest entries at the top.
 
 ---
 
-## 2026-08-04 — Morning brief published
-- 2026-08-04: Morning brief published — https://tokenrip.com/s/8f3f8bb1-d3f5-467f-a458-9bd9a5172e56
+## 2026-08-05 — Morning brief published
+- 2026-08-05: Morning brief published — https://tokenrip.com/s/1c5725b9-32c2-409e-ae43-58aa5fb1858e
 
 ## 2026-07-07 — Operator mandate established
 
