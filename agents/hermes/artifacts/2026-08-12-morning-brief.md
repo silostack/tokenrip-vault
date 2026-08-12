@@ -1,6 +1,4 @@
-> Canonical: https://tokenrip.com/s/0cd3d543-b887-4b59-bfac-4f2263d8c899
-
-# Morning Brief — 2026-08-11
+# Morning Brief — 2026-08-12
 
 Nothing new since yesterday's brief. The distribution-planner has not run
 since 2026-08-09T20:24:40Z (the state file's `last_run`), no new drafts have
@@ -17,6 +15,5 @@ recent distribution-planner run are still live:
 
 - 6 drafted (awaiting your go-ahead to queue): agent-readable-surfaces, blog-llm-discovery-gap, blog-post-custom-interfaces-on-artifacts, quintel-distribution-checklist, quintel-seo-keyword-bank, show-hn-post-draft
 - 5 still `new` (Tier B execution, no drafting needed): awesome-list-prs, github-topics-audit, make-com-disintermediation-positioning, smithery-mcp-so-submissions, substack-roblox-playbook-post
-- 0 draft-blocked (sequenced behind a predecessor): none
 
 Nothing today needs your decision.
