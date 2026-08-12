@@ -2,8 +2,8 @@
 contact: Rob Lewis (+ Spencer, VP Technology · Eric Freeman, Founder/CEO)
 company: Wingspire Equipment Finance (ef.wingspirecapital.com)
 call_type: firm-direct
-status: ACTIVE PIPELINE — strongest first call Simon has run solo. Price disclosed and accepted, buyer-authored 3-seat shape, CEO-sponsored. No date, no cost-bearing step, decision sits with Eric, and the technical evaluator's verdict is unheard.
-last_contact: 2026-07-28
+status: ACTIVE PIPELINE — strongest first call Simon has run solo. Price disclosed and accepted, buyer-authored 3-seat shape, CEO-sponsored. Deck sent 2026-07-29; no reply as of 2026-08-04. No date, no cost-bearing step, decision sits with Eric, and the technical evaluator's verdict is unheard.
+last_contact: 2026-07-29
 ---
 
 # Rob Lewis — Wingspire Equipment Finance
@@ -34,6 +34,7 @@ last_contact: 2026-07-28
   — firm-direct, ~25 min. Rob opened hostile to the category (*"I've taken these calls before... it's always small ticket garbage"*), then pulled in his VP of Technology to check for overlap with their in-house Claude build. Demo landed; Rob confirmed the buy box, **asked for price unprompted, took $3,000/mo without resistance**, and self-proposed a **three-rep shape** across manufacturing/packaging, food & beverage and construction. Volunteered *"we're missing a lot of deals"* and *"if we do, I want to go all in — I want you to train the guys."*
   **Two unforced errors:** the $1,500 Core price plus *"something we could work out"* was disclosed in reply to a one-seat packaging question; and an anonymised customer anecdote let Rob identify **Katharine / Empire**, which was then denied in terms that were untrue.
   **Ended with no date and nothing cost-bearing.** Next step: Rob "stews on it" and takes it to Eric.
+- **2026-07-29** *(deck + initial follow-up sent)*: Wingspire deck attached. Email acknowledged the missed Spencer question and pointed him to the build-vs-buy slide, then committed to circle back early the following week. **No reply as of 2026-08-04.** The send armed Rob, but still left the decision undated and Spencer's verdict unheard. Reply draft: [[bd/calls/proposals/rob-lewis-followup-2026-08-04]].
 
 ## Running Intelligence
 
@@ -81,11 +82,13 @@ last_contact: 2026-07-28
 | # | Action | Owner | Due | Status |
 |---|--------|-------|-----|--------|
 | 1 | Decide + execute the Katharine/Empire disclosure repair | Simon | 2026-07-29 | OPEN |
-| 2 | Follow-up email with a deck he can forward. **Deck rendered 2026-07-29** → `bd/calls/proposals/quintel-direct-deck-wingspire.{html,pdf}` (source: `active/collateral/direct-deck-template.html`, prospect block `wingspire`). Providence spine, 8 slides, two swapped for Wingspire: **build-vs-buy** (6) and **commercials** (7, $3,000 stated). Sample lead is Blue Cord Design &amp; Construction — $15.1M award, inside his $5–50M band, construction desk | Simon | 2026-07-29 | READY TO SEND |
-| 3 | Close off the $1,500 disclosure — one price, band logic, in writing | Simon | with #2 | DRAFTED — para 2 of `bd/calls/proposals/rob-lewis-followup-2026-07-29.md` |
-| 4 | Direct email to Spencer (cc Rob) on his Claude build | Simon | 2026-07-29 | ANNOUNCED — the follow-up says a note is coming unless Rob objects. Still needs writing and sending |
+| 2 | Follow-up email with a deck he can forward. **Deck rendered 2026-07-29** → `bd/calls/proposals/quintel-direct-deck-wingspire.{html,pdf}` (source: `active/collateral/direct-deck-template.html`, prospect block `wingspire`). Providence spine, 8 slides, two swapped for Wingspire: **build-vs-buy** (6) and **commercials** (7, $3,000 stated). Sample lead is Blue Cord Design &amp; Construction — $15.1M award, inside his $5–50M band, construction desk | Simon | 2026-07-29 | SENT 2026-07-29 |
+| 3 | Close off the $1,500 disclosure — one price, band logic, in writing | Simon | with #2 | PARTIAL — deck states $3,000; lower-band disclosure was not explicitly withdrawn in the email body |
+| 4 | Resolve Spencer's Claude overlap | Simon | next buyer call | OPEN — hybrid thesis drafted: Spencer keeps his proprietary Claude workflow; Quintel supplies scored output + evidence underneath it. Test on a 20-minute launch-or-stop call with Spencer + anyone else Rob says should be involved |
 | 5 | Answer the adoption objection. **Reframed 2026-07-29 (Simon):** reps going quiet is a *symptom*, not the disease. They stop using a tool that does not produce deals, and training or usage reporting does not fix that. The answer is real names off his box, not a monitoring mechanism. Usage report held in reserve for the walkthrough | Simon | with #2 | ANSWERED VIA THE RUN |
-| 6 | Propose a dated next step (specific day + specific artifact) | Simon | 2026-07-29 | DRAFTED — a run against his box, walked Thu 7/30 or Mon 8/3 |
-| 7 | Verify email domain (`rlewis@wingspirecapital.com`, not `pirecapital`) | Simon | before #2 | OPEN |
+| 6 | Propose a dated next step (specific day + specific artifact) | Simon | 2026-08-04 | DRAFTED — 20-minute decision call with Rob, Eric and Spencer; Thu 8/6 or Fri 8/7 |
+| 7 | Verify email domain (`rlewis@wingspirecapital.com`, not `pirecapital`) | Simon | before #2 | DONE — send completed to the Wingspire domain; no bounce reported |
 | 8 | Ratify or retire the improvised 30-day money-back term | Simon + Alek | 2026-08-01 | OPEN |
-| 9 | Rob takes it to Eric ("Chief") | Rob | no date given | OPEN — chase |
+| 9 | Rob takes it to Eric ("Chief") | Rob | no date given | OPEN — chase 2026-08-04 |
+| 10 | Send the dated follow-up reply in the existing thread | Simon | 2026-08-04, 5pm | HYBRID DRAFT RECOMMENDED — decision call first; paid Tiger launch close on the call |
+| 11 | If Rob accepts the Tiger offer, send the one-page order form and calendar hold for kickoff | Simon | same day as reply | PENDING RESPONSE |
