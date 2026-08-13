@@ -5,8 +5,8 @@ Newest entries at the top.
 
 ---
 
-## 2026-08-12 — Morning brief published
-- 2026-08-12: Morning brief published — [Tokenrip publish failed: 502 from api.tokenrip.com; vault mirror at agents/hermes/artifacts/2026-08-12-morning-brief.md]
+## 2026-08-13 — Morning brief published
+- 2026-08-13: Morning brief published — https://tokenrip.com/s/1be338fd-38e9-4693-a95d-4974ef1d94fe
 
 ## 2026-07-07 — Operator mandate established
 
