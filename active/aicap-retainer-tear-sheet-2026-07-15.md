@@ -38,11 +38,11 @@ Walking in with the inventory converts a negotiation into a transparent review �
 
 ## The −20% column (what cutting the rates actually costs)
 
-| Tier | Anchor | −20% (round) | Effective rate at −20% |
-|---|---|---|---|
-| Light (1 d/wk) | $4,000 | **$3,000** | ~$86/hr |
-| Standard (2 d/wk) | $7,500 | **$6,000** | ~$86/hr |
-| Sprint (3 d/wk) | $11,000 | **$9,000** | ~$86/hr |
+| Tier              | Anchor  | −20% (round) | Effective rate at −20% |
+| ----------------- | ------- | ------------ | ---------------------- |
+| Light (1 d/wk)    | $4,000  | **$3,000**   | ~$86/hr                |
+| Standard (2 d/wk) | $7,500  | **$6,000**   | ~$86/hr                |
+| Sprint (3 d/wk)   | $11,000 | **$9,000**   | ~$86/hr                |
 
 What the cut *means*: every −20% tier lands at ~$86/hr — i.e., **the SOW's design-partner discount rolling forward silently**, which directly contradicts the "one-time price tied to the partnership agreement" story. At Standard, the gap is **$1,500/mo = $18K/yr.** If you want a planned concession in your pocket, fine — but a concession must *buy* something: $6,000 in exchange for a 3-month minimum, or a quarter prepaid, or the partnership agreement signed with reference + case-study rights. Never open at $6K, and never drift there because the conversation felt warm.
 

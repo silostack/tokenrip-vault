@@ -1,7 +1,7 @@
-<!-- tokenrip-bootloader-version: 10 -->
+<!-- tokenrip-bootloader-version: 11 -->
 ---
 name: tokenrip-bootloader
-description: "Run a Tokenrip-published agent. Pass the slug as the first argument (or omit it to browse)."
+description: "Run a Tokenrip-published agent or skill. Pass the slug as the first argument (or omit it to browse)."
 argument-hint: "[agent-slug] [optional session context...]"
 allowed-tools: Bash(npm install -g @tokenrip/cli), Bash(rip:*), Bash(curl:*)
 ---
@@ -24,6 +24,12 @@ agent, end-to-end, via the local `rip` CLI. Do **not** use the
 Tokenrip MCP server for this; the CLI handles auth, session lifecycle, and
 memory writes.
 
+This runs **both imprint kinds**: full agents (`kind: 'agent'`, memory +
+tools) and lean skills (`kind: 'skill'`, a playbook + connection bindings,
+no memory ceremony). The flow is identical — sections below that reference
+memory tables, memory artifacts, or `tools[]` simply don't apply when the
+loaded manifest declares none.
+
 ## Inputs
 
 `$ARGUMENTS` is the user's input. The first whitespace-separated token is
@@ -40,7 +46,7 @@ pick a slug, then continue from step 3 with that slug.
    curl -fsSL https://api.tokenrip.com/commands/tokenrip-bootloader-version
    ```
 
-   Compare the returned `version` number to `10` (the version
+   Compare the returned `version` number to `11` (the version
    embedded in this file). If the server version is higher, re-install:
 
    ```bash
@@ -87,6 +93,11 @@ pick a slug, then continue from step 3 with that slug.
    rip --json agent load <slug>
    ```
 
+   A **team-owned** imprint automatically resolves to the team's shared
+   mount when you are a member — no flag needed. To target a specific team's
+   mount explicitly (or when the same slug exists in more than one scope),
+   add `--team <team-slug>`.
+
    Parse the JSON. The shape is:
 
    ```json
@@ -101,10 +112,19 @@ pick a slug, then continue from step 3 with that slug.
        "mountContext": { "alias": "...", "version": 0, "isEmpty": true, "content": "..." },
        "brain": [ { "alias": "...", "role": "soul", "content": "<artifact role=\"soul\" alias=\"...\">...</artifact>" } ],
        "layers": { "shared": { "tables": [...], "memoryArtifacts": [ { "logicalAlias": "...", "artifactId": "...", "content": "<memory-artifact alias=\"...\" scope=\"...\">...</memory-artifact>", "isEmpty": false } ] }, "team": {...}, "private": {...} },
-       "crossSessionReferences": { ... }
+       "crossSessionReferences": { ... },
+       "connectionBindings": [ { "name": "<slot>", "connection": "<connection-name>", "purpose": "..." } ],
+       "unboundConnectionBindings": [ { "name": "<slot>", "required": true, "purpose": "...", "reason": "connection-deleted" } ]
      }
    }
    ```
+
+   `connectionBindings` / `unboundConnectionBindings` appear only when the
+   manifest declares connection slots (typical for skills). If a **required**
+   slot appears in `unboundConnectionBindings`, stop before running the
+   brain and tell the operator to bind it (`rip agent mount-connection
+   <mount-id> <slot>=<connection-name>`, or the dashboard's deployment →
+   Connections panel).
 
    **If the response has `probeManifest` instead of `sessionToken`:** the
    agent declares `tools[]` and needs a capability probe before a session
@@ -172,6 +192,24 @@ rip --json agent rewrite-artifact <session-token> <logical-alias> \
 ```
 
 `<logical-alias>` is one of `manifest.memoryArtifacts[].logicalAlias`.
+
+## Calling External APIs (connection bindings)
+
+When the loaded brain instructs you to call an external API through a bound
+connection slot, resolve the slot to its connection name via the load
+envelope's `connectionBindings`, then run:
+
+```bash
+rip connection call --mount <mount.id> --connection <connection-name> \
+  --method POST --path </path> --body '<json-body>'
+```
+
+The platform injects the connection's secret server-side and proxies the
+request — you never see or supply the API key. Responses are non-streaming
+and capped at 5 MB, so follow the brain's guidance on response shapes (e.g.
+ask image APIs for a URL, not inline bytes). `CONNECTION_NOT_GRANTED` /
+`UNKNOWN_CONNECTION` mean the slot isn't bound on this mount — see the
+unbound-slot note in step 3.
 
 ## Dispatching Tools During the Session
 

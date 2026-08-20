@@ -2,14 +2,16 @@
 contact: Jerman Juarez-Padron
 company: Onset Financial
 call_type: firm-direct
-status: onboarded, expanding (Jerman live on the dashboard; Onset requested expansion to 4 seats — VP of Sales as manager + 3 reps he allocates)
+status: former champion / deployment continuity risk (Jerman has left Onset; account ownership now requires confirmation)
 last_contact: 2026-08-05
 ---
 
 # Jerman Juarez-Padron — Onset Financial
 
 ## Who / What
-Relationship-side BDM and closer at Onset Financial, an **independent equipment finance lender** (HQ Salt Lake City; Jerman based in St. George, UT). Onset was cold-reached at the VP level (Britain Johnson); Britain tasked Jerman to take the call. Jerman handles established broker relationships (post master-broker-agreement), works independent broker/consultant deals, and is the internal "closer" who steps in when a board or multiple heads stall a deal. He is **not** the formal buyer — decision sits with **Britain Johnson (VP)** and **Jeff Miller (executive)** — but as of 2026-07-29 he took rev-share to the credit committee and returned with approval, and he was the first designated user of the product. Practically, he has been both champion and end user.
+Former relationship-side BDM and closer at Onset Financial, an **independent equipment finance lender** (HQ Salt Lake City; Jerman based in St. George, UT). Onset was cold-reached at the VP level (Britain Johnson); Britain tasked Jerman to take the call. Jerman handled established broker relationships (post master-broker-agreement), worked independent broker/consultant deals, and was the internal "closer" who stepped in when a board or multiple heads stalled a deal. He was **not** the formal buyer — decision sat with **Britain Johnson (VP)** and **Jeff Miller (executive)** — but as of 2026-07-29 he took rev-share to the credit committee and returned with approval, and he was the first designated user of the product. Practically, he was both champion and end user.
+
+**Update 2026-08-18:** Heath Birchall stated that Jerman is no longer with Onset. This was not a Jerman call; it confirms a continuity risk rather than the successor or the four-seat expansion’s status. See [[bd/calls/contacts/heath-birchall]].
 
 **Update 2026-08-05:** deployment is expanding beyond Jerman alone. Onset's **VP of Sales** (present but unidentified on the 08-04 walkthrough call — name not yet captured, possibly but not confirmed to be Britain Johnson) requested **4 seats**: himself as manager, plus **3 reps he'll allocate leads to**. This moves Onset from a single-closer test to a small team rollout — a materially stronger commitment signal than a $0-cost pilot with one user.
 

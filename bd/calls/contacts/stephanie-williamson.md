@@ -2,8 +2,8 @@
 contact: Stephanie Williamson
 company: AICAP Access
 call_type: firm-direct
-status: BUILDING — paid in full; app handed over; Week-3 iteration on her GitHub issues. First committed paid build. **Commercial ceiling stalled: she offered a renegotiation 2026-07-22 and it was declined.** **First-customer gate reframed 2026-07-24: the blocker is executive buy-in, not the MSP.**
-last_contact: 2026-07-24
+status: CLOSING VALIDATION MVP — paid in full; Week 7 begins 2026-08-17. **Follow-on self-serve Demo Hardening / Pilot phase is now defined at requirements level but remains unscoped and unpriced. Real-data use would trigger the separate security/production scope.**
+last_contact: 2026-08-13
 email: stephanie@aicap-access.com
 phone: 804-572-1804
 ---
@@ -43,7 +43,17 @@ CPCS-certified credentialing and privileging operations leader with 20+ years in
 - **2026-07-24**: [[bd/calls/transcripts/stephanie-williamson-2026-07-24-boston-childrens]] · [[bd/calls/notes/stephanie-williamson-2026-07-24-boston-childrens]]
   — **client-hosted prospect intro (Matthew, Boston Children's).** Stephanie ran it; Simon introduced as **"my founding engineer"** and asked one question at the end. Matthew answered generously and **asked for nothing** — no pilot motion, no "specific ask" defined by anyone. **Three material outputs:** (a) the **executive-buy-in objection** is now the real first-customer gate — *"you're gonna pay $100K/yr for production software, why do you need to pay $10K more for whatever this is?"*; (b) he handed over the **ROI argument** — MSOs measure turnaround from *application-submitted*, executives measure from *contract-signed*, and AICAP lives entirely in that unmeasured gap; (c) the **office-address problem is solved** (*"we just use the general hospital address"*) — reversing the 07-22 "unsolvable" verdict. Also: new config dimensions (non-credentialing HR/hospital forms; foreign- vs domestic-trained branching). Momentum → **flat commercially, ↑ product intelligence.**
 
+- **2026-08-13**: [[bd/calls/transcripts/stephanie-williamson-2026-08-13]] · [[bd/calls/notes/stephanie-williamson-2026-08-13]]
+  — firm-direct (**Validation MVP status / Week-7 planning**). Stephanie locked the product focus: provider-first intake, judged through medical staff office value; coordinator outreach automation and external verification stay V2/V3. She defined the expansion sequence as limited self-serve demo → paid configured/non-integrated A/B pilot → integration, and specified the coordinator output as red flags/pending items → line-by-line captured data → printable application form. **Commercially unresolved:** the self-serve real-data demo introduces multi-format intake, mobile/QR, interruption recovery, instrumentation, testing, PII storage, and security — all outside the Validation MVP SOW — but no scope, price, acceptance decision, or next meeting was set. Momentum → **flat commercially; ↑ product clarity.**
+
 ## Running Intelligence
+
+**🔴 UPDATE 2026-08-13 — Phase 1 has a clear finish line; the requested self-serve demo is Phase 2**
+- **Provider-first is confirmed as the product north star.** Stephanie wants the provider guided to resolve what would otherwise become a long pending-items email. The medical staff office is the value judge, but coordinator outreach automation is explicitly V2/V3. External NPI-type validation also waits because incumbents already automate it. Her phrase: *"The real value is going to be cutting out that back and forth with the provider."*
+- **Commercialization sequence is now explicit:** (1) a limited, hands-off demo for trusted contacts; (2) a **paid**, hospital-configured but non-integrated pilot that compares old and new workflows; (3) integration if the data supports it. This is the cleanest articulation yet of how Boston Children's or another design partner moves from curiosity to deployment.
+- **The expansion is materially outside the signed SOW.** The Validation MVP accepts de-identified samples and explicitly excludes production hardening and live provider data. Her hands-off demo asks for broad document formats, save/resume and failure recovery, mobile/tablet, QR phone capture, tracing, adversarial testing, and potentially stored CV/ID/SSN data. These are not "polish"; they are a separately priced Demo Hardening / Pilot phase.
+- **The output contract is finally concrete.** Coordinator output: (1) red flags and pending items, (2) all captured application data line by line, (3) printable application-form rendering. The demo uses a generic form; a paid deployment reproduces the hospital's own application. Audit trail follows her prototype.
+- **Data governance became the gating technical question.** Stephanie wants backend visibility and may want to retain data for product learning; Simon raised model-drift regression needs. These are three distinct requirements — observability, regression fixtures, and raw-data retention — and should not be collapsed into "training data." The minimum safe architecture should prefer consented, de-identified regression cases over retaining every raw CV, ID, and SSN.
 
 **🔴 UPDATE 2026-07-24 — the first-customer gate is the CMO, not the MSP**
 - **The objection that matters is "why a second product," not "does it work."** Every hospital already owns credentialing software. AICAP is an **attach sale** against an incumbent the buyer thinks should already do this — a different sale from the pain-based pitch in this file, landing on a persona (CMO/CEO) nobody has sold to. Stephanie surfaced it: **two of her leads have flagged executive buy-in**, and she says she hasn't been asking — so the true rate is unknown and probably higher.
@@ -140,13 +150,13 @@ She built this on Replit by herself. "Burnt out Replit with reiterations." Her o
 
 ## Relationship / Pipeline State
 
-**🔵 DELIVERING, COMMERCIALLY CAPPED (2026-07-22).** Paid in full ($11K net), build ahead of the week plan, app handed over, weekly issue-iteration cadence running, and the client is volunteering competitive access most vendors never get. Relationship temperature is the highest it has been in the file.
+**🟦 VALIDATION MVP CLOSING; FOLLOW-ON UNPRICED (2026-08-13).** Paid in full ($11K net); Week 7 begins 2026-08-17. The immediate job is to close acceptance against the signed scope: de-identified end-to-end flow, coordinator operability, completed-application PDF, and audit-trail PDF. Stephanie's output feedback makes that finish line executable.
 
-**The constraint has moved.** It is no longer *converting* (done) or *delivering* (on track) — it is **capturing the expansion the client keeps offering.** On 2026-07-22 she opened a renegotiation and named a second commissionable project (AI chief of staff); both were declined in the moment with free/learning framing. Everything discussed on that call — demo polish, wow-factor UX, click reduction, reference-data seeding, a security milestone, the chief of staff, the credentialing knowledge engine — sits outside the SOW's acceptance criteria and none of it is priced. The [[../../../active/aicap-retainer-tear-sheet-2026-07-15|retainer tear sheet]] is the ready-made instrument; it just has to be sent.
+**The next phase is no longer vague "demo polish."** It is a self-serve Demo Hardening / Pilot-readiness package: hands-off external access, document/device resilience, save/resume, instrumentation, aggressive testing, and a real-data security design. The SOW explicitly excludes production hardening and live provider data. It therefore requires a separate scope, price, timeline, and acceptance gate — not an informal extension of Week 7.
 
-**First-customer path:** Boston Children's is the live one. Matthew has agreed to test and asked for a "specific ask" — **undefined by us.** Duke and MD Anderson unchanged since 2026-06-17.
+**Commercial constraint persists.** Stephanie wants to preserve momentum and previously volunteered that she was open to renegotiation, but this call again ended with "send me your thoughts / I'll send mine" rather than a priced decision. The best next motion is a short, risk-ranked paid scope after her requirements land — not further implementation.
 
-**Two process debts still open from 2026-07-01:** the weekly-demo cadence and the 30-day refund clock (nominally ~2026-07-31) were never confirmed in writing.
+**First-customer path:** Boston Children's remains the live one. Matthew has agreed to test and asked for a "specific ask" — still undefined. The limited demo could be the precursor, but only if its success event and the buyer handoff are defined before access is sent. Duke and MD Anderson unchanged since 2026-06-17.
 
 ---
 
@@ -181,19 +191,17 @@ She built this on Replit by herself. "Burnt out Replit with reiterations." Her o
 
 ## Load-Bearing Assumptions (ranked — test, don't assume)
 
-Post-kickoff reads driving the build that are **not yet confirmed by hard evidence**. Ranked by how much the plan breaks if wrong. The top item is the #1 thing to watch on next contact.
+Reads driving the closeout and follow-on motion that are **not yet confirmed by hard evidence**. Ranked by how much the plan breaks if wrong.
 
-*Refreshed 2026-07-22. Ranks 1–3 from the kickoff set are resolved (milestone funded 07-02; samples received with usable nuance; the rubric transfers iteratively via brain-dump + issues rather than one recorded call).*
+*Refreshed 2026-08-13.*
 
 | Rank | Assumption | fact/inferred + conf. | Cheapest test |
 |------|-----------|----------------------|---------------|
-| 1 | **Her "I'm open to renegotiate" is real budget, not politeness.** The whole Lane-2 retainer plan rests on it. She is self-funded and pre-revenue; the offer may be goodwill she can't fund. | inferred, med — she volunteered it unprompted, twice-adjacent (retainer + chief of staff) | **Send the two-option retainer note this week and watch what comes back.** A price in front of her resolves it in one reply; nothing else will. Do not build the Lane-2 plan further before she answers. |
-| 2 | **The compliance-examples homework is still a real blocker.** The tracker says Week 2 is blocked on it; neither party mentioned it on a full-hour call, while she filed a batch of GitHub issues instead. | inferred, low-med | Ask directly: "are the issues you filed the examples?" If yes, correct the tracker and stop chasing a ghost. One message. |
-| 3 | **Matthew's "specific ask" is a pilot ask** (scope + price + duration), not a feature demand or a compliance-proof request. | inferred, med — **still untested after 07-24; the shape is now partly known** | ⚠️ **The test was available on 07-24 and was not run** — nobody raised it. What we learned instead: whatever the ask is, it has to survive a CMO asking why the $100K incumbent doesn't already do this. **Next test must survive her non-presumptive style** — either Simon asks it directly, or it's embedded in the written ask so Matthew answers on his own time. Do not assume she will ask it. |
-| 3b | **Matthew is the economic buyer.** He has been treated as the decision-maker throughout the file. | inferred, **low after 07-24** — his own answer points at the CMO/CEO holding budget for a new line item | Ask him directly who signs. The champion→buyer handoff problem — the same one that killed the Quintel funnel — may exist here too. |
-| 4 | **The "wow demo" spec homework arrives** and is concrete enough to close the gap between the working system and a jaws-drop demo. Her demo-readiness expectation is currently unbounded. | inferred, med | If it hasn't landed by the next check-in, run it as a live 20-minute working session instead — she thinks out loud better than she writes. |
-| 5 | **She is not expecting demo-readiness inside the SOW price.** She said "I can't wait for the UX design" and wants wow factor; the SOW explicitly fences out demo polish and production hardening. | inferred, med — untested | Name the boundary generously in the retainer note: what's included, what's Lane 2, and one or two gray items gifted out loud. |
-| 6 | **In-AICAP attestation is the MVP bar** (downstream hospital acceptance is a later pilot question). Carried forward, still unconfirmed in writing. | inferred, high | Confirm in the same written follow-up. |
+| 1 | **Stephanie will fund the self-serve Demo Hardening / Pilot-readiness work as a separate phase.** The follow-on plan fails commercially if she treats it as included Week-7 polish. | inferred, med — she previously offered to renegotiate and explicitly described the hospital-configured pilot as paid, but no AICAP-side follow-on budget was discussed | Send a short scope with current-MVP boundary, must-haves, price, timeline, and a decision date before implementing expansion items. |
+| 2 | **Raw real PII is necessary for the first external demo.** She wants contacts to upload their own CVs and later leaned toward storing data, but initially described the test as not configured for real use. | inferred, med | Offer two tracks: de-identified/synthetic demo now versus real-data pilot after the security gate. Ask which learning cannot be obtained from Track 1. |
+| 3 | **A hands-off demo will move contacts toward a paid pilot without a defined conversion event.** Access and feedback can become another indefinite free-advisory loop. | inferred, med-high | For the first two testers, pre-book the feedback call and define the next-step question before issuing access: paid configured A/B pilot, yes/no/conditions. |
+| 4 | **Retaining raw submissions is required for model-drift regression.** The need for a durable regression set is fact; raw identifiable source retention is not. | inferred, low-med | Build a small consented and de-identified fixture set; compare what debugging signal is lost before approving raw-data retention. |
+| 5 | **Provider-first delight alone will clear the executive-buy-in objection.** It is Stephanie's product thesis, not yet a CMO-confirmed buying thesis. | inferred, med | Put the provider flow plus the contract-signed→submitted metric gap in front of Matthew/CMO and ask which proof they require to sponsor a paid pilot. |
 
 ## Open Commitments
 
@@ -213,7 +221,7 @@ Post-kickoff reads driving the build that are **not yet confirmed by hard eviden
 | 12 | Overview doc + target-system list | Stephanie | 2026-05-30 | ✅ Received 2026-06-02 (discovery scope doc covers both) |
 | 13 | Send prior integration/install documentation | Stephanie | pending | ✅ Received 2026-06-05 — Vanderbilt's Cactus implementation package (symplr-confidential; held locally, not committed to vault); folded into research/findings/roadmap |
 | 14 | Brain-dump Symplr AI-exploration session + screenshots | Stephanie | pending | ✅ Superseded by the Cactus package (#13) — far more useful than a brain-dump; symplr's own import spec + data dictionary |
-| 15 | Deliver the feasibility study (the actual deliverable) | Simon | ~5 business days from kickoff | 🟡 In progress — public-docs read done 2026-06-02 (first-pass draft: [[product/aicap/research/aicap-integration-feasibility-findings-2026-06-02]]); pending Simon's validation + her materials |
+| 15 | Deliver the feasibility study (the actual deliverable) | Simon | ~5 business days from kickoff | ✅ Done 2026-06-06 — [[../../../product/aicap/deliverables/aicap-integration-discovery-deliverable-2026-06-06]] |
 | 16 | System screen-share walkthrough (MD-Staff / Symplr) | Both | Post-discovery | Deferred — Stephanie's offer |
 | 17 | Send discovery-updated proposal (pilot-ready prototype; $1K credited → $11K net) | Simon | 2026-06-20 | ✅ Done — became the signed Validation MVP SOW ([[product/aicap/aicap-validation-mvp-sow-2026-06-22]]) |
 | 18 | Drive MVP kickoff now, decoupled from a pilot, as the demo that cracks her leads | Simon | Next contact | ✅ Done — kickoff 2026-07-01, **converted** |
@@ -227,15 +235,15 @@ Post-kickoff reads driving the build that are **not yet confirmed by hard eviden
 | 26 | Set up the private GitHub repo + add Stephanie as collaborator | Simon | 2026-07-01 | ✅ Done 2026-07-02 |
 | 27 | Begin Week-1 build (autofill on her samples) | Simon | On receipt of #24 | ✅ Built + demoed 2026-07-09 |
 | 28 | Field-by-field rubric transfer | Both | After Week-1 build | ↪️ Superseded — transfers iteratively (brain-dump 07-09 → her worked examples → her GitHub issues), not one recorded call |
-| 29 | Lock **weekly-demo cadence + the 30-day refund clock** in a written follow-up | Simon | 2026-07-23 | 🔴 **Still open** — third call running; clock nominally ends ~2026-07-31 |
+| 29 | Lock **weekly-demo cadence + the 30-day refund clock** in a written follow-up | Simon | 2026-07-23 | ↪️ Expired unresolved — refund window passed; replace with an explicit Week-7 acceptance decision |
 | 30 | **Compliance examples** (worked cases seeding the Week-2 architecture) | Stephanie | from 2026-07-09 | 🟠 Overdue + unmentioned 07-22 — *first confirm whether her GitHub issues are serving this purpose* |
-| 31 | **Send the two-option retainer note** (Lane 1 SOW / Lane 2 retainer) — she opened the door herself 07-22 | Simon | 2026-07-24 | 🔴 **New — top priority.** Instrument ready: [[../../../active/aicap-retainer-tear-sheet-2026-07-15]] |
+| 31 | **Send the two-option retainer note** (Lane 1 SOW / Lane 2 retainer) — she opened the door herself 07-22 | Simon | 2026-07-24 | 🔴 Overdue — 08-13 produced a cleaner trigger: separately scope and price the Demo Hardening / Pilot-readiness phase |
 | 32 | **Scope + fixed-price the AI chief of staff** as a separate engagement ("I would commission that in a heartbeat") | Simon | 2026-07-27 | 🔴 New — ask her for the 3 things she wants off her plate, return a price + 2-week window |
 | 33 | **Define the "specific ask" for Matthew / Boston Children's** (pilot scope, price, duration, success criteria) | Simon | 2026-07-29 | 🔴 **Still open — not raised on 07-24.** Reframed: it must clear the **executive-buy-in** objection, led by the contract-signed→credentialed metric gap, not the MSP pain |
 | 34 | Rewrite GitHub issue comments for a non-technical reader | Simon | ongoing from 2026-07-23 | 🔴 New — channel was transmitting nothing for 3 weeks |
 | 35 | Attend the **MD-Staff demo** (generic Gmail, camera off, "with VOMC," WhatsApp questions) | Simon | 2026-07-23 | 🔴 New |
 | 36 | Attend **Boston Children's / Matthew** (collared shirt; never "verification"; "Dr." for physicians only; conditional "if we were to" language) | Both | 2026-07-24, 10:00 | ✅ Done — introduced as *"my founding engineer"*; Simon asked one question. No pilot motion |
-| 37 | Write the **"wow demo" spec** (CV in → what was found → what was flagged → provider UX → coordinator UX, maximum detail) | Stephanie | ~2026-07-29 | 🔴 New — accepted on-call |
+| 37 | Write the **"wow demo" spec** (CV in → what was found → what was flagged → provider UX → coordinator UX, maximum detail) | Stephanie | ~2026-07-29 | ✅ Substantively resolved live 2026-08-13 — provider-first self-serve flow and three-layer coordinator output; remaining hardening requirements due in her follow-up brief |
 | 38 | Set up shared **Notion** workspace + invite Simon | Stephanie | ~2026-07-25 | 🔴 New |
 | 39 | Send this call's **transcript** | Stephanie | 2026-07-22 | 🔴 New — committed |
 | 40 | Check whether the **symplr biweekly calls** are recorded / transcript-liftable; Simon joins the next one otherwise | Both | ~2026-08-05 | 🔴 New — standing incumbent-failure intel stream |
@@ -243,6 +251,13 @@ Post-kickoff reads driving the build that are **not yet confirmed by hard eviden
 | 45 | **Get inside Stephanie's "executive talking-points form"** — she built it and offered it to Matthew for review; Simon has never seen it. It's where the metric-gap argument belongs | Simon | 2026-07-28 | 🔴 New |
 | 46 | **Build-side updates from 07-24:** hospital-level address default · non-credentialing hospital forms as pass-through collection · foreign- vs domestic-trained branching · historical malpractice carrier per prior employer | Simon | Week 3 | 🔴 New |
 | 47 | **Plan how the pilot question actually gets asked** — Stephanie won't push (by choice). Either Simon asks Matthew directly, or it's embedded in the written ask | Simon | Before next Matthew contact | 🔴 New |
-| 42 | Find authoritative **hospital / health-system reference data sources** (Simon: ~10 min AI sweep · Stephanie: association + software logins) | Both | ~2026-07-29 | 🔴 New |
+| 42 | Find authoritative **hospital / health-system reference data sources** (Simon: ~10 min AI sweep · Stephanie: association + software logins) | Both | ~2026-07-29 | 🟡 Stephanie's reference list started; committed to finish and send 2026-08-13. Simon to assess remaining gaps |
 | 43 | Research **NAMS** (Oct, New Orleans, virtual) and confirm whether to join her group registration | Simon | ~2026-07-29 | 🔴 New — incumbent vendors send speakers |
-| 44 | **Security milestone** — quote when triggered (real PII or imminent hospital deployment); third-party auditor reviews rather than builds | Simon | On trigger | 🟡 Pre-agreed 2026-07-22, not scheduled |
+| 44 | **Security milestone** — quote when triggered (real PII or imminent hospital deployment); third-party auditor reviews rather than builds | Simon | Before real-data access | 🔴 Trigger proposed 2026-08-13 — self-serve contacts may upload CV/ID/SSN and Stephanie may retain submissions; scope before enabling |
+| 48 | Send the 2026-08-13 recap with owner-by-owner actions and the Validation MVP / Demo Hardening boundary | Simon | 2026-08-13 | 🔴 New |
+| 49 | Close Validation MVP outputs: audit trail based on Stephanie's prototype; application PDF with summary → line-by-line data → printable form | Simon | 2026-08-20 *(inferred: Week 7)* | 🔴 New |
+| 50 | Review AI-implemented GitHub fixes; close or comment on each remaining issue | Simon | 2026-08-20 *(inferred: Week 7)* | 🔴 New |
+| 51 | Send a risk-ranked, priced scope for self-serve Demo Hardening / Pilot readiness after Stephanie's brief arrives | Simon | 2026-08-20 *(inferred)* | 🔴 New — do not implement before scope approval |
+| 52 | Finish and send hospital / health-system reference-data list | Stephanie | 2026-08-13 | 🔴 New — explicit same-day commitment |
+| 53 | Review updated interface and provider wizard; send concrete feedback plus consolidated self-serve-demo requirements | Stephanie | 2026-08-17 *(inferred)* | 🔴 New |
+| 54 | Decide de-identified demo vs real-data pilot and define consent, permitted use, retention, deletion, and access requirements before any PII handoff | Both | Before external access | 🔴 New |
