@@ -21,7 +21,11 @@ tags:
 
 ## Executive Summary
 
-**Kita is evidence for Quintel's operating model, not evidence for Quintel's business-model fork.** Kita has found a high-frequency, lender-owned workflow where work already exists—messy applicant files—and makes its value legible in minutes: a complete, auditable assessment rather than an AI claim. It sells modularly, integrates into the lender's stack, and stays forward-deployed until production is clean. That is a strong precedent for how Quintel should earn the right to software revenue.
+### Kita in one sentence
+
+**Kita is software for lenders after a borrower has applied.** It collects missing documents, reads and checks the evidence in those documents, applies a lender's credit policy, and drafts a source-linked credit memo for a human underwriter to approve or reject. It does **not** find borrowers, broker capital, or make the final lending decision.
+
+**Kita is evidence for Quintel's operating model, not evidence for Quintel's business-model fork.** Kita has found a high-frequency, lender-owned workflow where work already exists—messy applicant files—and makes its value legible in minutes: a complete, auditable assessment rather than an AI claim. It sells modularly, integrates into the lender's stack, and stays alongside the customer until the production workflow is clean. That is a strong precedent for how Quintel should earn the right to software revenue.
 
 Kita does **not** validate Quintel becoming an origination firm. Kita owns neither borrower acquisition nor capital placement; its lender customers already possess both the applicants and the decision right. Quintel's live uncertainty is one step earlier and more fundamental: whether public signals create a reachable, financeable need at enough density to justify a human action. The current deal sprint is therefore the correct prerequisite to the fork, not a detour from it. [[quintel-focus-realignment-2026-08-15]] sets the appropriate threshold: 150 contacted companies, at least three confirmed needs, and at least one lender acceptance for credit submission.
 
@@ -37,9 +41,11 @@ The recommendation is to adopt Kita's **evidence architecture** now—one bounde
 
 ## Kita Occupies the Post-Application Credit-Operations Layer
 
+**Why it matters to Quintel:** Kita is a useful analogy for how to make an AI-assisted financial workflow trustworthy. It is not a broker model. Quintel's unresolved question comes earlier: can it reliably find and qualify a financing need before an application exists?
+
 ### Kita's customer is a lender with applicants and document-heavy underwriting already in motion
 
-Kita targets banks, fintechs, CDFIs/community lenders, microfinance institutions, and SME lenders serving thin-file or otherwise document-heavy borrowers. Its public market pages focus on the Philippines and Indonesia, Mexico, the United States, and Africa. The stated buyer problem is consistent across markets: borrower evidence exists in bank statements, e-wallet records, tax forms, photographed IDs, and informal records, but credit teams must chase, validate, spread, reconcile, and summarize it manually. [Kita company](https://www.kita.ai/company) · [YC profile](https://www.ycombinator.com/companies/kita) · [US market page](https://www.kita.ai/united-states)
+Kita targets banks, fintechs, community-development financial institutions (**CDFIs**), microfinance institutions, and small- and midsize-enterprise (**SME**) lenders serving borrowers with sparse or document-heavy credit files. Its public market pages focus on the Philippines and Indonesia, Mexico, the United States, and Africa. The stated buyer problem is consistent across markets: borrower evidence exists in bank statements, e-wallet records, tax forms, photographed IDs, and informal records, but credit teams must chase, validate, extract, reconcile, and summarize it manually. [Kita company](https://www.kita.ai/company) · [YC profile](https://www.ycombinator.com/companies/kita) · [US market page](https://www.kita.ai/united-states)
 
 This is a high-frequency pain with an existing owner and budget-adjacent operational cost. It differs from Quintel's sourcing problem in a load-bearing way: a lender can see incomplete files accumulating today, whereas the value of a better reason to call becomes visible only after an originator acts.
 
@@ -58,7 +64,7 @@ This is a high-frequency pain with an existing owner and budget-adjacent operati
 
 ### Kita automates the path from application to human credit decision, not demand generation or capital placement
 
-Kita packages five connected capabilities: a white-labeled application, borrower portal, AI Credit Officer for document collection and follow-up, Kita Capture for document extraction/fraud signals, and AI Underwriter for policy checks and cited credit memos. These can be purchased independently or as an Intelligent LOS. The lender's underwriter makes the final decision. [Product stack](https://www.kita.ai/solutions) · [Intelligent LOS](https://www.kita.ai/intelligent-los) · [AI Underwriter](https://www.kita.ai/risk-engine)
+Kita packages five connected capabilities: a white-labeled application, borrower portal, AI Credit Officer for document collection and follow-up, Kita Capture for document extraction and fraud signals, and AI Underwriter for policy checks and cited credit memos. These can be purchased independently or as an Intelligent **loan-origination system (LOS)**—the system a lender uses to receive and process loan applications. The lender's underwriter makes the final decision. [Product stack](https://www.kita.ai/solutions) · [Intelligent LOS](https://www.kita.ai/intelligent-los) · [AI Underwriter](https://www.kita.ai/risk-engine)
 
 The operational flow is:
 
@@ -84,19 +90,19 @@ Kita's strongest product-design choices are transferable even though its technic
 - **Human judgment remains explicit.** The product drafts and flags; the lender signs.
 - **Outcomes are intended to compound.** Kita links document-level signals to repayment/default outcomes to improve future risk assessment. [YC profile](https://www.ycombinator.com/companies/kita)
 
-Its benchmark claims—99.3% signal accuracy across 62 documents and +7.0 Gini points from documents in an 8,000-microloan backtest—are methodologically more specific than ordinary AI marketing, but were designed and published by Kita. They should be treated as **company evidence, not independent proof**. [Benchmark](https://www.kita.ai/blog/bank-statement-extraction-benchmark) · [Backtest](https://www.kita.ai/blog/documents-alternative-data-microlending)
+Its benchmark claims—99.3% signal accuracy across 62 documents and a 7.0-point improvement in **Gini** (a statistical measure of how well a credit model separates stronger from weaker borrowers) in an 8,000-microloan backtest—are methodologically more specific than ordinary AI marketing, but were designed and published by Kita. They should be treated as **company evidence, not independent proof**. [Benchmark](https://www.kita.ai/blog/bank-statement-extraction-benchmark) · [Backtest](https://www.kita.ai/blog/documents-alternative-data-microlending)
 
 ### Kita's commercialization is FDE-shaped and modular
 
 Kita offers 100 free API credits, volume/usage pricing for growth, and custom enterprise annual contracts. Its enterprise offer includes data residency, VPC/on-prem options, dedicated solutions engineering, and a promise to stay embedded until the customer's first 1,000 files run clean. [Pricing](https://www.kita.ai/pricing)
 
-This is not conventional self-serve SaaS. The commercial sequence is: prove the system on the customer's actual documents → integrate into the existing LOS/CRM → stay accountable until the output is operational. That is the closest analogy to Tokenrip's forward-deployed doctrine.
+This is not conventional self-serve SaaS. The commercial sequence is: prove the system on the customer's actual documents → integrate into the existing LOS or **customer-relationship management system (CRM)** → stay accountable until the output is operational. That is the closest analogy to Tokenrip's **forward-deployed** doctrine: work alongside the customer until a real workflow operates reliably, then productize what repeats.
 
 ## Market and Competitive Context
 
 ### The market is structurally real, but its attractiveness comes from underwriting operations—not an abstract inclusion narrative
 
-IFC reports that 70% of MSMEs in emerging markets lack adequate financing; its current page estimates financing gaps of $5.2T for formal MSMEs and $2.9T for informal MSMEs. [IFC MSME finance](https://www.ifc.org/en/what-we-do/sector-expertise/financial-institutions/msme-finance) The large gap alone does not create software willingness to pay. Kita's commercial opening is the operational bottleneck inside the lending institutions trying to serve that market: manual evidence handling produces slow decisions, inconsistent files, fraud exposure, and a headcount ceiling.
+IFC reports that 70% of micro, small, and medium enterprises (**MSMEs**) in emerging markets lack adequate financing; its current page estimates financing gaps of $5.2T for formal MSMEs and $2.9T for informal MSMEs. [IFC MSME finance](https://www.ifc.org/en/what-we-do/sector-expertise/financial-institutions/msme-finance) The large gap alone does not create software willingness to pay. Kita's commercial opening is the operational bottleneck inside the lending institutions trying to serve that market: manual evidence handling produces slow decisions, inconsistent files, fraud exposure, and a headcount ceiling.
 
 ### Kita has meaningful competition in every layer it enters
 
@@ -177,7 +183,7 @@ Kita's lesson is that each stage needs a durable, inspectable record. A verbal �
 ## Recommended Actions
 
 1. **Run the deal sprint unchanged.** The recommendation rests on the inference that evidence, not distribution, is Quintel's binding constraint. The 150-company/three-need/one-submission test directly disconfirms it. Do not build it away.
-2. **Adopt a “cited handoff” standard.** The minimal lender-facing artifact should trace every material claim to a public trigger or borrower statement, distinguish fact from inference, and state what the lender still needs to verify. This is Quintel's Kita-like trust primitive.
+2. **Adopt a “cited handoff” standard.** The minimal lender-facing artifact should show where each material claim came from: a linked public trigger or dated borrower statement. It should distinguish fact from inference and state what the lender still needs to verify. This is Quintel's Kita-like trust primitive.
 3. **Treat the call ledger as the product's learning engine.** Ensure outcomes join to signal type, score at time of contact, borrower disposition, and lender decision. A ranked feed without this join is a presentation layer, not a compounding system.
 4. **Design the eventual boundary at application, not underwriting.** If the sprint passes, Quintel should own borrower timing, pre-application qualification, lender routing, and handoff; a document/credit-memo specialist or the lender's own LOS should own file assessment. Test integration demand only after a lender has accepted a Quintel handoff.
 5. **Hold the revenue-model decision until Sep. 26.** If the sprint yields ≥3 confirmed needs and ≥1 accepted submission, test broker economics plus a lender floor; if it fails, stop selling sourcing rather than responding with a Kita-like broad workflow build.

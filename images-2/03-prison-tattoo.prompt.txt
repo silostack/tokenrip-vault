@@ -1,0 +1,8 @@
+slug: theme-proto-prison-tattoo
+style: prison-tattoo
+seed: 424250
+trace_id: 068490d87e1f14f32d28329c7d4693b0
+concept: the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface
+
+full_prompt:
+traditional tattoo flash sheet style, bold black linework with limited red and blue accents, clean white background, iconographic, high contrast, outlaw prison tattoo art aesthetic, the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface

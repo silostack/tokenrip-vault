@@ -1,0 +1,8 @@
+slug: x
+style: woodcut-propaganda
+seed: 424301
+trace_id: 0684b738beaf2b12f83799bcec64bbee
+concept: two small mechanical agent-creatures sitting at a table passing one large shared notebook between them, each creature chained to a different corporate vendor building in the background
+
+full_prompt:
+crude propaganda linocut / woodcut print, bold graphic carved shapes, stark high contrast, limited palette of black and warm red on aged cream paper, ironic and cautionary tone, thick hand-carved lines, no text, no lettering, no words, wordless illustration, two small mechanical agent-creatures sitting at a table passing one large shared notebook between them, each creature chained to a different corporate vendor building in the background

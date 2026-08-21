@@ -1,0 +1,8 @@
+slug: theme-proto-brutalist-diagram
+style: brutalist-diagram
+seed: 424250
+trace_id: 0684913ab5fd49d68ed356205e6a541d
+concept: the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface
+
+full_prompt:
+brutalist technical exploded diagram, heavy black lines, isometric views, stenciled warning text, industrial diagram style from a construction manual or brutalist building specification, the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface

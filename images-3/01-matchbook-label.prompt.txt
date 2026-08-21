@@ -1,0 +1,8 @@
+slug: theme-proto-matchbook-label
+style: matchbook-label
+seed: 424270
+trace_id: 068495c955af2340e1d6ef99f4194b10
+concept: the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface
+
+full_prompt:
+vintage matchbook cover art, bold graphic hand-drawn illustration, limited color palette, small format product label style, high contrast, retro packaging aesthetic, the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface

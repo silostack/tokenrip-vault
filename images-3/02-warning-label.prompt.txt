@@ -1,0 +1,8 @@
+slug: theme-proto-warning-label
+style: warning-label
+seed: 424270
+trace_id: 068495da2b1f921d22f62df6d7ae84a3
+concept: the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface
+
+full_prompt:
+hand-drawn hazard warning label, bold black outlines, yellow and red accent colors, pictogram symbols and text, OSHA / safety sign style but crude and illustrative, the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface

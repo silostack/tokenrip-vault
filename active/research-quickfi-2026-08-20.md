@@ -16,9 +16,13 @@ scope: QuickFi company, product, customers, operating model, defensibility, and 
 
 ## Executive summary
 
-**QuickFi is not a direct competitor to Quintel's current sourcing-intelligence product. It is a materially more consequential signal: a working B2B2B equipment-finance operating model that captures borrowers at the vendor point of sale, then owns or orchestrates the application-to-servicing workflow.** Quintel works *before* an identified purchase; QuickFi works after the buyer selects equipment or enters a vendor funnel.
+### QuickFi in one sentence
 
-The strategic implication is not “build an LOS.” QuickFi's advantage comes from dealer/OEM distribution, credit-program configuration, capital and compliance plumbing, and years of transaction outcomes—not from any isolated AI feature. Moving Quintel downstream into its workflow would turn a six-week sourcing test into a multi-year regulated-operations build.
+**QuickFi is a North American equipment-finance platform that lets an equipment maker, dealer, or bank put a branded financing application inside the equipment-buying process, then runs much of the work from application through funding and servicing.** In plain English: it helps a buyer finance equipment at the moment the buyer is choosing it, rather than finding that buyer earlier through prospecting.
+
+**QuickFi is not a direct competitor to Quintel's current sourcing-intelligence product. It is a materially more consequential signal: a working business-to-business-to-business equipment-finance model that captures borrowers at the vendor point of sale, then runs or coordinates the workflow from application through servicing.** Quintel works *before* an identified purchase; QuickFi works after the buyer selects equipment or enters a vendor funnel.
+
+The strategic implication is not “build a lending-operations platform.” QuickFi's advantage comes from dealer/OEM distribution, credit-program configuration, capital and compliance plumbing, and years of transaction outcomes—not from any isolated AI feature. Moving Quintel downstream into its workflow would turn a six-week sourcing test into a multi-year regulated-operations build.
 
 The uncomfortable implication is upstream: several Quintel prospects are vendor-led, while the current thesis asks public signals to infer demand and then reach the buyer. QuickFi demonstrates that vendor point-of-sale distribution can remove that inference problem entirely. This does **not** falsify the sourcing thesis for complex or middle-market deals, but it makes “better direct outbound” an unsafe default for small-ticket, standardized equipment finance. The imminent, cheapest disconfirming test is to classify every live lender's winning acquisition channel and record whether founder-called surfaced companies already have a captive/vendor financing path.
 
@@ -36,16 +40,23 @@ The uncomfortable implication is upstream: several Quintel prospects are vendor-
 
 ### The operating model puts financing inside an equipment sale
 
-**Fact.** QuickFi is the trade name of Innovation Finance USA LLC, founded in 2018 by the former First American Equipment Finance leadership team. It sells a white-labelled, mobile-first equipment-finance platform to banks and equipment manufacturers. OEMs use it to offer a digital captive-finance experience through dealers, field sales, and e-commerce; banks use it to launch a branded equipment-finance channel without replacing their core or LOS. [QuickFi leadership](https://quickfi.ai/leadership) · [QuickFi for OEMs](https://quickfi.ai/for-oems) · [QuickFi for banks](https://quickfi.ai/for-banks)
+**Fact.** QuickFi is the trade name of Innovation Finance USA LLC, founded in 2018 by the former First American Equipment Finance leadership team. It sells a white-labelled, mobile-first equipment-finance platform to banks and equipment manufacturers.
+
+Two terms used throughout this memo:
+
+- An **OEM** is the original equipment manufacturer—the company that makes the equipment.
+- **Embedded lending** means financing is built into the equipment purchase journey, such as a dealer checkout flow, sales link, or QR code, rather than offered later by a separate lender or broker.
+
+OEMs use QuickFi to offer a digital **captive-finance** experience (a financing program tied to that manufacturer) through dealers, field sales, and e-commerce. Banks use it to launch a branded equipment-finance channel without replacing their core systems or **loan-origination system (LOS)**—the system used to collect, process, and track loan applications. [QuickFi leadership](https://quickfi.ai/leadership) · [QuickFi for OEMs](https://quickfi.ai/for-oems) · [QuickFi for banks](https://quickfi.ai/for-banks)
 
 The platform's transaction sequence is:
 
 | Stage | Borrower / dealer action | QuickFi role |
 |---|---|---|
 | Point of sale | Buyer selects configured equipment in a dealer, field, trade-show, or e-commerce flow | Branded application is embedded or accessed by link / QR code |
-| Application | Business and guarantor onboard on mobile; invoice uploaded; identity and credit authorization provided | Identity/KYC, credit-profile collection, pricing/structure workflow |
+| Application | Business and guarantor onboard on mobile; invoice uploaded; identity and credit authorization provided | Identity and **know-your-customer (KYC)** checks, credit-profile collection, pricing/structure workflow |
 | Decision and close | Qualifying buyer receives approval, terms, and fixed payment; selects structure and signs digitally | Credit decisioning, documents, e-signature, status workflow |
-| Funding | Conditions including KYC, insurance, equipment, and vendor requirements are cleared | Funds vendor, usually within one business day after signing and conditions are met |
+| Funding | Conditions including identity verification, insurance, equipment, and vendor requirements are cleared | Funds vendor, usually within one business day after signing and conditions are met |
 | Servicing and repeat purchase | Borrower pays and can return for further financing | Servicing, reporting, payment history, repeat line / customer-marketing inputs |
 
 Sources: [mobile application workflow](https://quickfi.com/quickfi-app/) · [vendor-payment FAQ](https://intercom.help/quickfi/en/articles/3584383-when-will-my-vendors-be-paid-after-i-complete-a-deal-with-quickfi) · [QuickFi Prime FAQ](https://intercom.help/quickfi/en/articles/9899002-quickfi-prime-faqs).
@@ -72,7 +83,7 @@ This locates QuickFi from **opportunity created** through **maturity**, whereas 
 
 **Fact.** Named or independently corroborated OEM programs include XCMG, SANY, Atlas Copco, Juniper Networks, Ackuretta, and Air-Tow. SANY and XCMG currently run dedicated dealer/customer finance sites powered by QuickFi. Air-Tow says QuickFi provides dealer pipeline visibility and handles onboarding, underwriting, documents, and delivery. [Finovate company profile](https://finovate.com/videos/finovatespring-2024-quickfi/) · [SANY Finance](https://sanyfi.ai/) · [XCMG finance](https://www.xcmgfi.com/) · [Air-Tow implementation](https://equipmentfinancenews.com/news/dealer-operations/air-tow-trailers-taps-quickfi-for-embedded-lending/).
 
-QuickFi's institutional customer is therefore usually the OEM, captive/program sponsor, or bank. The dealer distributes the program; the SMB borrower uses it; the funding institution provides capital and takes regulatory responsibility. This arrangement means QuickFi enters at a moment of verified intent—the buyer is already choosing an asset—not by predicting intent from public data.
+QuickFi's institutional customer is therefore usually the OEM, the operator of that manufacturer's financing program, or a bank. The dealer distributes the program; the **small or midsize business (SMB)** borrower uses it; the funding institution provides capital and takes regulatory responsibility. This arrangement means QuickFi enters at a moment of verified intent—the buyer is already choosing an asset—not by predicting intent from public data.
 
 **Second-order effect.** The OEM gets real-time visibility into applications, approvals, and funding and can market to its financed customer base. Once this workflow is adopted, replacing it touches dealer behavior, buyer UX, underwriting, compliance, servicing, and retention marketing at once. That is a stronger switching-cost bundle than a point application or generic AI add-on.
 
@@ -121,7 +132,7 @@ The moat is not necessarily exclusive ownership of each datum—OEMs and banks h
 | Starting point | Public-market signal / ranked target before a known purchase | Equipment selection or borrower entry in a vendor/bank funnel |
 | Primary buyer | Direct lender or broker originator | OEM/captive/program sponsor and bank |
 | Core job | Decide who to call and why | Convert an already-intending buyer into a financed and serviced customer |
-| Product scope | Entity resolution, box scoring, relevance explanation, founder-led qualification test | Application, credit, docs, funding, servicing, compliance, dealer/OEM visibility |
+| Product scope | Entity resolution, lender-fit scoring, relevance explanation, founder-led qualification test | Application, credit, documents, funding, servicing, compliance, dealer/OEM visibility |
 | Critical data | Public evidence plus customer deal history | Transaction, credit, outcome, servicing, and vendor data |
 | Primary failure mode | Signal does not precede a real need or cannot be worked | No program distribution, capital, or standardizable credit box |
 

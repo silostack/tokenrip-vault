@@ -1,0 +1,8 @@
+slug: theme-proto-vintage-badge
+style: vintage-badge
+seed: 424280
+trace_id: 068497b6d61ee6881854bac6e13af46f
+concept: two simple cartoon robots are sitting at a table passing a large open notebook between them. each robot has a chain attached to a different vendor building in the background
+
+full_prompt:
+vintage scout merit badge or enamel pin style, circular emblem with decorative border, central icon and banner text, retro badge illustration aesthetic, two simple cartoon robots are sitting at a table passing a large open notebook between them. each robot has a chain attached to a different vendor building in the background

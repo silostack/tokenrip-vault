@@ -1,0 +1,8 @@
+slug: theme-proto-vintage-ad
+style: vintage-ad
+seed: 424280
+trace_id: 06849767ed56a644314ade1216da92d1
+concept: two simple cartoon robots are sitting at a table passing a large open notebook between them. each robot has a chain attached to a different vendor building in the background
+
+full_prompt:
+vintage 1950s magazine print advertisement illustration, bold graphic style with headline space, central illustrative scene, retro advertising aesthetic, clean lines and limited colors, two simple cartoon robots are sitting at a table passing a large open notebook between them. each robot has a chain attached to a different vendor building in the background

@@ -29,7 +29,7 @@ Ask Simon for (or infer where possible):
 - **Prep file** (optional) — check `active/` for a `call-prep-*` file matching this
   contact. If one exists, read it: it states the goals and what success looked like.
 
-Also check `bd/calls/contacts/[contact-slug].md` — if it exists, this is a follow-up call;
+Also check `lenders/*/[contact-slug].md` first (live lenders), then `bd/calls/contacts/[contact-slug].md` — if either exists, this is a follow-up call;
 read it for prior history. If not, this is the first call and you will create it.
 
 ## Step 2: Clean and Store the Transcript
@@ -86,7 +86,7 @@ specifically did Simon commit to send?
 
 ## Step 4: Update the Persistent Contact Doc
 
-`bd/calls/contacts/[contact-slug].md`. Create on first call; update on every call after.
+`bd/calls/contacts/[contact-slug].md`, or `lenders/<lender>/[contact-slug].md` if the contact has moved there (the stub in `bd/calls/contacts/` says so). Create on first call; update on every call after.
 
 Structure (adapt sections to call type — omit what doesn't apply):
 

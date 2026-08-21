@@ -19,6 +19,9 @@ The contact docs and the briefing are **complementary, not redundant.** A briefi
 
 Keep filenames descriptive and unique so Obsidian bare wiki-links (`[[slug]]`) resolve regardless of path.
 
+## Graduated to `lenders/`
+Once terms are agreed with a lender, its folder moves to vault-root `lenders/<slug>/` (operating context + agreements + contact doc). Onset moved 2026-08-20; Wingspire and Envision created there directly. Call notes/transcripts stay in `bd/calls/`.
+
 ## Current clusters & briefings
 
 ### `empire/` — clean, independent direct-lender lead (Quintel)

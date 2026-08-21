@@ -1,0 +1,8 @@
+slug: theme-proto-red-string-board
+style: red-string-board
+seed: 424250
+trace_id: 068490f95b280dfc19e44c1ef200063f
+concept: the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface
+
+full_prompt:
+hand-drawn paranoid conspiracy investigation board on a wall, red string connecting elements, photos with X marks, scrawled notes and arrows, chaotic but readable connections, documentary evidence style, the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface

@@ -1,0 +1,8 @@
+slug: theme-proto-riso-graphic
+style: riso-graphic
+seed: 424270
+trace_id: 0684960c067a5a52759e3f1c7d843404
+concept: the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface
+
+full_prompt:
+riso print / screenprint graphic style, limited color separations, grainy texture, bold poster illustration, high contrast, hand-printed poster aesthetic, the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface

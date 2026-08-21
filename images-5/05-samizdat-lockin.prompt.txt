@@ -1,0 +1,8 @@
+slug: x
+style: samizdat
+seed: 424305
+trace_id: 0684b77afe54a8f769e8f6f1cd5662e2
+concept: two small mechanical agent-creatures sitting at a table passing one large shared notebook between them, each creature chained to a different corporate vendor building in the background
+
+full_prompt:
+clandestine samizdat underground-press document, smudged carbon-copy typewriter and mimeograph texture, faded ink, black censor redaction bars, official stamps, slightly crumpled paper, stark black on grey paper, forbidden-literature aesthetic, one bold hand-printed illustration, mostly wordless, no readable text, two small mechanical agent-creatures sitting at a table passing one large shared notebook between them, each creature chained to a different corporate vendor building in the background

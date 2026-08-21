@@ -1,0 +1,8 @@
+slug: x
+style: doodle-photo
+seed: 424304
+trace_id: 0684b76b26b58b5126029bc8921e8c3a
+concept: a corporate SaaS application window dissolving into pieces while a small agent-creature is trapped building a workflow inside the vendor's glowing surface
+
+full_prompt:
+crude naive black marker doodle drawn directly on top of a real photograph, childlike wobbly hand-drawn line illustration over a realistic photo background, high contrast between the simple hand-drawn doodle and the real photo, no text, no words, a corporate SaaS application window dissolving into pieces while a small agent-creature is trapped building a workflow inside the vendor's glowing surface

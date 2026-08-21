@@ -1,0 +1,8 @@
+slug: x
+style: agent-bestiary
+seed: 424308
+trace_id: 0684b7a846d2c728e2a75a9abeedb069
+concept: two agent-creature specimens of the same species shown sharing one external notebook-organ between them, an anatomical comparison plate
+
+full_prompt:
+vintage natural-history field-guide specimen plate, fine ink line drawing of an invented mechanical creature, neat taxonomic layout with thin leader lines pointing to its parts, off-white aged paper, scientific bestiary illustration style, blank label boxes, no readable text, two agent-creature specimens of the same species shown sharing one external notebook-organ between them, an anatomical comparison plate
