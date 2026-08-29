@@ -18,7 +18,7 @@ Tokenrip's local PostgreSQL database is backed up to the private `backups/` pref
 
 The active script is `/usr/local/sbin/tokenrip-backup`; it is root-owned and mode `0700`. Tokenrip-specific configuration is `/etc/tokenrip/backup.env`, root-owned and mode `0600`; it contains `TOKENRIP_DATABASE` and the `tokenrip-backups` bucket name.
 
-The job sources shared DigitalOcean Spaces and Resend settings from `/etc/quintel/backup.env`. This avoids duplicate cloud credentials, but makes rotation of that file a shared change: after changing it, manually validate both Tokenrip and Quintel backup plus restore jobs.
+The job is self-contained: `/etc/tokenrip/backup.env` holds the DigitalOcean Spaces and Resend delivery settings alongside `TOKENRIP_DATABASE` and the bucket name. It no longer sources `/etc/quintel/backup.env`. That shared-credential coupling was removed on 2026-08-29 when Quintel moved to its own host; rotating Tokenrip's credentials is now a Tokenrip-only change requiring no Quintel validation.
 
 For each backup run, the job:
 
@@ -85,4 +85,4 @@ sudo /usr/local/sbin/tokenrip-backup backup
 sudo /usr/local/sbin/tokenrip-backup restore-test
 ```
 
-When rotating the shared Spaces or Resend credentials, use `sudoedit /etc/quintel/backup.env` and run the manual backup and restore commands for both products immediately afterward.
+The same two commands cover Spaces and Resend credential rotation, since those settings now live in the same file. Quintel runs its own independent job on its own host; no cross-product validation is required.
