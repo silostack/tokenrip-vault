@@ -9,6 +9,7 @@
 - security / auditor skills: https://github.com/0xiehnnkta/nemesis-auditor
 - ai projects list: https://github.com/Shubhamsaboo/awesome-llm-apps
 - memory palace: https://github.com/MemPalace/mempalace
+- RAG is simple: https://www.lighthousenewsletter.com/p/rag-is-simpler-than-you-think
 - 
 
 

@@ -1,8 +1,0 @@
-slug: theme-proto-punk-zine
-style: punk-zine
-seed: 424250
-trace_id: 068490b6b0f4cb6abeec707ce85ff446
-concept: the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface
-
-full_prompt:
-crude DIY punk zine collage, heavy photocopy texture and halftone dots, ransom-note mixed typography and angry hand-scrawled text, torn paper edges, chaotic overlapping elements, high contrast black and one accent color, raw and rebellious on white paper, the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface

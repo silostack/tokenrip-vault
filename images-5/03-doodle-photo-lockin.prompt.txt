@@ -1,8 +1,0 @@
-slug: x
-style: doodle-photo
-seed: 424303
-trace_id: 0684b75c86fbd6386e6e7d47b61a60dd
-concept: two small mechanical agent-creatures sitting at a table passing one large shared notebook between them, each creature chained to a different corporate vendor building in the background
-
-full_prompt:
-crude naive black marker doodle drawn directly on top of a real photograph, childlike wobbly hand-drawn line illustration over a realistic photo background, high contrast between the simple hand-drawn doodle and the real photo, no text, no words, two small mechanical agent-creatures sitting at a table passing one large shared notebook between them, each creature chained to a different corporate vendor building in the background

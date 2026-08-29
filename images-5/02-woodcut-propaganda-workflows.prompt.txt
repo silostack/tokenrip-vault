@@ -1,8 +1,0 @@
-slug: x
-style: woodcut-propaganda
-seed: 424302
-trace_id: 0684b74a1ccd0a15583ed6b710f33a81
-concept: a corporate SaaS application window dissolving into pieces while a small agent-creature is trapped building a workflow inside the vendor's glowing surface
-
-full_prompt:
-crude propaganda linocut / woodcut print, bold graphic carved shapes, stark high contrast, limited palette of black and warm red on aged cream paper, ironic and cautionary tone, thick hand-carved lines, no text, no lettering, no words, wordless illustration, a corporate SaaS application window dissolving into pieces while a small agent-creature is trapped building a workflow inside the vendor's glowing surface

@@ -1,8 +1,0 @@
-slug: theme-proto-90s-clipart
-style: 90s-clipart
-seed: 424250
-trace_id: 068491197c8ade485edda94a91f2a63d
-concept: the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface
-
-full_prompt:
-1990s MS Paint / shareware clip art style, slightly crude bold lines, limited color palette, nostalgic early internet illustration but subverted for serious concepts, the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface

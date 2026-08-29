@@ -1,8 +1,0 @@
-slug: x
-style: agent-bestiary
-seed: 424307
-trace_id: 0684b79a316c9fb25784b87d63f10413
-concept: a single mounted agent-creature specimen with its imprint shell, memory core, and tool-limbs drawn as separate labeled parts being loaded from a shared folder organ
-
-full_prompt:
-vintage natural-history field-guide specimen plate, fine ink line drawing of an invented mechanical creature, neat taxonomic layout with thin leader lines pointing to its parts, off-white aged paper, scientific bestiary illustration style, blank label boxes, no readable text, a single mounted agent-creature specimen with its imprint shell, memory core, and tool-limbs drawn as separate labeled parts being loaded from a shared folder organ

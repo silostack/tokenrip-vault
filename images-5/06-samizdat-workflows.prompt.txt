@@ -1,8 +1,0 @@
-slug: x
-style: samizdat
-seed: 424306
-trace_id: 0684b78b661570e16c9925866ce15e86
-concept: a corporate SaaS application window dissolving into pieces while a small agent-creature is trapped building a workflow inside the vendor's glowing surface
-
-full_prompt:
-clandestine samizdat underground-press document, smudged carbon-copy typewriter and mimeograph texture, faded ink, black censor redaction bars, official stamps, slightly crumpled paper, stark black on grey paper, forbidden-literature aesthetic, one bold hand-printed illustration, mostly wordless, no readable text, a corporate SaaS application window dissolving into pieces while a small agent-creature is trapped building a workflow inside the vendor's glowing surface

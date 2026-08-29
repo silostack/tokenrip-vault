@@ -17,6 +17,7 @@
 | **LinkedIn warm-pipeline playbook** | [[get-a-sale/linkedin-pipeline]] |
 | **Reddit demand-scout agent spec** | [[get-a-sale/demand-scout-spec]] |
 | **Live opportunities + call notes** | `calls/` (contacts, notes, transcripts, proposals) |
+| **Borrower dial playbook (sprint)** | `calls/borrower-dial-playbook-2026-08-21.md` (script, branches, objections, data-mining questions, note format) |
 | **Live lenders (terms agreed): operating context, agreements, routing rule** | `lenders/CLAUDE.md` (vault root) — Onset · Wingspire · Envision |
 | **Per-deal living briefings + opportunity clusters** | [[bd/deals/CLAUDE.md]] — e.g. Quintel EF (Empire = live independent lender · Stauss-channel cluster: Bevel/DCF/VFI/NED) |
 | **This-week KPI tracker** | [[weekly-kpi-scorecard]] |

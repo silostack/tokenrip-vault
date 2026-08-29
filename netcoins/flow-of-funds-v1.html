@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RebelFi × BIGG — Flow of Funds</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  @page { size: Letter landscape; margin: 8mm; }
+  :root{
+    --ink:#1C2733; --ink-2:#4A5768; --ink-3:#7A8794;
+    --page:#FFFFFF; --panel:#F4F6F8; --rule:#C9D1D9; --rule-2:#E3E8ED;
+    --teal:#0E6B66; --teal-2:#DCEFEC; --teal-3:#F0F8F7;
+    --viol:#4D4F8F; --viol-2:#E4E4F3; --viol-3:#F2F2F9;
+    --amber:#A8701A; --amber-2:#FBF1DD;
+    --sans:"IBM Plex Sans",Helvetica,Arial,sans-serif; --mono:"IBM Plex Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--page);color:var(--ink);font-family:var(--sans);font-size:9.6px;line-height:1.35;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{width:1060px;min-height:790px;margin:0 auto;padding:0;page-break-after:always;display:flex;flex-direction:column;gap:8px}
+  @media print{.page{zoom:.88}}
+  .page:last-child{page-break-after:auto}
+
+  /* header strip */
+  .hd{display:grid;grid-template-columns:1fr auto;align-items:end;border-bottom:2px solid var(--ink);padding-bottom:6px}
+  .hd .kicker{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+  .hd h1{font-size:17px;font-weight:700;margin:2px 0 0;letter-spacing:-.01em}
+  .hd h1 span{font-weight:400;color:var(--ink-2)}
+  .hd .right{text-align:right;font-family:var(--mono);font-size:8.5px;color:var(--ink-2);line-height:1.5}
+  .hd .right b{display:block;color:var(--ink);font-size:9.5px}
+
+  .lede{margin:0;max-width:100%;color:var(--ink);font-size:9.8px}
+  .lede b{font-weight:600}
+
+  /* tags */
+  .tag{display:inline-block;font-family:var(--mono);font-size:7.8px;font-weight:600;line-height:13px;padding:0 4px;border-radius:2px;border:1px solid var(--ink);vertical-align:middle;white-space:nowrap}
+  .tag.c{color:var(--teal);border-color:var(--teal);background:var(--teal-3)}
+  .tag.n{color:var(--viol);border-color:var(--viol);background:var(--viol-3)}
+  .tag.a{color:var(--viol);border-color:var(--viol);border-style:dashed;background:#fff}
+  .tag.mtl{color:#fff;border-color:var(--teal);background:var(--teal)}
+  .tag.k{color:var(--ink-2);border-color:var(--rule);background:#fff}
+  .tag.q{color:var(--amber);border-color:var(--amber);border-style:dashed;background:var(--amber-2)}
+  .st{display:inline-block;font-family:var(--mono);font-size:7.3px;color:var(--ink-3);border:1px solid var(--rule);border-radius:2px;padding:0 3px;line-height:12px;vertical-align:middle}
+  .st.ok{color:var(--teal);border-color:var(--teal-2);background:var(--teal-3)}
+  .st.as{color:var(--ink-2)}
+  .st.op{color:var(--amber);border-color:#E6D3A8;background:var(--amber-2)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:3px 14px;font-size:8.8px;color:var(--ink-2);padding:4px 0 2px;border-bottom:1px solid var(--rule-2)}
+  .legend .tag{margin-right:3px}
+
+  /* Page 0 grid */
+  .grid{display:grid;grid-template-columns:104px 1fr 1fr;border:1px solid var(--rule);font-size:9.2px}
+  .g-hd{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;text-align:center;padding:4px;background:var(--panel);border-bottom:1px solid var(--rule);border-right:1px solid var(--rule-2);color:var(--ink-2)}
+  .g-lbl{padding:6px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule-2);background:var(--panel)}
+  .g-lbl b{display:block;font-size:9.5px}
+  .g-lbl small{display:block;color:var(--ink-3);font-size:8.2px;margin-top:2px;line-height:1.3}
+  .cell{padding:5px;border-right:1px solid var(--rule-2);border-bottom:1px solid var(--rule-2);display:flex;flex-direction:column;gap:4px}
+  .cell:last-child{border-right:none}
+  .span2{grid-column:2/4;border-right:none}
+  .band{grid-column:1/4;padding:3px 8px;font-family:var(--mono);font-size:8.3px;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+  .band.in{background:var(--teal);color:#fff}
+  .band.out{background:var(--viol);color:#fff}
+  .in-z{background:var(--teal-3)}
+  .out-z{background:var(--viol-3)}
+  .ent{border:1px solid var(--rule);border-radius:3px;padding:4px 6px;background:#fff}
+  .ent.teal{border-color:var(--teal)}
+  .ent.viol{border-color:var(--viol)}
+  .ent.open{border-style:dashed;border-color:var(--amber)}
+  .ent b{display:block;font-size:9.4px;margin-bottom:1px}
+  .ent ul{margin:1px 0 2px 12px;padding:0}
+  .ent li{margin:0;line-height:1.3}
+  .ent .src{display:block;margin-top:2px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+
+  /* footer sections */
+  .ft{display:grid;grid-template-columns:1fr 1.25fr;gap:14px;margin-top:auto}
+  h2{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin:0 0 4px;padding-bottom:2px;border-bottom:1px solid var(--rule)}
+  .rules{display:grid;gap:4px}
+  .rule{border-left:3px solid var(--teal);padding:3px 7px;background:var(--panel)}
+  .rule.v{border-left-color:var(--viol)}
+  .rule b{display:block;font-size:9.3px}
+  table{border-collapse:collapse;width:100%;font-size:8.9px}
+  th,td{border:1px solid var(--rule-2);padding:2px 5px;vertical-align:top;text-align:left}
+  th{background:var(--panel);font-family:var(--mono);font-size:8px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+  td.id{font-family:var(--mono);color:var(--amber);font-weight:600;white-space:nowrap}
+
+  /* Page 1 */
+  .models{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .model{border:1px solid var(--rule);border-radius:3px;overflow:hidden;display:flex;flex-direction:column}
+  .model .mh{padding:5px 8px;background:var(--panel);border-bottom:1px solid var(--rule-2)}
+  .model .mh b{display:block;font-size:10.2px}
+  .model .mh span{color:var(--ink-2);font-size:8.8px}
+  .model figure{margin:0;padding:4px 6px 0}
+  .model svg{display:block;width:100%;height:auto}
+  .steps{list-style:none;margin:0;padding:4px 8px 6px;display:grid;gap:2px;font-size:8.8px}
+  .steps li{display:grid;grid-template-columns:14px 1fr;gap:4px;align-items:start}
+  .steps .n{font-family:var(--mono);font-weight:600;font-size:8.5px;color:#fff;background:var(--ink);border-radius:50%;width:12px;height:12px;line-height:12px;text-align:center;margin-top:1px}
+  .steps .n.v{background:var(--viol)} .steps .n.t{background:var(--teal)} .steps .n.g{background:var(--ink-3)}
+  .model .open{margin:auto 0 0;padding:4px 8px 6px;border-top:1px dashed var(--rule);font-size:8.4px;color:var(--ink-2)}
+  .model .open b{font-family:var(--mono);color:var(--amber);font-weight:600}
+  .holds th:first-child{width:150px}
+
+/*GEN-CSS-START*/
+  .strip{display:flex;gap:6px;align-items:stretch;margin:2px 0}
+  .model{border:1px solid var(--rule)}
+  .strip .sc{flex:1}
+  .strip .sl{font-family:var(--mono);font-size:7.8px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);align-self:center;padding-right:4px}
+  .strip .sc{border:1px solid var(--rule);border-radius:3px;padding:4px 8px 4px 26px;position:relative;font-size:9px;background:var(--panel)}
+  .strip .sc span{position:absolute;left:7px;top:5px;font-family:var(--mono);font-size:7.5px;font-weight:600;color:var(--ink-2)}
+  .two-fig{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:6px}
+  .fig{border:1px solid var(--rule);border-radius:3px;overflow:hidden;display:flex;flex-direction:column}
+  .fig .fh{padding:4px 8px;background:var(--panel);border-bottom:1px solid var(--rule-2);font-weight:600;font-size:9.8px}
+  .fig figure{margin:0;padding:4px 6px 0}
+  .fig svg{display:block;width:100%;height:auto}
+  .fig .steps{padding:4px 8px 6px}
+  .fig .pad{padding:6px 8px}
+  .fig h2{margin-left:8px;margin-right:8px}
+  .three-col .steps{padding:0}
+/*GEN-CSS-END*/
+</style>
+</head>
+<body>
+
+<!-- shared arrowheads -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <marker id="ah-t" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="#0E6B66"/></marker>
+    <marker id="ah-v" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="#4D4F8F"/></marker>
+    <marker id="ah-g" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="#7A8794"/></marker>
+  </defs>
+</svg>
+
+<!-- ================= PAGE 0 ================= -->
+<section class="page">
+  <header class="hd">
+    <div>
+      <div class="kicker">Flow of funds · Page 0 of 9</div>
+      <h1>Entities, layers and perimeters <span>— the reference grid</span></h1>
+    </div>
+    <div class="right"><b>RebelFi × BIGG Digital Assets</b>Draft for discussion · v2 · 23 August 2026<br>Prepared by RebelFi</div>
+  </header>
+
+  <p class="lede">The reference grid for every flow in this document. Rows are layers, from bank accounts down to user wallets; columns are jurisdictions. Fiat and customer funds are held only inside the regulated perimeter. RebelFi sits outside it, non-custodial.</p>
+
+  <div class="legend">
+    <span><span class="tag c">C</span>custodial — entity holds customer funds</span>
+    <span><span class="tag n">N</span>non-custodial — no entity can move the funds</span>
+    <span><span class="tag a">A</span>admin-only — deploy/upgrade keys, cannot move funds</span>
+    <span><span class="tag mtl">MTL</span>leg requires a money-transmission licence</span>
+    <span><span class="tag k">KYC</span>identity checkpoint</span>
+    <span><span class="tag k">KYT</span>screening — Blockchain Intelligence Group</span>
+    <span><span class="st as">Assumed</span> <span class="st op">Open</span> status</span>
+  </div>
+
+  <div class="grid">
+    <div class="g-hd" style="background:#fff"></div>
+    <div class="g-hd">Canada</div>
+    <div class="g-hd" style="border-right:none">United States</div>
+
+    <div class="g-lbl"><b>A · Fiat / banking</b><small>Bank accounts and payment rails. No crypto.</small></div>
+    <div class="cell"><div class="ent teal"><b>Netcoins Canada — CAD accounts <span class="tag c">C</span></b>Domestic Canadian rails (Interac, EFT).</div></div>
+    <div class="cell"><div class="ent teal"><b>US bank partner — USD virtual accounts <span class="tag c">C</span> <span class="tag q">?1</span></b>Domestic US rails (ACH, wire). Virtual account per customer. <span class="st as">Assumed</span></div></div>
+
+    <div class="band in">Regulated perimeter — licensed entities</div>
+
+    <div class="g-lbl in-z"><b>B · Licensed / custodial</b><small>Conversion, custody, transmission.</small></div>
+    <div class="cell in-z">
+      <div class="ent teal"><b>Netcoins Canada <span class="tag c">C</span> <span class="tag mtl">MTL</span></b>Registered Canadian crypto trading platform. Custody and CAD on/off-ramp.</div>
+      <div class="ent open"><b>Canadian leg of cross-border flows <span class="tag q">?6</span></b>Through Netcoins Canada custody, or a non-custodial path <span class="st op">Open</span></div>
+    </div>
+    <div class="cell in-z">
+      <div class="ent teal"><b>Balance — US (Wyoming entity) <span class="tag c">C</span> <span class="tag mtl">MTL</span></b>
+        <ul><li>Custody, trading, staking · on-ramp / off-ramp</li>
+            <li>Money-transmission coverage in 40 states; remaining states <span class="tag q">?4</span></li>
+            <li>Relationship model — programme/agent vs customer <span class="tag q">?2</span></li></ul></div>
+      <div class="ent teal"><b>Netcoins USA <span class="tag c">C</span></b>Liquidity path to Circle (mint / redeem, OTC). Role in these flows: liquidity, not transmission. <span class="st as">Assumed</span> <span class="tag q">?3</span></div>
+    </div>
+
+    <div class="g-lbl in-z"></div>
+    <div class="cell span2 in-z"><div class="row2"><div class="ent teal"><b>Circle — USDC issuer <span class="tag c">C</span></b>Mint / redeem against USD · CCTP for cross-chain transfers · outside the BIGG group</div><div class="ent teal"><b>Blockchain Intelligence Group <span class="tag k">KYT</span></b>Screening and monitoring on every flow · BIGG group company</div></div></div>
+
+    <div class="band out">Outside the perimeter — RebelFi · non-custodial</div>
+
+    <div class="g-lbl out-z"><b>C · Orchestration</b><small>RebelFi software and on-chain contracts.</small></div>
+    <div class="cell span2 out-z"><div class="row2">
+      <div class="ent viol"><b>RebelFi platform <span class="tag a">A</span></b>
+        <ul><li>API and orchestration layer</li>
+            <li>Risk-policy engine — per-partner thresholds and protocol whitelists</li>
+            <li>Clean wallets — balances with verified sources</li>
+            <li>CCTP relay · yield routing · operations console</li></ul></div>
+      <div class="ent viol"><b>On-chain components <span class="tag n">N</span></b>
+        <ul><li>Escrow contracts — permissionless, release on pre-set conditions</li>
+            <li>Yield positions in whitelisted protocols — user- or partner-owned</li>
+            <li>CCTP transfers — no custodian while in flight</li></ul></div>
+    </div></div>
+
+    <div class="g-lbl" style="border-bottom:none"><b>D · User custody</b><small>Who owns the wallet.</small></div>
+    <div class="cell span2" style="border-bottom:none"><div class="row3">
+      <div class="ent"><b>Customer self-custody wallets <span class="tag n">N</span></b>The business customer controls keys.</div>
+      <div class="ent"><b>Partner-controlled wallets <span class="tag n">N</span></b>Business partner holds keys on behalf of its own end users (B2B2B).</div>
+      <div class="ent"><b>Policy-bound agent accounts <span class="tag n">N</span></b>Owned by a business; AI agents operate within on-chain spending limits.</div>
+    </div></div>
+  </div>
+
+  <div class="ft">
+    <div>
+      <h2>Operating rules applied on every page</h2>
+      <div class="rules">
+        <div class="rule"><b>1 · Every <span class="tag mtl">MTL</span> leg sits inside the perimeter.</b>Fiat-to-stablecoin, stablecoin-to-fiat and fiat transmission run through Balance (US) or Netcoins Canada (CA).</div>
+        <div class="rule v"><b>2 · RebelFi is non-custodial.</b>Any routing that needs a custodial hop uses a licensed entity's wallet. RebelFi keys deploy and upgrade contracts only.</div>
+        <div class="rule v"><b>3 · Identity and money travel on separate paths.</b>The licensed entity is customer-of-record for every money leg; RebelFi holds verification status and reference IDs, not documents.</div>
+      </div>
+    </div>
+    <div>
+      <h2>Open items on this page · needed from BIGG</h2>
+      <table>
+        <tr><th style="width:26px">#</th><th>Item</th><th style="width:118px">Source</th></tr>
+        <tr><td class="id">?1</td><td>US bank partner identity; virtual-account model assumed</td><td>BIGG</td></tr>
+        <tr><td class="id">?2</td><td>BIGG ↔ Balance relationship: programme/agent or customer — determines customer-of-record and whose KYC programme governs</td><td>BIGG / Balance</td></tr>
+        <tr><td class="id">?3</td><td>Which entity is the Circle counterparty</td><td>BIGG</td></tr>
+        <tr><td class="id">?4</td><td>States outside Balance coverage: geo-restrict or alternate partner</td><td>BIGG / Balance</td></tr>
+        <tr><td class="id">?5</td><td>Placement of the additional merchant-payments technology under evaluation</td><td>BIGG</td></tr>
+        <tr><td class="id">?6</td><td>Canadian leg: Netcoins Canada custody vs non-custodial path</td><td>BIGG / Netcoins</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PAGE 1 ================= -->
+<!-- GEN START -->
+<section class="page"><header class="hd"><div><div class="kicker">Flow of funds · Page 1 of 9</div><h1>Onboarding and KYC <span>— customer-of-record</span></h1></div>
+    <div class="right"><b>RebelFi × BIGG Digital Assets</b>Draft for discussion · v2 · 23 August 2026<br>Prepared by RebelFi</div></header>
+<p class="lede">In both onboarding models the licensed entity is customer-of-record for every money leg, and identity data and money travel on separate paths. RebelFi receives a verification result and a reference ID, not documents. Screening on every flow is provided by Blockchain Intelligence Group. Grey dotted arrows are RebelFi instructions.</p>
+<div class="two-fig">
+ <div class="fig"><div class="fh">Model 1 · Direct business (B2B) <span class="note" style="font-weight:400">— treasury, merchant or B2B payer is the customer</span></div><figure><svg viewBox="0 0 500 236" role="img" aria-label="B2B onboarding: business KYB to the licensed entity, result and risk policy to RebelFi; fiat to the licensed entity, USDC to a business-controlled wallet, with RebelFi gating instructions.">
+<rect x="0" y="42" width="500" height="80" fill="#F2F2F9"/>
+<text x="4" y="51" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#4D4F8F" letter-spacing=".08em">IDENTITY PATH</text>
+<rect x="0" y="126" width="500" height="100" fill="#F0F8F7"/>
+<text x="4" y="135" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#0E6B66" letter-spacing=".08em">MONEY PATH</text>
+<g stroke="#C9D1D9" stroke-width="1"><line x1="56.0" y1="34" x2="56.0" y2="230"/><line x1="185.3" y1="34" x2="185.3" y2="230"/><line x1="314.7" y1="34" x2="314.7" y2="230"/><line x1="444.0" y1="34" x2="444.0" y2="230"/></g>
+<g font-family="IBM Plex Sans, sans-serif" font-size="8.3" text-anchor="middle" font-weight="600">
+<rect x="8.0" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="56.0" y="19" fill="#1C2733">Business</text><text x="56.0" y="29" font-size="6.3" font-weight="400" fill="#1C2733">customer</text>
+<rect x="137.3" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#4D4F8F"/>
+<text x="185.3" y="24" fill="#4D4F8F">RebelFi</text>
+<rect x="266.7" y="8" width="96.0" height="26" rx="2" fill="#DCEFEC" stroke="#0E6B66"/>
+<text x="314.7" y="19" fill="#0E6B66">Licensed entity</text><text x="314.7" y="29" font-size="6.3" font-weight="400" fill="#0E6B66">Balance US · Netcoins CA</text>
+<rect x="396.0" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="444.0" y="19" fill="#1C2733">Business</text><text x="444.0" y="29" font-size="6.3" font-weight="400" fill="#1C2733">wallet(s)</text>
+</g>
+<line x1="56.0" y1="66" x2="312.7" y2="66" stroke="#4D4F8F" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ah-v)"/>
+<text x="185.3" y="62" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">entity documents · owners · signatories</text>
+<circle cx="67.0" cy="66" r="6" fill="#4D4F8F"/><text x="67.0" y="68.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">1</text>
+<line x1="314.7" y1="90" x2="187.3" y2="90" stroke="#4D4F8F" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ah-v)"/>
+<text x="294.7" y="86" text-anchor="end" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">result + reference ID + approved risk policy</text>
+<circle cx="303.7" cy="90" r="6" fill="#4D4F8F"/><text x="303.7" y="92.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">2</text>
+<path d="M314.7,102 h26 v12 h-24" fill="none" stroke="#4D4F8F" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ah-v)"/>
+<text x="344.7" y="106" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="6.8" fill="#4A5768">monitoring and re-verification</text>
+<circle cx="328.7" cy="120" r="6" fill="#4D4F8F"/><text x="328.7" y="122.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">3</text>
+<line x1="56.0" y1="152" x2="312.7" y2="152" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="185.3" y="148" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">fiat (USD / CAD)</text>
+<rect x="280.7" y="155" width="22" height="11" rx="1.5" fill="#0E6B66"/><text x="291.7" y="163.5" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#fff" text-anchor="middle">MTL</text>
+<circle cx="67.0" cy="152" r="6" fill="#0E6B66"/><text x="67.0" y="154.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">4</text>
+<line x1="314.7" y1="180" x2="442.0" y2="180" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="334.7" y="176" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">USDC</text>
+<circle cx="325.7" cy="180" r="6" fill="#0E6B66"/><text x="325.7" y="182.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">5</text>
+<line x1="185.3" y1="208" x2="442.0" y2="208" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="314.7" y="204" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">gates every outbound instruction against policy</text>
+<circle cx="196.3" cy="208" r="6" fill="#7A8794"/><text x="196.3" y="210.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">6</text>
+<text x="314.7" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.4" font-weight="600" fill="#0E6B66">CUSTOMER-OF-RECORD</text>
+</svg></figure>
+ <ol class="steps"><li><span class="n v">1</span><span>Business submits entity documents, beneficial owners and authorised signatories to the licensed entity's KYB programme <span class="tag k">KYC</span>.</span></li><li><span class="n v">2</span><span>Result + reference ID to RebelFi, which records the approved risk policy: thresholds, protocol whitelist, permitted counterparties.</span></li><li><span class="n v">3</span><span>Ongoing monitoring and periodic re-verification by the licensed entity; transaction screening by Blockchain Intelligence Group <span class="tag k">KYT</span>.</span></li><li><span class="n t">4</span><span>Fiat legs: the licensed entity is customer-of-record <span class="tag c">C</span> <span class="tag mtl">MTL</span>.</span></li><li><span class="n t">5</span><span>USDC delivered to business-controlled wallet(s) <span class="tag n">N</span>.</span></li><li><span class="n g">6</span><span>Policy engine gates every outbound instruction against the recorded policy.</span></li></ol>
+ <div class="open"><b>?8</b> large business customers: Balance directly, or via Netcoins USA for OTC liquidity</div></div>
+ <div class="fig"><div class="fh">Model 2 · Partner's end users (B2B2B, pass-through) <span class="note" style="font-weight:400">— a payment network, fintech or marketplace brings its own users</span></div><figure><svg viewBox="0 0 500 236" role="img" aria-label="B2B2B onboarding: the partner completes KYB and passes end-user KYC through to the licensed entity, which is customer-of-record for end-user money; RebelFi routes on partner instructions.">
+<rect x="0" y="42" width="500" height="92" fill="#F2F2F9"/>
+<text x="4" y="51" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#4D4F8F" letter-spacing=".08em">IDENTITY PATH</text>
+<rect x="0" y="138" width="500" height="88" fill="#F0F8F7"/>
+<text x="4" y="147" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#0E6B66" letter-spacing=".08em">MONEY PATH</text>
+<g stroke="#C9D1D9" stroke-width="1"><line x1="49.0" y1="34" x2="49.0" y2="230"/><line x1="149.5" y1="34" x2="149.5" y2="230"/><line x1="250.0" y1="34" x2="250.0" y2="230"/><line x1="350.5" y1="34" x2="350.5" y2="230"/><line x1="451.0" y1="34" x2="451.0" y2="230"/></g>
+<g font-family="IBM Plex Sans, sans-serif" font-size="8.3" text-anchor="middle" font-weight="600">
+<rect x="8.0" y="8" width="82.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="49.0" y="24" fill="#1C2733">End user</text>
+<rect x="108.5" y="8" width="82.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="149.5" y="19" fill="#1C2733">Partner</text><text x="149.5" y="29" font-size="6.3" font-weight="400" fill="#1C2733">introducer</text>
+<rect x="209.0" y="8" width="82.0" height="26" rx="2" fill="#fff" stroke="#4D4F8F"/>
+<text x="250.0" y="24" fill="#4D4F8F">RebelFi</text>
+<rect x="309.5" y="8" width="82.0" height="26" rx="2" fill="#DCEFEC" stroke="#0E6B66"/>
+<text x="350.5" y="19" fill="#0E6B66">Licensed entity</text><text x="350.5" y="29" font-size="6.3" font-weight="400" fill="#0E6B66">Balance · Netcoins CA</text>
+<rect x="410.0" y="8" width="82.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="451.0" y="19" fill="#1C2733">Wallet</text><text x="451.0" y="29" font-size="6.3" font-weight="400" fill="#1C2733">partner / user</text>
+</g>
+<line x1="149.5" y1="64" x2="348.5" y2="64" stroke="#4D4F8F" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ah-v)"/>
+<text x="250.0" y="60" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">KYB as introducing partner</text>
+<circle cx="160.5" cy="64" r="6" fill="#4D4F8F"/><text x="160.5" y="66.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">1</text>
+<line x1="49.0" y1="84" x2="147.5" y2="84" stroke="#4D4F8F" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ah-v)"/>
+<text x="69.0" y="80" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">KYC to standard</text>
+<circle cx="60.0" cy="84" r="6" fill="#4D4F8F"/><text x="60.0" y="86.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">2</text>
+<line x1="149.5" y1="104" x2="348.5" y2="104" stroke="#4D4F8F" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ah-v)"/>
+<text x="250.0" y="100" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">pass-through via API</text>
+<circle cx="160.5" cy="104" r="6" fill="#4D4F8F"/><text x="160.5" y="106.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">3</text>
+<line x1="350.5" y1="124" x2="252.0" y2="124" stroke="#4D4F8F" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ah-v)"/>
+<text x="330.5" y="120" text-anchor="end" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">per-user result + ref ID</text>
+<circle cx="339.5" cy="124" r="6" fill="#4D4F8F"/><text x="339.5" y="126.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">4</text>
+<line x1="49.0" y1="162" x2="348.5" y2="162" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="199.8" y="158" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">fiat, via the partner&#x27;s interface</text>
+<rect x="316.5" y="165" width="22" height="11" rx="1.5" fill="#0E6B66"/><text x="327.5" y="173.5" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#fff" text-anchor="middle">MTL</text>
+<circle cx="60.0" cy="162" r="6" fill="#0E6B66"/><text x="60.0" y="164.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">5</text>
+<line x1="350.5" y1="188" x2="449.0" y2="188" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="370.5" y="184" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">USDC</text>
+<circle cx="361.5" cy="188" r="6" fill="#0E6B66"/><text x="361.5" y="190.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">6</text>
+<line x1="149.5" y1="212" x2="449.0" y2="212" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="300.2" y="208" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">instructions · RebelFi routes · sub-ledger</text>
+<circle cx="160.5" cy="212" r="6" fill="#7A8794"/><text x="160.5" y="214.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">7</text>
+<text x="350.5" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.4" font-weight="600" fill="#0E6B66">CUSTOMER-OF-RECORD</text>
+<text x="149.5" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.4" font-weight="600" fill="#4A5768">INTRODUCER · NOT A TRANSMITTER</text>
+</svg></figure>
+ <ol class="steps"><li><span class="n v">1</span><span>Partner completes KYB and is approved as an introducing partner under the licensed entity's programme.</span></li><li><span class="n v">2</span><span>Partner collects end-user KYC to the licensed entity's standard <span class="tag k">KYC</span>.</span></li><li><span class="n v">3</span><span>Passed through via API; end users become customers of the licensed entity.</span></li><li><span class="n v">4</span><span>Per-user result + reference ID to RebelFi, mapped to partner sub-accounts under the partner's risk policy.</span></li><li><span class="n t">5</span><span>End-user fiat legs: licensed entity is customer-of-record, partner is introducer <span class="tag c">C</span> <span class="tag mtl">MTL</span>. The partner is not a money transmitter.</span></li><li><span class="n t">6</span><span>USDC to partner-controlled (omnibus + sub-ledger) or per-user wallets <span class="tag n">N</span>.</span></li><li><span class="n g">7</span><span>End users transact in the partner's interface; RebelFi routes; the licensed entity settles.</span></li></ol>
+ <div class="open"><b>?2</b> acceptance of pass-through KYC and its standard · <b>?9</b> omnibus vs per-user wallets for partners' end users</div></div>
+</div>
+<div class="ft" style="grid-template-columns:1.35fr 1fr;margin-top:4px">
+ <div><h2>Who holds what, after onboarding</h2><table><tr><th style="width:150px">Party</th><th>Holds</th><th>Does not hold</th></tr><tr><td>Licensed entity (Balance / Netcoins CA)</td><td>Identity documents, KYC/KYB file, customer-of-record relationship, fiat balances, monitoring obligations</td><td>Control over non-custodial wallets or on-chain positions</td></tr><tr><td>RebelFi</td><td>Verification status, tier, limits, reference IDs, the customer's or partner's risk policy, wallet mappings</td><td>Identity documents, fiat, customer funds of any kind</td></tr><tr><td>Customer / partner</td><td>Wallet keys; (partner) its end-user relationship and interface</td><td>Money-transmission obligations for the licensed legs</td></tr></table></div>
+ <div><h2>Assumptions to validate · open items added</h2><table><tr><th style="width:26px">#</th><th>Item</th><th style="width:92px">Source</th></tr><tr><td>A</td><td>The licensed entity's KYC programme can be called via API and returns results only, not documents <span class="st as">Assumed</span></td><td>Balance</td></tr><tr><td>B</td><td>Pass-through KYC (Model 2) is acceptable to Balance at a defined standard <span class="st as">Assumed</span></td><td>Balance</td></tr><tr><td class="id">?7</td><td>Treatment of customers resident in states not covered by Balance</td><td>BIGG / Balance</td></tr><tr><td class="id">?8</td><td>Onboarding route for large business customers needing OTC liquidity</td><td>BIGG</td></tr><tr><td class="id">?9</td><td>Omnibus vs per-user wallets for partners' end users</td><td>BIGG / Balance</td></tr></table></div>
+</div></section>
+<section class="page"><header class="hd"><div><div class="kicker">Flow of funds · Page 2 of 9</div><h1>On-ramp and off-ramp <span>— the licensed legs</span></h1></div>
+    <div class="right"><b>RebelFi × BIGG Digital Assets</b>Draft for discussion · v2 · 23 August 2026<br>Prepared by RebelFi</div></header>
+<p class="lede">The two ends of every flow are the only legs that require a money-transmission licence. Fiat enters and leaves through a virtual account at the bank partner; Balance converts and transmits; USDC is minted or redeemed with Circle. Everything between the two ends is on-chain.</p>
+<div class="strip"><div class="sl">Customer sees</div><div class="sc"><span>1</span>Funds the virtual account by ACH or wire</div><div class="sc"><span>2</span>USDC arrives in the wallet</div><div class="sc"><span>3</span>To exit, sends USDC to the off-ramp address</div><div class="sc"><span>4</span>USD arrives in the bank account</div></div>
+<div class="two-fig">
+ <div class="fig"><div class="fh">On-ramp · USD → USDC</div><figure><svg viewBox="0 0 500 236" role="img" aria-label="On-ramp: USD enters the customer&#x27;s virtual account at the bank partner, Balance converts and mints USDC via Circle, USDC is delivered to the customer wallet.">
+<rect x="0" y="42" width="500" height="48" fill="#F4F6F8"/>
+<text x="4" y="51" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#4A5768" letter-spacing=".08em">INSTRUCTIONS</text>
+<rect x="0" y="94" width="500" height="132" fill="#F0F8F7"/>
+<text x="4" y="103" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#0E6B66" letter-spacing=".08em">MONEY PATH</text>
+<g stroke="#C9D1D9" stroke-width="1"><line x1="41.3" y1="34" x2="41.3" y2="230"/><line x1="124.8" y1="34" x2="124.8" y2="230"/><line x1="208.3" y1="34" x2="208.3" y2="230"/><line x1="291.7" y1="34" x2="291.7" y2="230"/><line x1="375.2" y1="34" x2="375.2" y2="230"/><line x1="458.7" y1="34" x2="458.7" y2="230"/></g>
+<g font-family="IBM Plex Sans, sans-serif" font-size="8.3" text-anchor="middle" font-weight="600">
+<rect x="8.0" y="8" width="66.7" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="41.3" y="19" fill="#1C2733">Customer</text><text x="41.3" y="29" font-size="6.3" font-weight="400" fill="#1C2733">bank account</text>
+<rect x="91.5" y="8" width="66.7" height="26" rx="2" fill="#fff" stroke="#4D4F8F"/>
+<text x="124.8" y="24" fill="#4D4F8F">RebelFi</text>
+<rect x="174.9" y="8" width="66.7" height="26" rx="2" fill="#fff" stroke="#0E6B66"/>
+<text x="208.3" y="19" fill="#0E6B66">Bank partner</text><text x="208.3" y="29" font-size="6.3" font-weight="400" fill="#0E6B66">USD virtual acct</text>
+<rect x="258.4" y="8" width="66.7" height="26" rx="2" fill="#DCEFEC" stroke="#0E6B66"/>
+<text x="291.7" y="19" fill="#0E6B66">Balance</text><text x="291.7" y="29" font-size="6.3" font-weight="400" fill="#0E6B66">US licensed</text>
+<rect x="341.9" y="8" width="66.7" height="26" rx="2" fill="#fff" stroke="#0E6B66"/>
+<text x="375.2" y="19" fill="#0E6B66">Circle</text><text x="375.2" y="29" font-size="6.3" font-weight="400" fill="#0E6B66">USDC</text>
+<rect x="425.3" y="8" width="66.7" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="458.7" y="19" fill="#1C2733">Customer</text><text x="458.7" y="29" font-size="6.3" font-weight="400" fill="#1C2733">wallet</text>
+</g>
+<line x1="41.3" y1="66" x2="122.8" y2="66" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="61.3" y="62" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">on-ramp request: amount, destination wallet</text>
+<circle cx="52.3" cy="66" r="6" fill="#7A8794"/><text x="52.3" y="68.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">1</text>
+<line x1="124.8" y1="82" x2="289.7" y2="82" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="208.3" y="78" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">instruction + customer reference ID</text>
+<circle cx="135.8" cy="82" r="6" fill="#7A8794"/><text x="135.8" y="84.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">2</text>
+<line x1="41.3" y1="120" x2="206.3" y2="120" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="124.8" y="116" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">USD to the customer&#x27;s virtual account</text>
+<circle cx="52.3" cy="120" r="6" fill="#0E6B66"/><text x="52.3" y="122.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">3</text>
+<line x1="208.3" y1="146" x2="289.7" y2="146" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="228.3" y="142" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">USD credited · converted</text>
+<rect x="257.7" y="149" width="22" height="11" rx="1.5" fill="#0E6B66"/><text x="268.7" y="157.5" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#fff" text-anchor="middle">MTL</text>
+<circle cx="219.3" cy="146" r="6" fill="#0E6B66"/><text x="219.3" y="148.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">4</text>
+<line x1="291.7" y1="172" x2="373.2" y2="172" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="311.7" y="168" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">mint USDC</text>
+<circle cx="302.7" cy="172" r="6" fill="#0E6B66"/><text x="302.7" y="174.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">5</text>
+<line x1="375.2" y1="198" x2="456.7" y2="198" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="395.2" y="194" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">USDC delivered</text>
+<circle cx="386.2" cy="198" r="6" fill="#0E6B66"/><text x="386.2" y="200.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">6</text>
+<line x1="291.7" y1="218" x2="126.8" y2="218" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="208.3" y="214" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">confirmation</text>
+<circle cx="280.7" cy="218" r="6" fill="#7A8794"/><text x="280.7" y="220.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">7</text>
+<text x="291.7" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.4" font-weight="600" fill="#0E6B66">CUSTOMER-OF-RECORD</text>
+</svg></figure>
+ <ol class="steps"><li><span class="n g">1</span><span>Customer requests an on-ramp; RebelFi records amount and destination wallet.</span></li><li><span class="n g">2</span><span>RebelFi instructs Balance with the customer reference ID from onboarding.</span></li><li><span class="n t">3</span><span>Customer sends USD to their virtual account at the bank partner <span class="tag c">C</span>.</span></li><li><span class="n t">4</span><span>Balance converts and transmits <span class="tag mtl">MTL</span>.</span></li><li><span class="n t">5</span><span>USDC minted with Circle (directly or via Netcoins USA).</span></li><li><span class="n t">6</span><span>USDC delivered to the customer wallet <span class="tag n">N</span>.</span></li><li><span class="n g">7</span><span>Balance confirms; RebelFi updates the customer ledger.</span></li></ol></div>
+ <div class="fig"><div class="fh">Off-ramp · USDC → USD</div><figure><svg viewBox="0 0 500 236" role="img" aria-label="Off-ramp: USDC is sent to Balance, redeemed with Circle, and paid out in USD through the bank partner to the customer&#x27;s bank account.">
+<rect x="0" y="42" width="500" height="48" fill="#F4F6F8"/>
+<text x="4" y="51" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#4A5768" letter-spacing=".08em">INSTRUCTIONS</text>
+<rect x="0" y="94" width="500" height="132" fill="#F0F8F7"/>
+<text x="4" y="103" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#0E6B66" letter-spacing=".08em">MONEY PATH</text>
+<g stroke="#C9D1D9" stroke-width="1"><line x1="41.3" y1="34" x2="41.3" y2="230"/><line x1="124.8" y1="34" x2="124.8" y2="230"/><line x1="208.3" y1="34" x2="208.3" y2="230"/><line x1="291.7" y1="34" x2="291.7" y2="230"/><line x1="375.2" y1="34" x2="375.2" y2="230"/><line x1="458.7" y1="34" x2="458.7" y2="230"/></g>
+<g font-family="IBM Plex Sans, sans-serif" font-size="8.3" text-anchor="middle" font-weight="600">
+<rect x="8.0" y="8" width="66.7" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="41.3" y="19" fill="#1C2733">Customer</text><text x="41.3" y="29" font-size="6.3" font-weight="400" fill="#1C2733">bank account</text>
+<rect x="91.5" y="8" width="66.7" height="26" rx="2" fill="#fff" stroke="#4D4F8F"/>
+<text x="124.8" y="24" fill="#4D4F8F">RebelFi</text>
+<rect x="174.9" y="8" width="66.7" height="26" rx="2" fill="#fff" stroke="#0E6B66"/>
+<text x="208.3" y="19" fill="#0E6B66">Bank partner</text><text x="208.3" y="29" font-size="6.3" font-weight="400" fill="#0E6B66">USD virtual acct</text>
+<rect x="258.4" y="8" width="66.7" height="26" rx="2" fill="#DCEFEC" stroke="#0E6B66"/>
+<text x="291.7" y="19" fill="#0E6B66">Balance</text><text x="291.7" y="29" font-size="6.3" font-weight="400" fill="#0E6B66">US licensed</text>
+<rect x="341.9" y="8" width="66.7" height="26" rx="2" fill="#fff" stroke="#0E6B66"/>
+<text x="375.2" y="19" fill="#0E6B66">Circle</text><text x="375.2" y="29" font-size="6.3" font-weight="400" fill="#0E6B66">USDC</text>
+<rect x="425.3" y="8" width="66.7" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="458.7" y="19" fill="#1C2733">Customer</text><text x="458.7" y="29" font-size="6.3" font-weight="400" fill="#1C2733">wallet</text>
+</g>
+<line x1="41.3" y1="66" x2="122.8" y2="66" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="61.3" y="62" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">off-ramp request: amount, bank account</text>
+<circle cx="52.3" cy="66" r="6" fill="#7A8794"/><text x="52.3" y="68.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">1</text>
+<line x1="124.8" y1="82" x2="289.7" y2="82" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="208.3" y="78" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">instruction + reference ID · deposit address</text>
+<circle cx="135.8" cy="82" r="6" fill="#7A8794"/><text x="135.8" y="84.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">2</text>
+<line x1="458.7" y1="120" x2="293.7" y2="120" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="375.2" y="116" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">USDC to Balance deposit address</text>
+<circle cx="447.7" cy="120" r="6" fill="#0E6B66"/><text x="447.7" y="122.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">3</text>
+<line x1="291.7" y1="146" x2="373.2" y2="146" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="311.7" y="142" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">redeem USDC</text>
+<circle cx="302.7" cy="146" r="6" fill="#0E6B66"/><text x="302.7" y="148.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">4</text>
+<line x1="375.2" y1="172" x2="210.3" y2="172" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="291.7" y="168" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">USD to the virtual account</text>
+<circle cx="364.2" cy="172" r="6" fill="#0E6B66"/><text x="364.2" y="174.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">5</text>
+<line x1="208.3" y1="198" x2="43.3" y2="198" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="124.8" y="194" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">USD payout</text>
+<rect x="53.3" y="201" width="22" height="11" rx="1.5" fill="#0E6B66"/><text x="64.3" y="209.5" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#fff" text-anchor="middle">MTL</text>
+<circle cx="197.3" cy="198" r="6" fill="#0E6B66"/><text x="197.3" y="200.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">6</text>
+<line x1="291.7" y1="218" x2="126.8" y2="218" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="208.3" y="214" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">confirmation</text>
+<circle cx="280.7" cy="218" r="6" fill="#7A8794"/><text x="280.7" y="220.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">7</text>
+<text x="291.7" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.4" font-weight="600" fill="#0E6B66">CUSTOMER-OF-RECORD</text>
+</svg></figure>
+ <ol class="steps"><li><span class="n g">1</span><span>Customer requests an off-ramp to a registered bank account.</span></li><li><span class="n g">2</span><span>RebelFi instructs Balance; Balance issues a deposit address.</span></li><li><span class="n t">3</span><span>Customer sends USDC to the deposit address; Balance now custodies <span class="tag c">C</span>.</span></li><li><span class="n t">4</span><span>Balance redeems USDC for USD with Circle.</span></li><li><span class="n t">5</span><span>USD lands in the customer's virtual account.</span></li><li><span class="n t">6</span><span>Bank partner pays out to the customer's bank account <span class="tag mtl">MTL</span>.</span></li><li><span class="n g">7</span><span>Balance confirms; RebelFi closes the request.</span></li></ol></div>
+</div>
+<div class="ft" style="margin-top:4px">
+ <div><h2>Custody along the flow</h2><table><tr><th>Stage</th><th>Funds held by</th><th>Perimeter</th></tr><tr><td>Fiat in the virtual account</td><td>Bank partner <span class="tag c">C</span></td><td>Inside</td></tr><tr><td>Conversion and transmission</td><td>Balance <span class="tag c">C</span> <span class="tag mtl">MTL</span></td><td>Inside</td></tr><tr><td>Mint / redeem</td><td>Circle <span class="tag c">C</span></td><td>Inside; outside the group</td></tr><tr><td>USDC in the customer wallet</td><td>Customer <span class="tag n">N</span></td><td>Outside</td></tr></table>
+ <p class="note"><b>Canada.</b> Netcoins Canada performs both the banking and the licensed legs in CAD. Same sequence, one entity.</p></div>
+ <div><h2>Open items added</h2><table><tr><th style="width:26px">#</th><th>Item</th><th style="width:110px">Source</th></tr><tr><td class="id">?10</td><td>Deposit-address model for off-ramps: per customer or omnibus with reference</td><td>Balance</td></tr><tr><td class="id">?11</td><td>Settlement windows for virtual-account funding and payouts</td><td>Bank partner / Balance</td></tr></table></div>
+</div></section>
+<section class="page"><header class="hd"><div><div class="kicker">Flow of funds · Page 3 of 9</div><h1>Yield on idle balances <span>— no licensed leg</span></h1></div>
+    <div class="right"><b>RebelFi × BIGG Digital Assets</b>Draft for discussion · v2 · 23 August 2026<br>Prepared by RebelFi</div></header>
+<p class="lede">Idle USDC is deployed into whitelisted protocols under a per-customer risk policy. Funds move from the customer's wallet into on-chain positions the customer owns. No entity takes custody and no licensed leg is involved.</p>
+<div class="strip"><div class="sl">Customer sees</div><div class="sc"><span>1</span>Sets a risk policy, or accepts the partner default</div><div class="sc"><span>2</span>Idle balance is deployed within policy</div><div class="sc"><span>3</span>Accrual is visible; withdraw at any time</div></div>
+<div class="two-fig" style="grid-template-columns:1.3fr 1fr">
+ <div class="fig"><div class="fh">Deployment and withdrawal</div><figure><svg viewBox="0 0 520 236" role="img" aria-label="Yield: the wallet sets a risk policy, RebelFi proposes deployments within it, USDC moves into protocol positions owned by the wallet, accrues, and returns on withdrawal.">
+<rect x="0" y="42" width="520" height="80" fill="#F4F6F8"/>
+<text x="4" y="51" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#4A5768" letter-spacing=".08em">INSTRUCTIONS</text>
+<rect x="0" y="126" width="520" height="100" fill="#F0F8F7"/>
+<text x="4" y="135" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#0E6B66" letter-spacing=".08em">MONEY PATH</text>
+<g stroke="#C9D1D9" stroke-width="1"><line x1="56.0" y1="34" x2="56.0" y2="230"/><line x1="260.0" y1="34" x2="260.0" y2="230"/><line x1="464.0" y1="34" x2="464.0" y2="230"/></g>
+<g font-family="IBM Plex Sans, sans-serif" font-size="8.3" text-anchor="middle" font-weight="600">
+<rect x="8.0" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="56.0" y="19" fill="#1C2733">Customer / partner</text><text x="56.0" y="29" font-size="6.3" font-weight="400" fill="#1C2733">wallet</text>
+<rect x="212.0" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#4D4F8F"/>
+<text x="260.0" y="19" fill="#4D4F8F">RebelFi</text><text x="260.0" y="29" font-size="6.3" font-weight="400" fill="#4D4F8F">policy engine</text>
+<rect x="416.0" y="8" width="96.0" height="26" rx="2" fill="#F2F2F9" stroke="#4D4F8F"/>
+<text x="464.0" y="19" fill="#4D4F8F">Protocol</text><text x="464.0" y="29" font-size="6.3" font-weight="400" fill="#4D4F8F">whitelisted · on-chain</text>
+</g>
+<line x1="56.0" y1="66" x2="258.0" y2="66" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="158.0" y="62" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">risk policy: thresholds, protocol whitelist, limits</text>
+<circle cx="67.0" cy="66" r="6" fill="#7A8794"/><text x="67.0" y="68.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">1</text>
+<path d="M260.0,82 h26 v12 h-24" fill="none" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="290.0" y="86" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="6.8" fill="#4A5768">evaluates idle balance against policy</text>
+<circle cx="274.0" cy="100" r="6" fill="#7A8794"/><text x="274.0" y="102.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">2</text>
+<line x1="260.0" y1="114" x2="58.0" y2="114" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="158.0" y="110" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">proposed deployment, for approval</text>
+<circle cx="249.0" cy="114" r="6" fill="#7A8794"/><text x="249.0" y="116.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">3</text>
+<line x1="56.0" y1="152" x2="462.0" y2="152" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="260.0" y="148" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">USDC into a position owned by the wallet</text>
+<circle cx="67.0" cy="152" r="6" fill="#0E6B66"/><text x="67.0" y="154.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">4</text>
+<line x1="464.0" y1="176" x2="58.0" y2="176" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="260.0" y="172" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">accrual</text>
+<circle cx="453.0" cy="176" r="6" fill="#0E6B66"/><text x="453.0" y="178.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">5</text>
+<path d="M260.0,190 h26 v12 h-24" fill="none" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="290.0" y="194" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="6.8" fill="#4A5768">monitors venue risk · rebalances within policy</text>
+<circle cx="274.0" cy="208" r="6" fill="#7A8794"/><text x="274.0" y="210.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">6</text>
+<line x1="464.0" y1="218" x2="58.0" y2="218" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="260.0" y="214" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">USDC returned on withdrawal</text>
+<circle cx="453.0" cy="218" r="6" fill="#0E6B66"/><text x="453.0" y="220.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">7</text>
+</svg></figure>
+ <ol class="steps"><li><span class="n g">1</span><span>Customer or partner sets the risk policy; for B2B2B, the partner sets defaults per sub-account.</span></li><li><span class="n g">2</span><span>RebelFi evaluates idle balance against thresholds and the whitelist.</span></li><li><span class="n g">3</span><span>Proposed deployment goes to the wallet owner for approval, or executes automatically within pre-approved limits.</span></li><li><span class="n t">4</span><span>USDC moves into a protocol position owned by the wallet <span class="tag n">N</span>.</span></li><li><span class="n t">5</span><span>Accrual is tracked and attributed per wallet or sub-account.</span></li><li><span class="n g">6</span><span>RebelFi monitors venue risk and rebalances only within the policy.</span></li><li><span class="n t">7</span><span>On withdrawal, USDC returns to the wallet.</span></li></ol></div>
+ <div class="fig"><div class="fh">Policy options</div>
+  <div class="pad"><table><tr><th>Option</th><th>Effect</th></tr><tr><td>Approval thresholds</td><td>Amounts above the threshold require explicit approval</td></tr><tr><td>Protocol whitelist</td><td>Only named venues are eligible</td></tr><tr><td>Insured deposits</td><td>Restricts to venues with deposit cover</td></tr><tr><td>Sharia-compliant</td><td>Restricts to compliant venues and structures</td></tr><tr><td>Partner defaults</td><td>Applied across a partner's sub-accounts (B2B2B)</td></tr><tr><td>Treasury mode</td><td>Business balances swept above a floor, returned on demand</td></tr></table></div>
+  <h2 style="margin-top:8px">Custody along the flow</h2><div class="pad"><table><tr><th>Stage</th><th>Funds held by</th></tr><tr><td>Idle balance</td><td>Customer / partner wallet <span class="tag n">N</span></td></tr><tr><td>Deployed</td><td>On-chain position owned by the wallet <span class="tag n">N</span></td></tr><tr><td>RebelFi</td><td>Instructions only <span class="tag a">A</span></td></tr></table></div></div>
+</div>
+<div class="ft" style="margin-top:4px">
+ <div><h2>Notes</h2><p class="note">Yield is a feature applied to balances that already sit in a wallet; it does not change who holds the funds. Partner-level sweeps use the same sequence with the partner wallet as the owner.</p></div>
+ <div><h2>Open items added</h2><table><tr><th style="width:26px">#</th><th>Item</th><th style="width:110px">Source</th></tr><tr><td class="id">?12</td><td>Availability of yield to Netcoins Canada customers under its existing approvals</td><td>Netcoins</td></tr><tr><td class="id">?13</td><td>Whether group treasury balances participate (treasury mode for Netcoins entities)</td><td>BIGG</td></tr></table></div>
+</div></section>
+<section class="page"><header class="hd"><div><div class="kicker">Flow of funds · Page 4 of 9</div><h1>Escrow payments <span>— conditional release on-chain</span></h1></div>
+    <div class="right"><b>RebelFi × BIGG Digital Assets</b>Draft for discussion · v2 · 23 August 2026<br>Prepared by RebelFi</div></header>
+<p class="lede">The payer funds a permissionless escrow contract; funds release to the payee only when pre-set conditions are met. While funds are in escrow, neither RebelFi nor any licensed entity can move them. Fiat entry and exit use the on-ramp and off-ramp legs.</p>
+<div class="strip"><div class="sl">Customer sees</div><div class="sc"><span>1</span>Payer creates a payment with terms</div><div class="sc"><span>2</span>Funds are locked in escrow</div><div class="sc"><span>3</span>Conditions met: payee is paid</div><div class="sc"><span>4</span>Not met by expiry: payer is refunded</div></div>
+<div class="two-fig" style="grid-template-columns:1.3fr 1fr">
+ <div class="fig"><div class="fh">Lock, release, refund</div><figure><svg viewBox="0 0 520 236" role="img" aria-label="Escrow: payer locks USDC in a permissionless contract parameterised by RebelFi; the contract releases to the payee when conditions are met, or refunds the payer on expiry.">
+<rect x="0" y="42" width="520" height="60" fill="#F4F6F8"/>
+<text x="4" y="51" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#4A5768" letter-spacing=".08em">INSTRUCTIONS</text>
+<rect x="0" y="106" width="520" height="120" fill="#F0F8F7"/>
+<text x="4" y="115" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#0E6B66" letter-spacing=".08em">MONEY PATH</text>
+<g stroke="#C9D1D9" stroke-width="1"><line x1="56.0" y1="34" x2="56.0" y2="230"/><line x1="192.0" y1="34" x2="192.0" y2="230"/><line x1="328.0" y1="34" x2="328.0" y2="230"/><line x1="464.0" y1="34" x2="464.0" y2="230"/></g>
+<g font-family="IBM Plex Sans, sans-serif" font-size="8.3" text-anchor="middle" font-weight="600">
+<rect x="8.0" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="56.0" y="19" fill="#1C2733">Payer</text><text x="56.0" y="29" font-size="6.3" font-weight="400" fill="#1C2733">wallet</text>
+<rect x="144.0" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#4D4F8F"/>
+<text x="192.0" y="24" fill="#4D4F8F">RebelFi</text>
+<rect x="280.0" y="8" width="96.0" height="26" rx="2" fill="#F2F2F9" stroke="#4D4F8F"/>
+<text x="328.0" y="19" fill="#4D4F8F">Escrow contract</text><text x="328.0" y="29" font-size="6.3" font-weight="400" fill="#4D4F8F">permissionless · on-chain</text>
+<rect x="416.0" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="464.0" y="19" fill="#1C2733">Payee</text><text x="464.0" y="29" font-size="6.3" font-weight="400" fill="#1C2733">wallet</text>
+</g>
+<line x1="56.0" y1="66" x2="190.0" y2="66" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="76.0" y="62" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">payment terms: amount, payee, release conditions</text>
+<circle cx="67.0" cy="66" r="6" fill="#7A8794"/><text x="67.0" y="68.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">1</text>
+<line x1="192.0" y1="88" x2="326.0" y2="88" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="212.0" y="84" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">deploys and parameterises the escrow</text>
+<circle cx="203.0" cy="88" r="6" fill="#7A8794"/><text x="203.0" y="90.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">2</text>
+<line x1="56.0" y1="130" x2="326.0" y2="130" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="192.0" y="126" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">USDC locked in escrow</text>
+<circle cx="67.0" cy="130" r="6" fill="#0E6B66"/><text x="67.0" y="132.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">3</text>
+<path d="M192.0,148 h26 v12 h-24" fill="none" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="222.0" y="152" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="6.8" fill="#4A5768">monitors conditions: time · attestation · approval</text>
+<circle cx="206.0" cy="166" r="6" fill="#7A8794"/><text x="206.0" y="168.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">4</text>
+<line x1="328.0" y1="182" x2="462.0" y2="182" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="348.0" y="178" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">release when conditions are met</text>
+<circle cx="339.0" cy="182" r="6" fill="#0E6B66"/><text x="339.0" y="184.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">5</text>
+<line x1="328.0" y1="210" x2="58.0" y2="210" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="192.0" y="206" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">refund on expiry or dispute outcome</text>
+<circle cx="317.0" cy="210" r="6" fill="#0E6B66"/><text x="317.0" y="212.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">6</text>
+<text x="328.0" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.4" font-weight="600" fill="#4D4F8F">NO PARTY CAN REDIRECT FUNDS</text>
+</svg></figure>
+ <ol class="steps"><li><span class="n g">1</span><span>Payer sets amount, payee and release conditions.</span></li><li><span class="n g">2</span><span>RebelFi deploys the escrow with those parameters; the contract is permissionless once live.</span></li><li><span class="n t">3</span><span>Payer locks USDC in the contract <span class="tag n">N</span>.</span></li><li><span class="n g">4</span><span>RebelFi monitors the conditions and submits attestations where it is the designated source.</span></li><li><span class="n t">5</span><span>Contract releases to the payee when conditions are met.</span></li><li><span class="n t">6</span><span>Contract refunds the payer on expiry or per the dispute outcome.</span></li></ol></div>
+ <div class="fig"><div class="fh">Release conditions and use cases</div>
+  <div class="pad"><table><tr><th>Condition type</th><th>Example</th></tr><tr><td>Time</td><td>Release on date; refund after expiry</td></tr><tr><td>Attestation</td><td>Delivery confirmed by a designated source</td></tr><tr><td>Multi-party approval</td><td>Both parties, or an agreed third party, sign off</td></tr><tr><td>Milestone</td><td>Partial releases against agreed stages</td></tr></table></div>
+  <div class="pad" style="margin-top:6px"><table><tr><th>Use case</th><th>Shape</th></tr><tr><td>B2B invoice settlement</td><td>Lock on invoice, release on acceptance</td></tr><tr><td>Merchant acceptance</td><td>Lock at checkout, release on delivery</td></tr><tr><td>Cross-border supplier payment</td><td>Escrow between two off-ramps</td></tr><tr><td>Agent-initiated payments</td><td>An agent locks funds for work that takes time (page 5)</td></tr></table></div></div>
+</div>
+<div class="ft" style="margin-top:4px">
+ <div><h2>Custody along the flow</h2><table><tr><th>Stage</th><th>Funds held by</th></tr><tr><td>Before lock</td><td>Payer wallet <span class="tag n">N</span></td></tr><tr><td>In escrow</td><td>Contract — no party can move the funds <span class="tag n">N</span></td></tr><tr><td>After release</td><td>Payee wallet <span class="tag n">N</span></td></tr><tr><td>RebelFi</td><td>Deploys and monitors <span class="tag a">A</span></td></tr></table></div>
+ <div><h2>Open items added</h2><table><tr><th style="width:26px">#</th><th>Item</th><th style="width:110px">Source</th></tr><tr><td class="id">?14</td><td>Which merchant and B2B use cases BIGG prioritises for launch</td><td>BIGG</td></tr><tr><td class="id">?15</td><td>Attestation sources and dispute handling: who is designated to attest</td><td>BIGG / RebelFi</td></tr></table></div>
+</div></section>
+<section class="page"><header class="hd"><div><div class="kicker">Flow of funds · Page 5 of 9</div><h1>Agentic payments <span>— policy-bound agent accounts</span></h1></div>
+    <div class="right"><b>RebelFi × BIGG Digital Assets</b>Draft for discussion · v2 · 23 August 2026<br>Prepared by RebelFi</div></header>
+<p class="lede">An AI agent pays from a policy-bound account owned by a KYC'd business. The owner sets each agent's spending limit and the account enforces it on-chain, so a mistaken or compromised agent cannot overspend. <b>Agents never become customers</b>: the owner is customer-of-record, the agent is an operator on the owner's account, and fiat legs run through the licensed entity as on any other flow. Compatible with agent payment rails such as x402.</p>
+<div class="strip"><div class="sl">Customer sees</div><div class="sc"><span>1</span>Business creates an agent account and sets a limit per agent</div><div class="sc"><span>2</span>Agent pays within its limit; over-limit attempts are rejected by the account</div><div class="sc"><span>3</span>Payments for work that takes time sit in escrow until delivered</div><div class="sc"><span>4</span>Idle balances earn yield under the owner&#x27;s policy</div></div>
+<div class="two-fig" style="grid-template-columns:1.35fr 1fr">
+ <div class="fig"><div class="fh">Authority, intent, enforcement</div><figure><svg viewBox="0 0 560 236" role="img" aria-label="Agentic payment: a KYC&#x27;d business owner creates a policy-bound account and sets per-agent spending limits; the agent forms a payment intent, RebelFi builds an unsigned transaction that matches it, the agent signs locally, and the account enforces the limit on-chain before paying the payee or an escrow.">
+<rect x="0" y="42" width="560" height="84" fill="#F4F6F8"/>
+<text x="4" y="51" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#4A5768" letter-spacing=".08em">INSTRUCTIONS</text>
+<rect x="0" y="130" width="560" height="96" fill="#F0F8F7"/>
+<text x="4" y="139" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#0E6B66" letter-spacing=".08em">MONEY PATH</text>
+<g stroke="#C9D1D9" stroke-width="1"><line x1="55.0" y1="34" x2="55.0" y2="230"/><line x1="167.5" y1="34" x2="167.5" y2="230"/><line x1="280.0" y1="34" x2="280.0" y2="230"/><line x1="392.5" y1="34" x2="392.5" y2="230"/><line x1="505.0" y1="34" x2="505.0" y2="230"/></g>
+<g font-family="IBM Plex Sans, sans-serif" font-size="8.3" text-anchor="middle" font-weight="600">
+<rect x="8.0" y="8" width="94.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="55.0" y="19" fill="#1C2733">Owner</text><text x="55.0" y="29" font-size="6.3" font-weight="400" fill="#1C2733">business · KYC&#x27;d</text>
+<rect x="120.5" y="8" width="94.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="167.5" y="19" fill="#1C2733">Agent</text><text x="167.5" y="29" font-size="6.3" font-weight="400" fill="#1C2733">operator</text>
+<rect x="233.0" y="8" width="94.0" height="26" rx="2" fill="#fff" stroke="#4D4F8F"/>
+<text x="280.0" y="19" fill="#4D4F8F">RebelFi</text><text x="280.0" y="29" font-size="6.3" font-weight="400" fill="#4D4F8F">builds · verifies</text>
+<rect x="345.5" y="8" width="94.0" height="26" rx="2" fill="#F2F2F9" stroke="#4D4F8F"/>
+<text x="392.5" y="19" fill="#4D4F8F">Agent account</text><text x="392.5" y="29" font-size="6.3" font-weight="400" fill="#4D4F8F">policy-bound · on-chain</text>
+<rect x="458.0" y="8" width="94.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="505.0" y="19" fill="#1C2733">Payee</text><text x="505.0" y="29" font-size="6.3" font-weight="400" fill="#1C2733">or escrow</text>
+</g>
+<line x1="55.0" y1="64" x2="390.5" y2="64" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="223.8" y="60" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">creates the account · sets each agent&#x27;s spending limit · can pause</text>
+<circle cx="66.0" cy="64" r="6" fill="#7A8794"/><text x="66.0" y="66.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">1</text>
+<line x1="167.5" y1="82" x2="278.0" y2="82" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="187.5" y="78" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">payment intent: amount, payee</text>
+<circle cx="178.5" cy="82" r="6" fill="#7A8794"/><text x="178.5" y="84.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">2</text>
+<line x1="280.0" y1="98" x2="169.5" y2="98" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="260.0" y="94" text-anchor="end" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">unsigned transaction · matches the intent</text>
+<circle cx="269.0" cy="98" r="6" fill="#7A8794"/><text x="269.0" y="100.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">3</text>
+<line x1="167.5" y1="114" x2="390.5" y2="114" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="280.0" y="110" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">signs locally · submits</text>
+<circle cx="178.5" cy="114" r="6" fill="#7A8794"/><text x="178.5" y="116.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">4</text>
+<line x1="55.0" y1="154" x2="390.5" y2="154" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="223.8" y="150" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">funds the account</text>
+<circle cx="66.0" cy="154" r="6" fill="#0E6B66"/><text x="66.0" y="156.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">5</text>
+<path d="M392.5,170 h-26 v12 h24" fill="none" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="362.5" y="174" text-anchor="end" font-family="IBM Plex Sans, sans-serif" font-size="6.8" fill="#4A5768">within limit: executes</text>
+<text x="362.5" y="182" text-anchor="end" font-family="IBM Plex Sans, sans-serif" font-size="6.8" fill="#4A5768">over limit: rejected</text>
+<circle cx="378.5" cy="188" r="6" fill="#0E6B66"/><text x="378.5" y="190.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">6</text>
+<line x1="392.5" y1="206" x2="503.0" y2="206" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="412.5" y="202" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">payment, direct or into escrow</text>
+<circle cx="403.5" cy="206" r="6" fill="#0E6B66"/><text x="403.5" y="208.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">7</text>
+<text x="55.0" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.4" font-weight="600" fill="#0E6B66">CUSTOMER-OF-RECORD</text>
+<text x="392.5" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.4" font-weight="600" fill="#4D4F8F">OWNER CONTROLS · NON-CUSTODIAL</text>
+</svg></figure>
+ <ol class="steps"><li><span class="n g">1</span><span>Owner creates the account, adds each agent as an operator with its own spending limit, and can pause all agents at once.</span></li><li><span class="n g">2</span><span>Agent forms a payment intent: amount and payee.</span></li><li><span class="n g">3</span><span>RebelFi builds the unsigned transaction; the agent checks that it matches the intent before signing.</span></li><li><span class="n g">4</span><span>Agent signs on its own machine and submits. RebelFi never holds agent keys.</span></li><li><span class="n t">5</span><span>Owner funds the account; on-ramp as on page 2.</span></li><li><span class="n t">6</span><span>The account enforces the limit: within limit the payment executes; over limit it is rejected by the chain, not by the agent <span class="tag n">N</span>.</span></li><li><span class="n t">7</span><span>Payment lands with the payee directly, or in escrow for work that takes time (page 4).</span></li></ol></div>
+ <div class="fig"><div class="fh">Controls</div>
+  <div class="pad"><table><tr><th>Control</th><th>Enforced by</th><th style="width:56px">Status</th></tr><tr><td>Per-agent spending limit</td><td>The account, on-chain</td><td>Existing</td></tr><tr><td>Pause all agents</td><td>Owner, instantly</td><td>Existing</td></tr><tr><td>Owner override</td><td>Owner acts without limits; agents cannot</td><td>Existing</td></tr><tr><td>Intent check before signing</td><td>Agent-side library</td><td>Existing</td></tr><tr><td>Escrow for work that takes time</td><td>Contract</td><td>Existing</td></tr><tr><td>Period limits and allowlists</td><td>The account</td><td>Next</td></tr><tr><td>Conditional release from escrow</td><td>Contract</td><td>Next</td></tr></table></div>
+  <h2 style="margin-top:8px">Where it sits</h2><div class="pad"><table><tr><th>Item</th><th>Position</th></tr><tr><td>Customer-of-record</td><td>The owner (business), via the licensed entity</td></tr><tr><td>The agent</td><td>Operator on the owner's account; not a customer</td></tr><tr><td>Fiat in / out</td><td>On-ramp and off-ramp legs, unchanged</td></tr><tr><td>Screening</td><td>Blockchain Intelligence Group on every transaction <span class="tag k">KYT</span></td></tr><tr><td>Custody</td><td>Owner controls; RebelFi holds no keys <span class="tag a">A</span></td></tr></table></div></div>
+</div>
+<div class="ft" style="margin-top:4px">
+ <div><h2>Agent payment rails</h2><p class="note">Rails such as x402 define how an agent pays a service. The account defines whether it may, and how much. The rail requests; the account authorises within the owner's limits; screening applies as on any flow.</p></div>
+ <div><h2>Open items added</h2><table><tr><th style="width:26px">#</th><th>Item</th><th style="width:110px">Source</th></tr><tr><td class="id">?16</td><td>Agent use cases BIGG prioritises: treasury agents, procurement, agent-to-agent services</td><td>BIGG</td></tr><tr><td class="id">?17</td><td>Target chain for redeployment of the account and escrow programs</td><td>BIGG / RebelFi</td></tr></table></div>
+</div></section>
+<section class="page"><header class="hd"><div><div class="kicker">Flow of funds · Page 6 of 9</div><h1>Cross-chain transfers and clean wallets <span>— CCTP</span></h1></div>
+    <div class="right"><b>RebelFi × BIGG Digital Assets</b>Draft for discussion · v2 · 23 August 2026<br>Prepared by RebelFi</div></header>
+<p class="lede">USDC moves between chains by burn-and-mint through Circle's CCTP; no custodian holds funds in flight. A <b>clean wallet</b> (also known as a ring-fenced wallet) accepts only balances whose source passes screening, so everything inside it has a known origin.</p>
+<div class="strip"><div class="sl">Customer sees</div><div class="sc"><span>1</span>Chooses the destination chain</div><div class="sc"><span>2</span>USDC is burned on the source chain</div><div class="sc"><span>3</span>USDC is minted on the destination chain, within minutes</div></div>
+<div class="two-fig" style="grid-template-columns:1.3fr 1fr">
+ <div class="fig"><div class="fh">Burn, attest, mint</div><figure><svg viewBox="0 0 520 236" role="img" aria-label="Cross-chain: USDC is burned on the source chain, Circle attests, RebelFi relays the attestation, USDC is minted on the destination chain into a clean wallet after a source check.">
+<rect x="0" y="42" width="520" height="36" fill="#F4F6F8"/>
+<text x="4" y="51" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#4A5768" letter-spacing=".08em">INSTRUCTIONS</text>
+<rect x="0" y="82" width="520" height="144" fill="#F0F8F7"/>
+<text x="4" y="91" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#0E6B66" letter-spacing=".08em">MONEY PATH</text>
+<g stroke="#C9D1D9" stroke-width="1"><line x1="56.0" y1="34" x2="56.0" y2="230"/><line x1="192.0" y1="34" x2="192.0" y2="230"/><line x1="328.0" y1="34" x2="328.0" y2="230"/><line x1="464.0" y1="34" x2="464.0" y2="230"/></g>
+<g font-family="IBM Plex Sans, sans-serif" font-size="8.3" text-anchor="middle" font-weight="600">
+<rect x="8.0" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="56.0" y="19" fill="#1C2733">Source wallet</text><text x="56.0" y="29" font-size="6.3" font-weight="400" fill="#1C2733">chain A</text>
+<rect x="144.0" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#4D4F8F"/>
+<text x="192.0" y="19" fill="#4D4F8F">RebelFi</text><text x="192.0" y="29" font-size="6.3" font-weight="400" fill="#4D4F8F">relay</text>
+<rect x="280.0" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#0E6B66"/>
+<text x="328.0" y="19" fill="#0E6B66">Circle CCTP</text><text x="328.0" y="29" font-size="6.3" font-weight="400" fill="#0E6B66">burn · attest · mint</text>
+<rect x="416.0" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="464.0" y="19" fill="#1C2733">Destination</text><text x="464.0" y="29" font-size="6.3" font-weight="400" fill="#1C2733">chain B · clean wallet</text>
+</g>
+<line x1="56.0" y1="66" x2="190.0" y2="66" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="76.0" y="62" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">transfer request: amount, destination chain</text>
+<circle cx="67.0" cy="66" r="6" fill="#7A8794"/><text x="67.0" y="68.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">1</text>
+<line x1="56.0" y1="108" x2="326.0" y2="108" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="192.0" y="104" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">burn USDC on chain A</text>
+<circle cx="67.0" cy="108" r="6" fill="#0E6B66"/><text x="67.0" y="110.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">2</text>
+<line x1="328.0" y1="132" x2="194.0" y2="132" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="308.0" y="128" text-anchor="end" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">attestation</text>
+<circle cx="317.0" cy="132" r="6" fill="#7A8794"/><text x="317.0" y="134.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">3</text>
+<line x1="192.0" y1="156" x2="326.0" y2="156" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="212.0" y="152" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">relays attestation to chain B</text>
+<circle cx="203.0" cy="156" r="6" fill="#7A8794"/><text x="203.0" y="158.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">4</text>
+<line x1="328.0" y1="184" x2="462.0" y2="184" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="348.0" y="180" text-anchor="start" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">mint USDC on chain B</text>
+<circle cx="339.0" cy="184" r="6" fill="#0E6B66"/><text x="339.0" y="186.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">5</text>
+<line x1="192.0" y1="210" x2="462.0" y2="210" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="328.0" y="206" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">source check at entry</text>
+<circle cx="203.0" cy="210" r="6" fill="#7A8794"/><text x="203.0" y="212.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">6</text>
+<text x="328.0" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.4" font-weight="600" fill="#0E6B66">NO CUSTODIAN IN FLIGHT</text>
+</svg></figure>
+ <ol class="steps"><li><span class="n g">1</span><span>Wallet owner requests a transfer to another chain.</span></li><li><span class="n t">2</span><span>USDC is burned on the source chain <span class="tag n">N</span>.</span></li><li><span class="n g">3</span><span>Circle issues an attestation for the burn.</span></li><li><span class="n g">4</span><span>RebelFi relays the attestation to the destination chain.</span></li><li><span class="n t">5</span><span>USDC is minted on the destination chain <span class="tag n">N</span>.</span></li><li><span class="n g">6</span><span>For clean-wallet destinations, the source is screened by Blockchain Intelligence Group before the balance is accepted <span class="tag k">KYT</span>.</span></li></ol></div>
+ <div class="fig"><div class="fh">Clean wallets</div>
+  <div class="pad"><p class="note" style="margin:0 0 5px">A clean wallet is a customer- or partner-owned wallet with entry rules enforced by RebelFi. It is used where a counterparty, auditor or regulator needs assurance that every balance has a known source.</p>
+  <table><tr><th>Rule</th><th>Effect</th></tr><tr><td>Accepted sources</td><td>On-ramp output, identified counterparties, transfers from other clean wallets</td></tr><tr><td>Screening at entry</td><td>Inbound balances are checked by Blockchain Intelligence Group before acceptance; failures are rejected or quarantined <span class="tag k">KYT</span></td></tr><tr><td>Source trail</td><td>Origin recorded per unit for audit and reporting</td></tr><tr><td>Outbound</td><td>Unrestricted; the wallet owner controls keys <span class="tag n">N</span></td></tr></table></div></div>
+</div>
+<div class="ft" style="margin-top:4px">
+ <div><h2>Custody along the flow</h2><table><tr><th>Stage</th><th>Funds held by</th></tr><tr><td>Before burn</td><td>Source wallet <span class="tag n">N</span></td></tr><tr><td>In flight</td><td>None — burned on A, minted on B</td></tr><tr><td>After mint</td><td>Destination wallet <span class="tag n">N</span></td></tr></table></div>
+ <div><h2>Open items added</h2><table><tr><th style="width:26px">#</th><th>Item</th><th style="width:110px">Source</th></tr><tr><td class="id">?18</td><td>Chains supported at launch</td><td>BIGG / RebelFi</td></tr></table></div>
+</div></section>
+<section class="page"><header class="hd"><div><div class="kicker">Flow of funds · Page 7 of 9</div><h1>Cross-border Canada ↔ United States <span>— two licensed legs, one stablecoin leg</span></h1></div>
+    <div class="right"><b>RebelFi × BIGG Digital Assets</b>Draft for discussion · v2 · 23 August 2026<br>Prepared by RebelFi</div></header>
+<p class="lede">A Canadian-dollar payment settles in US dollars by passing through both licensed entities with a stablecoin leg between them. Each entity handles its own domestic leg; the stablecoin leg in between has no custodian. The reverse runs the same sequence: Balance sends, Netcoins Canada pays out in CAD.</p>
+<div class="strip"><div class="sl">Customer sees</div><div class="sc"><span>1</span>Canadian sender funds CAD and names the US recipient</div><div class="sc"><span>2</span>USD arrives in the recipient&#x27;s account</div><div class="sc"><span>3</span>Reverse: US sender funds USD, CAD arrives in Canada</div></div>
+<div class="fig"><div class="fh">Canada → United States</div><figure><svg viewBox="0 0 1040 236" role="img" aria-label="Cross-border: CAD enters Netcoins Canada, becomes USDC on-chain, is received by Balance, redeemed to USD and paid out through the bank partner to the US recipient.">
+<rect x="0" y="42" width="1040" height="36" fill="#F4F6F8"/>
+<text x="4" y="51" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#4A5768" letter-spacing=".08em">INSTRUCTIONS</text>
+<rect x="0" y="82" width="1040" height="144" fill="#F0F8F7"/>
+<text x="4" y="91" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#0E6B66" letter-spacing=".08em">MONEY PATH</text>
+<g stroke="#C9D1D9" stroke-width="1"><line x1="56.0" y1="34" x2="56.0" y2="230"/><line x1="210.7" y1="34" x2="210.7" y2="230"/><line x1="365.3" y1="34" x2="365.3" y2="230"/><line x1="520.0" y1="34" x2="520.0" y2="230"/><line x1="674.7" y1="34" x2="674.7" y2="230"/><line x1="829.3" y1="34" x2="829.3" y2="230"/><line x1="984.0" y1="34" x2="984.0" y2="230"/></g>
+<g font-family="IBM Plex Sans, sans-serif" font-size="8.3" text-anchor="middle" font-weight="600">
+<rect x="8.0" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="56.0" y="19" fill="#1C2733">Canadian sender</text><text x="56.0" y="29" font-size="6.3" font-weight="400" fill="#1C2733">CAD bank</text>
+<rect x="162.7" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#4D4F8F"/>
+<text x="210.7" y="24" fill="#4D4F8F">RebelFi</text>
+<rect x="317.3" y="8" width="96.0" height="26" rx="2" fill="#DCEFEC" stroke="#0E6B66"/>
+<text x="365.3" y="19" fill="#0E6B66">Netcoins Canada</text><text x="365.3" y="29" font-size="6.3" font-weight="400" fill="#0E6B66">CA licensed</text>
+<rect x="472.0" y="8" width="96.0" height="26" rx="2" fill="#F2F2F9" stroke="#4D4F8F"/>
+<text x="520.0" y="19" fill="#4D4F8F">Stablecoin leg</text><text x="520.0" y="29" font-size="6.3" font-weight="400" fill="#4D4F8F">on-chain</text>
+<rect x="626.7" y="8" width="96.0" height="26" rx="2" fill="#DCEFEC" stroke="#0E6B66"/>
+<text x="674.7" y="19" fill="#0E6B66">Balance</text><text x="674.7" y="29" font-size="6.3" font-weight="400" fill="#0E6B66">US licensed</text>
+<rect x="781.3" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#0E6B66"/>
+<text x="829.3" y="19" fill="#0E6B66">Bank partner</text><text x="829.3" y="29" font-size="6.3" font-weight="400" fill="#0E6B66">USD virtual acct</text>
+<rect x="936.0" y="8" width="96.0" height="26" rx="2" fill="#fff" stroke="#1C2733"/>
+<text x="984.0" y="19" fill="#1C2733">US recipient</text><text x="984.0" y="29" font-size="6.3" font-weight="400" fill="#1C2733">USD bank</text>
+</g>
+<line x1="56.0" y1="62" x2="208.7" y2="62" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="133.3" y="58" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">payment: amount, US recipient</text>
+<circle cx="67.0" cy="62" r="6" fill="#7A8794"/><text x="67.0" y="64.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">1</text>
+<line x1="210.7" y1="76" x2="672.7" y2="76" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/>
+<text x="442.7" y="72" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#4A5768">instruction + matching reference IDs to both licensed entities</text>
+<circle cx="221.7" cy="76" r="6" fill="#7A8794"/><text x="221.7" y="78.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">2</text>
+<line x1="56.0" y1="108" x2="363.3" y2="108" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="210.7" y="104" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">CAD</text>
+<rect x="331.3" y="111" width="22" height="11" rx="1.5" fill="#0E6B66"/><text x="342.3" y="119.5" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#fff" text-anchor="middle">MTL</text>
+<circle cx="67.0" cy="108" r="6" fill="#0E6B66"/><text x="67.0" y="110.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">3</text>
+<line x1="365.3" y1="130" x2="518.0" y2="130" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="442.7" y="126" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">CAD → USDC · sent on-chain</text>
+<circle cx="376.3" cy="130" r="6" fill="#0E6B66"/><text x="376.3" y="132.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">4</text>
+<line x1="520.0" y1="156" x2="672.7" y2="156" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="597.3" y="152" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">USDC received</text>
+<circle cx="531.0" cy="156" r="6" fill="#0E6B66"/><text x="531.0" y="158.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">5</text>
+<line x1="674.7" y1="182" x2="827.3" y2="182" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="752.0" y="178" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">redeem → USD</text>
+<rect x="795.3" y="185" width="22" height="11" rx="1.5" fill="#0E6B66"/><text x="806.3" y="193.5" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#fff" text-anchor="middle">MTL</text>
+<circle cx="685.7" cy="182" r="6" fill="#0E6B66"/><text x="685.7" y="184.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">6</text>
+<line x1="829.3" y1="208" x2="982.0" y2="208" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/>
+<text x="906.7" y="204" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.4" fill="#1C2733">USD payout</text>
+<circle cx="840.3" cy="208" r="6" fill="#0E6B66"/><text x="840.3" y="210.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" font-weight="600" fill="#fff">7</text>
+<text x="365.3" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.4" font-weight="600" fill="#0E6B66">CUSTOMER-OF-RECORD · CA</text>
+<text x="674.7" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.4" font-weight="600" fill="#0E6B66">CUSTOMER-OF-RECORD · US</text>
+<text x="520.0" y="226" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.4" font-weight="600" fill="#4D4F8F">NO CUSTODIAN</text>
+</svg></figure></div>
+<div class="three-col">
+ <div><ol class="steps"><li><span class="n g">1</span><span>Sender creates the payment; RebelFi resolves the recipient to a US payout.</span></li><li><span class="n g">2</span><span>RebelFi instructs both licensed entities with matching reference IDs.</span></li><li><span class="n t">3</span><span>Sender funds CAD with Netcoins Canada <span class="tag c">C</span> <span class="tag mtl">MTL</span>.</span></li><li><span class="n t">4</span><span>Netcoins Canada converts CAD to USDC and sends it on-chain; CCTP if the chains differ.</span></li></ol></div>
+ <div><ol class="steps"><li><span class="n t">5</span><span>Balance receives the USDC <span class="tag c">C</span>.</span></li><li><span class="n t">6</span><span>Balance redeems to USD into the recipient-side virtual account <span class="tag mtl">MTL</span>.</span></li><li><span class="n t">7</span><span>Bank partner pays out to the US recipient's bank account.</span></li></ol>
+  <h2 style="margin-top:6px">Custody along the flow</h2><table><tr><th>Stage</th><th>Funds held by</th></tr><tr><td>CAD leg</td><td>Netcoins Canada <span class="tag c">C</span></td></tr><tr><td>Stablecoin leg</td><td>None in flight; wallet-to-wallet <span class="tag n">N</span></td></tr><tr><td>USD leg</td><td>Balance, then bank partner <span class="tag c">C</span></td></tr></table></div>
+ <div><h2>Notes</h2><p class="note">The FX rate is set at the CAD → USDC conversion. Timing is dominated by the two domestic legs; the stablecoin leg settles in minutes.</p>
+  <h2 style="margin-top:6px">Open items added</h2><table><tr><th style="width:26px">#</th><th>Item</th><th style="width:96px">Source</th></tr><tr><td class="id">?6</td><td>Canadian leg: Netcoins Canada custody vs non-custodial path</td><td>BIGG / Netcoins</td></tr><tr><td class="id">?19</td><td>Which entity quotes FX and holds the spread</td><td>BIGG</td></tr><tr><td class="id">?20</td><td>Onboarding for Canadian senders: existing Netcoins customers vs new</td><td>Netcoins</td></tr></table></div>
+</div></section>
+<section class="page"><header class="hd"><div><div class="kicker">Flow of funds · Page 8 of 9</div><h1>Liquidity, settlement and intercompany <span>— current understanding</span></h1></div>
+    <div class="right"><b>RebelFi × BIGG Digital Assets</b>Draft for discussion · v2 · 23 August 2026<br>Prepared by RebelFi</div></header>
+<p class="lede">How value and fees move between the entities behind the flows. This page sets out RebelFi's current understanding as a baseline to align on; every item is assumed until confirmed. <span class="st as">Assumed</span></p>
+<div class="fig"><div class="fh">Entity-level value flows</div><figure><svg viewBox="0 0 1040 250" role="img" aria-label="Entity-level value flows: Circle supplies USDC to Netcoins Canada, Netcoins USA and Balance; Balance and the bank partner hold the US float; Blockchain Intelligence Group screens every flow; RebelFi, outside the perimeter, orchestrates the licensed entities and bills platform fees, with intercompany service fees between group entities."><rect x="0" y="0" width="1040" height="146" fill="#F0F8F7"/><text x="6" y="12" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#0E6B66" letter-spacing=".08em">REGULATED PERIMETER</text><rect x="0" y="154" width="1040" height="90" fill="#F2F2F9"/><text x="6" y="166" font-family="IBM Plex Mono, monospace" font-size="6.5" font-weight="600" fill="#4D4F8F" letter-spacing=".08em">OUTSIDE THE PERIMETER</text><rect x="40" y="40" width="160" height="40" rx="3" fill="#DCEFEC" stroke="#0E6B66" stroke-width="1.2"/><text x="120.0" y="56" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9" font-weight="600" fill="#0E6B66">Netcoins Canada</text><text x="120.0" y="68" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7" fill="#0E6B66">CAD float · CA customers</text><rect x="300" y="40" width="160" height="40" rx="3" fill="#fff" stroke="#0E6B66" stroke-width="1.2"/><text x="380.0" y="56" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9" font-weight="600" fill="#0E6B66">Circle</text><text x="380.0" y="68" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7" fill="#0E6B66">USDC mint / redeem</text><rect x="560" y="40" width="160" height="40" rx="3" fill="#DCEFEC" stroke="#0E6B66" stroke-width="1.2"/><text x="640.0" y="56" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9" font-weight="600" fill="#0E6B66">Netcoins USA</text><text x="640.0" y="68" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7" fill="#0E6B66">liquidity · OTC</text><rect x="820" y="40" width="160" height="40" rx="3" fill="#DCEFEC" stroke="#0E6B66" stroke-width="1.2"/><text x="900.0" y="56" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9" font-weight="600" fill="#0E6B66">Balance</text><text x="900.0" y="68" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7" fill="#0E6B66">US float · US customers</text><rect x="820" y="100" width="160" height="36" rx="3" fill="#fff" stroke="#0E6B66" stroke-width="1.2"/><text x="900.0" y="116" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9" font-weight="600" fill="#0E6B66">Bank partner</text><text x="900.0" y="128" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7" fill="#0E6B66">USD virtual accounts</text><rect x="40" y="100" width="200" height="36" rx="3" fill="#fff" stroke="#0E6B66" stroke-width="1.2"/><text x="140.0" y="116" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9" font-weight="600" fill="#0E6B66">Blockchain Intelligence Group</text><text x="140.0" y="128" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7" fill="#0E6B66">screening · monitoring</text><line x1="300" y1="60" x2="202" y2="60" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/><rect x="201.6" y="44.8" width="96.7" height="11.2" fill="#fff" opacity=".92"/><text x="250" y="52" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.2" fill="#1C2733">mint / redeem, CAD leg</text><line x1="460" y1="60" x2="558" y2="60" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/><rect x="460.6" y="44.8" width="96.7" height="11.2" fill="#fff" opacity=".92"/><text x="509" y="52" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.2" fill="#1C2733">mint / redeem at scale</text><line x1="720" y1="60" x2="818" y2="60" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/><rect x="724.7" y="44.8" width="88.6" height="11.2" fill="#fff" opacity=".92"/><text x="769" y="52" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.2" fill="#1C2733">USDC to the US float</text><line x1="900" y1="82" x2="900" y2="98" stroke="#0E6B66" stroke-width="1.6" marker-end="url(#ah-t)"/><rect x="930.8" y="85.8" width="48.3" height="11.2" fill="#fff" opacity=".92"/><text x="955" y="93" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.2" fill="#1C2733">USD ↔ USDC</text><rect x="430" y="190" width="180" height="44" rx="3" fill="#F2F2F9" stroke="#4D4F8F" stroke-width="1.2"/><text x="520.0" y="206" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9" font-weight="600" fill="#4D4F8F">RebelFi</text><text x="520.0" y="218" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7" fill="#4D4F8F">orchestration · ledger · fees</text><line x1="470" y1="190" x2="130" y2="82" stroke="#4D4F8F" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ah-v)"/><rect x="273.6" y="120.8" width="112.8" height="11.2" fill="#fff" opacity=".92"/><text x="330" y="128" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.2" fill="#4D4F8F">instructions · service fee</text><line x1="520" y1="190" x2="620" y2="82" stroke="#4D4F8F" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ah-v)"/><rect x="549.6" y="132.8" width="100.7" height="11.2" fill="#fff" opacity=".92"/><text x="600" y="140" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.2" fill="#4D4F8F">liquidity at group rate</text><line x1="570" y1="190" x2="880" y2="82" stroke="#4D4F8F" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ah-v)"/><rect x="683.6" y="132.8" width="112.8" height="11.2" fill="#fff" opacity=".92"/><text x="740" y="140" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.2" fill="#4D4F8F">instructions · service fee</text><line x1="240" y1="118" x2="430" y2="200" stroke="#7A8794" stroke-width="1.1" stroke-dasharray="1.5 2.5" marker-end="url(#ah-g)"/><rect x="237.5" y="164.8" width="124.9" height="11.2" fill="#fff" opacity=".92"/><text x="300" y="172" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="7.2" fill="#4A5768">screening results, every flow</text><text x="520" y="242" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.4" font-weight="600" fill="#4D4F8F">CUSTOMER FEES BILLED BY REBELFI · SETTLED TO EACH ENTITY FOR ITS LEG · ASSUMED</text></svg></figure></div>
+<div class="three-col" style="grid-template-columns:1.2fr 1fr 1fr">
+ <div><h2>Fee capture by flow <span class="st as">Assumed</span></h2><table><tr><th>Flow</th><th>Fee</th><th>Captured by</th></tr><tr><td>On-ramp / off-ramp</td><td>Conversion spread or fixed fee</td><td>Balance / Netcoins CA for the leg; RebelFi platform fee on top</td></tr><tr><td>Yield</td><td>Platform fee on accrual</td><td>RebelFi</td></tr><tr><td>Escrow and agent payments</td><td>Per-transaction fee</td><td>RebelFi</td></tr><tr><td>Cross-chain</td><td>Network cost, passed through</td><td>—</td></tr><tr><td>Cross-border</td><td>FX spread at conversion</td><td>?19</td></tr><tr><td>Liquidity</td><td>USDC at group rate</td><td>Netcoins USA</td></tr><tr><td>Screening</td><td>Group service</td><td>Blockchain Intelligence Group, intercompany</td></tr></table></div>
+ <div><h2>Settlement and reconciliation <span class="st as">Assumed</span></h2><table><tr><th>Item</th><th>Understanding</th></tr><tr><td>Fiat legs</td><td>Domestic rail timing; T+0 to T+1</td></tr><tr><td>On-chain legs</td><td>Minutes; final on confirmation</td></tr><tr><td>Reconciliation</td><td>Three-way, daily: RebelFi ledger ↔ licensed-entity statements ↔ on-chain</td></tr><tr><td>Exceptions</td><td>Handled by the licensed entity's operations team, with RebelFi tooling</td></tr><tr><td>Reporting</td><td>Per-entity activity reports for compliance and audit; screening records from Blockchain Intelligence Group</td></tr></table></div>
+ <div><h2>Intercompany <span class="st as">Assumed</span></h2><table><tr><th>Item</th><th>Understanding</th></tr><tr><td>RebelFi's role</td><td>Service provider to the licensed entities for orchestration, policy and ledger</td></tr><tr><td>Licensed entities' role</td><td>Customer-of-record, custody and transmission for their legs</td></tr><tr><td>Screening</td><td>Blockchain Intelligence Group to RebelFi and the licensed entities</td></tr><tr><td>Liquidity</td><td>Sourced through Netcoins USA for the group</td></tr><tr><td>Pricing</td><td>Set at group level</td></tr></table>
+  <h2 style="margin-top:6px">Open items added</h2><table><tr><th style="width:26px">#</th><th>Item</th><th style="width:80px">Source</th></tr><tr><td class="id">?21</td><td>Intercompany pricing model between RebelFi, Blockchain Intelligence Group and the licensed entities</td><td>BIGG</td></tr><tr><td class="id">?22</td><td>Who operates settlement and exceptions day to day</td><td>BIGG</td></tr><tr><td class="id">?23</td><td>Treasury policy for the US float: USD vs USDC holdings</td><td>BIGG / Balance</td></tr></table></div>
+</div></section>
+<section class="page"><header class="hd"><div><div class="kicker">Flow of funds · Page 9 of 9</div><h1>Open items and build notes <span>— what is needed to complete the map</span></h1></div>
+    <div class="right"><b>RebelFi × BIGG Digital Assets</b>Draft for discussion · v2 · 23 August 2026<br>Prepared by RebelFi</div></header>
+<p class="lede">Every open item from the preceding pages, with the page it appears on and who holds the answer. Build notes mark what exists today versus integration or new work; sizes are rough.</p>
+<div class="two-fig" style="grid-template-columns:1.45fr 1fr">
+ <div><h2>Open items register</h2><table><tr><th style="width:26px">#</th><th style="width:40px">Page</th><th>Item</th><th style="width:110px">Source</th></tr><tr><td class="id">?1</td><td>0</td><td>US bank partner identity; virtual-account model assumed</td><td>BIGG</td></tr><tr><td class="id">?2</td><td>0 · 1</td><td>BIGG ↔ Balance relationship: programme/agent or customer — customer-of-record and KYC programme</td><td>BIGG / Balance</td></tr><tr><td class="id">?3</td><td>0</td><td>Which entity is the Circle counterparty</td><td>BIGG</td></tr><tr><td class="id">?4</td><td>0</td><td>States outside Balance coverage: geo-restrict or alternate partner</td><td>BIGG / Balance</td></tr><tr><td class="id">?5</td><td>0</td><td>Placement of the additional merchant-payments technology under evaluation</td><td>BIGG</td></tr><tr><td class="id">?6</td><td>0 · 7</td><td>Canadian leg: Netcoins Canada custody vs non-custodial path</td><td>BIGG / Netcoins</td></tr><tr><td class="id">?7</td><td>1</td><td>Customers resident in states not covered by Balance</td><td>BIGG / Balance</td></tr><tr><td class="id">?8</td><td>1</td><td>Onboarding route for large business customers needing OTC liquidity</td><td>BIGG</td></tr><tr><td class="id">?9</td><td>1</td><td>Omnibus vs per-user wallets for partners' end users</td><td>BIGG / Balance</td></tr><tr><td class="id">?10</td><td>2</td><td>Deposit-address model for off-ramps</td><td>Balance</td></tr><tr><td class="id">?11</td><td>2</td><td>Settlement windows for virtual-account funding and payouts</td><td>Bank partner / Balance</td></tr><tr><td class="id">?12</td><td>3</td><td>Yield availability to Netcoins Canada customers under existing approvals</td><td>Netcoins</td></tr><tr><td class="id">?13</td><td>3</td><td>Group treasury balances in treasury mode</td><td>BIGG</td></tr><tr><td class="id">?14</td><td>4</td><td>Merchant and B2B use cases prioritised for launch</td><td>BIGG</td></tr><tr><td class="id">?15</td><td>4</td><td>Attestation sources and dispute handling</td><td>BIGG / RebelFi</td></tr><tr><td class="id">?16</td><td>5</td><td>Agent use cases prioritised: treasury, procurement, agent-to-agent services</td><td>BIGG</td></tr><tr><td class="id">?17</td><td>5</td><td>Target chain for redeployment of the account and escrow programs</td><td>BIGG / RebelFi</td></tr><tr><td class="id">?18</td><td>6</td><td>Chains supported at launch</td><td>BIGG / RebelFi</td></tr><tr><td class="id">?19</td><td>7 · 8</td><td>Which entity quotes FX and holds the spread</td><td>BIGG</td></tr><tr><td class="id">?20</td><td>7</td><td>Onboarding for Canadian senders</td><td>Netcoins</td></tr><tr><td class="id">?21</td><td>8</td><td>Intercompany pricing model</td><td>BIGG</td></tr><tr><td class="id">?22</td><td>8</td><td>Day-to-day settlement and exceptions operations</td><td>BIGG</td></tr><tr><td class="id">?23</td><td>8</td><td>Treasury policy for the US float</td><td>BIGG / Balance</td></tr></table></div>
+ <div><h2>Build notes</h2><table><tr><th>Component</th><th style="width:96px">Status</th><th style="width:52px">Size</th></tr><tr><td>Orchestration API and risk-policy engine</td><td>Existing</td><td>—</td></tr><tr><td>Yield routing and monitoring</td><td>Existing</td><td>—</td></tr><tr><td>Clean wallets and CCTP relay</td><td>Existing</td><td>—</td></tr><tr><td>Escrow contracts</td><td>Existing</td><td>Redeploy</td></tr><tr><td>Policy-bound agent accounts and agent SDK</td><td>Existing</td><td>Redeploy</td></tr><tr><td>Partner sub-ledger (B2B2B)</td><td>Existing, partial</td><td>S</td></tr><tr><td>Balance integration: KYC programme, on/off-ramp, deposit addresses</td><td>New integration</td><td>M</td></tr><tr><td>Bank partner virtual accounts</td><td>New integration</td><td>M</td></tr><tr><td>Netcoins Canada integration: CAD legs</td><td>New integration</td><td>M</td></tr><tr><td>Circle / Netcoins USA liquidity</td><td>New integration</td><td>S</td></tr><tr><td>Blockchain Intelligence Group screening at entry points</td><td>New integration</td><td>S</td></tr><tr><td>Cross-border orchestration (two-entity instruction and matching)</td><td>New</td><td>M</td></tr><tr><td>Settlement, reconciliation and reporting</td><td>New</td><td>M</td></tr><tr><td>Agent account: period limits, allowlists, conditional release</td><td>New</td><td>M</td></tr></table>
+  <p class="note" style="margin-top:6px">Existing components were demonstrated on 18 August. Integrations depend on partner APIs and are sized on the assumption that programme terms (?2) are settled first. Sizes: S — weeks; M — one to two months; subject to partner readiness.</p></div>
+</div></section>
+<!-- GEN END -->
+</body>
+</html>

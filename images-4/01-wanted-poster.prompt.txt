@@ -1,8 +1,0 @@
-slug: theme-proto-wanted-poster
-style: wanted-poster
-seed: 424280
-trace_id: 068497560788d295bc7ead0619af5041
-concept: two simple cartoon robots are sitting at a table passing a large open notebook between them. each robot has a chain attached to a different vendor building in the background
-
-full_prompt:
-vintage wild west wanted poster style, bold black text 'WANTED' at top, large central illustration area, reward text below, high contrast woodcut or lithograph aesthetic on slightly aged paper, two simple cartoon robots are sitting at a table passing a large open notebook between them. each robot has a chain attached to a different vendor building in the background

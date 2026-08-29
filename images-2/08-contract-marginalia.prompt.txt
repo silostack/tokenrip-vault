@@ -1,8 +1,0 @@
-slug: theme-proto-contract-marginalia
-style: contract-marginalia
-seed: 424250
-trace_id: 06849129443198a1eb1aacabbca9ca99
-concept: the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface
-
-full_prompt:
-formal legal contract page with dense fine print text, but the margins and whitespace are filled with tiny hand-drawn doodles, arrows, and protest annotations, high detail on the contrast between the official document and rebellious notes, the product disappears but the dependency stays: a SaaS app window dissolving while an agent in a chat window builds a workflow inside it; the agent is trapped in the vendor's surface
