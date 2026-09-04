@@ -2,8 +2,8 @@
 contact: Rob Lewis (+ Spencer, VP Technology · Eric Freeman, Founder/CEO)
 company: Wingspire Equipment Finance (ef.wingspirecapital.com)
 call_type: firm-direct
-status: BROKER HANDSHAKE LIVE 2026-08-20 — SaaS dead (tool fatigue). 0.5% on funded, already-in pays zero, 5-biz-day CRM check, no paper ever. Rob = intake. First send due this week; 1–3 month verdict. Operating context: lenders/wingspire/CLAUDE.md
-last_contact: 2026-08-20
+status: PAID PILOT FORMING 2026-09-02 — first 10 sent, portal in use, Trojan Battery = working. Eric pre-cleared $500–1,000/mo; Rob wants hybrid (monthly + per-funded) with attribution clock + quarterly reconciliation. Written proposal due 2026-09-03. 10 in flight stay on 0.5% handshake. 3-month evaluation to ~2026-12-01. Operating context: lenders/wingspire/CLAUDE.md
+last_contact: 2026-09-02
 ---
 
 # Rob Lewis — Wingspire Equipment Finance
@@ -41,7 +41,15 @@ last_contact: 2026-08-20
 - **2026-08-20** *(2nd call — broker model, Simon solo)*: [[bd/calls/transcripts/rob-lewis-2026-08-20]] · [[bd/calls/notes/rob-lewis-2026-08-20]]
   — firm-direct. Team killed the tool (*"use it for a day"*). He wants **Quintel to kick them names**. Verbal **0.5% on funded** if they are not already working the account; **will never sign a referral agreement**; handshake + term-sheet build-in + wire 24h–4 days after fund. Box stated: $100M rev / $10M EBITDA, $5–50M slug, PE preferred not required, 8–12% world. Intake = Rob (email is enough). Also floated **0.25% on raw intel** and a squeeze on repeats. Simon committed to a low-touch email send + follow-up; accepted informal and waived reporting. Verdict in **1–3 months**. Prep: [[bd/calls/notes/rob-lewis-2026-08-20-call-prep]].
 
+- **2026-09-02** *(3rd call — first-batch feedback + commercial reopen, Rob-initiated)*: [[bd/calls/transcripts/rob-lewis-2026-09-02]] · [[bd/calls/notes/rob-lewis-2026-09-02]]
+  — firm-direct. Portal understood (working / existing / pass), sources praised (*"better than ZoomInfo Intent"*). Batch 1: 9/10 already in Salesforce; **Trojan Battery = working** (in DB, untouched); Price Companies = existing (rep found the same article); CNY Feeds / Gardner Glass leaning pass. Rob sat with Eric: **$500–1,000/mo pre-approved**. He tabled ~$500/mo + flat ~$5k on funded + 6-month sunset (a reprice down vs 0.5%), while also saying a $25k check on $10M is fine. Simon proposed hybrid; Rob added the **quarterly "has any of these closed?" list** and a 3-month full-shot commitment. Simon owes a written proposal 2026-09-03. The 10 stay on the 0.5% handshake.
+
 ## Running Intelligence
+
+- **09-02 — Money and coverage.** Eric (CEO) cleared $500–1,000/mo for "information." Rob rejected the $3k/mo SaaS frame himself. Coverage math: **4,000 target accounts, 20 reps, ~35 accounts each really covered** (~700 active), which is the structural reason an outside movement signal is worth paying for. His mental account size for us: *"I'm a $50,000 account for you"* (2–3 deals/yr + monthly).
+- **09-02 — Attribution horizon, his data.** Cold "working it" → ~3 months to proposal → ~1 month to fund. Biggest deal ($300M+): signed a year before funding. His floated 6-month sunset is inconsistent with both; 12 months from click (extended past a term sheet) fits.
+- **09-02 — "In database" ≠ "already worked."** 9/10 of batch 1 were in the 40k CRM; Trojan Battery still pays because nobody is calling it. The failure case is Price Companies: rep already acted on the same public article. Tune toward names with no recent rep activity, not "not in CRM."
+- **09-02 — Portal.** Rep-email CC = *"record on both sides, that's really cool."* Fix: "whose desk it lands on" → optional note; detail page must paste into an email body. He asked about integration later (*"right now I just copy and paste"*).
 
 - **How they source, in Rob's words (07-28):** *"When you go after private equity, you're able to usually get in with private equity. You see their platforms and then you try to make relationships there."* Plus long referral relationships (*"I've been doing deals with them for six years"*). And then the gap: *"a lot of it is, sometimes it's **call and hope**, right? You just look at a website."* They run an internal model on employee size, revenue size, equipment intensity.
 - **🔑 The SaaS wedge is dead here; the live wedge is kicking them names.** 07-28 already said the gap was non-sponsor origination, not sponsor coverage. 08-20 the team confirmed they will not adopt another tool. What they *will* do is pay a referral source the way they already pay ~$400k/year of them.
@@ -76,8 +84,11 @@ last_contact: 2026-08-20
 
 | Rank | Assumption | fact/inferred + conf. | Cheapest test |
 |---|---|---|---|
+| **0a** | **Rob will accept a percentage success fee (not a flat $5k) and a 12-month window once a monthly fee and a reconciliation mechanism are on the table.** He said both "$25k check, I'm good with it" and "flat $5k, 6-month sunset" in one call | **inferred, MED** | The 09-03 written proposal. If he replies asking for the flat/sunset again, it is a real price position, not a tracking worry |
+| **0b** | **$1,000/mo is inside Eric's approval, not the ceiling of it** | **fact for $500–1,000 (his words); inferred above** | Propose $1,000; watch whether he re-loops Eric |
+| **0c** | **"Working it" stays honest if it carries no per-click cost** — a per-working-name fee would make him mark fewer names and corrupt the attribution ledger | **inferred, HIGH** | Don't test; design around it (flat monthly, never per-"working") |
 | **1** | **He will actually pay 0.5% on a name they were not already covering** — the whole channel is a handshake; Omaha is the comparable and also the "we're already in" story | **inferred, MED** | First funded deal is the only real test. Until then: freeze 0.5% in the follow-up email and require the CC on the rep assignment. Fold immediately if the first "yes" arrives with a new rate |
-| **2** | **A useful share of $5–50M / ~$100M-rev names are in the 10k untouched, not the 30k they already own** — otherwise every send is a free heads-up | **inferred, MED** | First batch of 5. If 4/5 are "we're in," the channel is a CRM-enrichment gift, not a fee stream. Kill or switch to worked-only |
+| **2** | ~~A useful share of names are in the 10k untouched~~ **Partly answered 09-02:** 9/10 in CRM, but untouched-in-CRM pays (Trojan). Live version: **a useful share of sends have no recent rep activity** | **inferred, MED** | Batch-1 final tally (6 pending). Target ≥30% working |
 | **3** | **0.5% holds vs the 0.25% raw-intel float and the repeat squeeze** — he confirmed then reopened in one call | **inferred, LOW–MED** | The follow-up email. If he replies "case by case," we are already on Onset's per-deal exhibit |
 | **4** | **We can produce in-box names this week** at $5–50M, non-sponsor, ~$100M rev, that are not already in a conflict with Onset | **inferred, LOW–MED** | Count the corpus against this box *before* promising a batch. Same open item as prep |
 | **5** | **SaaS is parked, not the ask** — do not re-pitch the tool; he will reopen $3k/mo himself if the channel fails or graduates | **fact (his words)** | Don't test. Wait for him to say it |
@@ -101,12 +112,17 @@ last_contact: 2026-08-20
 | 9 | Rob takes SaaS to Eric ("Chief") | Rob | no date given | **DROPPED** — team already said no to the tool |
 | 10 | Send the dated SaaS follow-up reply | Simon | 2026-08-04 | **SUPERSEDED** — 08-20 call happened instead |
 | 11 | Tiger order form if he accepted | Simon | n/a | **DROPPED** |
-| 12 | Follow-up email: send mechanics + **freeze 0.5%** + 5-business-day in/out clock (no agreement attached unless asked) | Simon | 2026-08-20 EOD | **OPEN** |
-| 13 | First in-box names to Rob (email; company, who to call, evidence, box fit) | Simon | this week | **OPEN** |
+| 12 | Follow-up email: send mechanics + **freeze 0.5%** + 5-business-day in/out clock (no agreement attached unless asked) | Simon | 2026-08-20 EOD | **DONE** (08-20 email sent; first 10 delivered via list page ~2026-08-31; handshake-only chosen) |
+| 13 | First in-box names to Rob (email; company, who to call, evidence, box fit) | Simon | this week | **DONE** (08-20 email sent; first 10 delivered via list page ~2026-08-31; handshake-only chosen) |
 | 14 | Onset-vs-Wingspire routing rule for overlapping $5–50M deals | Simon | before first send | **OPEN** |
-| 15 | Handshake-only vs one-pager — founder decision | Simon + Alek | before first send | **OPEN** |
+| 15 | Handshake-only vs one-pager — founder decision | Simon + Alek | before first send | **DONE** (08-20 email sent; first 10 delivered via list page ~2026-08-31; handshake-only chosen) |
 | 16 | Referral-fee licensing check (CA / interstate) at this ticket | Simon | before first send if possible | **OPEN** |
 | 17 | CRM-check each name; pay on fund; CC on assignment emails | Rob | on each send / on fund | **OPEN** |
-| 18 | 1–3 month go/no-go on the channel | Rob | ~2026-09-20 to 2026-11-20 | **OPEN** |
+| 18 | 1–3 month go/no-go on the channel | Rob | ~2026-12-01 (restated 09-02: "three months, full shot") | **OPEN** |
+| 19 | Written hybrid proposal (monthly + success fee + 12-mo window + quarterly reconciliation) | Simon + Alek | **2026-09-03** | **OPEN** |
+| 20 | Portal fixes: rename desk field → note; email-body paste; keep CC | Simon | before next batch | **OPEN** |
+| 21 | Quarterly reconciliation list (product feature; first run ~2026-12-01) | Simon | spec this week | **OPEN** |
+| 22 | Log batch-1 verdicts; chase 6 pending; tune next batch to no-recent-activity names | Simon | 2026-09-05 | **OPEN** |
+| 23 | Work the 10 on the existing 0.5% handshake; finish verdicts | Rob | this week | **OPEN** |
 - **2026-08-20** *(2nd call — broker model, Simon solo)*: [[bd/calls/transcripts/rob-lewis-2026-08-20]] · [[bd/calls/notes/rob-lewis-2026-08-20]] · prep [[bd/calls/notes/rob-lewis-2026-08-20-call-prep]]
   — Team killed the tool ("use it for a day and go back"); "it is our money" frame won. Handshake channel: 0.5% funded, already-in pays zero, CRM screenshot yes/no, CC on fund email, **no agreement ever**. Box confirmed: $5–50M slug, ~$100M rev / $10M EBITDA, sponsor preferred not required, 8–12% bank-turndown, ~10k untouched accounts. He floated 0.25% on raw (unanswered on call; closed in the follow-up email). Funnel: 10 financials/qtr → 2–3 proposals → 1–2 wins; verdict in 1–3 months. Terms, box, and open items now live in `lenders/wingspire/CLAUDE.md`; the SaaS-era pipeline table and assumptions above are historical.

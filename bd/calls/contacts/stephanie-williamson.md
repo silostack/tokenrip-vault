@@ -2,8 +2,8 @@
 contact: Stephanie Williamson
 company: AICAP Access
 call_type: firm-direct
-status: CLOSING VALIDATION MVP — paid in full; Week 7 begins 2026-08-17. **Follow-on self-serve Demo Hardening / Pilot phase is now defined at requirements level but remains unscoped and unpriced. Real-data use would trigger the separate security/production scope.**
-last_contact: 2026-08-13
+status: VALIDATION MVP CLOSED; SELF-SERVE DEMO PHASE PRICED AND LIKELY UNDERWAY. $18K/~8-9wk SOW sent 2026-08-30 (Option B: real CV + optional real ID, robust security/retention, tester tracing); 09-01 call activity (GitHub org, DO server, API accounts, 500-CV seed library) matches that SOW's Week-0 kickoff almost exactly. **Confirm the SOW is actually signed — that's the one open item, not the pricing question itself.**
+last_contact: 2026-09-01
 email: stephanie@aicap-access.com
 phone: 804-572-1804
 ---
@@ -46,7 +46,22 @@ CPCS-certified credentialing and privileging operations leader with 20+ years in
 - **2026-08-13**: [[bd/calls/transcripts/stephanie-williamson-2026-08-13]] · [[bd/calls/notes/stephanie-williamson-2026-08-13]]
   — firm-direct (**Validation MVP status / Week-7 planning**). Stephanie locked the product focus: provider-first intake, judged through medical staff office value; coordinator outreach automation and external verification stay V2/V3. She defined the expansion sequence as limited self-serve demo → paid configured/non-integrated A/B pilot → integration, and specified the coordinator output as red flags/pending items → line-by-line captured data → printable application form. **Commercially unresolved:** the self-serve real-data demo introduces multi-format intake, mobile/QR, interruption recovery, instrumentation, testing, PII storage, and security — all outside the Validation MVP SOW — but no scope, price, acceptance decision, or next meeting was set. Momentum → **flat commercially; ↑ product clarity.**
 
+- **2026-08-22**: [[../../../product/aicap/aicap-self-serve-demo-scope-2026-08-22]] — scoping document delivered. Resolves the 08-13 open question into two concrete build paths (A: real CV + sample ID; B: real CV + real ID) plus the testing-engine, security/retention, and access add-ons. Frames the choice, doesn't price it yet.
+
+- **2026-08-30**: [[../../../bd/calls/proposals/stephanie-williamson-2026-08-30-self-serve-demo-v1]] — **Self-Serve Demo SOW sent.** $18,000 fixed + AI usage billed direct to AICAP, ~8-9 weeks. Follows Stephanie's 08-29 decisions: Option B (real CV + optional real ID, no SSN), robust security/retention from day one, tester tracing in, in-product feedback prompt out, text-on-submission priced as a $500 add-on. **This is the priced Demo Hardening / Pilot-readiness phase** flagged as open since 08-13 — Load-Bearing Assumption #1 below is answered by this artifact's existence; whether Stephanie has actually signed it is the remaining open point.
+
+- **2026-09-01**: [[bd/calls/transcripts/stephanie-williamson-2026-09-01]] · [[bd/calls/notes/stephanie-williamson-2026-09-01]]
+  — firm-direct (technical planning; **no verbatim transcript, auto-generated notes only**). **Corrected read (see 09-01 running-intelligence update below): this call's content maps almost line-for-line onto the already-priced 08-30 SOW's "What AICAP provides" + Week-0 kickoff tasks** (OpenAI/Microsoft/GitHub/server accounts opened under AICAP's name, seed CV library) — not unpriced scope creep as first logged. Two open items worth confirming: (1) whether the $18K SOW has actually been signed/accepted, since the notes don't say so explicitly; (2) "benchmark Anthropic and ChatGPT" is new relative to the SOW's OpenAI-only document-reading architecture, worth a quick clarifying note. Momentum → **↑ advancing**, pending signature confirmation.
+
 ## Running Intelligence
+
+**🟢 UPDATE 2026-09-01 (corrected) — the follow-on phase is priced; 09-01 activity matches its kickoff, not unscoped drift**
+- **First pass at this call (same day) over-read the risk** — it was written before the 2026-08-22 scope doc and 2026-08-30 proposal ($18K, ~8-9 wks) were surfaced. Those exist, and the SOW's own architecture *is* "GitHub org / DO server / OpenAI + Microsoft accounts opened under AICAP's name from week 1, so there's no migration at the end" — meaning the account/server hand-off in this call is the SOW working as designed, not an ownership exit for Simon.
+- **The one thing genuinely still open: has Stephanie signed/funded the $18K SOW?** The 09-01 notes don't say so explicitly, but the tasks discussed (GitHub org, DO server, API account, 500-CV seed library, invite-only accounts) are exactly the SOW's Week-0/"What AICAP provides" list — strong circumstantial evidence she's proceeding under it. Confirm explicitly rather than assume.
+- **"Benchmark Anthropic and ChatGPT models"** is new versus the SOW, which specifies OpenAI for CV-understanding and Microsoft for ID-reading (with the CV-extraction logic built in-house regardless of underlying model). Not a conflict — just worth a one-line check that this doesn't imply reopening the document-reading architecture already priced.
+- **"Host within hospital environments"** in the 09-01 notes is about the future **paid pilot** (per-hospital deployment), which the 08-22 scope doc explicitly defers ("per-hospital application layouts and configuration; belongs to a paid pilot") — not part of the current $18K self-serve-demo scope. Fine as forward-looking talk, just don't let it quietly expand this phase's build.
+- Physician-first scope reaffirmed, architecture kept multi-provider-extensible — consistent with her long-standing "outcome-based," no-re-architecture preference, and consistent with the SOW.
+- *Caveat: 09-01 read is from an auto-generated notes summary, not a transcript — treat specifics as directionally reliable, not quote-grade.*
 
 **🔴 UPDATE 2026-08-13 — Phase 1 has a clear finish line; the requested self-serve demo is Phase 2**
 - **Provider-first is confirmed as the product north star.** Stephanie wants the provider guided to resolve what would otherwise become a long pending-items email. The medical staff office is the value judge, but coordinator outreach automation is explicitly V2/V3. External NPI-type validation also waits because incumbents already automate it. Her phrase: *"The real value is going to be cutting out that back and forth with the provider."*
@@ -150,9 +165,9 @@ She built this on Replit by herself. "Burnt out Replit with reiterations." Her o
 
 ## Relationship / Pipeline State
 
-**🟦 VALIDATION MVP CLOSING; FOLLOW-ON UNPRICED (2026-08-13).** Paid in full ($11K net); Week 7 begins 2026-08-17. The immediate job is to close acceptance against the signed scope: de-identified end-to-end flow, coordinator operability, completed-application PDF, and audit-trail PDF. Stephanie's output feedback makes that finish line executable.
+**🟢 VALIDATION MVP CLOSED; SELF-SERVE DEMO PHASE PRICED, KICKOFF LIKELY UNDERWAY (2026-09-01).** Paid in full ($11K net) through Week 7 closeout. The follow-on Self-Serve Demo phase was scoped 2026-08-22 and priced 2026-08-30 ($18K fixed, ~8-9 weeks, Option B: real CV + optional real ID, robust security/retention, tester tracing, text-on-submission as a $500 add-on). The 2026-09-01 call's items — GitHub org + admin access, DO server, OpenAI/Microsoft accounts, 500-CV seed library, invite-only/segregated access — map directly onto that SOW's "What AICAP provides" and Week-0 kickoff tasks (the SOW is designed to run on AICAP's own accounts from week 1, so this hand-off is by design, not an ownership exit). **The one open item is confirming the SOW was actually signed** — the 09-01 notes don't say so explicitly, though the matching activity is strong circumstantial evidence.
 
-**The next phase is no longer vague "demo polish."** It is a self-serve Demo Hardening / Pilot-readiness package: hands-off external access, document/device resilience, save/resume, instrumentation, aggressive testing, and a real-data security design. The SOW explicitly excludes production hardening and live provider data. It therefore requires a separate scope, price, timeline, and acceptance gate — not an informal extension of Week 7.
+**The Demo Hardening / Pilot-readiness gap flagged 2026-08-13 is now closed as a pricing question.** What remains open is execution tracking against the signed 8-week timeline (test-library/accuracy-check first, per the SOW's own sequencing) and a light check that "benchmark Anthropic and ChatGPT" + "host within hospital environments" (both raised 09-01) don't quietly expand scope beyond the priced SOW — the latter is explicitly pilot-phase, out of scope here.
 
 **Commercial constraint persists.** Stephanie wants to preserve momentum and previously volunteered that she was open to renegotiation, but this call again ended with "send me your thoughts / I'll send mine" rather than a priced decision. The best next motion is a short, risk-ranked paid scope after her requirements land — not further implementation.
 
@@ -193,11 +208,11 @@ She built this on Replit by herself. "Burnt out Replit with reiterations." Her o
 
 Reads driving the closeout and follow-on motion that are **not yet confirmed by hard evidence**. Ranked by how much the plan breaks if wrong.
 
-*Refreshed 2026-08-13.*
+*Refreshed 2026-09-01 (corrected same day — see note).*
 
 | Rank | Assumption | fact/inferred + conf. | Cheapest test |
 |------|-----------|----------------------|---------------|
-| 1 | **Stephanie will fund the self-serve Demo Hardening / Pilot-readiness work as a separate phase.** The follow-on plan fails commercially if she treats it as included Week-7 polish. | inferred, med — she previously offered to renegotiate and explicitly described the hospital-configured pilot as paid, but no AICAP-side follow-on budget was discussed | Send a short scope with current-MVP boundary, must-haves, price, timeline, and a decision date before implementing expansion items. |
+| 1 | **✅ Largely resolved 2026-08-30.** Stephanie will fund the self-serve Demo Hardening / Pilot-readiness work as a separate phase. A priced SOW ($18K, ~8-9wk) exists and the 09-01 call's activity matches its Week-0 kickoff almost exactly. **Remaining sub-question: has she actually signed/funded it?** Not yet confirmed by her own words in-hand. | fact (SOW sent + matching kickoff activity), inferred-but-strong that it's accepted (no explicit signature/payment confirmation seen yet) | Ask directly in the next written follow-up: "confirming the $18K SOW is signed and we're proceeding under it" — one line, closes the loop. |
 | 2 | **Raw real PII is necessary for the first external demo.** She wants contacts to upload their own CVs and later leaned toward storing data, but initially described the test as not configured for real use. | inferred, med | Offer two tracks: de-identified/synthetic demo now versus real-data pilot after the security gate. Ask which learning cannot be obtained from Track 1. |
 | 3 | **A hands-off demo will move contacts toward a paid pilot without a defined conversion event.** Access and feedback can become another indefinite free-advisory loop. | inferred, med-high | For the first two testers, pre-book the feedback call and define the next-step question before issuing access: paid configured A/B pilot, yes/no/conditions. |
 | 4 | **Retaining raw submissions is required for model-drift regression.** The need for a durable regression set is fact; raw identifiable source retention is not. | inferred, low-med | Build a small consented and de-identified fixture set; compare what debugging signal is lost before approving raw-data retention. |
@@ -261,3 +276,14 @@ Reads driving the closeout and follow-on motion that are **not yet confirmed by 
 | 52 | Finish and send hospital / health-system reference-data list | Stephanie | 2026-08-13 | 🔴 New — explicit same-day commitment |
 | 53 | Review updated interface and provider wizard; send concrete feedback plus consolidated self-serve-demo requirements | Stephanie | 2026-08-17 *(inferred)* | 🔴 New |
 | 54 | Decide de-identified demo vs real-data pilot and define consent, permitted use, retention, deletion, and access requirements before any PII handoff | Both | Before external access | 🔴 New |
+| 55 | Send checklist email for account/hand-off setup (OpenAI, Microsoft, DO server, GitHub) — the SOW's referenced "separate handoff guide" | Simon | 2026-09-03 *(inferred)* | 🔴 New |
+| 55b | **Confirm explicitly that the $18K Self-Serve Demo SOW (2026-08-30) is signed/funded** — the 09-01 notes imply it via matching kickoff activity but never say so | Simon | 2026-09-03 *(inferred, fold into #55)* | 🔴 New — the one real open item from this call |
+| 56 | Review hand-off documentation | Stephanie | 2026-09-05 *(inferred)* | 🔴 New |
+| 57 | Configure GitHub org + grant Simon admin access — **per SOW design** (build runs on AICAP's own accounts from week 1) | Stephanie | 2026-09-05 *(inferred)* | 🔴 New |
+| 58 | Provision Digital Ocean (or equivalent) hosting instance — **per SOW "What AICAP provides"** | Stephanie | 2026-09-05 *(inferred)* | 🔴 New |
+| 59 | Open OpenAI + Microsoft platform accounts, add Simon as member — **per SOW "What AICAP provides"** | Stephanie | 2026-09-05 *(inferred)* | 🔴 New |
+| 60 | Aggregate 500-CV/ID seed library for the test corpus (Simon: source + synthetic; Stephanie: collect + scrub real CVs) — **per SOW test-library scope, Weeks 1-2** | Both | 2026-09-15 *(inferred)* | 🔴 New |
+| 61 | Architect system for multi-provider extensibility (physicians now, NPs/PAs later, no re-architecting) | Simon | 2026-09-10 *(inferred)* | 🔴 New |
+| 62 | Build invite-only accounts + email-login workflow + hard account segregation + outgoing-comms lockdown — **per SOW "Access and tracing"** | Simon | 2026-09-10 *(inferred)* | 🔴 New |
+| 63 | Clarify "benchmark Anthropic and ChatGPT" against the SOW's OpenAI-only document-reading architecture — confirm it's not silently reopening priced scope | Simon | 2026-09-05 *(inferred)* | 🔴 New |
+| 64 | Note: "host within hospital environments" (09-01) is pilot-phase per the 08-22 scope doc, not this SOW — don't let it expand current build | Simon | ongoing | 🟢 Tracked, no action needed unless she pushes it into current scope |

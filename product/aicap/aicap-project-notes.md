@@ -108,3 +108,4 @@ Full agenda — 22 questions, grouped — lives in **[[walkthrough-questions]]**
 - Field + rule extraction → [[knowledge/README|knowledge/]]
 - Walkthrough agenda → [[walkthrough-questions]]
 - Relationship / call history → [[bd/calls/contacts/stephanie-williamson]]
+- cloud document parsing (like microsoft azure): https://www.unstructured.io/

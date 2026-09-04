@@ -3,7 +3,7 @@ contact: Max Sarango
 company: Providence Capital Funding
 call_type: firm-direct
 status: active pilot — Max + Robert onboarding; first lead batch due, commercial terms unconfirmed
-last_contact: 2026-08-26
+last_contact: 2026-09-02
 ---
 
 # Max Sarango — Providence Capital Funding
@@ -21,6 +21,9 @@ Sales Manager at Providence Capital Funding (providencecapitalfunding.com), a sm
 - **2026-08-26**: [[bd/calls/transcripts/max-sarango-2026-08-26]] · [[bd/calls/notes/max-sarango-2026-08-26]]
   — firm-direct/onboarding: Providence moved into a two-user pilot with Max and Robert, a senior producer who manages cold callers. Robert surfaced the primary new workflow: use equipment-, territory-, secured-party-, and trade-show-specific end-user campaigns to reciprocate vendor referrals and deepen dealer relationships. Providence requested accounts, a Teams feedback loop, 50 leads per rep per day, and a 500–600-lead initial bucket by 08-31. Operational next steps are concrete; pilot success criteria and fee-on-deal terms were not settled.
 
+- **2026-09-02**: [[bd/calls/transcripts/david-lasaee-2026-09-02]] · [[bd/calls/notes/david-lasaee-2026-09-02]]
+  — firm-direct kickoff (unrecorded): Max introduced [[david-lasaee]], a contractor building Providence's email-first outbound motion who wants to encode 18 months of learnings into a system on Quintel. Max was the introducer; the thread is now David's. Follow-up 09-03 without Max produced a joint pilot (debrief: [[active/providence-pool-first-debrief-2026-09-03]]). The Max/Robert lead batches and David's pool should come from one deduped list; Alek to merge.
+
 ## Running Intelligence
 
 - **Sourcing model**: 100% outbound. Primary channel is vendor-based relationships (equipment vendors refer end-user financing needs) — not commodity list-buying. Occasional UCC filing leads. Sits on an 850K-contact database built over 20+ years.
@@ -34,6 +37,8 @@ Sales Manager at Providence Capital Funding (providencecapitalfunding.com), a sm
 - **Pilot operating model:** Max and Robert first, broader team only after they establish a profitable working model. Requested capacity is 50 leads/day each, with lead-level Teams feedback and a joint review every 48 hours. Max requested 500–600 leads for the first 3–4 calling days, but a segmented smaller batch would produce cleaner diagnostic evidence.
 
 ## Relationship / Pipeline State
+
+**09-02 note:** Providence now sits in two overlapping relationships with Quintel: (a) pilot user of the tool (Max/Robert lead batches, this doc) and (b) recipient of founder-sourced borrower opportunities during weeks 1–2 of the 12-week brokerage plan (tokenrip.com/s/60f6c8f5…). Add (c) [[david-lasaee]] as a potential co-builder. Neither (b) nor (c) has fee, attribution, or outcome-reporting terms on record; #13 below now covers all three.
 
 Active pilot/onboarding, materially beyond the prior warm-curious stage. Named users: Max and Robert; Max controls operational rollout and will withhold the tool from the broader 45–50-rep team until the two-person pod proves a profitable model. Robert appears to be the lead workflow evaluator for vendor-led campaigns; Michael's role in the pilot is unclear after driving the 07-21 technical diligence. Authority remains shared with Providence's two owners. Commercial structure is still unconfirmed: the 07-21 subscription quote is stale in practice, while the 08-26 onboarding call did not put a referral/revenue-share rate or attribution rules on record. Timeline: accounts/Teams 08-27, first segmented bucket and dialing by 08-31, feedback every 48 hours.
 
@@ -61,7 +66,7 @@ Active pilot/onboarding, materially beyond the prior warm-curious stage. Named u
 | 7 | Follow up on the "problem" Max flagged mid-call and never finished explaining | Alek | Next call | Dropped — not resurfaced during 08-26 onboarding |
 | 8 | Provision Max and Robert accounts; send access instructions | Alek / Simon | 2026-08-27 | Open |
 | 9 | Add Alek and Simon to Providence Teams channel | Max | 2026-08-27 | Open |
-| 10 | Confirm and send UCC coverage matrix, especially Texas and Florida | Simon | 2026-08-28 (inferred) | Open |
+| 10 | Confirm and send UCC coverage matrix, especially Texas and Florida | Simon | 2026-08-28 (inferred) | Open — 09-03 fact: only FL, CO, CT loaded; TX and CA not. Load order to come from Providence's funded-deal state distribution (see [[david-lasaee]]) |
 | 11 | Populate segmented pilot batches for packaging, construction, and AV; first dialing by 08-31 | Simon | 2026-08-31 | Open |
 | 12 | Walk Quintel through PACK EXPO/PMMI exhibitor directory | Max | 2026-08-27, if schedules align | Open |
 | 13 | Define pilot outcome labels and fee-on-deal terms before Providence works the list | Alek / Simon | 2026-08-31 | Open |

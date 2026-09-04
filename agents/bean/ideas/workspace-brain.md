@@ -2,7 +2,7 @@
 
 **Status**: developing
 **Created**: 2026-06-14
-**Last touched**: 2026-06-14
+**Last touched**: 2026-08-29
 
 ## Thesis
 
@@ -11,6 +11,9 @@ A *workspace* is shared storage; a *workspace brain* is shared memory. The two t
 ## Evolution
 
 - **2026-06-14**: Generalized from the marketing-brain design (Bean session 2026-06-13/14). Established the 3-zones-2-operations model; identified that "completeness" comes from naming *operations*, not adding storage zones; named the consolidate step (Simon's intuited "process step") as the memory-consolidation move that separates a flywheel from a shelf. Resolved the storage-vs-retrieval question (atomic notes + envelope + retained source docs, semantic-not-positional decomposition, lazy seeding). Mapped folder-linking topology and the cross-org boundary. Full spec → `active/workspace-brain-architecture-2026-06-14.md`.
+- **2026-08-29**: Revived and expanded into [[sovereign-organizational-memory]]. The prior Signals / Doctrine / Output anatomy describes storage and consolidation, but Simon's company-brain model exposed two additional distinctions: raw sources are **evidence**, not facts; and reusable modules are the organization's **procedural memory**, not merely tools beside the brain. Personal context is better modeled as a sovereign peer scope composed into a task-specific view than as a child layer stored “on top” of company memory.
+
+- **2026-09-01**: Reframed in Simon's plain-English model — Doctrine→**positions** (bets with lifecycle + why), Signals/Output→**facts**; brain separated from harness (terminals); modules as ingest pumps answer the write-side-friction killer; principals = (slice, projection, derived layer). Synthesis → `active/tokenrip-brain-terminals-modules-canon-2026-09-01.md`; projections split out to [[brain-projections]].
 
 ## Key Challenges Surfaced
 
@@ -18,6 +21,7 @@ A *workspace* is shared storage; a *workspace brain* is shared memory. The two t
 - **Seeding can eat the week** — atomizing a whole vault up front is build-reflex; produces a library, ships nothing. *Resolved as discipline:* seed lazily/just-in-time; the brain fills as a byproduct of the work (which is also the honest test of the zero-ceremony-ingestion pitch).
 - **Cross-org embeddings can leak what an ACL hides** — vectors partially reconstruct content; the federated/projected/revocable slice is a genuine security build, not a slide. *Open — the cross-party claim rests on it.*
 - **Provenance/recency vs. fuzzy recall** — a contested corpus surfaces superseded/contradictory neighbors. *Resolved in design:* recall by meaning, verify by lineage; Signals recency-weighted, Doctrine trust-weighted, Output immutable.
+- **Evidence vs. authority** — ingesting a transcript does not make every statement in it a company fact, and a company may hold scoped or contested positions. *Open:* positions need explicit authority, status, temporal scope, evidence links, and supersession.
 
 ## Open Questions
 
@@ -25,6 +29,7 @@ A *workspace* is shared storage; a *workspace brain* is shared memory. The two t
 - Build the reusable "atomize → linked notes" skill now (serves customer brains later) or hand-curate first Doctrine notes?
 - Decay mechanics for Signals — explicit TTL/archival vs. pure recency-weighting?
 - Is "brain" the canonical product noun vs. "workspace"? (Reshapes the vocabulary tree — naming pass warranted.)
+- Is a personal brain a stored overlay, or should every interaction resolve a temporary view across sovereign scopes (personal + company + project + shared room)? The latter currently looks structurally safer.
 
 ## Non-Obvious Connections
 
@@ -34,3 +39,4 @@ A *workspace* is shared storage; a *workspace brain* is shared memory. The two t
 - **The marketing machine built on the brain IS the magic demo** — agents collaborating on shared memory, shown live; the folder-linking topology dogfoods federation specifically. Ties [[marketing-motion-distribution]] to the 6-11 magic-demo work.
 - **Atomic-note granularity composes with folder-linking** — link a folder of atoms → recall surfaces the right notes; link a folder of docs → dump dead weight into the search space. The two design choices reinforce.
 - **Embeddings hypothesize edges, retrieval confirms them, the why-graph records them** — the brain progressively converts the latent dependency graph of knowledge work into an explicit one (the "embeddings are scaffolding, the graph is the moat" insight, 2026-06-12).
+- **Modules are procedural memory.** Evidence/Output records what happened, Doctrine/Positions records what the organization believes, and an installed module records how it acts. This turns the brain from a recall surface into an operating memory.

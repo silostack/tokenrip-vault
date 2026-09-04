@@ -2,7 +2,7 @@
 
 **Status**: developing
 **Created**: 2026-06-18
-**Last touched**: 2026-06-18
+**Last touched**: 2026-08-29
 
 ## Thesis
 
@@ -14,6 +14,8 @@ Semantic search over shared workspaces turns Tokenrip from shared storage into s
 
 - **2026-06-18**: Re-engagement now that semantic search is actually enabled in the product. Push from "what does this open" to first-principles "what does multi-player agentic collaboration actually require, and why does the combination of semantic retrieval + neutral cross-harness memory uniquely enable it." Sharpened the git-for-non-code analogy against the a16z spine, concrete two-Cowork-users texture inside and across firms, and the claim that the collaboration unit becomes the corpus itself.
 
+- **2026-08-29**: Live-market pressure materially narrowed the differentiation. Glean now publicly offers enterprise + personal graphs and governed context over MCP to Claude Code, Codex, Cursor, and other AI entry points; Dust now frames Pods as multiplayer shared context. Cross-harness shared memory is therefore validated but no longer exclusive. The still-open frontier is **multi-principal sovereignty**: independently owned brains composing into a revocable shared room, with private context allowed to inform work without being disclosed. Simon's employee-brain model became a context-view model, and RebelFi's acquisition handoff emerged as the cheapest live boundary test.
+
 ## Key Challenges Surfaced
 
 - Write-side zero-ceremony remains the gating reality for the brain to fill as a byproduct rather than a project. If deposition of artifacts from inside Cowork (or any harness) requires deliberate ceremony, the vision reduces to "better search over manually managed files."
@@ -21,6 +23,7 @@ Semantic search over shared workspaces turns Tokenrip from shared storage into s
 - The consolidate loop (what turns a brain smarter rather than just larger) has clear ownership inside one firm; across firms it requires new ritual and sovereignty design.
 - High-stakes knowledge work will demand "recall by meaning, verify by lineage" as table stakes — provenance must be first-class in retrieval results or defensibility erodes.
 - Many current "multi-agent" and "multiplayer AI" surfaces are still coordination within one human's or one vendor's control plane. True multi-principal collaboration is a different shape.
+- **The original exclusivity claim has weakened.** Cross-harness context and personal/company layering are now explicit incumbent claims. The defensible remainder—cross-org sovereign composition and information-flow policy—is inferred from public product boundaries, not yet proved absent or commercially valuable.
 
 ## Open Questions
 
@@ -28,6 +31,7 @@ Semantic search over shared workspaces turns Tokenrip from shared storage into s
 - Does "brain" become the canonical noun for the memory+recall+consolidate construct, and how does that reshape the rest of the vocabulary tree (mount a brain, federate brains, firm brain)?
 - How does the read-side provenance graph (this knowledge informed that decision) surface usefully to humans and agents without becoming noise?
 - Is the first real multi-player signal intra-firm (multiple humans + their agents on one brain) or the individual case (one human's agents across multiple harnesses sharing the same memory)?
+- Can a scoped private source influence a shared output without leaking through that output? If not, retrieval ACLs alone cannot support the strongest multiplayer claim.
 
 ## Non-Obvious Connections
 
@@ -36,3 +40,4 @@ Semantic search over shared workspaces turns Tokenrip from shared storage into s
 - The a16z spine's insight ("the recorded work was both the substrate coding agents operated in and the corpus they learned from") only transfers to operational domains once recall by meaning exists inside the daily tools. Semantic search on the neutral substrate is the transfer function.
 - Embeddings are scaffolding that recovers the latent graph; the explicit moat is the confirmed usage graph (retrieval events + the why they produced) that no single-player tool accumulates.
 - Coordination passes small explicit context; collaboration retrieves large implicit context across boundaries. The substrate must therefore be a retrieval surface first, a storage surface second.
+- **Acquisition is a natural sovereignty test.** A project brain can transfer to a buyer while founder-private context remains behind and a temporary transition room bridges both parties. This makes abstract federation concrete and finite.
