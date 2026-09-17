@@ -2,7 +2,7 @@
 
 **Status**: developing
 **Created**: 2026-06-14
-**Last touched**: 2026-08-29
+**Last touched**: 2026-09-14
 
 ## Thesis
 
@@ -13,6 +13,8 @@ A *workspace* is shared storage; a *workspace brain* is shared memory. The two t
 - **2026-06-14**: Generalized from the marketing-brain design (Bean session 2026-06-13/14). Established the 3-zones-2-operations model; identified that "completeness" comes from naming *operations*, not adding storage zones; named the consolidate step (Simon's intuited "process step") as the memory-consolidation move that separates a flywheel from a shelf. Resolved the storage-vs-retrieval question (atomic notes + envelope + retained source docs, semantic-not-positional decomposition, lazy seeding). Mapped folder-linking topology and the cross-org boundary. Full spec → `active/workspace-brain-architecture-2026-06-14.md`.
 - **2026-08-29**: Revived and expanded into [[sovereign-organizational-memory]]. The prior Signals / Doctrine / Output anatomy describes storage and consolidation, but Simon's company-brain model exposed two additional distinctions: raw sources are **evidence**, not facts; and reusable modules are the organization's **procedural memory**, not merely tools beside the brain. Personal context is better modeled as a sovereign peer scope composed into a task-specific view than as a child layer stored “on top” of company memory.
 
+- **2026-09-14**: Standard files reframed as the memory triad in the workspace redesign (log = episodic, status = semantic, runbooks = procedural; decisions and learnings are log entry types). See [[boundary-aware-workspaces]] and `active/tokenrip-workspaces-prd-2026-09-14.md`.
+- **2026-09-04**: **The brain got its verb.** Simon's pain list showed memory wasn't the missing piece (brain, hands, skills, surfaces, pull inbox all exist); the missing piece is what fills the inbox without a human. The daily surface is terminal-connect ("3 things landed while you were away"), split out to [[inbox-as-the-product-surface]]. First loop chosen: call transcripts → `process-call` → team brain → weekly consolidate; the learning note is a draft position, so consolidate has an input on day one. Also: `/brain-sync` already is the "brain dump" v0 (run-reflex), and `bd/calls/contacts/` becomes the first vault folder to go collective, which is how the personal-brain ownership line gets decided by doing. The consolidate cadence question (below) is answered: the weekly consolidate rides the same queue as everything else.
 - **2026-09-01**: Reframed in Simon's plain-English model — Doctrine→**positions** (bets with lifecycle + why), Signals/Output→**facts**; brain separated from harness (terminals); modules as ingest pumps answer the write-side-friction killer; principals = (slice, projection, derived layer). Synthesis → `active/tokenrip-brain-terminals-modules-canon-2026-09-01.md`; projections split out to [[brain-projections]].
 
 ## Key Challenges Surfaced

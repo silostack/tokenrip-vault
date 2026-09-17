@@ -2,8 +2,8 @@
 contact: Rob Lewis (+ Spencer, VP Technology · Eric Freeman, Founder/CEO)
 company: Wingspire Equipment Finance (ef.wingspirecapital.com)
 call_type: firm-direct
-status: PAID PILOT FORMING 2026-09-02 — first 10 sent, portal in use, Trojan Battery = working. Eric pre-cleared $500–1,000/mo; Rob wants hybrid (monthly + per-funded) with attribution clock + quarterly reconciliation. Written proposal due 2026-09-03. 10 in flight stay on 0.5% handshake. 3-month evaluation to ~2026-12-01. Operating context: lenders/wingspire/CLAUDE.md
-last_contact: 2026-09-02
+status: CUSTOMER 2026-09-15 — $1,000/mo on card from 2026-10-01, month to month, no success fee (Eric: too complicated to track). Rob set volume at ~100 names/mo ($10/name). He flags funded deals; reference + testimonial once something funds; quarterly feedback call. 3-month evaluation to ~2026-12-15, then double or shut down. Operating context: lenders/wingspire/CLAUDE.md
+last_contact: 2026-09-15
 ---
 
 # Rob Lewis — Wingspire Equipment Finance
@@ -44,7 +44,17 @@ last_contact: 2026-09-02
 - **2026-09-02** *(3rd call — first-batch feedback + commercial reopen, Rob-initiated)*: [[bd/calls/transcripts/rob-lewis-2026-09-02]] · [[bd/calls/notes/rob-lewis-2026-09-02]]
   — firm-direct. Portal understood (working / existing / pass), sources praised (*"better than ZoomInfo Intent"*). Batch 1: 9/10 already in Salesforce; **Trojan Battery = working** (in DB, untouched); Price Companies = existing (rep found the same article); CNY Feeds / Gardner Glass leaning pass. Rob sat with Eric: **$500–1,000/mo pre-approved**. He tabled ~$500/mo + flat ~$5k on funded + 6-month sunset (a reprice down vs 0.5%), while also saying a $25k check on $10M is fine. Simon proposed hybrid; Rob added the **quarterly "has any of these closed?" list** and a 3-month full-shot commitment. Simon owes a written proposal 2026-09-03. The 10 stay on the 0.5% handshake.
 
+- **2026-09-04** *(terms email sent)*: [[bd/calls/proposals/rob-lewis-terms-email-2026-09-04]] — $1,000/mo from Oct, ~10/wk, 0.5 pt on funded (0.25 floor), 12-mo clock, quarterly review.
+- **2026-09-14** *(Rob reply, email)*: has **not distributed the last 2 lists**. Spoke with his **EVP** (new name on the critical path, not Eric): *"we cannot accommodate the .5-point fee. We are more than fine paying for the services and can work inside all of the other requests."* Offered a call. Asked whether we take **credit card** or invoice. Closer read: objection scope unknown (percentage vs any success fee vs term-sheet build-in); EVP likely bucketed Quintel as a data vendor. Play: call this week, learn the scope first, then Option A ($1k + flat $5k on funded, Wingspire-paid) → Option B ($1.5k flat) → floor $1k flat with Q4 committed or reference right. Unblock the two held lists now (September is free).
+
+- **2026-09-15** *(4th call — terms settled, Rob-booked)*: [[bd/calls/transcripts/rob-lewis-2026-09-15]] · [[bd/calls/notes/rob-lewis-2026-09-15]] · prep [[bd/calls/notes/rob-lewis-2026-09-15-call-prep]]
+  — firm-direct, 19 min. Eric killed any success fee (*"too complicated, just pay for their monthly service"*); Rob: *"no way, shape, or form would we even come close to paying you on the deal."* Rob set the frame: **$1,000/mo for ~100 names, $10 a name**, three-month evaluation, one or two funded deals a year is *"well worth it."* Simon accepted without pricing the 2.5x volume. Secured: funded-deal notification (*"a hundred percent"*), reference + testimonial (*"all in the cards"*), quarterly feedback call, **card billing from Oct 1**. Asks: right email + phone, UCC lender on file, no investment-grade. Dead deals: no market (*"we're plan A, and we already have plan B, C, D, E, and F"*).
+
 ## Running Intelligence
+
+- **09-15 — Pricing frame is per-name.** *"1,200 leads a year, I close one, I pay you $12,000, that one deal we break even. Two deals a year, we're in the green."* Downside float: *"maybe five bucks a lead"* if quality slips. Upside float: *"an extra thousand on the credit card"* if they close four; *"if the leads are so good, we can talk about upping it."* Ceiling he named: $3,000/mo appointment-setting services, *"we may or may not try."* Quintel sits between ZoomInfo and appointment-setters in his head.
+- **09-15 — What pays and what wastes.** *"You're gapping about two to four leads every time"* per ten. *"Sometimes you're finding subs ... we don't even know this sub."* *"You're before the intent signal ... yours comes with source and a little bit more story."* Waste: investment-grade credits (MP Materials). Add: email, phone, UCC lender (*"when it's all banks, they have to hit that hiccup wall"*).
+- **09-15 — He's thinking about our exclusivity problem unprompted.** *"If we say working it, it comes off your list and then you don't get to use it ... there's only so much credit intelligence to go around."* Suggests tiering by lender type (equipment-only → B players like Wingspire → double-B middle market → investment grade). Industry structure: *"10 or 15 that do what we do ... only about five of us have our own money."*
 
 - **09-02 — Money and coverage.** Eric (CEO) cleared $500–1,000/mo for "information." Rob rejected the $3k/mo SaaS frame himself. Coverage math: **4,000 target accounts, 20 reps, ~35 accounts each really covered** (~700 active), which is the structural reason an outside movement signal is worth paying for. His mental account size for us: *"I'm a $50,000 account for you"* (2–3 deals/yr + monthly).
 - **09-02 — Attribution horizon, his data.** Cold "working it" → ~3 months to proposal → ~1 month to fund. Biggest deal ($300M+): signed a year before funding. His floated 6-month sunset is inconsistent with both; 12 months from click (extended past a term sheet) fits.
@@ -84,6 +94,11 @@ last_contact: 2026-09-02
 
 | Rank | Assumption | fact/inferred + conf. | Cheapest test |
 |---|---|---|---|
+| **NEW 1** | **~100 in-box names/month is producible at current quality.** He set the volume; we accepted | **inferred, LOW–MED** | Count the corpus this week. If short, say so in the confirmation email (10–15/wk) before Oct 1, not after |
+| **NEW 2** | **"Two to four gaps per ten" holds as volume rises** (gap rate is the value metric he'll judge on) | **inferred, MED** | Instrument working/existing/pass rates on the list page; review at the quarterly call |
+| ~~0a~~ | ~~Rob accepts a percentage success fee~~ **RESOLVED NO 09-15.** No success fee of any form at Wingspire | fact | — |
+| ~~0b~~ | ~~$1,000 inside Eric's approval~~ **RESOLVED YES 09-15** | fact | — |
+| ~~1, 3~~ | ~~0.5% holds~~ **MOOT** — no per-deal fee | fact | — |
 | **0a** | **Rob will accept a percentage success fee (not a flat $5k) and a 12-month window once a monthly fee and a reconciliation mechanism are on the table.** He said both "$25k check, I'm good with it" and "flat $5k, 6-month sunset" in one call | **inferred, MED** | The 09-03 written proposal. If he replies asking for the flat/sunset again, it is a real price position, not a tracking worry |
 | **0b** | **$1,000/mo is inside Eric's approval, not the ceiling of it** | **fact for $500–1,000 (his words); inferred above** | Propose $1,000; watch whether he re-loops Eric |
 | **0c** | **"Working it" stays honest if it carries no per-click cost** — a per-working-name fee would make him mark fewer names and corrupt the attribution ledger | **inferred, HIGH** | Don't test; design around it (flat monthly, never per-"working") |
@@ -116,13 +131,20 @@ last_contact: 2026-09-02
 | 13 | First in-box names to Rob (email; company, who to call, evidence, box fit) | Simon | this week | **DONE** (08-20 email sent; first 10 delivered via list page ~2026-08-31; handshake-only chosen) |
 | 14 | Onset-vs-Wingspire routing rule for overlapping $5–50M deals | Simon | before first send | **OPEN** |
 | 15 | Handshake-only vs one-pager — founder decision | Simon + Alek | before first send | **DONE** (08-20 email sent; first 10 delivered via list page ~2026-08-31; handshake-only chosen) |
-| 16 | Referral-fee licensing check (CA / interstate) at this ticket | Simon | before first send if possible | **OPEN** |
+| 16 | Referral-fee licensing check (CA / interstate) at this ticket | Simon | before first send if possible | **MOOT 09-15** — no referral fee at Wingspire |
 | 17 | CRM-check each name; pay on fund; CC on assignment emails | Rob | on each send / on fund | **OPEN** |
-| 18 | 1–3 month go/no-go on the channel | Rob | ~2026-12-01 (restated 09-02: "three months, full shot") | **OPEN** |
-| 19 | Written hybrid proposal (monthly + success fee + 12-mo window + quarterly reconciliation) | Simon + Alek | **2026-09-03** | **OPEN** |
+| 18 | 1–3 month go/no-go on the channel | Rob | ~2026-12-15 (restated 09-15: three months from Oct 1, then "double" or "shut it down") | **OPEN** |
+| 19 | Written hybrid proposal (monthly + success fee + 12-mo window + quarterly reconciliation) | Simon + Alek | **2026-09-03** | **DONE 09-04**; success fee rejected 09-14/15 |
 | 20 | Portal fixes: rename desk field → note; email-body paste; keep CC | Simon | before next batch | **OPEN** |
 | 21 | Quarterly reconciliation list (product feature; first run ~2026-12-01) | Simon | spec this week | **OPEN** |
 | 22 | Log batch-1 verdicts; chase 6 pending; tune next batch to no-recent-activity names | Simon | 2026-09-05 | **OPEN** |
-| 23 | Work the 10 on the existing 0.5% handshake; finish verdicts | Rob | this week | **OPEN** |
+| 23 | Work the 10 on the existing 0.5% handshake; finish verdicts | Rob | this week | **SUPERSEDED 09-15** — all names now under the monthly; no per-deal fee |
+| 24 | Confirmation email restating 09-15 terms | Simon | 2026-09-15 EOD | **OPEN** |
+| 25 | Card billing set up; first charge Oct 1 | Simon | 2026-09-30 | **OPEN** |
+| 26 | Volume decision: count corpus vs ~100/mo in box; fallback 10–15/wk stated in writing | Simon + Alek | 2026-09-18 | **OPEN** |
+| 27 | Send format: add email + phone + UCC lender; exclude investment-grade | Simon | next batch | **OPEN** |
+| 28 | List page as reconciliation surface + funded flag; quarterly feedback call (first ~12-01) | Simon | 2026-10-15 / 12-01 | **OPEN** |
+| 29 | Flag funded Quintel names; rep feedback by the quarterly call | Rob | ongoing | **OPEN** |
+| 30 | Reference + testimonial once a name funds | Rob | on fund | **AGREED 09-15** |
 - **2026-08-20** *(2nd call — broker model, Simon solo)*: [[bd/calls/transcripts/rob-lewis-2026-08-20]] · [[bd/calls/notes/rob-lewis-2026-08-20]] · prep [[bd/calls/notes/rob-lewis-2026-08-20-call-prep]]
   — Team killed the tool ("use it for a day and go back"); "it is our money" frame won. Handshake channel: 0.5% funded, already-in pays zero, CRM screenshot yes/no, CC on fund email, **no agreement ever**. Box confirmed: $5–50M slug, ~$100M rev / $10M EBITDA, sponsor preferred not required, 8–12% bank-turndown, ~10k untouched accounts. He floated 0.25% on raw (unanswered on call; closed in the follow-up email). Funnel: 10 financials/qtr → 2–3 proposals → 1–2 wins; verdict in 1–3 months. Terms, box, and open items now live in `lenders/wingspire/CLAUDE.md`; the SaaS-era pipeline table and assumptions above are historical.

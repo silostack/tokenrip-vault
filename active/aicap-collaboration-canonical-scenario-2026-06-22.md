@@ -7,7 +7,7 @@ suggested_home: product/tokenrip/
 related:
   - "[[product/tokenrip/CLAUDE]]"
   - "[[product/tokenrip/mounted-agent-model]]"
-  - "[[active/tokenrip-semantic-substrate-canonical-opus-2026-06-11]]"
+  - "[[tokenrip-semantic-substrate-canonical-opus-2026-06-11]]"
   - "[[bd/calls/contacts/stephanie-williamson]]"
 ---
 

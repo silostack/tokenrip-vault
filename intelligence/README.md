@@ -17,7 +17,7 @@ This workspace houses the strategy, experiment tracking, and daily learnings. Th
 
 | Document | Purpose |
 |----------|---------|
-| [[gameplan]] | Full strategy — hypotheses, success/kill criteria, experimentation roadmap, market signals |
+| [[active/gameplan]] | Full strategy — hypotheses, success/kill criteria, experimentation roadmap, market signals |
 | [[strategy-landscape]] | Competitive landscape, positioning options, go-to-market strategies, long-term path |
 | [[citrini-2028-gic-analysis]] | Citrini "2028 GIC" analysis — interchange disruption, stablecoin-as-payment-rail, enterprise agent TAM |
 | [[a16z-agentic-commerce-cards-analysis]] | a16z "cards vs stablecoins" — vibe coder micro-merchants, x402, underwriting intelligence |

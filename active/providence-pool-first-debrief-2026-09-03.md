@@ -85,7 +85,7 @@ From ICP + persona + the call, the eleven appear to be: (1) commercial use; (2) 
 | 8 | Sender-identity decision with Alek (Providence vs Quintel origination firm). | before batch 2 |
 | 9 | Batch 2: 200 rows, same slice, once batch-1 accuracy is known. David's 200/day capacity means a week of grading. | ~09-11 |
 | 10 | Verification-before-dialing on our own borrower queue; compare connect rate to the 77% no-connect baseline. | 09-12 |
-| 11 | **Opener A/B on the UCC-maturity lane** (need hook vs ledger hook), ~200 touches across email and phone. This is the cheapest test of the borrower-side thesis ([[active/borrower-ledger-thesis-2026-09-03]]). | 09-19 |
+| 11 | **Opener A/B on the UCC-maturity lane** (need hook vs ledger hook), ~200 touches across email and phone. This is the cheapest test of the borrower-side thesis ([[quintel-borrower-ledger-thesis-2026-09-03]]). | 09-19 |
 
 ### Alek
 
@@ -122,7 +122,7 @@ Batch 1 graded (~09-05) → accuracy % → batch 2 (~09-11) → domains warm and
 - **Simon joins Max's rep-debrief call** for product questions.
 - **"Lead X":** a tool Providence appears to use surfaced in the notes; nobody could name it. Ask.
 - **Email math corrected:** see Quintel #7. Neither "10 domains for a million a month" nor "$2K/month" is right; a million a month is hundreds of domains, and the pool does not need it.
-- **Borrower-side thesis** raised by Simon, pushed on by Alek. Pressure test and start plan in [[active/borrower-ledger-thesis-2026-09-03]]; cheapest test is Quintel #11.
+- **Borrower-side thesis** raised by Simon, pushed on by Alek. Pressure test and start plan in [[quintel-borrower-ledger-thesis-2026-09-03]]; cheapest test is Quintel #11.
 
 ## 7. Things Simon didn't ask about
 

@@ -1,8 +1,8 @@
 # Folders as Organizational Primitive
 
-**Status**: parked (auto-flagged 2026-07-16 — untouched 60+ days; revive, kill, or graduate in /bean-compact)
+**Status**: developing (revived 2026-09-14: the graduation trigger question is answered in [[boundary-aware-workspaces]] — a folder becomes a workspace when an outsider returns a file into it)
 **Created**: 2026-04-20
-**Last touched**: 2026-04-20
+**Last touched**: 2026-09-14
 
 ## Thesis
 

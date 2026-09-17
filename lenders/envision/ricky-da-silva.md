@@ -2,8 +2,9 @@
 contact: Ricky Da Silva
 company: Envision Capital Group (envisioncapitalgroup.com)
 call_type: firm-direct → broker/referral model
-status: verbal terms agreed — awaiting our agreement (committed 08-19 EOD); Ricky championing to CEO Jeff + sales manager Dan
+status: AE champion; manager path moved to Dan Lund (platform trial 09-08). 1% still only verbal with Ricky. Paper unsigned.
 last_contact: 2026-08-19
+next_touch: Dan owns the trial — [[lenders/envision/dan-lund]]
 ---
 
 # Ricky Da Silva — Envision Capital Group
@@ -24,6 +25,8 @@ last_contact: 2026-08-19
 - **2026-07-29 → 08-18** LinkedIn thread (Simon): platform ask → materials ask → Director of Sales out (family emergency) → broker-model offer at ~1% → Ricky: fee on funded only? % of amount financed? → booked call.
 - **2026-08-19**: [[bd/calls/transcripts/ricky-da-silva-2026-08-19]] · [[bd/calls/notes/ricky-da-silva-2026-08-19]] · prep: [[bd/calls/notes/ricky-da-silva-2026-08-19-call-prep]]
   — firm-direct (first call, discovery + structure). **Verbal terms agreed in one call**: Quintel slots in as a **vendor/referral source** at Envision's standard **1% flat on funded volume, form-independent** (raw referral or worked deal, same fee; paid at final funding = equipment delivered + accepted; protected from pricing concessions — "the 1% is priced in for you first"). They have **no standard agreement and prefer informal** — paper comes from our side; Simon committed to send it same afternoon. Decision path: sales manager **Dan** (already briefed) + CEO **Jeff**, may meet-first or just sign. Only stated concern: fraud. Ricky unprompted proposed the **graduation path to the subscription model** after proven history, and independently asked for the **outcome-data flowback loop**. Geography and referral close-rate went unasked.
+- **2026-08-19 EOD**: referral agreement v4 sent (`envision-quintel-referral-agreement-2026-08-19.docx`). Vault copy: [[lenders/envision/referral-agreement-draft-2026-08-19]]. Spark attachment matches.
+- **2026-09-08**: manager call was **Dan only** (Ricky did not join). [[bd/calls/transcripts/dan-lund-2026-09-08]] · [[bd/calls/notes/dan-lund-2026-09-08]] · contact: [[dan-lund]]. Dan's brief from Ricky was thin. Trial path is now Dan-as-admin on the platform, not signature on the 08-19 agreement. Ricky's 1% not restated.
 
 ## Running Intelligence
 
@@ -39,8 +42,8 @@ last_contact: 2026-08-19
 - Volume expectation set by Simon: **10–50 leads/week, feedback-tuned** — a claim, not yet a capability (small-ticket data model updated 08-18).
 
 ## Relationship / Pipeline State
-- **Stage:** verbal-terms-agreed → paper. Furthest a first call has advanced in this pipeline. The constraint is now **our side**: agreement draft, CFL licensing check, and real small-ticket supply.
-- **Authority:** CEO **Jeff** + sales manager **Dan** (which Dan — Lund or Compagni — unconfirmed). Ricky has already briefed Dan; possible meet-first.
+- **Stage:** AE verbal 1% still on file; manager took a **free platform trial** instead of signing. Ricky is not the intake for the trial unless Dan routes to him.
+- **Authority:** **Dan Lund** (Director of Sales) confirmed 09-08. Jeff unmentioned on the manager call. Ricky remains champion AE, not the buyer.
 - **Budget:** none required — pure contingency, their standard referral rate.
 - **Temperature:** hot; Ricky is visibly bought in ("being willing to go through this testing period says a lot about you guys") and self-narrating the expansion path. Standard caveat: enthusiasm for a free option ≠ pain; the model makes that acceptable.
 - **Strategic role:** the sink node — small-ticket ($50–250K) B/C-capable lender for deals below the Onset/Wingspire boxes; first natural consumer of the UCC-renewals lane.
@@ -49,7 +52,7 @@ last_contact: 2026-08-19
 
 | Rank | Assumption | fact/inferred + conf. | Cheapest test |
 |------|-----------|----------------------|---------------|
-| 1 | Quintel can actually produce $50–250K-band leads at meaningful volume, in geographies Envision funds — the "10–50/week" claim | **inferred, LOW** — the small-ticket data model shipped 08-18; the 07-29 defects review showed the prior small-ticket band outside the UCC lane was a data artifact; **Envision's funding geography was never asked** (prep doc's #1 kill question, missed) | Run their box ($50–250K) against the corpus this week and count. Ask the geography question in the agreement email: "Are you funding nationwide? We're deepest in FL/CO/CT." |
+| 1 | Quintel can produce $50–250K-band names Dan will actually work (live-purchase vs public-record timing) at a volume that isn't the "10–50/week" claim | **inferred, LOW** — small-ticket model shipped 08-18; 07-29 defects showed the prior small-ticket band outside UCC was an artifact; Ricky asked the buying-signal question, Dan has not | First-batch bar on the manager call: live-purchase only, or timing name with a why. Then count against that bar. Geography is not the constraint — they are a nationwide lender. |
 | 2 | A referral fee from a CA CFL licensee doesn't require Quintel to hold a CFL broker license — in either handoff mode | **unverified** — standing item, now urgent because paper was promised same-day | 30-min licensing check **before signature**, covering Mode 1 (finder-like) and Mode 2 (broker-like) separately |
 | 3 | Dan + Jeff sign without material changes | **inferred, MED-HIGH** — Ricky briefed Dan pre-call and reports appetite; "they might just sign it"; no-redline culture stated | Send clean, short paper; the response inside a week is the test |
 | 4 | Their referral close rate makes 1% worthwhile (expected value per lead) | **inferred, unknown magnitude** — never asked; funded-only comp means their conversion is our revenue | Ask Ricky directly with the send or first batch: "what share of referrals typically fund?" Then instrument our own from batch one |
@@ -59,10 +62,10 @@ last_contact: 2026-08-19
 ## Open Commitments
 | # | Action | Owner | Due | Status |
 |---|--------|-------|-----|--------|
-| 1 | Draft + send the referral agreement (exclusivity window w/ re-route mechanics, funded-only 1% fee, all-sizes clause, fraud-diligence acknowledgment) | Simon | 2026-08-19 EOD (committed on call) | Open |
+| 1 | Draft + send the referral agreement (exclusivity window w/ re-route mechanics, funded-only 1% fee, all-sizes clause, fraud-diligence acknowledgment) | Simon | 2026-08-19 EOD (committed on call) | **Sent 08-19** — Spark `envision-quintel-referral-agreement-2026-08-19.docx` |
 | 2 | CA CFL broker-licensing check, both handoff modes | Simon | before signature | Open — carried from prep, now urgent |
 | 3 | Run Envision's box ($50–250K) against the corpus; get a real weekly-volume number to replace the "10–50" claim | Simon | this week, before first send | Open |
-| 4 | Ask funding geography (the missed kill question) | Simon | with the agreement email | Open |
+| 4 | Ask funding geography | Simon | killed 2026-09-08 — never raised on-call; they are a nationwide lender; Vendor 360 is open/nationwide, not a regional dealer lock | Dropped |
 | 5 | Align with Alek: tiers dead for Envision; their standard 1% flat governs | Simon + Alek | 2026-08-20 | Open |
-| 6 | Take agreement to Dan + CEO Jeff; arrange meet if they want one | Ricky | on receipt | Open |
-| 7 | Ask referral close-rate; identify which Dan is sales manager | Simon | next touch | Open |
+| 6 | Take agreement to Dan + CEO Jeff; arrange meet if they want one | Ricky | on receipt | Done as meet — Dan did not sign; trial instead |
+| 7 | Ask referral close-rate; identify which Dan is sales manager | Simon | next touch | Dan = **Dan Lund**. Close rate still unasked |

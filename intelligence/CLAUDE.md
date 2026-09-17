@@ -27,7 +27,7 @@ The answer was yes. See `gameplan.md` for the full hypothesis testing results.
 
 ## Key Documents
 
-- [[gameplan]] — Full strategy: hypotheses, success/kill criteria, experimentation roadmap, market signals
+- [[active/gameplan]] — Full strategy: hypotheses, success/kill criteria, experimentation roadmap, market signals
 - [[strategy-landscape]] — Competitive landscape, positioning options, go-to-market strategies
 - [[landscape-tracker]] — Ongoing competitive landscape tracking
 - [[agentic-strategy-reference]] — Synthesized strategic reference (used by Agent CLI)

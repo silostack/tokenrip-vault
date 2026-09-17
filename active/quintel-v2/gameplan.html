@@ -1,0 +1,355 @@
+<title>Quintel v2 Plan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root{
+  --bg:#F5F3EE; --paper:#FBFAF7; --ink:#1C1B18; --ink-2:#4A4740; --muted:#7A766C; --rule:#D9D4C7;
+  --accent:#B8790F; --accent-ink:#7A4E05; --accent-soft:#F3E4C4;
+  --steel:#34506B; --steel-soft:#DDE5EE;
+  --open:#2E7D4F; --dead:#B3412E; --hold:#8A6D1F;
+  --shadow:0 1px 0 rgba(28,27,24,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171816; --paper:#1F201D; --ink:#ECE8DF; --ink-2:#C9C4B8; --muted:#8F8A7E; --rule:#34352F;
+    --accent:#E0A030; --accent-ink:#F2C979; --accent-soft:#3A2E14;
+    --steel:#8FB0D0; --steel-soft:#22303D;
+    --open:#5DBA85; --dead:#E07A66; --hold:#D9B24C;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171816; --paper:#1F201D; --ink:#ECE8DF; --ink-2:#C9C4B8; --muted:#8F8A7E; --rule:#34352F;
+  --accent:#E0A030; --accent-ink:#F2C979; --accent-soft:#3A2E14;
+  --steel:#8FB0D0; --steel-soft:#22303D;
+  --open:#5DBA85; --dead:#E07A66; --hold:#D9B24C;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;font-size:17px;line-height:1.5;padding-inline:clamp(16px,4vw,40px);padding-block:32px 80px}
+.wrap{max-width:1040px;margin:0 auto}
+h1,h2,h3,.eyebrow,.lbl,th,.stat b{font-family:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif}
+h1{font-size:clamp(38px,6vw,64px);font-weight:700;line-height:1;letter-spacing:-.01em;margin:8px 0 12px;text-wrap:balance}
+h2{font-size:30px;font-weight:600;line-height:1.1;margin:0 0 14px;text-wrap:balance}
+h3{font-size:20px;font-weight:600;margin:22px 0 8px}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 6px}
+.prose{max-width:68ch}
+p{margin:0 0 14px}
+section{padding-block:40px;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0;padding-top:12px}
+.lede{font-size:21px;line-height:1.4;color:var(--ink-2);max-width:60ch}
+.meta{display:flex;flex-wrap:wrap;gap:10px 26px;color:var(--muted);font-size:15px;margin-top:18px}
+.meta span b{color:var(--ink);font-weight:600}
+ul{padding-left:20px;margin:0 0 14px}
+li{margin-bottom:8px}
+li::marker{color:var(--accent)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:22px 0 8px}
+.stat{background:var(--paper);border:1px solid var(--rule);padding:14px 16px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:34px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:14px;color:var(--muted);margin-top:6px;line-height:1.3}
+.stat.bad b{color:var(--dead)} .stat.good b{color:var(--open)}
+table{border-collapse:collapse;width:100%;font-size:15.5px;margin:12px 0 18px}
+th{text-align:left;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 10px;border-bottom:2px solid var(--rule)}
+td{padding:10px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+td.k{font-weight:600;white-space:nowrap}
+.hyp td:first-child{font-weight:600;max-width:46ch}
+.hyp td:first-child small{display:block;font-weight:400;color:var(--ink-2);margin-top:4px}
+.hyp td:nth-child(2){white-space:nowrap}
+.tbl{overflow-x:auto}
+.pill{display:inline-block;font-family:"Barlow Semi Condensed",Arial,sans-serif;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border:1px solid var(--rule);border-radius:3px;color:var(--ink-2);white-space:nowrap}
+.pill.med{border-color:var(--hold);color:var(--hold)} .pill.hi{border-color:var(--open);color:var(--open)}
+figure{margin:24px 0}
+figure svg{width:100%;height:auto;display:block;color:var(--ink)}
+figcaption{font-size:14px;color:var(--muted);margin-top:8px;max-width:72ch}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.ask{background:var(--paper);border:1px solid var(--rule);padding:16px 18px}
+.ask h3{margin-top:0}
+.ask ul{margin-bottom:0}
+.doors{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:8px 0 18px}
+.door{border-top:3px solid var(--accent);padding:10px 2px 0}
+.door.wall{border-top-color:var(--steel)}
+.door b{font-family:"Barlow Semi Condensed",Arial,sans-serif;font-size:17px;display:block;margin-bottom:4px}
+.door span{font-size:15px;color:var(--ink-2)}
+ol.q{padding-left:22px;max-width:72ch}
+ol.q li{margin-bottom:10px}
+.foot{color:var(--muted);font-size:14px;margin-top:40px;padding-top:16px;border-top:1px solid var(--rule)}
+@media (max-width:640px){h2{font-size:26px} body{font-size:16px} .hyp td:nth-child(2){white-space:normal}}
+</style>
+
+<div class="wrap">
+<section>
+  <p class="eyebrow">Quintel × Providence · for Saturday 19 September 2026</p>
+  <h1>Quintel v2 Plan</h1>
+  <p class="lede">Bring owners to us already asking for a number, qualify them without touching personal data, and hand Providence a deal, not a lead.</p>
+  <div class="meta"><span><b>Draft v0.4</b> · 17 Sep 2026</span><span>Simon Pettibone · Aleksandar Perak</span><span>Companion to <b>gameplan.md</b></span></div>
+</section>
+
+<section>
+  <p class="eyebrow">Where we are</p>
+  <h2>Five batches, four states, one conclusion</h2>
+  <div class="stats">
+    <div class="stat"><b>~300</b><span>dials across FL, OH, WI, CO</span></div>
+    <div class="stat good"><b>98%</b><span>numbers live; 96–97% right contact</span></div>
+    <div class="stat"><b>~100</b><span>live conversations with in-box owners</span></div>
+    <div class="stat bad"><b>0</b><span>applications (2% baseline predicts 2+)</span></div>
+    <div class="stat"><b>1</b><span>signal that separated outcomes: business events</span></div>
+  </div>
+  <div class="prose">
+    <ul>
+      <li><b>Identity is solved.</b> The registries (FMCSA, Secretary of State, UCC) beat every contact vendor on who the company is.</li>
+      <li><b>Intent is missing.</b> Hiring, UCC renewals, lien age, news and court records are all tested and dead for businesses this size.</li>
+      <li><b>Cold calls are capped whatever the list.</b> AI screening on mobiles, gatekeepers on office lines, a reflexive “no” at the word financing from owners who fit.</li>
+      <li><b>One thing separated outcomes:</b> business events (a new DOT number, a visible expansion). Small sample.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">Why this direction</p>
+  <h2>The hypotheses we are working from, and how each gets tested</h2>
+  <div class="tbl"><table class="hyp">
+    <thead><tr><th>Hypothesis</th><th>Confidence</th><th>Test</th></tr></thead>
+    <tbody>
+      <tr><td>Small operators leave no planned-event trail, but they do leave loss and cohort records.<small>Crashes, out-of-service orders, disaster declarations in their county, listing the old truck.</small></td><td><span class="pill med">medium</span></td><td>the signal arms below; first list ships within ten days</td></tr>
+      <tr><td>Owners start at the equipment question, not the financing question.<small>“Which vac truck,” “what does a knuckleboom cost,” increasingly asked of an AI. The financing offer rides on the answer.</small></td><td><span class="pill hi">medium-high</span></td><td>query and citation data from the first content sprint</td></tr>
+      <tr><td>The service technician sees the need first.<small>The repair-or-replace call is made in the bay before a dealer is involved. A monthly number at that moment turns a stalled job into a borrower who already knows what he needs.</small></td><td><span class="pill med">medium</span></td><td>twenty shop conversations in one metro; one question to Providence on whether a shop can be the seller on a deal</td></tr>
+      <tr><td>An owner will give a website equipment, price and timing with no personal data, then take a warm call from Providence.<small>Personal information is collected by Providence, where the trust already is.</small></td><td><span class="pill med">medium</span></td><td>the first 20 routed applications</td></tr>
+      <tr><td>A qualified application handed warm converts at Providence well above the cold baseline.<small>The rep starts at “you asked about a $140K vac truck,” not “are you looking for financing.”</small></td><td><span class="pill med">medium</span></td><td>same 20</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <p class="eyebrow">The direction</p>
+  <h2>One site, one funnel, a handoff at the personal-data line</h2>
+  <figure>
+    <svg viewBox="0 0 1000 470" role="img" aria-label="Providence's current funnel is two steps: dial, then application with personal data. Quintel v2 adds inbound, outbound and partner sources feeding engage, qualify and verify stages with no personal data, then routes and hands off to Providence, which runs the application and returns the outcome." xmlns="http://www.w3.org/2000/svg" font-family="Source Sans 3, Arial, sans-serif" font-size="13">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker>
+        <marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#B8790F"/></marker>
+      </defs>
+      <text x="20" y="34" font-family="Barlow Semi Condensed, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1.5" fill="currentColor">PROVIDENCE TODAY</text>
+      <rect x="20" y="52" width="170" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <text x="105" y="74" text-anchor="middle" font-weight="600" fill="currentColor">Rep dials cold</text>
+      <text x="105" y="93" text-anchor="middle" fill="currentColor" opacity=".7">3 min research, 30 s pitch</text>
+      <line x1="190" y1="79" x2="258" y2="79" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr)"/>
+      <text x="224" y="70" text-anchor="middle" fill="currentColor" opacity=".7" font-size="12">“financing?”</text>
+      <rect x="260" y="52" width="170" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <text x="345" y="74" text-anchor="middle" font-weight="600" fill="currentColor">Owner says no</text>
+      <text x="345" y="93" text-anchor="middle" fill="currentColor" opacity=".7">or AI screens the call</text>
+      <line x1="430" y1="79" x2="498" y2="79" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr)"/>
+      <text x="464" y="70" text-anchor="middle" fill="currentColor" opacity=".7" font-size="12">2 in 100</text>
+      <rect x="500" y="52" width="170" height="54" rx="3" fill="#DDE5EE" stroke="#34506B" stroke-width="1.4"/>
+      <text x="585" y="74" text-anchor="middle" font-weight="600" fill="#1C1B18">Application</text>
+      <text x="585" y="93" text-anchor="middle" fill="#1C1B18" opacity=".75">SSN, statements, credit</text>
+      <line x1="670" y1="79" x2="738" y2="79" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr)"/>
+      <rect x="740" y="52" width="150" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <text x="815" y="74" text-anchor="middle" font-weight="600" fill="currentColor">Funded</text>
+      <text x="815" y="93" text-anchor="middle" fill="currentColor" opacity=".7">1 in 500 contacts</text>
+
+      <line x1="20" y1="140" x2="980" y2="140" stroke="currentColor" stroke-width="1" stroke-dasharray="4 5" opacity=".4"/>
+
+      <text x="20" y="176" font-family="Barlow Semi Condensed, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1.5" fill="#B8790F">QUINTEL V2</text>
+      <rect x="20" y="196" width="150" height="44" rx="3" fill="#F3E4C4" stroke="#B8790F" stroke-width="1.4"/>
+      <text x="95" y="214" text-anchor="middle" font-weight="600" fill="#1C1B18">Inbound</text>
+      <text x="95" y="231" text-anchor="middle" fill="#1C1B18" opacity=".75">owner or his AI finds the site</text>
+      <rect x="20" y="248" width="150" height="44" rx="3" fill="#F3E4C4" stroke="#B8790F" stroke-width="1.4"/>
+      <text x="95" y="266" text-anchor="middle" font-weight="600" fill="#1C1B18">Outbound</text>
+      <text x="95" y="283" text-anchor="middle" fill="#1C1B18" opacity=".75">event-triggered email, replies</text>
+      <rect x="20" y="300" width="150" height="44" rx="3" fill="#F3E4C4" stroke="#B8790F" stroke-width="1.4"/>
+      <text x="95" y="318" text-anchor="middle" font-weight="600" fill="#1C1B18">Partner link</text>
+      <text x="95" y="335" text-anchor="middle" fill="#1C1B18" opacity=".75">shop, dealer, insurance agent</text>
+      <path d="M170 218 C 200 218, 200 270, 226 270" fill="none" stroke="#B8790F" stroke-width="1.4"/>
+      <path d="M170 270 L 226 270" fill="none" stroke="#B8790F" stroke-width="1.4"/>
+      <path d="M170 322 C 200 322, 200 270, 226 270" fill="none" stroke="#B8790F" stroke-width="1.4" marker-end="url(#arrA)"/>
+      <rect x="230" y="245" width="130" height="50" rx="3" fill="none" stroke="#B8790F" stroke-width="1.4"/>
+      <text x="295" y="265" text-anchor="middle" font-weight="600" fill="currentColor">Engage</text>
+      <text x="295" y="283" text-anchor="middle" fill="currentColor" opacity=".7">asks for a number</text>
+      <line x1="360" y1="270" x2="388" y2="270" stroke="#B8790F" stroke-width="1.4" marker-end="url(#arrA)"/>
+      <rect x="390" y="245" width="130" height="50" rx="3" fill="none" stroke="#B8790F" stroke-width="1.4"/>
+      <text x="455" y="265" text-anchor="middle" font-weight="600" fill="currentColor">Qualify</text>
+      <text x="455" y="283" text-anchor="middle" fill="currentColor" opacity=".7">business, TIB, fleet, email</text>
+      <line x1="520" y1="270" x2="548" y2="270" stroke="#B8790F" stroke-width="1.4" marker-end="url(#arrA)"/>
+      <rect x="550" y="245" width="130" height="50" rx="3" fill="none" stroke="#B8790F" stroke-width="1.4"/>
+      <text x="615" y="265" text-anchor="middle" font-weight="600" fill="currentColor">Verify + route</text>
+      <text x="615" y="283" text-anchor="middle" fill="currentColor" opacity=".7">FMCSA · SOS · UCC</text>
+      <line x1="712" y1="160" x2="712" y2="430" stroke="#B3412E" stroke-width="2" stroke-dasharray="6 5"/>
+      <text x="712" y="446" text-anchor="middle" font-family="Barlow Semi Condensed, Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1" fill="#B3412E">PERSONAL-DATA LINE</text>
+      <text x="704" y="178" text-anchor="end" font-size="12" fill="currentColor" opacity=".75">Quintel · no SSN, no bank data</text>
+      <text x="720" y="178" font-size="12" fill="currentColor" opacity=".75">Providence · paper and name</text>
+      <line x1="680" y1="270" x2="738" y2="270" stroke="#B8790F" stroke-width="1.4" marker-end="url(#arrA)"/>
+      <text x="709" y="260" text-anchor="middle" font-size="12" fill="currentColor" opacity=".8">warm handoff</text>
+      <rect x="740" y="245" width="150" height="50" rx="3" fill="#DDE5EE" stroke="#34506B" stroke-width="1.4"/>
+      <text x="815" y="265" text-anchor="middle" font-weight="600" fill="#1C1B18">Application</text>
+      <text x="815" y="283" text-anchor="middle" fill="#1C1B18" opacity=".75">rep starts at “your $140K vac truck”</text>
+      <line x1="815" y1="295" x2="815" y2="323" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr)"/>
+      <rect x="740" y="325" width="150" height="46" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <text x="815" y="344" text-anchor="middle" font-weight="600" fill="currentColor">Funded / dead</text>
+      <text x="815" y="361" text-anchor="middle" fill="currentColor" opacity=".7">with the reason</text>
+      <path d="M740 348 L 615 348 L 615 297" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 4" marker-end="url(#arr)"/>
+      <text x="676" y="341" text-anchor="middle" font-size="12" fill="currentColor" opacity=".75">outcome back</text>
+      <text x="455" y="330" text-anchor="middle" font-size="12" fill="currentColor" opacity=".75">every step timestamped · deal, not lead</text>
+    </svg>
+    <figcaption>Providence’s funnel is two steps: reach the owner, then collect the application. Quintel v2 adds the steps a new brand can do credibly, stops at the personal-data line, and returns the outcome. The dial lab keeps running underneath as the instrument that says why a row was dead.</figcaption>
+  </figure>
+  <div class="prose">
+    <p><b>One site, one brand, Quintel’s.</b> It answers what a specialty-trade operator asks about equipment (cost, monthly, new vs used, by trade and state) and offers a payment calculator. Nobody hesitates to type a price into a calculator, so that is the entry point. Outbound email and partner links land on the same site. Three ways in, one funnel.</p>
+    <p><b>Clean handoff.</b> Providence receives a qualified application warm, with the evidence (equipment, price band, timing, lien history, phone), and runs everything from the application on. Whether the borrower already sits somewhere in Providence’s systems does not matter: what moves is a transaction, and Providence routes it internally however it likes. Existing-customer collisions stop being a problem, and so does the three minutes of research per row.</p>
+  </div>
+  <h3>Three doors on one site</h3>
+  <div class="doors">
+    <div class="door"><b>Buyer</b><span>The calculator, then the smallest form a trade site would ask: business name, years in business, fleet band, a work email.</span></div>
+    <div class="door"><b>Partner</b><span>One link and QR per shop, dealer or agent. It pre-fills the partner as seller of record and carries attribution. Not a directory.</span></div>
+    <div class="door wall"><b>Originator</b><span>Never on the page. “Financing through our funding partners.” Receives the handoff, returns the outcome.</span></div>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">Roadmap</p>
+  <h2>Seven phases, most of them in parallel, one read per week</h2>
+  <figure>
+    <svg viewBox="0 0 1000 330" role="img" aria-label="Timeline over eight weeks: Align on 19 September; loss-signal lab weeks 1 to 2; site v1 weeks 1 to 4; outbound on the funnel weeks 2 to 5; cohort and turnover signals weeks 2 to 5; partner sources weeks 2 to 6; read and price after the first 20 routed applications." xmlns="http://www.w3.org/2000/svg" font-family="Source Sans 3, Arial, sans-serif" font-size="13">
+      <g stroke="currentColor" opacity=".25">
+        <line x1="200" y1="28" x2="200" y2="300"/><line x1="297.5" y1="28" x2="297.5" y2="300"/><line x1="395" y1="28" x2="395" y2="300"/><line x1="492.5" y1="28" x2="492.5" y2="300"/><line x1="590" y1="28" x2="590" y2="300"/><line x1="687.5" y1="28" x2="687.5" y2="300"/><line x1="785" y1="28" x2="785" y2="300"/><line x1="882.5" y1="28" x2="882.5" y2="300"/><line x1="980" y1="28" x2="980" y2="300"/>
+      </g>
+      <g fill="currentColor" opacity=".7" font-size="12" text-anchor="middle">
+        <text x="248" y="20">wk 1 · Sep 21</text><text x="346" y="20">wk 2</text><text x="443" y="20">wk 3</text><text x="541" y="20">wk 4</text><text x="638" y="20">wk 5</text><text x="736" y="20">wk 6</text><text x="833" y="20">wk 7</text><text x="931" y="20">wk 8</text>
+      </g>
+      <g font-family="Barlow Semi Condensed, Arial, sans-serif" font-weight="600" font-size="14" fill="currentColor">
+        <text x="16" y="52">A · Align (Sat 09-19)</text>
+        <text x="16" y="88">B · Loss-signal lab</text>
+        <text x="16" y="124">C · Site v1</text>
+        <text x="16" y="160">D · Outbound on the funnel</text>
+        <text x="16" y="196">E · Cohort + turnover signals</text>
+        <text x="16" y="232">F · Partner sources</text>
+        <text x="16" y="268">G · Read and price</text>
+      </g>
+      <rect x="176" y="38" width="20" height="20" fill="#B8790F"/>
+      <rect x="200" y="74" width="146" height="20" fill="#B8790F" opacity=".9"/>
+      <text x="352" y="89" font-size="12" fill="currentColor" opacity=".8">FMCSA crash + out-of-service join · first 50+50 blind arm · Texas pool</text>
+      <rect x="200" y="110" width="390" height="20" fill="#B8790F" opacity=".75"/>
+      <text x="596" y="125" font-size="12" fill="currentColor" opacity=".8">calculator · qualify · verify · handoff · outcome sheet · partner links</text>
+      <rect x="297.5" y="146" width="340" height="20" fill="#B8790F" opacity=".6"/>
+      <text x="644" y="161" font-size="12" fill="currentColor" opacity=".8">Quintel domains warming now · event-selected sends</text>
+      <rect x="297.5" y="182" width="340" height="20" fill="#B8790F" opacity=".5"/>
+      <text x="644" y="197" font-size="12" fill="currentColor" opacity=".8">FEMA overlay · listings scrape · Section 179 timing</text>
+      <rect x="297.5" y="218" width="438" height="20" fill="#B8790F" opacity=".4"/>
+      <text x="742" y="233" font-size="12" fill="currentColor" opacity=".8">20 shops · 10 agents · 21 vendors researched</text>
+      <rect x="687.5" y="254" width="292" height="20" fill="none" stroke="#B8790F" stroke-width="1.6" stroke-dasharray="5 4"/>
+      <text x="833" y="269" text-anchor="middle" font-size="12" fill="currentColor" opacity=".85">after the first 20 routed applications</text>
+      <text x="200" y="318" font-size="12" fill="currentColor" opacity=".7">Weekly cadence: one list to David · one verdict read · one line changed in the plan</text>
+    </svg>
+    <figcaption>Phase B runs on data already held and needs nothing but a join and David’s dials. Phase C is the build. G is where the numbers get set, after twenty real handoffs rather than before.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <p class="eyebrow">Experiments queued</p>
+  <h2>Signals that fit a business that does not plan</h2>
+  <div class="prose"><p>Every intent idea so far assumed a planned event at the company level. For a two-to-seven-truck operator those do not exist in the record. What does exist: things that happen to the business, things that happen to its county and trade, and moments where someone else sees the need first. Each arm is 50 rows with the signal plus 50 matched controls, David blind to which is which, read at 50 live conversations. The decision rule is written before the list ships.</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>#</th><th>Idea</th><th>Why it might work</th><th>What decides it</th></tr></thead>
+    <tbody>
+      <tr><td class="k">H1</td><td>Carriers with a tow-away or disabling crash in the last 90 days</td><td>the truck is gone; the insurer pays actual cash value; the gap to the replacement gets financed. Recorded in public FMCSA files for exactly this population</td><td>crash arm opens at 2× controls → daily trigger</td></tr>
+      <tr><td class="k">H2</td><td>A vehicle placed out of service for a mechanical defect, especially repeatedly on one unit</td><td>a unit that keeps failing is a unit about to be replaced</td><td>same</td></tr>
+      <tr><td class="k">H3</td><td>Tree, roll-off, vac and hauling operators in counties under a fresh disaster declaration</td><td>months of work overnight; the second truck is needed now; the signal is the county, not the company</td><td>same, run when a declaration is live</td></tr>
+      <tr><td class="k">H4</td><td>Owners who listed a specialty truck privately in the last 60 days</td><td>seller of the old truck is buyer of the new one</td><td>same, and “already bought” under 30%</td></tr>
+      <tr><td class="k">H6</td><td>New DOT numbers and visible expansions</td><td>the only tag that separated outcomes so far</td><td>holds at 50 reached → default selector</td></tr>
+      <tr><td class="k">H7</td><td>Send timing around Section 179 year end</td><td>Q4 purchase rush</td><td>reply rate 1.5× → calendar-triggered sends</td></tr>
+      <tr><td class="k">H8</td><td>Repair shops and service contractors as referrers, with a shop link</td><td>the shop sees the need first; a link on the quote gives the owner a monthly number instead of a lump sum; the shop earns a finder’s fee on funded deals</td><td>5 of 20 shops would use it, one real lead in 30 days</td></tr>
+      <tr><td class="k">H9</td><td>Commercial insurance agents as referrers</td><td>they see the loss first</td><td>same at half the numbers</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <p class="eyebrow">Partner sources</p>
+  <h2>Who sees the need before a dealer does</h2>
+  <div class="two">
+    <div class="ask">
+      <h3>Service technicians</h3>
+      <p>The shop tells the owner the unit is not worth fixing, quotes the replacement, and waits for the owner to find $40–150K. Many of those jobs stall. A link on the quote gives the owner a monthly number on the spot and gets Providence a borrower who already knows what he needs.</p>
+      <p>The shop’s reason to use it is a finder’s fee on funded deals and a job that closes; it costs the shop nothing. The shop is also a Providence-preferred borrower for its own trucks and equipment.</p>
+      <p><b>Lanes that fit the box:</b> truck upfitters and body shops; refrigeration and HVAC contractors serving food processing, cold storage and industrial; electrical contractors installing generators. Restaurants are restricted.</p>
+      <p><b>Cheapest test:</b> has a deal ever come to Providence from a shop, and would Providence take one where the shop is the seller?</p>
+    </div>
+    <div class="ask">
+      <h3>Vendors: what the sheet says</h3>
+      <p>Two weeks of fundings from two reps, 21 vendors. Every one is a niche specialty dealer or a manufacturer selling direct, in one equipment class, with no OEM captive behind it: vac trucks (the three-star vendor), tow and wrecker, directional drilling, ambulance and EMS, lifts, ag and land-clearing. The vendor to pursue is the dealer a captive does not cover.</p>
+            <p><b>Next:</b> a research pass on all 21, then the vendor plan.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">Commercials</p>
+  <h2>Paid for deals, not leads</h2>
+  <figure>
+    <svg viewBox="0 0 1000 250" role="img" aria-label="Three rungs: verified rows for the dial lab at no charge; a qualified application handed off for a flat fee set after the first twenty; a funded deal that entered through the funnel earning a share of Providence's revenue. Attribution is by timestamp." xmlns="http://www.w3.org/2000/svg" font-family="Source Sans 3, Arial, sans-serif" font-size="13">
+      <defs><marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#B8790F"/></marker></defs>
+      <rect x="20" y="120" width="290" height="96" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <text x="36" y="146" font-family="Barlow Semi Condensed, Arial, sans-serif" font-weight="700" font-size="16" fill="currentColor">1 · Verified rows (the dial lab)</text>
+      <text x="36" y="170" fill="currentColor" opacity=".8">Providence gets: dialable, in-box, verified companies</text>
+      <text x="36" y="190" fill="currentColor" opacity=".8">Quintel gets: verdicts. No charge; R&amp;D, continues</text>
+      <rect x="355" y="76" width="290" height="140" rx="3" fill="#F3E4C4" stroke="#B8790F" stroke-width="1.6"/>
+      <text x="371" y="102" font-family="Barlow Semi Condensed, Arial, sans-serif" font-weight="700" font-size="16" fill="#1C1B18">2 · Qualified application, handed off</text>
+      <text x="371" y="126" fill="#1C1B18" opacity=".85">Providence gets: a warm deal with the evidence block</text>
+      <text x="371" y="146" fill="#1C1B18" opacity=".85">Quintel gets: a flat fee per application</text>
+      <text x="371" y="170" fill="#1C1B18" opacity=".85">Number set after the first 20, from real conversion</text>
+      <text x="371" y="196" fill="#1C1B18" opacity=".85">Providence confirms contact within one business day</text>
+      <rect x="690" y="32" width="290" height="184" rx="3" fill="#DDE5EE" stroke="#34506B" stroke-width="1.6"/>
+      <text x="706" y="58" font-family="Barlow Semi Condensed, Arial, sans-serif" font-weight="700" font-size="16" fill="#1C1B18">3 · Funded deal from our funnel</text>
+      <text x="706" y="82" fill="#1C1B18" opacity=".85">Providence gets: a closed deal it did not source</text>
+      <text x="706" y="102" fill="#1C1B18" opacity=".85">Quintel gets: a share of Providence’s revenue</text>
+      <text x="706" y="122" fill="#1C1B18" opacity=".85">on that deal, on top of the application fee</text>
+      <text x="706" y="150" fill="#1C1B18" opacity=".85">Attributed if: entered through our funnel on a date,</text>
+      <text x="706" y="168" fill="#1C1B18" opacity=".85">application date after it, funds within 12 months,</text>
+      <text x="706" y="186" fill="#1C1B18" opacity=".85">any rep. No CRM lookups. Monthly funded list back.</text>
+      <line x1="310" y1="168" x2="352" y2="168" stroke="#B8790F" stroke-width="1.6" marker-end="url(#arrB)"/>
+      <line x1="645" y1="146" x2="687" y2="146" stroke="#B8790F" stroke-width="1.6" marker-end="url(#arrB)"/>
+      <text x="500" y="240" text-anchor="middle" font-size="12" fill="currentColor" opacity=".75">A qualified application Providence passes on, or cannot fund, is placed with another originator after 30 days.</text>
+    </svg>
+    <figcaption>The fee rises with how much of the borrower’s journey Quintel completes. The dial lab stays free. Saturday’s ask is agreement on the shape and who signs it, not the numbers.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <p class="eyebrow">What each side brings</p>
+  <h2>The division of work</h2>
+  <div class="two">
+    <div class="ask">
+      <h3>Quintel</h3>
+      <ul>
+        <li>Pools and verification in every state we work</li>
+        <li>The site, the calculator, the qualify flow, the partner links</li>
+        <li>Outbound infrastructure on Quintel domains</li>
+        <li>The signal experiments and their lists, weekly</li>
+        <li>The routing and outcome ledger, and the weekly read</li>
+        <li>The shop and agent conversations, and the vendor research</li>
+      </ul>
+    </div>
+    <div class="ask">
+      <h3>Providence, through David</h3>
+      <ul>
+        <li>Calls on the lab lists, verdicts in the template</li>
+        <li>The warm-handoff packet: what a rep needs to take a routed application as his own</li>
+        <li>Outcomes back on every routed deal</li>
+        <li>The case-study 50 (repeat customers, vendor per deal) to calibrate the signals against real winners</li>
+        <li>Texas: share of the best customers, lanes beyond specialty trucks</li>
+        <li>Whether a repair shop has ever sent a deal, and whether Providence would take one where the shop is the seller</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">Saturday</p>
+  <h2>Six questions for the call</h2>
+  <ol class="q">
+    <li>Does the site-plus-handoff shape work for Providence, and who signs off?</li>
+    <li>The warm-handoff packet: what does a rep need to see to take a routed application as his own?</li>
+    <li>The three-rung commercial shape and the timestamp attribution rule: acceptable in principle?</li>
+    <li>Texas: what share of Providence’s best customers are there, and which lanes beyond specialty trucks?</li>
+    <li>Technicians and vendors: has a repair shop ever sent a deal, and would Providence take one where the shop is the seller? What does the top producer’s vendor list look like?</li>
+    <li>One business day to confirm contact, and placement elsewhere after 30 days: reasonable?</li>
+  </ol>
+  <p class="foot">Companion document: gameplan.md carries the same plan in full text. Draft v0.4, 17 September 2026. Amend on the call.</p>
+</section>
+</div>

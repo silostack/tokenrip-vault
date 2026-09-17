@@ -90,7 +90,7 @@ A also fails the architectural-requirement test (a regular SaaS could deliver a 
 
 | Motion | Trigger to activate / advance |
 |---|---|
-| E | Already active. Continues until decision point in [[gameplan]] §"Decision Points." |
+| E | Already active. Continues until decision point in [[active/gameplan]] §"Decision Points." |
 | D | Already passively active via Series 3 blog. Active sales motion ramps when marketplace UX is shipped (~week 8). |
 | B | 5+ Motion E lighthouse imprints live + multi-tenant capability shipped + named CTO buy-intent (top-down) OR AI Enabler organic adoption producing bottom-up demand (see [[icps]] §"AI Enabler"). Estimated 2027. |
 | C | ≥100 published imprints + inter-imprint composition primitives + capability discovery + billing for inter-agent calls. Estimated late 2027 / 2028. |
@@ -225,7 +225,7 @@ These apply across all motions. They belong attached to the strategy, not buried
 
 1. **Creator economy framing trap.** "Creator monetization for AI experts" gets filed under Patreon/Substack (unfavorable comparable benchmarks). "Agent commerce substrate with creator-direct wedge" gets filed under AWS/Stripe (favorable). Lead with infrastructure framing externally. See [[yc-strategy]] §"Infrastructure vs. Creator-Economy Framing Trap."
 2. **Vanity metrics risk.** Deploy count without engagement metrics is fundraising vanity, not PMF. Real metrics: operators per imprint, return rate, memory growth, tooling-tier conversion. Defined in [[kpis]].
-3. **Quality control overhead.** Variable creator quality drags platform reputation. Editorial standards required before public deploys. Hard rule in [[gameplan]] §"Hard Rules."
+3. **Quality control overhead.** Variable creator quality drags platform reputation. Editorial standards required before public deploys. Hard rule in [[active/gameplan]] §"Hard Rules."
 4. **Hero-tier disappointment.** No Garry-Tan-class hero in 90 days = missing marquee story. Mitigations: lower the bar (200K-follower niche-famous = valid hero) OR over-invest in mid-tier so hero isn't the headline.
 5. **YC/a16z assumption risk.** If capital doesn't land, no $25K firm-pilot revenue exists because A was cancelled. Mitigation: motion is right regardless. Firm-direct $25K pilots aren't a fundable path anyway. Detail in [[operations-and-hiring]] §4.
 6. **Substrate scope creep.** Marketplace UX + creator dashboard + "build an agent" wizard + creator billing is a lot. Rank ruthlessly. First 10 deploys can be Simon-assisted.
@@ -238,7 +238,7 @@ These apply across all motions. They belong attached to the strategy, not buried
 
 ## Cross-References
 
-- **The roadmap:** [[gameplan]]
+- **The roadmap:** [[active/gameplan]]
 - **Motion E execution detail:** [[audience-led-gameplan]]
 - **What we measure:** [[kpis]]
 - **YC application + positioning:** [[yc-strategy]]

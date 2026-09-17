@@ -38,6 +38,13 @@ Clean the transcript:
 - Remove small talk: greetings, goodbyes, weather, scheduling chat.
 - Remove filler: "um", "uh", filler "like", "you know", "sort of".
 - Remove false starts and repetitions.
+- Remove AI notetaker tool annotations — these are the notetaker's own inserted
+  metadata, not anything a participant said. Includes (not exhaustive): "ACTION ITEM:"
+  lines, "VIEW RECORDING" / "WATCH:" links with timestamps, auto-generated chapter or
+  highlight markers, and any other bracketed/labelled insert that names the notetaker
+  tool's own commentary rather than speech. If a note flags a real commitment worth
+  keeping, that commitment still gets captured — in Step 3's commitments analysis and
+  the call note — just not as a leftover annotation inside the transcript body.
 - Keep tangents that have strategic value.
 - DO NOT fix grammar — preserve natural speech.
 

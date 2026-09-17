@@ -201,7 +201,7 @@ Run agents. Generate proprietary intelligence. Integrate vertically. The program
 
 ## Related Documents
 
-- [[gameplan]] — Agentic economy exploration strategy and 6 hypotheses
+- [[active/gameplan]] — Agentic economy exploration strategy and 6 hypotheses
 - [[silk-account-primitive]] — Deep analysis of the Silk Account as a novel on-chain primitive
 - [[agent-cli-opportunity-deep-dive]] — Full opportunity analysis and competitive landscape
 - [[agent-cli-agent-first-vision]] — Strategic vision for the agent-first financial OS

@@ -2,7 +2,7 @@
 
 **Status**: developing
 **Created**: 2026-06-11
-**Last touched**: 2026-06-11
+**Last touched**: 2026-09-04
 
 ## Thesis
 
@@ -11,6 +11,8 @@ Infrastructure can't be sold; it has to be wrapped — nobody consumer-adopted P
 ## Evolution
 
 - **2026-06-11**: Emerged from Simon's GTM question (is there a grassroots/consumer motion? is there a "walk-forward" B2B motion where Tokenrip plays a bigger role than the current walk-backward FDE pattern?). Expanded his LinkedIn-outreach-video instinct into the catalog format ("every piece of content ships a mountable agent") with the compounding loop: mount agent → brain accretes → next agent arrives warm → autonomy paywall → invite-a-teammate bridge to B2B. Identified three B2B walk-forward shapes ranked by cost: (a) leave-behind conversion of the current motion (change the deliverable, not the sale — Palantir mechanic, zero new GTM), (b) Cowork companion ("shared drive for your team's AI" — multiplayer thesis at its smallest commercial unit), (c) agency channel (sell the delivery stack to AI-automation agencies — every agency becomes an FDE team Tokenrip doesn't employ). Captured to `active/semantic-workspaces-multiplayer-and-gtm-2026-06-11.md`.
+
+- **2026-09-04**: **The lure found, and the cadence problem got a motor.** The call processor ("Fathom notes that know what your company believes") passes every wrapper test at once: pre-existing demand (every founder has a notetaker and hates the generic summary), inherently shared (calls are the one thing co-founders must share), requires the architecture (source + brain + inbox + terminal all load-bearing). Hero = brain + inbox; lure = the call processor; launch on PH/HN only after two weeks of internal use. The "one video ≠ a motion" cost (below) is answered by the cadence reflex: the brain drafts the weekly build-in-public post from the week's facts into Simon's inbox — the reflex that markets reflexes. Added channels: harness directories (Anthropic connectors, Cowork plugins, Cursor/Codex MCP lists, Smithery), Fathom's own integrations page, `llms.txt` → MCP URL. Two proof assets from running the company: the ops page (two founders, two continents, one technical) and "Alek ships a fix from Cowork off a work item." Full sequence → `active/tokenrip-first-loop-site-gtm-2026-09-04.md` §5.
 
 ## Key Challenges Surfaced
 
