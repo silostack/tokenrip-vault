@@ -1,0 +1,17 @@
+raw.sunbiz_fl            11,802,288 rows   42 cols   99.5s
+raw.sunbiz_officers       6,120,543 rows   11 cols    9.3s
+raw.sunbiz_aliases          342,592 rows    4 cols    0.5s
+raw.fmcsa_fl_api            287,917 rows  145 cols    1.7s
+raw.ucc_fl                   67,126 rows   37 cols    0.3s
+raw.exclusions_prod           1,195 rows    8 cols    0.0s
+
+indexing...
+  ix_sb_join
+  ix_sb_name
+  ix_sb_doc 
+  ix_sb_stat
+  ix_of_doc 
+  ix_al_doc 
+  ix_fm_dot 
+  ix_ucc_deb
+done

@@ -1,0 +1,51 @@
+company,lane,line_type,cnam_match,fit_flag,lien_age_months,ucc_status,lender,lender_class,power_units,crm,david_colour,outcome,human_reached,owner_reached,says_cash_buyer,hung_up,david_comment
+WOODSIDE LAND CLEARING LLC,A_DIRT,mobile,owner,filed_<6mo,4,unexpired,Marlin Leasing / PEAC Solutions,ef_independent,2,no,,no_decision,False,False,False,False,Straight to MB. LMIGMB. Offered promo rate. Same number on URL.
+HAULAWAY PRO LLC,OTHER,nonFixedVoip,company,,8,unexpired,Blue Bridge Financial,ef_independent,2,no,maybe,maybe_later,True,True,False,False,Jason said he is an owner too. No capex. OK for call back next year
+FLECTO LLC,OTHER,fixedVoip,company,,11,unexpired,Blue Bridge Financial,ef_independent,4,no,,no_decision,True,False,False,False,LMWS. No promos. Alos called yesterday.
+BEAVERDAM CONTRACTING INC,OTHER,mobile,other,,12,unexpired,Marlin Leasing / PEAC Solutions,ef_independent,6,no,,no_decision,False,False,False,False,LMIG. Offered promo rate
+GREAT LAKES CRUSHING LTD,OTHER,mobile,none,,22,unexpired,North Mill Credit Trust,ef_independent,3,no,dead,dead,True,True,False,False,Alec is NLWC. Emp said call back and ask for Hannah (accounting) . Hannah said they don't need financing and does not want follow up
+LAND PRO MANAGEMENT LLC,OTHER,mobile,none,,23,unexpired,Blue Bridge Financial,ef_independent,2,no,,no_decision,False,False,False,False,LVM. Offered promo rates
+LEMASTER TOWING AND RECOVERY LLC,C,mobile,none,,24,unexpired,Blue Bridge Financial,ef_independent,5,no,,no_decision,False,False,False,False,LMWE. Offered promo rates
+DO IT RIGHT EXCAVATING LLC,A_DIRT,mobile,owner,,24,unexpired,Blue Bridge Financial,ef_independent,4,yes,dead,unreachable,False,False,False,False,MB is full. Purchaded lead (leadX 2025). Also house account since 2016
+BRET'S CARPENTRY INC,OTHER,mobile,company,out_of_box,28,unexpired,TimePayment,ef_independent,5,no,,no_decision,False,False,False,False,LMIG. Offered promo rate
+BISHOP BROS SUPPLY & TRANSIT LLC,OTHER,mobile,none,out_of_box,31,unexpired,Blue Bridge Financial,ef_independent,2,no,,no_decision,False,False,False,False,Long ringer. No operator. LMIG. Offered promo rates.
+R & D EXCAVATING SVC LLC,A_DIRT,mobile,company,,32,unexpired,North Mill Credit Trust,ef_independent,2,no,dead,unreachable,False,False,False,False,MB is not set up.
+C&M FARM DRAINAGE LLC,OTHER,mobile,owner,,33,unexpired,Marlin Leasing / PEAC Solutions,ef_independent,3,no,dead,dead,True,True,False,False,iPhone screen. No financing needs. Does not want follow ups.
+CNN ENTERPRISES LLC,OTHER,mobile,owner,unclear_equipment,36,unexpired,Blue Bridge Financial,ef_independent,5,no,,no_decision,False,False,False,False,LVM for Ron. Offered promo rates.
+RAZE INTERNATIONAL INC,OTHER,fixedVoip,company,,38,unexpired,Blue Bridge Financial,ef_independent,6,yes,dead,dead,True,True,False,False,Debbie said they are not in a position to buy anything for the foreseeable future
+COUNTY LINE TRANSPORT LLC,OTHER,mobile,surname,,40,unexpired,Blue Bridge Financial,ef_independent,4,yes,maybe,maybe_later,True,True,False,False,Applied in 2017. Poor credit. Bad indstry (trucking). Brice (POC) said no current needs. OK with call back
+KT SUPPLY LTD,OTHER,nonFixedVoip,surname,out_of_box,54,unexpired,North Mill Credit Trust,ef_independent,6,no,,no_decision,False,False,False,False,No operator or DBN. Dialed the CFO ext. Offered Q4 promos
+WOODFORD EXCAVATING LLC,A_DIRT,fixedVoip,company,drivers_53,54,unexpired,North Mill Credit Trust,ef_independent,5,yes,,no_decision,True,False,False,False,LMWS. Offered Q4 promos
+LAST ARROW MANUFACTURING,OTHER,landline,company,out_of_box,59,unexpired,North Mill Credit Trust,ef_independent,2,no,red_font,dead,True,False,False,True,Sec put me on hold. Then hanged up!
+FAXON MACHINING LLC,OTHER,mobile,company,out_of_box,59,unexpired,TimePayment,ef_independent,2,no,dead,dead,False,False,False,False,Very large company. Does not fit ICP. Not a mobile number
+BIN IT TO WIN IT LLC,OTHER,mobile,other,filed_<6mo,0,unexpired,Western Equipment Finance,ef_independent,5,no,dead,dead,True,False,False,True,Cindy said no thanks and hanged up!
+PATTERSON SPECIALTY SERVICES LLC,OTHER, ,company,unclear_equipment;filed_<6mo,3,unexpired,Western Equipment Finance,ef_independent,5,no,,no_decision,True,False,False,False,LMWS. Offered Q4 promos
+JACOBS TOWING INC,C,nonFixedVoip,other,filed_<6mo,5,unexpired,LEAF Capital Funding,ef_independent,5,no,dead,unreachable,False,False,False,False,Call is blocked.
+ANSTEAD CONSTRUCTION LLC,A_DIRT,mobile,company,,8,unexpired,LEAF Capital Funding,ef_independent,4,yes,existing,existing_lead,False,False,False,False,DO NOT CALL. Active lead. Purchased in 2025. No needs. No traction
+AGILE SIGN & LIGHTING MAINTENANCE INC,OTHER,mobile,none,unclear_equipment,8,unexpired,LEAF Capital Funding,ef_independent,6,no,dead,dead,True,False,False,False,LMWS. Could hear Tim on the background saying nt interested!
+ROYAL CABINET DESIGN CO INC,OTHER,landline,company,out_of_box,10,unexpired,LEAF Capital Funding,ef_independent,2,no,dead,dead,False,False,False,False,LVM for Joe Estephan. Not a good lead. They design and build cabinets. Not an eqp needy company
+WILLIAM S CURTIS,OTHER,fixedVoip,company,,12,unexpired,LEAF Capital Funding,ef_independent,4,no,dead,dead,True,True,False,False,William said no financing needs. Doesn't care if I call next year!
+MCKINLEY INDUSTRIES LLC,OTHER,mobile,company,unclear_equipment,12,unexpired,Western Equipment Finance,ef_independent,3,no,,no_decision,False,False,False,False,iPhone screen. LVM. Offered Q4 promos
+SCOTT YOUNG,OTHER,mobile,company,unclear_equipment,15,unexpired,LEAF Capital Funding,ef_independent,2,no,dead,dead,False,False,False,False,iPhone screen. LVM. Offered Q4 promos
+CARDINAL WELDING INC,OTHER,fixedVoip,company,out_of_box,16,unexpired,LEAF Capital Funding,ef_independent,6,no,dead,dead,True,True,False,False,Dan said no capex plans for several years
+BARRONS LAWN SERVICE LLC,OTHER,landline,company,out_of_box,18,unexpired,Western Equipment Finance,ef_independent,2,no,dead,dead,True,True,True,False,Tom said they pay cash. Claims he has not financed in years! Very outdated URL.
+CHASE SIGN & LIGHTING SERVICE INC,OTHER,mobile,owner,unclear_equipment,22,unexpired,LEAF Capital Funding,ef_independent,6,no,dead,unreachable,False,False,False,False,NIS. (567) 218-3444 is listed on their URL. Also NIS
+SNOWVILLE CREAMERY LLC,OTHER,nonFixedVoip,company,out_of_box,23,unexpired,LEAF Capital Funding,ef_independent,2,yes,,unreachable,True,False,False,False,Purchased lead 2025. Number and POC (purchased data) were incorrect.  LMWS. No promos.
+G&G CONCRETE CONSTRUCTION LLC,A_DIRT,landline,company,,24,unexpired,LEAF Capital Funding,ef_independent,3,no,,no_decision,True,False,False,False,LMWS. She didn't know why I was calling!
+FLECK ENTERPRISES INC,OTHER,mobile,other,,26,unexpired,Western Equipment Finance,ef_independent,5,no,dead,dead,True,False,False,False,LMWS. No promos. This is a Roto Rooter. Not an eqp needy compnay.
+"KELLY'S SEPTIC SERVICE, LLC",A_VAC,mobile,none,,27,unexpired,LEAF Capital Funding,ef_independent,5,no,followup,followup,True,False,False,False,Call was answered by his wife. She said call after 8 PM! Residence
+"HARBS HOLDINGS, LTD",OTHER,nonFixedVoip,other,,28,unexpired,Western Equipment Finance,ef_independent,3,no,,no_decision,False,False,False,False,Long ringer. No operator. LMIG. Offered promo rates. Business name is Bin There Dump That
+HOCKING VALLEY DUMPSTERS LLC,OTHER,mobile,none,,31,unexpired,Western Equipment Finance,ef_independent,2,no,,no_decision,False,False,False,False,LVM. Offered promo rates. Business name is Bin There Dump That
+PETTY FARMS LLC,OTHER,nonFixedVoip,none,,34,unexpired,LEAF Capital Funding,ef_independent,6,no,followup,followup,True,False,False,False,Not in till Monday. Follow up
+SHAWN SEXTON,OTHER,fixedVoip,company,,42,unexpired,LEAF Capital Funding,ef_independent,3,no,,no_decision,False,False,False,False,Answering service. LM. Business name is Sexton's Excavating
+CROWN EXCAVATING INC,A_DIRT,nonFixedVoip,company,,43,unexpired,LEAF Capital Funding,ef_independent,5,no,dead,maybe_later,True,True,False,False,No current needs. Ok with call back late next year!
+BORDER PATROL LLC,OTHER,mobile,owner,unclear_equipment,44,unexpired,LEAF Capital Funding,ef_independent,5,no,,no_decision,True,False,False,False,LMWS. Offered Q4 promos.
+DOVER CABINET INDUSTRIES INC,OTHER,nonFixedVoip,company,out_of_box,44,unexpired,LEAF Capital Funding,ef_independent,2,no,,no_decision,False,False,False,False,URL is down. LVM for John. Offered Q4 promos
+CLN PORTABLE RESTROOM SERVICE COMPANY,A_VAC,mobile,none,,48,unexpired,Western Equipment Finance,ef_independent,5,no,dead,dead,True,False,False,False,LMWS. Offered Q4 promos. Sec (most likely family) said email. CLNPORTABLEs@gmail.com
+GRANEX INDUSTRIES INC,OTHER,nonFixedVoip,company,out_of_box,48,unexpired,LEAF Capital Funding,ef_independent,4,yes,,no_decision,True,False,False,False,Purchased lead 2025. POC (purchased data) was incorrect. Sec didn't want to the take message! Said email him!
+AAA WASTEWATER SERVICES INC,OTHER,nonFixedVoip,other,,64,unexpired,Western Equipment Finance,ef_independent,5,yes,existing,existing_lead,False,False,False,False,DO NOT CALL. Active lead. Applied in 2020 and 2022. Active lead. Was not approved
+CGS IMAGING INC,OTHER,landline,company,out_of_box;lien_lapsed,46,historical,LEAF Capital Funding,ef_independent,2,no,dead,dead,True,False,False,True,Carol a quick no thanks and hang up!
+CREEKSIDE GARDENS INC,OTHER,fixedVoip,company,out_of_box;lien_lapsed,64,historical,LEAF Capital Funding,ef_independent,7,no,dead,dead,True,False,False,True,Emp put me on hold and then hanged up!
+AQUA SCIENCE INC,OTHER,landline,company,out_of_box;lien_lapsed,67,historical,LEAF Capital Funding,ef_independent,3,no,dead,dead,True,False,False,False,Very large company. Sec said they are not interested
+DURBIN INTERIOR & EXTERIOR LANDSCAPING INC,OTHER,nonFixedVoip,owner,out_of_box;lien_lapsed,69,historical,Western Equipment Finance,ef_independent,6,no,dead,dead,True,False,False,True,Julie was very short! Not interested and hanged up!
+SANDER CONTRACTING INC,OTHER,mobile,none,lien_lapsed,69,historical,LEAF Capital Funding,ef_independent,3,no,,no_decision,False,False,False,False,LMIG. Offered promo rate

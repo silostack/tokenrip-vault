@@ -1,0 +1,15 @@
+  cordata5.txt: {'records': 1280730, 'fl': 1179809, 'active': 385262, 'inactive': 794547, 'officers': 611881, 'badlen': 0}
+  cordata1.txt: {'records': 1280953, 'fl': 1180504, 'active': 385666, 'inactive': 794838, 'officers': 612830, 'badlen': 0}
+  cordata3.txt: {'records': 1280973, 'fl': 1180677, 'active': 385911, 'inactive': 794766, 'officers': 612924, 'badlen': 0}
+  cordata7.txt: {'records': 1280748, 'fl': 1180305, 'active': 385567, 'inactive': 794738, 'officers': 612101, 'badlen': 0}
+  cordata8.txt: {'records': 1280754, 'fl': 1180022, 'active': 385644, 'inactive': 794378, 'officers': 611831, 'badlen': 0}
+  cordata9.txt: {'records': 1280748, 'fl': 1180365, 'active': 385352, 'inactive': 795013, 'officers': 611046, 'badlen': 0}
+  cordata4.txt: {'records': 1280925, 'fl': 1180310, 'active': 385276, 'inactive': 795034, 'officers': 612321, 'badlen': 0}
+  cordata0.txt: {'records': 1280693, 'fl': 1180034, 'active': 386026, 'inactive': 794008, 'officers': 613010, 'badlen': 0}
+  cordata2.txt: {'records': 1280886, 'fl': 1180032, 'active': 385610, 'inactive': 794422, 'officers': 611492, 'badlen': 0}
+  cordata6.txt: {'records': 1280786, 'fl': 1180230, 'active': 385117, 'inactive': 795113, 'officers': 611107, 'badlen': 0}
+wrote data/work/sunbiz_fl.csv
+wrote data/work/sunbiz_officers.csv
+
+TOTALS: {'records': 12808196, 'fl': 11802288, 'active': 3855431, 'inactive': 7946857, 'officers': 6120543, 'badlen': 0}
+active/inactive split: 3855431 A / 7946857 I
