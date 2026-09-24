@@ -1,0 +1,492 @@
+<title>Ironmark Outbound Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#F2F4F6; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6877; --line:#C8D0D8; --rule:#E3E8ED;
+  --send:#2F63A3; --send-soft:#DCE7F5;
+  --reply:#1F7A4D; --reply-soft:#DDF1E6;
+  --record:#6D4C9F; --record-soft:#EAE2F5;
+  --human:#C2410C; --human-soft:#FBE4D6;
+  --warn:#9A6A00; --warn-soft:#F8ECCB;
+  --core:#EEF2F6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1318; --surface:#161D25; --ink:#E4EAF0; --muted:#93A2B1; --line:#33404D; --rule:#26313C;
+    --send:#74A6E0; --send-soft:#1B2A3D; --reply:#5CC592; --reply-soft:#16301F;
+    --record:#B294E3; --record-soft:#2A2038; --human:#F0834A; --human-soft:#3A2418;
+    --warn:#E3B341; --warn-soft:#332810; --core:#1B242E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1318; --surface:#161D25; --ink:#E4EAF0; --muted:#93A2B1; --line:#33404D; --rule:#26313C;
+  --send:#74A6E0; --send-soft:#1B2A3D; --reply:#5CC592; --reply-soft:#16301F;
+  --record:#B294E3; --record-soft:#2A2038; --human:#F0834A; --human-soft:#3A2418;
+  --warn:#E3B341; --warn-soft:#332810; --core:#1B242E; color-scheme:dark;
+}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:32px 64px;display:grid;gap:36px}
+h1{font-size:30px;line-height:1.15;margin:4px 0 0;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:21px;margin:0;font-weight:600;text-wrap:balance}
+h3{margin:0;font-size:18px;font-weight:600}
+h4{margin:0 0 6px;font-size:14px;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:17px;max-width:74ch;margin:10px 0 0}
+.sub{color:var(--muted);max-width:76ch}
+.muted{color:var(--muted);font-size:13px;max-width:100ch}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.92em}
+a{color:var(--send)}
+section.block{display:grid;gap:14px;scroll-margin-top:16px}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.fact b{display:block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.fact span{color:var(--muted);font-size:13px}
+.fact .s{color:var(--send)} .fact .r{color:var(--reply)} .fact .h{color:var(--human)} .fact .c{color:var(--record)}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px}
+nav.toc a{font-size:13px;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--send);outline:none}
+figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.scroll{overflow-x:auto}
+.scroll svg{display:block;width:100%;height:auto;color:var(--ink)}
+figcaption{color:var(--muted);font-size:13px;margin-top:10px;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+.key{display:inline-flex;align-items:center;gap:6px}
+.sw{width:14px;height:10px;border-radius:2px;display:inline-block}
+.decisions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.decision{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:8px;align-content:start}
+.decision .n{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.decision h3{font-size:16px}
+.decision p{font-size:14px}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:14px;scroll-margin-top:16px}
+.stage.send{border-left:4px solid var(--send)} .stage.reply{border-left:4px solid var(--reply)} .stage.record{border-left:4px solid var(--record)} .stage.human{border-left:4px solid var(--human)}
+.shead{display:flex;gap:14px;align-items:flex-start}
+.badge{flex:none;width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:600}
+.shead p{margin:4px 0 0;max-width:76ch}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tag{font-size:11.5px;font-weight:600;border-radius:4px;padding:2px 8px;border:1px solid var(--line);color:var(--muted);background:var(--bg)}
+.tag.have{color:var(--send);border-color:var(--send)} .tag.build{color:var(--human);border-color:var(--human)} .tag.gap{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+ul,ol{margin:0;padding-left:18px;display:grid;gap:5px;font-size:14.5px}
+li{max-width:70ch}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:600;background:var(--bg)}
+tr:last-child td{border-bottom:none}
+td.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.s{color:var(--send);font-weight:600} td.r{color:var(--reply);font-weight:600} td.h{color:var(--human);font-weight:600} td.c{color:var(--record);font-weight:600} td.w{color:var(--warn);font-weight:600}
+.pill{display:inline-block;font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:600;font-size:11.5px;border-radius:4px;padding:1px 7px;white-space:nowrap}
+.pill.auto{background:var(--reply-soft);color:var(--reply)} .pill.hum{background:var(--human-soft);color:var(--human)} .pill.rule{background:var(--send-soft);color:var(--send)} .pill.off{background:var(--warn-soft);color:var(--warn)}
+.email{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:16px;font-size:14.5px;max-width:640px;display:grid;gap:8px}
+.slot{background:var(--reply-soft);border-bottom:2px solid var(--reply);padding:0 3px;border-radius:2px}
+.slot.h{background:var(--human-soft);border-bottom-color:var(--human)}
+.foot{color:var(--muted);font-size:12.5px;border-top:1px solid var(--rule);padding-top:8px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:10px;align-content:start}
+.box.warn{border-left:4px solid var(--warn)}
+.parts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.part{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:6px;align-content:start}
+.part .k{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.06em;color:var(--muted)}
+.part h4{font-size:14.5px;margin:0}
+.part p{font-size:13.5px;color:var(--muted)}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.col{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:10px;align-content:start}
+.col.must{border-top:4px solid var(--reply)} .col.lag{border-top:4px solid var(--send)} .col.off{border-top:4px solid var(--warn)}
+.col ol{font-size:14px}
+.note{color:var(--muted);font-size:13px;max-width:100ch;border-top:1px solid var(--rule);padding-top:14px}
+/* svg */
+svg text{fill:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:12px}
+svg .colh{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.08em;fill:var(--muted);font-weight:600}
+svg .h{font-weight:600;font-size:13px}
+svg .sub{fill:var(--muted);font-size:11.5px}
+svg .li{font-size:12.5px}
+svg .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px}
+svg .elbl{fill:var(--muted);font-size:11px;font-style:italic}
+svg .bandt{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.06em;font-weight:600}
+svg .box{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+svg .core{fill:var(--core)}
+svg .dashed{stroke-dasharray:5 4}
+svg .rule{stroke:var(--rule);stroke-width:1}
+svg .edge{fill:none;stroke:var(--muted);stroke-width:1.5}
+svg .ahp{fill:var(--muted)}
+svg .band{fill:var(--bg);stroke:var(--line)}
+svg .band.s{fill:var(--send-soft);stroke:var(--send)} svg .band.r{fill:var(--reply-soft);stroke:var(--reply)} svg .band.c{fill:var(--record-soft);stroke:var(--record)} svg .band.hm{fill:var(--human-soft);stroke:var(--human)}
+svg .chip{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+svg .chip.s{stroke:var(--send)} svg .chip.r{stroke:var(--reply)} svg .chip.c{stroke:var(--record)} svg .chip.hm{fill:var(--human-soft);stroke:var(--human)}
+svg .chip.soft-s{fill:var(--send-soft);stroke:var(--send)} svg .chip.soft-r{fill:var(--reply-soft);stroke:var(--reply)} svg .chip.soft-c{fill:var(--record-soft);stroke:var(--record)} svg .chip.soft-w{fill:var(--warn-soft);stroke:var(--warn)}
+svg .ts{fill:var(--send)} svg .tr{fill:var(--reply)} svg .tc{fill:var(--record)} svg .th{fill:var(--human)} svg .tw{fill:var(--warn)}
+svg .es{stroke:var(--send)} svg .er{stroke:var(--reply)} svg .ec{stroke:var(--record)} svg .eh{stroke:var(--human)}
+svg .numc{fill:var(--ink)} svg .numt{fill:var(--bg);font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:600;font-size:13px}
+svg .callout{font-size:13px;font-weight:600}
+svg .tick{stroke:var(--line);stroke-width:1.2}
+@media (max-width:900px){.decisions,.parts,.cols3,.three{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}}
+@media (max-width:600px){.decisions,.parts,.cols3,.three{grid-template-columns:1fr}}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+<header>
+<div class="eyebrow">Quintel v2 · Ironmark borrower outreach for Providence · engine design · Sep 24, 2026</div>
+<h1>The Outbound Engine</h1>
+<p class="lead">Three machines and one record. The send machine (Alek's Six-State model) puts emails in front of owners. The reply machine sorts every answer, verifies it against the pool, suppresses what must never be emailed again, acknowledges the owner and creates the ledger row. The record is where David works and what the referral fee is paid on. Nothing in the engine talks to a prospect on its own; David does.</p>
+</header>
+
+<section class="facts" aria-label="Key numbers">
+<div class="fact"><b class="s">900</b><span>emails a weekday at full plan, 30 mailboxes on 6 state domains</span></div>
+<div class="fact"><b class="r">~3</b><span>positive replies a weekday at 3 per 1,000 sends (small sample)</span></div>
+<div class="fact"><b class="r">20–50</b><span>total replies a weekday, incl. bounces and out-of-office (inferred)</span></div>
+<div class="fact"><b class="h">10-06</b><span>first send, when warmup ends · reply machine live by 10-03</span></div>
+</section>
+
+<nav class="toc" aria-label="Sections"><a href="#whole">Whole engine</a><a href="#send">1 Send</a><a href="#reply">2 Reply</a><a href="#ack">Acknowledgment</a><a href="#sender">Sender problem</a><a href="#record">3 Record</a><a href="#parts">Moving parts</a><a href="#build">Build order</a><a href="#risks">Risks</a><a href="#david">For David</a></nav>
+
+<section class="block" id="decisions">
+<h2>Three decisions this design makes</h2>
+<div class="decisions">
+<div class="decision"><div class="n">DECISION 1</div><h3>Automate the sorting, never the conversation</h3><p>Classification, verification, suppression, the acknowledgment and the ping run without a person from day one. The two to four positives a day go to David by hand. Drafted replies to prospects are off until the ledger holds 100 positives with David's reason codes.</p></div>
+<div class="decision"><div class="n">DECISION 2</div><h3>David's acknowledgment is a template with a clock</h3><p>His spec (acknowledge, introduce me, copy me, give the timeline) is deterministic. One message, chosen by receipt time in Eastern, sent in the owner's thread from the mailbox he wrote to. No model writes it.</p></div>
+<div class="decision"><div class="n">DECISION 3</div><h3>One database, two ledgers, one bridge</h3><p>The outreach layer records every company and every send, and it is ours. The handoff ledger records one row per positive reply, and both sides write to it. Only the reply machine creates a row in the second from the first.</p></div>
+</div>
+</section>
+
+<section class="block" id="whole">
+<h2>The whole engine</h2>
+<p class="sub">Left to right: the send machine feeds Smartlead, replies come back into the reply machine, positives become rows in the record, David works the row. Two loops run underneath: every reply becomes a label on the send it answered, and every unsubscribe, bounce and CRM collision lands in one suppression table that the send machine checks before every push.</p>
+<figure><div class="scroll"><svg viewBox="0 0 1400 560" role="img" aria-label="Three machines in a row: send machine (feeds, contact append, pool and buy-box gate, draft and validator, planner with ramp, Smartlead), reply machine (ingest, classify, verify, act), record (handoff ledger with David's queue, CRM check, four flags, reason code, fee). David sits to the right of the record. Below, a suppression table and a labels loop feed back into the send machine." style="min-width:1100px">
+<defs><marker id="ah1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahp"/></marker></defs>
+<!-- bands -->
+<rect x="20" y="16" width="600" height="26" rx="4" class="band s"/><text x="320" y="34" class="bandt ts" text-anchor="middle">1 · SEND MACHINE · Alek's stages 1–5 · nightly, then Smartlead by day</text>
+<rect x="660" y="16" width="380" height="26" rx="4" class="band r"/><text x="850" y="34" class="bandt tr" text-anchor="middle">2 · REPLY MACHINE · minutes after a reply</text>
+<rect x="1080" y="16" width="300" height="26" rx="4" class="band c"/><text x="1230" y="34" class="bandt tc" text-anchor="middle">3 · RECORD · the shared ledger</text>
+<!-- send machine box -->
+<rect x="20" y="60" width="600" height="220" rx="8" class="box core"/>
+<rect x="34" y="78" width="100" height="56" rx="6" class="chip s"/><text x="84" y="100" class="h" text-anchor="middle">Feeds</text><text x="84" y="118" class="sub" text-anchor="middle">CO UCC, FMCSA…</text>
+<polyline points="134,106 150,106" class="edge" marker-end="url(#ah1)"/>
+<rect x="150" y="78" width="110" height="56" rx="6" class="chip s"/><text x="205" y="100" class="h" text-anchor="middle">Contact append</text><text x="205" y="118" class="sub" text-anchor="middle">site → email → verify</text>
+<polyline points="260,106 276,106" class="edge" marker-end="url(#ah1)"/>
+<rect x="276" y="78" width="110" height="56" rx="6" class="chip s"/><text x="331" y="100" class="h" text-anchor="middle">Pool + box gate</text><text x="331" y="118" class="sub" text-anchor="middle">dedupe, buy box</text>
+<polyline points="386,106 402,106" class="edge" marker-end="url(#ah1)"/>
+<rect x="402" y="78" width="100" height="56" rx="6" class="chip s"/><text x="452" y="100" class="h" text-anchor="middle">Draft</text><text x="452" y="118" class="sub" text-anchor="middle">2 lines + validator</text>
+<polyline points="502,106 518,106" class="edge" marker-end="url(#ah1)"/>
+<rect x="518" y="78" width="88" height="56" rx="6" class="chip s"/><text x="562" y="100" class="h" text-anchor="middle">Planner</text><text x="562" y="118" class="sub" text-anchor="middle">ramp + cap</text>
+<polyline points="562,134 562,166" class="edge" marker-end="url(#ah1)"/>
+<rect x="300" y="166" width="306" height="96" rx="6" class="chip soft-s"/>
+<text x="453" y="190" class="h" text-anchor="middle">Smartlead · 6 state domains · 30 mailboxes</text>
+<text x="453" y="210" class="sub" text-anchor="middle">12 campaigns · sends 7am–4pm local · stops a sequence on any reply</text>
+<text x="453" y="228" class="sub" text-anchor="middle">block list mirrors our suppression table</text>
+<text x="453" y="248" class="sub" text-anchor="middle">webhooks: reply · bounce · unsubscribe</text>
+<text x="34" y="190" class="li" text-anchor="start">Checks before every push:</text>
+<text x="34" y="210" class="li" text-anchor="start">· suppression table</text>
+<text x="34" y="228" class="li" text-anchor="start">· one sequence per contact</text>
+<text x="34" y="246" class="li" text-anchor="start">· domain bounce brake (3%)</text>
+<!-- send -> reply -->
+<polyline points="606,214 660,214" class="edge er" marker-end="url(#ah1)"/>
+<text x="633" y="204" class="elbl" text-anchor="middle">replies</text>
+<!-- reply machine -->
+<rect x="660" y="60" width="380" height="220" rx="8" class="box core"/>
+<rect x="674" y="78" width="80" height="56" rx="6" class="chip r"/><text x="714" y="100" class="h" text-anchor="middle">Ingest</text><text x="714" y="118" class="sub" text-anchor="middle">webhook + poll</text>
+<polyline points="754,106 770,106" class="edge" marker-end="url(#ah1)"/>
+<rect x="770" y="78" width="84" height="56" rx="6" class="chip r"/><text x="812" y="100" class="h" text-anchor="middle">Classify</text><text x="812" y="118" class="sub" text-anchor="middle">rules, then model</text>
+<polyline points="854,106 870,106" class="edge" marker-end="url(#ah1)"/>
+<rect x="870" y="78" width="72" height="56" rx="6" class="chip r"/><text x="906" y="100" class="h" text-anchor="middle">Verify</text><text x="906" y="118" class="sub" text-anchor="middle">vs the pool</text>
+<polyline points="942,106 958,106" class="edge" marker-end="url(#ah1)"/>
+<rect x="958" y="78" width="68" height="56" rx="6" class="chip r"/><text x="992" y="100" class="h" text-anchor="middle">Act</text><text x="992" y="118" class="sub" text-anchor="middle">by class</text>
+<polyline points="992,134 992,160" class="edge" marker-end="url(#ah1)"/>
+<rect x="674" y="160" width="352" height="104" rx="6" class="chip soft-r"/>
+<text x="688" y="182" class="h" text-anchor="start">interested / question → ledger row + acknowledgment + ping</text>
+<text x="688" y="202" class="li" text-anchor="start">unsubscribe · DNC · hard bounce → suppression, permanent</text>
+<text x="688" y="220" class="li" text-anchor="start">not now → park with a date · out of office → pause</text>
+<text x="688" y="238" class="li" text-anchor="start">not interested → 90-day cooldown · cannot tell → a person</text>
+<text x="688" y="256" class="li" text-anchor="start">verify_failed → hold; never reaches David</text>
+<!-- reply -> record -->
+<polyline points="1040,214 1080,214" class="edge ec" marker-end="url(#ah1)"/>
+<text x="1060" y="204" class="elbl" text-anchor="middle">row</text>
+<!-- record -->
+<rect x="1080" y="60" width="300" height="220" rx="8" class="box core"/>
+<rect x="1094" y="78" width="272" height="186" rx="6" class="chip soft-c"/>
+<text x="1108" y="100" class="h" text-anchor="start">Handoff ledger · one row per positive</text>
+<text x="1108" y="122" class="li" text-anchor="start">Quintel writes: identity, context, the reply,</text>
+<text x="1108" y="140" class="li" text-anchor="start">the email replied to, entry timestamp, fee</text>
+<text x="1108" y="164" class="li th" text-anchor="start">David writes: CRM check, contacted →</text>
+<text x="1108" y="182" class="li th" text-anchor="start">application → approved → funded / dead,</text>
+<text x="1108" y="200" class="li th" text-anchor="start">LeasePath id, referral coded, reason code</text>
+<text x="1108" y="226" class="sub" text-anchor="start">Views: his queue with the clock, open deals,</text>
+<text x="1108" y="244" class="sub" text-anchor="start">reconciliation (the invoice), sources, export</text>
+<!-- David -->
+<rect x="1140" y="320" width="180" height="70" rx="8" class="chip hm"/>
+<text x="1230" y="346" class="h" text-anchor="middle">David</text>
+<text x="1230" y="366" class="sub" text-anchor="middle">calls by hand · two-hour clock</text>
+<polyline points="1200,280 1200,320" class="edge eh" marker-end="url(#ah1)"/>
+<text x="1188" y="304" class="elbl" text-anchor="end">Slack ping, 2h re-ping</text>
+<polyline points="1260,320 1260,280" class="edge eh" marker-end="url(#ah1)"/>
+<text x="1272" y="304" class="elbl" text-anchor="start">status, reason</text>
+<!-- feedback: labels -->
+<polyline points="850,280 850,430 330,430 330,282" class="edge es dashed" marker-end="url(#ah1)"/>
+<text x="590" y="422" class="elbl" text-anchor="middle">every class → label on the send row (arm, copy, state, feed): the measurement that decides which feeds keep running</text>
+<!-- suppression table -->
+<rect x="560" y="460" width="380" height="76" rx="8" class="chip soft-w"/>
+<text x="750" y="484" class="h" text-anchor="middle">Suppression · one table, all domains, all lists</text>
+<text x="750" y="504" class="sub" text-anchor="middle">unsubscribes · hard bounces · DNC · pcf_book (CRM collisions) · April list</text>
+<text x="750" y="522" class="sub" text-anchor="middle">our own touches · Alek's Origami campaigns · flpool touches</text>
+<polyline points="940,280 940,498" class="edge er" marker-end="url(#ah1)"/>
+<text x="952" y="380" class="elbl" text-anchor="start">DNC, bounce → minutes</text>
+<polyline points="1230,390 1230,498 940,498" class="edge eh"/>
+<text x="1090" y="490" class="elbl" text-anchor="middle">CRM check: existing customer, 9 months, other AE → pcf_book</text>
+<polyline points="560,498 100,498 100,282" class="edge dashed" marker-end="url(#ah1)"/>
+<text x="330" y="490" class="elbl" text-anchor="middle">checked at plan time and at send time; mirrored to Smartlead's block list</text>
+</svg></div>
+<figcaption><span class="key"><i class="sw" style="background:var(--send)"></i>Send machine</span><span class="key"><i class="sw" style="background:var(--reply)"></i>Reply machine</span><span class="key"><i class="sw" style="background:var(--record)"></i>Record</span><span class="key"><i class="sw" style="background:var(--human)"></i>David, by hand</span><span class="key"><i class="sw" style="background:var(--warn)"></i>Suppression</span><span>Dashed: feedback loops</span></figcaption></figure>
+</section>
+
+<article class="stage send" id="send">
+<div class="shead"><div class="badge">1</div><div><h3>The send machine: Alek's model, with three corrections</h3><p>Stages 1 to 5 of the Six-State Outbound Model stand as designed: nightly pull, ledger and buy-box gate, two drafted lines from stored facts with a validator, a 4 am planner, Smartlead sending from 30 mailboxes on six state domains. Three things change after the source-feed fetch and the 09-22 call.</p>
+<div class="meta"><span class="tag">Scoped in Alek's artifact</span><span class="tag have">Mailboxes warming since ~09-22</span><span class="tag build">Connectors and tables to build</span></div></div></div>
+<div class="three">
+<div class="box"><h4 style="color:var(--send)">Contact append is the gate, not the connectors</h4><p style="font-size:14px">Only about six of the 26 build-now feeds carry an email. Colorado UCC, the TCEQ feeds and the diesel registrations name a company and an address and stop. The model assumes 50% "valid email found"; for rural 2–25 employee companies known by name and address that number is unmeasured. Run 200 through website → email → verify first. Under ~25%, the general bucket (FMCSA, email-bearing rosters) carries week one.</p></div>
+<div class="box"><h4 style="color:var(--send)">The planner needs a ramp, not a fixed 150 per domain</h4><p style="font-size:14px">Alek's planner allocates 150 per domain per day from day one, which is 900 a day. David's ramp is 500, then 1,000, then 5,000, and mailboxes fresh out of warmup should not jump to 30 a day. The planner gets a per-mailbox ramp (10, 15, 20, 30 over two weeks) and a global daily cap Simon sets; the state split runs under the cap.</p></div>
+<div class="box"><h4 style="color:var(--send)">Second domain per state starts warming now</h4><p style="font-size:14px">One domain per state means a flagged domain takes a state dark for weeks, and warmup is the long pole. The second family should be warming today so it lands when it lands; it also moves each domain from 5 mailboxes to 3, inside Smartlead's guidance.</p></div>
+</div>
+<div class="tbl"><table><thead><tr><th>Stage</th><th>What it does</th><th>Where it runs</th><th>Corrected by</th></tr></thead><tbody>
+<tr><td class="s">1 Sources + pull</td><td>11 pm pull from the build-now feeds; intent bucket (live events) and general bucket (rosters, FMCSA fleets 2–7 trucks)</td><td>Quintel, nightly</td><td>26 feeds build now; CO UCC and FMCSA first; four hosts need a US server</td></tr>
+<tr><td class="s">2 Pool + box gate</td><td>dedupe on USDOT → website → name+state+ZIP; buy-box drop list; one sequence per contact; 90-day cooldown</td><td>Quintel</td><td>uses the existing <span class="mono">company</span> and <span class="mono">lender</span> tables; suppression is one table (see loops above)</td></tr>
+<tr><td class="s">3 Draft</td><td>two personalized lines from stored facts; validator rejects anything not in the facts; plain template when facts are thin</td><td>Quintel</td><td>morning review becomes a sampled queue, not 120 emails read before 4:30 am</td></tr>
+<tr><td class="s">4 Plan + push</td><td>slots per state; intent first, activity, then rosters; API push with daily caps</td><td>Quintel, 4–4:30 am</td><td>ramp schedule and global cap; a row can also enter from a trigger, not only the nightly batch</td></tr>
+<tr><td class="s">5 Smartlead</td><td>rotates mailboxes, keeps warmup, stops on reply, holds the master inbox, fires webhooks</td><td>Smartlead, 7 am–4 pm local</td><td>its per-campaign dedupe is not suppression; our table is the source of truth</td></tr>
+</tbody></table></div>
+</article>
+
+<article class="stage reply" id="reply">
+<div class="shead"><div class="badge">2</div><div><h3>The reply machine: sort everything, converse with no one</h3><p>Scoped in neither Alek's model nor the ledger, and on the critical path: the first positive arrives the first morning and the ledger row is supposed to exist before David calls. Sized for 20 to 50 replies a day, of which two to four are positives.</p>
+<div class="meta"><span class="tag gap">Not in either prior scope</span><span class="tag build">To build, first block</span></div></div></div>
+<figure><div class="scroll"><svg viewBox="0 0 1400 400" role="img" aria-label="Reply pipeline: Smartlead webhook and inbox poll feed a raw store; rules classify bounces, unsubscribes and out-of-office; a model classifies the rest into eight classes; a person confirms the first 200 and any low-confidence result; positives are verified against the pool; then four outcomes: ledger row with acknowledgment and ping, suppression, park or pause, hold for a person." style="min-width:1100px">
+<defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahp"/></marker></defs>
+<text x="20" y="30" class="colh">INGEST</text><text x="300" y="30" class="colh">CLASSIFY</text><text x="720" y="30" class="colh">GATE</text><text x="900" y="30" class="colh">VERIFY</text><text x="1090" y="30" class="colh">ACT</text>
+<rect x="20" y="60" width="120" height="50" rx="6" class="chip r"/><text x="80" y="81" class="h" text-anchor="middle">Smartlead</text><text x="80" y="98" class="sub" text-anchor="middle">webhooks</text>
+<rect x="20" y="130" width="120" height="50" rx="6" class="chip r"/><text x="80" y="151" class="h" text-anchor="middle">Master inbox</text><text x="80" y="168" class="sub" text-anchor="middle">poll every 15 min</text>
+<polyline points="140,85 160,85 160,120 170,120" class="edge" marker-end="url(#ah2)"/>
+<polyline points="140,155 160,155 160,120" class="edge"/>
+<rect x="170" y="90" width="110" height="60" rx="6" class="chip soft-r"/><text x="225" y="112" class="h" text-anchor="middle">Raw store</text><text x="225" y="130" class="sub" text-anchor="middle">thread, mailbox,</text><text x="225" y="144" class="sub" text-anchor="middle">campaign, the email</text>
+<polyline points="280,120 300,120" class="edge" marker-end="url(#ah2)"/>
+<rect x="300" y="60" width="180" height="60" rx="6" class="chip soft-s"/><text x="390" y="82" class="h ts" text-anchor="middle">Rules first</text><text x="390" y="100" class="sub" text-anchor="middle">bounce codes · auto-reply headers</text><text x="390" y="114" class="sub" text-anchor="middle">list-unsubscribe · "remove me"</text>
+<rect x="300" y="140" width="180" height="60" rx="6" class="chip r"/><text x="390" y="162" class="h" text-anchor="middle">Model, one job</text><text x="390" y="180" class="sub" text-anchor="middle">pick one class + confidence</text><text x="390" y="194" class="sub" text-anchor="middle">no drafting</text>
+<polyline points="300,120 290,120 290,170 300,170" class="edge" marker-end="url(#ah2)"/>
+<text x="286" y="140" class="elbl" text-anchor="end">not a rule hit</text>
+<rect x="500" y="60" width="200" height="140" rx="6" class="box"/>
+<text x="600" y="82" class="colh" text-anchor="middle">CLASSES</text>
+<text x="514" y="104" class="li th">interested · question</text>
+<text x="514" y="122" class="li">not now · not interested</text>
+<text x="514" y="140" class="li">wrong person · out of office</text>
+<text x="514" y="158" class="li tw">do not contact · bounce</text>
+<text x="514" y="176" class="li sub">cannot tell</text>
+<polyline points="480,90 500,90" class="edge" marker-end="url(#ah2)"/><polyline points="480,170 500,170" class="edge" marker-end="url(#ah2)"/>
+<rect x="720" y="90" width="150" height="60" rx="6" class="chip hm"/><text x="795" y="112" class="h" text-anchor="middle">A person confirms</text><text x="795" y="130" class="sub" text-anchor="middle">first 200 replies; then only</text><text x="795" y="144" class="sub" text-anchor="middle">cannot-tell and low confidence</text>
+<polyline points="700,120 720,120" class="edge" marker-end="url(#ah2)"/>
+<rect x="900" y="90" width="150" height="60" rx="6" class="chip r"/><text x="975" y="112" class="h" text-anchor="middle">Verify vs pool</text><text x="975" y="130" class="sub" text-anchor="middle">domain, FMCSA legal name,</text><text x="975" y="144" class="sub" text-anchor="middle">SOS officer must reconcile</text>
+<polyline points="870,120 900,120" class="edge" marker-end="url(#ah2)"/>
+<text x="885" y="110" class="elbl" text-anchor="middle">positives</text>
+<!-- outcomes -->
+<rect x="1090" y="50" width="290" height="70" rx="6" class="chip soft-c"/><text x="1104" y="72" class="h tc">Ledger row + acknowledgment + ping</text><text x="1104" y="90" class="li">interested, question · status routed · clock starts</text><text x="1104" y="108" class="li">David copied on the acknowledgment</text>
+<rect x="1090" y="135" width="290" height="60" rx="6" class="chip soft-w"/><text x="1104" y="157" class="h tw">Suppression</text><text x="1104" y="175" class="li">DNC, unsubscribe, hard bounce: permanent, all domains, within minutes</text>
+<rect x="1090" y="210" width="290" height="60" rx="6" class="chip"/><text x="1104" y="232" class="h">Park or pause</text><text x="1104" y="250" class="li">not now → re-enter on the date · OOO → resume after return + 2 days</text>
+<rect x="1090" y="285" width="290" height="60" rx="6" class="chip hm"/><text x="1104" y="307" class="h">Hold for a person</text><text x="1104" y="325" class="li">verify_failed, cannot tell · never reaches David unread</text>
+<polyline points="1050,120 1070,120 1070,85 1090,85" class="edge ec" marker-end="url(#ah2)"/>
+<polyline points="700,120 710,120 710,165 1090,165" class="edge" marker-end="url(#ah2)"/>
+<polyline points="710,165 710,240 1090,240" class="edge" marker-end="url(#ah2)"/>
+<polyline points="1050,120 1070,120 1070,315 1090,315" class="edge eh" marker-end="url(#ah2)"/>
+<polyline points="795,150 795,315 1070,315" class="edge eh"/>
+<text x="300" y="250" class="callout">Every class writes a label on the send row it answered.</text>
+<text x="300" y="272" class="sub">Rules, not a model, decide the classes with legal or deliverability weight. The model never drafts; it only sorts.</text>
+<text x="300" y="300" class="callout">Nothing here writes to a prospect except the fixed acknowledgment.</text>
+<text x="300" y="322" class="sub">Rule for changing that: 100 positives on the ledger with David's status and reason code on each, then drafts a person approves, then the approval rate decides.</text>
+</svg></div>
+<figcaption><span class="key"><i class="sw" style="background:var(--send)"></i>Deterministic rules</span><span class="key"><i class="sw" style="background:var(--reply)"></i>Automated</span><span class="key"><i class="sw" style="background:var(--human)"></i>A person</span><span class="key"><i class="sw" style="background:var(--warn)"></i>Suppression</span></figcaption></figure>
+
+<div class="tbl"><table><thead><tr><th>Class</th><th>Sequence</th><th>Suppression</th><th>Ledger</th><th>Message to the owner</th><th>David</th></tr></thead><tbody>
+<tr><td class="h">interested</td><td>stop</td><td>none</td><td><b>row created</b>, status routed, clock starts</td><td>acknowledgment, same thread, same mailbox, David copied</td><td>Slack ping (+ text); re-ping at 2 h if not marked contacted</td></tr>
+<tr><td class="h">question</td><td>stop</td><td>none</td><td>row created, flagged question</td><td>acknowledgment with the one-line answer (variant Q)</td><td>same ping; he answers by hand</td></tr>
+<tr><td>not now</td><td>stop</td><td>none</td><td>no row; outreach row parked with a date</td><td>none</td><td>none; re-enters a sequence on the date</td></tr>
+<tr><td>not interested</td><td>stop</td><td>90-day cooldown</td><td>no row</td><td>none</td><td>none</td></tr>
+<tr><td>wrong person</td><td>stop</td><td>address suppressed; referred name captured</td><td>no row</td><td>none in v1</td><td>none</td></tr>
+<tr><td class="w">do not contact / unsubscribe</td><td>stop</td><td><b>permanent, all domains, within minutes</b></td><td>no row</td><td>none, or a one-line confirmation</td><td>none</td></tr>
+<tr><td>out of office</td><td>pause; resume after return + 2 days</td><td>none</td><td>no row</td><td>none</td><td>none</td></tr>
+<tr><td class="w">bounce (hard)</td><td>stop</td><td>permanent</td><td>no row</td><td>none</td><td>none; domain bounce counter increments</td></tr>
+<tr><td>verify_failed</td><td>stop</td><td>hold</td><td>no row until cleared</td><td>none</td><td>none</td></tr>
+</tbody></table></div>
+
+<div class="two">
+<div class="box"><h4>Automated from day one <span class="pill auto">AUTO</span></h4><ul><li>Ingest, raw store, thread and campaign attribution</li><li>Rule classes: bounce, unsubscribe, out of office</li><li>Model classes for the rest, with confidence</li><li>Verification of positives against the pool</li><li>Suppression writes and the Smartlead block-list mirror</li><li>The acknowledgment (fixed copy, five slots) and the ping</li><li>Ledger row creation with the reply and the email attached</li><li>Labels back on every send row</li></ul></div>
+<div class="box"><h4>Stays a person's, by rule <span class="pill hum">HUMAN</span></h4><ul><li>Every conversation with an owner: the call, the answer to a question, any follow-up. David's.</li><li>Confirming every class on the first 200 replies; after that, cannot-tell and low confidence</li><li>Clearing verify_failed rows</li><li>The CRM check and its result on the row</li><li>Reason codes on every dead lead</li></ul><p class="muted">The unlock for drafted replies is a number: 100 positives with David's status and reason code. Not before.</p></div>
+</div>
+</article>
+
+<article class="stage human" id="ack">
+<div class="shead"><div class="badge">A</div><div><h3>The acknowledgment: David's spec made exact</h3><p>His spec: the owner gets a response acknowledging his message; David is introduced in the same message and copied; the owner gets the timeline. Receipt time is the reply's arrival in Eastern, whatever state it came from, because the promise is about David's day. The message is a reply in the owner's thread from the mailbox he wrote to, so it threads, carries the domain's DKIM, and does not look like a new cold email.</p>
+<div class="meta"><span class="tag">Fixed copy, five slots</span><span class="tag build">Availability config to build</span><span class="tag gap">Four gaps for David</span></div></div></div>
+<div class="two">
+<div class="tbl"><table><thead><tr><th>Received (Eastern)</th><th>Promise</th><th>Note</th></tr></thead><tbody>
+<tr><td class="num">Mon–Fri 5:00 AM – 6:30 PM</td><td class="h">"today"</td><td>his rule</td></tr>
+<tr><td class="num">Mon–Thu after 6:30 PM, or before 5:00 AM</td><td>"tomorrow morning"</td><td>he wrote 6:30 PM Pacific; read as Eastern, confirm</td></tr>
+<tr><td class="num">Fri after 6:30 PM</td><td>"Monday"</td><td>implied</td></tr>
+<tr><td class="num">Sat before 1:00 PM</td><td>"today"</td><td>his rule implies Saturday mornings; confirm</td></tr>
+<tr><td class="num">Sat after 1:00 PM · Sunday</td><td>"Monday"</td><td>Sunday not in the spec</td></tr>
+<tr><td class="num">Holiday, or a day he has blocked</td><td>next working day</td><td class="w">needs a config he edits, not a code change</td></tr>
+</tbody></table></div>
+<div class="box warn"><h4>Why "today" is the dangerous word</h4><p style="font-size:14px">A promise the ledger's two-hour clock cannot back is worse than no promise. Rule: the acknowledgment's timeline and the re-ping are generated from the same availability config (working hours, days off, holidays) that David edits himself, so the two never disagree and the message never names a day he is not working.</p>
+<h4 style="margin-top:6px">The scheduling link</h4><p style="font-size:14px">David: people like picking a time, it creates an obligation, but a Calendly link in the first email might get caught in spam. The spam concern does not apply to an in-thread reply. Rule: <b>no link in the cold sequence; a link in the acknowledgment, second to the phone promise.</b> It writes the booked time to the ledger row. Drop it if bookings are under one in ten over the first 50 positives. Focus group Q7 tests the preference on Saturday.</p></div>
+</div>
+<div class="email" aria-label="Acknowledgment, variant I: Ironmark sender, interested reply">
+<p>Thanks for getting back to me, <span class="slot">[first name]</span>. I've copied <span class="slot h">David LaSaee</span>, who handles this for the businesses we work with; he'll call you <span class="slot">[today / tomorrow morning / Monday]</span> at <span class="slot">[phone]</span>. If a specific time works better, you can pick one here: <span class="slot">[link]</span>. Nothing is needed from you before the call.</p>
+<p>[Ironmark sender]</p>
+<p class="foot">[postal address] · [opt-out line]</p>
+</div>
+<p class="muted">Variant I, under 90 words, the three parts in the order David gave them. Highlighted text is a slot; nothing is generated. Variant Q adds one sentence answering the question ("how did you get my information," "what is the catch") once Saturday says which line owners believe. Variant D, with David as sender, drops the introduction and speaks in the first person.</p>
+</article>
+
+<article class="stage human" id="sender">
+<div class="shead"><div class="badge">!</div><div><h3>The sender problem the spec exposes</h3><p>"I get introduced in the same message" assumes someone other than David is sending. But all 30 mailboxes are provisioned with David as the named sender. Those are two different machines, and the mailbox provisioning has already picked one while the spec assumes the other. It has to be settled before 10-06, and the cheapest test arrives Saturday.</p>
+<div class="meta"><span class="tag gap">Open · thread T32</span><span class="tag">Focus group Q1 and Q5 on 09-26</span></div></div></div>
+<figure><div class="scroll"><svg viewBox="0 0 1200 250" role="img" aria-label="Two variants side by side. Variant I: an Ironmark sender emails the owner, the owner replies, the acknowledgment introduces David and copies him, David calls; Providence is named after the CRM check. Variant D: David is the sender from an Ironmark domain, the acknowledgment says I'll call you, David calls; a truthful-header question is flagged." style="min-width:900px">
+<defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahp"/></marker></defs>
+<rect x="20" y="16" width="560" height="26" rx="4" class="band r"/><text x="300" y="34" class="bandt tr" text-anchor="middle">VARIANT I · IRONMARK SENDER, DAVID INTRODUCED · recommended, held until Saturday</text>
+<rect x="620" y="16" width="560" height="26" rx="4" class="band"/><text x="900" y="34" class="bandt" text-anchor="middle">VARIANT D · DAVID AS SENDER · what the mailboxes say today</text>
+<!-- variant I -->
+<rect x="20" y="70" width="130" height="50" rx="6" class="chip r"/><text x="85" y="91" class="h" text-anchor="middle">Ironmark name</text><text x="85" y="108" class="sub" text-anchor="middle">ironmark state domain</text>
+<polyline points="150,95 190,95" class="edge" marker-end="url(#ah3)"/><text x="170" y="86" class="elbl" text-anchor="middle">cold</text>
+<rect x="190" y="70" width="100" height="50" rx="6" class="chip"/><text x="240" y="91" class="h" text-anchor="middle">Owner</text><text x="240" y="108" class="sub" text-anchor="middle">replies "yes"</text>
+<polyline points="290,95 330,95" class="edge er" marker-end="url(#ah3)"/>
+<rect x="330" y="60" width="150" height="70" rx="6" class="chip soft-r"/><text x="405" y="82" class="h" text-anchor="middle">Acknowledgment</text><text x="405" y="100" class="sub" text-anchor="middle">introduces David,</text><text x="405" y="116" class="sub" text-anchor="middle">copies him, gives the day</text>
+<polyline points="480,95 520,95" class="edge eh" marker-end="url(#ah3)"/>
+<rect x="520" y="70" width="60" height="50" rx="6" class="chip hm"/><text x="550" y="91" class="h" text-anchor="middle">David</text><text x="550" y="108" class="sub" text-anchor="middle">calls</text>
+<text x="20" y="160" class="li">✓ matches the spec as David wrote it</text>
+<text x="20" y="180" class="li">✓ matches the 09-22 decision: own brand on top, Providence named after the CRM check</text>
+<text x="20" y="200" class="li">✓ From line names the business that sent it (CAN-SPAM truthful header)</text>
+<text x="20" y="220" class="li sub">Cost: display names on 30 mailboxes change (about an hour); the "who are you" question gets asked more</text>
+<!-- variant D -->
+<rect x="620" y="70" width="130" height="50" rx="6" class="chip hm"/><text x="685" y="91" class="h" text-anchor="middle">"David"</text><text x="685" y="108" class="sub" text-anchor="middle">on an ironmark domain</text>
+<polyline points="750,95 790,95" class="edge" marker-end="url(#ah3)"/><text x="770" y="86" class="elbl" text-anchor="middle">cold</text>
+<rect x="790" y="70" width="100" height="50" rx="6" class="chip"/><text x="840" y="91" class="h" text-anchor="middle">Owner</text><text x="840" y="108" class="sub" text-anchor="middle">replies "yes"</text>
+<polyline points="890,95 930,95" class="edge er" marker-end="url(#ah3)"/>
+<rect x="930" y="60" width="150" height="70" rx="6" class="chip soft-r"/><text x="1005" y="82" class="h" text-anchor="middle">Acknowledgment</text><text x="1005" y="100" class="sub" text-anchor="middle">"I'll call you today"</text><text x="1005" y="116" class="sub" text-anchor="middle">nobody to introduce</text>
+<polyline points="1080,95 1120,95" class="edge eh" marker-end="url(#ah3)"/>
+<rect x="1120" y="70" width="60" height="50" rx="6" class="chip hm"/><text x="1150" y="91" class="h" text-anchor="middle">David</text><text x="1150" y="108" class="sub" text-anchor="middle">calls</text>
+<text x="620" y="160" class="li">✓ one voice from first email to call; his suggestion on 09-22 was to test it</text>
+<text x="620" y="180" class="li tw">? From line: a Providence AE's name on our domain is a counsel question, not a copy choice</text>
+<text x="620" y="200" class="li tw">? "David at Providence" on our domain is the option the 09-22 call ruled out</text>
+<text x="620" y="220" class="li sub">Cost: the spec's "introduced and copied" line cannot run; Providence surfaces on the first call</text>
+</svg></div>
+<figcaption><span>Build both acknowledgment variants; let Saturday's focus group (sender A/B/C; lender first or a company that sends you to the lender) and David pick. Nothing is hard-wired.</span></figcaption></figure>
+</article>
+
+<article class="stage record" id="record">
+<div class="shead"><div class="badge">3</div><div><h3>The record: two layers in one database, one bridge</h3><p>Alek's stage-2 tables and David's ledger are not competing designs; they are two layers. The mistake to avoid is building David's ledger as a view over the outreach tables. It cannot be: the outreach layer holds every company we ever emailed and is ours alone; the ledger holds only people who replied positively and is shared with a counterparty who is paid on it.</p>
+<div class="meta"><span class="tag">Scoped in ledger.md</span><span class="tag have">Quintel already has the handoff layer's schema</span><span class="tag build">v0 sheet due 09-24 · v1 page before 10-06</span></div></div></div>
+<figure><div class="scroll"><svg viewBox="0 0 1200 330" role="img" aria-label="Two boxes. Left, the outreach layer, private to Quintel: company, contact, outreach lead, outreach event, suppression, daily plan; one row per company, contact and send. Right, the handoff layer, shared with David: registered lead and register event with attribution window and audit log, plus ledger fields; one row per positive reply. A single arrow between them labeled: the reply machine creates a row on interested or question, entry timestamp equals classification time." style="min-width:900px">
+<defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahp"/></marker></defs>
+<rect x="20" y="16" width="500" height="26" rx="4" class="band s"/><text x="270" y="34" class="bandt ts" text-anchor="middle">OUTREACH LAYER · ours, private · Alek's stage 2</text>
+<rect x="680" y="16" width="500" height="26" rx="4" class="band c"/><text x="930" y="34" class="bandt tc" text-anchor="middle">HANDOFF LAYER · shared with David · ledger.md</text>
+<rect x="20" y="56" width="500" height="250" rx="8" class="box core"/>
+<text x="36" y="82" class="h">One row per company, contact and send</text>
+<text x="36" y="108" class="mono ts">company · contact · lender · debt_event</text><text x="300" y="108" class="sub">exist today (123,798 companies)</text>
+<text x="36" y="130" class="mono ts">outreach_lead · outreach_event</text><text x="300" y="130" class="sub">new: one active sequence, every send</text>
+<text x="36" y="152" class="mono ts">suppression</text><text x="300" y="152" class="sub">new: the one table, all sources</text>
+<text x="36" y="174" class="mono ts">daily_plan</text><text x="300" y="174" class="sub">new: slots per state, ramp, cap</text>
+<line x1="36" y1="192" x2="504" y2="192" class="rule"/>
+<text x="36" y="214" class="li">Created by the nightly pull and the planner</text>
+<text x="36" y="234" class="li">Written by Quintel only · visible to us only</text>
+<text x="36" y="254" class="li">Kept forever, for dedupe and cooldown</text>
+<text x="36" y="274" class="li">Key: company (USDOT → website → name+state+ZIP); contact (email)</text>
+<text x="36" y="294" class="li sub">Use the existing company table and identity tooling; no new company_identifier</text>
+<!-- bridge -->
+<polyline points="520,180 680,180" class="edge er" marker-end="url(#ah4)" style="stroke-width:2.5"/>
+<text x="600" y="150" class="callout tr" text-anchor="middle">the only bridge</text>
+<text x="600" y="168" class="elbl" text-anchor="middle">reply machine creates a row</text>
+<text x="600" y="200" class="elbl" text-anchor="middle">on interested / question</text>
+<text x="600" y="216" class="elbl" text-anchor="middle">entry timestamp = classification time</text>
+<rect x="680" y="56" width="500" height="250" rx="8" class="box core"/>
+<text x="696" y="82" class="h">One row per positive reply, and per sourced vendor</text>
+<text x="696" y="108" class="mono tc">registered_lead · register_event</text><text x="940" y="108" class="sub">exist today: status machine,</text>
+<text x="940" y="124" class="sub">attribution_ends_at, actor-typed audit log</text>
+<text x="696" y="146" class="mono tc">referral_item · referral_event</text><text x="940" y="146" class="sub">exist: rep_name, pass_reason, amount</text>
+<text x="696" y="168" class="mono tc">+ CRM check, four flags, LeasePath id,</text><text x="696" y="184" class="mono tc">referral coded, GM, reason code, fee due / paid</text>
+<line x1="696" y1="200" x2="1164" y2="200" class="rule"/>
+<text x="696" y="222" class="li">Created by the reply machine, never by a list</text>
+<text x="696" y="242" class="li">Quintel writes identity, context, reply, fee · <tspan class="th">David writes the rest</tspan></text>
+<text x="696" y="262" class="li">Nothing deleted; wrong rows voided · Providence = an account, David = a user</text>
+<text x="696" y="282" class="li sub">Inference (medium): a Providence account on the existing tables fits;</text>
+<text x="696" y="298" class="li sub">the account-keyed constraint is the thing to check before building</text>
+</svg></div>
+<figcaption><span>Attribution lives in the handoff layer: the fee rule (our timestamp before Providence's application date, funded within twelve months, any AE) needs the row's entry timestamp to be the positive reply, not the send.</span></figcaption></figure>
+<div class="two">
+<div class="box"><h4 style="color:var(--record)">The sheet and the page</h4><p style="font-size:14px">Keep the order in ledger.md (sheet now, page before 10-06) with one change: the sheet is a rendered export of the handoff layer that David also types into, synced both ways on his columns only. The pipeline writes the sheet, not a person, because the row and the reply text must exist minutes after the owner writes. If two-way sync with a sheet costs more than a day, skip it and ship the page with the same columns.</p></div>
+<div class="box"><h4 style="color:var(--record)">What David sees, in the order he hits it</h4><ol><li>His queue: new leads not yet contacted, oldest first, clock running, the reply and the email replied to on the row</li><li>The CRM check: clear, existing customer, contacted within nine months, other AE. Collisions go to suppression as <span class="mono">pcf_book</span></li><li>Export in his LeasePath column order, one click</li><li>Four flags with dates, LeasePath id, referral coded</li><li>Reason code and one line on every dead lead</li></ol></div>
+</div>
+</article>
+
+<section class="block" id="parts">
+<h2>The other moving parts</h2>
+<p class="sub">Beyond Alek's five stages and the reply machine, these have to exist or the engine is unsafe to run. Ordered by what breaks first.</p>
+<div class="parts">
+<div class="part"><div class="k">01 · BREAKS A DOMAIN</div><h4>One suppression table</h4><p>Our touches across every domain, unsubscribes, hard bounces, DNC, pcf_book returns, David's April list, Alek's Origami campaigns, flpool touches. Checked at plan time and send time; mirrored to Smartlead's block list nightly and on every DNC event.</p></div>
+<div class="part"><div class="k">02 · BREAKS A DOMAIN</div><h4>Deliverability monitor with brakes</h4><p>Per domain and mailbox, daily: bounce, reply, spam-complaint rate from Google Postmaster, warmup health. A domain over 3% bounce is paused by the planner, not by a person noticing. A mailbox under the reply floor after 600 sends rotates out.</p></div>
+<div class="part"><div class="k">03 · BREAKS A DOMAIN</div><h4>The ramp in the planner</h4><p>Per-mailbox ramp (10, 15, 20, 30 over two weeks) and a global daily cap Simon sets. David's 500 → 1,000 → 5,000 is the same rule; Alek's 900 a day on day one is its third step.</p></div>
+<div class="part"><div class="k">04 · BREAKS TRUST</div><h4>David's availability config</h4><p>Working hours, days off, holidays, editable by him. Drives the acknowledgment's promise and the two-hour re-ping from one source so they never disagree.</p></div>
+<div class="part"><div class="k">05 · BREAKS TRUST</div><h4>Ping and digest</h4><p>Positive: Slack immediately, text if he wants it, with the packet and the reply. Two-hour re-ping if not marked contacted. 7 AM Eastern digest of overnight positives. Weekly numbers Tuesday. Nothing else pings.</p></div>
+<div class="part"><div class="k">06 · BREAKS TRUST</div><h4>The trust surface</h4><p>Site v0 before the first send: entity in the footer, street address, about page with names, LinkedIn page, the Quintel parent link. The landing page the email links to. The "how did you get my information" line the focus group picks.</p></div>
+<div class="part"><div class="k">07 · GATES VOLUME</div><h4>Contact-append measurement</h4><p>Website → email → verify on 200 address-only companies from Colorado UCC and TXG11. The found-and-verified rate replaces the model's 0.5 and decides whether the intent bucket fills at all.</p></div>
+<div class="part"><div class="k">08 · GATES VOLUME</div><h4>Sampled morning review</h4><p>A queue with approve and reject; a random 20 drafts total, not 20 per state. The push is blocked on rejections above a threshold, not on a person having read 120 emails before 4:30 am.</p></div>
+<div class="part"><div class="k">09 · LEGAL</div><h4>Compliance footer and opt-out path</h4><p>Ironmark's postal address (the entity has to exist), an opt-out that lands in suppression within minutes, plain text, no pixels. State disclosure and the truthful-header question go to counsel by 10-03.</p></div>
+<div class="part"><div class="k">10 · LEARNING</div><h4>Measurement</h4><p>Per arm, copy, state, feed, campaign: sent, delivered, bounced, replied by class, positive, routed, hours to contacted, application, funded. Wilson intervals; gates pre-registered (3% bounce; scale at 1% positive; rewrite under 0.3% after 600).</p></div>
+<div class="part"><div class="k">11 · LEARNING</div><h4>Not-now re-entry and triggered sends</h4><p>Parked rows re-enter on their date. Later, a row enters when its event fires (a new UCC, a truck added on the FMCSA diff). Write the planner so a row can enter from a trigger, not only the nightly batch.</p></div>
+<div class="part"><div class="k">12 · LEARNING</div><h4>CRM collision write-back</h4><p>When David marks a row existing customer, nine months, or other AE, the company goes to suppression as pcf_book and the send machine stops touching it. Until the sync exists, a person copies it.</p></div>
+</div>
+</section>
+
+<section class="block" id="build">
+<h2>Build order against 10-06</h2>
+<p class="sub">Everything in the first block is small; the risk is not effort but forgetting one. The reply machine is built before the connectors, because the general bucket carries week one and the first positive arrives the first morning.</p>
+<figure><div class="scroll"><svg viewBox="0 0 1200 200" role="img" aria-label="Timeline from Sep 24 to the 100-positive gate: Sep 24 design and ledger sheet, Sep 26 focus group decides the sender, Sep 29 site v0 trust page, Oct 3 reply machine live, Oct 6 first send at 500 a day, then ramp to 900, then the 100 labeled positives gate for any drafted reply." style="min-width:900px">
+<defs><marker id="ah5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahp"/></marker></defs>
+<line x1="40" y1="100" x2="1160" y2="100" class="edge" marker-end="url(#ah5)"/>
+<g><line x1="80" y1="88" x2="80" y2="112" class="tick"/><text x="80" y="74" class="mono" text-anchor="middle">09-24</text><text x="80" y="134" class="li" text-anchor="middle">design ·</text><text x="80" y="150" class="li" text-anchor="middle">ledger v0 sheet</text></g>
+<g><line x1="240" y1="88" x2="240" y2="112" class="tick"/><circle cx="240" cy="100" r="7" class="chip hm"/><text x="240" y="74" class="mono th" text-anchor="middle">09-26</text><text x="240" y="134" class="li" text-anchor="middle">focus group</text><text x="240" y="150" class="li" text-anchor="middle">→ sender decided</text></g>
+<g><line x1="400" y1="88" x2="400" y2="112" class="tick"/><text x="400" y="74" class="mono" text-anchor="middle">09-29</text><text x="400" y="134" class="li" text-anchor="middle">site v0</text><text x="400" y="150" class="li" text-anchor="middle">trust page</text></g>
+<g><line x1="580" y1="88" x2="580" y2="112" class="tick"/><circle cx="580" cy="100" r="7" class="chip soft-r"/><text x="580" y="74" class="mono tr" text-anchor="middle">10-03</text><text x="580" y="134" class="li" text-anchor="middle">reply machine live</text><text x="580" y="150" class="li" text-anchor="middle">three days of slack</text></g>
+<g><line x1="760" y1="88" x2="760" y2="112" class="tick"/><circle cx="760" cy="100" r="7" class="chip soft-s"/><text x="760" y="74" class="mono ts" text-anchor="middle">10-06</text><text x="760" y="134" class="li" text-anchor="middle">first send</text><text x="760" y="150" class="li" text-anchor="middle">~500 a day, warmup done</text></g>
+<g><line x1="940" y1="88" x2="940" y2="112" class="tick"/><text x="940" y="74" class="mono" text-anchor="middle">+2 weeks</text><text x="940" y="134" class="li" text-anchor="middle">ramp to 900 · second</text><text x="940" y="150" class="li" text-anchor="middle">domains landing</text></g>
+<g><line x1="1110" y1="88" x2="1110" y2="112" class="tick"/><circle cx="1110" cy="100" r="7" class="chip soft-w"/><text x="1110" y="74" class="mono tw" text-anchor="middle">100 positives</text><text x="1110" y="134" class="li" text-anchor="middle">labeled → drafted</text><text x="1110" y="150" class="li" text-anchor="middle">replies considered</text></g>
+<text x="600" y="186" class="elbl" text-anchor="middle">the 3-per-1,000 positive rate is re-measured on the first 2,000 sends; only the alert cadence changes if it moves</text>
+</svg></div></figure>
+<div class="cols3">
+<div class="col must"><h4 style="color:var(--reply)">Must exist at first send · target 10-03</h4><ol><li>Suppression table loaded from every source; Smartlead block list synced</li><li>Reply ingest (webhook + poll), raw store, rule classes</li><li>Model classification with the person-confirms gate on the first 200</li><li>Pool verification on positives</li><li>Handoff row on interested / question, reply and email attached; sheet or page, pipeline-populated</li><li>Acknowledgment: availability config, timeline rule, three variants, in-thread, David copied</li><li>Ping, two-hour re-ping, 7 AM digest</li><li>Bounce and complaint counters with the 3% brake</li><li>Planner with ramp and global cap; Alek's state split under it</li><li>Send-row labels from every class</li></ol></div>
+<div class="col lag"><h4 style="color:var(--send)">Can lag by a week or two</h4><ul><li>Nightly connectors beyond Colorado UCC and FMCSA</li><li>The v1 ledger page and David's login, if the populated sheet works; the vendor board</li><li>The scheduling page that writes to the row (a plain Calendly link is fine for the first 50)</li><li>Second domain per state (start warming now)</li><li>pcf_book write-back from the CRM check (a person copies it until the sync exists)</li></ul></div>
+<div class="col off"><h4 style="color:var(--warn)">Not before 100 labeled positives</h4><ul><li>Any drafted reply to a prospect</li><li>Then: the classes with the most volume and the least judgment first ("how did you get my info," "not now"), a person approves each draft, and the approval rate over the next 100 decides whether drafts go unreviewed</li></ul><p class="muted">Write the rule into decisions.md when that file exists.</p></div>
+</div>
+</section>
+
+<section class="block" id="risks">
+<h2>Risks this design carries</h2>
+<div class="tbl"><table><thead><tr><th>Risk</th><th>Why it matters</th><th>What is done about it</th></tr></thead><tbody>
+<tr><td>The 3-per-1,000 positive rate is from one small test</td><td>the reply machine's sizing and David's five-a-day ceiling both depend on it</td><td>first 2,000 sends re-measure it; alert cadence is the only thing that changes</td></tr>
+<tr><td class="w">Sender identity unresolved while mailboxes already say "David"</td><td>changes the acknowledgment, the CAN-SPAM read and the brand argument</td><td>two template variants; focus group Saturday; display names changeable in an hour</td></tr>
+<tr><td>"Today" promised and not kept</td><td>trust, and the two-hour rule David set himself</td><td>promise and re-ping generated from one availability config he edits</td></tr>
+<tr><td>Classification error on a DNC or unsubscribe</td><td>legal and deliverability weight</td><td>rules, not a model, for those classes; person-confirms gate on the first 200</td></tr>
+<tr><td>Ledger built as a view over the outreach tables</td><td>shares our whole pool with a counterparty; violates the ledger's own row rule</td><td>two layers, one bridge</td></tr>
+<tr><td>Smartlead's per-campaign dedupe mistaken for suppression</td><td>the same owner in two state campaigns or two arms</td><td>our table is the source of truth; Smartlead's block list is a mirror</td></tr>
+<tr><td class="w">Reply machine not built by 10-06; positives handled from the master inbox by hand</td><td>no ledger row, no clock, no labels; the Origami situation again</td><td>it is the first block in the build order, ahead of connectors</td></tr>
+<tr><td>Contact-append rate under 25%</td><td>the intent bucket cannot fill its slots on free sources</td><td>measured on 200 companies before more connectors; the general bucket carries week one</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="block" id="david">
+<h2>Questions for David this week</h2>
+<p class="sub">One at a time on Slack. The first two decide the build.</p>
+<div class="two">
+<div class="box"><ol><li><b>Timeline rules.</b> 6:30 PM Eastern, not Pacific? Saturday mornings "today"? Sundays "Monday"? His days off and holidays, so the message never promises a day he is not working.</li><li><b>Sender.</b> After the focus group: does the first email come from him, or from an Ironmark name that introduces him? The mailboxes currently say him.</li><li><b>The scheduling link.</b> In the acknowledgment, after the phone promise; his Calendly or one of ours; the booked time on the ledger row.</li></ol></div>
+<div class="box"><ol start="4"><li><b>The ping.</b> Slack, text, or both; whether the two-hour re-ping is welcome or annoying.</li><li><b>Question replies.</b> Reach him like positives, or get the one-line answer first, then him?</li><li><b>The CRM check on the row</b> within the two hours, so the collision goes to suppression and the AE of record gets the deal without a second email from us.</li></ol></div>
+</div>
+<p class="note">Sources: Alek's Six-State Outbound Model (09-23) · <span class="mono">outbound.md</span>, <span class="mono">ledger.md</span>, <span class="mono">source-feeds.md</span>, <span class="mono">funnel.md</span> (quintel-v2) · David's acknowledgment spec (Slack, this week) · the 09-22 call (handoff packet, Calendly, own brand) · the Quintel production schema read 09-24 (<span class="mono">registered_lead</span>, <span class="mono">register_event</span>, <span class="mono">referral_item</span>, <span class="mono">company</span>, <span class="mono">lender</span>, <span class="mono">debt_event</span>). Numbers marked inferred are unmeasured for this list and get replaced by the first two weeks of sends.</p>
+</section>
+</div>
