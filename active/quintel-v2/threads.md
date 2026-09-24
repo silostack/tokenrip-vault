@@ -1,6 +1,6 @@
 ---
 status: living register
-last_revised: 2026-09-17
+last_revised: 2026-09-24
 owner: Simon
 serves: keeping every idea from calls and sessions alive until it is scheduled, tested, or killed
 tier: internal
@@ -43,6 +43,7 @@ One line each. Status vocabulary: `seed` (named, nobody has looked) · `scoped` 
 | T29 | American Equipment Exchange | $50-a-listing used-equipment marketplace, Equifax-verified users, "easy financing" with the provider unnamed, buys ads on "sell heavy equipment." David wants it on the 09-23 agenda. Three readings (vendor, buyer venue, seller-about-to-replace signal); ask before researching. Simon 09-21: the contact-seller button is one-to-one outreach to the ICP with the unit as the opener; split one-listing owners (signal) from 5+-listing dealers (vendor); twenty by hand, rule 3 of 20. PayPal-on-eBay lesson: the dealer's own listing line is the badge, the tab on his site is the wallet | David 09-20; Simon 09-21; `launch.md` §7d | on the 09-23 agenda; test by 09-26 | vendor doc, `signals.md` |
 | T30 | David's after-hours team | an unnamed weekend group working the project with him, including an ex-employee. Capacity we did not plan on; unclear who they are, who pays them, and whether their dials are logged. Ask, then decide if they key the ledger | David 09-21 | ask 09-23 | `providence.md` |
 | T31 | GME Leasing / National Truck Loans as a second FL originator | Inbound lender (found Quintel through ChatGPT), Port St. Lucie. Used trucks, yellow iron, moving to regional dump trucks and construction, 620+ FICO, 100% broker/dealer today, wants direct-to-business demand. Candidate second originator on the panel (deals Providence passes on), and the first AEO-sourced lender inbound as evidence for `inbound.md`. Conflict: his box overlaps Providence's FL truck lanes; decide the lane split first. Don't pitch the panel until the seat deal is settled | Alek call 09-24 (`bd/calls/notes/junior-gonzalez-2026-09-24.md`) | open | `funnel.md` routing, `inbound.md` |
+| T32 | **Sender identity on the 30 mailboxes vs David's acknowledgment spec** | mailboxes are provisioned with David as the named sender, but his reply spec says "I get introduced and copied," which assumes an Ironmark sender; CAN-SPAM's truthful-header rule and the 09-22 own-brand decision both lean Ironmark; the focus group tests it Saturday (Q1, Q5). Two acknowledgment variants built; display names changed after the answer | Simon 09-24; `outbound.md` §5b | scoped; decide after 09-26 focus group | `outbound.md` §5 |
 
 ## Graveyard (so nothing is re-tested by accident)
 
