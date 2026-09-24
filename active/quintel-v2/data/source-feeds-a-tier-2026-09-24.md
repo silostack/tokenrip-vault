@@ -314,61 +314,67 @@ Pikes Peak Regional Building Department (El Paso County incl. Colorado Springs) 
 
 ### FL
 
-#### FL-g3-01 · DBPR Construction Industry Licensee File — `build_later`
+#### FL-g3-01 · DBPR Construction Industry Licensee File — `build_now`
 
 FL DBPR Construction Industry Licensing Board · https://www2.myfloridalicense.com/sto/
 
-- **Verdict:** Content and cadence are still attractive (per prior round), but the access path just broke: direct download is now blocked by a Cloudflare managed challenge that a plain nightly curl/cron job cannot pass. Needs a bypass solution proven reliable before this is build_now.
+- **Verdict:** Reachable from the US with no challenge, regenerated daily, ~1,630 new licenses a month with clean license-type codes. Address only, so every lead needs contact-append.
+- **Retest:** date: 2026-09-24; egress: Clifton, New Jersey, US, AS14061 DigitalOcean, LLC (datacenter); probe_result: reachable; conclusion: geoblock_confirmed; headless_result: not_tried; summary: The CSV (46.6 MB) downloads with no Cloudflare challenge from a US datacenter IP and is regenerated daily; the pipeline needs a US host, no browser step.
 - **Endpoint:** https://www2.myfloridalicense.com/sto/file_download/extracts/CONSTRUCTIONLICENSE_1.csv
-- **Access / format / auth:** bulk_file · csv · none · cost: free
-- **Latency:** 1 day (per prior round; not reverified)
-- **History:** unknown, appears to be current full licensee roster not an event log
-- **Incremental pull:** no API filter; prior round notes col 16 = original license date, so incremental pull = full-file download + diff/filter locally on that column
-- **Volume:** not remeasured; prior round figure (~1,640/mo) unverified this pass because file could not be fetched
-- **Total records:** not measured this round (prior round: ~1,640 new/month incl. ~645 QB)
+- **Access / format / auth:** bulk_file · csv, no header, quoted, 22 columns · none · cost: free
+- **Cadence:** daily: Last-Modified 2026-09-24 10:48 UTC on the day of the pull; newest dates in the file are 2026-09-23
+- **Latency:** about 1 day (newest original license date 2026-09-23 in a file generated 2026-09-24)
+- **History:** full roster including inactive licenses, original license dates back decades
+- **Incremental pull:** full file only; diff locally on column 16 (original license date) and column 21 (license number)
+- **Volume:** 1,132–1,961 new licenses a month by original license date, Sep 2025–Aug 2026, mean ~1,630 (measured); matches the prior round's ~1,640
+- **Total records:** 260,843 rows (46.6 MB); 132,896 distinct license numbers
 - **Record names:** licensee / qualified business (contractor)
-- **Company fields:** business name, address, county
-- **Identity keys:** license type/#, licensee name
-- **Contact:** address only, per prior round
+- **Company fields:** licensee name (col 3), business name/DBA (col 4, 126,305 rows filled, 48%), address, city, state, zip (cols 6–11), county code (col 12)
+- **Identity keys:** license number (col 21), license type (col 2)
+- **Contact:** mailing address only
+- **Contact fill:** no phone or email column (confirmed on the full file)
 - **Equipment:** none direct; license type implies trade
-- **Event fields:** original license date
-- **Industry filter:** license type/category field, per prior round; not reverified this pass
-- **Rate limits:** unknown
-- **Terms / restrictions:** No specific statutory restriction on commercial use of the bulk CSV (name/business/address/license type) was located. The one confirmed DBPR-specific carve-out is narrower: under s. 455.275(1), Fla. Stat., a licensee's email address is public record but DBPR licensee-facing pages warn that if a licensee emails the Department, that email may be released in response to a public-records request -- this concerns individual licensee emails submitted to DBPR, not the bulk extract fields. Chapter 119 (public records) itself is permissive and does not generally bar commercial/solicitation use. Could not confirm a DBPR-specific 'no solicitation' clause on the extract page itself because the page is now blocked (see fragility).
-- **Fragility:** high -- the download URL now returns HTTP 403 from a Cloudflare 'managed challenge' (JS interactive challenge) for both a plain curl and a browser-UA curl; this is new/worse than the prior round's 'verified: true'. A nightly pipeline will need a JS-capable fetcher (headless browser) or a paid anti-bot bypass (e.g., FlareSolverr, ScrapingBee) -- plain HTTP GET no longer works from this environment.
+- **Event fields:** original license date (col 16), effective date (col 17), expiration date (col 18), status (col 15)
+- **Industry filter:** clean on column 2, license type. Top types: QB 127,808 rows (qualified business), CGC 35,204, FRO 19,305, CBC 17,628, CAC 11,359, CCC 10,215, CFC 8,674, CRC 7,419, CUC 2,739 (underground utility and excavation). Correction: column 16 is the original license date, not the license type
+- **Rate limits:** none observed on one request per file
+- **Terms / restrictions:** No solicitation restriction found on the /sto/ landing page; robots.txt covers only WordPress paths. Florida ch. 119 generally permissive; not a legal review
+- **Fragility:** low-medium: served through Cloudflare (cf-cache-status REVALIDATED) with no challenge from a US datacenter IP, but a managed challenge from Colombia, so the Cloudflare rule is geographic. Low risk while fetching from the US; a tightened rule could break it
 - **Entity resolution:** Join to Sunbiz (SOS) by business name for phone/officer enrichment, per prior round notes.
-- **Build effort:** M -- was S in the prior round's plumbing terms (plain CSV), but the new Cloudflare challenge means a headless-browser or anti-bot-bypass step is required, which is real added engineering and ongoing fragility risk.
-- **Verified by fetch:** endpoint currently returns HTTP 403 Cloudflare managed challenge, confirmed with both default and browser User-Agent
-- **Open questions:** Is there an alternate DBPR bulk-data path (FTP, data.florida.gov mirror, or an official API) that isn't behind the Cloudflare challenge?, Was this URL reachable without a challenge as recently as the prior research round, i.e. is this a new protection?, What headers/session/JS execution are required to pass the challenge reliably for automation?
-- **Notes:** This and FL-g3-02 share the same www2.myfloridalicense.com domain and the same Cloudflare block; fix once, fixes both.
+- **Build effort:** S: one GET, CSV parse, diff on license number and original license date; one fetcher serves both DBPR files
+- **Verified by fetch:** HTTP 200, 46,586,604 bytes, no Cloudflare challenge, from a US datacenter IP, Last-Modified 2026-09-24, 260,843 rows x 22 columns, license-type distribution, monthly new-license counts, no phone or email column
+- **Open questions:** Is there a layout document on the extracts page confirming columns 5, 14, 19, 20 and 22?
+- **Notes:** Shares a host and fetcher with FL-g3-02. QB rows (qualified business) are the company-level records; the other types name the individual license holder.
 
-#### FL-g3-02 · DBPR Electrical Contractor Licensee File — `build_later`
+#### FL-g3-02 · DBPR Electrical Contractor Licensee File — `build_now`
 
 FL DBPR Electrical Contractors Licensing Board · https://www2.myfloridalicense.com/sto/
 
-- **Verdict:** Same blocker as FL-g3-01: real content, broken plumbing right now. Bundle the anti-bot-bypass work across both DBPR feeds rather than solving twice.
+- **Verdict:** Same plumbing as FL-g3-01 at almost no extra cost, but low volume (~160 a month) and electrical is not a core in-box trade; build it alongside FL-g3-01, not on its own.
+- **Retest:** date: 2026-09-24; egress: Clifton, New Jersey, US, AS14061 DigitalOcean, LLC (datacenter); probe_result: reachable; conclusion: geoblock_confirmed; headless_result: not_tried; summary: The CSV (4.0 MB) downloads with no Cloudflare challenge from a US datacenter IP and is regenerated daily; the pipeline needs a US host, no browser step.
 - **Endpoint:** https://www2.myfloridalicense.com/sto/file_download/extracts/lic08el.csv
-- **Access / format / auth:** bulk_file · csv · none · cost: free
-- **Latency:** 1 day per prior round; not reverified
-- **History:** unknown, appears to be current full licensee roster
-- **Incremental pull:** no API filter; same layout as CONSTRUCTIONLICENSE_1.csv, original license date column drives the diff
-- **Volume:** not remeasured; prior round figure (~160/mo) unverified this pass
-- **Total records:** not measured this round
+- **Access / format / auth:** bulk_file · csv, no header, quoted, 22 columns · none · cost: free
+- **Cadence:** daily: Last-Modified 2026-09-24 10:45 UTC on the day of the pull; newest dates in the file are 2026-09-23
+- **Latency:** about 1 day (newest original license date 2026-09-23 in a file generated 2026-09-24)
+- **History:** full roster including inactive licenses, original license dates back decades
+- **Incremental pull:** full file only; diff locally on column 16 (original license date) and column 21 (license number)
+- **Volume:** 61–259 new licenses a month by original license date, Sep 2025–Aug 2026, mean ~160 (measured); matches the prior round
+- **Total records:** 20,055 rows (4.0 MB); 20,019 distinct license numbers
 - **Record names:** licensee / qualified business (electrical contractor)
-- **Company fields:** business name, address
-- **Identity keys:** license type/#, licensee name
-- **Contact:** address only per prior round; elec_app.csv applicant file has phones but no dates, per prior round
+- **Company fields:** licensee name (col 3), business name/DBA (col 4, 16,792 rows filled, 84%), address, city, state, zip (cols 6–11), county code (col 12)
+- **Identity keys:** license number (col 21), license type (col 2)
+- **Contact:** mailing address only
+- **Contact fill:** no phone or email column (confirmed on the full file)
 - **Equipment:** none direct; license type implies trade
-- **Event fields:** original license date
-- **Industry filter:** license type code (EC/EF/ES/ER/EG), per prior round
-- **Rate limits:** unknown
-- **Terms / restrictions:** Same as FL-g3-01 -- no specific solicitation restriction located; Chapter 119 is permissive; could not reach the actual extract page to check for any posted notice because of the Cloudflare block.
-- **Fragility:** high -- identical Cloudflare managed-challenge block confirmed on this exact URL (403, JS challenge page, both plain and browser UA).
+- **Event fields:** original license date (col 16), effective date (col 17), expiration date (col 18), status (col 15)
+- **Industry filter:** clean on column 2, license type. Top types: EC 12,301 (electrical contractor), ES 1,783, CRS3 1,724, ER 1,641, EF 1,464, EG 542. Correction: column 16 is the original license date, not the license type
+- **Rate limits:** none observed on one request per file
+- **Terms / restrictions:** No solicitation restriction found on the /sto/ landing page; robots.txt covers only WordPress paths. Florida ch. 119 generally permissive; not a legal review
+- **Fragility:** low-medium: served through Cloudflare (cf-cache-status REVALIDATED) with no challenge from a US datacenter IP, but a managed challenge from Colombia, so the Cloudflare rule is geographic. Low risk while fetching from the US; a tightened rule could break it
 - **Entity resolution:** Same layout as CONSTRUCTIONLICENSE_1.csv per prior round; joins the same way via Sunbiz.
-- **Build effort:** M -- see FL-g3-01; solving the Cloudflare block once likely unlocks both files.
-- **Verified by fetch:** endpoint currently returns HTTP 403 Cloudflare managed challenge, confirmed with both default and browser User-Agent
-- **Open questions:** Same as FL-g3-01.
-- **Notes:** Low volume (~160/mo per prior round) means this is a lower priority to unblock than FL-g3-01 even once the Cloudflare fix exists.
+- **Build effort:** S: one GET, CSV parse, diff on license number and original license date; one fetcher serves both DBPR files
+- **Verified by fetch:** HTTP 200, 3,988,718 bytes, no Cloudflare challenge, from a US datacenter IP, Last-Modified 2026-09-24, 20,055 rows x 22 columns, license-type distribution, monthly new-license counts, no phone or email column
+- **Open questions:** Is there a layout document on the extracts page confirming columns 5, 14, 19, 20 and 22?
+- **Notes:** Same layout and fetcher as FL-g3-01. The elec_app.csv applicant file was not fetched this pass.
 
 #### FL-g3-03 · FDEP ARMS Air Facilities (concrete, asphalt, crusher, air curtain incinerator) — `build_now`
 
@@ -445,29 +451,36 @@ FloridaUCC LLC (contract vendor for the FL Secretary of State, Division of Corpo
 - **Open questions:** What format/cadence/cost does Quintel's existing Florida UCC ingestion actually use -- ask internally rather than re-derive from the public site., Does FloridaUCC LLC offer a direct bulk/FTP product to non-Quintel buyers, and at what price -- unresolved because the marketing/help pages are JS-rendered.
 - **Notes:** Per the task instructions, this entry intentionally does not describe Quintel's internal ingestion -- only the public vendor and the statutory backdrop.
 
-#### FL-g3-06 · Hillsborough Clerk Official Records Daily Index — `build_later`
+#### FL-g3-06 · Hillsborough Clerk Official Records Daily Index — `build_now`
 
 Hillsborough County Clerk of Court · https://publicrec.hillsclerk.com/OfficialRecords/DailyIndexes/
 
-- **Verdict:** Could not verify reachability this pass; don't commit build effort until a successful fetch confirms the site is actually up and the daily-index file structure still matches the prior round's description.
-- **Endpoint:** https://publicrec.hillsclerk.com/OfficialRecords/DailyIndexes/
-- **Access / format / auth:** bulk_file · csv (pipe-delimited, per prior round) · none, per prior round · cost: free, per prior round
-- **Latency:** 1 day, per prior round; not reverified
-- **History:** ~2 months retained, per prior round
-- **Incremental pull:** daily files, per prior round; not reverified
-- **Volume:** not remeasured; prior round: ~270 NOCs/business day
-- **Record names:** contractor (TO party) and property owner (FRM party) on a recorded Notice of Commencement
-- **Company fields:** contractor (TO party), owner (FRM party)
-- **Contact fill:** none, per prior round
-- **Equipment:** none direct
-- **Event fields:** job address, record date
-- **Industry filter:** none in the index itself, per prior round -- requires joining to DBPR license file by contractor name
-- **Terms / restrictions:** Not checked this pass -- could not reach the site at all (see fragility).
-- **Fragility:** high -- this pass could not connect at all: TCP connection to port 443 timed out after 15s from this environment (DNS resolves fine to 198.184.182.65, but the socket never completes), distinct from an app-level 403/block. This is either a transient outage, an IP/geo-block on this environment's egress, or the site has added network-level protection since the prior round. Needs retest from a different network before trusting the prior round's 'verified: true'.
-- **Entity resolution:** Per prior round, join contractor name to DBPR license file for address; also carries ~59 FIN/day (mostly consumer solar/water liens), per prior round.
-- **Build effort:** M -- unchanged from what the content would imply, but flag the connectivity risk as a build blocker until reverified.
-- **Open questions:** Is publicrec.hillsclerk.com actually down, or is this environment's outbound network blocked/rate-limited for this host?, If reachable from elsewhere, does the daily index file format/columns still match the prior round's notes?
-- **Notes:** All fields above are carried over from the prior round's description and are NOT reverified this pass -- treat as inferred, not confirmed, until connectivity is restored and retested.
+- **Verdict:** Reachable from the US, stable static files, 272 NOCs a day with the contractor named in the index. Weaknesses to plan around: 6–18 day posting lag, no contact fields, and a residential-heavy contractor mix that needs the DBPR join to filter.
+- **Retest:** date: 2026-09-24; egress: Clifton, New Jersey, US, AS14061 DigitalOcean, LLC (datacenter); probe_result: reachable; conclusion: geoblock_confirmed; headless_result: not_tried; summary: Daily index files download from the US and name the contractor on 268 of 272 NOCs; the pipeline needs a US host and should expect a 6–18 day posting lag.
+- **Endpoint:** https://publicrec.hillsclerk.com/OfficialRecords/DailyIndexes/ (IIS directory listing; per recording day: D<YYYYMMDD>01id.29 documents, P<YYYYMMDD>01id.29 parties, M<YYYYMMDD>01d.29 doc-code map)
+- **Access / format / auth:** bulk_file · pipe-delimited ASCII (latin-1), no header, EOF trailer line; layout in readme.txt in the same directory · none · cost: free
+- **Cadence:** one file set per recording business day, posted in batches at 11 AM or 6 PM
+- **Latency:** 2–18 calendar days from recording to posting, median 6 (39 recording days measured from directory timestamps); September was slower at 7–18 days. Not the 1 day the prior round reported
+- **History:** rolling window: recording days 2026-07-21 to 2026-09-15 listed (39 business days), matching the readme's 'at least two months'
+- **Incremental pull:** yes: list the directory and fetch new D and P filenames; the readme says D also carries records modified that day
+- **Volume:** 272 NOCs and 59 FIN on 2026-09-15 (measured, one day); ~5,400 NOCs a month at 20 business days (estimate from one day)
+- **Total records:** recording day 2026-09-15: 2,401 documents and 6,631 party rows
+- **Record names:** NOC: FRM party = property owner, TO party = contractor (inferred from party roles and names, high confidence); 268 of 272 NOCs carry at least one TO party, 56 carry more than one
+- **Company fields:** Party Name (FRM owner, TO contractor), Legal Description (job street address on NOCs)
+- **Identity keys:** Instrument Number (joins D to P)
+- **Contact fill:** none: the index has no phone or email
+- **Equipment:** none direct; an NOC is a job start, implying crew and equipment use
+- **Event fields:** Document Type (NOC), Date Recorded, Time Recorded, Legal Description (job address, 267/272 NOCs), Consideration Amount (blank on all 272 NOCs)
+- **Industry filter:** NOCs filter cleanly on Document Type = 'NOC'. Contractor trade is not in the index; join the TO name to DBPR (FL-g3-01) for license type. The 09-15 mix skews residential: top TO names are roofers, pool builders, solar installers, home builders and Lowe's
+- **Size signal:** none in the index
+- **Rate limits:** none observed; static file server
+- **Terms / restrictions:** No terms or restriction in readme.txt or the listing; no robots.txt (404). Florida ch. 119 generally permissive; not a legal review
+- **Fragility:** low: static IIS directory with naming stable since the 2007 readme. Not reachable from Colombia (TCP timeout); reachable from a US datacenter IP, so the fetch must run from a US host. The readme's action codes (ADD/ADP) differ from the files (DDA/DPA)
+- **Entity resolution:** TO names are dirty (e.g. 'WESTFALL CONSTRUCTION INC' and 'WESTFALL ROOFING' for one firm); normalize before the DBPR join. About a third of TO parties look like individuals rather than companies (222 of 331 matched company suffixes or trade words)
+- **Build effort:** S for ingest (two pipe files joined on instrument number); M with the DBPR name join that supplies trade and address
+- **Verified by fetch:** directory listing and readme.txt, D, P and M files for recording day 2026-09-15, NOC, FIN and party counts for that day, posting lag across 39 recording days, TO party present on 268/272 NOCs
+- **Open questions:** What share of NOC TO parties are in-box trades after the DBPR join?, Is the September posting lag (7–18 days) a new normal or a backlog?
+- **Notes:** The contractor is named in the index (TO party), not only in the recorded image.
 
 #### FL-g3-07 · Palm Beach County Licensed Towing Companies (Consumer Affairs API) — `build_now`
 
@@ -848,52 +861,73 @@ Metro Nashville NDOT / Nashville Open Data · https://datanashvillegov-nashville
 
 TDEC Division of Air Pollution Control DataViewer · https://dataviewers.tdec.tn.gov/dataviewers/f?p=19031:34001
 
-- **Verdict:** Could not re-verify any plumbing claim this session - the whole TDEC DataViewer domain is currently blocking automated requests (403 on every URL tried). Prior round reported it working from a different session/IP, so this is not necessarily permanently dead, but a nightly pipeline cannot depend on a source that 403s an unauthenticated GET with no clear pattern; needs residential/non-cloud egress or a session-cookie workaround verified before committing build effort.
+- **Verdict:** Blocked from a US datacenter IP too, at the load balancer, before any session or CSV export can be attempted. The prior round's 'APEX CSV works from cloud IP' was not reproduced. Revisit only with a residential-IP test or a published bulk alternative.
+- **Retest:** date: 2026-09-24; egress: Clifton, New Jersey, US, AS14061 DigitalOcean, LLC (datacenter); probe_result: http_403; conclusion: blocked_from_us_too; headless_result: not_tried; summary: Still 403 from a US datacenter IP, at the AWS load balancer and even for robots.txt, so it is an IP-range block rather than geography; the headless test was skipped because Chromium's system libraries could not be installed without root.
 - **Access / format / auth:** portal_search · csv · none · cost: free
 - **Record names:** permittee (facility operator)
-- **Fragility:** high - the entire dataviewers.tdec.tn.gov domain returned HTTP 403 Forbidden to every request this session (plain curl, curl with a browser User-Agent, and WebFetch all blocked), for this URL and both of the other two TDEC dataviewer URLs in this batch. This directly contradicts the prior round's claim of a working session-based CSV export ('APEX CSV works from cloud IP'). Either the WAF now blocks this environment's egress IP range, or TDEC tightened bot protection since the last pull.
-- **Verified by fetch:** landing URL returns 403 Forbidden to curl and WebFetch
-- **Open questions:** Is the 403 IP-range-based (would a different network succeed), or has TDEC added bot detection that also blocks the prior round's method?, Does TDEC publish a bulk/Socrata mirror of this data elsewhere (data.tn.gov) that isn't behind the APEX DataViewer WAF?
+- **Fragility:** high: the AWS load balancer in front of dataviewers.tdec.tn.gov (server: awselb/2.0) returns a 520-byte 403 to every path, including / and /robots.txt, from a US datacenter IP (DigitalOcean, NJ) as well as from Colombia. The block fires before the APEX app, so it is an IP-reputation or datacenter-range rule (inferred), not geography and not a missing session or cookie. Residential US IPs not tested. A production pipeline on datacenter hosting cannot reach it
+- **Verified by fetch:** 403 (520 bytes, awselb/2.0) from Colombia and from a US datacenter IP, 403 on / and /robots.txt as well, with full browser headers
+- **Open questions:** Does TDEC publish a bulk/Socrata mirror of this data elsewhere (data.tn.gov) that isn't behind the APEX DataViewer WAF?, Does the block lift from a residential US IP? If yes, the pipeline needs a non-datacenter egress for this host, which the guardrails rule out today., Does TDEC publish the same data as a bulk file or on data.tn.gov?
 - **Notes:** Not independently verified this round - deferring to prior round's schema/volume claims (Facility ID, permittee name, permit type, city, county, issued date; ~50/month total, ~9 crusher/batch plant NOCs) but those are now unconfirmed given the access failure. Treat prior round's numbers as inferred, not fact, until access is re-established.
 
 #### TN-g5-03 · TDEC DWR Permits (CGP, ARAP, TMSP, RMCP) — `build_later`
 
 TN Dept of Environment and Conservation, Division of Water Resources DataViewer · https://dataviewers.tdec.tn.gov/dataviewers/f?p=2005:34001
 
-- **Verdict:** Same blocking issue as TN-g5-02: this session could not reach the TDEC DataViewer at all, so none of the prior round's plumbing claims (session-token CSV export pattern, cadence, volumes) could be re-confirmed. Note the prior round's own text flagged this as working 'from cloud IP' with a session-token workaround (f?p=2005:34001:<session>:CSV) - that fragility is now realized: it does not work reliably.
+- **Verdict:** Blocked from a US datacenter IP too, at the load balancer, before any session or CSV export can be attempted. The prior round's 'APEX CSV works from cloud IP' was not reproduced. Revisit only with a residential-IP test or a published bulk alternative.
+- **Retest:** date: 2026-09-24; egress: Clifton, New Jersey, US, AS14061 DigitalOcean, LLC (datacenter); probe_result: http_403; conclusion: blocked_from_us_too; headless_result: not_tried; summary: Still 403 from a US datacenter IP, at the AWS load balancer and even for robots.txt, so it is an IP-range block rather than geography; the headless test was skipped because Chromium's system libraries could not be installed without root.
 - **Access / format / auth:** portal_search · csv · none · cost: free
 - **Record names:** permittee (usually site owner/developer, not necessarily the grading contractor)
-- **Fragility:** high - same dataviewers.tdec.tn.gov domain as TN-g5-02, returned HTTP 403 Forbidden on every attempt this session (curl plain, curl with browser UA, WebFetch)
-- **Verified by fetch:** landing URL returns 403 Forbidden to curl and WebFetch
-- **Open questions:** Same as TN-g5-02 - is the block IP-based or a new bot-detection rule?, Given the permittee is often the site owner/developer rather than the grading contractor (per prior round's own note that the contractor sits inside NOI PDFs under Documents), how much extra PDF-parsing effort does this source actually require even when reachable?
+- **Fragility:** high: the AWS load balancer in front of dataviewers.tdec.tn.gov (server: awselb/2.0) returns a 520-byte 403 to every path, including / and /robots.txt, from a US datacenter IP (DigitalOcean, NJ) as well as from Colombia. The block fires before the APEX app, so it is an IP-reputation or datacenter-range rule (inferred), not geography and not a missing session or cookie. Residential US IPs not tested. A production pipeline on datacenter hosting cannot reach it
+- **Verified by fetch:** 403 (520 bytes, awselb/2.0) from Colombia and from a US datacenter IP, 403 on / and /robots.txt as well, with full browser headers
+- **Open questions:** Given the permittee is often the site owner/developer rather than the grading contractor (per prior round's own note that the contractor sits inside NOI PDFs under Documents), how much extra PDF-parsing effort does this source actually require even when reachable?, Does the block lift from a residential US IP? If yes, the pipeline needs a non-datacenter egress for this host, which the guardrails rule out today., Does TDEC publish the same data as a bulk file or on data.tn.gov?
 - **Notes:** Not independently verified this round - deferring to prior round's numbers (~330/month statewide: ~180 CGP, ~107 ARAP, ~28 TMSP) as unconfirmed pending access fix.
 
 #### TN-g5-04 · TDEC Water Well Driller Reports (completed wells) — `build_later`
 
 TDEC Division of Water Resources (DWR DataViewer, WLTS) · https://dataviewers.tdec.tn.gov/dataviewers/f?p=2005:39929
 
-- **Verdict:** Same TDEC-wide access failure as TN-g5-02 and TN-g5-03; could not confirm the ~33MB full CSV download, the 266,365-record total, or the per-driller volume claims this session.
+- **Verdict:** Blocked from a US datacenter IP too, at the load balancer, before any session or CSV export can be attempted. The prior round's 'APEX CSV works from cloud IP' was not reproduced. Revisit only with a residential-IP test or a published bulk alternative.
+- **Retest:** date: 2026-09-24; egress: Clifton, New Jersey, US, AS14061 DigitalOcean, LLC (datacenter); probe_result: http_403; conclusion: blocked_from_us_too; headless_result: not_tried; summary: Still 403 from a US datacenter IP, at the AWS load balancer and even for robots.txt, so it is an IP-range block rather than geography; the headless test was skipped because Chromium's system libraries could not be installed without root.
 - **Access / format / auth:** portal_search · csv · none · cost: free
 - **Latency:** 1 to 3 months between completion and report receipt, per prior round (unconfirmed this session)
 - **Record names:** well driller (licensee) and well owner
-- **Fragility:** high - same dataviewers.tdec.tn.gov domain, 403 Forbidden on every attempt this session
-- **Verified by fetch:** landing URL returns 403 Forbidden to curl and WebFetch
-- **Open questions:** Same access question as the other two TDEC sources - all three failing together suggests a domain-wide WAF change rather than a per-dataset issue, worth re-testing from a non-cloud IP before writing this source off.
+- **Fragility:** high: the AWS load balancer in front of dataviewers.tdec.tn.gov (server: awselb/2.0) returns a 520-byte 403 to every path, including / and /robots.txt, from a US datacenter IP (DigitalOcean, NJ) as well as from Colombia. The block fires before the APEX app, so it is an IP-reputation or datacenter-range rule (inferred), not geography and not a missing session or cookie. Residential US IPs not tested. A production pipeline on datacenter hosting cannot reach it
+- **Verified by fetch:** 403 (520 bytes, awselb/2.0) from Colombia and from a US datacenter IP, 403 on / and /robots.txt as well, with full browser headers
+- **Open questions:** Does the block lift from a residential US IP? If yes, the pipeline needs a non-datacenter egress for this host, which the guardrails rule out today., Does TDEC publish the same data as a bulk file or on data.tn.gov?
 - **Notes:** Not independently verified this round - deferring to prior round's numbers (266,365 wells total; 160-316 completed/month in 2025) as unconfirmed. Given all three TDEC dataviewer sources in this batch failed identically, treat this as one shared plumbing risk (the TDEC DataViewer platform itself), not three independent risks.
 
-#### TN-g5-05 · TN Board for Licensing Contractors: Contractor and Qualifying Agent Data (bulk CSV) — `build_later`
+#### TN-g5-05 · TN Board for Licensing Contractors: Contractor and Qualifying Agent Data (bulk CSV) — `build_now`
 
 TN Dept of Commerce and Insurance, Board for Licensing Contractors (Tableau on data.tn.gov) · https://www.tn.gov/commerce/regboards/contractors/consumer/verify-qa.html
 
-- **Verdict:** This is the single highest-value source in the batch on paper (bulk file, no auth, email/phone/aggregate-monetary-limit fields, clean trade-classification codes) but this session could not reach data.tn.gov at all - three different fetch methods all failed (timeout, timeout, ECONNRESET) while the sibling www.tn.gov host worked normally. Needs a retest before committing build time; if the block is durable, the full-file-diff approach the prior round describes is otherwise sound.
+- **Verdict:** Reachable from the US, current to the day before the pull, 126–216 new licenses a month, and the richest contact yield in the set (email 95%, phone 73%) with a dollar-denominated size signal and clean trade codes. Tennessee's best source is now build-now.
+- **Retest:** date: 2026-09-24; egress: Clifton, New Jersey, US, AS14061 DigitalOcean, LLC (datacenter); probe_result: reachable; conclusion: geoblock_confirmed; headless_result: not_tried; summary: The CSV downloads in one GET from a US datacenter IP with email on 95% of rows; the pipeline only needs to fetch from a US host.
 - **Endpoint:** https://data.tn.gov/t/Public/views/ContractorandQAdata/PublicDashboard.csv?:embed=y
 - **Access / format / auth:** bulk_file · csv · none · cost: free
-- **Incremental pull:** no incremental query support even if reachable - it's a full Tableau extract download each time, not a queryable API; incrementality has to be done client-side by diffing successive full pulls
-- **Record names:** licensed contractor / qualifying agent
-- **Fragility:** high - data.tn.gov (this is a different host than the www.tn.gov agency site, which was reachable fine) timed out on every connection attempt this session: plain HEAD, GET with browser UA, and WebFetch (WebFetch returned ECONNRESET). www.tn.gov itself responded 200 OK immediately, so this is specific to the data.tn.gov Tableau Public host, not a general TN state network block.
-- **Verified by fetch:** data.tn.gov unreachable via curl HEAD (28s timeout) and WebFetch (ECONNRESET); www.tn.gov reachable and returned 200 OK as a control
-- **Open questions:** Is data.tn.gov's Tableau Public endpoint rate-limiting or blocking cloud/datacenter IPs specifically (would explain a clean 200 from www.tn.gov but a hang on data.tn.gov)?, Tableau Public CSV exports are notoriously fragile to view/dashboard renames on the publisher's end - if reachable, how stable has this specific view URL been historically?
-- **Notes:** Not independently verified this round - deferring to prior round's numbers (33,987 rows / 29,095 licenses; 126-216 new licenses/month) as unconfirmed. This source and the three TDEC sources together mean 4 of 8 sources in this batch had a live-access failure this session - worth flagging to whoever owns the pipeline infra that egress IP/UA may need hardening (e.g. a residential proxy or scheduled runs from TN business hours) before relying on any of these four.
+- **Cadence:** at least daily (inferred): newest License Origination Date is 2026-09-23, one day before the pull; the Tableau response carries no Last-Modified header
+- **Latency:** about 1 day from license origination (newest record dated the day before the pull)
+- **History:** full roster back to 1931 origination dates; includes Active, Expired, Expired-Grace, Closed, Retired, App Expired, Applicant, Revoked and other statuses
+- **Incremental pull:** full file only (9.4 MB, one GET, ~seconds); incrementality done client-side by License Number plus License Origination Date
+- **Volume:** 126–216 new licenses a month by License Origination Date, Apr 2025–Aug 2026 (measured); matches the prior round
+- **Total records:** 33,994 rows; 29,096 distinct license numbers plus 1,053 rows with a blank license number (applicant-stage rows); 23,570 rows Active
+- **Record names:** licensed contractor (the business) plus its qualifying agent; this is the equipment buyer for in-box trades
+- **Company fields:** Name and Address (one free-text cell: company name, street, city/state/zip, then 'Email:' and 'Phone:' lines), Qualifying Agent Name
+- **Identity keys:** TN contractor License Number
+- **Contact:** email (inside Name and Address, 'Email:' line), phone (inside Name and Address, 'Phone:' line), qualifying agent name
+- **Contact fill:** email 95% (190/200) and phone 73% (146/200) on a random sample of 200 rows; Active-only sample of 200: email 99%, phone 64%. About 38% of emails are free-mail domains (gmail, yahoo and similar)
+- **Equipment:** none direct; license classification implies heavy-equipment trades (grading, underground piping, paving, excavation, highway)
+- **Event fields:** License Origination Date, License Expiration Date, License Status
+- **Industry filter:** clean: Classifications is a semicolon-separated list of coded classes. Distinct licenses by keyword: Grading 1,188, Underground Piping 1,165, Paving 758, Heavy 699, Concrete 597, Excavation 498 (BC-28), Demolition 524, HVAC 1,899, Plumbing 1,194, Water and Sewer 188, Well Drilling 18
+- **Size signal:** monetary limit: every licensed contractor carries an 'AGLM - Aggregate Limit $X' class (e.g. $25,000, $1,500,000, UNLIMITED), a direct proxy for job size and bonding capacity
+- **Rate limits:** none observed on one request
+- **Terms / restrictions:** No commercial-use or solicitation restriction found on the verify-qa landing page (text search). data.tn.gov has no robots.txt (404). Tennessee public-records law not reviewed this pass; not a legal review
+- **Fragility:** medium: this is a Tableau dashboard export, not a designed extract ('Blank (Spacer)' column), so a republish or view rename breaks the URL; contact and address sit in one free-text cell that must be parsed. Not reachable from Colombia (connection reset), reachable from a US datacenter IP, so the fetch must run from a US host
+- **Entity resolution:** Multiple rows per license (3,195 licenses have >1 row, one per qualifying agent or classification set); dedupe on License Number. 35% of rows are out-of-state addresses (GA, TX, AL, NC, MS lead); filter to TN or to TN job activity. Join to TN SOS by company name; to FMCSA by name and address
+- **Build effort:** S: one GET, parse the name/address blob with regexes, dedupe on license number, diff by origination date
+- **Verified by fetch:** HTTP 200, 9,442,509-byte CSV from a US datacenter IP, 33,994 rows, 8 columns, 29,096 distinct license numbers, newest origination date 2026-09-23, monthly new-license counts Apr 2025–Aug 2026, email and phone fill on a 200-row random sample, classification codes and aggregate-limit values, out-of-state share by parsed address
+- **Open questions:** How stable is the Tableau view name across dashboard republishes? Monitor for 404 and alert., Does the refresh run nightly? Confirm by pulling on two consecutive days and diffing.
+- **Notes:** The Colombia-round note that fields were unknown is superseded. The column list differs from the prior round's description (no separate email, phone or monetary-limit columns); the same data is embedded in 'Name and Address' and 'Classifications'.
 
 #### TN-g5-06 · Chattanooga All Permits — `build_now`
 

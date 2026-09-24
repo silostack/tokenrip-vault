@@ -1,0 +1,239 @@
+{
+ "probed_at": "2026-09-24T16:27:30.752165+00:00",
+ "egress": {
+  "ip": "104.236.118.226",
+  "city": "Clifton",
+  "region": "New Jersey",
+  "country": "US",
+  "org": "AS14061 DigitalOcean, LLC"
+ },
+ "results": [
+  {
+   "ids": [],
+   "label": "control: www.tn.gov",
+   "url": "https://www.tn.gov/",
+   "tcp": {
+    "dns": "52.70.105.188",
+    "tcp": "ok",
+    "ms": 45
+   },
+   "http": {
+    "status": 200,
+    "final_url": "https://www.tn.gov/",
+    "server": "Apache",
+    "content_type": "text/html;charset=utf-8",
+    "bytes_read": 60807,
+    "cloudflare_challenge": false,
+    "head": "<!doctype html> <html class=\"no-js tn-html\" lang=\"en\">     <head>         <title>Tennessee State Government - TN.gov</title>         <meta charset=\"utf-8\"/>         <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>         <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"/> ",
+    "ms": 82
+   },
+   "result": "reachable"
+  },
+  {
+   "ids": [],
+   "label": "control: data.texas.gov",
+   "url": "https://data.texas.gov/resource/a5y7-t5ih.json?$limit=1",
+   "tcp": {
+    "dns": "52.206.140.205",
+    "tcp": "ok",
+    "ms": 15
+   },
+   "http": {
+    "status": 200,
+    "final_url": "https://data.texas.gov/resource/a5y7-t5ih.json?$limit=1",
+    "server": "nginx",
+    "content_type": "application/json;charset=utf-8",
+    "bytes_read": 179,
+    "cloudflare_challenge": false,
+    "head": "[{\"tp_id\":\"12018414289\",\"registration_number\":\"AG00127926\",\"name\":\"FARIA EAST DAIRY\",\"city\":\"DUMAS\",\"zip\":\"79029-7008\",\"effective_date\":\"2007-10-09T00:00:00.000\",\"suspended\":\"\"}] ",
+    "ms": 245
+   },
+   "result": "reachable"
+  },
+  {
+   "ids": [
+    "TN-g5-02"
+   ],
+   "label": "TDEC air permits (APEX)",
+   "url": "https://dataviewers.tdec.tn.gov/dataviewers/f?p=19031:34001",
+   "tcp": {
+    "dns": "52.206.107.136",
+    "tcp": "ok",
+    "ms": 21
+   },
+   "http": {
+    "status": 403,
+    "final_url": "https://dataviewers.tdec.tn.gov/dataviewers/f?p=19031:34001",
+    "server": "awselb/2.0",
+    "content_type": "text/html",
+    "bytes_read": 520,
+    "cloudflare_challenge": false,
+    "head": "<html>\r <head><title>403 Forbidden</title></head>\r <body>\r <center><h1>403 Forbidden</h1></center>\r </body>\r </html>\r <!-- a padding to disable MSIE and Chrome friendly error page -->\r <!-- a padding to disable MSIE and Chrome friendly error page -->\r <!-- a padding to disable MSIE and Chrome friend",
+    "ms": 68
+   },
+   "result": "http_403"
+  },
+  {
+   "ids": [
+    "TN-g5-03"
+   ],
+   "label": "TDEC DWR permits (APEX)",
+   "url": "https://dataviewers.tdec.tn.gov/dataviewers/f?p=2005:34001",
+   "tcp": {
+    "dns": "44.212.201.176",
+    "tcp": "ok",
+    "ms": 7
+   },
+   "http": {
+    "status": 403,
+    "final_url": "https://dataviewers.tdec.tn.gov/dataviewers/f?p=2005:34001",
+    "server": "awselb/2.0",
+    "content_type": "text/html",
+    "bytes_read": 520,
+    "cloudflare_challenge": false,
+    "head": "<html>\r <head><title>403 Forbidden</title></head>\r <body>\r <center><h1>403 Forbidden</h1></center>\r </body>\r </html>\r <!-- a padding to disable MSIE and Chrome friendly error page -->\r <!-- a padding to disable MSIE and Chrome friendly error page -->\r <!-- a padding to disable MSIE and Chrome friend",
+    "ms": 59
+   },
+   "result": "http_403"
+  },
+  {
+   "ids": [
+    "TN-g5-04"
+   ],
+   "label": "TDEC well driller reports (APEX)",
+   "url": "https://dataviewers.tdec.tn.gov/dataviewers/f?p=2005:39929",
+   "tcp": {
+    "dns": "44.212.201.176",
+    "tcp": "ok",
+    "ms": 7
+   },
+   "http": {
+    "status": 403,
+    "final_url": "https://dataviewers.tdec.tn.gov/dataviewers/f?p=2005:39929",
+    "server": "awselb/2.0",
+    "content_type": "text/html",
+    "bytes_read": 520,
+    "cloudflare_challenge": false,
+    "head": "<html>\r <head><title>403 Forbidden</title></head>\r <body>\r <center><h1>403 Forbidden</h1></center>\r </body>\r </html>\r <!-- a padding to disable MSIE and Chrome friendly error page -->\r <!-- a padding to disable MSIE and Chrome friendly error page -->\r <!-- a padding to disable MSIE and Chrome friend",
+    "ms": 61
+   },
+   "result": "http_403"
+  },
+  {
+   "ids": [
+    "TN-g5-05"
+   ],
+   "label": "TN contractor + QA licenses (Tableau CSV)",
+   "url": "https://data.tn.gov/t/Public/views/ContractorandQAdata/PublicDashboard.csv?:embed=y",
+   "tcp": {
+    "dns": "170.141.168.103",
+    "tcp": "ok",
+    "ms": 77
+   },
+   "http": {
+    "status": 200,
+    "final_url": "https://data.tn.gov/t/Public/views/ContractorandQAdata/PublicDashboard.csv?:embed=y",
+    "server": "Tableau",
+    "content_type": "text/csv",
+    "bytes_read": 200000,
+    "cloudflare_challenge": false,
+    "head": "Blank (Spacer),Classifications,License Expiration Date,License Number,License Origination Date,License Status,Name and Address,Qualifying Agent Name\r  ,,,,,App Expired,\" Carolina Power & Signalization, Llc\r 1416  Middle River Loop \r FAYETTEVILLE, NC  28312\r Email: amy@ncpower.net\r Phone: 910-323-558",
+    "ms": 10826
+   },
+   "result": "reachable"
+  },
+  {
+   "ids": [
+    "FL-g3-06"
+   ],
+   "label": "Hillsborough Clerk daily indexes",
+   "url": "https://publicrec.hillsclerk.com/OfficialRecords/DailyIndexes/",
+   "tcp": {
+    "dns": "198.184.182.65",
+    "tcp": "ok",
+    "ms": 68
+   },
+   "http": {
+    "status": 200,
+    "final_url": "https://publicrec.hillsclerk.com/OfficialRecords/DailyIndexes/",
+    "server": "Microsoft-IIS/10.0",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes_read": 13623,
+    "cloudflare_challenge": false,
+    "head": "<html><head><title>publicrec.hillsclerk.com - /OfficialRecords/DailyIndexes/</title></head><body><H1>publicrec.hillsclerk.com - /OfficialRecords/DailyIndexes/</H1><hr>\r \r <pre><A HREF=\"/OfficialRecords/\">[To Parent Directory]</A><br><br> 7/28/2026  6:00 PM       177007 <A HREF=\"/OfficialRecords/Dail",
+    "ms": 244
+   },
+   "result": "reachable"
+  },
+  {
+   "ids": [
+    "FL-g3-01",
+    "FL-g3-02"
+   ],
+   "label": "DBPR licensee extracts landing",
+   "url": "https://www2.myfloridalicense.com/sto/",
+   "tcp": {
+    "dns": "104.16.150.108",
+    "tcp": "ok",
+    "ms": 9
+   },
+   "http": {
+    "status": 200,
+    "final_url": "https://www2.myfloridalicense.com/",
+    "server": "cloudflare",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes_read": 198391,
+    "cloudflare_challenge": false,
+    "head": "<!DOCTYPE html>\r <html lang=\"en-US\">\r <head>\r <meta charset=\"UTF-8\">\r <!--<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\r <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">-->\r <meta charset=\"utf-8\">\r   <meta name=\"viewport\" content=\"width=device-width, ini",
+    "ms": 2752
+   },
+   "result": "reachable"
+  },
+  {
+   "ids": [
+    "FL-g3-01"
+   ],
+   "label": "DBPR construction licensee CSV",
+   "url": "https://www2.myfloridalicense.com/sto/file_download/extracts/CONSTRUCTIONLICENSE_1.csv",
+   "tcp": {
+    "dns": "104.16.150.108",
+    "tcp": "ok",
+    "ms": 2
+   },
+   "http": {
+    "status": 200,
+    "final_url": "https://www2.myfloridalicense.com/sto/file_download/extracts/CONSTRUCTIONLICENSE_1.csv",
+    "server": "cloudflare",
+    "content_type": "text/csv",
+    "bytes_read": 200000,
+    "cloudflare_challenge": false,
+    "head": "\"06\",\"CBC\",\"ERGLE, GERALD K\",\"\",\"\",\"3631 SE 12TH PLACE\",\"\",\"\",\"OCALA\",\"FL\",\"34471\",\"52\",\"0006261\",\"C\",\"I\",\"\",\"08/11/2026\",\"08/31/2028\",\"\",\"\",\"CBC006261\",\"\"\r \"06\",\"CBC\",\"CRACCHIOLO, SAM A JR\",\"\",\"\",\"8483 GRAND PRIX LANE\",\"\",\"\",\"BOYNTON BEACH\",\"FL\",\"33472\",\"60\",\"0015061\",\"C\",\"I\",\"01/03/1980\",\"09/29/20",
+    "ms": 134
+   },
+   "result": "reachable"
+  },
+  {
+   "ids": [
+    "FL-g3-02"
+   ],
+   "label": "DBPR electrical licensee CSV",
+   "url": "https://www2.myfloridalicense.com/sto/file_download/extracts/lic08el.csv",
+   "tcp": {
+    "dns": "104.16.151.108",
+    "tcp": "ok",
+    "ms": 2
+   },
+   "http": {
+    "status": 200,
+    "final_url": "https://www2.myfloridalicense.com/sto/file_download/extracts/lic08el.csv",
+    "server": "cloudflare",
+    "content_type": "text/csv",
+    "bytes_read": 200000,
+    "cloudflare_challenge": false,
+    "head": "\"08\",\"EF\",\"MORALES, ALEJANDRO M\",\"FISEC TECHNOLOGY CONVERGENCE LLC\",\"\",\"14260 SW 35 ST\",\"\",\"\",\"MIAMI\",\"FL\",\"33175\",\"23\",\"0000971\",\"C\",\"A\",\"11/16/1994\",\"09/06/2000\",\"08/31/2028\",\"\",\"\",\"EF0000971\",\"\"\r \"08\",\"ER\",\"KREUSCHER, LEANHARDT C\",\"\",\"\",\"374 NW 40TH STREET\",\"\",\"\",\"BOCA RATON\",\"FL\",\"33431\",\"60\",\"0",
+    "ms": 143
+   },
+   "result": "reachable"
+  }
+ ]
+}

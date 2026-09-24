@@ -1,5 +1,5 @@
 ---
-status: v0.1
+status: v0.2
 last_revised: 2026-09-24
 owner: Simon
 serves: which public feeds the Ironmark outbound engine ingests first, judged as data plumbing (access, cadence, incremental pull, fields, contact yield, build effort), not as sales signal
@@ -21,8 +21,8 @@ Scope: 61 A-tier sources in Alek's model; 9 are out of box (liquor, beer, food s
 
 | Verdict | Count | What it means |
 |---|---|---|
-| build_now | 26 | reachable, stable, in-box records, effort S–M |
-| build_later | 17 | blocked from Colombia (7 records on 5 hosts; retest pending), fragile scrape or login portal (3), buy-box fit on an undocumented API (2), noisy or mis-described (5) |
+| build_now | 30 | reachable, stable, in-box records, effort S–M |
+| build_later | 13 | TDEC DataViewer blocks datacenter IPs, US included (3), fragile scrape or login portal (3), buy-box fit on an undocumented API (2), noisy or mis-described (5) |
 | enrichment_only | 9 | useful to confirm or enrich a company already in the pool; not a lead source on its own |
 
 Access methods: 19 Socrata, 9 ArcGIS, 4 other APIs, 10 bulk files, 2 PDFs, 3 HTML scrapes, 5 portal searches.
@@ -46,6 +46,10 @@ Access methods: 19 Socrata, 9 ArcGIS, 4 other APIs, 10 bulk files, 2 PDFs, 3 HTM
 | **FDEP grease haulers** (FL-g3-04) | small vac-truck operators | ArcGIS, `STATUS_DATE` incremental | 13,959 in the layer | none | S |
 | **TDLR tow companies** (TX-g2-01) | tow roster, phone-rich | daily CSV, full file | 3,789 companies | phone 97% | S; see robots note in §4 |
 | **GA EPD solid waste facilities** (GA-g6-01) | haulers and roll-off | xlsx, roughly monthly | 7,266 rows | phone, most rows | S |
+| **TN contractor licenses** (TN-g5-05) | Tennessee's best source; trade codes plus a dollar aggregate limit as a size signal | Tableau CSV, one 9.4 MB GET, current to the prior day; **US host only** | 126–216 new licenses a month; 29,096 licenses | email 95%, phone 73% (sample of 200) | S; parse the name-and-address cell |
+| **DBPR construction licensees** (FL-g3-01) | Florida contractor roster with license type; the join key for Hillsborough NOCs | daily CSV, 46.6 MB, full file; **US host only** | ~1,630 new licenses a month | address only | S; same fetcher as FL-g3-02 |
+| **DBPR electrical licensees** (FL-g3-02) | rides on the FL-g3-01 fetcher | daily CSV, 4.0 MB; **US host only** | ~160 a month | address only | S, marginal |
+| **Hillsborough Clerk NOC index** (FL-g3-06) | names the contractor (TO party) on a job start | pipe-delimited daily files; **US host only** | ~272 NOCs a business day | none | S ingest, M with the DBPR join; 6–18 day posting lag |
 
 Colorado UCC needs one clarification. The SOS sells a $10K-a-year "UCC Master File" FTP subscription, and its own documentation says the free Socrata datasets carry the same data. Never pay for it. It also means Colorado doesn't depend on David's bulk file.
 
@@ -53,7 +57,7 @@ Colorado UCC needs one clarification. The SOS sells a $10K-a-year "UCC Master Fi
 
 ## 4. Cross-cutting findings
 
-- **Geoblocking is not ruled out, so seven "blocked" records (five hosts) are unverified.** This machine's traffic exits in Colombia (Medellín, checked 09-24). Four sources returned 403s or timeouts: the three TDEC DataViewer feeds and the Tennessee contractor-license file on data.tn.gov. Hillsborough Clerk didn't answer at the TCP level, and DBPR sits behind a Cloudflare challenge. US state sites often block foreign IPs. **Retest all seven from a US server before downgrading them** (runbook: `geoblock-retest.md`; Colombia baseline in `data/geoblock-probe-2026-09-24-colombia-baseline.json`). Tennessee is the state this affects most: only 1 of its 8 sources is build-now, and its best source on paper (contractor licenses with email, phone and monetary limit) is one of the blocked ones.
+- **Four of five blocked hosts were geoblocked; TDEC blocks datacenter IPs everywhere.** A retest on 2026-09-24 from a US datacenter host (DigitalOcean, Clifton NJ) reached data.tn.gov, Hillsborough Clerk and both DBPR CSVs. DBPR is still behind Cloudflare, but it serves the files to a US IP with no challenge, so its rule is geographic, not bot protection. TDEC's DataViewer returns 403 from its AWS load balancer on every path, robots.txt included, from the US as well. That is an IP-range block, not geography (inferred; a residential US IP was not tested, and the headless test was skipped because Chromium couldn't be installed without root). **Production fetches for these four hosts must run from a US host; local development from Colombia cannot reach them.** Tennessee moves from one build-now source to two, and TN-g5-05 (email 95%, phone 73%) becomes one of the most contact-rich feeds in the set. Detail: `data/geoblock-probe-2026-09-24.json`, `data/geoblock-retest-2026-09-24.json`.
 - **Many records don't name the equipment buyer.** Dallas ROW is dominated by large primes and unrelated installers. Nashville ROW fills its company field in only 22% of rows. TCEQ OSSF names an individual license holder. Permit feeds need the contractor join the model already flags as a risk. Feeds that name the contractor directly: Colorado dewatering, Miami-Dade (contractor number in DBPR format), Austin (`contractor_trade`).
 - **Rosters are the other half of the set, and they're snapshots, not events.** TDLR tow, TSBPE, IDEM septage, GA EPD and the TxDOT vendor list are full-file downloads with no add date. They load as companies and get compared month to month. Only dated events should become triggers.
 - **Traps a pipeline will hit:**
@@ -75,7 +79,7 @@ Colorado UCC needs one clarification. The SOS sells a $10K-a-year "UCC Master Fi
 1. **Measure contact-append before building more connectors.** Take 200 address-only companies from Colorado UCC and TXG11 and run them through website → email → verify. The found-and-verified rate replaces the model's 0.5. If it's under ~25%, the intent bucket can't fill its slots on free sources, and the general bucket (FMCSA, email-bearing rosters) carries the send volume.
 2. **Put Colorado UCC and FMCSA in v0.** Both are small builds, both are live, and together they cover the one validated signal plus the carrier universe in all six states.
 3. **Get a free Socrata app token** before any scheduled job runs. FMCSA throttled unauthenticated calls repeatedly.
-4. **Retest the seven blocked records from a US host** before Tennessee's sources get written off. Runbook ready: `geoblock-retest.md`.
+4. ~~Retest the seven blocked records from a US host.~~ **Done 2026-09-24:** four moved to build_now (TN-g5-05, FL-g3-01, FL-g3-02, FL-g3-06); the three TDEC DataViewer feeds stay build_later, blocked from US datacenter IPs too.
 5. **Correct the volumes in the artifact's by-state table** where the fetch measured them: Colorado UCC 4,000–4,650 initial UCC-1s a month, TXR05 industrial stormwater 266 in 30 days rather than ~137 a month, and Indiana FMCSA intrastate 39,771 before filters.
 
 ## 6. Scorecard, all 52
@@ -89,8 +93,11 @@ Sorted by verdict, then by state. Columns are shortened; the JSON has the full v
 | build_now | CO-g4-02 | CDPS active permits extract: construction dewatering… | bulk_file | irregular/periodic | no; full-file re-download only, then a… | ~99.9% carry legal phone and email per prior… | indirect: a  | S |
 | build_now | CO-g4-03 | DWR well permit API: well construction and pump… | other_api | daily | yes — min-modified query parameter (required… | driller/pumpLic fields are frequently null… | indirect: co | S |
 | build_now | CO-g4-04 | UCC initial filings by equipment lenders (Filing +… | socrata_api | daily | yes — filter/order by filingdate (SoQL… | address fields appear consistently populated… | direct when  | S |
+| build_now (retested) | FL-g3-01 | DBPR Construction Industry Licensee File | bulk_file | daily: Last-Modified 2026-09-2 | full file only; diff locally on column 16… | no phone or email column (confirmed on the… | none direct | S:  |
+| build_now (retested) | FL-g3-02 | DBPR Electrical Contractor Licensee File | bulk_file | daily: Last-Modified 2026-09-2 | full file only; diff locally on column 16… | no phone or email column (confirmed on the… | none direct | S:  |
 | build_now | FL-g3-03 | FDEP ARMS Air Facilities (concrete, asphalt, crusher, air… | arcgis_api | unknown -- no per-record last- | no date field to filter on; incremental pull… | no phone/email fields present in the layer… | indirect --  | S - |
 | build_now | FL-g3-04 | FDEP Grease Waste Hauler Licenses (Solid Waste Facilities… | arcgis_api | daily-capable -- STATUS_DATE v | yes -- STATUS_DATE field,… | no contact fields in the schema fetched | indirect --  | S - |
+| build_now (retested) | FL-g3-06 | Hillsborough Clerk Official Records Daily Index | bulk_file | one file set per recording bus | yes: list the directory and fetch new D and… | none: the index has no phone or email | none direct | S f |
 | build_now | FL-g3-07 | Palm Beach County Licensed Towing Companies (Consumer… | other_api | unknown -- this is a live quer | no server-side date filter observed in this… | phone present in all 3 sampled records;… | direct -- ve | S - |
 | build_now | FL-g3-08 | City of Orlando Permit Applications | socrata_api | daily -- dataset metadata rows | yes -- $where=processed_date>=... and… | 2 of 3 sampled records had… | none direct | S - |
 | build_now | FL-g3-09 | Miami-Dade Building Permits | arcgis_api | recent -- editingInfo.dataLast | yes -- orderByFields=PermitIssuedDate DESC… | ContractorPhone populated in the 1 full… | indirect --  | S - |
@@ -100,6 +107,7 @@ Sorted by verdict, then by state. Columns are shortened; the JSON has the full v
 | build_now | IN-g6-03 | IDEM Approved Septage Management Permittees list (septage,… | pdf | monthly | no incremental query -- single PDF, full… | phone present on essentially every row… | indirect: se | S |
 | build_now | IN-g6-04 | IDEM Pending Septage Management Applications tracking report | pdf | monthly | no incremental query -- single PDF, full… | 0% -- no phone or email column in this… | indirect onl | S |
 | build_now | IN-g6-05 | INDOT Official Bid Tabulations (letting results) | html_scrape | monthly | no API -- pipeline must crawl the archive… | phone and email present for essentially… | indirect: co | M |
+| build_now (retested) | TN-g5-05 | TN Board for Licensing Contractors: Contractor and… | bulk_file | at least daily | full file only (9.4 MB, one GET, ~seconds);… | email 95% (190/200) and phone 73% (146/200)… | none direct | S:  |
 | build_now | TN-g5-06 | Chattanooga All Permits | bulk_file | daily | no native filtering - it is a single flat… | not re-measured this round on a fresh… | indirect - p | M |
 | build_now | TX-g1-01 | Comptroller Signed Statement Registration Numbers (dyed… | socrata_api | daily | yes; $order=effective_date DESC or… | 0% — no phone/email/contact-person field… | indirect | S |
 | build_now | TX-g1-02 | Dallas Right of Way (ROW) Permits | socrata_api | dataset rowsUpdatedAt = 2026-0 | yes; $order=issuedate DESC or createddate… | 0% — no phone/email field in schema;… | indirect | M |
@@ -113,16 +121,12 @@ Sorted by verdict, then by state. Columns are shortened; the JSON has the full v
 | build_now | TX-g2-05 | Austin Issued Construction Permits | socrata_api | newest issue_date returned by  | yes, via issue_date; also has… | not formally sampled; 2 of 3 sample rows had… | indirect via | S |
 | build_later | CO-g4-01 | CDOT bid tabs and weekly letting results | html_scrape | weekly | no field-level incremental query; would need… | 0% on this page; would need to join to CDOT… | indirect: wi | M |
 | build_later | CO-g4-08 | Pikes Peak Regional Building Dept daily/weekly permit… | html_scrape | not independently re-confirmed | unclear; reports appear to be point-in-time… | — | indirect: co | M |
-| build_later | FL-g3-01 | DBPR Construction Industry Licensee File | bulk_file | — | no API filter; prior round notes col 16 =… | address only, per prior round | none direct | M - |
-| build_later | FL-g3-02 | DBPR Electrical Contractor Licensee File | bulk_file | — | no API filter; same layout as… | address only per prior round; elec_app.csv… | none direct | M - |
-| build_later | FL-g3-06 | Hillsborough Clerk Official Records Daily Index | bulk_file | — | daily files, per prior round; not reverified | none, per prior round | none direct | M - |
 | build_later | GA-g6-07 | GDA License Search - Food Establishment Licenses | other_api | daily plausible based on prior | yes in practice via sort=IssueDate-desc plus… | phone present on all 4 sampled rows; email… | none direct | S |
 | build_later | GA-g6-08 | GDA License Search - fuel pump, poultry dealer, feed,… | other_api | not independently re-measured  | same approach as GA-g6-07: page through… | phone present on all 3 sampled fuel-pump… | indirect onl | S |
 | build_later | TN-g5-01 | Nashville Active Right-of-Way Permits | arcgis_api | daily | yes; query with… | Company field: 11/50 (22%) filled in a… | indirect - P | S |
-| build_later | TN-g5-02 | TDEC Air Pollution Control Permits | portal_search | — | — | — | — | — |
-| build_later | TN-g5-03 | TDEC DWR Permits (CGP, ARAP, TMSP, RMCP) | portal_search | — | — | — | — | — |
-| build_later | TN-g5-04 | TDEC Water Well Driller Reports (completed wells) | portal_search | — | — | — | — | — |
-| build_later | TN-g5-05 | TN Board for Licensing Contractors: Contractor and… | bulk_file | — | no incremental query support even if… | — | — | — |
+| build_later (retested) | TN-g5-02 | TDEC Air Pollution Control Permits | portal_search | — | — | — | — | — |
+| build_later (retested) | TN-g5-03 | TDEC DWR Permits (CGP, ARAP, TMSP, RMCP) | portal_search | — | — | — | — | — |
+| build_later (retested) | TN-g5-04 | TDEC Water Well Driller Reports (completed wells) | portal_search | — | — | — | — | — |
 | build_later | TX-g1-06 | TCEQ Central Registry regional files: construction… | socrata_api | daily | yes, but requires a bounded affil_begin_dt… | 0% | indirect | L |
 | build_later | TX-g1-07 | TCEQ Central Registry regional files: new air… | socrata_api | daily | yes via affil_begin_dt, same sentinel-date… | 0% | indirect | M |
 | build_later | TX-g1-09 | TCEQ Water Quality General Permits: industrial stormwater… | socrata_api | daily | yes; $where=program_area='SWD' AND… | 0% | indirect and | M |
