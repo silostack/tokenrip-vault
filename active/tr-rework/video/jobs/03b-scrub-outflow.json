@@ -1,0 +1,9 @@
+{
+  "id": "03b",
+  "name": "scrub-outflow",
+  "seconds": 8,
+  "reference": "src/ref_hero_1280.jpg",
+  "prompt": "Static locked-off camera. No camera movement, no zoom, no pan, no dolly, no parallax. The hardware unit, its brushed metal front panel, its engraved labels and its small amber display stay perfectly still and unchanged for the entire shot. Over the whole shot the right-hand side of the panel grows brighter and busier. The four copper cables on the right fill with a dense, fast, continuous stream of warm amber light flowing away from the unit toward the bottom of the frame, brightening steadily and spilling a soft amber pool of light onto the dark floor beneath them. The green flow on the left cables continues steadily and constantly, unchanged. The amber glow under the smoked glass top brightens slowly. The flow never stops or decays at any point. Photorealistic product cinematography, dark studio, shallow depth of field. No people, no hands, no new objects, nothing is added or removed.",
+  "model": "sora-2",
+  "size": "1280x720"
+}

@@ -1,0 +1,420 @@
+# AICAP Credentialing Rules Catalog — every rule extracted from S1/S2/S3 + CVs + Stephanie-stated logic + domain docs.
+# STATUS: raw extraction, architecture-neutral. NOT a runtime rule engine.
+# rule_type ∈ {format, completeness, conditional_branch, cross_field_consistency, compliance_red_flag,
+#              attestation, document_requirement}
+# provenance.form = which sample stated it; provenance.regulatory = derived regulatory basis (NCQA/TJC/CMS/NPDB/CSA/Stephanie)
+# consequence ∈ {delays_verification, blocks_submission, flag_for_coordinator, needs_follow_up, informational}
+
+meta:
+  version: 0
+  date: 2026-07-02
+  note: >
+    Rules are typed and provenance-tagged but NOT encoded. Several rules the forms state are in tension
+    with each other (see the 'conflicts' block at the end) — those are decisions for Stephanie, not the model.
+
+format:
+  - id: FMT-01
+    statement: "Month AND year are required for education and work-history dates."
+    meaning: "Year-only is insufficient; verification needs month granularity to reconcile timelines."
+    trigger: "any education/training/work-history date"
+    affects: [education, training, work_history]
+    provenance: {form: [S3 p2, S1 (MM/YYYY labels)], regulatory: NCQA/TJC}
+    consequence: delays_verification
+  - id: FMT-02
+    statement: "Do not leave any blanks; write 'n/a' if a section does not apply."
+    meaning: "A blank is ambiguous (unknown vs not-applicable); explicit n/a removes the ambiguity."
+    provenance: {form: [S3 p2]}
+    consequence: delays_verification
+  - id: FMT-03
+    statement: "'See CV' is not acceptable unless a current CV containing all requested info is also submitted."
+    meaning: "The structured fields must be populated even when a CV exists."
+    provenance: {form: [S3 p2]}
+    consequence: delays_verification
+  - id: FMT-04
+    statement: "Changes must be lined-through and initialed; correction fluid/tape not acceptable."
+    provenance: {form: [S3 p2]}
+    consequence: informational
+    note: "A digital workflow sidesteps this, but the intent (auditable edits) maps to the audit trail."
+  - id: FMT-05
+    statement: "Modification to the wording or format of the application/agreement invalidates it."
+    meaning: "Legal-form integrity; relevant if AICAP re-renders a hospital's form."
+    provenance: {form: [S3 p2]}
+    consequence: blocks_submission
+  - id: FMT-06
+    statement: "Use full legal name; no nicknames or initials unless part of the legal name."
+    affects: [legal_name]
+    provenance: {form: [S1 p2]}
+    consequence: delays_verification
+  - id: FMT-07
+    statement: "Identifier formats: NPI = 10 digits; DEA = 2 letters + 7 digits; license/DEA patterns per issuer."
+    meaning: "Structural validation of key identifiers before submission."
+    affects: [npi, dea_number, license_number]
+    provenance: {form: [derived], regulatory: CSA/NPPES}
+    consequence: needs_follow_up
+  - id: FMT-08
+    statement: "Normalize dates to the target form's format (e.g. a CV's year-only → MM/YYYY)."
+    meaning: "Stephanie's demoed behavior: a CV listing only years is revised to month/year."
+    affects: [all date fields]
+    provenance: {form: [Stephanie prototype], regulatory: NCQA/TJC}
+    consequence: informational
+  - id: FMT-09
+    statement: "Type or print legibly (digital-native for AICAP)."
+    provenance: {form: [S3 p2]}
+    consequence: informational
+
+completeness:
+  - id: CMP-01
+    statement: "Provide a chronological work history for ≥10 years; account for all time in the clinical career."
+    affects: [work_history]
+    provenance: {form: [S1 p11, S3 p7], regulatory: NCQA/TJC}
+    consequence: delays_verification
+  - id: CMP-02
+    statement: "Explain work-history gaps over the threshold. THRESHOLD IS IN CONFLICT across forms."
+    meaning: "A gap between employment end and next start beyond N days requires a written explanation."
+    affects: [work_history, work_gap_explanation]
+    provenance: {form: ["S1 p12: >3 months", "S3 p7 body: >30 days", "S3 p2 instructions: >60 days"], regulatory: NCQA/TJC}
+    consequence: delays_verification
+    conflict: true
+  - id: CMP-03
+    statement: "All disclosure questions must be answered (yes/no); none left blank."
+    affects: [disclosure_questions]
+    provenance: {form: [S1 p13, S3 p9]}
+    consequence: blocks_submission
+  - id: CMP-04
+    statement: "Signed authorization/attestation must be current — S2 (WA app) requires signed within the last 120 days."
+    meaning: "Ties to NCQA's tightened 120-day primary-source-verification window."
+    affects: [attestation]
+    provenance: {form: [S2 p1 checklist], regulatory: NCQA-120-day}
+    consequence: blocks_submission
+  - id: CMP-05
+    statement: "Collect ONLY what is required — do not ask for anything not needed."
+    meaning: "Stephanie: extra provided data creates an obligation to verify it. Minimalism is a compliance rule, not aesthetics."
+    provenance: {form: [Stephanie]}
+    consequence: informational
+    design_note: "Argues against a 'kitchen-sink superset' at the PROVIDER surface even though the DICTIONARY is a superset."
+  - id: CMP-06
+    statement: "References must be current — able to comment on clinical work within the past year (S3: six physician references)."
+    affects: [references]
+    provenance: {form: [S3 p7], regulatory: NCQA/TJC}
+    consequence: delays_verification
+  - id: CMP-07
+    statement: "CME activity for the last 3 years (privileging may require certificate copies)."
+    affects: [cme]
+    provenance: {form: [S3 p3, p11]}
+    consequence: needs_follow_up
+  - id: CMP-08
+    statement: "The entity will not process the application until it is deemed complete."
+    meaning: "Completeness is the gate; incompleteness = no processing (the core AICAP value)."
+    provenance: {form: [S1 p17 attestation]}
+    consequence: blocks_submission
+  - id: CMP-09
+    statement: "Fill empty fields only (never overwrite existing data); all-or-nothing at submission."
+    meaning: "AICAP design constraint from discovery; partial submission not allowed."
+    affects: [all]
+    provenance: {form: [Stephanie / repo gameplan]}
+    consequence: blocks_submission
+
+conditional_branch:
+  - id: CND-01
+    statement: "If not board certified → require exam status (taken/pending | intend to sit + date | do not intend + explanation)."
+    trigger: "board_certified_flag == No"
+    affects: [board_not_certified_status]
+    provenance: {form: [S1 p7, S3 p6]}
+    consequence: needs_follow_up
+  - id: CND-02
+    statement: "If non-US/Canadian graduate → ECFMG number + certificate required (Fifth Pathway alternative)."
+    trigger: "graduate_type == Non-US or Canadian"
+    affects: [ecfmg_number]
+    provenance: {form: [S1 p3-4, S3 p6], regulatory: ECFMG}
+    consequence: needs_follow_up
+  - id: CND-03
+    statement: "If not a U.S. citizen → visa/status number + green card/permanent resident card required."
+    trigger: "citizenship != US"
+    affects: [visa_status_number]
+    provenance: {form: [S1 p2, S3 checklist p3]}
+    consequence: needs_follow_up
+  - id: CND-04
+    statement: "If employed by the hospital = Yes → pre-populate the associated affiliation/malpractice/work-history fields."
+    meaning: "Stephanie's 'rollover' demo: an employment answer cascades to adjacent fields instead of re-asking."
+    trigger: "employed_by_hospital == Yes"
+    affects: [hospital_affiliations, malpractice_insurance, work_history]
+    provenance: {form: [Stephanie prototype]}
+    consequence: informational
+    type_note: "This is an EXPANSION rule (Surface 2), the inverse of a red flag — populate, don't gate."
+  - id: CND-05
+    statement: "Any disclosure question answered 'Yes' → require the supplemental explanation form; malpractice-yes → the claims detail form."
+    trigger: "any dq_answer == Yes"
+    affects: [dq_explanation, malpractice_claims]
+    provenance: {form: [S1 p18-19, S3 p12-13]}
+    consequence: blocks_submission
+  - id: CND-06
+    statement: "If no SSN → Foreign National ID Number (FNIN) + country required."
+    trigger: "ssn absent"
+    affects: [foreign_national_id]
+    provenance: {form: [S1 p2]}
+    consequence: needs_follow_up
+  - id: CND-07
+    statement: "If practicing exclusively inpatient = Yes → practice-location section may be left blank."
+    trigger: "practice_exclusively_inpatient == Yes"
+    affects: [practice_location]
+    provenance: {form: [S1 p2, p8]}
+    consequence: informational
+  - id: CND-08
+    statement: "If training program not completed → require explanation."
+    trigger: "training_completed_flag == No"
+    affects: [training]
+    provenance: {form: [S1 p4]}
+    consequence: needs_follow_up
+  - id: CND-09
+    statement: "If a hospital affiliation was terminated → require explanation."
+    trigger: "affiliation terminated"
+    affects: [affil_terminated_explanation]
+    provenance: {form: [S1 p11]}
+    consequence: needs_follow_up
+  - id: CND-10
+    statement: "If provider does not carry malpractice insurance → skip the liability-carrier section (but the fact is itself disclosable)."
+    trigger: "mal_carry_flag == No"
+    affects: [malpractice_insurance]
+    provenance: {form: [S1 p11]}
+    consequence: informational
+  - id: CND-11
+    statement: "(Entity axis) If status = Disclosing Entity → require board-of-directors detail (name/DOB/SSN/%)."
+    trigger: "entity is Disclosing Entity"
+    affects: [board_of_directors]
+    provenance: {form: [S2 p8], regulatory: 42-CFR-455.104}
+    consequence: blocks_submission
+
+cross_field_consistency:
+  - id: XFD-01
+    statement: "The name on the application must match the name on the medical license."
+    meaning: "Stephanie's demoed check. Cannot be verified at intake (no PSV) but is important to confirm — a mismatch holds the applicant up downstream."
+    affects: [legal_name, license_number]
+    provenance: {form: [Stephanie prototype], regulatory: NCQA/TJC}
+    consequence: flag_for_coordinator
+  - id: XFD-02
+    statement: "NPI must match NPPES and be consistent everywhere it appears in the application."
+    affects: [npi]
+    provenance: {form: [S2 p1 checklist], regulatory: NPPES/CMS}
+    consequence: needs_follow_up
+  - id: XFD-03
+    statement: "Tax ID / payee name must be consistent with the W-9 ('check payable to' consistent with W-9)."
+    affects: [tax_id, billing_contact]
+    provenance: {form: [S1 p9, S2], regulatory: IRS}
+    consequence: needs_follow_up
+  - id: XFD-04
+    statement: "No unexplained time gaps across education → training → work-history (continuous timeline)."
+    meaning: "The union of education, training, and work dates should tile the clinical career with no unexplained holes."
+    affects: [education, training, work_history]
+    provenance: {form: [S1 p12, S3 p2/p7], regulatory: NCQA/TJC}
+    consequence: delays_verification
+  - id: XFD-05
+    statement: "DEA/CDS state(s) should correspond to the state(s) of licensure (heuristic)."
+    affects: [dea_state, license_state]
+    provenance: {form: [derived]}
+    consequence: needs_follow_up
+  - id: XFD-06
+    statement: "Declared specialty should be consistent with board certification and training."
+    affects: [specialty_name, board_name, training_department_specialty]
+    provenance: {form: [derived], regulatory: NCQA/TJC}
+    consequence: needs_follow_up
+
+compliance_red_flag:
+  # Disclosure-category flags (S1 26-question set ∪ S3 19-question set → shared categories)
+  - id: FLG-01
+    category: licensure_action
+    statement: "License/registration/certification ever relinquished, denied, suspended, revoked, restricted, or challenged."
+    provenance: {form: [S1 Q1-2, S3 Q1/Q3], regulatory: NPDB}
+    consequence: flag_for_coordinator
+  - id: FLG-02
+    category: hospital_privilege_action
+    statement: "Clinical privileges / medical-staff membership denied, suspended, revoked, restricted, or surrendered."
+    provenance: {form: [S1 Q3-4, S3 Q4-5], regulatory: NPDB}
+    consequence: flag_for_coordinator
+  - id: FLG-03
+    category: managed_care_or_program_termination
+    statement: "Terminated/disciplined by a managed-care org, or excluded/debarred/sanctioned from Medicare/Medicaid."
+    provenance: {form: [S1 Q5/Q11, S3 Q8-9], regulatory: CMS/OIG-exclusion}
+    consequence: flag_for_coordinator
+  - id: FLG-04
+    category: education_training_discipline
+    statement: "Probation/discipline/withdrawal during internship/residency/fellowship."
+    provenance: {form: [S1 Q6-7, S3 Q via institutional]}
+    consequence: flag_for_coordinator
+  - id: FLG-05
+    category: board_cert_action
+    statement: "Board certification/eligibility revoked, or surrendered while under investigation."
+    provenance: {form: [S1 Q8-9, S3 Q7]}
+    consequence: flag_for_coordinator
+  - id: FLG-06
+    category: dea_cds_action
+    statement: "DEA/CDS certificate challenged, denied, suspended, revoked, restricted, or relinquished."
+    provenance: {form: [S1 Q10, S3 Q2], regulatory: DEA}
+    consequence: flag_for_coordinator
+  - id: FLG-07
+    category: active_investigation
+    statement: "Currently the subject of an investigation (hospital, licensing, DEA, Medicare/Medicaid, civil action)."
+    provenance: {form: [S1 Q12]}
+    consequence: flag_for_coordinator
+  - id: FLG-08
+    category: npdb_hipdb_report
+    statement: "Information ever reported to the National Practitioner Data Bank / HIPDB."
+    provenance: {form: [S1 Q13, S3 Q19], regulatory: NPDB/HIPDB}
+    consequence: flag_for_coordinator
+  - id: FLG-09
+    category: regulatory_sanction
+    statement: "Sanctions/investigation by regulatory agencies (CLIA, OSHA, etc.)."
+    provenance: {form: [S1 Q14]}
+    consequence: flag_for_coordinator
+  - id: FLG-10
+    category: liability_coverage_action
+    statement: "Professional liability coverage cancelled/restricted/declined/non-renewed, or surcharged/high-risk rated."
+    provenance: {form: [S1 Q17-18, S3 malpractice Q1]}
+    consequence: flag_for_coordinator
+  - id: FLG-11
+    category: malpractice_claim_history
+    statement: "Any professional-liability action (pending/settled/arbitrated/mediated/litigated) — triggers the claims form."
+    provenance: {form: [S1 Q19, S3 malpractice Q2-3]}
+    consequence: flag_for_coordinator
+  - id: FLG-12
+    category: criminal
+    statement: "Felony conviction; misdemeanor (excl. minor traffic) in past 10 yrs; pending charges; court-martial."
+    provenance: {form: [S1 Q20-22, S3 Q13-14]}
+    consequence: flag_for_coordinator
+  - id: FLG-13
+    category: crime_children_or_sexual
+    statement: "Arrested/charged with a crime involving children, or a sexual offense/harassment."
+    provenance: {form: [S1 Q15, S3 Q15-16]}
+    consequence: flag_for_coordinator
+  - id: FLG-14
+    category: moral_turpitude
+    statement: "Arrested/charged with a crime involving moral turpitude."
+    provenance: {form: [S3 Q17]}
+    consequence: flag_for_coordinator
+  - id: FLG-15
+    category: substance_impairment
+    statement: "Current illegal drug use / legal drugs used illegally; substance that impairs ability to practice."
+    provenance: {form: [S1 Q23-24, S3 Q10-11]}
+    consequence: flag_for_coordinator
+  - id: FLG-16
+    category: ability_to_perform
+    statement: "Physical/mental condition (incl. alcohol/drug dependency) or inability to perform essential functions (even with accommodation)."
+    provenance: {form: [S1 Q25-26, S3 Q10/Q12]}
+    consequence: flag_for_coordinator
+  - id: FLG-17
+    category: other_disclosable_issue
+    statement: "Any other issue that should be disclosed that may adversely affect delivery of care."
+    provenance: {form: [S3 Q18]}
+    consequence: flag_for_coordinator
+  # Credential-expiry / validity flags (from CV data, not disclosure questions)
+  - id: FLG-EXP-LICENSE
+    category: expired_license
+    statement: "A state license whose expiration date is past (or imminent) with active status → follow-up."
+    example: "Ortho CV: Maryland license expiration 09/2025 → genuinely expired as of 07/2026."
+    affects: [license_expiration_date]
+    provenance: {form: [derived from CV], regulatory: state-board}
+    consequence: needs_follow_up
+  - id: FLG-EXP-DEA
+    category: expired_dea
+    statement: "DEA/CDS registration past expiration → pending item."
+    affects: [dea_expiration_date]
+    provenance: {form: [derived from CV], regulatory: DEA}
+    consequence: needs_follow_up
+  - id: FLG-BOARD-MOC
+    category: board_cert_moc_nuance
+    statement: "A board-certification expiration date in the PAST that carries a continuous-certification / MOC annotation is NOT a red flag — the cert is maintained."
+    meaning: "CRITICAL false-positive guard: all four sample CVs show this pattern. Naive 'expired cert' logic would flag every physician."
+    example: "Cardiology CV: ABIM Cardiovascular exp 09/2019 '(MOC active)'; EM: ABEM exp 12/2014 '(Continuous Certification active)'; Ortho: ABOS exp 10/2021 '(Part II re-certification active)'; FM: ABFM exp 12/2017 '(Continuous Certification — active)'."
+    affects: [board_expiration_date]
+    provenance: {form: [derived from all 4 CVs], regulatory: ABMS-MOC}
+    consequence: informational
+  - id: FLG-BOARD-REAL
+    category: board_cert_lapsed
+    statement: "A board cert past expiration with NO continuous/MOC annotation → genuine follow-up (distinguish from FLG-BOARD-MOC)."
+    provenance: {form: [derived]}
+    consequence: needs_follow_up
+  - id: FLG-NONRESOLVING-ID
+    category: identifier_not_resolving
+    statement: "An NPI/DEA/license number that does not resolve against its registry → flag. AICAP detects; it does NOT perform primary-source verification (PSV)."
+    affects: [npi, dea_number, license_number]
+    provenance: {form: [Stephanie / repo gameplan]}
+    consequence: flag_for_coordinator
+  - id: FLG-PENDING-DOC
+    category: pending_document
+    statement: "Required accompanying document missing (DEA cert, certificate of insurance, board certificate, etc.) → pending item."
+    provenance: {form: [repo gameplan / S3 checklist]}
+    consequence: needs_follow_up
+
+attestation:
+  - id: ATT-01
+    statement: "A genuine provider e-signature is required; the provider attests their own information."
+    meaning: "Coordinator impersonation is the flaw that killed the PDF-pilot; the attestation must be truly the provider's."
+    provenance: {form: [Stephanie], regulatory: NCQA/TJC}
+    consequence: blocks_submission
+  - id: ATT-02
+    statement: "Attestation must be currently dated (see CMP-04: within 120 days for the WA app)."
+    provenance: {form: [S1, S3, S2], regulatory: NCQA-120-day}
+    consequence: blocks_submission
+  - id: ATT-03
+    statement: "Provider consents to investigation + third-party release of records (incl. NPDB, carriers, prior employers)."
+    provenance: {form: [S1 p16, S3 p14, S2 p7]}
+    consequence: blocks_submission
+  - id: ATT-04
+    statement: "Ongoing duty to notify of material changes within 10 days (S1) / 15 days (S2)."
+    provenance: {form: [S1 p17, S2 p7]}
+    consequence: informational
+  - id: ATT-05
+    statement: "A photocopy / electronic signature is as effective as the original."
+    provenance: {form: [S1 p17, S3 p15]}
+    consequence: informational
+  - id: ATT-06
+    statement: "A stamp signature is not acceptable (S2)."
+    provenance: {form: [S2 p7]}
+    consequence: blocks_submission
+
+document_requirement:
+  # What must accompany a complete application (union across forms; S3 checklist is the richest)
+  - {id: DOC-01, item: "IRS W-9 (per Tax ID)", provenance: [S1, S2, S3], axis: both}
+  - {id: DOC-02, item: "Copy of Federal DEA + State CDS registration (current)", provenance: [S2, S3]}
+  - {id: DOC-03, item: "Board Certification certificate", provenance: [S2, S3]}
+  - {id: DOC-04, item: "ECFMG certificate (foreign grad) / Fifth Pathway", provenance: [S1, S3]}
+  - {id: DOC-05, item: "State license wallet card + wall certificate (exp + number)", provenance: [S3]}
+  - {id: DOC-06, item: "Government photo ID — driver's license OR passport", provenance: [S3], mvp_input: true}
+  - {id: DOC-07, item: "Recent signed photograph (within 1 yr)", provenance: [S3]}
+  - {id: DOC-08, item: "3 written letters of recommendation (observed in practice within past year)", provenance: [S3]}
+  - {id: DOC-09, item: "Permanent resident/green card or visa status (non-US citizens)", provenance: [S3]}
+  - {id: DOC-10, item: "Military discharge DD-214 (if applicable)", provenance: [S3]}
+  - {id: DOC-11, item: "CME certificates (last 3 yrs, privileging)", provenance: [S3]}
+  - {id: DOC-12, item: "Professional liability face sheet / certificate of insurance", provenance: [S2, S3]}
+  - {id: DOC-13, item: "Medical school diploma + training certificates (internship/residency/fellowship)", provenance: [S3]}
+  - {id: DOC-14, item: "NBME / USMLE / FLEX / SPEX score reports", provenance: [S3]}
+  - {id: DOC-15, item: "BLS/ACLS/ATLS/PALS/NRP certificates", provenance: [S3]}
+  - {id: DOC-16, item: "(Entity) State operational license, accreditation survey results, ownership disclosure, MMP directory form", provenance: [S2], axis: entity}
+
+# Regulatory provenance anchors (the 'where rules come from' layer)
+regulatory_anchors:
+  - {body: NCQA, role: "Credentialing standard S3 explicitly cites; PSV window tightened to 120 days (2025); references, work-history, license/DEA/board verification.", cite: "S3 p2 'based on NCQA'; AICAP domain docs"}
+  - {body: "The Joint Commission (TJC/JCAHO)", role: "Accreditation standard S3 explicitly cites; medical-staff standards drive privileging.", cite: "S3 p2 'based on TJC'; S2 accreditation table"}
+  - {body: CMS, role: "Medicare/Medicaid participation; 42 CFR 455 ownership disclosure; provider enrollment.", cite: "S2 ownership disclosure; S1 Medicare/Medicaid fields"}
+  - {body: NPDB/HIPDB, role: "National Practitioner Data Bank reporting — the backbone of the disclosure questions.", cite: "S1 Q13, S3 Q19"}
+  - {body: "Controlled Substances Act / DEA", role: "DEA schedules II–V; state CDS permits.", cite: "S1/S3 DEA fields, disclosure Q23"}
+  - {body: ECFMG, role: "Foreign medical graduate certification.", cite: "S1/S3 ECFMG"}
+  - {body: Stephanie (domain SME), role: "Minimalism rule, name-license match, employment rollover, date normalization, genuine attestation, resolved/unresolved gating.", cite: "bd/calls/contacts/stephanie-williamson.md"}
+
+# Rules that CONFLICT across forms — decisions for Stephanie, not the model (see walkthrough-questions.md)
+conflicts:
+  - id: CONF-GAP
+    concept: "Work-history gap explanation threshold"
+    values: {"S1": ">3 months", "S3 body": ">30 days", "S3 instructions": ">60 days"}
+    resolution: "Baseline must choose one; Stephanie decides."
+  - id: CONF-DISCLOSURE-SET
+    concept: "Disclosure question set + count"
+    values: {"S1": "26 questions", "S3": "19 questions"}
+    resolution: "Use the union of shared categories; the specific worded set is per-hospital config."
+  - id: CONF-CHANGE-NOTICE
+    concept: "Material-change notification window"
+    values: {"S1": "10 days", "S2": "15 days"}
+    resolution: "Per-form; informational."
+  - id: CONF-REFERENCE-COUNT
+    concept: "Reference count/type"
+    values: {"S1": "covering colleagues only", "S3": "6 physician references (past year)"}
+    resolution: "Per-hospital config."

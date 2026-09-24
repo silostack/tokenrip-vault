@@ -1,0 +1,234 @@
+<div id="root" class="min-h-screen bg-slate-50 p-4 sm:p-6 font-sans text-slate-900">loading…</div>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.24.7/babel.min.js"></script>
+<script type="text/babel" data-presets="react">
+  (function () {
+    'use strict';
+
+    var STATUSES = ['scouted', 'approved', 'posted', 'skipped', 'failed'];
+    var TABS = [
+      { key: 'scouted', label: 'Inbox' },
+      { key: 'approved', label: 'Approved' },
+      { key: 'posted', label: 'Posted' },
+      { key: 'skipped', label: 'Skipped' },
+      { key: 'failed', label: 'Failed' },
+      { key: 'all', label: 'All' }
+    ];
+    var BADGE = {
+      scouted: 'bg-amber-100 text-amber-800 border-amber-200',
+      approved: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+      posted: 'bg-sky-100 text-sky-800 border-sky-200',
+      skipped: 'bg-slate-100 text-slate-600 border-slate-200',
+      failed: 'bg-red-100 text-red-800 border-red-200'
+    };
+    var TWEET_MAX = 280;
+
+    function cx() {
+      var out = [];
+      for (var i = 0; i < arguments.length; i++) { if (arguments[i]) { out.push(arguments[i]); } }
+      return out.join(' ');
+    }
+
+    function ReviewQueue() {
+      var t = window.tokenrip.useTable('posts', {
+        poll: 12000,
+        patchDebounce: 600,
+        sort: { by: 'createdAt', order: 'desc' },
+        limit: 200
+      });
+
+      var tabState = React.useState('scouted');
+      var tab = tabState[0];
+      var setTab = tabState[1];
+
+      var rows = t.rows || [];
+
+      var counts = {};
+      for (var s = 0; s < STATUSES.length; s++) { counts[STATUSES[s]] = 0; }
+      rows.forEach(function (row) {
+        var st = (row.data || {}).status || 'scouted';
+        if (counts[st] == null) { counts[st] = 0; }
+        counts[st] += 1;
+      });
+
+      var visible = rows.filter(function (row) {
+        if (tab === 'all') { return true; }
+        return ((row.data || {}).status || 'scouted') === tab;
+      });
+
+      return (
+        <div className="mx-auto max-w-3xl space-y-4">
+          <header className="flex flex-wrap items-baseline justify-between gap-2">
+            <div>
+              <h1 className="text-xl font-semibold tracking-tight">Reply Guy — Review Queue</h1>
+              <p className="text-xs text-slate-500">@silostack · review, edit, approve. Only approved replies get posted.</p>
+            </div>
+            <span className="text-xs text-slate-500">
+              {t.refreshing ? 'refreshing… · ' : ''}{rows.length} total
+            </span>
+          </header>
+
+          {t.validationBlocked ? (
+            <div className="rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+              Validation mode — writes blocked
+            </div>
+          ) : null}
+
+          {t.error ? (
+            <div className="rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-900">
+              <span className="font-mono font-semibold">{t.error.code}</span> — {t.error.message}
+            </div>
+          ) : null}
+
+          <div className="flex flex-wrap gap-1.5">
+            {TABS.map(function (tb) {
+              var n = tb.key === 'all' ? rows.length : (counts[tb.key] || 0);
+              var active = tab === tb.key;
+              return (
+                <button
+                  key={tb.key}
+                  type="button"
+                  onClick={function () { setTab(tb.key); }}
+                  className={cx(
+                    'rounded-full border px-3 py-1 text-xs font-medium transition',
+                    active ? 'border-slate-800 bg-slate-800 text-white' : 'border-slate-300 bg-white text-slate-600 hover:border-slate-400'
+                  )}
+                >
+                  {tb.label} <span className={active ? 'text-slate-300' : 'text-slate-400'}>{n}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {t.loading ? (
+            <div className="rounded-md border border-slate-200 bg-white p-4 text-sm text-slate-500">Loading…</div>
+          ) : null}
+
+          {!t.loading && visible.length === 0 ? (
+            <div className="rounded-md border border-slate-200 bg-white p-6 text-center text-sm text-slate-500">
+              Nothing in {tab === 'all' ? 'the queue' : tab} yet.
+            </div>
+          ) : null}
+
+          <ul className="space-y-3">
+            {visible.map(function (row) {
+              var d = row.data || {};
+              var status = d.status || 'scouted';
+              var replyLen = (d.generated_reply || '').length;
+              var over = replyLen > TWEET_MAX;
+              var replyId = 'reply-' + row.id;
+              var fbId = 'fb-' + row.id;
+              var statusId = 'status-' + row.id;
+
+              return (
+                <li key={row.id} className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 text-sm">
+                        <span className="font-semibold text-slate-900">@{d.author || 'unknown'}</span>
+                        {d.source ? <span className="text-xs text-slate-400">· {d.source}</span> : null}
+                      </div>
+                      <p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">{d.original_text || '(no text captured)'}</p>
+                    </div>
+                    <span className={cx('shrink-0 rounded-full border px-2 py-0.5 text-[11px] font-medium', BADGE[status] || BADGE.scouted)}>
+                      {status}
+                    </span>
+                  </div>
+
+                  <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-400">
+                    {d.tweet_url ? (
+                      <a
+                        href={d.tweet_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={'Open original tweet by @' + (d.author || 'unknown')}
+                        className="text-sky-600 hover:underline"
+                      >open tweet ↗</a>
+                    ) : null}
+                    {d.opinion_match ? <span>grounded in: <span className="font-mono text-slate-500">{d.opinion_match}</span></span> : null}
+                  </div>
+
+                  <div className="mt-3">
+                    <div className="flex items-center justify-between">
+                      <label htmlFor={replyId} className="text-xs font-medium uppercase tracking-wide text-slate-500">Our reply</label>
+                      <span className={cx('text-xs tabular-nums', over ? 'font-semibold text-red-600' : 'text-slate-400')}>
+                        {replyLen}/{TWEET_MAX}
+                      </span>
+                    </div>
+                    <textarea
+                      id={replyId}
+                      className={cx(
+                        'mt-1 w-full rounded border bg-white px-2 py-1.5 text-sm',
+                        over ? 'border-red-300 focus:border-red-400' : 'border-slate-300 focus:border-slate-400'
+                      )}
+                      rows={3}
+                      value={d.generated_reply || ''}
+                      onChange={function (e) { t.patch(row.id, { generated_reply: e.target.value }); }}
+                      placeholder="(empty — nothing to post)"
+                    />
+                  </div>
+
+                  <div className="mt-3">
+                    <label htmlFor={fbId} className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                      Feedback note <span className="normal-case text-slate-400">(consolidate learns from this)</span>
+                    </label>
+                    <textarea
+                      id={fbId}
+                      className="mt-1 w-full rounded border border-slate-300 bg-white px-2 py-1.5 text-sm"
+                      rows={2}
+                      value={d.feedback_note || ''}
+                      onChange={function (e) { t.patch(row.id, { feedback_note: e.target.value }); }}
+                      placeholder="e.g. too stiff — more contractions · drop the trailing question"
+                    />
+                  </div>
+
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={function () { t.patch(row.id, { status: 'approved' }); }}
+                      disabled={status === 'approved' || over || !(d.generated_reply || '').trim()}
+                      className="rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
+                    >
+                      {status === 'approved' ? 'Approved ✓' : 'Approve'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={function () { t.patch(row.id, { status: 'skipped' }); }}
+                      disabled={status === 'skipped'}
+                      className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 hover:border-slate-400 disabled:cursor-not-allowed disabled:text-slate-300"
+                    >
+                      Skip
+                    </button>
+                    <div className="ml-auto flex items-center gap-1.5">
+                      <label htmlFor={statusId} className="text-xs text-slate-400">status</label>
+                      <select
+                        id={statusId}
+                        className="rounded border border-slate-300 bg-white px-2 py-1 text-sm"
+                        value={status}
+                        onChange={function (e) { t.patch(row.id, { status: e.target.value }); }}
+                      >
+                        {STATUSES.map(function (opt) { return <option key={opt} value={opt}>{opt}</option>; })}
+                      </select>
+                    </div>
+                  </div>
+                  {over ? (
+                    <p className="mt-2 text-xs text-red-600">Reply is over {TWEET_MAX} characters — trim it before approving.</p>
+                  ) : null}
+                </li>
+              );
+            })}
+          </ul>
+
+          <footer className="pt-2 text-center text-xs text-slate-400">
+            Edits and approvals save automatically. Run <span className="font-mono">reply-guy post</span> to publish approved replies.
+          </footer>
+        </div>
+      );
+    }
+
+    var root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<ReviewQueue />);
+  })();
+</script>

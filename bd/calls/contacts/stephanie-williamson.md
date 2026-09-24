@@ -279,8 +279,8 @@ Reads driving the closeout and follow-on motion that are **not yet confirmed by 
 | 55 | Send checklist email for account/hand-off setup (OpenAI, Microsoft, DO server, GitHub) — the SOW's referenced "separate handoff guide" | Simon | 2026-09-03 *(inferred)* | 🔴 New |
 | 55b | **Confirm explicitly that the $18K Self-Serve Demo SOW (2026-08-30) is signed/funded** — the 09-01 notes imply it via matching kickoff activity but never say so | Simon | 2026-09-03 *(inferred, fold into #55)* | 🔴 New — the one real open item from this call |
 | 56 | Review hand-off documentation | Stephanie | 2026-09-05 *(inferred)* | 🔴 New |
-| 57 | Configure GitHub org + grant Simon admin access — **per SOW design** (build runs on AICAP's own accounts from week 1) | Stephanie | 2026-09-05 *(inferred)* | 🔴 New |
-| 58 | Provision Digital Ocean (or equivalent) hosting instance — **per SOW "What AICAP provides"** | Stephanie | 2026-09-05 *(inferred)* | 🔴 New |
+| 57 | Configure GitHub org + grant Simon admin access — **per SOW design** (build runs on AICAP's own accounts from week 1) | Stephanie | 2026-09-05 *(inferred)* | ✅ Org set up; Simon transferred the repo into it (2026-09-20). Post-transfer checks → [[../../../product/aicap/aicap-handoff-checklist-2026-09-20]] |
+| 58 | Provision Digital Ocean (or equivalent) hosting instance — **per SOW "What AICAP provides"** | Stephanie | 2026-09-05 *(inferred)* | ✅ Server set up by Stephanie (2026-09-20); Simon configuring the project on it |
 | 59 | Open OpenAI + Microsoft platform accounts, add Simon as member — **per SOW "What AICAP provides"** | Stephanie | 2026-09-05 *(inferred)* | 🔴 New |
 | 60 | Aggregate 500-CV/ID seed library for the test corpus (Simon: source + synthetic; Stephanie: collect + scrub real CVs) — **per SOW test-library scope, Weeks 1-2** | Both | 2026-09-15 *(inferred)* | 🔴 New |
 | 61 | Architect system for multi-provider extensibility (physicians now, NPs/PAs later, no re-architecting) | Simon | 2026-09-10 *(inferred)* | 🔴 New |

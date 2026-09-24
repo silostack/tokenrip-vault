@@ -1,0 +1,9 @@
+{
+  "id": "10",
+  "name": "cta-ambient",
+  "seconds": 12,
+  "reference": "src/ref_octane_1280.jpg",
+  "prompt": "The camera pushes in extraordinarily slowly and smoothly toward a black rack-mount hardware unit on a dark floor, barely moving at all across the whole shot. The scene is cold, quiet and still. A single warm amber point of light travels slowly along one of the copper cables away from the unit, and the small green indicator light on the panel pulses once, gently. Everything else is motionless. Photorealistic product cinematography, dark studio, shallow depth of field. No people, no hands, no new objects, nothing is added or removed.",
+  "model": "sora-2",
+  "size": "1280x720"
+}

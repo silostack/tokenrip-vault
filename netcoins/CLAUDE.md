@@ -2,6 +2,7 @@
 
 Canonical note: [[deal/netcoins]]
 Live order of operations: [[deal/battle-plan]]
+Product direction and decision tracker: [[netcoins/product-direction]]
 Signed LOI: [[deal/loi/RebelFi_LOI_Final_31Aug2026]]
 
 ## Stage
@@ -20,4 +21,5 @@ Consideration (signed LOI): up to C$700K in Surge/BIGG shares — C$100K closing
 | `letters/` | Founder split, consents, engagement letter, tax officer cert |
 | `dd/` | Contributor IP response, account export |
 | `flow-of-funds/` | Diagrams |
+| `product-direction.md` | Fraser's product artifact, decision status, conflicts and open questions |
 | `tax/` | CPA work product — see `letters/officer-certificate-tax.md` until then |

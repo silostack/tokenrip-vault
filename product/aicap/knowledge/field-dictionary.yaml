@@ -1,0 +1,547 @@
+# AICAP Credentialing Field Dictionary — superset across S1 (universal), S2 (facility/Medicaid), S3 (CVO/locum) + CV-derivable set.
+# STATUS: raw extraction, architecture-neutral. NOT a runtime schema.
+# Legend:
+#   source: cv | government_id | provider_entered | derived  (where the VALUE comes from for the MVP)
+#   appears_in: which sample forms show the field  (S1 / S2 / S3)
+#   cardinality: single | repeating(group)
+#   axis: individual (provider credentialing) | entity (facility/Medicaid enrollment)
+
+meta:
+  version: 0
+  date: 2026-07-02
+  note: >
+    Field keys are descriptive, not final. Repeating structures (licenses, work history, board certs,
+    disclosure questions, references, service locations) are modeled as groups. S2 is a different axis
+    (facility/entity + Medicaid enrollment) and is captured separately at the end.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# AXIS 1 — INDIVIDUAL PROVIDER (the AICAP MVP core; S1 ∪ S3, CV-fed)
+# ─────────────────────────────────────────────────────────────────────────────
+
+identity:
+  - key: legal_name
+    label: "Name (Last, First, Middle, Suffix)"
+    meaning: "Provider's full legal name; the anchor identity field. Must match primary sources exactly."
+    type: person_name
+    source: government_id            # authoritative; CV also carries it
+    appears_in: [S1, S3]
+    provenance: "S1 p2 Personal Info; S3 p5 Personal Info table (Last/Suffix/First/Middle/Degree cells)"
+    variants: ["Name (Last, First, Middle)", "Last | Suffix(Jr.Sr.III) | First | Middle | Degree"]
+    required: true
+    notes: "Instruction (S1): 'Do not use any nicknames or initials unless part of legal name.'"
+  - key: degree
+    label: "Degree"
+    meaning: "Professional degree (MD, DO, etc.)"
+    type: string
+    source: cv
+    appears_in: [S1, S3]
+    required: true
+  - key: other_names_used
+    label: "Have you ever used another name?"
+    meaning: "Prior/alternate legal names + date span of use (maiden name, etc.). Drives PSV matching."
+    type: group
+    cardinality: repeating
+    fields: [other_name, other_name_date_span]
+    source: provider_entered
+    appears_in: [S1]
+    provenance: "S1 p2"
+    required: conditional            # only if 'yes'
+  - key: date_of_birth
+    label: "Date of Birth"
+    meaning: "DOB; identity + used across disclosure/verification"
+    type: date
+    format: MM/DD/YYYY
+    source: government_id
+    appears_in: [S1, S3]
+    required: true
+  - key: sex
+    label: "Sex"
+    type: enum
+    values: [Male, Female]
+    source: government_id
+    appears_in: [S1]
+  - key: place_of_birth
+    label: "Place of Birth (City, State, Country)"
+    type: string
+    source: provider_entered        # partially on some IDs
+    appears_in: [S1, S3]
+  - key: citizenship
+    label: "Citizenship"
+    type: string
+    source: provider_entered
+    appears_in: [S1, S3]
+  - key: visa_status_number
+    label: "If not a U.S. citizen: Status & Visa Number"
+    meaning: "Immigration status/visa; conditional on non-citizen."
+    type: string
+    source: provider_entered
+    appears_in: [S1]
+    required: conditional            # if not a US citizen
+    related_docs: ["green card / permanent resident card (S3 checklist)"]
+  - key: ssn
+    label: "SSN #"
+    meaning: "Social Security Number; sensitive; used as a verification key."
+    type: ssn
+    source: provider_entered
+    appears_in: [S1, S3]
+    required: true
+    notes: "PHI/PII — de-identified in MVP samples. FNIN used only if no SSN (S1)."
+  - key: foreign_national_id
+    label: "Foreign National ID Number (FNIN) + Country of Issue"
+    meaning: "Only if no SSN. 'Do not enter NPI here.'"
+    type: string
+    source: provider_entered
+    appears_in: [S1]
+    required: conditional
+  - key: languages_spoken
+    label: "Non-English languages you speak"
+    type: list
+    source: cv
+    appears_in: [S1]
+
+contact:
+  - key: mailing_address
+    label: "Mailing Address / City / State / Zip"
+    type: address
+    source: cv                       # CV carries home address
+    appears_in: [S1, S3]
+    required: true
+  - key: phone_mailing
+    label: "Mailing Phone"
+    type: phone
+    source: cv
+    appears_in: [S1, S3]
+  - key: phone_cell
+    label: "Cell Phone"
+    type: phone
+    source: cv
+    appears_in: [S1, S3]
+  - key: email
+    label: "E-mail"
+    type: email
+    source: cv
+    appears_in: [S1, S3]
+    required: true
+  - key: fax
+    label: "Fax"
+    type: phone
+    source: provider_entered
+    appears_in: [S1, S3]
+  - key: preferred_contact_method
+    label: "Preferred method of contact"
+    type: enum
+    values: [Mail, E-mail, Fax]
+    source: provider_entered
+    appears_in: [S1]
+  - key: pager_answering_service
+    label: "Beeper # / Digital / Answering Service #"
+    type: string
+    source: provider_entered
+    appears_in: [S1]
+
+professional_ids:
+  - key: npi
+    label: "National Provider ID (NPI)"
+    meaning: "10-digit NPI; lookup key; 'NPI matches NPPES' consistency rule."
+    type: string
+    format: "10 digits"
+    source: cv
+    appears_in: [S1, S2, S3]
+    required: true
+  - key: medicare_number
+    label: "Medicare Number"
+    type: string
+    source: provider_entered
+    appears_in: [S1, S2, S3]
+  - key: medicaid_number
+    label: "Medicaid Number (+ Medicaid State)"
+    type: string
+    source: provider_entered
+    appears_in: [S1, S2, S3]
+  - key: upin
+    label: "UPIN"
+    type: string
+    source: provider_entered
+    appears_in: [S1, S3]
+    notes: "Legacy identifier; may be deprecated."
+  - key: usmle_number
+    label: "USMLE Number"
+    type: string
+    source: provider_entered
+    appears_in: [S1]
+  - key: ecfmg_number
+    label: "ECFMG Number + Certificate issue date"
+    meaning: "Educational Commission for Foreign Medical Graduates; conditional on non-US grad."
+    type: string
+    source: provider_entered
+    appears_in: [S1, S3]
+    required: conditional            # non-US/Canadian graduate
+  - key: workers_comp_number
+    label: "Worker's Compensation Number"
+    type: string
+    source: provider_entered
+    appears_in: [S1]
+  - key: tax_id
+    label: "Individual Tax ID / Group Tax ID (Primary Tax ID selector)"
+    meaning: "TIN; consistency with W-9."
+    type: string
+    source: provider_entered
+    appears_in: [S1, S2]
+
+licensure:
+  cardinality: repeating
+  group: state_license
+  meaning: "One row per state medical license held (current AND previous)."
+  source: cv                         # CV lists license#, state, status, issue, expiration
+  appears_in: [S1, S3]
+  provenance: "S1 p3 Professional IDs table; S3 p6 LICENSURE table"
+  fields:
+    - {key: license_state, label: "State / Issuing State", type: string, required: true}
+    - {key: license_number, label: "License Number", type: string, required: true}
+    - {key: license_status, label: "License Status", type: enum, values: [Active, Inactive], source: cv, appears_in: [S3]}
+    - {key: license_initial_flag, label: "Initial License?", type: boolean, appears_in: [S3]}
+    - {key: license_issue_date, label: "Issue / Date Granted (MM/YY)", type: date, format: MM/YYYY, source: cv}
+    - {key: license_expiration_date, label: "Expiration Date (MM/DD/YY)", type: date, source: cv, required: true, notes: "Expiry drives a red-flag/needs-follow-up rule."}
+    - {key: license_practicing_flag, label: "Practicing in this State? (Y/N)", type: boolean, appears_in: [S1]}
+    - {key: license_medicare_provider_no, label: "State Medicare Provider Number", type: string, appears_in: [S3]}
+    - {key: license_medicaid_provider_no, label: "State Medicaid Provider Number", type: string, appears_in: [S3]}
+    - {key: license_state_cds_permit_no, label: "State Controlled Substance Permit Number", type: string, appears_in: [S3]}
+
+controlled_substance_registrations:
+  cardinality: repeating
+  group: dea_cds
+  meaning: "Federal DEA and state CDS registrations (S1 allows two of each)."
+  source: cv                         # CV carries DEA #, state, schedules, issue, expiration
+  appears_in: [S1, S3]
+  provenance: "S1 p3; S3 p6 Federal Provider Info"
+  fields:
+    - {key: dea_number, label: "Federal DEA Number", type: string, source: cv, required: true}
+    - {key: dea_state, label: "DEA State of registration", type: string, source: cv}
+    - {key: dea_schedules, label: "DEA Schedules (II–V)", type: list, source: cv}
+    - {key: dea_issue_date, label: "DEA issue date", type: date, format: MM/YYYY, source: cv}
+    - {key: dea_expiration_date, label: "DEA expiration date", type: date, source: cv, required: true, notes: "Expiry → red flag / pending item."}
+    - {key: cds_number, label: "CDS Certificate Number (+ state, issue, exp)", type: string, appears_in: [S1]}
+
+education:
+  meaning: "Medical/professional degree school(s). Graduate-type branch drives which sub-block applies."
+  source: cv
+  appears_in: [S1, S3]
+  provenance: "S1 p4 Education; S3 p5 Education & Training table"
+  fields:
+    - {key: graduate_type, label: "Graduate Type", type: enum, values: ["US or Canadian", "Non-US or Canadian", "Fifth Pathway"], required: true, notes: "Branches into US-school vs non-US-school block; non-US → ECFMG."}
+    - {key: med_school_name, label: "Name of School", type: string, source: cv, required: true}
+    - {key: med_school_degree, label: "Degree awarded", type: string, source: cv}
+    - {key: med_school_start, label: "Start date (MM/YYYY)", type: date, format: MM/YYYY, source: cv}
+    - {key: med_school_end, label: "End (graduation) date (MM/YYYY)", type: date, format: MM/YYYY, source: cv, required: true}
+    - {key: med_school_address, label: "Address / City / Country / Postal (non-US)", type: address, appears_in: [S1]}
+    - {key: med_school_completed_here, label: "Did you complete your graduate education at this school?", type: boolean, appears_in: [S1]}
+
+training:
+  cardinality: repeating
+  group: training_program
+  meaning: "Internship / Residency / Fellowship / Other programs — one per institution."
+  source: cv
+  appears_in: [S1, S3]
+  provenance: "S1 p4-5 Training; S3 p5 (PGY1/Residency/Fellowship/Additional rows)"
+  fields:
+    - {key: training_type, label: "Type", type: enum, values: [Internship/Residency, Fellowship, Other, PGY1], required: true}
+    - {key: training_institution, label: "Institution / Hospital / Facility Name", type: string, source: cv, required: true}
+    - {key: training_affiliated_med_school, label: "Affiliated medical school", type: string, appears_in: [S1]}
+    - {key: training_address, label: "Address / City / State / Zip / Country", type: address, source: cv}
+    - {key: training_start, label: "Start date (MM/YYYY)", type: date, format: MM/YYYY, source: cv}
+    - {key: training_end, label: "End date (MM/YYYY)", type: date, format: MM/YYYY, source: cv}
+    - {key: training_department_specialty, label: "Department / Specialty (do not abbreviate)", type: string, source: cv}
+    - {key: training_director_name, label: "Name of Director", type: string, source: cv}
+    - {key: training_completed_flag, label: "Did you complete this program? (+ explain if no)", type: boolean, appears_in: [S1]}
+    - {key: training_category, label: "Category of Training", type: string, appears_in: [S3]}
+
+specialty_board:
+  cardinality: repeating
+  group: board_certification
+  meaning: "Specialties + board certification status. S1 uses a fixed specialty grid; S3 a free board table."
+  source: cv
+  appears_in: [S1, S3]
+  provenance: "S1 p6 Specialty grid + p7 not-certified branch; S3 p6 Board Cert/Recert table"
+  fields:
+    - {key: specialty_name, label: "Specialty", type: string, required: true}
+    - {key: specialty_primary_secondary, label: "Primary / Secondary", type: enum, values: [Primary, Secondary], appears_in: [S1]}
+    - {key: board_name, label: "Name of Issuing Board", type: string, source: cv}
+    - {key: board_certified_flag, label: "Board Certified? (Yes/No)", type: boolean, source: cv, required: true}
+    - {key: board_cert_date, label: "Date Certified / Year Certified (MM/YY)", type: date, format: MM/YYYY, source: cv}
+    - {key: board_recert_date, label: "Date Recertified (MM/YY) [S3 allows two]", type: date, appears_in: [S3]}
+    - {key: board_expiration_date, label: "Expiration Date (if any) (MM/YY)", type: date, source: cv, notes: "SEE NUANCE: expired date + MOC/continuous annotation ≠ invalid. See nuance cases."}
+    - {key: board_not_certified_status, label: "If not certified: exam taken/pending | intend to sit (date) | do not intend", type: enum, appears_in: [S1, S3], required: conditional, notes: "Conditional branch on board_certified_flag = No."}
+    - {key: board_exam_failed_flag, label: "Ever examined by a specialty board but failed to pass?", type: boolean, appears_in: [S3]}
+
+clinical_certifications:
+  meaning: "Life-support / clinical certs (BLS, ACLS, ATLS, PALS) with expiration."
+  type: group
+  source: provider_entered          # not typically on CV
+  appears_in: [S3]
+  provenance: "S3 p6 Clinical Certification"
+  fields:
+    - {key: cert_bls, label: "BLS Certification (Yes/No + Expiration)", type: cert}
+    - {key: cert_acls, label: "ACLS Certification (Yes/No + Expiration)", type: cert}
+    - {key: cert_atls, label: "ATLS Certification (Yes/No + Expiration)", type: cert}
+    - {key: cert_pals, label: "PALS Certification (Yes/No + Expiration)", type: cert}
+
+licensing_exams:
+  meaning: "Exam pathway taken to licensure."
+  type: group
+  source: provider_entered
+  appears_in: [S1, S3]
+  provenance: "S3 p6 Licensing Exams Taken; S1 p3 USMLE/ECFMG"
+  fields:
+    - {key: exam_usmle, label: "USMLE (Yes/No + Date Taken)", type: exam}
+    - {key: exam_national_boards, label: "National Boards (NBME) (Yes/No + Date)", type: exam}
+    - {key: exam_flex, label: "FLEX (Yes/No + Date)", type: exam}
+    - {key: exam_spex, label: "SPEX (Yes/No + Date)", type: exam}
+    - {key: exam_state_boards, label: "State Boards (Yes/No + Date + State)", type: exam}
+    - {key: exam_lmcc, label: "LMCC (Canadian) (Yes/No + Date)", type: exam}
+
+practice_location:
+  cardinality: repeating
+  group: practice_location
+  meaning: "Where the provider practices; directory + billing + correspondence info."
+  source: provider_entered
+  appears_in: [S1]
+  provenance: "S1 p8 Practice Location Information"
+  fields:
+    - {key: practice_currently_here, label: "Currently practicing at this address? (+ expected start date if no)", type: boolean}
+    - {key: practice_group_name, label: "Physician Group/Practice name (directory)", type: string}
+    - {key: practice_w9_name, label: "Group/Corporate name as on W-9", type: string}
+    - {key: practice_address, label: "Practice Address / City / State / Zip", type: address}
+    - {key: practice_phone_fax_email, label: "Telephone / Fax / Office email", type: string}
+    - {key: practice_tax_id_selector, label: "Primary Tax ID (Individual vs Group)", type: enum}
+    - {key: practice_exclusively_inpatient, label: "Practice exclusively inpatient? (skips practice-location section)", type: boolean, provenance: "S1 p2 + p8 note"}
+
+related_contacts:
+  meaning: "People associated with the provider's practice."
+  type: group
+  source: provider_entered
+  appears_in: [S1, S2]
+  provenance: "S1 p7 Primary Credentialing Contact; p8 Office Manager / Billing Contact"
+  fields:
+    - {key: credentialing_contact, label: "Primary Credentialing Contact (name/address/phone/email)", type: contact}
+    - {key: office_manager_contact, label: "Office Manager / Business Office Staff Contact", type: contact}
+    - {key: billing_contact, label: "Billing Contact", type: contact}
+    - {key: forwarding_contact, label: "Someone who will always know your forwarding address", type: contact, appears_in: [S3]}
+
+office_practice_status:
+  meaning: "Practice operational attributes (payer-directory data)."
+  type: group
+  source: provider_entered
+  appears_in: [S1]
+  provenance: "S1 p9"
+  fields:
+    - {key: office_hours, label: "Office Hours (Mon–Sun start/end)", type: schedule}
+    - {key: after_hours_coverage, label: "24/7 Phone Coverage? / Answering service / Voicemail", type: string}
+    - {key: open_practice_status, label: "Accept new patients / all new / Medicare / referral", type: boolean_set}
+    - {key: electronic_billing_flag, label: "Electronic billing capabilities?", type: boolean}
+    - {key: midlevel_practitioners_flag, label: "Do mid-level practitioners care for patients here?", type: boolean}
+    - {key: office_languages, label: "Non-English language spoken by office personnel / interpreters", type: list}
+
+hospital_affiliations:
+  cardinality: repeating
+  group: hospital_affiliation
+  meaning: "Hospital privileges / facility affiliations (last 10 yrs). Also the 'employment rollover' pre-populate source (Stephanie)."
+  source: cv                         # partial (Fam-Med CV lists affiliations + staff category)
+  appears_in: [S1, S3]
+  provenance: "S1 p10-11 Hospital Affiliations; S3 p8 Current Hospital & Other Facility Affiliations"
+  fields:
+    - {key: affil_hospital_name, label: "Hospital / Primary Facility Name", type: string, required: true}
+    - {key: affil_address, label: "Address / City / State / Zip", type: address}
+    - {key: affil_department, label: "Department Name + Director", type: string, appears_in: [S1]}
+    - {key: affil_period, label: "Affiliation / Appointment period (MM/YYYY from–to)", type: date_range}
+    - {key: affil_privilege_status, label: "Admitting privilege status (full/provisional/temporary); full unrestricted?", type: string, appears_in: [S1], notes: "CV variant: 'Active Staff' / 'Courtesy Staff'."}
+    - {key: affil_pct_admissions, label: "% of total annual admissions to this hospital", type: number, appears_in: [S1]}
+    - {key: affil_terminated_explanation, label: "Explain terminated affiliation", type: text, appears_in: [S1], required: conditional}
+
+covering_colleagues:
+  cardinality: repeating
+  meaning: "Colleagues who cover the practice but are not partners."
+  type: group
+  source: provider_entered
+  appears_in: [S1]
+  provenance: "S1 p10"
+  fields: [colleague_name, colleague_specialty]
+
+references:
+  cardinality: repeating
+  group: reference
+  meaning: "Peer/physician references who can attest to current clinical competence."
+  source: cv                         # CVs carry 3 references each
+  appears_in: [S3]
+  provenance: "S3 p7 References (asks for six physician references within the past year)"
+  fields:
+    - {key: ref_name, label: "Name", type: string}
+    - {key: ref_specialty, label: "Specialty", type: string}
+    - {key: ref_address, label: "Address / City / State / Zip", type: address}
+    - {key: ref_phone_fax_email, label: "Phone / Fax / Email", type: string}
+    - {key: ref_relationship, label: "Relationship (supervisor/peer/program director)", type: string, source: cv}
+
+malpractice_insurance:
+  cardinality: repeating
+  group: liability_policy
+  meaning: "Professional liability (malpractice) insurance coverage, current + last 10 yrs."
+  source: provider_entered           # not on CV (CV only asserts 'no claims')
+  appears_in: [S1, S3]
+  provenance: "S1 p11 Professional Liability Insurance Carrier; S3 p10 carrier list"
+  fields:
+    - {key: mal_carrier_name, label: "Carrier or Self-Insured Name", type: string}
+    - {key: mal_self_insured_flag, label: "Self-Insured?", type: boolean}
+    - {key: mal_policy_number, label: "Policy Number", type: string}
+    - {key: mal_effective_dates, label: "Original effective / effective / expiration date", type: date_range}
+    - {key: mal_coverage_type, label: "Type of Coverage (Individual/Shared) + tail coverage", type: enum}
+    - {key: mal_coverage_amounts, label: "Amount per occurrence / per aggregate", type: money}
+    - {key: mal_carry_flag, label: "Do you carry malpractice insurance? (skip if no)", type: boolean}
+
+malpractice_claims:
+  cardinality: repeating
+  group: malpractice_claim
+  meaning: "Malpractice claims history — the detailed per-claim supplemental (S1 p19, S3 p12)."
+  source: provider_entered
+  appears_in: [S1, S3]
+  provenance: "S1 p15 Q19 + p19 supplemental; S3 p10 + p12 Professional Liability Claims Info Form"
+  required: conditional              # only if any claim disclosed
+  fields:
+    - {key: claim_occurrence_date, label: "Date/Month-Year of Occurrence", type: date}
+    - {key: claim_filed_date, label: "Date claim filed / lawsuit", type: date}
+    - {key: claim_status, label: "Status (Open/Closed/Pending/Settled/Dismissed)", type: enum}
+    - {key: claim_carrier, label: "Professional Liability Carrier at time", type: string}
+    - {key: claim_amount, label: "Amount of award / settlement / judgment", type: money}
+    - {key: claim_defendant_role, label: "Primary vs Co-defendant; your involvement", type: string}
+    - {key: claim_allegations, label: "Description of allegations / alleged injury / outcome", type: text}
+    - {key: claim_npdb_flag, label: "Included in NPDB?", type: boolean}
+
+work_history:
+  cardinality: repeating
+  group: employment
+  meaning: "Chronological work history (≥10 years); the gap-detection source."
+  source: cv                         # CVs carry positions with employer/address/phone/dates
+  appears_in: [S1, S3]
+  provenance: "S1 p11-12 Work History + Gaps; S3 p7 Work History table"
+  fields:
+    - {key: work_employer_name, label: "Practice / Employer / Hospital-Facility Name", type: string, required: true}
+    - {key: work_address, label: "Address / City / State / Zip / Country", type: address, source: cv}
+    - {key: work_phone, label: "Telephone / Fax", type: phone, source: cv}
+    - {key: work_start, label: "Start date (MM/YYYY)", type: date, format: MM/YYYY, source: cv, required: true}
+    - {key: work_end, label: "End date (MM/YYYY) or Present", type: date, format: MM/YYYY, source: cv, required: true}
+    - {key: work_reason_for_departure, label: "Reason for departure", type: text, appears_in: [S1], source: provider_entered}
+    - {key: work_do_not_contact, label: "Do Not Contact flag", type: boolean, appears_in: [S3]}
+    - {key: work_military_duty_flag, label: "Currently on active military duty/reserve?", type: boolean, appears_in: [S1]}
+  gap_subfield:
+    - {key: work_gap_explanation, label: "Gaps in Professional/Work History (start/end + explanation)", type: group, required: conditional, notes: "Threshold conflict: S1='>3 months', S3 body='>30 days', S3 instructions='>60 days'. SEE walkthrough-questions."}
+
+cme:
+  cardinality: repeating
+  group: cme_activity
+  meaning: "Continuing Medical Education activity (last 3 years)."
+  source: provider_entered
+  appears_in: [S3]
+  provenance: "S3 p11 Current Continuing Medical Education"
+  fields:
+    - {key: cme_program_title, label: "Program Title", type: string}
+    - {key: cme_date, label: "Date", type: date}
+    - {key: cme_sponsor, label: "Sponsoring Organization", type: string}
+    - {key: cme_credits, label: "# of CMEs", type: number}
+
+disclosure_questions:
+  cardinality: repeating
+  group: disclosure_question
+  meaning: >
+    Yes/No attestation questions probing adverse history. S1 has 26; S3 has 19; wording differs but
+    they collapse onto shared red-flag CATEGORIES (see rules-catalog). Any 'Yes' → supplemental explanation.
+  source: provider_entered
+  appears_in: [S1, S3]
+  provenance: "S1 p13-15 Disclosure Questions (26); S3 p9 Disciplinary Actions (19)"
+  required: true                     # all must be answered
+  shared_categories:
+    - licensure_action            # license relinquished/denied/suspended/revoked/restricted/challenged
+    - hospital_privilege_action   # privileges/staff membership denied/suspended/surrendered
+    - managed_care_termination
+    - education_training_discipline
+    - board_cert_action
+    - dea_cds_action
+    - medicare_medicaid_exclusion # excluded/debarred/sanctioned
+    - active_investigation
+    - npdb_hipdb_report
+    - regulatory_sanction         # CLIA/OSHA etc.
+    - sexual_misconduct
+    - military_discipline
+    - liability_coverage_action   # cancelled/surcharge/high-risk
+    - malpractice_claim_history   # Q19 -> claims group
+    - criminal_felony
+    - criminal_misdemeanor
+    - criminal_pending
+    - crime_involving_children    # S3-specific
+    - crime_moral_turpitude       # S3-specific
+    - illegal_drug_use
+    - impairment_physical_mental
+    - unable_to_perform_functions
+  per_question_fields:
+    - {key: dq_number, label: "Question #", type: number}
+    - {key: dq_answer, label: "Yes / No", type: boolean, required: true}
+    - {key: dq_explanation, label: "Explanation (supplemental form)", type: text, required: conditional}
+
+attestation:
+  meaning: "Authorization, Attestation and Release — consent to investigate + release of info + certification of truth + e-signature."
+  type: group
+  source: provider_entered           # genuine e-signature captured in-AICAP
+  appears_in: [S1, S2, S3]
+  provenance: "S1 p16-17; S3 p14-15; S2 p7 provider responsibility + release"
+  fields:
+    - {key: attest_signature, label: "Signature (may be electronic)", type: signature, required: true}
+    - {key: attest_print_name, label: "Name (print)", type: string, required: true}
+    - {key: attest_date, label: "Date (current)", type: date, required: true}
+    - {key: attest_authorization_investigation, label: "Authorization of investigation / third-party release", type: consent}
+    - {key: attest_certify_truth, label: "Certification that info is true/current/complete + 10-day update duty", type: consent}
+
+banking:
+  meaning: "Direct-deposit / ACH authorization (payment set-up)."
+  type: group
+  source: provider_entered
+  appears_in: [S3]
+  provenance: "S3 p17 Authorization Agreement for ACH Credits"
+  fields:
+    - {key: bank_name, label: "Depository Name / Branch / City / State", type: string}
+    - {key: bank_routing, label: "Bank Transit/ABA (routing) Number", type: string}
+    - {key: bank_account, label: "Account Number (Checking/Savings)", type: string}
+    - {key: bank_tax_id_ssn, label: "Tax ID Number (or SSN)", type: string}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# AXIS 2 — FACILITY / ENTITY + MEDICAID ENROLLMENT (S2; mostly org-level, adjacent)
+# ─────────────────────────────────────────────────────────────────────────────
+
+entity_axis:
+  note: "S2 (Coordinated Care) is facility/entity credentialing + Medicaid managed-care enrollment, NOT individual privileging. Captured for completeness; flagged as a separate context for the walkthrough."
+  provenance: "S2 pp2-15"
+  groups:
+    - key: w9
+      label: "IRS Form W-9 (TIN certification)"
+      fields: [w9_name, w9_business_name, w9_tax_classification, w9_address, w9_tin_ssn_ein, w9_signature]
+      provenance: "S2 p2-3"
+    - key: ownership_disclosure
+      label: "Disclosure of Ownership and Control Interest (42 CFR 455.104/105/106)"
+      meaning: "CMS/Medicaid federal requirement: owners ≥5%, related parties, subcontractors, criminal-conviction of owners, business transactions, board of directors."
+      fields: [owner_name_dob_address_ssn_tin, owners_related_flag, subcontractor_ownership, owner_criminal_conviction_flag, business_transactions_over_25k, board_of_directors]
+      provenance: "S2 p6-8"
+      regulatory_basis: "42 CFR 455 (CMS/Medicaid)"
+    - key: facility_application
+      label: "Hospital/Facility Provider Application"
+      fields: [legal_entity_tin, provider_type_grid, credentialing_type, contact_info, legal_entity_info, insurance_info, billing_info]
+      provenance: "S2 p9-10"
+    - key: service_location
+      label: "Service Location (repeating)"
+      cardinality: repeating
+      fields: [svc_facility_name, svc_tax_id, svc_provider_type, svc_npi, svc_state_license, svc_medicaid_no, svc_medicare_no, svc_address, svc_county, svc_phone_fax_email, svc_office_hours, svc_handicap_access, svc_accepting_patients, svc_ada_compliant, svc_languages, svc_age_restrictions]
+      provenance: "S2 p11, p13 Additional Service Locations"
+    - key: accreditation
+      label: "Accreditation / Certification (repeating; agency table)"
+      meaning: "Accrediting bodies: AHCH, AAAHC, ACR, CLIA, CARF, CHAP, HQAA, TJC/JCAHO, DNV, NABP, NCQA, URAC, etc. (name, level/status, applied date, expiration)."
+      fields: [accred_agency, accred_level_status, accred_applied_date, accred_expiration_date]
+      provenance: "S2 p12, p14"
+    - key: facility_sanctions
+      label: "Organization-level Sanctions (Yes/No)"
+      fields: [org_malpractice_5yr, org_medicare_medicaid_exclusion, org_officer_felony]
+      provenance: "S2 p12, p14"

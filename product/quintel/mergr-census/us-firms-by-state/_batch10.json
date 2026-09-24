@@ -1,0 +1,26 @@
+{
+  "batch": true,
+  "requested": 6,
+  "firms": [
+    {"firm": {"id": 2159, "name": "Green Brook Capital Management LLC", "url": "https://mergr.com/firms/2159"}, "returned": 1, "portfolio": [
+      {"id": 29113, "name": "eData Solutions", "sector": "Software", "location": "Shawnee, Kansas, United States", "acquired_date": "2010-07-15", "acquisition_type": "Buyout (LBO, MBO, MBI)", "exit_date": null, "exit_type": null, "hold_years": 16.1, "is_current": true, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/29113"}
+    ]},
+    {"firm": {"id": 5070, "name": "Point Capital Partners", "url": "https://mergr.com/firms/5070"}, "returned": 1, "portfolio": [
+      {"id": 229264, "name": "First Tennessee Bank National Association - Institutional Equity Research Business", "sector": "Information Services", "location": "Memphis, Tennessee, United States", "acquired_date": "2009-09-30", "acquisition_type": "Divestiture", "exit_date": null, "exit_type": null, "hold_years": 16.9, "is_current": true, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/229264"}
+    ]},
+    {"firm": {"id": 4665, "name": "Palisade Capital Management", "url": "https://mergr.com/firms/4665"}, "returned": 1, "portfolio": [
+      {"id": 199354, "name": "Shoe Sensation", "sector": "Retail", "location": "Jeffersonville, Indiana, United States", "acquired_date": "2007-12-01", "acquisition_type": "Growth Capital", "exit_date": "2015-08-04", "exit_type": "Trade Sale - Public Company", "hold_years": 7.7, "is_current": false, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/199354"}
+    ]},
+    {"firm": {"id": 466, "name": "Rainbow Capital", "url": "https://mergr.com/firms/466"}, "returned": 3, "portfolio": [
+      {"id": 65458, "name": "Vitex Extrusion", "sector": "Manufacturing", "location": "Franklin, New Hampshire, United States", "acquired_date": "2007-05-01", "acquisition_type": "Buyout (LBO, MBO, MBI)", "exit_date": "2020-01-07", "exit_type": "Divestiture", "hold_years": 12.7, "is_current": false, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/65458"},
+      {"id": 65462, "name": "NPS", "sector": "Distribution", "location": "Secaucus, New Jersey, United States", "acquired_date": "2005-06-01", "acquisition_type": "Buyout (LBO, MBO, MBI)", "exit_date": null, "exit_type": null, "hold_years": 21.3, "is_current": true, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/65462"},
+      {"id": 3002, "name": "Classic Tuxedo", "sector": "Apparel/Textiles", "location": "Boston, Massachusetts, United States", "acquired_date": "2005-02-01", "acquisition_type": "Growth Capital", "exit_date": null, "exit_type": null, "hold_years": 21.6, "is_current": true, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/3002"}
+    ]},
+    {"firm": {"id": 193, "name": "Fischer Investment Capital", "url": "https://mergr.com/firms/193"}, "returned": 1, "portfolio": [
+      {"id": 1567, "name": "SECOA", "sector": "Media", "location": "Champlin, Minnesota, United States", "acquired_date": "2005-06-01", "acquisition_type": "Buyout (LBO, MBO, MBI)", "exit_date": null, "exit_type": null, "hold_years": 21.3, "is_current": true, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/1567"}
+    ]},
+    {"firm": {"id": 2144, "name": "Kildare Enterprises", "url": "https://mergr.com/firms/2144"}, "returned": 1, "portfolio": [
+      {"id": 3028, "name": "AJ Manufacturing", "sector": "Building Materials", "location": "Bloomer, Wisconsin, United States", "acquired_date": "2005-01-27", "acquisition_type": "Buyout (LBO, MBO, MBI)", "exit_date": null, "exit_type": null, "hold_years": 21.6, "is_current": true, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/3028"}
+    ]}
+  ]
+}

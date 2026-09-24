@@ -1,0 +1,200 @@
+{
+  "manifestVersion": 1,
+  "slug": "reddit-demand-scout",
+  "display": {
+    "displayName": "Reddit Demand-Scout",
+    "tagline": "Reads Reddit for real agent pain and the conversations worth joining.",
+    "description": "A demand-research agent for Tokenrip. It scans a watchlist of subreddits for posts about building, deploying, and using AI agents \u2014 especially workplace usage and specific industry verticals \u2014 judges each against a relevance rubric, and records the interesting ones to a team-shared signals table with a one-line judgment and an engageable flag. A consolidate ritual synthesizes recurring verticals and pains into a demand-landscape and learns from operator feedback to tune future judgments. Optimizes for conversations the team can actually join, not link-hoarding.",
+    "capabilities": [
+      "Scans a configurable subreddit watchlist for AI-agent demand signal via logged-in browser fetch",
+      "Judges posts against a two-gate rubric and records interesting ones to a team table with dedup",
+      "Flags engageable posts (real person, real reply opening, worthwhile vertical)",
+      "Synthesizes recurring verticals and pains and learns from operator feedback over time"
+    ]
+  },
+  "brain": {
+    "artifacts": [
+      {
+        "alias": "reddit-demand-scout-soul",
+        "role": "soul"
+      },
+      {
+        "alias": "reddit-demand-scout-frameworks",
+        "role": "frameworks"
+      }
+    ]
+  },
+  "commands": [
+    {
+      "name": "scan",
+      "description": "Fetch the watchlist, judge each post, and record new interesting signals to the table.",
+      "playbook": "reddit-demand-scout-scan",
+      "default": true,
+      "scheduleHint": "daily"
+    },
+    {
+      "name": "consolidate",
+      "description": "Promote recurring workspace themes and rewrite the shared demand-landscape synthesis.",
+      "playbook": "reddit-demand-scout-consolidate",
+      "default": false,
+      "scheduleHint": "weekly"
+    }
+  ],
+  "workspace": {
+    "maturityStates": [
+      "seedling",
+      "growing",
+      "evergreen"
+    ],
+    "promotionRule": "min-backlinks-2"
+  },
+  "memoryTables": [
+    {
+      "slug": "reddit-signals",
+      "scope": "team",
+      "tableArtifactAlias": "reddit-signals-table",
+      "default": true,
+      "uniqueKey": [
+        "post_url"
+      ],
+      "schema": [
+        {
+          "name": "post_url",
+          "type": "text"
+        },
+        {
+          "name": "subreddit",
+          "type": "text"
+        },
+        {
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "name": "summary",
+          "type": "text"
+        },
+        {
+          "name": "signal_type",
+          "type": "enum",
+          "values": [
+            "building-problem",
+            "deploying-problem",
+            "usage-problem",
+            "use-case",
+            "workplace-vertical"
+          ]
+        },
+        {
+          "name": "vertical",
+          "type": "text"
+        },
+        {
+          "name": "engageable",
+          "type": "enum",
+          "values": [
+            "yes",
+            "watch",
+            "no"
+          ]
+        },
+        {
+          "name": "interest_judgment",
+          "type": "text"
+        },
+        {
+          "name": "posted_at",
+          "type": "text"
+        },
+        {
+          "name": "feedback_rating",
+          "type": "enum",
+          "values": [
+            "unset",
+            "good",
+            "bad"
+          ]
+        },
+        {
+          "name": "feedback_note",
+          "type": "text"
+        },
+        {
+          "name": "review_status",
+          "type": "enum",
+          "values": [
+            "inbox",
+            "dismissed",
+            "processed"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "consolidation-runs",
+      "scope": "operator-private",
+      "slugTemplate": "consolidation-runs-{operator_slug}",
+      "default": false,
+      "schema": [
+        {
+          "name": "ran_at",
+          "type": "text"
+        },
+        {
+          "name": "signals_reviewed",
+          "type": "text"
+        },
+        {
+          "name": "themes_promoted",
+          "type": "text"
+        },
+        {
+          "name": "landscape_updated",
+          "type": "enum",
+          "values": [
+            "yes",
+            "no"
+          ]
+        },
+        {
+          "name": "learnings_updated",
+          "type": "enum",
+          "values": [
+            "yes",
+            "no"
+          ]
+        },
+        {
+          "name": "notes",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "memoryArtifacts": [
+    {
+      "logicalAlias": "demand-landscape",
+      "scope": "team",
+      "alias": "demand-landscape-seed",
+      "purpose": "Team-shared living synthesis of Reddit demand signal: top verticals, recurring pains, use-case clusters, engageable shortlist. Rewritten by consolidate."
+    },
+    {
+      "logicalAlias": "scout-learnings",
+      "scope": "team",
+      "alias": "scout-learnings-seed",
+      "purpose": "Team-shared distilled feedback rules tuning the scout's judgment. Written by consolidate from rated rows; read by scan at judgment time."
+    }
+  ],
+  "mountIntake": {
+    "starterArtifactAlias": "reddit-demand-scout-mount-starter"
+  },
+  "session": {
+    "ttlHours": 24,
+    "rateLimit": {
+      "perAgentPerHour": 60,
+      "perAgentPerDay": 500
+    },
+    "produceSessionOutput": true
+  },
+  "teamContext": "recommended"
+}

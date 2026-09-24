@@ -1,0 +1,9 @@
+{
+  "id": "06",
+  "name": "coldopen-reverse",
+  "seconds": 8,
+  "reference": "src/ref_hero_1280.jpg",
+  "prompt": "The camera pushes in extremely slowly and smoothly toward a black rack-mount hardware unit with a smoked glass top, while at the same time the whole scene fades down into darkness: the amber glow under the glass top fades out, the light in the cables dies away, the small display goes black, and last of all the small green indicator light at the right of the panel blinks twice and goes out, leaving the frame almost entirely black. Slow, smooth, continuous and even from the first frame to the last. Photorealistic product cinematography, dark studio, shallow depth of field. No people, no hands, no new objects, nothing is added or removed.",
+  "model": "sora-2",
+  "size": "1280x720"
+}

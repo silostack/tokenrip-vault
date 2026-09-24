@@ -305,6 +305,20 @@ AI-native underwriting workspace for private credit funds, commercial banks, and
 
 ---
 
+## Agent Artifact Hosts (publish-an-artifact list)
+
+Tools whose core job is "agent builds something → publish it to a shareable URL." All collide with **Layer 1 only** (publish → stable URL); none tracked here has versioned collaboration, agent-to-agent messaging, or cross-org routing. Add new entrants as one row each; promote to a full company entry above only if one moves past Layer 1.
+
+| Name | URL | Added | What it is | Pricing | Layer touched | Notes |
+|---|---|---|---|---|---|---|
+| **Showly** | showly.ai | 2026-09-23 | Hosts agent-built content as polished sites on a stable `showly.site` URL or custom domain. Publishes via MCP from Claude Code, Codex, Hermes, OpenClaw. Private preview → publish, version history/rollback. Self-styled "#1 Agent Artifact Cloud." | Free (300 credits/mo); Pro $10/mo (3,000 credits, analytics, teams); Enterprise (SSO, dedicated cloud, approval workflows) | L1 | Target is product leads/agency founders/ops sending agent work to clients. Overlaps the Quintel "local Claude HTML can't be opened" pain. Enterprise "approval workflows" is the one feature to watch (edges toward L2 review). Source: vendor site only; funding/traction unverified. |
+| publish.new | publish.new | 2026-04-07 | Upload → price → shareable URL; humans pay via checkout, agents via x402 | Marketplace fee | L1 (+ monetization) | Full entry above. |
+| Claude Artifacts | claude.ai | (context) | First-party publish-to-link inside claude.ai | Bundled | L1 | Not usable by headless agents; see [[cloud-storage-agents-landscape]]. |
+
+**Read:** Layer 1 is crowding and price is collapsing toward free/$10. Publishing alone is not a defensible position; the wedge stays persistence + versioned collaboration + cross-org routing. Showly's "agents produce, clients review" framing is the closest external mirror of Tokenrip's Surfaces-to-clients use case.
+
+---
+
 ## Observations
 
 - **"Shared context layer" is now a commodity phrase.** Microsoft (Fabric IQ), Snowflake (Cortex Sense), Atlan, Zaro, and Nessie all use it. "Agentic collaboration" is claimed by Alike, gitlawb, and Tokenrip. The only unclaimed vocabulary of strategic value: **"mounted agents," "synced minds," "layer 5 portability."** Blog Series 3 (mounted agents) and Series 4 (lock-in trap) are now category-defining stakes, not just content.
@@ -331,6 +345,7 @@ AI-native underwriting workspace for private credit funds, commercial banks, and
 | Alike integrates with LangGraph / CrewAI / Claude Code | Entering Tokenrip's developer segment |
 | publish.new adds programmatic POST /publish API | Layer 1 commoditization risk for Tokenrip increases materially |
 | publish.new adds versioning or annotation | Layer 2 competition begins — currently uncontested |
+| Showly adds review/approval + comments on published pages beyond Enterprise tier, or raises funding | Layer 2 activation from the artifact-host cluster; Layer 1 pricing pressure already visible ($10/mo Pro) |
 | Any new entrant uses "agentic collaboration" as product category | Vocabulary congestion signal — blog post urgency increases |
 | Zaro announces cross-org context sharing | Competitive surface widens — architectural moat claim weakens |
 | Zaro targets financial services verticals | Quintel collision — monitor immediately |

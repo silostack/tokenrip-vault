@@ -1,0 +1,17 @@
+{
+  "batch": true,
+  "requested": 3,
+  "firms": [
+    {"firm": {"id": 174, "name": "Equity South", "url": "https://mergr.com/firms/174"}, "returned": 4, "portfolio": [
+      {"id": 24754, "name": "Sherman & Reilly, Inc.", "sector": "Manufacturing", "location": "Chattanooga, Tennessee, United States", "acquired_date": "2010-04-01", "acquisition_type": "Buyout (LBO, MBO, MBI)", "exit_date": "2013-05-01", "exit_type": "Divestiture", "hold_years": 3.1, "is_current": false, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/24754"},
+      {"id": 19266, "name": "Carstar, Inc.", "sector": "Franchising", "location": "Leawood, Kansas, United States", "acquired_date": "2004-01-01", "acquisition_type": "Buyout (LBO, MBO, MBI)", "exit_date": "2008-05-29", "exit_type": "Trade Sale - Public Company", "hold_years": 4.3, "is_current": false, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/19266"},
+      {"id": 668, "name": "Loyaltyworks", "sector": "Marketing", "location": "Atlanta, Georgia, United States", "acquired_date": "1999-11-01", "acquisition_type": "Growth Capital", "exit_date": "2009-07-01", "exit_type": "Unknown", "hold_years": 9.7, "is_current": false, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/668"},
+      {"id": 699, "name": "Paysys", "sector": "Financial Services", "location": "Atlanta, Georgia, United States", "acquired_date": "1999-05-19", "acquisition_type": "Venture", "exit_date": "2001-04-30", "exit_type": "Divestiture", "hold_years": 1.9, "is_current": false, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/699"}
+    ]},
+    {"firm": {"id": 5797, "name": "Toxaway Capital Partners", "url": "https://mergr.com/firms/5797"}, "returned": 2, "portfolio": [
+      {"id": 28795, "name": "Pharos Marine Automatic Power", "sector": "Metals/Mining", "location": "Houston, Texas, United States", "acquired_date": "2009-06-10", "acquisition_type": "Buyout (LBO, MBO, MBI)", "exit_date": null, "exit_type": null, "hold_years": 17.2, "is_current": true, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/28795"},
+      {"id": 28800, "name": "TWR Lighting", "sector": "Manufacturing", "location": "Houston, Texas, United States", "acquired_date": "2006-11-03", "acquisition_type": "Buyout (LBO, MBO, MBI)", "exit_date": null, "exit_type": null, "hold_years": 19.8, "is_current": true, "revenue_millions_usd": null, "acquisitions_during_hold": 0, "divestitures_during_hold": 0, "url": "https://mergr.com/company/28800"}
+    ]},
+    {"firm": {"id": 6790, "name": "Bearing Partners", "url": "https://mergr.com/firms/6790"}, "returned": 0, "portfolio": []}
+  ]
+}

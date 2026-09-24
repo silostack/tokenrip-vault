@@ -143,3 +143,16 @@ Sunbiz (verify) + FMCSA / DBPR / FDEP (anchor) + FL UCC from local `quintel-prod
 | `out/verdicts/david_{fl,co}_partial_2026-09-15.csv` | Scored verdicts. **Finding (gameplan §4.11): event tags predict, lien timing doesn't; CO 21% CRM-overlap** |
 
 File naming from 2026-09-10: lowercase filenames (`gameplan.md`, `runbook_*.md`); older upper-case files kept as-is.
+
+### Added 2026-09-19 (FL 100 completed)
+| Path | What |
+|---|---|
+| `data/raw/david_fl_completed_2026-09-19.xlsx` | David's completed FL-100 call sheet (all 100 rows; theme8 = funded) |
+| `out/verdicts/david_fl_completed_2026-09-19.csv` | Scored via `scripts/c5j_verdicts.py flc` (new `flc` config). **Finding (gameplan §4.12): event tags hold at n=28 (18% dead vs 57%); tree = base rate; 13% wrong-number rows** |
+
+### Added 2026-09-18 (Texas)
+| Path | What |
+|---|---|
+| `scripts/c5k_tx.py` | Alek's TX top-50 (WI format, CST) → Twilio line+CNAM overwriting his inference → internal `out/TX_PHONE_TEST_50_2026-09-18.csv` + blind David copy `out/TX_PHONE_TEST_50_DAVID_2026-09-18.csv`/`.xlsx`. Blind copy required: per-row `fit_flag`/`alek_signal`/`lender_note` would confound verdicts. |
+| `data/work/tx50_alek_raw.csv` | Alek's raw export as received (2026-09-18) |
+| `EMAIL_TO_DAVID_TX_2026-09-18.md` | Cover email for the Texas list |

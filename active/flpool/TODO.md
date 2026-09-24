@@ -1,6 +1,6 @@
 ---
 title: flpool — open items and David's feedback
-updated: 2026-09-15
+updated: 2026-09-19
 status: INTERNAL. David's Slack and email wording stays internal.
 ---
 
@@ -121,6 +121,10 @@ David:
 - [x] FL 100 through Twilio line+CNAM → `out/FL_PHONE_TEST_100_2026-09-14.csv` (`scripts/c5g_fl100.py`); David-facing blind copy `out/FL_PHONE_TEST_100_DAVID_2026-09-14.csv`
 - [x] Send `email_to_david_fl100_2026-09-14.md`
 - [x] **Verdicts (partial, first 50) joined to `alek_signal` / `fit_flag`** → `out/verdicts/david_fl_partial_2026-09-15.csv` (`scripts/c5j_verdicts.py`); analysis gameplan §4.11. **Finding: HOT event tags separate (0 dead of HOT reached); WARM lien-timing 11/11 dead reached; 24–48mo band did not replicate.** HOT-reached n=2 → confirm at n on rows 51–100.
+- [x] **Completed FL 100 back 09-19, scored** → `out/verdicts/david_fl_completed_2026-09-19.csv` (`scripts/c5j_verdicts.py flc`); analysis gameplan §4.12. **HOT 18% dead vs WARM 57% at n=28/67; tree = base rate; 13% wrong-number rows; 4 seller rows (turnover).** 0 apps.
+- [ ] **Second-source phone check before the next list** (Places/website number vs record; language flag): 5 NIS on Twilio-valid numbers, 2 wrong company, 2 Spanish mailboxes. David hand-corrected 4 numbers; that is our job.
+- [ ] **Lane cap 25% and majority-HOT selection** for the next FL list (§4.12); tell Alek.
+- [ ] Pass the 4 seller rows (Roll-Off Services of FL, Jag Property, Fast Towing, and the Temsa mis-pool) to `../quintel-v2/signals-execution.md` E-T1 as first turnover observations.
 - [ ] **Data defect on Alek's FL export: 4 duplicate company pairs** (Trash Taxi, Venice Wrecker, Stan's Pro Tows, Tri J.). Add a dedup pass (owner+county) before next list. CO export had a "LYES" name-smudge too.
 - [ ] Confirm with Alek the fuller `florida-ucc-full.csv` source and lien-age depth (resolves the young-slice worry for FL only)
 - [ ] Decode Alek's flag taxonomy for the record: DELIVERED (deliverable) / CAP_HELD (lien-timing only, no web signal) / WEB_WARM_MIDLIEN (web signal, lien not mature) / NO_SIGNAL (control); modifiers REV_BAND_EDGE, SINGLE_UNIT, E_UNEXAMINED, FILED_LT6MO, PCF_SOURCE_FUNDER
@@ -134,6 +138,17 @@ David:
 - [ ] GOLDSTAR Excavation: dual-ownership (also owns Generation Sewer & Water) — flagged to David to verify; watch for it as a dedupe pattern.
 - [ ] **No blind copy needed** (fit_flag uniform `DELIVERED`, alek_signal uniform on all 100 — no per-row intent to confound). But lien age is per-row with good spread (fresh<6: 12, 6–24: 31, **24–48: 25**, 48+: 31) → on verdicts, re-test the WI 24–48mo warm-band finding at bigger n. No `renewal_window`/`lapsing_12m` tag here, so the intent-clock bug (§4.10) doesn't apply to CO.
 - [x] **Verdicts (partial, first 28) scored** → `out/verdicts/david_co_partial_2026-09-15.csv` (`scripts/c5j_verdicts.py`). **21% CRM-overlap (6/28 David's own/funded customers)** — signal uniform so no intent test, but this makes the **suppression-list ask top priority for the call**. Existing customers cluster in the 24–48mo band (leakage caution — partly why that band looked good in WI). 9 dead / 2 follow-up / 11 voicemail; wireless out-reached landline (4/14 vs 1/10).
+
+## 1j. Texas batch (2026-09-18) — the state David asked for on 09-16
+- [x] TX 50 (Alek, WI format, CST) through our Twilio line+CNAM, overwriting Alek's own `line_type` inference for cross-batch parity → internal `out/TX_PHONE_TEST_50_2026-09-18.csv`, David blind copy `out/TX_PHONE_TEST_50_DAVID_2026-09-18.csv` + `.xlsx` (`scripts/c5k_tx.py`). 73 distinct numbers, ~$1.31 Twilio.
+- [x] **Blind copy IS needed here** (unlike CO): `fit_flag` has 31 distinct values, `alek_signal` splits 28 FIT_ONLY / 22 FIT_ONLY;MOBILE, `lender_note` populated on all 50 → per-row intent that would confound his verdicts. Dropped from his copy: `phone_valid`, `cnam_match`, `lane`, `equipment_ticket`, `ucc_status`, `usdot`, `fit_flag`, `alek_signal`, `lender_note` (the FL-100 column set).
+- [x] Phones: **50/50 valid**, 36 mobile (72%, highest of any batch; CO was 63%), 7 landline, 5 nonFixedVoip, 2 fixedVoip. CNAM returned a name on 40/50. `cnam_match`: company 16, owner 10, surname 7, other 7, none 10. Kept internal only — WI/FL verdicts showed it does not predict reach.
+- [x] **Alek's own line-type inference scored against Twilio: 21/22 correct** (MOBILE_VENDOR 10/10, MOBILE_INFERRED 11/12; the miss came back nonFixedVoip). His 28 `main` rows split 15 mobile / 7 landline / 6 VoIP. His vendor-sourced call is reliable; his inferred call is nearly so.
+- [x] Email drafted `EMAIL_TO_DAVID_TX_2026-09-18.md` (flags Extreme Pumping: we have owner Mike, CNAM says TROY GIPSON).
+- [ ] **No TX UCC in prod** (FL/CO/CT only) → 38 rows have no filing, 12 carry one from other records (6 in the 6–24mo band, 6 at 48+). This is a **no-lien-overlay arm**: it tests the pool on its own, and is the cleanest comparison yet against the WI/CO lien-banded batches. Pre-register that before verdicts come back.
+- [ ] **CRM clearance pending on all 50** (Alek's note) — David dedupes. CO ran 21% CRM overlap; if TX repeats that, the suppression-list ask stops being a nice-to-have.
+- [ ] 17 rows carry `HELD_BEST` (Alek's second-tier accept). Score verdicts HELD_BEST vs ACCEPTED — Ohio showed 0/27 flagged rows positive, this is the re-test at n=17.
+- [ ] `classify()` reads "SVC UNLTD" vs "Services Unlimited" as `other`. Internal column only, low stakes, but add UNLIMITED/UNLTD to the abbreviation handling next time it's touched.
 
 ## 2. Batch 2 build changes implied
 

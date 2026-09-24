@@ -1,0 +1,8 @@
+{
+  "id": "04",
+  "name": "atmosphere",
+  "seconds": 8,
+  "prompt": "The background is pure flat black and completely empty for the entire shot. No room, no floor, no horizon, no objects, no text, no logos, no numbers, no people. Only the glowing element described, isolated on black, as if shot in a blacked-out void. Slow drifting motes of soft light, some pale green and some warm amber, floating gently across the frame at different depths with a subtle parallax, some sharply in focus and some as large soft out-of-focus bokeh circles. Occasionally a faint horizontal streak of light drifts slowly across. Continuous, steady and unhurried for the entire shot, never stopping and never fading out. Static locked-off camera. Extremely dark, high contrast, cinematic.",
+  "model": "sora-2",
+  "size": "1280x720"
+}

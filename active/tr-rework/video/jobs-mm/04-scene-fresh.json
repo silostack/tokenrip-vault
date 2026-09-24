@@ -1,0 +1,9 @@
+{
+  "id": "04",
+  "name": "scene-fresh",
+  "model": "MiniMax-Hailuo-2.3",
+  "resolution": "1080P",
+  "duration": 6,
+  "first_frame": "frames/4e-1.jpg",
+  "prompt": "[Static shot] Locked-off camera, no camera movement whatsoever. The desk, the two monitors and the black hardware unit between them stay completely still and unchanged for the entire shot. The only motion is light travelling along the cables, continuously and without ever stopping or fading: a steady stream of small pale green beads of light glides along the black braided cable from the left monitor down into the unit, and a steady stream of warm amber beads of light glides along the copper cable from the unit up to the right monitor. As one bead leaves the frame another enters, so the flow is constant from the first frame to the last and never decays. The amber glow inside the unit's smoked glass top shimmers very slowly and the small green indicator light pulses gently. Photoreal product cinematography, dark studio, shallow depth of field. No people, no hands, nothing added or removed. [Static shot]"
+}

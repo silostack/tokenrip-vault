@@ -1,0 +1,9 @@
+{
+  "id": "03a",
+  "name": "scrub-powerdown",
+  "seconds": 8,
+  "reference": "src/ref_hero_1280.jpg",
+  "prompt": "Static locked-off camera. No camera movement, no zoom, no pan, no dolly, no parallax. The hardware unit, its brushed metal front panel, its engraved labels and its small amber display stay perfectly still and unchanged for the entire shot. The scene powers down in one slow continuous fade over the whole shot. The amber glow beneath the smoked glass top dims steadily until the glass is dark and empty. The green points of light on the left cables thin out and fade away. The amber light inside the copper cables on the right dies out. The small display goes black and the small green indicator light fades out last. Nothing moves and nothing is added or removed; only the light level falls. The shot ends in near darkness with only a faint cold rim light on the metal edges of the unit. Photorealistic product cinematography, dark studio, shallow depth of field. No people, no hands, no new objects, nothing is added or removed.",
+  "model": "sora-2",
+  "size": "1280x720"
+}

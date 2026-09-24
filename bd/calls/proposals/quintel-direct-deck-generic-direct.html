@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quintel — Direct and large-ticket lenders</title>
+<style>
+  /* =========================================================
+     Quintel — direct / large-ticket lender deck
+     Same house system and slide spine as the other segment decks:
+     dark cover, cream body, faint grid, forest-on-light accents.
+     Two slides differ from the original spine: build-vs-buy (06)
+     replaces the integration slide, and commercials (07) is new.
+     Renders to 16:9 PDF via WeasyPrint and to a hosted page.
+     ========================================================= */
+
+  @page { size: 13.333in 7.5in; margin: 0; }
+
+  :root {
+    --dark:      #10231A;
+    --mint:      #63D397;
+    --cream:     #F4F3EE;
+    --paper:     #FFFFFF;
+    --ink:       #16211B;
+    --ink-soft:  #3F4A44;
+    --muted:     #6E7A73;
+    --faint:     #A3ADA7;
+    --forest:    #15693C;
+    --line:      #E2E4DE;
+    --grid-lt:   rgba(22,33,27,0.045);
+    --grid-dk:   rgba(255,255,255,0.045);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  /* ---------- slide shell ---------- */
+  .slide {
+    width: 13.333in; height: 7.5in;
+    padding: 0.42in 0.62in 0.34in;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    background: var(--cream);
+    background-image:
+      linear-gradient(to right, var(--grid-lt) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-lt) 1px, transparent 1px);
+    background-size: 0.77in 0.77in;
+    page-break-after: always;
+  }
+  .slide:last-child { page-break-after: auto; }
+
+  .slide.dark {
+    background: var(--dark);
+    color: #fff;
+    background-image:
+      linear-gradient(to right, var(--grid-dk) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-dk) 1px, transparent 1px);
+    background-size: 0.77in 0.77in;
+  }
+
+  /* ---------- rails ---------- */
+  .rail { display: flex; justify-content: space-between; align-items: center; }
+  .mark { display: flex; align-items: center; gap: 8pt; font-size: 15pt; font-weight: 700; letter-spacing: -0.02em; }
+  .bars { display: flex; align-items: flex-end; gap: 2.2pt; height: 15pt; }
+  .bars i { display: block; width: 3.2pt; background: var(--forest); border-radius: 1pt; }
+  .bars i:nth-child(1) { height: 38%; }
+  .bars i:nth-child(2) { height: 60%; }
+  .bars i:nth-child(3) { height: 80%; }
+  .bars i:nth-child(4) { height: 100%; }
+  .dark .bars i { background: var(--mint); }
+
+  .tag {
+    font-size: 7.6pt; font-weight: 600; letter-spacing: 0.19em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .dark .tag { color: var(--mint); }
+
+  .eyebrow {
+    font-size: 7.8pt; font-weight: 700; letter-spacing: 0.19em;
+    text-transform: uppercase; color: var(--forest); margin-bottom: 9pt;
+  }
+  .dark .eyebrow { color: var(--mint); }
+
+  h1 {
+    font-size: 34pt; font-weight: 800; line-height: 1.1;
+    letter-spacing: -0.028em; color: var(--ink); max-width: 11.4in;
+  }
+  h1 em { font-style: normal; color: var(--forest); }
+  .dark h1 { color: #fff; font-size: 44pt; max-width: 9.6in; }
+  .dark h1 em { color: var(--mint); }
+
+  .stage { flex: 1; display: flex; flex-direction: column; padding-top: 14pt; }
+  .center .stage { justify-content: center; padding-top: 0; }
+
+  .lede {
+    margin-top: 16pt; font-size: 13pt; line-height: 1.55;
+    color: rgba(255,255,255,0.80); max-width: 8.8in; font-weight: 400;
+  }
+  .lede b { color: #fff; font-weight: 600; }
+
+  .prep { margin-top: 34pt; font-size: 11.5pt; color: #fff; font-weight: 600; }
+  .prep span { display: block; margin-top: 4pt; font-weight: 400; color: rgba(255,255,255,0.55); font-size: 10.5pt; }
+
+  /* ---------- cards ---------- */
+  .cards { display: flex; gap: 15pt; margin-top: 22pt; align-items: stretch; }
+  .card {
+    flex: 1; background: var(--paper); border: 1px solid var(--line);
+    border-radius: 9pt; padding: 17pt 18pt 19pt;
+    box-shadow: 0 1pt 2pt rgba(22,33,27,0.04);
+  }
+  .card.lead { border-top: 3pt solid var(--mint); padding-top: 15pt; }
+  .card.solid { background: var(--dark); border-color: var(--dark); }
+  .card.solid h3 { color: #fff; }
+  .card.solid p { color: rgba(255,255,255,0.75); }
+  .card.solid .k { color: var(--mint); }
+
+  .card .k {
+    font-size: 7.2pt; font-weight: 700; letter-spacing: 0.17em;
+    text-transform: uppercase; color: var(--forest); display: block; margin-bottom: 7pt;
+  }
+  .card h3 { font-size: 13.5pt; font-weight: 700; letter-spacing: -0.012em; color: var(--ink); line-height: 1.25; }
+  .card p { margin-top: 8pt; font-size: 10.4pt; line-height: 1.52; color: var(--ink-soft); }
+  .card p + p { margin-top: 8pt; }
+  .card p b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- timing rail ---------- */
+  .tline-k {
+    margin-top: 20pt; font-size: 7.4pt; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .tline {
+    margin-top: 9pt; background: var(--paper); border: 1px solid var(--line);
+    border-radius: 9pt; padding: 18pt 14pt 20pt; display: flex; align-items: flex-start;
+  }
+  .tline .rstep { flex: 1; text-align: center; padding: 0 6pt; }
+  .tline .dot { width: 9pt; height: 9pt; border-radius: 50%; background: var(--mint); margin: 0 auto 11pt; }
+  .tline .rstep h4 { font-size: 10.6pt; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+  .tline .rstep p { margin-top: 5pt; font-size: 9.3pt; line-height: 1.45; color: var(--muted); }
+  .tline .rstep.past .dot { background: var(--line); }
+  .tline .rstep.past h4, .tline .rstep.past p { color: var(--faint); }
+  .tline .arw { flex: 0 0 20pt; text-align: center; color: var(--faint); font-size: 11pt; padding-top: 13pt; }
+
+  /* ---------- note ---------- */
+  .note {
+    margin-top: 20pt; border-top: 1px solid var(--line); padding-top: 12pt;
+    font-size: 10.4pt; line-height: 1.5; color: var(--muted); max-width: 11.4in;
+  }
+  .note b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- signal chips ---------- */
+  .chips-k {
+    margin-top: 20pt; font-size: 7.4pt; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 7pt; margin-top: 9pt; }
+  .chip {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 40pt;
+    padding: 6pt 13pt; font-size: 9.6pt; font-weight: 600; color: var(--ink);
+  }
+  .chip.ghost { border-style: dashed; color: var(--forest); background: transparent; }
+
+  /* ---------- split: one big panel + stacked side ---------- */
+  .split { display: flex; gap: 15pt; margin-top: 20pt; align-items: stretch; }
+  .split .main { flex: 1.35; }
+  .split .side { flex: 1; display: flex; flex-direction: column; gap: 11pt; }
+  .split .side .card { padding: 13pt 15pt 15pt; }
+  .split .side .card h3 { font-size: 11.8pt; }
+  .split .side .card p { font-size: 9.9pt; margin-top: 6pt; }
+
+  .co { font-size: 19pt; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+  .co-sub { margin-top: 4pt; font-size: 10.4pt; color: var(--muted); }
+  .hr { height: 1px; background: var(--line); margin: 13pt 0; }
+  .fact { margin-top: 11pt; }
+  .fact .k { font-size: 7.2pt; font-weight: 700; letter-spacing: 0.17em; text-transform: uppercase; color: var(--forest); }
+  .fact p { margin-top: 5pt; font-size: 10.6pt; line-height: 1.5; color: var(--ink-soft); }
+  .fact p b { color: var(--ink); font-weight: 600; }
+  .src {
+    display: inline-block; margin-top: 8pt; border: 1px solid var(--line);
+    border-radius: 40pt; padding: 5pt 12pt; font-size: 9.2pt; color: var(--ink-soft);
+  }
+
+  /* ---------- footer ---------- */
+  .foot {
+    margin-top: 12pt; padding-top: 10pt; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 8.4pt; color: var(--faint);
+  }
+  .dark .foot { border-top-color: rgba(255,255,255,0.14); }
+  .foot b { color: var(--ink-soft); font-weight: 600; }
+  .dark .foot { color: rgba(255,255,255,0.45); }
+  .dark .foot b { color: rgba(255,255,255,0.85); }
+
+  /* ---------- screen presentation ---------- */
+  @media screen {
+    body { background: #333; padding: 26px 0; }
+    .slide {
+      margin: 0 auto 24px; box-shadow: 0 6px 30px rgba(0,0,0,0.30);
+      border-radius: 4px;
+    }
+  }
+  @media screen and (max-width: 1400px) {
+    html { font-size: 13px; }
+    .slide { zoom: 0.72; }
+  }
+  @media screen and (max-width: 900px) {
+    .slide { zoom: 0.46; }
+  }
+</style>
+</head>
+<body>
+
+<section class="slide dark center">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">July 2026</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">Deal sourcing for equipment finance</div>
+    <h1><em>High-intent leads</em> for your origination desks.</h1>
+    <p class="lede">Quintel is a market intelligence engine that reads <b>millions of public filings</b> and surfaces the companies showing buying signals, matched to what your firm funds, while the deal is still open.</p>
+    <div class="prep"><span>July 2026</span></div>
+  </div>
+  <div class="foot"><span>Quintel</span><span><b>Simon Pettibone</b> · simon@quintel.ai</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">Why Quintel</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">What your desks get</div>
+    <h1>Every call goes to a <em>name worth calling</em>.</h1>
+    <div class="cards">
+      <div class="card lead">
+        <h3>Higher-intent names</h3>
+        <p>Companies carrying a real buying signal in the public record: a contract won, a permit issued, a facility going up, financing running down. Not a size filter. A reason to call.</p>
+      </div>
+      <div class="card lead">
+        <h3>Surfaced before anyone else</h3>
+        <p>Signals hit your list the day they hit the record, so your rep gets there first instead of dialling the same names every other lender already bought.</p>
+      </div>
+      <div class="card lead">
+        <h3>Ranked by priority</h3>
+        <p>Every company is scored on signal strength, corroboration across sources, and fit to what your firm funds. Reps start the day at the top.</p>
+      </div>
+    </div>
+    <div class="tline-k">The timing advantage</div>
+    <div class="tline">
+      <div class="rstep">
+        <div class="dot"></div>
+        <h4>Signal hits the public record</h4>
+        <p>A permit lands, a contract is awarded, a filing ages toward its end</p>
+      </div>
+      <div class="arw">&rarr;</div>
+      <div class="rstep">
+        <div class="dot"></div>
+        <h4>Quintel surfaces it, ranked</h4>
+        <p>Matched to your buy box, scored, with the evidence attached</p>
+      </div>
+      <div class="arw">&rarr;</div>
+      <div class="rstep">
+        <div class="dot"></div>
+        <h4>Your rep calls first</h4>
+        <p>The conversation happens while the capex decision is still open</p>
+      </div>
+      <div class="arw">&rarr;</div>
+      <div class="rstep past">
+        <div class="dot"></div>
+        <h4>Months later, it goes public</h4>
+        <p>The announcement runs and every other lender hears about it at once</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>2</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">How we do it</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">The engine</div>
+    <h1>What you fund plus public signals, <em>synthesized into one list</em>.</h1>
+    <div class="cards">
+      <div class="card">
+        <span class="k">What you fund</span>
+        <h3>Your buy box</h3>
+        <p>Sectors, ticket range, company size, geography, contact requirements. Set once with your team and tuned any time. Nothing surfaces that your firm could not fund.</p>
+      </div>
+      <div class="card">
+        <span class="k">Public market signals</span>
+        <h3>Scattered across thousands of sources</h3>
+        <p>Awards, permits, financing filings, expansions, market news. The buying intent is out there, but no rep has time to find it across millions of records by hand.</p>
+      </div>
+      <div class="card solid lead">
+        <span class="k">What your team gets</span>
+        <h3>A ranked, high-intent lead list</h3>
+        <p>One list, scored and explained, refreshed through the day as new signals land. Every row carries the trigger behind it and a link to the source document.</p>
+      </div>
+    </div>
+    <div class="chips-k">Signals scanned continuously</div>
+    <div class="chips">
+      <span class="chip">Federal &amp; state contract awards</span>
+      <span class="chip">Construction &amp; air permits</span>
+      <span class="chip">Financing renewal timing</span>
+      <span class="chip">Facility expansions</span>
+      <span class="chip">SEC filings</span>
+      <span class="chip">State incentive awards</span>
+      <span class="chip">New locations &amp; leases</span>
+      <span class="chip ghost">+ dozens more public sources</span>
+    </div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>3</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">The difference</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">Timing</div>
+    <h1>Timing your competitors <em>don't have</em>.</h1>
+    <div class="split">
+      <div class="main card lead">
+        <h3>Know who committed to the equipment</h3>
+        <p>A company commits long before it shops for financing. The permit is filed, the contract is won, the site work starts. Each of those is dated and public, months ahead of the press release.</p>
+        <p>Those names reach your reps inside that window, with the evidence attached, while the conversation is still worth having.</p>
+        <p>A bought list shows you what already happened. This shows you what is about to.</p>
+      </div>
+      <div class="side">
+        <div class="card">
+          <h3>Every name comes with the why</h3>
+          <p>Each company ships with its evidence trail: the score, the signals behind it, and a link to the public source. Reps know exactly why a name ranks before they dial.</p>
+        </div>
+        <div class="card">
+          <h3>Works alongside ZoomInfo</h3>
+          <p>Intent data infers from browsing behaviour, which is why it surfaces companies that are not equipment intensive. Quintel reads the record itself. Different mechanisms, different lists. Run both.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>4</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">The product</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">What lands on your list</div>
+    <h1>Every lead arrives <em>ready to dial</em>.</h1>
+    <div class="split">
+      <div class="main card lead">
+        <span class="k">From a recent run</span>
+        <div class="co">Blue Cord Design &amp; Construction, LLC</div>
+        <div class="co-sub">Construction · Florida</div>
+        <div class="hr"></div>
+        <div class="fact">
+          <span class="k">The signal</span>
+          <p>Awarded a <b>$15.1M federal construction contract</b>, July 2026.</p>
+        </div>
+        <div class="fact">
+          <span class="k">Why your rep calls</span>
+          <p>A company that just won an eight-figure job has to mobilize: machines, trucks, crews, timelines. The financing conversation happens now, not after the equipment is already on site.</p>
+        </div>
+        <div class="fact">
+          <span class="k">The evidence</span>
+          <p><span class="src">Linked source: usaspending.gov award record</span></p>
+        </div>
+      </div>
+      <div class="side">
+        <div class="card">
+          <h3>Delivered with</h3>
+          <p>Decision-maker contact: name, title, mobile, office line, email. Company profile and estimated ticket range.</p>
+        </div>
+        <div class="card">
+          <h3>Where it lands</h3>
+          <p>Straight into your CRM or exported as CSV, alongside everything else surfaced that day.</p>
+        </div>
+        <div class="card">
+          <h3>Filtered how you work</h3>
+          <p>Sector, ticket size, company size, geography, contact completeness. If it matters to how a desk picks a name, it can be a filter.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>5</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">Build vs buy</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">If you have engineers</div>
+    <h1>Build the tool <em>only you can build</em>.</h1>
+    <div class="cards">
+      <div class="card">
+        <span class="k">True</span>
+        <h3>A working version is weeks, not months</h3>
+        <p>Pointing a model at a data source and scoring companies against a buy box is a short project now. Any competent team gets a useful v1 standing up.</p>
+      </div>
+      <div class="card">
+        <span class="k">Not in the estimate</span>
+        <h3>The second year, and the one after</h3>
+        <p>There is no federal registry. Company and lien records sit in fifty-odd state systems with their own formats, and permits are county by county.</p>
+        <p>Joining them is the work. One company appears under three names across a filing, an award and a news item, and nothing reconciles them for you.</p>
+      </div>
+      <div class="card solid lead">
+        <span class="k">The better use of that engineer</span>
+        <h3>The things nobody can sell you</h3>
+        <p>Your credit process. The time from application to spread. That work compounds into an advantage that belongs to you.</p>
+        <p>A public record corpus does not. It is the same corpus for everyone who builds it.</p>
+      </div>
+    </div>
+    <div class="note">It is not either-or. Everything Quintel surfaces <b>comes out as data you own</b>, so whatever your team builds on top of it starts with the corpus already assembled.</div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>6</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">Getting started</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">Getting started</div>
+    <h1>More funded deals from <em>the same dial count</em>.</h1>
+    <div class="cards">
+      <div class="card lead">
+        <span class="k">Step 1</span>
+        <h3>Set your criteria</h3>
+        <p>Sectors, ticket range, titles, contact requirements. The engine only surfaces deals your desks can actually fund.</p>
+      </div>
+      <div class="card">
+        <span class="k">Step 2</span>
+        <h3>Put it on the phones</h3>
+        <p>Your reps work a live, ranked, fully enriched feed. We review what connected and retune together, so the list gets sharper every week.</p>
+      </div>
+      <div class="card">
+        <span class="k">Step 3</span>
+        <h3>Own the timing window</h3>
+        <p>Every desk works names surfaced ahead of the market, first in on deals your competitors' lists haven't printed yet.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>7 · <b>Simon Pettibone</b> · simon@quintel.ai · quintel.ai</span></div>
+</section>
+
+</body>
+</html>

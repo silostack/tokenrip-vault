@@ -1,0 +1,9 @@
+{
+  "id": "01",
+  "name": "hero-loop",
+  "seconds": 8,
+  "reference": "src/ref_hero_1280.jpg",
+  "prompt": "Static locked-off camera. No camera movement, no zoom, no pan, no dolly, no parallax. The hardware unit, its brushed metal front panel, its engraved labels and its small amber display stay perfectly still and unchanged for the entire shot. Throughout the entire shot, without ever stopping or fading, a continuous endless stream of small soft green points of light glides along each of the seven black braided cables on the left, travelling from the bottom of the frame upward into the unit. At the same time, continuously and without stopping, warm amber points of light glide along the four copper cables on the right, travelling away from the unit down toward the bottom of the frame. The flow is steady and constant from the first frame to the last: as one point of light leaves the frame another enters, so the cables are lit the whole time and the brightness never decays. The amber glow beneath the smoked glass top shimmers very slowly. The small green indicator light at the right end of the panel pulses gently and steadily. Photorealistic product cinematography, dark studio, shallow depth of field. No people, no hands, no new objects, nothing is added or removed.",
+  "model": "sora-2",
+  "size": "1280x720"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "08",
+  "name": "unpatch-reverse",
+  "seconds": 8,
+  "reference": "src/ref_hero_1280.jpg",
+  "prompt": "Static locked-off camera. No camera movement, no zoom, no pan, no dolly, no parallax. The hardware unit, its brushed metal front panel, its engraved labels and its small amber display stay perfectly still and unchanged for the entire shot. One after another, in a slow steady sequence from left to right, every cable pulls straight out of its jack and withdraws down out of the bottom of the frame, until all eleven sockets are empty. As each cable disconnects, the light inside it fades out. Once the last cable is out, the glow beneath the smoked glass top fades away and the small green indicator light goes dark, leaving a bare unlit unit on a dark floor. Slow, smooth, mechanical. Photorealistic product cinematography, dark studio, shallow depth of field. No people, no hands, no new objects, nothing is added or removed.",
+  "model": "sora-2",
+  "size": "1280x720"
+}

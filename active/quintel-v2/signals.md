@@ -134,7 +134,7 @@ Each hypothesis names the test, the metric, the decision rule and the prior. Dec
 | H6 | The new-DOT and visible-expansion tags (Alek's HOT) hold at n | next FL/TX list majority-HOT; David blind | open; dead | HOT open rate ≥ 2× the batch's WARM history → HOT becomes the default selector | 0.5 |
 | H7 | Section 179 timing lifts reply rate on outbound in Nov–Dec vs Sep–Oct, same list quality | send timing arm on email once live | reply; positive | ≥ 1.5× → calendar-triggered sends | 0.6 |
 | H8 | Service shops see repair-or-replace before vendors and will refer for a fee | 20 conversations with independent diesel / hydraulic / ag / refrigeration shops in one metro; ask what they do when a unit is not worth fixing | share who name a dealer; share who would refer; first referred lead | ≥ 5 of 20 would refer and ≥ 1 real lead in 30 days → build the tech channel (calculator on their phone) | 0.4 |
-| H9 | Insurance agents will refer post-claim | 10 conversations with independent commercial-auto agents | same shape | same rule at half the numbers | 0.35 |
+| H9 | Insurance agents will refer post-claim | 10 conversations with independent commercial-auto agents | same shape | same rule at half the numbers | 0.20 (down from 0.35 on David's 09-18 read: claims filed online, agent unaware; regulated, will not share; parked, `threads.md` T24) |
 
 Not registered, deliberately: anything lien-timing, anything hiring, anything news-scrape at entity level.
 
@@ -156,7 +156,7 @@ Not registered, deliberately: anything lien-timing, anything hiring, anything ne
 
 **Phase 3, weeks 2–4: turnover scrape (H4).** One state, one platform first (Commercial Truck Trader private-party filter, vac / tow / bucket / crane), match to pool by seller name and phone, 50-row arm.
 
-**Phase 4, weeks 2–4: partner conversations (H8, H9).** Twenty shops, ten agents, one metro where David has density (his map: NC and TX are best). Script: what happens when a unit is not worth fixing; who does the owner call; would you hand him a payment number. Every answer goes into `threads.md` T19/T4.
+**Phase 4, weeks 2–4: partner conversations (H8; H9 parked, `threads.md` T24).** Twenty shops (agents only if a shop names one), one metro where David has density (his map: NC and TX are best). Script: what happens when a unit is not worth fixing; who does the owner call; would you hand him a payment number. Every answer goes into `threads.md` T19/T4.
 
 **Phase 5, continuous: source discovery.** Run the prompt in §8 per lane × state, log every candidate source in a registry (source, what it emits, join key, freshness, ICP coverage, cost), and validate one month of one source per week using the flpool feed runbook. Sources that emit dated company names at a non-zero join rate get a scraper; the rest stay lookup-only.
 

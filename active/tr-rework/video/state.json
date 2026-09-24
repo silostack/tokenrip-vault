@@ -1,0 +1,42 @@
+{
+  "01": {
+    "name": "hero-loop",
+    "model": "sora-2",
+    "size": "1280x720",
+    "seconds": 8,
+    "cost": 0.8,
+    "video_id": "video_6a9ece16963481918870a12bb35ee79d04a18ed152031118",
+    "status": "completed",
+    "file": "clips/01-hero-loop.mp4"
+  },
+  "02": {
+    "name": "plug-reverse",
+    "model": "sora-2",
+    "size": "1280x720",
+    "seconds": 4,
+    "cost": 0.4,
+    "video_id": "video_6a9ece19f9f48191860d3e1bed2e1ba80eaee99f225606a6",
+    "status": "completed",
+    "file": "clips/02-plug-reverse.mp4"
+  },
+  "03a": {
+    "name": "scrub-powerdown",
+    "model": "sora-2",
+    "size": "1280x720",
+    "seconds": 8,
+    "cost": 0.8,
+    "video_id": "video_6a9ece1cf8a881939d58e0f1d950c0e008caa03307115162",
+    "status": "completed",
+    "file": "clips/03a-scrub-powerdown.mp4"
+  },
+  "03b": {
+    "name": "scrub-outflow",
+    "model": "sora-2",
+    "size": "1280x720",
+    "seconds": 8,
+    "cost": 0.8,
+    "video_id": "video_6a9ece1f64cc81919955449ae21b475f03ab0a1efa82408a",
+    "status": "completed",
+    "file": "clips/03b-scrub-outflow.mp4"
+  }
+}

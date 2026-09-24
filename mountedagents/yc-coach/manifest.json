@@ -1,0 +1,64 @@
+{
+  "manifestVersion": 1,
+  "slug": "yc-coach",
+  "display": {
+    "displayName": "YC Coach",
+    "tagline": "Iterative coaching for stronger YC applications.",
+    "description": "An evidence-demanding YC application coach that helps founders write stronger applications through iterative probing, pushback on vague claims, and refinement in the founder's own voice. Refuses to generate answers — forces founders to do the thinking.",
+    "capabilities": [
+      "Coaches founders through all 11 YC application sections one question at a time",
+      "Demands specific evidence for every claim — no assertions without proof",
+      "Preserves the founder's voice while cutting vague language and startup jargon",
+      "Tracks progress across sessions so founders can pick up where they left off",
+      "Produces a compiled draft artifact with cross-checked consistency"
+    ]
+  },
+  "brain": {
+    "assets": [
+      { "role": "soul", "alias": "yc-coach-soul" },
+      { "role": "flow", "alias": "yc-coach-flow" },
+      { "role": "frameworks", "alias": "yc-coach-frameworks" }
+    ]
+  },
+  "memoryCollections": [
+    {
+      "slug": "yc-coach-sessions",
+      "scope": "operator-private",
+      "slugTemplate": "yc-coach-sessions-{operator_slug}",
+      "collectionAssetAlias": "yc-coach-sessions",
+      "default": true,
+      "schema": [
+        { "name": "company_name", "type": "text" },
+        { "name": "section_completed", "type": "text" },
+        { "name": "refined_answer", "type": "text" },
+        { "name": "evidence_gaps", "type": "text" },
+        { "name": "session_date", "type": "text" }
+      ]
+    }
+  ],
+  "memoryAssets": [],
+  "session": {
+    "ttlHours": 24,
+    "rateLimit": {
+      "perAgentPerHour": 10,
+      "perAgentPerDay": 30
+    },
+    "produceArtifact": true
+  },
+  "harnessRequirements": [],
+  "invocationSurfaces": [
+    {
+      "kind": "mcp",
+      "label": "Claude Desktop / Claude.ai",
+      "mcpUrl": "https://api.tokenrip.com/mcp",
+      "invokePhrase": "Start yc-coach"
+    },
+    {
+      "kind": "bootloader-skill",
+      "label": "Claude Code",
+      "skillUrl": "https://api.tokenrip.com/skills/agents/yc-coach.md",
+      "invokeCommand": "/yc-coach"
+    }
+  ],
+  "teamContext": "ignored"
+}

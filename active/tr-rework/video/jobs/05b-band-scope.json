@@ -1,0 +1,8 @@
+{
+  "id": "05b",
+  "name": "band-scope",
+  "seconds": 8,
+  "prompt": "The background is pure flat black and completely empty for the entire shot. No room, no floor, no horizon, no objects, no text, no logos, no numbers, no people. Only the glowing element described, isolated on black, as if shot in a blacked-out void. A single thin glowing amber oscilloscope trace running horizontally across the middle of the frame, rippling and undulating gently and continuously, with a soft phosphor glow and a faint after-image trail behind it. Nothing else in frame. Continuous and steady for the entire shot, never stopping. Static locked-off camera. Extremely dark, high contrast.",
+  "model": "sora-2",
+  "size": "1280x720"
+}

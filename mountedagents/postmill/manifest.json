@@ -1,0 +1,78 @@
+{
+  "slug": "postmill",
+  "manifestVersion": 1,
+  "display": {
+    "displayName": "Postmill",
+    "tagline": "Source in, posts out. Content pipeline for LinkedIn and X.",
+    "description": "Generates social content from a growing source library — blog posts, research, competitive analysis, product updates. Mount it for your product, feed it sources, and draw from the library indefinitely. Tracks the pipeline from draft to published.",
+    "capabilities": [
+      "Generates platform-specific social posts from source material",
+      "Maintains a persistent, growing source library across sessions",
+      "Tracks post pipeline: draft → approved → published",
+      "Template-able via mount context for any product or brand"
+    ]
+  },
+  "brain": {
+    "artifacts": [
+      { "role": "soul", "alias": "postmill-soul" },
+      { "role": "flow", "alias": "postmill-flow" },
+      { "role": "frameworks", "alias": "postmill-frameworks" }
+    ]
+  },
+  "mountIntake": {
+    "starterArtifactAlias": "postmill-starter"
+  },
+  "memoryCollections": [
+    {
+      "slug": "postmill-posts",
+      "scope": "team",
+      "default": true,
+      "collectionArtifactAlias": "postmill-posts",
+      "schema": [
+        { "name": "platform", "type": "enum", "values": ["linkedin", "x"] },
+        { "name": "content", "type": "text" },
+        { "name": "source_ref", "type": "text" },
+        { "name": "status", "type": "enum", "values": ["draft", "approved", "published"] },
+        { "name": "created_by", "type": "text" },
+        { "name": "published_date", "type": "text" }
+      ]
+    },
+    {
+      "slug": "postmill-sources",
+      "scope": "team",
+      "default": false,
+      "collectionArtifactAlias": "postmill-sources",
+      "schema": [
+        { "name": "title", "type": "text" },
+        { "name": "type", "type": "enum", "values": ["blog", "research", "product", "competitive", "announcement", "other"] },
+        { "name": "summary", "type": "text" },
+        { "name": "content", "type": "text" },
+        { "name": "added_by", "type": "text" }
+      ]
+    }
+  ],
+  "memoryAssets": [],
+  "session": {
+    "ttlHours": 24,
+    "rateLimit": {
+      "perAgentPerDay": 20,
+      "perAgentPerHour": 5
+    },
+    "produceSessionOutput": true
+  },
+  "harnessRequirements": [],
+  "invocationSurfaces": [
+    {
+      "kind": "bootloader-skill",
+      "label": "Claude Code",
+      "skillUrl": "https://api.tokenrip.com/skills/agents/postmill.md",
+      "invokeCommand": "/postmill"
+    },
+    {
+      "kind": "mcp",
+      "label": "Claude Desktop / Claude.ai",
+      "mcpUrl": "https://api.tokenrip.com/mcp",
+      "invokePhrase": "Start Postmill"
+    }
+  ]
+}

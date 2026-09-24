@@ -1,0 +1,9 @@
+{
+  "id": "02",
+  "name": "plug-reverse",
+  "seconds": 4,
+  "reference": "src/ref_hero_1280.jpg",
+  "prompt": "Static locked-off camera. No camera movement, no zoom, no pan, no dolly, no parallax. The hardware unit, its brushed metal front panel, its engraved labels and its small amber display stay perfectly still and unchanged for the entire shot. The leftmost black braided cable slowly pulls straight out of its jack and withdraws toward the bottom left of the frame, its knurled metal connector catching a warm rim light as it separates from the socket, leaving that one socket empty. As it separates, the green points of light on that one cable fade out. Every other cable stays exactly where it is and keeps its steady flow of light for the whole shot. Slow, smooth, mechanical movement. Photorealistic product cinematography, dark studio, shallow depth of field. No people, no hands, no new objects, nothing is added or removed.",
+  "model": "sora-2",
+  "size": "1280x720"
+}

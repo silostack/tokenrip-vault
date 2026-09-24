@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quintel — Vendor-sourced lenders</title>
+<style>
+  /* =========================================================
+     Quintel — vendor / dealer-sourced lender deck
+     House system: dark cover, cream body, mint-on-dark and
+     forest-on-light accents, faint grid, card components.
+     Renders to 16:9 PDF via WeasyPrint and to a hosted page.
+     ========================================================= */
+
+  @page { size: 13.333in 7.5in; margin: 0; }
+
+  :root {
+    --dark:      #10231A;
+    --dark-2:    #16301F;
+    --mint:      #63D397;
+    --mint-soft: #9FE7C1;
+    --cream:     #F4F3EE;
+    --paper:     #FFFFFF;
+    --ink:       #16211B;
+    --ink-soft:  #3F4A44;
+    --muted:     #6E7A73;
+    --faint:     #A3ADA7;
+    --forest:    #15693C;
+    --forest-dk: #0F4F2D;
+    --line:      #E2E4DE;
+    --grid-lt:   rgba(22,33,27,0.045);
+    --grid-dk:   rgba(255,255,255,0.045);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  /* ---------- slide shell ---------- */
+  .slide {
+    width: 13.333in; height: 7.5in;
+    padding: 0.42in 0.62in 0.34in;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    background: var(--cream);
+    background-image:
+      linear-gradient(to right, var(--grid-lt) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-lt) 1px, transparent 1px);
+    background-size: 0.77in 0.77in;
+    page-break-after: always;
+  }
+  .slide:last-child { page-break-after: auto; }
+
+  .slide.dark {
+    background: var(--dark);
+    color: #fff;
+    background-image:
+      linear-gradient(to right, var(--grid-dk) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-dk) 1px, transparent 1px);
+    background-size: 0.77in 0.77in;
+  }
+
+  /* ---------- rails ---------- */
+  .rail { display: flex; justify-content: space-between; align-items: center; }
+  .mark { display: flex; align-items: center; gap: 8pt; font-size: 15pt; font-weight: 700; letter-spacing: -0.02em; }
+  .bars { display: flex; align-items: flex-end; gap: 2.2pt; height: 15pt; }
+  .bars i { display: block; width: 3.2pt; background: var(--forest); border-radius: 1pt; }
+  .bars i:nth-child(1) { height: 38%; }
+  .bars i:nth-child(2) { height: 60%; }
+  .bars i:nth-child(3) { height: 80%; }
+  .bars i:nth-child(4) { height: 100%; }
+  .dark .bars i { background: var(--mint); }
+
+  .tag {
+    font-size: 7.6pt; font-weight: 600; letter-spacing: 0.19em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .dark .tag { color: var(--mint); }
+
+  .eyebrow {
+    font-size: 7.8pt; font-weight: 700; letter-spacing: 0.19em;
+    text-transform: uppercase; color: var(--forest); margin-bottom: 9pt;
+  }
+  .dark .eyebrow { color: var(--mint); }
+
+  h1 {
+    font-size: 34pt; font-weight: 800; line-height: 1.1;
+    letter-spacing: -0.028em; color: var(--ink); max-width: 11in;
+  }
+  h1 em { font-style: normal; color: var(--forest); }
+  .dark h1 { color: #fff; font-size: 44pt; max-width: 9.6in; }
+  .dark h1 em { color: var(--mint); }
+
+  .stage { flex: 1; display: flex; flex-direction: column; padding-top: 14pt; }
+  .center .stage { justify-content: center; padding-top: 0; }
+
+  .lede {
+    margin-top: 16pt; font-size: 13pt; line-height: 1.55;
+    color: rgba(255,255,255,0.80); max-width: 8.6in; font-weight: 400;
+  }
+  .lede b { color: #fff; font-weight: 600; }
+
+  .prep { margin-top: 34pt; font-size: 11.5pt; color: #fff; font-weight: 600; }
+  .prep span { display: block; margin-top: 4pt; font-weight: 400; color: rgba(255,255,255,0.55); font-size: 10.5pt; }
+
+  /* ---------- cards ---------- */
+  .cards { display: flex; gap: 15pt; margin-top: 22pt; }
+  .cards.four > .card { flex: 1; }
+  .card {
+    flex: 1; background: var(--paper); border: 1px solid var(--line);
+    border-radius: 9pt; padding: 17pt 18pt 19pt;
+    box-shadow: 0 1pt 2pt rgba(22,33,27,0.04);
+  }
+  .card.lead { border-top: 3pt solid var(--mint); padding-top: 15pt; }
+  .card.solid { background: var(--dark); border-color: var(--dark); }
+  .card.solid h3, .card.solid p { color: #fff; }
+  .card.solid p { color: rgba(255,255,255,0.75); }
+  .card.solid .k { color: var(--mint); }
+
+  .card .k {
+    font-size: 7.2pt; font-weight: 700; letter-spacing: 0.17em;
+    text-transform: uppercase; color: var(--forest); display: block; margin-bottom: 7pt;
+  }
+  .card h3 { font-size: 13.5pt; font-weight: 700; letter-spacing: -0.012em; color: var(--ink); line-height: 1.25; }
+  .card p { margin-top: 8pt; font-size: 10.4pt; line-height: 1.52; color: var(--ink-soft); }
+  .card p + p { margin-top: 8pt; }
+  .card p b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- numbered flow ---------- */
+  .flow { display: flex; gap: 13pt; margin-top: 20pt; }
+  .step {
+    flex: 1; background: var(--paper); border: 1px solid var(--line);
+    border-radius: 9pt; padding: 15pt 16pt 17pt; position: relative;
+  }
+  .step .n {
+    width: 17pt; height: 17pt; border-radius: 50%;
+    background: var(--forest); color: #fff;
+    font-size: 9pt; font-weight: 700; line-height: 17pt; text-align: center;
+    margin-bottom: 9pt;
+  }
+  .step h3 { font-size: 12.5pt; font-weight: 700; color: var(--ink); line-height: 1.25; letter-spacing: -0.01em; }
+  .step p { margin-top: 7pt; font-size: 10pt; line-height: 1.5; color: var(--ink-soft); }
+
+  /* ---------- payoff band ---------- */
+  .payoff {
+    margin-top: auto; background: var(--dark); border-radius: 9pt;
+    padding: 16pt 22pt; font-size: 14pt; font-weight: 600;
+    line-height: 1.4; color: #fff; letter-spacing: -0.012em;
+  }
+  .payoff em { font-style: normal; color: var(--mint); }
+
+  .note {
+    margin-top: auto; border-top: 1px solid var(--line); padding-top: 12pt;
+    font-size: 10.4pt; line-height: 1.5; color: var(--muted);
+  }
+  .note b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- signal chips ---------- */
+  .chips-k {
+    margin-top: 20pt; font-size: 7.4pt; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 7pt; margin-top: 9pt; }
+  .chip {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 40pt;
+    padding: 6pt 13pt; font-size: 9.6pt; font-weight: 600; color: var(--ink);
+  }
+  .chip.ghost { border-style: dashed; color: var(--forest); background: transparent; }
+
+  /* ---------- sample lead ---------- */
+  .split { display: flex; gap: 15pt; margin-top: 20pt; align-items: stretch; }
+  .split .main { flex: 1.35; }
+  .split .side { flex: 1; display: flex; flex-direction: column; gap: 11pt; }
+  .split .side .card { padding: 13pt 15pt 15pt; }
+  .split .side .card h3 { font-size: 11.8pt; }
+  .split .side .card p { font-size: 9.9pt; margin-top: 6pt; }
+
+  .co { font-size: 19pt; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+  .co-sub { margin-top: 4pt; font-size: 10.4pt; color: var(--muted); }
+  .hr { height: 1px; background: var(--line); margin: 13pt 0; }
+  .fact { margin-top: 11pt; }
+  .fact .k { font-size: 7.2pt; font-weight: 700; letter-spacing: 0.17em; text-transform: uppercase; color: var(--forest); }
+  .fact p { margin-top: 5pt; font-size: 10.6pt; line-height: 1.5; color: var(--ink-soft); }
+  .fact p b { color: var(--ink); font-weight: 600; }
+  .src {
+    display: inline-block; margin-top: 8pt; border: 1px solid var(--line);
+    border-radius: 40pt; padding: 5pt 12pt; font-size: 9.2pt; color: var(--ink-soft);
+  }
+
+  /* ---------- two-column compare ---------- */
+  .compare { display: flex; gap: 15pt; margin-top: 22pt; align-items: stretch; }
+  .compare > div { flex: 1; border-radius: 9pt; padding: 20pt 22pt 22pt; }
+  .compare .one { background: var(--paper); border: 1px solid var(--line); }
+  .compare .many { background: var(--dark); }
+  .compare .k { font-size: 7.4pt; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--forest); }
+  .compare .many .k { color: var(--mint); }
+  .compare h3 { margin-top: 9pt; font-size: 17pt; font-weight: 700; letter-spacing: -0.018em; color: var(--ink); line-height: 1.2; }
+  .compare .many h3 { color: #fff; }
+  .compare p { margin-top: 10pt; font-size: 10.8pt; line-height: 1.55; color: var(--ink-soft); }
+  .compare .many p { color: rgba(255,255,255,0.78); }
+
+  /* ---------- footer ---------- */
+  .foot {
+    margin-top: 12pt; padding-top: 10pt; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 8.4pt; color: var(--faint);
+  }
+  .dark .foot { border-top-color: rgba(255,255,255,0.14); }
+  .foot b { color: var(--ink-soft); font-weight: 600; }
+  .dark .foot { color: rgba(255,255,255,0.45); }
+  .dark .foot b { color: rgba(255,255,255,0.85); }
+
+  /* ---------- screen presentation ---------- */
+  @media screen {
+    body { background: #333; padding: 26px 0; }
+    .slide {
+      margin: 0 auto 24px; box-shadow: 0 6px 30px rgba(0,0,0,0.30);
+      border-radius: 4px;
+    }
+  }
+  @media screen and (max-width: 1400px) {
+    html { font-size: 13px; }
+    .slide { zoom: 0.72; }
+  }
+  @media screen and (max-width: 900px) {
+    .slide { zoom: 0.46; }
+  }
+</style>
+</head>
+<body>
+
+<section class="slide dark center">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">July 2026</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">Deal sourcing for equipment finance</div>
+    <h1>Bring a dealer <em>a customer</em>, not a pitch.</h1>
+    <p class="lede">Quintel reads the public record for companies about to buy the equipment you fund, early enough that <b>your team can put the deal where you want it</b>.</p>
+    <div class="prep"><span>July 2026</span></div>
+  </div>
+  <div class="foot"><span>Quintel</span><span><b>Simon Pettibone</b> · simon@quintel.ai</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">The move</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">Opening a dealer</div>
+    <h1>Walk in with <em>demand you brought</em>.</h1>
+    <div class="flow">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>Name the category</h3>
+        <p>An equipment category you want a program in and don't have yet.</p>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>We surface who is about to buy</h3>
+        <p>Companies in your box carrying public signals that the purchase is coming: work won, permits filed, fleets expanding, financing running down.</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h3>You reach them while it is open</h3>
+        <p>Early enough that the equipment decision has not been made yet.</p>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <h3>You open the dealer</h3>
+        <p>The first conversation starts from a buyer you brought them rather than a rate sheet.</p>
+      </div>
+    </div>
+    <div class="payoff">Every funder can offer a dealer a rate. <em>Very few can offer them a buyer.</em></div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>2</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">How it works</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">The engine</div>
+    <h1>What you fund, run against <em>the whole public record</em>.</h1>
+    <div class="cards">
+      <div class="card">
+        <span class="k">What you fund</span>
+        <h3>Your criteria</h3>
+        <p>Equipment categories, ticket range, company size, geography, contact requirements. Set with your team, tuned any time. Nothing surfaces that you could not write.</p>
+      </div>
+      <div class="card">
+        <span class="k">Public signals</span>
+        <h3>Scattered across thousands of records</h3>
+        <p>Financing filings, permits, contract awards, expansions, registrations, news. The evidence a purchase is coming is public. Finding it by hand across every source, every day, is not realistic.</p>
+      </div>
+      <div class="card solid lead">
+        <span class="k">What you get</span>
+        <h3>One ranked list, with the why on every row</h3>
+        <p>Scored against your categories, refreshed as new records land, and each name carries the trigger behind it and a link to the source document.</p>
+      </div>
+    </div>
+    <div class="chips-k">Signals scanned continuously</div>
+    <div class="chips">
+      <span class="chip">Financing maturity windows</span>
+      <span class="chip">Contract &amp; project awards</span>
+      <span class="chip">Building permits</span>
+      <span class="chip">Facility expansions</span>
+      <span class="chip">New fleet authority</span>
+      <span class="chip">New locations &amp; leases</span>
+      <span class="chip">Incumbent lender on record</span>
+      <span class="chip ghost">+ dozens more public sources</span>
+    </div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>3</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">The product</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">What lands</div>
+    <h1>Every name arrives with <em>the reason attached</em>.</h1>
+    <div class="split">
+      <div class="main card lead">
+        <span class="k">From a recent run</span>
+        <div class="co">TKTK real surfaced company</div>
+        <div class="co-sub">TKTK sector · TKTK state</div>
+        <div class="hr"></div>
+        <div class="fact">
+          <span class="k">The signal</span>
+          <p>TKTK: the dated trigger, in one line.</p>
+        </div>
+        <div class="fact">
+          <span class="k">Why it is on the list</span>
+          <p>TKTK: why this company is about to need equipment in this category, in the buyer's own terms.</p>
+        </div>
+        <div class="fact">
+          <span class="k">The evidence</span>
+          <p><span class="src">Linked source: TKTK</span></p>
+        </div>
+      </div>
+      <div class="side">
+        <div class="card">
+          <h3>Delivered with</h3>
+          <p>Decision-maker contact, company profile, estimated ticket range, and the incumbent lender where the filing names one.</p>
+        </div>
+        <div class="card">
+          <h3>Where it lands</h3>
+          <p>Into your CRM, or exported as CSV, alongside everything else surfaced that day.</p>
+        </div>
+        <div class="card">
+          <h3>Filtered how you work</h3>
+          <p>Equipment category, ticket size, company size, geography, contact completeness. If it matters to how you pick a name, it can be a filter.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>4</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">The math</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">What it is worth</div>
+    <h1>A dealer program is <em>not one ticket</em>.</h1>
+    <div class="compare">
+      <div class="one">
+        <span class="k">One end user</span>
+        <h3>A funded deal</h3>
+        <p>Real revenue, and it pays for the tool several times over. It also closes once.</p>
+      </div>
+      <div class="many">
+        <span class="k">One dealer</span>
+        <h3>Every deal that dealer sends, for as long as the relationship runs</h3>
+        <p>Which is why the end-user deal is worth more as the thing that opens the program than as the ticket itself.</p>
+      </div>
+    </div>
+    <div class="note">The number that decides whether this is worth your time is <b>what one new dealer program earns you in a year</b>. You know that figure and we do not, so it belongs in your hands, not ours. Put it against the cost of one seat and the answer is arithmetic.</div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>5</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">Also</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">The book you already have</div>
+    <h1>The same engine reads <em>what you have already written</em>.</h1>
+    <div class="cards">
+      <div class="card lead">
+        <span class="k">Renewals</span>
+        <h3>Your own portfolio, ranked by what is coming due</h3>
+        <p>Equipment you financed sits on a clock. The filings are public, dated, and tied to assets with known replacement cycles.</p>
+        <p>The engine ranks your book by where that clock is running out, so the reactivation call goes out on the asset rather than on the age of the file.</p>
+      </div>
+      <div class="card lead">
+        <span class="k">Existing programs</span>
+        <h3>Volume into the dealers you already have</h3>
+        <p>The same category targeting, pointed at programs that are already live. End users about to buy in your dealers' categories, surfaced to your team.</p>
+        <p>A dealer who sees buyers arriving from the relationship treats it differently from one who only sees paper.</p>
+      </div>
+    </div>
+    <div class="note">Worth saying plainly: <b>no one else can be sold which of your funded deals are coming up for replacement.</b> That part is not a promise about who we work with. It is a fact about where the data comes from.</div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>6</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">Next step</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">Getting started</div>
+    <h1>Name one dealer program <em>you want and don't have</em>.</h1>
+    <div class="cards">
+      <div class="card lead">
+        <span class="k">Step 1</span>
+        <h3>You name the category</h3>
+        <p>One equipment category, your ticket range, and the geography you cover. Five minutes.</p>
+      </div>
+      <div class="card">
+        <span class="k">Step 2</span>
+        <h3>We run it against your box</h3>
+        <p>Real companies with real triggers and a link to the record behind each one. If the volume is not there in your category, you will hear that from us first.</p>
+      </div>
+      <div class="card">
+        <span class="k">Step 3</span>
+        <h3>We walk it together</h3>
+        <p>A short call once the run is back. Twenty minutes on your own market rather than a demo account.</p>
+      </div>
+    </div>
+    <div class="note">The run costs you one category and five minutes. It is the fastest way to find out whether the volume is there in your market before anyone talks about terms.</div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>7 · <b>Simon Pettibone</b> · simon@quintel.ai · quintel.ai</span></div>
+</section>
+
+</body>
+</html>

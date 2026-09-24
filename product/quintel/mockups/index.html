@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quintel — Wireframe Mockups</title>
+<link rel="stylesheet" href="wireframe.css">
+<style>
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+  .screens { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .card { border: 1px solid var(--line); border-radius: 6px; padding: 18px; text-decoration: none; color: var(--ink); display: block; }
+  .card:hover { background: var(--fill-2); border-color: var(--line-strong); }
+  .card .n { font-size: 11px; color: var(--faint); letter-spacing: .08em; text-transform: uppercase; }
+  .card h3 { margin: 4px 0 6px; font-size: 17px; }
+  .card p { margin: 0; color: var(--muted); font-size: 13px; }
+  .legend { margin-top: 30px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--muted); font-size: 13px; }
+  .legend code { background: var(--fill); padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="ribbon">Wireframe set · synthetic data · Cornerstone Capital (fictional lender)</div>
+<div class="wrap">
+  <div class="crumb">Quintel v1 · UX wireframes</div>
+  <h1 class="page">Quintel — screen wireframes</h1>
+  <p class="sub">Low-fidelity wireframes of the v1 screens from the UX framework
+  (<code>quintel-ux-framework-2026-07-01.md</code>). Grayscale and schematic on purpose — the point is
+  layout, flow, and the “why-everywhere” signature, not visual polish. Data is synthetic but internally
+  consistent across screens.</p>
+
+  <div class="screens">
+    <a class="card" href="prospects.html">
+      <div class="n">01 · Home</div>
+      <h3>Prospects</h3>
+      <p>The ranked worklist (table). Stat block, BLIND↔QUINTEL before/after, woven-in “what changed” digest, net-new fits, and the down-ranked <em>Skip</em> with its reason.</p>
+    </a>
+    <a class="card" href="item-detail.html">
+      <div class="n">02 · The wow</div>
+      <h3>Item Detail</h3>
+      <p>The comprehension surface. “Scored against your 220-deal book,” Strengths + Checks tied to their own deals, resembles-your-deals, market activity with the reach-out-not-prediction disclaimer.</p>
+    </a>
+    <a class="card" href="profile.html">
+      <div class="n">03 · The mirror</div>
+      <h3>Profile</h3>
+      <p>Quantified self-knowledge + the tunable fit model. Book at a glance, the weights the ranker uses, and a tuning prompt (question, not verdict).</p>
+    </a>
+    <a class="card" href="pipeline.html">
+      <div class="n">04 · Track</div>
+      <h3>Pipeline</h3>
+      <p>Working leads by status (manual in v1). Won/Lost captures a reason — the deepest personalization signal.</p>
+    </a>
+  </div>
+
+  <div class="legend">
+    <strong>Tiers:</strong>
+    <span class="tier tier-call">Call first</span>
+    <span class="tier tier-work">Work</span>
+    <span class="tier tier-skip">Skip</span>
+    &nbsp;— action instructions, not close-probability. Fit score (0–100) drives the sort; every row carries its “why.”
+  </div>
+
+  <div class="legend">
+    <strong>Demo arc:</strong> Mirror (Profile) → Apply (Prospects + Item Detail, lead with the before/after) → Fresh (what-changed) → live-tune.
+    Pre-frame on screen: <em>“a smarter cold-call list, not confirmed live deals.”</em>
+  </div>
+
+  <p class="footnote">Companion to Alek's demo mockups (<code>yourelosingmoney.xyz/quintel-hyland</code>). Serve over localhost to click through cleanly.</p>
+</div>
+</body>
+</html>

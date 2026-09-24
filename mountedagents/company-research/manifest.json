@@ -1,0 +1,64 @@
+{
+  "slug": "company-research",
+  "display": {
+    "displayName": "Company Research",
+    "tagline": "Structured meeting briefs from public company info",
+    "description": "Researches a named company via web search and their public website, then produces a structured meeting brief. Stores briefs in a team collection so any team member can retrieve or update prior research.",
+    "capabilities": [
+      "Searches the web and company websites for public information",
+      "Produces a structured meeting brief with key facts, leadership, funding, and recent activity",
+      "Stores and retrieves prior research so briefs can be updated across sessions",
+      "Tailors briefs to meeting context when provided"
+    ]
+  },
+  "brain": {
+    "artifacts": [
+      { "alias": "company-research-soul", "role": "soul" },
+      { "alias": "company-research-flow", "role": "flow" }
+    ]
+  },
+  "memoryCollections": [
+    {
+      "slug": "company-briefs",
+      "scope": "team",
+      "collectionArtifactAlias": "company-briefs-tokenrip",
+      "default": true,
+      "schema": [
+        { "name": "company_name", "type": "text" },
+        { "name": "website_url", "type": "text" },
+        { "name": "one_liner", "type": "text" },
+        { "name": "funding_summary", "type": "text" },
+        { "name": "headcount", "type": "text" },
+        { "name": "stage", "type": "text" },
+        { "name": "key_people", "type": "text" },
+        { "name": "recent_activity", "type": "text" },
+        { "name": "meeting_context", "type": "text" },
+        { "name": "last_updated", "type": "text" }
+      ]
+    }
+  ],
+  "memoryArtifacts": [],
+  "session": {
+    "ttlHours": 24,
+    "produceSessionOutput": false,
+    "rateLimit": {
+      "perAgentPerHour": 10,
+      "perAgentPerDay": 50
+    }
+  },
+  "teamContext": "recommended",
+  "harnessRequirements": ["http-fetch"],
+  "invocationSurfaces": [
+    {
+      "kind": "bootloader-skill",
+      "label": "Claude Code",
+      "skillUrl": "https://api.tokenrip.com/skills/agents/company-research.md",
+      "invokeCommand": "/company-research"
+    },
+    {
+      "kind": "mcp",
+      "label": "Claude Desktop / Claude.ai",
+      "invokePhrase": "research [company name]"
+    }
+  ]
+}

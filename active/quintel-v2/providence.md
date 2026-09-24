@@ -26,6 +26,9 @@ Facts, paraphrased from the 09-10 and 09-16 calls (his phrasing stays here):
 - He raised the JV/commercial question unprompted for the second time and moved to a private room to do it. He compartmentalises from Max (Slack only, "every email can be opened by the company"). He is positioning as a partner, not Providence's rep.
 - He wants to talk vendors Saturday: geofence trade shows, email them "under a new banner, so you guys have total control." He is already proposing a Quintel-controlled brand for the vendor side.
 
+- **Added 09-18, from his Slack replies to the gameplan (facts):** "It is going to take me several hours to virtualize the V2 steps and if we should consider adding or altering anything to increase the funnel success (BOFU - conversion)." He proposed discussing "pros and cons of the two possible revenue streams for Quintel and how to monitor it: 1. Lead Gen Provider Income for fully qualified leads (warm handoff). 2. Participation Income (shares in deal revenue)." He raised participation himself, unprompted, for the third time. On channels: add **trade shows** to outbound ("participants' names and email addresses are readily available… reach both the end-users and the vendors… intent is going to be reliable"). Partner link "is essential." Insurance agents: skeptical ("most claims are made online and the agent is not aware… regulated industry… reluctant to provide any information to third parties"). Shops: "interested to learn more." Numbers for the call: **average deal revenue since Jan 1 is $7,853.19 on 73 deals a month; the company's best in the past three years is $9,632; he wants to lift it by targeting higher-ticket items.**
+- Inference from those numbers (medium): 73 deals × $7,853 ≈ $573K revenue a month, ≈ $6.9M a year, across all reps. If a revenue share pays on that per-deal figure, 25% ≈ $1,960 per funded deal and the $300 figure he floated 09-10 is a lead-gen-shaped number, not a participation-shaped one. Do not say either number Saturday; let him put his two streams on the table and map them to the ladder.
+
 Inference, medium-high: David will accept a Quintel-branded site and funnel faster than the 09-16 transcript suggests, because (a) he proposed a new banner himself for vendors, (b) his objection was to Quintel *collecting PII*, which the funnel does not do, and (c) he needs this to pay us or it stops.
 
 ## 3. The brand decision: reverse commitment #19, with the reason
@@ -59,6 +62,8 @@ He asked twice. Bring a structure, not a number that pretends to be final. The s
 
 **Attribution, written before any revenue share:** an attributed deal is one that entered through our funnel (our timestamp), where Providence's application date is after that timestamp, and funding occurs within 12 months, any rep. No CRM lookup on either side. He called the Max split unpoliceable; this is the policeable version and he will recognise it because the record is a transaction, not a name.
 
+**He has already named the two streams.** His 09-18 message calls them "lead gen provider income for fully qualified leads (warm handoff)" and "participation income (shares in deal revenue)," and asks for pros and cons "and how to monitor it." Those are rungs 2 and 3 of the ladder in his words, and "how to monitor it" is the attribution definition. Let him present them; agree that both exist; put the monitoring answer (timestamp, monthly funded list) on the table as the thing that makes participation policeable. Pros and cons as we see them: lead-gen income is simple, early and paid whether or not Providence closes, but it makes Quintel a vendor and caps upside; participation aligns both sides on close rate, pays late, and only works with an attribution rule neither side has to trust the other's CRM for. The ladder takes both because they answer different risks.
+
 **What we ask him to say yes to Saturday:** the clean-handoff shape; the ladder; the attribution definition in principle; and that he takes it to whoever at Providence signs. Numbers on the application fee follow the first 20 routed applications, which is the honest position and the one he has already accepted (test, then scale).
 
 **His role, stated plainly if he opens the door:** he has said "the three of us" and "joint venture" on two calls and separated himself from Providence throughout. If ratios come in, the live question is whether he is on Providence's side of the table or ours. Do not raise it; if he does, the answer is that step 1 needs Providence as the first originator and needs him to run it, and that the structure above pays him through Providence today. Anything beyond that is a conversation after the first funded deal, not before.
@@ -85,3 +90,24 @@ Then plant the technician idea (`threads.md` T19) as a question, not a plan: the
 - Do not float a finished number for the application fee. He respects "we'll know at twenty."
 - Do not commit Providence's brand, sender identity or customer data to anything; only he can and it is unclear he can either.
 - Keep his quotes here. Alek was on the calls, so the shape can be discussed with Alek freely; nothing in this file goes to Slack.
+
+
+## 2026-09-19 call: what changed
+
+See `call-analysis-2026-09-19.md`. Confirmed on the call: the rev share is Max's and not approved by ownership; David proposes a referral fee per funded deal (about $1,000, tiered) plus a share of his side, signed by him; applications are priced at $10–100 by the market he knows; 70% of August business came from vendors; he asks for 200 Providence-branded domains held by us. The commercial ladder in §4 and the domain position in §3 are superseded where the analysis says so.
+
+## 2026-09-20/21: David's follow-through, and what it tells us about him
+
+He spent the weekend keying Providence's funded vendors of the last 18 months against his own ideal vendor profile and sent the partial read (`data/david-ivp-2026-09-20.md`): over 89% match five traits (no or stale financing tab, mostly used specialty trucks and cranes, under five locations, small towns, marketplace listings). Monday he sent twelve more preferred industries. Both are Providence data and his own framework, volunteered unasked, two days after the kickoff. Read: he is doing the work, and he is doing it by hand, which is the ListPad problem again in another form.
+
+The note to Alek matters more than it looks. His after-hours team, which we did not know existed, asked him why end users are being called when vendors hold the key. His answer is that vendors are won by funding their deals fast, and that cold calling vendors is the bridge until trade shows. Three things for us: his side has arrived at vendor-first on its own, so we are not selling him the reframe; his dial time will likely drift to vendors, so the state lists' role is the lab and the vendor question, not volume; and there are people around him whose status (Providence staff or not, paid by whom) we do not know. That last one touches who keys the ledger and who codes the referral, so it gets asked, not assumed.
+
+Superseded here: the "niche specialty dealer or manufacturer-direct" framing in §6a. The funded book says used-equipment dealer first; manufacturer-direct holds only in the machinery lanes.
+
+## 2026-09-22: the commercials, one round in
+
+Alek sent a one-pager (12.5% fee capped $1,000, plus 25% of David's commission). David's reply was the tax point and a three-phase structure: phase 1 now, phase 2 a pre-tax carve from his 45% paid by PCF once there is revenue, phase 3 a renegotiation past "$1MM." Read: good faith, and he is protecting two things at once, his net and his standing with ownership. He will not go to the owners before he has a number to show; the phases are how he buys that time. Give him the time, take the date. The tell to remember: "PCF won't agree to give you anything from their 50% except the referral fee" is now stated twice. Stop designing anything that needs the house side.
+
+## 2026-09-22 call: what changed
+
+See `call-analysis-2026-09-22.md`. Corrections to this file: every AE is W-2 with a $72K draw, nobody is 1099 (§4's carve-from-commission idea has a tax problem he cannot solve; ask whether referral fees come off GM before the split instead). The "collisions are not our problem" line in §4 becomes "collisions are caught at handoff": 4,800 active records are off-limits and his fear of other AEs is specific. Own brand at the top of the funnel is now his position too. His throughput (five a day realistically, processors at 4.5–8% above that) is the volume ceiling. He has a team with engineers and runs focus groups; status unknown. Voter-file data offered; we do not take it.

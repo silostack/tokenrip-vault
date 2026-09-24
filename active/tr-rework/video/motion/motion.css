@@ -1,0 +1,89 @@
+/* ---------------------------------------------------------------------------
+   Tokenrip motion layer
+   Drop-in companion to the darkroom homepage. Every component degrades to a
+   still image: if the video never loads, or the visitor asks for reduced
+   motion, or the clip has not been generated yet, the page looks exactly like
+   the static design.
+   --------------------------------------------------------------------------- */
+
+/* 1 · Patch bay ----------------------------------------------------------------
+   The clip is already a baked composite: the pristine still is burnt back over
+   the top of every frame down to the label row, so labels, file tree and readout
+   are pixel-perfect and only the cables move. That means no CSS mask and no
+   second layer to keep in register -- the still here is purely the fallback for
+   before the video loads, or if it never does. */
+.tr-pb{position:relative;width:100%;aspect-ratio:1536/864;overflow:hidden;background:#0b0908}
+.tr-pb video,.tr-pb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.tr-pb__still{z-index:0}
+.tr-pb__vid{z-index:1;opacity:0;transition:opacity .6s ease}
+.tr-pb.is-playing .tr-pb__vid{opacity:1}
+
+/* 2 · Intro overlay: plays once, then hands off to the loop underneath -------- */
+.tr-pb__intro{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity .4s ease;z-index:2;pointer-events:none}
+.tr-pb.is-intro .tr-pb__intro{opacity:1}
+
+/* 3 · Scroll-scrubbed sequence ------------------------------------------------ */
+.tr-scrub{position:relative;width:100%;aspect-ratio:1536/864;overflow:hidden;background:#0b0908}
+.tr-scrub video,.tr-scrub img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tr-scrub__still{z-index:0}
+.tr-scrub video{z-index:1;opacity:0;transition:opacity .6s ease}
+.tr-scrub.is-playing video{opacity:1}
+.tr-scrub__rail{position:absolute;left:0;right:0;bottom:18px;height:2px;
+  background:rgba(232,227,210,.14);z-index:3}
+.tr-scrub__rail i{display:block;height:100%;width:0;background:var(--amber,#E0A030);
+  box-shadow:0 0 10px var(--amber,#E0A030)}
+
+/* 4 · Screen-blend glow layer -------------------------------------------------
+   Light rendered on pure black composites onto a dark page with `screen`: black
+   contributes nothing, the glow adds. No matte, no chroma key, no green fringe. */
+.tr-glow{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  mix-blend-mode:screen;pointer-events:none;opacity:0;transition:opacity 1.2s ease;z-index:0}
+.tr-glow.is-playing{opacity:.85}
+
+/* 5 · Section-break bands ----------------------------------------------------- */
+.tr-band{position:relative;height:96px;margin:0 -28px;overflow:hidden;
+  background:var(--bg,#120D0A)}
+.tr-band video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  mix-blend-mode:screen;opacity:0;transition:opacity 1.4s ease}
+.tr-band video.is-playing{opacity:.5}
+.tr-band::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to bottom,var(--bg,#120D0A),transparent 38%,transparent 62%,var(--bg,#120D0A))}
+
+/* 6 · Module micro-loops ------------------------------------------------------ */
+.tr-mod-loop{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;
+  background:#0b0908;border:1px solid var(--line,#2E211A)}
+.tr-mod-loop video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  mix-blend-mode:screen;opacity:0;transition:opacity 1s ease}
+.tr-mod-loop video.is-playing{opacity:.9}
+
+/* 7 · Final-CTA ambient bed --------------------------------------------------- */
+.tr-cta-bed{position:absolute;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+.tr-cta-bed video{width:100%;height:100%;object-fit:cover;opacity:0;
+  transition:opacity 2s ease}
+.tr-cta-bed video.is-playing{opacity:.32}
+.tr-cta-bed::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(to right,var(--bg,#120D0A) 8%,transparent 55%)}
+
+/* 8 · SVG signal pulses on the two-tool scene ---------------------------------
+   The cable paths in that scene are already exact SVG beziers, so the pulse is
+   drawn on the real geometry rather than generated. Free, sharp at any DPI, and
+   it lands on the pixel the cable actually occupies. */
+/* paths carry pathLength="100", so the dash pattern is in percent of the cable
+   and the same numbers work whatever the real bezier length is */
+.tr-pulse{fill:none;stroke-linecap:round;stroke-dasharray:2 98;filter:url(#trGlow)}
+.tr-pulse--in{stroke:#DFFBE6;stroke-width:9;animation:tr-run 2.8s linear infinite}
+.tr-pulse--out{stroke:#FFE7B4;stroke-width:9;animation:tr-run 2.8s linear infinite 1.4s}
+@keyframes tr-run{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+
+/* 9 · Reduced motion and no-JS: stills only ------------------------------------ */
+@media (prefers-reduced-motion:reduce){
+  .tr-pb video,.tr-scrub video,.tr-glow,.tr-band video,
+  .tr-mod-loop video,.tr-cta-bed video{display:none!important}
+  .tr-pulse{animation:none;display:none}
+}
+@media (max-width:760px){
+  .tr-band{height:64px;margin:0 -20px}
+  /* the scrub needs a tall scroll runway that does not exist on a phone */
+  .tr-scrub video,.tr-scrub__rail{display:none}
+}

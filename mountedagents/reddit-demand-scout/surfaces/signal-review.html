@@ -1,0 +1,255 @@
+<div id="root" class="min-h-screen bg-slate-50 font-sans text-slate-900">loading...</div>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.24.7/babel.min.js"></script>
+<script type="text/babel" data-presets="react">
+  (function () {
+    'use strict';
+
+    var SIGNAL_TYPES = ['building-problem', 'deploying-problem', 'usage-problem', 'use-case', 'workplace-vertical'];
+    var ENGAGEABLE_VALUES = ['yes', 'watch', 'no'];
+
+    var ENGAGEABLE_STYLES = {
+      yes:   'bg-emerald-100 text-emerald-800 border-emerald-300',
+      watch: 'bg-amber-100 text-amber-800 border-amber-300',
+      no:    'bg-slate-100 text-slate-600 border-slate-300',
+    };
+
+    var SIGNAL_LABELS = {
+      'building-problem':   'Building',
+      'deploying-problem':  'Deploying',
+      'usage-problem':      'Usage',
+      'use-case':           'Use Case',
+      'workplace-vertical': 'Vertical',
+    };
+
+    function isInbox(d) {
+      return !d.review_status || d.review_status === 'inbox';
+    }
+
+    function SignalReview() {
+      var t = window.tokenrip.useTable('reddit-signals', {
+        poll: 15000,
+        patchDebounce: 800,
+        sort: { by: 'createdAt', order: 'desc' },
+        limit: 200,
+      });
+
+      var filterEngState = React.useState('all');
+      var filterEngageable = filterEngState[0];
+      var setFilterEngageable = filterEngState[1];
+
+      var filterTypeState = React.useState('all');
+      var filterType = filterTypeState[0];
+      var setFilterType = filterTypeState[1];
+
+      var showAllState = React.useState(false);
+      var showAll = showAllState[0];
+      var setShowAll = showAllState[1];
+
+      var inboxRows = t.rows.filter(function (r) { return isInbox(r.data || {}); });
+      var rows = showAll ? t.rows : inboxRows;
+
+      if (filterEngageable !== 'all') {
+        rows = rows.filter(function (r) { return (r.data || {}).engageable === filterEngageable; });
+      }
+      if (filterType !== 'all') {
+        rows = rows.filter(function (r) { return (r.data || {}).signal_type === filterType; });
+      }
+
+      var counts = { yes: 0, watch: 0, no: 0, rated: 0, dismissed: 0, processed: 0 };
+      t.rows.forEach(function (r) {
+        var d = r.data || {};
+        if (d.engageable && counts[d.engageable] !== undefined) counts[d.engageable]++;
+        if (d.feedback_rating && d.feedback_rating !== 'unset') counts.rated++;
+        if (d.review_status === 'dismissed') counts.dismissed++;
+        if (d.review_status === 'processed') counts.processed++;
+      });
+
+      var archivedCount = counts.dismissed + counts.processed;
+
+      function handleDismiss(rowId) {
+        t.patch(rowId, { review_status: 'dismissed' });
+      }
+
+      return (
+        <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6 space-y-5">
+          <header>
+            <h1 className="text-xl font-bold tracking-tight text-slate-900">Demand Signal Review</h1>
+            <p className="mt-1 text-sm text-slate-500">
+              {inboxRows.length} in queue
+              {counts.rated > 0 ? ' · ' + counts.rated + ' rated' : ''}
+              {archivedCount > 0 ? ' · ' + archivedCount + ' archived' : ''}
+              {t.refreshing ? ' · refreshing…' : ''}
+            </p>
+          </header>
+
+          {t.validationBlocked ? (
+            <div className="rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+              Validation mode — writes blocked
+            </div>
+          ) : null}
+
+          {t.error ? (
+            <div className="rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-900">
+              <span className="font-mono font-semibold">{t.error.code}</span> — {t.error.message}
+            </div>
+          ) : null}
+
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <label htmlFor="filter-engage" className="text-xs font-medium text-slate-500 uppercase tracking-wide">Engage</label>
+              <select
+                id="filter-engage"
+                className="rounded-md border border-slate-300 bg-white px-2 py-1 text-sm"
+                value={filterEngageable}
+                onChange={function (e) { setFilterEngageable(e.target.value); }}
+              >
+                <option value="all">All</option>
+                <option value="yes">Yes ({counts.yes})</option>
+                <option value="watch">Watch ({counts.watch})</option>
+                <option value="no">No ({counts.no})</option>
+              </select>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <label htmlFor="filter-type" className="text-xs font-medium text-slate-500 uppercase tracking-wide">Type</label>
+              <select
+                id="filter-type"
+                className="rounded-md border border-slate-300 bg-white px-2 py-1 text-sm"
+                value={filterType}
+                onChange={function (e) { setFilterType(e.target.value); }}
+              >
+                <option value="all">All types</option>
+                {SIGNAL_TYPES.map(function (v) {
+                  return <option key={v} value={v}>{SIGNAL_LABELS[v] || v}</option>;
+                })}
+              </select>
+            </div>
+            {archivedCount > 0 ? (
+              <label className="ml-auto flex items-center gap-1.5 text-xs text-slate-500 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  className="rounded border-slate-300"
+                  checked={showAll}
+                  onChange={function (e) { setShowAll(e.target.checked); }}
+                />
+                Show archived ({archivedCount})
+              </label>
+            ) : null}
+          </div>
+
+          {t.loading ? (
+            <div className="rounded-md border border-slate-200 bg-white p-6 text-center text-sm text-slate-500">Loading signals…</div>
+          ) : rows.length === 0 ? (
+            <div className="rounded-md border border-slate-200 bg-white p-6 text-center text-sm text-slate-500">
+              {t.rows.length === 0 ? 'No signals yet. Run the scout first.' : inboxRows.length === 0 && !showAll ? 'Queue is clear. Nice work.' : 'No signals match these filters.'}
+            </div>
+          ) : (
+            <ul className="space-y-3">
+              {rows.map(function (row) {
+                var d = row.data || {};
+                var engStyle = ENGAGEABLE_STYLES[d.engageable] || ENGAGEABLE_STYLES.no;
+                var typeLabel = SIGNAL_LABELS[d.signal_type] || d.signal_type || '?';
+                var isArchived = d.review_status === 'dismissed' || d.review_status === 'processed';
+                var isRated = d.feedback_rating && d.feedback_rating !== 'unset';
+
+                return (
+                  <li key={row.id} className={'rounded-lg border bg-white shadow-sm overflow-hidden ' + (isArchived ? 'border-slate-100 opacity-60' : 'border-slate-200')}>
+                    <div className="p-4 space-y-3">
+                      <div className="flex flex-wrap items-start gap-2">
+                        <a
+                          href={d.post_url || '#'}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 min-w-0 text-sm font-semibold text-slate-900 hover:text-blue-700 hover:underline leading-snug"
+                          aria-label={'Open post: ' + (d.title || 'untitled')}
+                        >
+                          {d.title || '(untitled)'}
+                        </a>
+                        <div className="flex items-center gap-1.5 flex-shrink-0">
+                          {isRated ? (
+                            <span className={'inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ' + (d.feedback_rating === 'good' ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-red-100 text-red-700 border border-red-200')}>
+                              {d.feedback_rating}
+                            </span>
+                          ) : null}
+                          {isArchived ? (
+                            <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs text-slate-500">
+                              {d.review_status}
+                            </span>
+                          ) : null}
+                          <span className={'inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ' + engStyle}>
+                            {d.engageable || '?'}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-500">
+                        <span>r/{d.subreddit || '?'}</span>
+                        <span className="text-slate-300">·</span>
+                        <span>{d.posted_at || ''}</span>
+                        <span className="text-slate-300">·</span>
+                        <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5">{typeLabel}</span>
+                        {d.vertical ? <span className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-2 py-0.5 text-blue-700">{d.vertical}</span> : null}
+                      </div>
+
+                      <p className="text-sm text-slate-700 leading-relaxed">{d.summary || ''}</p>
+
+                      {d.interest_judgment ? (
+                        <div className="rounded-md bg-slate-50 border border-slate-100 px-3 py-2">
+                          <p className="text-xs font-medium text-slate-500 mb-0.5">Scout judgment</p>
+                          <p className="text-sm text-slate-700">{d.interest_judgment}</p>
+                        </div>
+                      ) : null}
+
+                      {!isArchived ? (
+                        <div className="border-t border-slate-100 pt-3 space-y-2">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <label className="text-xs font-medium text-slate-500 uppercase tracking-wide" htmlFor={'rating-' + row.id}>Feedback</label>
+                            <select
+                              id={'rating-' + row.id}
+                              className="rounded border border-slate-300 bg-white px-2 py-1 text-sm"
+                              value={d.feedback_rating || 'unset'}
+                              onChange={function (e) { t.patch(row.id, { feedback_rating: e.target.value }); }}
+                            >
+                              <option value="unset">—</option>
+                              <option value="good">Good</option>
+                              <option value="bad">Bad</option>
+                            </select>
+                            <div className="flex-1"></div>
+                            <button
+                              type="button"
+                              className="rounded border border-slate-200 bg-white px-2 py-1 text-xs text-slate-500 hover:text-slate-700 hover:border-slate-300 transition-colors"
+                              onClick={function () { handleDismiss(row.id); }}
+                              aria-label={'Dismiss signal: ' + (d.title || 'untitled')}
+                            >
+                              Dismiss
+                            </button>
+                          </div>
+                          <div>
+                            <label className="text-xs font-medium text-slate-500 uppercase tracking-wide" htmlFor={'note-' + row.id}>Note</label>
+                            <textarea
+                              id={'note-' + row.id}
+                              className="mt-1 w-full rounded border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-sm placeholder:text-slate-400 focus:border-slate-400 focus:bg-white focus:outline-none"
+                              rows={2}
+                              value={d.feedback_note || ''}
+                              onChange={function (e) { t.patch(row.id, { feedback_note: e.target.value }); }}
+                              placeholder="Why good or bad? Helps the scout learn…"
+                            />
+                          </div>
+                        </div>
+                      ) : null}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+      );
+    }
+
+    var root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<SignalReview />);
+  })();
+</script>

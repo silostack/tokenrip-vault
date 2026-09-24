@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quintel — Prospects (wireframe)</title>
+<link rel="stylesheet" href="wireframe.css">
+</head>
+<body>
+<div class="ribbon">Wireframe · synthetic data · Cornerstone Capital (fictional)</div>
+<div class="app">
+
+  <!-- sidebar -->
+  <aside class="sidebar">
+    <div class="brand"><span class="logo">Quintel</span></div>
+    <div class="account">Account<br><span class="name">Cornerstone Capital</span></div>
+    <ul class="nav">
+      <li><a class="active" href="prospects.html"><span class="ic">☰</span> Prospects</a></li>
+      <li><a href="pipeline.html"><span class="ic">◷</span> Pipeline</a></li>
+      <li><a href="profile.html"><span class="ic">◐</span> Profile</a></li>
+      <li class="sep"></li>
+      <li><a href="#"><span class="ic">+</span> Import list</a></li>
+      <li class="section-label">Modules · upsell</li>
+      <li><a class="disabled" href="#"><span class="ic">◇</span> News / Market <span class="tag">soon</span></a></li>
+      <li><a class="disabled" href="#"><span class="ic">⊞</span> Underwrite <span class="tag">soon</span></a></li>
+      <li><a class="disabled" href="#"><span class="ic">⇄</span> Place <span class="tag">soon</span></a></li>
+      <li><a class="disabled" href="#"><span class="ic">🔌</span> Integrations <span class="tag">v2</span></a></li>
+    </ul>
+  </aside>
+
+  <!-- main -->
+  <main class="main">
+    <div class="crumb">01 / Prospects</div>
+    <h1 class="page">Your prospect list, ranked to your book</h1>
+    <p class="sub">1,000 companies from your Apollo export — reordered by what your credit team actually funds.</p>
+
+    <!-- stat block -->
+    <div class="stats">
+      <div class="stat"><div class="k">Leads ranked</div><div class="v">1,000</div></div>
+      <div class="stat"><div class="k">Call first</div><div class="v">498</div></div>
+      <div class="stat"><div class="k">Priority</div><div class="v">73</div></div>
+      <div class="stat"><div class="k">Call-first pipeline</div><div class="v">$607M</div></div>
+    </div>
+
+    <!-- before / after -->
+    <div class="rerank">
+      <span>In your export, <strong>Cedar Valley Provisions</strong> sat at</span>
+      <span class="old">#914</span><span class="arrow">→</span><span>Quintel</span><span class="new">#3</span>
+      <span class="toggle"><span class="on">Quintel</span><span class="off">Blind</span></span>
+    </div>
+
+    <!-- what changed digest -->
+    <div class="digest">
+      <div class="hd"><span class="bolt">⚡</span> What changed since Monday — 5 moved · 2 net-new fits</div>
+      <ul>
+        <li>Acme Foods filed an air permit (9d ago) — moved ↑ into Priority</li>
+        <li>Delta Cold Storage surfaced as a net-new fit (not on your list)</li>
+      </ul>
+    </div>
+
+    <!-- filters -->
+    <div class="filters">
+      <span class="pill">All</span>
+      <span class="pill">Sector</span>
+      <span class="pill">Tier</span>
+      <span class="pill">Status: New</span>
+      <span class="search">Search companies…</span>
+    </div>
+
+    <!-- ranked table -->
+    <table class="grid">
+      <thead>
+        <tr>
+          <th class="rank">#</th>
+          <th>Company</th>
+          <th>Ticket</th>
+          <th>Channel</th>
+          <th>Score</th>
+          <th>Tier</th>
+          <th>Why it ranks here</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="rank">1</td>
+          <td class="co"><a href="item-detail.html">Acme Foods</a> <span class="bolt" title="market event">⚡</span><div class="meta">food-processing · Columbus, OH</div></td>
+          <td class="mono">~$8.0M</td>
+          <td>OEM-X</td>
+          <td class="score"><span class="bar"><i style="width:84%"></i></span>84</td>
+          <td><span class="tier tier-call">Call first</span></td>
+          <td class="why">Food-processing — your #1 funded sector (38% of book)</td>
+        </tr>
+        <tr>
+          <td class="rank">2</td>
+          <td class="co"><a href="item-detail.html">Beta Metalworks</a> <span class="bolt">⚡</span><div class="meta">metal-fab · Fort Worth, TX</div></td>
+          <td class="mono">~$11.0M</td>
+          <td>OEM-X</td>
+          <td class="score"><span class="bar"><i style="width:79%"></i></span>79</td>
+          <td><span class="tier tier-call">Call first</span></td>
+          <td class="why">Via OEM-X (your #2 channel) · in your $5–12M core ticket</td>
+        </tr>
+        <tr>
+          <td class="rank">3</td>
+          <td class="co"><a href="item-detail.html">Cedar Valley Provisions</a><div class="meta">food-processing · Cedar Rapids, IA</div></td>
+          <td class="mono">~$6.5M</td>
+          <td>OEM-Y</td>
+          <td class="score"><span class="bar"><i style="width:77%"></i></span>77</td>
+          <td><span class="tier tier-call">Call first</span></td>
+          <td class="why">Resembles Lakeside Provisions (funded $6.5M, Nov '25)</td>
+        </tr>
+        <tr>
+          <td class="rank">4</td>
+          <td class="co"><a href="item-detail.html">Delta Cold Storage</a> <span class="badge-new">★ net-new</span><div class="meta">refrigerated-transport · Savannah, GA</div></td>
+          <td class="mono">~$9.0M</td>
+          <td>OEM-X</td>
+          <td class="score"><span class="bar"><i style="width:58%"></i></span>58</td>
+          <td><span class="tier tier-work">Work</span></td>
+          <td class="why">Not on your list — fits what you fund · via OEM-X</td>
+        </tr>
+        <tr>
+          <td class="rank">5</td>
+          <td class="co"><a href="item-detail.html">Ridgeline Fabrication</a><div class="meta">metal-fab · Akron, OH</div></td>
+          <td class="mono">~$7.2M</td>
+          <td>Direct</td>
+          <td class="score"><span class="bar"><i style="width:63%"></i></span>63</td>
+          <td><span class="tier tier-work">Work</span></td>
+          <td class="why">Metal-fab in your core ticket · new sponsor, unproven channel</td>
+        </tr>
+        <tr>
+          <td class="rank">6</td>
+          <td class="co"><a href="item-detail.html">Summit Cold Chain</a><div class="meta">refrigerated-transport · Memphis, TN</div></td>
+          <td class="mono">~$12.0M</td>
+          <td>OEM-X</td>
+          <td class="score"><span class="bar"><i style="width:61%"></i></span>61</td>
+          <td><span class="tier tier-work">Work</span></td>
+          <td class="why">Refrig-transport — your #3 funded sector (19%)</td>
+        </tr>
+        <tr>
+          <td class="rank">7</td>
+          <td class="co"><a href="item-detail.html">Harbor Freight Foods</a><div class="meta">food-processing · Grand Rapids, MI</div></td>
+          <td class="mono">~$4.1M</td>
+          <td>OEM-Y</td>
+          <td class="score"><span class="bar"><i style="width:52%"></i></span>52</td>
+          <td><span class="tier tier-work">Work</span></td>
+          <td class="why">Right sector, but below your $5–12M core ticket band</td>
+        </tr>
+        <tr>
+          <td class="rank">8</td>
+          <td class="co"><a href="item-detail.html">Ironclad Machining</a><div class="meta">metal-fab · Houston, TX</div></td>
+          <td class="mono">~$14.0M</td>
+          <td>Direct</td>
+          <td class="score"><span class="bar"><i style="width:44%"></i></span>44</td>
+          <td><span class="tier tier-work">Work</span></td>
+          <td class="why">Above your core ticket · unknown channel</td>
+        </tr>
+        <tr>
+          <td class="rank">9</td>
+          <td class="co"><a href="item-detail.html">Gamma Mining</a><div class="meta">mining · Elko, NV</div></td>
+          <td class="mono">~$30.0M</td>
+          <td>—</td>
+          <td class="score"><span class="bar"><i style="width:22%"></i></span>22</td>
+          <td><span class="tier tier-skip">Skip</span></td>
+          <td class="why"><span class="warn">⚠</span> In your stated box, but 0/20 closed in mining → down-ranked</td>
+        </tr>
+        <tr>
+          <td class="rank">10</td>
+          <td class="co"><a href="item-detail.html">Apex Logistics</a><div class="meta">trucking · Joliet, IL</div></td>
+          <td class="mono">~$3.0M</td>
+          <td>—</td>
+          <td class="score"><span class="bar"><i style="width:18%"></i></span>18</td>
+          <td><span class="tier tier-skip">Skip</span></td>
+          <td class="why"><span class="warn">⚠</span> Trucking — 0 funded; outside your revealed book</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="footnote">Wireframe · all companies, tickets, and figures are synthetic. Quintel surfaces and scores — your team works the lead.</p>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+owner_firm_id,owner_firm_name,company_id,company_name,sector,location,acquired_date,acquisition_type,exit_date,exit_type,hold_years,is_current,revenue_millions_usd,acquisitions_during_hold,divestitures_during_hold,mergr_url,_fetched_at
+328,KKR,137377,CIRCOR,Machinery,"Burlington, Massachusetts, United States",2023-06-05,Going Private,,,3.2,True,787,3,3,https://mergr.com/company/137377,2026-09-03T15:00:00-05:00
+328,KKR,330039,Fortifi,Machinery,"The Woodlands, Texas, United States",2021-11-03,Consolidation,,,4.8,True,,1,0,https://mergr.com/company/330039,2026-09-03T15:00:00-05:00
+328,KKR,206605,Selecta,Machinery,"Steinhausen, Switzerland",2015-10-12,Secondary Buyout,,,10.8,True,805,2,1,https://mergr.com/company/206605,2026-09-03T15:00:00-05:00
+328,KKR,68938,ACCO MHS,Machinery,"York, Pennsylvania, United States",2013-10-09,Divestiture,,,12.8,True,,0,0,https://mergr.com/company/68938,2026-09-03T15:00:00-05:00
+328,KKR,60202,Kito Crosby,Machinery,"Manheim, Pennsylvania, United States",2013-10-09,Divestiture,2025-02-10,Divestiture,11.3,False,,2,0,https://mergr.com/company/60202,2026-09-03T15:00:00-05:00
+328,KKR,2696,KION Group,Machinery,"Frankfurt, Germany",2006-11-06,"Buyout (LBO, MBO, MBI)",2013-06-28,IPO,6.6,False,12963,0,0,https://mergr.com/company/2696,2026-09-03T15:00:00-05:00
+328,KKR,24768,KraussMaffei,Machinery,"Parsdorf, Germany",2002-07-26,Divestiture,2006-06-06,Trade Sale - Public Company,3.8,False,,0,0,https://mergr.com/company/24768,2026-09-03T15:00:00-05:00
+251,H.I.G. Capital,329137,Onis Visa,Machinery,"Fontanelle, Italy",2022-11-15,"Buyout (LBO, MBO, MBI)",,,3.8,True,,0,0,https://mergr.com/company/329137,2026-09-03T15:00:00-05:00
+251,H.I.G. Capital,31768,Siat,Machinery,"Turate, Italy",2022-04-11,"Buyout (LBO, MBO, MBI)",,,4.3,True,,0,0,https://mergr.com/company/31768,2026-09-03T15:00:00-05:00
+251,H.I.G. Capital,235580,Time Manufacturing,Machinery,"Waco, Texas, United States",2021-12-03,Secondary Buyout,,,4.8,True,,1,0,https://mergr.com/company/235580,2026-09-03T15:00:00-05:00
+251,H.I.G. Capital,208109,Hart & Cooley,Machinery,"Grand Rapids, Michigan, United States",2020-10-07,Divestiture,2021-10-05,Divestiture,0.9,False,,0,1,https://mergr.com/company/208109,2026-09-03T15:00:00-05:00
+251,H.I.G. Capital,28907,Wastequip,Machinery,"Charlotte, North Carolina, United States",2018-02-06,Secondary Buyout,,,8.5,True,310,3,0,https://mergr.com/company/28907,2026-09-03T15:00:00-05:00
+251,H.I.G. Capital,2066,Environmental Filtration Technologies LLC,Machinery,"Charlotte, North Carolina, United States",2005-10-21,"Buyout (LBO, MBO, MBI)",2012-09-11,Divestiture,6.8,False,99,0,0,https://mergr.com/company/2066,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,328604,Farmfront Group,Machinery,"Castelvetro di Modena , Italy",2023-10-31,Consolidation,,,2.8,True,,4,0,https://mergr.com/company/328604,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,328607,Ocmis,Machinery,"Castelvetro di Modena, Italy",2022-08-08,"Buyout (LBO, MBO, MBI)",2023-10-31,Divestiture,1.2,False,,0,0,https://mergr.com/company/328607,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,286822,Agilox,Machinery,"Neukirchen bei Lambach, Austria",2021-06-21,Growth Capital,,,5.2,True,,0,0,https://mergr.com/company/286822,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,263333,Rigaku,Machinery,"Tokyo, Japan",2021-01-06,"Buyout (LBO, MBO, MBI)",,,5.6,True,,1,0,https://mergr.com/company/263333,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,259185,Jeanologia,Machinery,"Valencia, Spain",2019-03-12,Stake Purchase,,,7.4,True,36,0,0,https://mergr.com/company/259185,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,189200,Duravant,Machinery,"Downers Grove, Illinois, United States",2017-06-16,Secondary Buyout,,,9.2,True,,19,0,https://mergr.com/company/189200,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,198955,Ubox,Machinery,"Beijing, China",2015-07-30,Growth Capital,2017-07-17,Divestiture,1.9,False,,0,0,https://mergr.com/company/198955,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,170705,Sematic Group,Machinery,"Osio, Italy",2014-12-23,"Buyout (LBO, MBO, MBI)",2016-08-01,Divestiture,1.6,False,169,0,0,https://mergr.com/company/170705,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,33721,Sundyne,Machinery,"Arvada, Colorado, United States",2012-12-13,Divestiture,2020-01-06,Trade Sale - Public Company,7,False,,0,0,https://mergr.com/company/33721,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,7795,Walbro,Machinery,"Tucson, Arizona, United States",2012-09-24,Secondary Buyout,2021-10-28,Trade Sale - Public Company,9.1,False,,0,0,https://mergr.com/company/7795,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,67210,Accudyne Industries,Machinery,"Neuve, Luxembourg",2012-07-25,Divestiture,,,14.1,True,,0,2,https://mergr.com/company/67210,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,32764,"Nantong Rainbow Heavy Industries Co., Ltd.",Machinery,"Nantong, China",2009-11-19,Growth Capital,,,16.8,True,,0,0,https://mergr.com/company/32764,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,4905,Hudson Products Corp.,Machinery,"Beasley, Texas, United States",2008-07-24,Secondary Buyout,2017-09-21,Divestiture,9.1,False,,0,0,https://mergr.com/company/4905,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,5667,"Veyance Technologies, Inc.",Machinery,"Fairlawn, Ohio, United States",2007-07-01,Divestiture,2014-02-10,Divestiture,6.6,False,1690,0,1,https://mergr.com/company/5667,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,28907,Wastequip,Machinery,"Charlotte, North Carolina, United States",2007-02-07,Secondary Buyout,2012-06-15,Trade Sale - Public Company,5.3,False,310,1,0,https://mergr.com/company/28907,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,5748,Kito,Machinery,"Shinjuku-Ku, Japan",2003-09-01,"Buyout (LBO, MBO, MBI)",,,23,True,517,1,0,https://mergr.com/company/5748,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,23340,Messer Eutectic Castolin Group,Machinery,"Munich, Germany",2000-09-01,"Buyout (LBO, MBO, MBI)",,,26,True,,0,0,https://mergr.com/company/23340,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,24419,Riello SpA,Machinery,"Legnano, Italy",2000-03-29,Stake Purchase,2004-10-17,Sold to Management,4.5,False,,0,0,https://mergr.com/company/24419,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,21333,Andritz,Machinery,"Graz, Austria",1999-12-01,"Buyout (LBO, MBO, MBI)",2003-06-24,IPO,3.5,False,9369,2,0,https://mergr.com/company/21333,2026-09-03T15:00:00-05:00
+751,The Carlyle Group,24478,Tecnoforge Group,Machinery,"Castelsangiovanni, Italy",1999-01-01,"Buyout (LBO, MBO, MBI)",2004-12-21,Divestiture,5.9,False,,0,0,https://mergr.com/company/24478,2026-09-03T15:00:00-05:00
+1111,Advantage Capital Partners,307464,AEM,Machinery,"Milwaukee, Wisconsin, United States",2018-01-01,Growth Capital,,,8.7,True,,0,0,https://mergr.com/company/307464,2026-09-03T15:00:00-05:00
+1111,Advantage Capital Partners,242635,Vogt Ice,Machinery,"Louisville, Kentucky, United States",2017-08-15,"Buyout (LBO, MBO, MBI)",,,9,True,,0,0,https://mergr.com/company/242635,2026-09-03T15:00:00-05:00
+1111,Advantage Capital Partners,307402,Worldwide Equipment,Machinery,"Rockdale, Illinois, United States",2017-01-01,Venture,,,9.7,True,,0,0,https://mergr.com/company/307402,2026-09-03T15:00:00-05:00
+1111,Advantage Capital Partners,307430,Nu Way,Machinery,"St Louis, Missouri, United States",2015-01-01,Growth Capital,,,11.7,True,,0,0,https://mergr.com/company/307430,2026-09-03T15:00:00-05:00
+1111,Advantage Capital Partners,213308,GAME Equipment LLC,Machinery,"Napoleonville, Louisiana, United States",2010-01-01,Venture,,,16.7,True,,0,0,https://mergr.com/company/213308,2026-09-03T15:00:00-05:00
+1111,Advantage Capital Partners,30347,CheckPoint,Machinery,"Mandeville, Louisiana, United States",2010-01-01,Stake Purchase,,,16.7,True,,0,0,https://mergr.com/company/30347,2026-09-03T15:00:00-05:00
+1111,Advantage Capital Partners,8811,Monarch Machine Tool,Machinery,"Cortland, New York, United States",2003-10-08,"Buyout (LBO, MBO, MBI)",,,22.8,True,,0,0,https://mergr.com/company/8811,2026-09-03T15:00:00-05:00
+3377,Credit Mutuel Equity,327510,Groupe Poclain,Machinery,"Verberie, France",2022-07-01,Recapitalization,,,4.2,True,,0,0,https://mergr.com/company/327510,2026-09-03T15:00:00-05:00
+3377,Credit Mutuel Equity,327239,Adial,Machinery,"Lisieux, France",2022-04-01,Stake Purchase,,,4.4,True,,0,0,https://mergr.com/company/327239,2026-09-03T15:00:00-05:00
+3377,Credit Mutuel Equity,254884,Hunkeler,Machinery,"Wikon, Switzerland",2018-10-09,Stake Purchase,2023-12-06,Divestiture,5.1,False,,0,0,https://mergr.com/company/254884,2026-09-03T15:00:00-05:00
+3377,Credit Mutuel Equity,322012,Aramine,Machinery,"Aix en Provence, France",2018-01-01,Growth Capital,,,8.7,True,,0,0,https://mergr.com/company/322012,2026-09-03T15:00:00-05:00
+3377,Credit Mutuel Equity,327270,ISP System,Machinery,"Vic En Bigorre, France",2017-05-15,Growth Capital,,,9.3,True,,0,0,https://mergr.com/company/327270,2026-09-03T15:00:00-05:00
+3377,Credit Mutuel Equity,201986,Compte.R,Machinery,"Arlanc, France",2015-09-01,Growth Capital,,,11,True,,0,0,https://mergr.com/company/201986,2026-09-03T15:00:00-05:00
+3377,Credit Mutuel Equity,180937,Altrad,Machinery,"Montpellier, France",2015-03-17,Growth Capital,,,11.4,True,,4,0,https://mergr.com/company/180937,2026-09-03T15:00:00-05:00
+3377,Credit Mutuel Equity,180933,Alstef Group,Machinery,"Orleans, France",2011-10-14,Stake Purchase,2024-06-13,Trade Sale - Public Company,12.6,False,56,1,0,https://mergr.com/company/180933,2026-09-03T15:00:00-05:00
+3377,Credit Mutuel Equity,327334,Groupe Serap,Machinery,"Gorron, France",2008-01-01,"Buyout (LBO, MBO, MBI)",,,18.7,True,,0,0,https://mergr.com/company/327334,2026-09-03T15:00:00-05:00
+3377,Credit Mutuel Equity,327326,Serac Group,Machinery,"La Ferte-Bernard, France",2000-01-01,"Buyout (LBO, MBO, MBI)",,,26.7,True,,0,0,https://mergr.com/company/327326,2026-09-03T15:00:00-05:00
+362,Main Street Capital,50254,Victory Energy,Machinery,"Collinsville, Oklahoma, United States",2024-10-08,Recapitalization,,,1.8,True,,0,0,https://mergr.com/company/50254,2026-09-03T15:00:00-05:00
+362,Main Street Capital,115865,Compass Systems and Sales,Machinery,"Barberton, Ohio, United States",2023-12-13,Recapitalization,,,2.7,True,,0,0,https://mergr.com/company/115865,2026-09-03T15:00:00-05:00
+362,Main Street Capital,202292,GRT Rubber Technologies,Machinery,"Paragould, Arizona, United States",2014-12-30,Growth Capital,,,11.7,True,,1,0,https://mergr.com/company/202292,2026-09-03T15:00:00-05:00
+362,Main Street Capital,186163,Boss Industries,Machinery,"LaPorte, Indiana, United States",2014-07-08,"Buyout (LBO, MBO, MBI)",2019-02-05,Trade Sale - Public Company,4.5,False,,0,0,https://mergr.com/company/186163,2026-09-03T15:00:00-05:00
+362,Main Street Capital,23861,PCI,Machinery,"Riverside, California, United States",2012-12-20,"Buyout (LBO, MBO, MBI)",2021-04-16,Merger,8.3,False,,0,0,https://mergr.com/company/23861,2026-09-03T15:00:00-05:00
+362,Main Street Capital,258098,Syneo,Machinery,"West Palm Beach, Florida, United States",2011-07-19,Growth Capital,2019-02-05,Trade Sale,7.5,False,,0,0,https://mergr.com/company/258098,2026-09-03T15:00:00-05:00
+362,Main Street Capital,27837,Harrison Hydra-Gen,Machinery,"Houston, Texas, United States",2010-06-15,Growth Capital,,,16.2,True,,0,0,https://mergr.com/company/27837,2026-09-03T15:00:00-05:00
+362,Main Street Capital,13352,OMi Crane Systems,Machinery,"Royse City, Texas, United States",2008-04-01,Recapitalization,,,18.4,True,,0,0,https://mergr.com/company/13352,2026-09-03T15:00:00-05:00
+362,Main Street Capital,13345,Hydratec,Machinery,"Delano, California, United States",2007-11-01,"Buyout (LBO, MBO, MBI)",2018-04-24,Trade Sale - Public Company,10.4,False,,0,0,https://mergr.com/company/13345,2026-09-03T15:00:00-05:00
+1087,One Equity Partners,326251,Gruppo B&T,Machinery,"Formigine, Italy",2024-06-20,Stake Purchase,,,2.2,True,,0,0,https://mergr.com/company/326251,2026-09-03T15:00:00-05:00
+1087,One Equity Partners,301647,DESMI,Machinery,"Norresundby, Denmark",2022-06-22,"Buyout (LBO, MBO, MBI)",,,4.2,True,,0,0,https://mergr.com/company/301647,2026-09-03T15:00:00-05:00
+1087,One Equity Partners,1228,Norit Activated Carbon,Machinery,"Amersfoort, Netherlands",2021-11-29,Divestiture,,,4.8,True,,0,0,https://mergr.com/company/1228,2026-09-03T15:00:00-05:00
+1087,One Equity Partners,131213,AMECO,Machinery,"Greenville, South Carolina, United States",2021-05-04,Divestiture,,,5.3,True,,1,0,https://mergr.com/company/131213,2026-09-03T15:00:00-05:00
+1087,One Equity Partners,238301,USCO,Machinery,"Modena, Italy",2017-04-03,Growth Capital,,,9.4,True,,0,0,https://mergr.com/company/238301,2026-09-03T15:00:00-05:00
+1087,One Equity Partners,76969,Progress Rail,Machinery,"Albertville, Alabama, United States",2005-03-04,Divestiture,2006-06-19,Divestiture,1.3,False,,0,0,https://mergr.com/company/76969,2026-09-03T15:00:00-05:00
+4924,Bpifrance Investissement,341210,3R,Machinery,"Montauban, France",2024-02-29,"Buyout (LBO, MBO, MBI)",,,2.5,True,,0,0,https://mergr.com/company/341210,2026-09-03T15:00:00-05:00
+4924,Bpifrance Investissement,342304,Otico,Machinery,"Chalmaison, France",2023-09-04,Stake Purchase,,,2.9,True,,0,0,https://mergr.com/company/342304,2026-09-03T15:00:00-05:00
+4924,Bpifrance Investissement,313808,AB Process,Machinery,"Landivisiau, France",2023-05-31,"Buyout (LBO, MBO, MBI)",,,3.3,True,,0,0,https://mergr.com/company/313808,2026-09-03T15:00:00-05:00
+4924,Bpifrance Investissement,327239,Adial,Machinery,"Lisieux, France",2022-04-01,Stake Purchase,,,4.4,True,,0,0,https://mergr.com/company/327239,2026-09-03T15:00:00-05:00
+4924,Bpifrance Investissement,30088,Gravotech,Machinery,"Rillieux-la-Pape, France",2018-03-01,Secondary Buyout,2024-03-15,Divestiture,6,False,,0,0,https://mergr.com/company/30088,2026-09-03T15:00:00-05:00
+4924,Bpifrance Investissement,21736,Numalliance,Machinery,"Saint-Michel-sur-Meurthe, France",2015-04-23,Secondary Buyout,,,11.3,True,30,1,0,https://mergr.com/company/21736,2026-09-03T15:00:00-05:00
+6310,Groupe Baelen,315243,Machines Dubuit,Machinery,"Noisy-le-Grand, France",2022-09-29,"Buyout (LBO, MBO, MBI)",,,3.9,True,,0,0,https://mergr.com/company/315243,2026-09-03T15:00:00-05:00
+6310,Groupe Baelen,315227,Segepar,Machinery,"Buc, France",2022-06-14,"Buyout (LBO, MBO, MBI)",,,4.2,True,,0,0,https://mergr.com/company/315227,2026-09-03T15:00:00-05:00
+6310,Groupe Baelen,315231,Janodet,Machinery,"Soissons, France",2022-01-01,"Buyout (LBO, MBO, MBI)",,,4.7,True,,0,0,https://mergr.com/company/315231,2026-09-03T15:00:00-05:00
+6310,Groupe Baelen,315236,Merand,Machinery,"Brece, France",2022-01-01,"Buyout (LBO, MBO, MBI)",,,4.7,True,,0,0,https://mergr.com/company/315236,2026-09-03T15:00:00-05:00
+6310,Groupe Baelen,315245,Eurotech Packaging,Machinery,"Coursac, France",2022-01-01,"Buyout (LBO, MBO, MBI)",,,4.7,True,,0,0,https://mergr.com/company/315245,2026-09-03T15:00:00-05:00
+6310,Groupe Baelen,315225,R-Laurent,Machinery,"Pontailler-sur-Saone, France",2019-01-01,"Buyout (LBO, MBO, MBI)",,,7.7,True,,0,0,https://mergr.com/company/315225,2026-09-03T15:00:00-05:00
+6310,Groupe Baelen,315221,Emsens,Machinery,"Fraisses, France",2003-01-01,"Buyout (LBO, MBO, MBI)",,,23.7,True,,0,0,https://mergr.com/company/315221,2026-09-03T15:00:00-05:00
+5422,Anders Invest,335198,Spaans Babcock,Machinery,"Balk, Netherlands",2024-09-02,"Buyout (LBO, MBO, MBI)",,,2,True,,0,0,https://mergr.com/company/335198,2026-09-03T15:00:00-05:00
+5422,Anders Invest,335332,Vanmac Group,Machinery,"Amersfoort, Netherlands",2023-11-29,Growth Capital,,,2.8,True,,0,0,https://mergr.com/company/335332,2026-09-03T15:00:00-05:00
+5422,Anders Invest,335326,Gusella Bakker,Machinery,"Elst, Netherlands",2023-02-23,Growth Capital,,,3.5,True,,0,0,https://mergr.com/company/335326,2026-09-03T15:00:00-05:00
+5422,Anders Invest,298981,ROHR-IDRECO,Machinery,"Doetinchem, Netherlands",2021-06-17,Stake Purchase,2024-10-22,Divestiture,3.3,False,,0,0,https://mergr.com/company/298981,2026-09-03T15:00:00-05:00
+5422,Anders Invest,298986,TMS,Machinery,"Werkendam, Netherlands",2021-05-26,"Buyout (LBO, MBO, MBI)",,,5.3,True,,0,0,https://mergr.com/company/298986,2026-09-03T15:00:00-05:00
+5422,Anders Invest,298987,Banzo,Machinery,"Hoogeveen, Netherlands",2021-03-31,"Buyout (LBO, MBO, MBI)",,,5.4,True,,0,0,https://mergr.com/company/298987,2026-09-03T15:00:00-05:00
+5422,Anders Invest,263238,Van Dam Machine,Machinery,"Amsterdam, Netherlands",2019-08-07,"Buyout (LBO, MBO, MBI)",,,7,True,,0,0,https://mergr.com/company/263238,2026-09-03T15:00:00-05:00
+5422,Anders Invest,252079,Mosman Stainless Steel,Machinery,"Haaksbergen, Netherlands",2018-03-22,"Buyout (LBO, MBO, MBI)",,,8.4,True,,0,0,https://mergr.com/company/252079,2026-09-03T15:00:00-05:00
+5422,Anders Invest,272601,Solex Thermal Science,Machinery,"Calgary, Alberta, Canada",2018-03-22,"Buyout (LBO, MBO, MBI)",,,8.4,True,,1,0,https://mergr.com/company/272601,2026-09-03T15:00:00-05:00
+5422,Anders Invest,252094,Numafa Cleaning & Automation,Machinery,"Heinenoord, Netherlands",2017-12-05,"Buyout (LBO, MBO, MBI)",,,8.7,True,,0,0,https://mergr.com/company/252094,2026-09-03T15:00:00-05:00
+5422,Anders Invest,252096,Vitotherm,Machinery,"Bleiswijk, Netherlands",2017-06-12,"Buyout (LBO, MBO, MBI)",,,9.2,True,,0,0,https://mergr.com/company/252096,2026-09-03T15:00:00-05:00
+5422,Anders Invest,252166,Bos Machines,Machinery,"Vianen, Netherlands",2016-11-29,"Buyout (LBO, MBO, MBI)",,,9.8,True,11,0,0,https://mergr.com/company/252166,2026-09-03T15:00:00-05:00

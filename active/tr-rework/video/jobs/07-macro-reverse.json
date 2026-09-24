@@ -1,0 +1,9 @@
+{
+  "id": "07",
+  "name": "macro-reverse",
+  "seconds": 4,
+  "reference": "src/ref_macro_1280.jpg",
+  "prompt": "Static locked-off macro camera, no camera movement. Extreme close-up on a metal jack socket in a black brushed-metal panel. A single soft green point of light travels up the braided cable toward the connector and vanishes into it, and then the knurled metal connector pulls slowly and smoothly straight back out of the socket, its collar catching a warm rim light as it separates, leaving the socket empty. Photorealistic product macro cinematography, very shallow depth of field, dark studio, cool key light with a warm rim. No hands, no people.",
+  "model": "sora-2",
+  "size": "1280x720"
+}

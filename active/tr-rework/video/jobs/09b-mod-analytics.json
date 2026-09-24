@@ -1,0 +1,8 @@
+{
+  "id": "09b",
+  "name": "mod-analytics",
+  "seconds": 4,
+  "prompt": "The background is pure flat black and completely empty for the entire shot. No room, no floor, no horizon, no objects, no text, no logos, no numbers, no people. Only the glowing element described, isolated on black, as if shot in a blacked-out void. A single thin glowing warm amber line draws itself smoothly from the left edge to the right edge of the frame, rising and falling like a trend line, leaving a soft glow and a faint gradient beneath it. Continuous and steady. Static locked-off camera. Extremely dark, high contrast. No axes, no grid, no text, no numbers, no labels.",
+  "model": "sora-2",
+  "size": "1280x720"
+}

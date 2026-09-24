@@ -1,0 +1,50 @@
+{
+  "manifestVersion": 1,
+  "kind": "skill",
+  "slug": "quintel-blog",
+  "display": {
+    "displayName": "Quintel Blog Publisher",
+    "tagline": "Turn a finished blog post into a published Quintel article with a generated hero image.",
+    "description": "Takes a written markdown blog post, derives a wordless hero-image concept via the concept-llm connection (MiniMax-M3), generates a 16:9 hero image via the image-gen connection (MiniMax image-01), uploads it as a public CDN asset, and publishes the post through the repository's guarded publisher (bun run blog:publish / blog:validate) into the Quintel blog table — idempotent by slug, drafts-first, with the SEO/GEO editorial fields (answer_summary, primary_query, content_cluster, related_slugs) required before publish.",
+    "capabilities": [
+      "Derive a staged, wordless hero-image concept and style from post content via the concept-llm connection",
+      "Generate a 16:9 hero image via the image-gen connection (URL response, fetched immediately)",
+      "Upload the hero as a public CDN asset with reproducibility metadata (style, seed, concept, full prompt)",
+      "Collect and validate the SEO/GEO editorial contract (answer_summary, primary_query, content_cluster, related_slugs) with the operator before any write",
+      "Run a clean-context editorial QC pass on the derived metadata fields before the CMS write",
+      "Publish via the repository's guarded publisher (bun run blog:publish + blog:validate), never a raw table write",
+      "Harden unpublish/delete against dangling related_slugs references in the published corpus"
+    ]
+  },
+  "brain": {
+    "artifacts": [
+      {
+        "alias": "quintel-blog-flow",
+        "role": "flow"
+      }
+    ]
+  },
+  "session": {
+    "ttlHours": 24,
+    "rateLimit": {
+      "perAgentPerDay": 500,
+      "perAgentPerHour": 60
+    },
+    "produceSessionOutput": false
+  },
+  "teamContext": "recommended",
+  "memoryTables": [],
+  "memoryArtifacts": [],
+  "connectionBindings": [
+    {
+      "name": "concept-llm",
+      "purpose": "Anthropic-compatible LLM endpoint (MiniMax-M3) used to pick a style key and author the staged, wordless concept sentence for the hero image",
+      "required": true
+    },
+    {
+      "name": "image-gen",
+      "purpose": "MiniMax image API (image-01) used to generate the 16:9 hero image; returns a URL so the response stays under the 5MB proxy cap",
+      "required": true
+    }
+  ]
+}

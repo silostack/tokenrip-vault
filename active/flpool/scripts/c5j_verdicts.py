@@ -6,6 +6,7 @@ David returned both before finishing (call notes on the call before ours):
   FL  rows 2-51  = first 50 of 100 called   (blind copy -> intent columns were stripped
                    from his sheet; we join back to the internal FL_PHONE_TEST_100 file)
   CO  rows 2-29  = first 28 of 99 called
+  flc = the completed FL 100 (2026-09-19); theme8 = funded in that workbook
 
 Colour scheme is the WI scheme but each workbook uses a different theme palette, so we map
 by *canonical meaning*, confirmed against the comment text:
@@ -29,6 +30,12 @@ CFG = {
         xlsx="data/raw/david_fl_partial_2026-09-15.xlsx",
         internal="out/FL_PHONE_TEST_100_2026-09-14.csv",
         out="out/verdicts/david_fl_partial_2026-09-15.csv",
+        comments_col="Comments",
+    ),
+    "flc": dict(
+        xlsx="data/raw/david_fl_completed_2026-09-19.xlsx",
+        internal="out/FL_PHONE_TEST_100_2026-09-14.csv",
+        out="out/verdicts/david_fl_completed_2026-09-19.csv",
         comments_col="Comments",
     ),
     "co": dict(
@@ -55,7 +62,7 @@ def fill_code(cell):
     if fg.type == "rgb":
         return {GREEN: "green", YELLOW: "yellow", RED: "red"}.get(fg.rgb, "")
     if fg.type == "theme":
-        return {7: "blue", 3: "blue", 5: "existing", 9: "funded",
+        return {7: "blue", 3: "blue", 5: "existing", 9: "funded", 8: "funded",
                 6: "green", 2: "grey", 4: "grey"}.get(fg.theme, "")
     return ""
 

@@ -1,0 +1,8 @@
+{
+  "posts": {
+    "kind": "mount_table",
+    "mountId": "59129182-e2b9-49a3-8d66-28628c8b44e1",
+    "table": "reply-guy-posts",
+    "permissions": ["rows:read", "rows:patch"]
+  }
+}

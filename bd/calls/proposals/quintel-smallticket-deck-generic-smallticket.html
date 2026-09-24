@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quintel — Small-ticket lenders</title>
+<style>
+  /* =========================================================
+     Quintel — small-ticket / vendor-hybrid lender deck
+     Same house system and slide spine as the other segment decks:
+     dark cover, cream body, faint grid, forest-on-light accents.
+     Differs from the direct deck: the replacement cycle (04) replaces
+     build-vs-buy, and a proof slide of real verifiable filings (05)
+     replaces the single-sample slide.
+     Renders to 16:9 PDF via WeasyPrint and to a hosted page.
+     ========================================================= */
+
+  @page { size: 13.333in 7.5in; margin: 0; }
+
+  :root {
+    --dark:      #10231A;
+    --mint:      #63D397;
+    --cream:     #F4F3EE;
+    --paper:     #FFFFFF;
+    --ink:       #16211B;
+    --ink-soft:  #3F4A44;
+    --muted:     #6E7A73;
+    --faint:     #A3ADA7;
+    --forest:    #15693C;
+    --line:      #E2E4DE;
+    --grid-lt:   rgba(22,33,27,0.045);
+    --grid-dk:   rgba(255,255,255,0.045);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  /* ---------- slide shell ---------- */
+  .slide {
+    width: 13.333in; height: 7.5in;
+    padding: 0.42in 0.62in 0.34in;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    background: var(--cream);
+    background-image:
+      linear-gradient(to right, var(--grid-lt) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-lt) 1px, transparent 1px);
+    background-size: 0.77in 0.77in;
+    page-break-after: always;
+  }
+  .slide:last-child { page-break-after: auto; }
+
+  .slide.dark {
+    background: var(--dark);
+    color: #fff;
+    background-image:
+      linear-gradient(to right, var(--grid-dk) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-dk) 1px, transparent 1px);
+    background-size: 0.77in 0.77in;
+  }
+
+  /* ---------- rails ---------- */
+  .rail { display: flex; justify-content: space-between; align-items: center; }
+  .mark { display: flex; align-items: center; gap: 8pt; font-size: 15pt; font-weight: 700; letter-spacing: -0.02em; }
+  .bars { display: flex; align-items: flex-end; gap: 2.2pt; height: 15pt; }
+  .bars i { display: block; width: 3.2pt; background: var(--forest); border-radius: 1pt; }
+  .bars i:nth-child(1) { height: 38%; }
+  .bars i:nth-child(2) { height: 60%; }
+  .bars i:nth-child(3) { height: 80%; }
+  .bars i:nth-child(4) { height: 100%; }
+  .dark .bars i { background: var(--mint); }
+
+  .tag {
+    font-size: 7.6pt; font-weight: 600; letter-spacing: 0.19em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .dark .tag { color: var(--mint); }
+
+  .eyebrow {
+    font-size: 7.8pt; font-weight: 700; letter-spacing: 0.19em;
+    text-transform: uppercase; color: var(--forest); margin-bottom: 9pt;
+  }
+  .dark .eyebrow { color: var(--mint); }
+
+  h1 {
+    font-size: 34pt; font-weight: 800; line-height: 1.1;
+    letter-spacing: -0.028em; color: var(--ink); max-width: 11.4in;
+  }
+  h1 em { font-style: normal; color: var(--forest); }
+  .dark h1 { color: #fff; font-size: 44pt; max-width: 9.6in; }
+  .dark h1 em { color: var(--mint); }
+
+  .stage { flex: 1; display: flex; flex-direction: column; padding-top: 14pt; }
+  .center .stage { justify-content: center; padding-top: 0; }
+
+  .lede {
+    margin-top: 16pt; font-size: 13pt; line-height: 1.55;
+    color: rgba(255,255,255,0.80); max-width: 8.8in; font-weight: 400;
+  }
+  .lede b { color: #fff; font-weight: 600; }
+
+  .prep { margin-top: 34pt; font-size: 11.5pt; color: #fff; font-weight: 600; }
+  .prep span { display: block; margin-top: 4pt; font-weight: 400; color: rgba(255,255,255,0.55); font-size: 10.5pt; }
+
+  /* ---------- cards ---------- */
+  .cards { display: flex; gap: 15pt; margin-top: 22pt; align-items: stretch; }
+  .card {
+    flex: 1; background: var(--paper); border: 1px solid var(--line);
+    border-radius: 9pt; padding: 17pt 18pt 19pt;
+    box-shadow: 0 1pt 2pt rgba(22,33,27,0.04);
+  }
+  .card.lead { border-top: 3pt solid var(--mint); padding-top: 15pt; }
+  .card.solid { background: var(--dark); border-color: var(--dark); }
+  .card.solid h3 { color: #fff; }
+  .card.solid p { color: rgba(255,255,255,0.75); }
+  .card.solid .k { color: var(--mint); }
+
+  .card .k {
+    font-size: 7.2pt; font-weight: 700; letter-spacing: 0.17em;
+    text-transform: uppercase; color: var(--forest); display: block; margin-bottom: 7pt;
+  }
+  .card h3 { font-size: 13.5pt; font-weight: 700; letter-spacing: -0.012em; color: var(--ink); line-height: 1.25; }
+  .card p { margin-top: 8pt; font-size: 10.4pt; line-height: 1.52; color: var(--ink-soft); }
+  .card p + p { margin-top: 8pt; }
+  .card p b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- timing rail ---------- */
+  .tline-k {
+    margin-top: 20pt; font-size: 7.4pt; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .tline {
+    margin-top: 9pt; background: var(--paper); border: 1px solid var(--line);
+    border-radius: 9pt; padding: 18pt 14pt 20pt; display: flex; align-items: flex-start;
+  }
+  .tline .rstep { flex: 1; text-align: center; padding: 0 6pt; }
+  .tline .dot { width: 9pt; height: 9pt; border-radius: 50%; background: var(--mint); margin: 0 auto 11pt; }
+  .tline .rstep h4 { font-size: 10.6pt; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+  .tline .rstep p { margin-top: 5pt; font-size: 9.3pt; line-height: 1.45; color: var(--muted); }
+  .tline .rstep.past .dot { background: var(--line); }
+  .tline .rstep.past h4, .tline .rstep.past p { color: var(--faint); }
+  .tline .arw { flex: 0 0 20pt; text-align: center; color: var(--faint); font-size: 11pt; padding-top: 13pt; }
+
+  /* ---------- note ---------- */
+  .note {
+    margin-top: 20pt; border-top: 1px solid var(--line); padding-top: 12pt;
+    font-size: 10.4pt; line-height: 1.5; color: var(--muted); max-width: 11.4in;
+  }
+  /* Under a filing list the note is carrying the ask, and the rows above it are
+     tall, so it gets a tighter gap rather than being pushed off the slide. */
+  .plist + .note { margin-top: 11pt; padding-top: 10pt; }
+  .note b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- signal chips ---------- */
+  .chips-k {
+    margin-top: 20pt; font-size: 7.4pt; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 7pt; margin-top: 9pt; }
+  .chip {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 40pt;
+    padding: 6pt 13pt; font-size: 9.6pt; font-weight: 600; color: var(--ink);
+  }
+  .chip.ghost { border-style: dashed; color: var(--forest); background: transparent; }
+
+  /* ---------- proof rows: real filings the reader can go check ---------- */
+  .plist { margin-top: 11pt; display: flex; flex-direction: column; gap: 5pt; }
+  .prow {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 8pt;
+    padding: 7pt 15pt 8pt; display: flex; align-items: flex-start; gap: 10pt;
+  }
+  .prow.lead { border-left: 3pt solid var(--mint); }
+  .pcell { flex: 1; min-width: 0; }
+  .pcell.wide { flex: 1.7; }
+  .pcell.status { flex: 1.25; }
+  .pcell .pk {
+    font-size: 6.8pt; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--faint); display: block; margin-bottom: 4pt;
+  }
+  /* Block, not inline: the company cell stacks a name over a location and they
+     must not run together into "OVERALL TOWING INCMiami, FL". */
+  .pcell .pv { display: block; font-size: 9.8pt; line-height: 1.35; color: var(--ink-soft); }
+  .pcell .pv.co { font-size: 11.4pt; font-weight: 700; color: var(--ink); letter-spacing: -0.012em; margin-bottom: 2pt; }
+  .pcell .pv.mono { font-variant-numeric: tabular-nums; }
+  .pcell .pv b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- split: one big panel + stacked side ---------- */
+  .split { display: flex; gap: 15pt; margin-top: 20pt; align-items: stretch; }
+  .split .main { flex: 1.35; }
+  .split .side { flex: 1; display: flex; flex-direction: column; gap: 11pt; }
+  .split .side .card { padding: 13pt 15pt 15pt; }
+  .split .side .card h3 { font-size: 11.8pt; }
+  .split .side .card p { font-size: 9.9pt; margin-top: 6pt; }
+
+  .co { font-size: 19pt; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+  .co-sub { margin-top: 4pt; font-size: 10.4pt; color: var(--muted); }
+  .hr { height: 1px; background: var(--line); margin: 13pt 0; }
+  .fact { margin-top: 11pt; }
+  .fact .k { font-size: 7.2pt; font-weight: 700; letter-spacing: 0.17em; text-transform: uppercase; color: var(--forest); }
+  .fact p { margin-top: 5pt; font-size: 10.6pt; line-height: 1.5; color: var(--ink-soft); }
+  .fact p b { color: var(--ink); font-weight: 600; }
+  .src {
+    display: inline-block; margin-top: 8pt; border: 1px solid var(--line);
+    border-radius: 40pt; padding: 5pt 12pt; font-size: 9.2pt; color: var(--ink-soft);
+  }
+
+  /* ---------- footer ---------- */
+  .foot {
+    margin-top: 12pt; padding-top: 10pt; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 8.4pt; color: var(--faint);
+  }
+  .dark .foot { border-top-color: rgba(255,255,255,0.14); }
+  .foot b { color: var(--ink-soft); font-weight: 600; }
+  .dark .foot { color: rgba(255,255,255,0.45); }
+  .dark .foot b { color: rgba(255,255,255,0.85); }
+
+  /* ---------- screen presentation ---------- */
+  @media screen {
+    body { background: #333; padding: 26px 0; }
+    .slide {
+      margin: 0 auto 24px; box-shadow: 0 6px 30px rgba(0,0,0,0.30);
+      border-radius: 4px;
+    }
+  }
+  @media screen and (max-width: 1400px) {
+    html { font-size: 13px; }
+    .slide { zoom: 0.72; }
+  }
+  @media screen and (max-width: 900px) {
+    .slide { zoom: 0.46; }
+  }
+</style>
+</head>
+<body>
+
+<section class="slide dark center">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">July 2026</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">Deal sourcing for equipment finance</div>
+    <h1><em>High-intent leads</em> for your account executives.</h1>
+    <p class="lede">Quintel is a market intelligence engine that reads <b>millions of public filings</b> and surfaces the companies showing buying signals, matched to what your firm funds, while the equipment decision is still open.</p>
+    <div class="prep"><span>July 2026</span></div>
+  </div>
+  <div class="foot"><span>Quintel</span><span><b>Simon Pettibone</b> · simon@quintel.ai</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">Why Quintel</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">What your AEs get</div>
+    <h1>Every call goes to a <em>name worth calling</em>.</h1>
+    <div class="cards">
+      <div class="card lead">
+        <h3>A reason to call</h3>
+        <p>Companies carrying a real buying signal in the public record: work won, a permit issued, a facility going up, financing running down. Not a list filtered by size and state.</p>
+      </div>
+      <div class="card lead">
+        <h3>Surfaced before anyone else</h3>
+        <p>Signals reach your reps close to the day they hit the record, so the call happens before the same name shows up on the list every other funder bought.</p>
+      </div>
+      <div class="card lead">
+        <h3>Ranked by priority</h3>
+        <p>Every company is scored on signal strength, corroboration across sources, and fit to what your firm funds. Your AEs start the day at the top of one list.</p>
+      </div>
+    </div>
+    <div class="tline-k">The timing advantage</div>
+    <div class="tline">
+      <div class="rstep">
+        <div class="dot"></div>
+        <h4>Signal hits the public record</h4>
+        <p>Work is awarded, a permit lands, a filing ages toward its end</p>
+      </div>
+      <div class="arw">&rarr;</div>
+      <div class="rstep">
+        <div class="dot"></div>
+        <h4>Quintel surfaces it, ranked</h4>
+        <p>Matched to your buy box, scored, with the evidence attached</p>
+      </div>
+      <div class="arw">&rarr;</div>
+      <div class="rstep">
+        <div class="dot"></div>
+        <h4>Your AE calls first</h4>
+        <p>The conversation happens while they are still deciding how to pay for it</p>
+      </div>
+      <div class="arw">&rarr;</div>
+      <div class="rstep past">
+        <div class="dot"></div>
+        <h4>Later, the iron is on site</h4>
+        <p>Financed by whoever the dealer happened to walk them to</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>2</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">How we do it</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">The engine</div>
+    <h1>What you fund plus public signals, <em>synthesized into one list</em>.</h1>
+    <div class="cards">
+      <div class="card">
+        <span class="k">What you fund</span>
+        <h3>Your buy box</h3>
+        <p>Sectors, ticket range, company size, geography, contact requirements. Set once with your team and tuned any time. Nothing surfaces that your firm could not write.</p>
+      </div>
+      <div class="card">
+        <span class="k">Public market signals</span>
+        <h3>Scattered across thousands of sources</h3>
+        <p>Awards, permits, financing filings, expansions, fleet authority, market news. The buying intent is public, but no AE has time to find it across millions of records by hand.</p>
+      </div>
+      <div class="card solid lead">
+        <span class="k">What your team gets</span>
+        <h3>A ranked, high-intent call list</h3>
+        <p>One list, scored and explained, refreshed through the day as new signals land. Every row carries the trigger behind it and a link to the source document.</p>
+      </div>
+    </div>
+    <div class="chips-k">Signals scanned continuously</div>
+    <div class="chips">
+      <span class="chip">Federal &amp; state contract awards</span>
+      <span class="chip">Construction permits</span>
+      <span class="chip">New fleet authority</span>
+      <span class="chip">Financing renewal timing</span>
+      <span class="chip">Facility expansions &amp; new locations</span>
+      <span class="chip">Disaster recovery &amp; infrastructure programs</span>
+      <span class="chip">State incentive awards</span>
+      <span class="chip ghost">+ dozens more public sources</span>
+    </div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>3</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">Timing</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">The replacement cycle</div>
+    <h1>The equipment you didn't finance is <em>on a clock</em>.</h1>
+    <div class="cards">
+      <div class="card lead">
+        <h3>The clock is public</h3>
+        <p>When a business finances equipment, a UCC-1 goes on the state record: who lent, who borrowed, what date. Terms run two to five years.</p>
+        <p>That filing dates the moment the conversation reopens, and it has been sitting in the public record the whole time.</p>
+      </div>
+      <div class="card lead">
+        <h3>Today only the incumbent knows</h3>
+        <p>Whoever wrote the paper knows when it matures and calls ahead of it. Everyone else finds out after the deal is re-papered, which is why renewals feel locked up.</p>
+        <p>They are not locked. Nobody is assembling the filings.</p>
+      </div>
+      <div class="card solid lead">
+        <h3>And you are calling a proven borrower</h3>
+        <p>They needed equipment before. They were underwritten and approved before. They were financed by lenders writing the kind of paper your firm writes.</p>
+        <p>Two guesses come off every dial at once: whether they need it, and whether it can get approved.</p>
+      </div>
+    </div>
+    <div class="note">Same engine, one more public record. Filings get read and ranked against your box alongside the permits, awards and expansions, so <b>renewal timing and new demand arrive on one list</b> rather than in two places.</div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>4</span></div>
+</section>
+
+<section class="slide">
+  <div class="rail">
+    <div class="mark"><span class="bars"><i></i><i></i><i></i><i></i></span> Quintel</div>
+    <span class="tag">Getting started</span>
+  </div>
+  <div class="stage">
+    <div class="eyebrow">Getting started</div>
+    <h1>More funded deals from <em>the same dial count</em>.</h1>
+    <div class="cards">
+      <div class="card lead">
+        <span class="k">Step 1</span>
+        <h3>Set your criteria</h3>
+        <p>Sectors, ticket range, titles, contact requirements. The engine only surfaces companies your AEs can actually write.</p>
+      </div>
+      <div class="card">
+        <span class="k">Step 2</span>
+        <h3>Put it on the phones</h3>
+        <p>Your AEs work a live, ranked feed. We review what connected and retune together, so the list gets sharper every week.</p>
+      </div>
+      <div class="card">
+        <span class="k">Step 3</span>
+        <h3>Check the number every Friday</h3>
+        <p>One page each week: who logged in, how many surfaced companies each AE contacted, and what came back. If a seat is not being used, you see it before we do.</p>
+      </div>
+    </div>
+    <div class="note">The last one matters more than it looks. The risk with any tool bought for a sales floor is that it gets used for a month and then quietly stops, so <b>usage is reported to you rather than asked about.</b></div>
+  </div>
+  <div class="foot"><span>Quintel</span><span>5 · <b>Simon Pettibone</b> · simon@quintel.ai · quintel.ai</span></div>
+</section>
+
+</body>
+</html>

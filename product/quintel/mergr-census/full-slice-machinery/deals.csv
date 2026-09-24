@@ -1,0 +1,51 @@
+mergr_deal_id,date,deal_type,target_id,target_name,target_sector,target_location,buyers,sellers,advisors,deal_value,_fetched_at
+243675,2026-09-02,Add-on Acquisition,338064,Serpentix,Machinery,"Westminster, Colorado, United States",NWPX Infrastructure,Dry Fly Capital,,,2026-09-03T15:00:00-05:00
+243622,2026-09-01,Add-on Acquisition,353352,Delta Star,Machinery,"Lynchburg, Virginia, United States",MacLean Power Systems,,,,2026-09-03T15:00:00-05:00
+243640,2026-09-01,Add-on Acquisition,333051,ServerLIFT,Machinery,"Phoenix, Arizona, United States",Justrite,American Pacific Group,,,2026-09-03T15:00:00-05:00
+243566,2026-08-31,Divestiture,210278,Kelvion,Machinery,"Herne, Germany",Schlumberger,Apollo Global Management; Triton Partners,,3400,2026-09-03T15:00:00-05:00
+243496,2026-08-27,"Buyout (LBO, MBO, MBI)",353243,Resodyn,Machinery,"Butte, Montana, United States",Continuim Equity Partners,,"Liberty Advisor Group (bank, buyer)",,2026-09-03T15:00:00-05:00
+243151,2026-08-18,Add-on Acquisition,180212,Dukane,Machinery,"St. Charles, Illinois, United States",Crest Ultrasonics,,"Stout (bank, seller); Paul Hastings (law, seller); Morrison & Foerster (law, buyer)",,2026-09-03T15:00:00-05:00
+243085,2026-08-18,Add-on Acquisition,352872,Leistung,Machinery,"Ahmedabad, India",Dover,,,,2026-09-03T15:00:00-05:00
+243090,2026-08-18,Add-on Acquisition,352876,East Elevator,Machinery,"Chicago, Illinois, United States",Elevator Service,,,,2026-09-03T15:00:00-05:00
+243534,2026-08-18,Growth Capital,353266,Koma Precision,Machinery,"East Windsor, Connecticut, United States",Compass Group Equity Partners,,,,2026-09-03T15:00:00-05:00
+242581,2026-08-05,Add-on Acquisition,352462,Arumani,Machinery,"La Vall d'Uixo, Spain","Victaulic Company, Inc.",,,,2026-09-03T15:00:00-05:00
+242591,2026-08-05,Add-on Acquisition,352468,Buckley Belcher,Machinery,"Charleston, South Carolina, United States",American Testing and Inspection Services,,,,2026-09-03T15:00:00-05:00
+242477,2026-08-03,Add-on Acquisition,352353,Carlson,Machinery,"Tulsa, Oklahoma, United States",Zink Industrial Group,"Riverbend Industries, Inc.",,,2026-09-03T15:00:00-05:00
+242446,2026-08-03,Add-on Acquisition,352340,Lone Star Turbo,Machinery,"Houston, Texas, United States",IR,,,,2026-09-03T15:00:00-05:00
+242221,2026-07-28,Add-on Acquisition,183921,Taco,Machinery,"Cranston, Rhode Island, United States",Pentair,,,1400,2026-09-03T15:00:00-05:00
+242190,2026-07-28,Add-on Acquisition,352091,Cloeren,Machinery,"Orange, Texas, United States",Dover,,,,2026-09-03T15:00:00-05:00
+241642,2026-07-10,Merger,300472,Precision Roll Solutions,Machinery,"Green Bay, Wisconsin, United States",American Roller Company,Guardian Capital Partners,,,2026-09-03T15:00:00-05:00
+241167,2026-07-07,Add-on Acquisition,351243,STEPR,Machinery,"Wilmington, Delaware, United States",Interactive Strength,,,6.7,2026-09-03T15:00:00-05:00
+241044,2026-07-03,Add-on Acquisition,215175,DB Defence,Machinery,"Huddersfield, United Kingdom",RENK,Stellex Capital Management,"Barclays Investment Bank (bank, buyer); Linklaters (law, buyer)",,2026-09-03T15:00:00-05:00
+240757,2026-06-29,Secondary Buyout,160037,Extrude Hone,Machinery,"Irwin, Pennsylvania, United States",Gladstone Investment,Madison Industries,,,2026-09-03T15:00:00-05:00
+240891,2026-06-29,Divestiture,351010,Clevertech,Machinery,"Cadelbosco Sopra, Italy",CVC Capital Partners,Refa,,,2026-09-03T15:00:00-05:00
+240781,2026-06-24,Add-on Acquisition,350920,SATec,Machinery,"Bischofswiesen, Germany",2Connect,,,,2026-09-03T15:00:00-05:00
+240493,2026-06-22,Add-on Acquisition,350666,Kinisi,Machinery,"Bristol, United Kingdom",Bear Robotics,,,,2026-09-03T15:00:00-05:00
+240370,2026-06-18,Divestiture,202819,Heat Controller,Machinery,"Jackson, Michigan, United States",Lennox International,MARS,,,2026-09-03T15:00:00-05:00
+240237,2026-06-16,Add-on Acquisition,350471,Hydronic,Machinery,"Mortagne-au-Perche, France",LFB Group,,,,2026-09-03T15:00:00-05:00
+239968,2026-06-10,Add-on Acquisition,350233,US Baird,Machinery,"Thomaston, Connecticut, United States",Bliss Munitions Equipment,,"Osage Advisors (bank, seller)",,2026-09-03T15:00:00-05:00
+239567,2026-06-02,Add-on Acquisition,349832,MagCanica,Machinery,"San Diego, California, United States",Arxis,,"Kroll (bank, seller)",,2026-09-03T15:00:00-05:00
+239146,2026-05-21,Add-on Acquisition,349422,Valco Melton,Machinery,"Cincinnati, Ohio, United States",Graco,,,447,2026-09-03T15:00:00-05:00
+238999,2026-05-18,Add-on Acquisition,349291,Nanotech,Machinery,"Swanzey, New Hampshire, United States",Shibaura Machine,,"Houlihan Lokey (bank, seller); TrueNorth Capital Partners (bank, buyer); DLA Piper (law, seller); Covington & Burling (law, buyer); Anderson Mori & Tomotsune (law, buyer)",,2026-09-03T15:00:00-05:00
+238965,2026-05-15,Add-on Acquisition,349254,Logiudice Forni,Machinery,"Arcole, Italy",Waico Group,,,,2026-09-03T15:00:00-05:00
+241703,2026-05-14,Add-on Acquisition,351710,TEI Rock Drills,Machinery,"Montrose, Colorado, United States",Entegra,,,,2026-09-03T15:00:00-05:00
+240828,2026-05-11,Add-on Acquisition,350946,Classic Lifts,Machinery,United Kingdom,Complii,,,,2026-09-03T15:00:00-05:00
+238610,2026-05-08,Add-on Acquisition,348950,Machinery Partner,Machinery,"Boston, Massachusetts, United States",Phoenix Tailings,,,,2026-09-03T15:00:00-05:00
+238618,2026-05-07,Secondary Buyout,11386,Qlar,Machinery,"Darmstadt, Germany",Everstone Capital,The Blackstone Group,"Barclays Investment Bank (bank, buyer)",,2026-09-03T15:00:00-05:00
+238406,2026-05-05,Add-on Acquisition,348766,Hi-Force,Machinery,"Daventry, United Kingdom",Snap-on,,,58,2026-09-03T15:00:00-05:00
+238318,2026-05-02,Add-on Acquisition,348676,ARIbots,Machinery,"San Francisco, California, United States",Meta,,,,2026-09-03T15:00:00-05:00
+238225,2026-04-29,Add-on Acquisition,151277,TK Elevator,Machinery,"Dusseldorf, Germany",KONE,Advent International; Cinven; Omnes Capital; RAG-Stiftung,,29400 EUR,2026-09-03T15:00:00-05:00
+237928,2026-04-22,Add-on Acquisition,323995,AIM,Machinery,"Littleton, Colorado, United States",Innovative Lab Services,,,,2026-09-03T15:00:00-05:00
+237441,2026-04-09,Add-on Acquisition,347934,Megadale,Machinery,"Galway, Ireland",Machine Solutions,,,,2026-09-03T15:00:00-05:00
+237058,2026-04-01,Add-on Acquisition,347599,Infinity Lifts,Machinery,"Ennis, Ireland",Mitsubishi Electric,,,,2026-09-03T15:00:00-05:00
+237971,2026-04-01,Add-on Acquisition,348356,Keydak,Machinery,"Guangzhou, China",Legrand,,,,2026-09-03T15:00:00-05:00
+236987,2026-03-31,Divestiture,30688,Marioff,Machinery,"Vantaa, Finland",Inflexion,Spectrum Safety Solutions,,,2026-09-03T15:00:00-05:00
+237004,2026-03-31,Add-on Acquisition,347556,Vinspec,Machinery,"Edmonton, Alberta, Canada",KJA,,,,2026-09-03T15:00:00-05:00
+237009,2026-03-31,Add-on Acquisition,347563,Pump & Process Equipment,Machinery,"Birmingham, Alabama, United States",Citco Water,,,,2026-09-03T15:00:00-05:00
+236923,2026-03-30,Add-on Acquisition,347484,Mechanical Solutions,Machinery,"Whippany, New Jersey, United States",Universal Plant Services,,,,2026-09-03T15:00:00-05:00
+237039,2026-03-30,Add-on Acquisition,347585,Alchemist Filling Machines,Machinery,"Tempe, Arizona, United States",3Win,,,,2026-09-03T15:00:00-05:00
+236742,2026-03-25,Add-on Acquisition,347331,Fauna Robotics,Machinery,"New York, New York, United States",Amazon,,,,2026-09-03T15:00:00-05:00
+236775,2026-03-24,Divestiture,347356,SDC,Machinery,"New York, New York, United States",Atlas Copco,CVD Equipment,,16.9,2026-09-03T15:00:00-05:00
+238284,2026-03-24,Add-on Acquisition,95725,Toyota Industries,Machinery,"Kariya, Japan",Elliott; Toyota Fudosan,,,5900000 JPY,2026-09-03T15:00:00-05:00
+236766,2026-03-23,Add-on Acquisition,347349,ThermoKey,Machinery,"Rivarotta di Rivignano Teor, Italy",Vertiv,,,,2026-09-03T15:00:00-05:00
+236571,2026-03-19,Add-on Acquisition,347187,Northern Air Systems,Machinery,"Rochester, New York, United States",AirX Climate Solutions,,,,2026-09-03T15:00:00-05:00

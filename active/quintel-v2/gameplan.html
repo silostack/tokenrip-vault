@@ -67,8 +67,8 @@ figcaption{font-size:14px;color:var(--muted);margin-top:8px;max-width:72ch}
 .door.wall{border-top-color:var(--steel)}
 .door b{font-family:"Barlow Semi Condensed",Arial,sans-serif;font-size:17px;display:block;margin-bottom:4px}
 .door span{font-size:15px;color:var(--ink-2)}
-ol.q{padding-left:22px;max-width:72ch}
-ol.q li{margin-bottom:10px}
+ul.agenda{padding-left:20px;max-width:72ch}
+ul.agenda li{margin-bottom:10px}
 .foot{color:var(--muted);font-size:14px;margin-top:40px;padding-top:16px;border-top:1px solid var(--rule)}
 @media (max-width:640px){h2{font-size:26px} body{font-size:16px} .hyp td:nth-child(2){white-space:normal}}
 </style>
@@ -87,7 +87,7 @@ ol.q li{margin-bottom:10px}
   <div class="stats">
     <div class="stat"><b>~300</b><span>dials across FL, OH, WI, CO</span></div>
     <div class="stat good"><b>98%</b><span>numbers live; 96–97% right contact</span></div>
-    <div class="stat"><b>~100</b><span>live conversations with in-box owners</span></div>
+    <div class="stat"><b>~100</b><span>live conversations with owners who fit the profile</span></div>
     <div class="stat bad"><b>0</b><span>applications (2% baseline predicts 2+)</span></div>
     <div class="stat"><b>1</b><span>signal that separated outcomes: business events</span></div>
   </div>
@@ -107,9 +107,9 @@ ol.q li{margin-bottom:10px}
   <div class="tbl"><table class="hyp">
     <thead><tr><th>Hypothesis</th><th>Confidence</th><th>Test</th></tr></thead>
     <tbody>
-      <tr><td>Small operators leave no planned-event trail, but they do leave loss and cohort records.<small>Crashes, out-of-service orders, disaster declarations in their county, listing the old truck.</small></td><td><span class="pill med">medium</span></td><td>the signal arms below; first list ships within ten days</td></tr>
+      <tr><td>Small operators leave no planned-event trail, but they do leave loss and cohort records.<small>Crashes, out-of-service orders, disaster declarations in their county, listing the old truck.</small></td><td><span class="pill med">medium</span></td><td>the experiments below; the first list, built from FMCSA crash and out-of-service records, ships within ten days</td></tr>
       <tr><td>Owners start at the equipment question, not the financing question.<small>“Which vac truck,” “what does a knuckleboom cost,” increasingly asked of an AI. The financing offer rides on the answer.</small></td><td><span class="pill hi">medium-high</span></td><td>query and citation data from the first content sprint</td></tr>
-      <tr><td>The service technician sees the need first.<small>The repair-or-replace call is made in the bay before a dealer is involved. A monthly number at that moment turns a stalled job into a borrower who already knows what he needs.</small></td><td><span class="pill med">medium</span></td><td>twenty shop conversations in one metro; one question to Providence on whether a shop can be the seller on a deal</td></tr>
+      <tr><td>The service technician sees the need first.<small>The repair-or-replace call is made in the bay before a dealer is involved. A monthly number at that moment turns a stalled job into a borrower who already knows what he needs.</small></td><td><span class="pill med">medium</span></td><td>twenty conversations with repair shops in one metro; one question to Providence on whether a shop can be the seller on a deal</td></tr>
       <tr><td>An owner will give a website equipment, price and timing with no personal data, then take a warm call from Providence.<small>Personal information is collected by Providence, where the trust already is.</small></td><td><span class="pill med">medium</span></td><td>the first 20 routed applications</td></tr>
       <tr><td>A qualified application handed warm converts at Providence well above the cold baseline.<small>The rep starts at “you asked about a $140K vac truck,” not “are you looking for financing.”</small></td><td><span class="pill med">medium</span></td><td>same 20</td></tr>
     </tbody>
@@ -187,7 +187,7 @@ ol.q li{margin-bottom:10px}
       <text x="676" y="341" text-anchor="middle" font-size="12" fill="currentColor" opacity=".75">outcome back</text>
       <text x="455" y="330" text-anchor="middle" font-size="12" fill="currentColor" opacity=".75">every step timestamped · deal, not lead</text>
     </svg>
-    <figcaption>Providence’s funnel is two steps: reach the owner, then collect the application. Quintel v2 adds the steps a new brand can do credibly, stops at the personal-data line, and returns the outcome. The dial lab keeps running underneath as the instrument that says why a row was dead.</figcaption>
+    <figcaption>Providence’s funnel is two steps: reach the owner, then collect the application. Quintel v2 adds the steps a new brand can do credibly, stops at the personal-data line, and returns the outcome. The calling pilot keeps running underneath as the instrument that says why a row was dead.</figcaption>
   </figure>
   <div class="prose">
     <p><b>One site, one brand, Quintel’s.</b> It answers what a specialty-trade operator asks about equipment (cost, monthly, new vs used, by trade and state) and offers a payment calculator. Nobody hesitates to type a price into a calculator, so that is the entry point. Outbound email and partner links land on the same site. Three ways in, one funnel.</p>
@@ -214,7 +214,7 @@ ol.q li{margin-bottom:10px}
       </g>
       <g font-family="Barlow Semi Condensed, Arial, sans-serif" font-weight="600" font-size="14" fill="currentColor">
         <text x="16" y="52">A · Align (Sat 09-19)</text>
-        <text x="16" y="88">B · Loss-signal lab</text>
+        <text x="16" y="88">B · Loss-signal list</text>
         <text x="16" y="124">C · Site v1</text>
         <text x="16" y="160">D · Outbound on the funnel</text>
         <text x="16" y="196">E · Cohort + turnover signals</text>
@@ -223,7 +223,7 @@ ol.q li{margin-bottom:10px}
       </g>
       <rect x="176" y="38" width="20" height="20" fill="#B8790F"/>
       <rect x="200" y="74" width="146" height="20" fill="#B8790F" opacity=".9"/>
-      <text x="352" y="89" font-size="12" fill="currentColor" opacity=".8">FMCSA crash + out-of-service join · first 50+50 blind arm · Texas pool</text>
+      <text x="352" y="89" font-size="12" fill="currentColor" opacity=".8">FMCSA crash + out-of-service records · 100-row list, half with an event, unmarked · Texas</text>
       <rect x="200" y="110" width="390" height="20" fill="#B8790F" opacity=".75"/>
       <text x="596" y="125" font-size="12" fill="currentColor" opacity=".8">calculator · qualify · verify · handoff · outcome sheet · partner links</text>
       <rect x="297.5" y="146" width="340" height="20" fill="#B8790F" opacity=".6"/>
@@ -236,23 +236,23 @@ ol.q li{margin-bottom:10px}
       <text x="833" y="269" text-anchor="middle" font-size="12" fill="currentColor" opacity=".85">after the first 20 routed applications</text>
       <text x="200" y="318" font-size="12" fill="currentColor" opacity=".7">Weekly cadence: one list to David · one verdict read · one line changed in the plan</text>
     </svg>
-    <figcaption>Phase B runs on data already held and needs nothing but a join and David’s dials. Phase C is the build. G is where the numbers get set, after twenty real handoffs rather than before.</figcaption>
+    <figcaption>Phase B runs on records already held and needs only David’s calls. Phase C is the build. G is where the numbers get set, after twenty real handoffs rather than before.</figcaption>
   </figure>
 </section>
 
 <section>
   <p class="eyebrow">Experiments queued</p>
   <h2>Signals that fit a business that does not plan</h2>
-  <div class="prose"><p>Every intent idea so far assumed a planned event at the company level. For a two-to-seven-truck operator those do not exist in the record. What does exist: things that happen to the business, things that happen to its county and trade, and moments where someone else sees the need first. Each arm is 50 rows with the signal plus 50 matched controls, David blind to which is which, read at 50 live conversations. The decision rule is written before the list ships.</p></div>
+  <div class="prose"><p>Every intent idea so far assumed a planned event at the company level. For a two-to-seven-truck operator those do not exist in the record. What does exist: things that happen to the business, things that happen to its county and trade, and moments where someone else sees the need first. Each experiment is a 100-row list: 50 companies with the signal and 50 similar companies without it, mixed and unmarked so the calls are blind, read once 50 live conversations are in. The rule that decides it is written before the list ships.</p></div>
   <div class="tbl"><table>
     <thead><tr><th>#</th><th>Idea</th><th>Why it might work</th><th>What decides it</th></tr></thead>
     <tbody>
-      <tr><td class="k">H1</td><td>Carriers with a tow-away or disabling crash in the last 90 days</td><td>the truck is gone; the insurer pays actual cash value; the gap to the replacement gets financed. Recorded in public FMCSA files for exactly this population</td><td>crash arm opens at 2× controls → daily trigger</td></tr>
+      <tr><td class="k">H1</td><td>Carriers with a tow-away or disabling crash in the last 90 days</td><td>the truck is gone; the insurer pays actual cash value; the gap to the replacement gets financed. Recorded in public FMCSA files for exactly this population</td><td>crash group opens at twice the rate of the comparison group → daily trigger</td></tr>
       <tr><td class="k">H2</td><td>A vehicle placed out of service for a mechanical defect, especially repeatedly on one unit</td><td>a unit that keeps failing is a unit about to be replaced</td><td>same</td></tr>
       <tr><td class="k">H3</td><td>Tree, roll-off, vac and hauling operators in counties under a fresh disaster declaration</td><td>months of work overnight; the second truck is needed now; the signal is the county, not the company</td><td>same, run when a declaration is live</td></tr>
-      <tr><td class="k">H4</td><td>Owners who listed a specialty truck privately in the last 60 days</td><td>seller of the old truck is buyer of the new one</td><td>same, and “already bought” under 30%</td></tr>
-      <tr><td class="k">H6</td><td>New DOT numbers and visible expansions</td><td>the only tag that separated outcomes so far</td><td>holds at 50 reached → default selector</td></tr>
-      <tr><td class="k">H7</td><td>Send timing around Section 179 year end</td><td>Q4 purchase rush</td><td>reply rate 1.5× → calendar-triggered sends</td></tr>
+      <tr><td class="k">H4</td><td>Owners who listed a specialty truck for sale privately in the last 60 days</td><td>seller of the old truck is buyer of the new one</td><td>same, and fewer than 30% say they already bought</td></tr>
+      <tr><td class="k">H6</td><td>New DOT numbers and visible expansions</td><td>the only signal that separated outcomes so far</td><td>holds at 50 conversations → default list selector</td></tr>
+      <tr><td class="k">H7</td><td>Email timing around the Section 179 year-end deadline</td><td>Q4 purchase rush</td><td>reply rate 1.5× the rest of the year → calendar-triggered sends</td></tr>
       <tr><td class="k">H8</td><td>Repair shops and service contractors as referrers, with a shop link</td><td>the shop sees the need first; a link on the quote gives the owner a monthly number instead of a lump sum; the shop earns a finder’s fee on funded deals</td><td>5 of 20 shops would use it, one real lead in 30 days</td></tr>
       <tr><td class="k">H9</td><td>Commercial insurance agents as referrers</td><td>they see the loss first</td><td>same at half the numbers</td></tr>
     </tbody>
@@ -266,14 +266,18 @@ ol.q li{margin-bottom:10px}
     <div class="ask">
       <h3>Service technicians</h3>
       <p>The shop tells the owner the unit is not worth fixing, quotes the replacement, and waits for the owner to find $40–150K. Many of those jobs stall. A link on the quote gives the owner a monthly number on the spot and gets Providence a borrower who already knows what he needs.</p>
-      <p>The shop’s reason to use it is a finder’s fee on funded deals and a job that closes; it costs the shop nothing. The shop is also a Providence-preferred borrower for its own trucks and equipment.</p>
-      <p><b>Lanes that fit the box:</b> truck upfitters and body shops; refrigeration and HVAC contractors serving food processing, cold storage and industrial; electrical contractors installing generators. Restaurants are restricted.</p>
+      <p>The shop’s reason to use it is a finder’s fee on funded deals and a job that closes; it costs the shop nothing. The shop is also on Providence’s preferred-industry list as a borrower for its own trucks and equipment.</p>
+      <p><b>Shop types that fit Providence’s profile:</b> truck upfitters and body shops; refrigeration and HVAC contractors serving food processing, cold storage and industrial customers; electrical contractors installing generators. Restaurants are on the restricted list.</p>
       <p><b>Cheapest test:</b> has a deal ever come to Providence from a shop, and would Providence take one where the shop is the seller?</p>
     </div>
     <div class="ask">
+      <h3>Trade shows (David’s addition)</h3>
+      <p>A show in a preferred lane puts buyers and vendors in one room for two days. The exhibitor list is a ready vendor list per lane. The partner link works there with a clock on it: exhibitors get the link and a booth QR two weeks before the show so a buyer at the booth can see the monthly on the unit in front of him; after the show, one page with the units shown and their price bands for anyone who scanned. No booth of our own until a vendor has used the link. First test: one regional show within 90 days, picked with David.</p>
+    </div>
+    <div class="ask">
       <h3>Vendors: what the sheet says</h3>
-      <p>Two weeks of fundings from two reps, 21 vendors. Every one is a niche specialty dealer or a manufacturer selling direct, in one equipment class, with no OEM captive behind it: vac trucks (the three-star vendor), tow and wrecker, directional drilling, ambulance and EMS, lifts, ag and land-clearing. The vendor to pursue is the dealer a captive does not cover.</p>
-            <p><b>Next:</b> a research pass on all 21, then the vendor plan.</p>
+      <p>David’s list of the 21 vendors behind two weeks of fundings from two reps says one thing: every vendor is a niche specialty dealer or a manufacturer selling direct, in one equipment class, with no manufacturer finance arm behind it. Vac trucks (the vendor with the most repeat deals), tow and wrecker, directional drilling, ambulance and EMS, lifts, ag and land-clearing. The vendor to pursue is the dealer a captive does not cover.</p>
+            <p><b>Next:</b> research on all 21, then a vendor plan.</p>
     </div>
   </div>
 </section>
@@ -282,12 +286,12 @@ ol.q li{margin-bottom:10px}
   <p class="eyebrow">Commercials</p>
   <h2>Paid for deals, not leads</h2>
   <figure>
-    <svg viewBox="0 0 1000 250" role="img" aria-label="Three rungs: verified rows for the dial lab at no charge; a qualified application handed off for a flat fee set after the first twenty; a funded deal that entered through the funnel earning a share of Providence's revenue. Attribution is by timestamp." xmlns="http://www.w3.org/2000/svg" font-family="Source Sans 3, Arial, sans-serif" font-size="13">
+    <svg viewBox="0 0 1000 250" role="img" aria-label="Three rungs: verified companies for the calling pilot at no charge; a qualified application handed off for a flat fee set after the first twenty; a funded deal that entered through the funnel earning a share of Providence's revenue. Attribution is by timestamp." xmlns="http://www.w3.org/2000/svg" font-family="Source Sans 3, Arial, sans-serif" font-size="13">
       <defs><marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#B8790F"/></marker></defs>
       <rect x="20" y="120" width="290" height="96" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/>
-      <text x="36" y="146" font-family="Barlow Semi Condensed, Arial, sans-serif" font-weight="700" font-size="16" fill="currentColor">1 · Verified rows (the dial lab)</text>
-      <text x="36" y="170" fill="currentColor" opacity=".8">Providence gets: dialable, in-box, verified companies</text>
-      <text x="36" y="190" fill="currentColor" opacity=".8">Quintel gets: verdicts. No charge; R&amp;D, continues</text>
+      <text x="36" y="146" font-family="Barlow Semi Condensed, Arial, sans-serif" font-weight="700" font-size="16" fill="currentColor">1 · Verified companies (the calling pilot)</text>
+      <text x="36" y="170" fill="currentColor" opacity=".8">Providence gets: verified companies that fit the profile</text>
+      <text x="36" y="190" fill="currentColor" opacity=".8">Quintel gets: the grades. No charge; R&amp;D, continues</text>
       <rect x="355" y="76" width="290" height="140" rx="3" fill="#F3E4C4" stroke="#B8790F" stroke-width="1.6"/>
       <text x="371" y="102" font-family="Barlow Semi Condensed, Arial, sans-serif" font-weight="700" font-size="16" fill="#1C1B18">2 · Qualified application, handed off</text>
       <text x="371" y="126" fill="#1C1B18" opacity=".85">Providence gets: a warm deal with the evidence block</text>
@@ -306,7 +310,7 @@ ol.q li{margin-bottom:10px}
       <line x1="645" y1="146" x2="687" y2="146" stroke="#B8790F" stroke-width="1.6" marker-end="url(#arrB)"/>
       <text x="500" y="240" text-anchor="middle" font-size="12" fill="currentColor" opacity=".75">A qualified application Providence passes on, or cannot fund, is placed with another originator after 30 days.</text>
     </svg>
-    <figcaption>The fee rises with how much of the borrower’s journey Quintel completes. The dial lab stays free. Saturday’s ask is agreement on the shape and who signs it, not the numbers.</figcaption>
+    <figcaption>The fee rises with how much of the borrower’s journey Quintel completes. The calling pilot stays free. Saturday’s ask is agreement on the shape and who signs it, not the numbers.</figcaption>
   </figure>
 </section>
 
@@ -317,9 +321,9 @@ ol.q li{margin-bottom:10px}
     <div class="ask">
       <h3>Quintel</h3>
       <ul>
-        <li>Pools and verification in every state we work</li>
+        <li>Company data and verification in every state we work</li>
         <li>The site, the calculator, the qualify flow, the partner links</li>
-        <li>Outbound infrastructure on Quintel domains</li>
+        <li>Outbound email on Quintel domains</li>
         <li>The signal experiments and their lists, weekly</li>
         <li>The routing and outcome ledger, and the weekly read</li>
         <li>The shop and agent conversations, and the vendor research</li>
@@ -328,11 +332,10 @@ ol.q li{margin-bottom:10px}
     <div class="ask">
       <h3>Providence, through David</h3>
       <ul>
-        <li>Calls on the lab lists, verdicts in the template</li>
+        <li>Calls on the pilot lists, grades in the template</li>
         <li>The warm-handoff packet: what a rep needs to take a routed application as his own</li>
         <li>Outcomes back on every routed deal</li>
-        <li>The case-study 50 (repeat customers, vendor per deal) to calibrate the signals against real winners</li>
-        <li>Texas: share of the best customers, lanes beyond specialty trucks</li>
+        <li>Texas: where the best customers are, and which industries to add beyond specialty trucks</li>
         <li>Whether a repair shop has ever sent a deal, and whether Providence would take one where the shop is the seller</li>
       </ul>
     </div>
@@ -341,15 +344,21 @@ ol.q li{margin-bottom:10px}
 
 <section>
   <p class="eyebrow">Saturday</p>
-  <h2>Six questions for the call</h2>
-  <ol class="q">
-    <li>Does the site-plus-handoff shape work for Providence, and who signs off?</li>
-    <li>The warm-handoff packet: what does a rep need to see to take a routed application as his own?</li>
-    <li>The three-rung commercial shape and the timestamp attribution rule: acceptable in principle?</li>
-    <li>Texas: what share of Providence’s best customers are there, and which lanes beyond specialty trucks?</li>
-    <li>Technicians and vendors: has a repair shop ever sent a deal, and would Providence take one where the shop is the seller? What does the top producer’s vendor list look like?</li>
-    <li>One business day to confirm contact, and placement elsewhere after 30 days: reasonable?</li>
-  </ol>
-  <p class="foot">Companion document: gameplan.md carries the same plan in full text. Draft v0.4, 17 September 2026. Amend on the call.</p>
+  <h2>19 September call agenda</h2>
+  <ul class="agenda">
+    <li><b>Where we are.</b> About 300 dials, zero applications, and what the calls taught us. Agree or amend.</li>
+    <li><b>The direction.</b> One site, one funnel, a clean handoff to Providence at the point where personal information is collected. Does it work for Providence, and who needs to sign off?</li>
+    <li><b>The warm-handoff packet.</b> Which fields a Providence rep needs to see to take a routed application as his own.</li>
+    <li><b>Commercials.</b> No charge for the pilot lists; a flat fee per qualified application; a revenue share on funded deals that came through our funnel; attribution by timestamp rather than CRM lookups. Acceptable in principle? Plus two operating terms: one business day to confirm contact, and placement with another originator if Providence passes after 30 days.</li>
+    <li><b>The next two lists.</b> A Florida list built from FMCSA crash and out-of-service records (same template, half with a recent event and half without, unmarked), and Texas. Where are Providence’s best Texas customers, and which industries should we add beyond specialty trucks?</li>
+    <li><b>The home page.</b> What David would want a borrower to see first, how it should be branded, and what makes him trust a site he has never heard of. A mockup is ready to walk through.</li>
+    <li><b>Two revenue streams.</b> Lead-gen income per qualified handoff, and participation in deal revenue: pros and cons of each, and how each is monitored. Providence’s average deal revenue and how higher-ticket targeting changes the picture.</li>
+    <li><b>Florida 100.</b> What the completed sheet says about which signals to rank on, about tree services, and about the wrong numbers.</li>
+    <li><b>Trade shows.</b> Which show, and what exhibitors get before it.</li>
+    <li><b>Vendors.</b> David’s list of 21 vendors behind recent fundings, what it says about which dealers to pursue, and what the top producer’s vendor mix looks like.</li>
+    <li><b>Technicians.</b> Has a repair shop ever sent Providence a deal, and would Providence take a deal where the shop that installs the unit is the seller? Insurance agents: David’s read is that claims go online and agents will not share; we agree and set them aside.</li>
+    <li><b>Next call.</b> Same slot weekly until the first 20 handoffs.</li>
+  </ul>
+  <p class="foot">Companion document: gameplan.md carries the same plan in full text. Draft v0.5, 19 September 2026. Amend on the call.</p>
 </section>
 </div>

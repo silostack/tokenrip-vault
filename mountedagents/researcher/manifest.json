@@ -1,0 +1,79 @@
+{
+  "manifestVersion": 1,
+  "slug": "researcher",
+  "teamContext": "recommended",
+  "display": {
+    "displayName": "Researcher",
+    "tagline": "Queue source URLs; get clean, tagged knowledge notes in your research workspace and an email digest.",
+    "description": "A source-processing workflow agent. The operator queues blog, Twitter/X, Reddit, and article URLs; on each run the agent fetches every queued source, extracts the meaty article (filler stripped, not a summary), writes it as a tagged Markdown note into the shared tr-research workspace, emails the operator the full note, and reports run statistics. One bad source never aborts the run.",
+    "capabilities": [
+      "Drains a queue of source URLs end-to-end on each run",
+      "Fetches blogs, articles, Twitter/X threads, and Reddit threads (web fetch + browser fallback)",
+      "Extracts the full substantive article with filler removed — not a summary",
+      "Writes tagged Markdown notes with frontmatter into the tr-research workspace",
+      "Emails the operator each finished note and reports per-run statistics"
+    ]
+  },
+  "brain": {
+    "artifacts": [
+      { "alias": "researcher-soul", "role": "soul" },
+      { "alias": "researcher-flow", "role": "flow" },
+      { "alias": "researcher-frameworks", "role": "frameworks" }
+    ]
+  },
+  "mountIntake": {
+    "starterArtifactAlias": "researcher-mount-starter"
+  },
+  "workspaceBindings": [
+    {
+      "name": "research",
+      "access": "read-write",
+      "purpose": "The tr-research knowledge base this agent produces into — each processed source becomes a tagged Markdown note here for the whole team to read and search."
+    }
+  ],
+  "memoryTables": [
+    {
+      "slug": "input-sources",
+      "scope": "operator-private",
+      "slugTemplate": "input-sources-{operator_slug}",
+      "default": false,
+      "uniqueKey": ["url"],
+      "schema": [
+        { "name": "url", "type": "text" },
+        { "name": "source_type", "type": "enum", "values": ["blog", "twitter", "reddit", "article", "other"] },
+        { "name": "status", "type": "enum", "values": ["queued", "processing", "done", "failed"] },
+        { "name": "title", "type": "text" },
+        { "name": "note_slug", "type": "text" },
+        { "name": "tags", "type": "text" },
+        { "name": "failed_reason", "type": "text" },
+        { "name": "added_at", "type": "text" },
+        { "name": "processed_at", "type": "text" }
+      ]
+    },
+    {
+      "slug": "run-log",
+      "scope": "operator-private",
+      "slugTemplate": "run-log-{operator_slug}",
+      "default": true,
+      "schema": [
+        { "name": "ran_at", "type": "text" },
+        { "name": "processed_count", "type": "number" },
+        { "name": "failed_count", "type": "number" },
+        { "name": "sources_summary", "type": "text" }
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "bind": "email-operator",
+      "kind": "email-outbound",
+      "execution": "backend"
+    }
+  ],
+  "harnessRequirements": ["http-fetch", "file-write", "shell"],
+  "session": {
+    "ttlHours": 24,
+    "rateLimit": { "perAgentPerHour": 20, "perAgentPerDay": 100 },
+    "produceSessionOutput": true
+  }
+}

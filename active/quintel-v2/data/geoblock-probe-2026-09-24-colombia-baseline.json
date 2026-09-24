@@ -1,0 +1,225 @@
+{
+ "probed_at": "2026-09-24T16:18:50.090885+00:00",
+ "egress": {
+  "ip": "152.203.70.190",
+  "city": "Medell\u00edn",
+  "region": "Antioquia",
+  "country": "CO",
+  "org": "AS3816 COLOMBIA TELECOMUNICACIONES S.A. ESP BIC"
+ },
+ "results": [
+  {
+   "ids": [],
+   "label": "control: www.tn.gov",
+   "url": "https://www.tn.gov/",
+   "tcp": {
+    "dns": "52.70.105.188",
+    "tcp": "ok",
+    "ms": 193
+   },
+   "http": {
+    "status": 200,
+    "final_url": "https://www.tn.gov/",
+    "server": "Apache",
+    "content_type": "text/html;charset=utf-8",
+    "bytes_read": 60807,
+    "cloudflare_challenge": false,
+    "head": "<!doctype html> <html class=\"no-js tn-html\" lang=\"en\">     <head>         <title>Tennessee State Government - TN.gov</title>         <meta charset=\"utf-8\"/>         <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>         <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"/> ",
+    "ms": 422
+   },
+   "result": "reachable"
+  },
+  {
+   "ids": [],
+   "label": "control: data.texas.gov",
+   "url": "https://data.texas.gov/resource/a5y7-t5ih.json?$limit=1",
+   "tcp": {
+    "dns": "52.206.140.205",
+    "tcp": "ok",
+    "ms": 218
+   },
+   "http": {
+    "status": 200,
+    "final_url": "https://data.texas.gov/resource/a5y7-t5ih.json?$limit=1",
+    "server": "nginx",
+    "content_type": "application/json;charset=utf-8",
+    "bytes_read": 179,
+    "cloudflare_challenge": false,
+    "head": "[{\"tp_id\":\"12018414289\",\"registration_number\":\"AG00127926\",\"name\":\"FARIA EAST DAIRY\",\"city\":\"DUMAS\",\"zip\":\"79029-7008\",\"effective_date\":\"2007-10-09T00:00:00.000\",\"suspended\":\"\"}] ",
+    "ms": 970
+   },
+   "result": "reachable"
+  },
+  {
+   "ids": [
+    "TN-g5-02"
+   ],
+   "label": "TDEC air permits (APEX)",
+   "url": "https://dataviewers.tdec.tn.gov/dataviewers/f?p=19031:34001",
+   "tcp": {
+    "dns": "52.206.107.136",
+    "tcp": "ok",
+    "ms": 192
+   },
+   "http": {
+    "status": 403,
+    "final_url": "https://dataviewers.tdec.tn.gov/dataviewers/f?p=19031:34001",
+    "server": "awselb/2.0",
+    "content_type": "text/html",
+    "bytes_read": 520,
+    "cloudflare_challenge": false,
+    "head": "<html>\r <head><title>403 Forbidden</title></head>\r <body>\r <center><h1>403 Forbidden</h1></center>\r </body>\r </html>\r <!-- a padding to disable MSIE and Chrome friendly error page -->\r <!-- a padding to disable MSIE and Chrome friendly error page -->\r <!-- a padding to disable MSIE and Chrome friend",
+    "ms": 244
+   },
+   "result": "http_403"
+  },
+  {
+   "ids": [
+    "TN-g5-03"
+   ],
+   "label": "TDEC DWR permits (APEX)",
+   "url": "https://dataviewers.tdec.tn.gov/dataviewers/f?p=2005:34001",
+   "tcp": {
+    "dns": "52.206.107.136",
+    "tcp": "ok",
+    "ms": 82
+   },
+   "http": {
+    "status": 403,
+    "final_url": "https://dataviewers.tdec.tn.gov/dataviewers/f?p=2005:34001",
+    "server": "awselb/2.0",
+    "content_type": "text/html",
+    "bytes_read": 520,
+    "cloudflare_challenge": false,
+    "head": "<html>\r <head><title>403 Forbidden</title></head>\r <body>\r <center><h1>403 Forbidden</h1></center>\r </body>\r </html>\r <!-- a padding to disable MSIE and Chrome friendly error page -->\r <!-- a padding to disable MSIE and Chrome friendly error page -->\r <!-- a padding to disable MSIE and Chrome friend",
+    "ms": 239
+   },
+   "result": "http_403"
+  },
+  {
+   "ids": [
+    "TN-g5-04"
+   ],
+   "label": "TDEC well driller reports (APEX)",
+   "url": "https://dataviewers.tdec.tn.gov/dataviewers/f?p=2005:39929",
+   "tcp": {
+    "dns": "52.206.107.136",
+    "tcp": "ok",
+    "ms": 79
+   },
+   "http": {
+    "status": 403,
+    "final_url": "https://dataviewers.tdec.tn.gov/dataviewers/f?p=2005:39929",
+    "server": "awselb/2.0",
+    "content_type": "text/html",
+    "bytes_read": 520,
+    "cloudflare_challenge": false,
+    "head": "<html>\r <head><title>403 Forbidden</title></head>\r <body>\r <center><h1>403 Forbidden</h1></center>\r </body>\r </html>\r <!-- a padding to disable MSIE and Chrome friendly error page -->\r <!-- a padding to disable MSIE and Chrome friendly error page -->\r <!-- a padding to disable MSIE and Chrome friend",
+    "ms": 240
+   },
+   "result": "http_403"
+  },
+  {
+   "ids": [
+    "TN-g5-05"
+   ],
+   "label": "TN contractor + QA licenses (Tableau CSV)",
+   "url": "https://data.tn.gov/t/Public/views/ContractorandQAdata/PublicDashboard.csv?:embed=y",
+   "tcp": {
+    "dns": "170.141.168.103",
+    "tcp": "ok",
+    "ms": 278
+   },
+   "http": {
+    "status": null,
+    "error": "URLError(TimeoutError('_ssl.c:1063: The handshake operation timed out'))",
+    "ms": 20117
+   },
+   "result": "http_error"
+  },
+  {
+   "ids": [
+    "FL-g3-06"
+   ],
+   "label": "Hillsborough Clerk daily indexes",
+   "url": "https://publicrec.hillsclerk.com/OfficialRecords/DailyIndexes/",
+   "tcp": {
+    "dns": "198.184.182.65",
+    "tcp": "fail",
+    "error": "TimeoutError('timed out')"
+   },
+   "http": {},
+   "result": "tcp_fail"
+  },
+  {
+   "ids": [
+    "FL-g3-01",
+    "FL-g3-02"
+   ],
+   "label": "DBPR licensee extracts landing",
+   "url": "https://www2.myfloridalicense.com/sto/",
+   "tcp": {
+    "dns": "104.16.151.108",
+    "tcp": "ok",
+    "ms": 142
+   },
+   "http": {
+    "status": 403,
+    "final_url": "https://www2.myfloridalicense.com/sto/",
+    "server": "cloudflare",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes_read": 5684,
+    "cloudflare_challenge": true,
+    "head": "<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"><meta name=\"robots\" content=\"noindex,nofollow\"><meta name=\"viewport\" content=\"width=device-width,initial-scal",
+    "ms": 127
+   },
+   "result": "cloudflare_challenge"
+  },
+  {
+   "ids": [
+    "FL-g3-01"
+   ],
+   "label": "DBPR construction licensee CSV",
+   "url": "https://www2.myfloridalicense.com/sto/file_download/extracts/CONSTRUCTIONLICENSE_1.csv",
+   "tcp": {
+    "dns": "104.16.151.108",
+    "tcp": "ok",
+    "ms": 30
+   },
+   "http": {
+    "status": 403,
+    "final_url": "https://www2.myfloridalicense.com/sto/file_download/extracts/CONSTRUCTIONLICENSE_1.csv",
+    "server": "cloudflare",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes_read": 5892,
+    "cloudflare_challenge": true,
+    "head": "<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"><meta name=\"robots\" content=\"noindex,nofollow\"><meta name=\"viewport\" content=\"width=device-width,initial-scal",
+    "ms": 126
+   },
+   "result": "cloudflare_challenge"
+  },
+  {
+   "ids": [
+    "FL-g3-02"
+   ],
+   "label": "DBPR electrical licensee CSV",
+   "url": "https://www2.myfloridalicense.com/sto/file_download/extracts/lic08el.csv",
+   "tcp": {
+    "dns": "104.16.151.108",
+    "tcp": "ok",
+    "ms": 34
+   },
+   "http": {
+    "status": 403,
+    "final_url": "https://www2.myfloridalicense.com/sto/file_download/extracts/lic08el.csv",
+    "server": "cloudflare",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes_read": 5829,
+    "cloudflare_challenge": true,
+    "head": "<!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"><meta name=\"robots\" content=\"noindex,nofollow\"><meta name=\"viewport\" content=\"width=device-width,initial-scal",
+    "ms": 112
+   },
+   "result": "cloudflare_challenge"
+  }
+ ]
+}

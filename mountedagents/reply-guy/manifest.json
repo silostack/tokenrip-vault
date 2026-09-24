@@ -1,0 +1,105 @@
+{
+  "manifestVersion": 1,
+  "slug": "reply-guy",
+  "display": {
+    "displayName": "Reply Guy",
+    "tagline": "Replies to the right posts with a take worth reading — grounded in your opinions, gated by your approval.",
+    "description": "An engagement agent for an X (Twitter) brand presence. It scouts posts via a logged-in Chrome session, only drafts a reply where it has a real opinion grounded in a semantically-searchable opinion workspace, and queues each draft for operator approval. A separate post command publishes approved replies; a consolidate ritual absorbs operator feedback into an evolving voice profile and matures the opinion corpus. Build a following by saying something worth saying, not by farming engagement.",
+    "capabilities": [
+      "Scouts X for postable conversations across search queries, the home timeline, and target accounts via logged-in browser",
+      "Only drafts where it has a real opinion grounded in a semantic opinion workspace — skips the rest",
+      "Queues every draft for operator review and approval before anything is posted",
+      "Publishes approved replies on a human-paced cadence and tracks status per post",
+      "Learns voice from operator feedback via a consolidate ritual, converging toward fewer edits over time"
+    ]
+  },
+  "brain": {
+    "artifacts": [
+      { "alias": "reply-guy-soul", "role": "soul" },
+      { "alias": "reply-guy-frameworks", "role": "frameworks" }
+    ]
+  },
+  "commands": [
+    {
+      "name": "scout",
+      "description": "Gather candidate posts, ground a reply in the opinion workspace, and queue drafts for approval.",
+      "playbook": "reply-guy-scout",
+      "default": true,
+      "scheduleHint": "several times a day"
+    },
+    {
+      "name": "post",
+      "description": "Publish operator-approved replies via logged-in Chrome, human-paced.",
+      "playbook": "reply-guy-post",
+      "default": false,
+      "scheduleHint": "hourly"
+    },
+    {
+      "name": "consolidate",
+      "description": "Absorb operator feedback into the voice profile and mature the opinion workspace.",
+      "playbook": "reply-guy-consolidate",
+      "default": false,
+      "scheduleHint": "weekly"
+    }
+  ],
+  "workspace": {
+    "maturityStates": ["seedling", "growing", "evergreen"],
+    "promotionRule": "min-backlinks-2"
+  },
+  "memoryTables": [
+    {
+      "slug": "reply-guy-posts",
+      "scope": "team",
+      "tableArtifactAlias": "reply-guy-posts-table",
+      "default": true,
+      "uniqueKey": ["tweet_id"],
+      "schema": [
+        { "name": "tweet_url", "type": "text" },
+        { "name": "tweet_id", "type": "text" },
+        { "name": "author", "type": "text" },
+        { "name": "original_text", "type": "text" },
+        { "name": "source", "type": "enum", "values": ["search", "home", "target"] },
+        { "name": "opinion_match", "type": "text" },
+        { "name": "generated_reply", "type": "text" },
+        { "name": "status", "type": "enum", "values": ["scouted", "approved", "posted", "skipped", "failed"] },
+        { "name": "feedback_note", "type": "text" },
+        { "name": "feedback_absorbed", "type": "enum", "values": ["no", "yes"] },
+        { "name": "scouted_at", "type": "text" },
+        { "name": "posted_at", "type": "text" }
+      ]
+    },
+    {
+      "slug": "consolidation-runs",
+      "scope": "operator-private",
+      "slugTemplate": "consolidation-runs-{operator_slug}",
+      "default": false,
+      "schema": [
+        { "name": "ran_at", "type": "text" },
+        { "name": "feedback_absorbed", "type": "text" },
+        { "name": "opinions_promoted", "type": "text" },
+        { "name": "voice_updated", "type": "enum", "values": ["yes", "no"] },
+        { "name": "notes", "type": "text" }
+      ]
+    }
+  ],
+  "memoryArtifacts": [
+    {
+      "logicalAlias": "voice",
+      "scope": "team",
+      "alias": "reply-guy-voice-seed",
+      "purpose": "Reply Guy's living voice profile — tone, vernacular, do/don't"
+    }
+  ],
+  "mountIntake": {
+    "starterArtifactAlias": "reply-guy-mount-starter"
+  },
+  "session": {
+    "ttlHours": 24,
+    "rateLimit": {
+      "perAgentPerHour": 60,
+      "perAgentPerDay": 500
+    },
+    "produceSessionOutput": true
+  },
+  "teamContext": "recommended"
+}

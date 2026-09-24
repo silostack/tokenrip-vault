@@ -1,0 +1,8 @@
+{
+  "id": "05c",
+  "name": "band-dust",
+  "seconds": 8,
+  "prompt": "The background is pure flat black and completely empty for the entire shot. No room, no floor, no horizon, no objects, no text, no logos, no numbers, no people. Only the glowing element described, isolated on black, as if shot in a blacked-out void. A single soft shaft of warm light raking across the frame at a shallow angle, with fine dust particles drifting slowly through it and catching the light. Continuous and steady for the entire shot. Static locked-off camera. Extremely dark, cinematic, high contrast.",
+  "model": "sora-2",
+  "size": "1280x720"
+}

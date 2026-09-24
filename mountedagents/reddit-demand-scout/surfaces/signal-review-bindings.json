@@ -1,0 +1,8 @@
+{
+  "reddit-signals": {
+    "kind": "mount_table",
+    "mountId": "9e43ae75-c361-45a7-8281-511644b85249",
+    "table": "reddit-signals",
+    "permissions": ["rows:read", "rows:patch"]
+  }
+}
