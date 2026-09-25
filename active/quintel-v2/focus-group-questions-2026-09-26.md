@@ -1,5 +1,5 @@
 ---
-status: v2.3, for David, 2026-09-25 (core five plus optional six; Q3 part 1 is now the two chains, two people versus one David)
+status: v2.4, for David, 2026-09-25 (core five plus optional six; Q3 part 1 is the two chains, part 2 is named, unnamed or asked)
 owner: Simon
 serves: the questions for David's weekend focus group (about 500 people, blue-collar, general audience), rewritten so every question is self-contained and tests an open decision in the outbound engine: who the sender is, what the first email says, what the reply to a "yes" says, how the call gets set up, and what makes a cold email look real
 tier: shareable with David as written
@@ -100,7 +100,7 @@ Both start with the same first email (Email B in Q2, "Your next vac truck, the m
 |---|---|
 | 1 | First email is from **Mike at Ironmark**. |
 | 2 | You reply: *"Yeah, I might be adding a unit. What would it look like?"* |
-| 3 | Twenty minutes later, from Mike at Ironmark: *"Thanks for getting back to me, Joe. David LaSaee, with one of the lenders we work with, will call you today at the number on your reply. If a specific time is easier, you can pick one here: **[link]**. Nothing is needed from you before the call."* |
+| 3 | Twenty minutes later, from Mike at Ironmark: *"Thanks for getting back to me, Joe. Someone from one of the lenders we work with will call you today at the number on your reply; I'll make sure they have your note. If a specific time is easier, you can pick one here: **[link]**. Nothing is needed from you before the call."* |
 | 4 | That afternoon your phone rings: *"Hi Joe, this is David LaSaee with Providence Capital Funding. Mike at Ironmark passed along your note about the vac truck."* |
 | 5 | After the call, David emails you a one-page credit application from his Providence Capital Funding address. |
 
@@ -116,7 +116,7 @@ Both start with the same first email (Email B in Q2, "Your next vac truck, the m
 
 **Which chain would you trust more?** ☐ Chain A ☐ Chain B ☐ Same
 
-**In Chain A, was there a step that felt off?** ☐ None ☐ Step 3 (the email naming David) ☐ Step 4 (the call) ☐ Step 5 (the application)
+**In Chain A, was there a step that felt off?** ☐ None ☐ Step 3 (the email promising a lender's call) ☐ Step 4 (the call) ☐ Step 5 (the application)
 
 **In Chain B, was there a step that felt off?** ☐ None ☐ Step 3 (the email) ☐ Step 4 (the call, where he says Providence) ☐ Step 5 (the application)
 
@@ -124,19 +124,24 @@ Both start with the same first email (Email B in Q2, "Your next vac truck, the m
 
 **In one line: why?** ________________________________
 
-### Part 2 · Told, or asked
+### Part 2 · Named, unnamed, or asked
 
-Two ways the email in Chain A, step 3 could bring David in. Which do you prefer?
+Three ways the email in Chain A, step 3 could set up the call. Which do you prefer?
 
-**Version 1** *(you are told)*
+**Version 1** *(the caller is named)*
 > David LaSaee, with one of the lenders we work with, will call you today at the number on your reply.
 
-**Version 2** *(you are asked)*
-> Mind if I have David LaSaee, with one of the lenders we work with, call you today? Reply "sure" and he'll call the number on your reply.
+**Version 2** *(the caller is not named)*
+> Someone from one of the lenders we work with will call you today at the number on your reply; I'll make sure they have your note.
 
-**I prefer:** ☐ Version 1 ☐ Version 2 ☐ No difference
+**Version 3** *(you are asked first)*
+> Mind if I have someone from one of the lenders we work with call you today? Reply "sure" and they'll call the number on your reply.
 
-**If you got Version 2, would you actually reply "sure"?** ☐ Yes ☐ Probably ☐ No, I'd let it drop
+**I prefer:** ☐ Version 1 ☐ Version 2 ☐ Version 3 ☐ No difference
+
+**Does knowing the caller's name in advance matter to you?** ☐ Yes, a lot ☐ A little ☐ No
+
+**If you got Version 3, would you actually reply "sure"?** ☐ Yes ☐ Probably ☐ No, I'd let it drop
 
 ### Part 3 · Sending the paperwork
 
@@ -341,7 +346,7 @@ Anything about Providence's rates or terms, anything about David's role at Provi
 | Question | Decision it feeds |
 |---|---|
 | Q2 | who the sender is on the 30 mailboxes: an Ironmark name or David (`outbound.md` §5b, T32) |
-| Q3 | the handoff design (`outbound.md` §5b, §5e): two people (an Ironmark sender hands to David at the lender) or one David with two hats, and at which step the switch feels wrong; told or asked before the call; whether people will send an application to Providence, to Ironmark, or not at all, and whether the partner line on the site helps |
+| Q3 | the handoff design (`outbound.md` §5b, §5e, §5f): two people (an Ironmark sender hands to the lender's rep) or one David with two hats, and at which step the switch feels wrong; whether the acknowledgment should name the caller (it goes out before we know who will call), or ask first; whether people will send an application to Providence, to Ironmark, or not at all, and whether the partner line on the site helps |
 | Q4 | whether the DOT-specific detail (the same specificity the first email opens with) keeps people reading or stops them |
 | Q5 | what the trust page must show before the first send |
 | Q6 | the honest referral line for the site and the "question" acknowledgment variant |
