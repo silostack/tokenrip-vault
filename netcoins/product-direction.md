@@ -58,6 +58,7 @@ related:
 |---|---|---|---|
 | 2026-09-22 | [Pavel/Kim/Jay call](calls/netcoins-call-notes-2026-09-22.md) | Netcoins operator group scoped a USDC-only, simple yield offering; wallet vendor and structure open; Kim owns regulator path. | Direct call record |
 | 2026-09-23 | [Fraser artifact v0.4.1](https://claude.ai/artifact/GUFQqVGxbCdkQTaWUQG6t7) | Consumer wallet direction recorded: Solana, Privy, USDC/USDT/BTC/SOL, CCTP/USDT0, Netcoins conversion, agent layer; QCAD out, BancoLibre passed. | Fraser-authored plan; joint acceptance unconfirmed |
+| 2026-09-23 | [Fraser artifact v0.4.2–v0.4.3](https://claude.ai/artifact/GUFQqVGxbCdkQTaWUQG6t7) | Phase 1 cross-chain narrowed to USDC on Base/Ethereum (CCTP); USDT Tether-native on Solana only, USDT0 to Phase 2. Every asset non-custodial: native BTC in Privy (est. +2–3 sprint-weeks), Convert settles atomically with Netcoins co-signing, Lightning self-custodial. Simon named engineering lead with "this week" items (Kora devnet, program redeploy + audit quote). | Fraser-authored plan; joint acceptance unconfirmed. Prep: [[netcoins/calls/fraser-roadmap-call-prep-2026-09-25]] |
 
 ## Tracking rule
 
