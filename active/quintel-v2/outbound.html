@@ -338,11 +338,11 @@ svg .tick{stroke:var(--line);stroke-width:1.2}
 <h4 style="margin-top:6px">The scheduling link</h4><p style="font-size:14px">David: people like picking a time, it creates an obligation, but a Calendly link in the first email might get caught in spam. The spam concern does not apply to an in-thread reply. Rule: <b>no link in the cold sequence; a link in the acknowledgment, second to the phone promise.</b> It writes the booked time to the ledger row. Drop it if bookings are under one in ten over the first 50 positives. Focus group Q12 (optional) tests the preference on Saturday.</p></div>
 </div>
 <div class="email" aria-label="Acknowledgment, variant I: Ironmark sender, interested reply">
-<p>Thanks for getting back to me, <span class="slot">[first name]</span>. I've copied <span class="slot h">David LaSaee</span>, who handles this for the businesses we work with; he'll call you <span class="slot">[today / tomorrow morning / Monday]</span> at <span class="slot">[phone]</span>. If a specific time works better, you can pick one here: <span class="slot">[link]</span>. Nothing is needed from you before the call.</p>
+<p>Thanks for getting back to me, <span class="slot">[first name]</span>. <span class="slot h">David LaSaee</span>, with one of the lenders we work with, will call you <span class="slot">[today / tomorrow morning / Monday]</span> at <span class="slot">[phone]</span>. If a specific time works better, you can pick one here: <span class="slot">[link]</span>. Nothing is needed from you before the call.</p>
 <p>[Ironmark sender]</p>
 <p class="foot">[postal address] · [opt-out line]</p>
 </div>
-<p class="muted">Variant I, under 90 words, the three parts in the order David gave them. Highlighted text is a slot; nothing is generated. Variant Q adds one sentence answering the question ("how did you get my information," "what is the catch") once Saturday says which line owners believe. Variant D, with David as sender, drops the introduction and speaks in the first person.</p>
+<p class="muted">Variant I, under 90 words. David is named as the lender's rep and not copied; the thread reaches him after the CRM check. Highlighted text is a slot; nothing is generated. Variant Q adds one sentence answering the question ("how did you get my information," "what is the catch") once Saturday says which line owners believe. Variant D, with David as sender, drops the introduction and speaks in the first person.</p>
 </article>
 
 <article class="stage human" id="sender">
@@ -357,13 +357,13 @@ svg .tick{stroke:var(--line);stroke-width:1.2}
 <polyline points="150,95 190,95" class="edge" marker-end="url(#ah3)"/><text x="170" y="86" class="elbl" text-anchor="middle">cold</text>
 <rect x="190" y="70" width="100" height="50" rx="6" class="chip"/><text x="240" y="91" class="h" text-anchor="middle">Owner</text><text x="240" y="108" class="sub" text-anchor="middle">replies "yes"</text>
 <polyline points="290,95 330,95" class="edge er" marker-end="url(#ah3)"/>
-<rect x="330" y="60" width="150" height="70" rx="6" class="chip soft-r"/><text x="405" y="82" class="h" text-anchor="middle">Acknowledgment</text><text x="405" y="100" class="sub" text-anchor="middle">introduces David,</text><text x="405" y="116" class="sub" text-anchor="middle">copies him, gives the day</text>
+<rect x="330" y="60" width="150" height="70" rx="6" class="chip soft-r"/><text x="405" y="82" class="h" text-anchor="middle">Acknowledgment</text><text x="405" y="100" class="sub" text-anchor="middle">names David as the</text><text x="405" y="116" class="sub" text-anchor="middle">lender's rep, gives the day</text>
 <polyline points="480,95 520,95" class="edge eh" marker-end="url(#ah3)"/>
 <rect x="520" y="70" width="60" height="50" rx="6" class="chip hm"/><text x="550" y="91" class="h" text-anchor="middle">David</text><text x="550" y="108" class="sub" text-anchor="middle">calls</text>
-<text x="20" y="160" class="li">✓ matches the spec as David wrote it</text>
+<text x="20" y="160" class="li">✓ the reveal happens in the acknowledgment, before the call, not at the SSN moment</text>
 <text x="20" y="180" class="li">✓ matches the 09-22 decision: own brand on top, Providence named after the CRM check</text>
 <text x="20" y="200" class="li">✓ From line names the business that sent it (CAN-SPAM truthful header)</text>
-<text x="20" y="220" class="li sub">Cost: display names on 30 mailboxes change (about an hour); the "who are you" question gets asked more</text>
+<text x="20" y="220" class="li sub">Cost: a real Ironmark person's name on the mailboxes (a founder now); display names change in an hour</text>
 <!-- variant D -->
 <rect x="620" y="70" width="130" height="50" rx="6" class="chip hm"/><text x="685" y="91" class="h" text-anchor="middle">"David"</text><text x="685" y="108" class="sub" text-anchor="middle">on an ironmark domain</text>
 <polyline points="750,95 790,95" class="edge" marker-end="url(#ah3)"/><text x="770" y="86" class="elbl" text-anchor="middle">cold</text>
@@ -375,11 +375,11 @@ svg .tick{stroke:var(--line);stroke-width:1.2}
 <text x="620" y="160" class="li">✓ one voice from first email to call; his suggestion on 09-22 was to test it</text>
 <text x="620" y="180" class="li tw">? From line: a Providence AE's name on our domain is a counsel question, not a copy choice</text>
 <text x="620" y="200" class="li tw">? "David at Providence" on our domain is the option the 09-22 call ruled out</text>
-<text x="620" y="220" class="li sub">Cost: the spec's "introduced and copied" line cannot run; Providence surfaces on the first call</text>
+<text x="620" y="220" class="li sub">Cost: David explains his own dual identity live on the call, or the switch lands with the credit application</text>
 </svg></div>
-<figcaption><span>Build both acknowledgment variants; let Saturday's focus group (sender A/B/C; lender first or a company that sends you to the lender) and David pick. Nothing is hard-wired.</span></figcaption></figure>
+<figcaption><span>Build both acknowledgment variants; let Saturday's focus group (Q2 sender A/B/C; Q3 the two chains side by side) and David pick. Nothing is hard-wired. Condition on variant I: the Ironmark sender is a real person the legitimacy check can find.</span></figcaption></figure>
 <div class="two">
-<div class="box"><h4>The handoff chain, under variant I</h4><ol><li>Owner replies; acknowledgment goes out from the Ironmark mailbox, David copied on his <b>Ironmark</b> inbox, not his Providence address</li><li>Ledger row created; David runs the CRM check</li><li>David calls, identifies as Providence, says the partner line</li><li>Credit application goes through Providence's own channel; Ironmark never holds an SSN, a bank statement or a guarantor's ID</li></ol><p class="muted">Copying David at Providence in step 1 would surface Providence before the CRM check, which is the collision the 09-22 call was about.</p></div>
+<div class="box"><h4>The handoff chain, under variant I</h4><ol><li>Owner replies; acknowledgment goes out from the Ironmark mailbox naming David as "with one of the lenders we work with." Nobody is copied</li><li>Ledger row created and David pinged; he runs the CRM check; the thread is forwarded to his Providence address once clear</li><li>David calls, identifies as Providence, says the partner line</li><li>Credit application goes through Providence's own channel; Ironmark never holds an SSN, a bank statement or a guarantor's ID</li></ol><p class="muted">Copying David at Providence in step 1 would surface Providence before the CRM check; copying him at an Ironmark address would contradict "he is with the lender." So no Cc.</p></div>
 <div class="box"><h4>Why the application stays with Providence</h4><ul><li>It is the pattern everywhere in lending: the intermediary stops at pre-qualification; LendingTree says so outright, Lendio adds a human who stays through the lender's application</li><li>The FTC Safeguards Rule now names "finders" and lead generators as financial institutions for consumer-purpose transactions; commercial EF is probably outside it, and holding no application data makes the question moot</li><li>An application taken by Ironmark is an application before the CRM check</li></ul><p class="muted">Weaker than it looks: EF brokers take one-page applications with SSNs from new borrowers every day, and the Fed's studies say owners' mistrust of online lenders is about spam, not data. Focus group Q3 measures comfort instead of assuming it.</p></div>
 </div>
 </article>
