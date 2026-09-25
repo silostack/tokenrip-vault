@@ -1,5 +1,5 @@
 ---
-status: v2, for David, 2026-09-25 (supersedes the 09-22 draft)
+status: v2.1, for David, 2026-09-25 (supersedes the 09-22 draft; core five plus optional six)
 owner: Simon
 serves: the questions for David's weekend focus group (about 500 people, blue-collar, general audience), rewritten so every question is self-contained and tests an open decision in the outbound engine: who the sender is, what the first email says, what the reply to a "yes" says, how the call gets set up, and what makes a cold email look real
 tier: shareable with David as written
@@ -8,13 +8,20 @@ relationship: decisions these answers feed are in `outbound.md` §5 (the acknowl
 
 # Focus group questions for the weekend
 
-**For David.** Twelve questions, each one complete on the page: the text people read is printed in full, the answers are boxes to tick, and there is one open line where the words matter. No calculators, no product demos, nothing that needs a screen. Every question can be read aloud, shown on a screen, or sent by text.
+**For David.** Five core questions and six optional ones. Each is complete on the page: the text people read is printed in full, the answers are boxes to tick, and there is one open line where the words matter. No calculators, no product demos, nothing that needs a screen. Every question can be read aloud, shown on a screen, or sent by text.
+
+**If the group only has time for five, run Q1 to Q6 and stop.** They decide things we have to build in the next ten days that real sends cannot tell us: who the sender is, what the reply to a "yes" says, whether specific details read as creepy, what makes the website look real, and what the honest answer to "what's the catch" is. Q7 to Q12 are worth asking if there is time; the first two weeks of real emails will answer most of them anyway.
 
 **Tell the group this once, before the questions:**
 
 > For every question, imagine you own a small company with a few trucks or machines, and this shows up on your phone. Answer as yourself. There are no right answers; we want to know what you would actually do.
 
 The names in the emails (Mike, Joe, Summit Equipment Finance) are stand-ins. Ironmark and Providence Capital Funding are real.
+
+---
+
+
+# Part 1 · The core five (plus the screener)
 
 ---
 
@@ -81,84 +88,7 @@ Read all three. Then answer below.
 
 ---
 
-## Q3 · The subject line
-
-Same email, three subject lines. Which one would you open?
-
-- ☐ **Your next vac truck, the monthly**
-- ☐ **Financing for your next truck**
-- ☐ **Quick question about your trucks**
-- ☐ I would not open any of them
-
-**In one line: why that one?** ________________________________
-
----
-
-## Q4 · "How did you get my information?"
-
-You wrote back and asked how they got your name. Here are three answers. Which one makes you keep reading, and which one makes you stop?
-
-**Answer 1**
-> Your company is listed in public business records. We look at those, nothing private.
-
-**Answer 2**
-> Your DOT registration is public. We saw you run two trucks out of Indiana.
-
-**Answer 3**
-> *(no explanation; the reply just moves on to the offer)*
-
-**Keeps me reading:** ☐ 1 ☐ 2 ☐ 3
-**Makes me stop:** ☐ 1 ☐ 2 ☐ 3
-
----
-
-## Q5 · "What's the catch?"
-
-You asked what the catch is. Two answers. Which one do you believe?
-
-**Answer 1**
-> We don't lend. When you want a real quote, a lender we work with calls you. They pay us a referral fee if it funds. You pay nothing to us.
-
-**Answer 2**
-> There's no catch. We help owners find financing.
-
-**I believe:** ☐ Answer 1 ☐ Answer 2 ☐ Neither
-
-**In one line: why?** ________________________________
-
----
-
-## Q6 · What you would actually do next
-
-Say Email B (from Mike at Ironmark) landed in your inbox and you were half interested. What would you actually do first? Pick one.
-
-- ☐ Nothing, and forget about it
-- ☐ Reply to the email
-- ☐ Google the company
-- ☐ Open the company's website on my phone
-- ☐ Ask ChatGPT or another AI whether the company is real
-- ☐ Ask a friend, my accountant or my mechanic
-- ☐ Something else: ____________
-
-**What on a website tells you a company is real?** List whatever comes to mind. ________________________________
-
----
-
-## Q7 · The name
-
-You see the name **Ironmark Equipment Partners** at the bottom of the email. Without looking anything up, what kind of company do you think that is?
-
-- ☐ A lender or finance company
-- ☐ An equipment dealer
-- ☐ An investment firm
-- ☐ A tool, parts or service brand
-- ☐ Can't tell
-
-**Does the name make you more or less likely to reply than "Summit Equipment Finance"?** ☐ More ☐ Less ☐ Same
-
----
-
-## Q8 · The email you get after you say yes
+## Q3 · The email you get after you say yes
 
 You replied to Email B: *"Yeah, I might be adding a unit. What would it look like?"* Twenty minutes later this comes back:
 
@@ -182,26 +112,66 @@ You replied to Email B: *"Yeah, I might be adding a unit. What would it look lik
 
 ---
 
-## Q9 · Who should send the first email
+## Q4 · "How did you get my information?"
 
-Here is a line from the company's website:
+You wrote back and asked how they got your name. Here are three answers. Which one makes you keep reading, and which one makes you stop?
 
-> We are not the lender. We send your request to a funding partner who has been doing this for over 20 years, and they call you.
+**Answer 1**
+> Your company is listed in public business records. We look at those, nothing private.
 
-**Does this line make you trust the company more, less, or the same?** ☐ More ☐ Less ☐ Same
+**Answer 2**
+> Your DOT registration is public. We saw you run two trucks out of Indiana.
 
-**If you had to pick, would you rather the first email came from:**
-- ☐ The lender itself (Email C, Providence)
-- ☐ A company like Ironmark that sends you to the lender (Email B)
-- ☐ No difference to me
+**Answer 3**
+> *(no explanation; the reply just moves on to the offer)*
+
+**Keeps me reading:** ☐ 1 ☐ 2 ☐ 3
+**Makes me stop:** ☐ 1 ☐ 2 ☐ 3
+
+---
+
+## Q5 · What you would actually do next
+
+Say Email B (from Mike at Ironmark, in Q2) landed in your inbox and you were half interested. What would you actually do first? Pick one.
+
+- ☐ Nothing, and forget about it
+- ☐ Reply to the email
+- ☐ Google the company
+- ☐ Open the company's website on my phone
+- ☐ Ask ChatGPT or another AI whether the company is real
+- ☐ Ask a friend, my accountant or my mechanic
+- ☐ Something else: ____________
+
+**What on a website tells you a company is real?** List whatever comes to mind. ________________________________
+
+---
+
+## Q6 · "What's the catch?"
+
+You asked what the catch is. Two answers. Which one do you believe?
+
+**Answer 1**
+> We don't lend. When you want a real quote, a lender we work with calls you. They pay us a referral fee if it funds. You pay nothing to us.
+
+**Answer 2**
+> There's no catch. We help owners find financing.
+
+**I believe:** ☐ Answer 1 ☐ Answer 2 ☐ Neither
 
 **In one line: why?** ________________________________
 
 ---
 
-## Q10 · The promise about the call
 
-Three versions of the same sentence from the reply in Q8. Which one do you believe most, and which one would you prefer?
+# Part 2 · Optional, if there is time
+
+*Q7 first if you can fit one more.*
+
+---
+
+## Q7 · The promise about the call
+
+Three versions of the same sentence from the reply in Q3. Which one do you believe most, and which one would you prefer?
 
 - **Version 1:** *"He'll call you today."*
 - **Version 2:** *"He'll call you within two hours."*
@@ -217,25 +187,20 @@ Three versions of the same sentence from the reply in Q8. Which one do you belie
 
 ---
 
-## Q11 · Setting up the call
+## Q8 · The subject line
 
-Two ways a company can answer your "yes, I'm interested." Which one do you prefer?
+Same email, three subject lines. Which one would you open?
 
-**Way 1**
-> What's the best number and time to reach you?
+- ☐ **Your next vac truck, the monthly**
+- ☐ **Financing for your next truck**
+- ☐ **Quick question about your trucks**
+- ☐ I would not open any of them
 
-**Way 2**
-> Pick a time that works for you here: **[link to a calendar]**
-
-**I prefer:** ☐ Way 1 ☐ Way 2 ☐ Either is fine
-
-**If the very first cold email (before you had replied to anything) already had a "pick a time" link in it, would that make you:** ☐ More likely to reply ☐ Less likely to reply ☐ No difference
-
-**When would you actually want the call?** ☐ Early morning, before 8 ☐ Mid-morning ☐ Lunch ☐ Afternoon ☐ After 6 pm ☐ Weekend
+**In one line: why that one?** ________________________________
 
 ---
 
-## Q12 · The bottom of the email
+## Q9 · The bottom of the email
 
 Same email, two endings. Which one looks more legitimate, and which one looks more like spam?
 
@@ -257,17 +222,66 @@ Same email, two endings. Which one looks more legitimate, and which one looks mo
 
 ---
 
+## Q10 · The name
+
+You see the name **Ironmark Equipment Partners** at the bottom of the email. Without looking anything up, what kind of company do you think that is?
+
+- ☐ A lender or finance company
+- ☐ An equipment dealer
+- ☐ An investment firm
+- ☐ A tool, parts or service brand
+- ☐ Can't tell
+
+**Does the name make you more or less likely to reply than "Summit Equipment Finance"?** ☐ More ☐ Less ☐ Same
+
+---
+
+## Q11 · Who should send the first email
+
+Here is a line from the company's website:
+
+> We are not the lender. We send your request to a funding partner who has been doing this for over 20 years, and they call you.
+
+**Does this line make you trust the company more, less, or the same?** ☐ More ☐ Less ☐ Same
+
+**If you had to pick, would you rather the first email came from:**
+- ☐ The lender itself (Email C, Providence)
+- ☐ A company like Ironmark that sends you to the lender (Email B)
+- ☐ No difference to me
+
+**In one line: why?** ________________________________
+
+---
+
+## Q12 · Setting up the call
+
+Two ways a company can answer your "yes, I'm interested." Which one do you prefer?
+
+**Way 1**
+> What's the best number and time to reach you?
+
+**Way 2**
+> Pick a time that works for you here: **[link to a calendar]**
+
+**I prefer:** ☐ Way 1 ☐ Way 2 ☐ Either is fine
+
+**If the very first cold email (before you had replied to anything) already had a "pick a time" link in it, would that make you:** ☐ More likely to reply ☐ Less likely to reply ☐ No difference
+
+**When would you actually want the call?** ☐ Early morning, before 8 ☐ Mid-morning ☐ Lunch ☐ Afternoon ☐ After 6 pm ☐ Weekend
+
+---
+
 ## For whoever runs the group
 
 - **One variable at a time.** Each question changes one thing (the sender, the subject, the ending). Don't combine questions or edit the texts; the comparison only works if the rest stays identical.
-- **Rotate the order of options** between groups so the first one shown does not win by default. Q2's A/B/C, Q4's 1/2/3 and Q10's 1/2/3 matter most.
+- **Rotate the order of options** between groups so the first one shown does not win by default. Q2's A/B/C, Q4's 1/2/3 and Q7's 1/2/3 matter most.
 - **Read the texts exactly as printed**, including the From and Subject lines. They are the product.
 - **Keep the three groups from Q1 separable** in the tallies: owners who have financed, owners who have not, everyone else.
 
 ## What we need back
 
 - Counts per option for every question, split by the three groups from Q1.
-- The one-line "why" answers **verbatim** for Q2, Q3, Q5, Q6, Q9 and the "what tells you a company is real" list in Q6. The words they use are the copy.
+- The one-line "why" answers **verbatim** for Q2, Q5, Q6, Q8 and Q11, and the "what tells you a company is real" list in Q5. The words they use are the copy.
 - How the group was recruited and how the questions were presented (read aloud, shown on a screen, sent by text).
 
 ## What we are not asking
@@ -278,11 +292,14 @@ Anything about Providence's rates or terms, anything about David's role at Provi
 
 | Question | Decision it feeds |
 |---|---|
-| Q2, Q9 | who the sender is on the 30 mailboxes: Ironmark name or David (`outbound.md` §5b, T32) |
-| Q3 | the subject line for the first send |
-| Q4, Q5 | the one-line answers in the "question" acknowledgment variant |
-| Q6, Q12 | what the trust page and the email footer must show before 10-06 |
-| Q7 | whether "Partners" reads as finance, dealer or investment firm (`site.md` §5) |
-| Q8 | whether introducing David in the acknowledgment reads as a handoff or a bait-and-switch |
-| Q10 | how the timeline promise is worded ("today" vs a window) and what a missed promise costs |
-| Q11 | the scheduling link: in the acknowledgment only, or also in the first email; when David should call |
+| Q2 | who the sender is on the 30 mailboxes: an Ironmark name or David (`outbound.md` §5b, T32) |
+| Q3 | whether introducing David in the acknowledgment reads as a handoff or a bait-and-switch; the one message the engine sends on its own |
+| Q4 | whether the DOT-specific detail (the same specificity the first email opens with) keeps people reading or stops them |
+| Q5 | what the trust page must show before the first send |
+| Q6 | the honest referral line for the site and the "question" acknowledgment variant |
+| Q7 | how the call promise is worded ("today" vs a window) and what a missed promise costs |
+| Q8 | the subject line for the first send (real sends will also answer this) |
+| Q9 | whether the compliance footer reads as legitimate or as spam (real sends will also answer this) |
+| Q10 | whether "Partners" reads as finance, dealer or investment firm (`site.md` §5) |
+| Q11 | the sender question asked directly; a check on Q2 |
+| Q12 | the scheduling link, in the acknowledgment only or also in the first email; when David should call |
