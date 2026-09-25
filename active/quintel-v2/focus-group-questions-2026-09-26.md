@@ -1,5 +1,5 @@
 ---
-status: v2.1, for David, 2026-09-25 (supersedes the 09-22 draft; core five plus optional six)
+status: v2.2, for David, 2026-09-25 (core five plus optional six; Q3 rebuilt as the three-part handoff question)
 owner: Simon
 serves: the questions for David's weekend focus group (about 500 people, blue-collar, general audience), rewritten so every question is self-contained and tests an open decision in the outbound engine: who the sender is, what the first email says, what the reply to a "yes" says, how the call gets set up, and what makes a cold email look real
 tier: shareable with David as written
@@ -10,13 +10,13 @@ relationship: decisions these answers feed are in `outbound.md` §5 (the acknowl
 
 **For David.** Five core questions and six optional ones. Each is complete on the page: the text people read is printed in full, the answers are boxes to tick, and there is one open line where the words matter. No calculators, no product demos, nothing that needs a screen. Every question can be read aloud, shown on a screen, or sent by text.
 
-**If the group only has time for five, run Q1 to Q6 and stop.** They decide things we have to build in the next ten days that real sends cannot tell us: who the sender is, what the reply to a "yes" says, whether specific details read as creepy, what makes the website look real, and what the honest answer to "what's the catch" is. Q7 to Q12 are worth asking if there is time; the first two weeks of real emails will answer most of them anyway.
+**If the group only has time for five, run Q1 to Q6 and stop.** They decide things we have to build in the next ten days that real sends cannot tell us: who the sender is, how the handoff to the lender works and where people will send paperwork, whether specific details read as creepy, what makes the website look real, and what the honest answer to "what's the catch" is. Q3 is three short parts; run all three. Q7 to Q12 are worth asking if there is time; the first two weeks of real emails will answer most of them anyway.
 
 **Tell the group this once, before the questions:**
 
 > For every question, imagine you own a small company with a few trucks or machines, and this shows up on your phone. Answer as yourself. There are no right answers; we want to know what you would actually do.
 
-The names in the emails (Mike, Joe, Summit Equipment Finance) are stand-ins. Ironmark and Providence Capital Funding are real.
+The names in the emails (Mike, Joe, Summit Equipment Finance) are stand-ins. Ironmark and Providence Capital Funding are real. Q3 names Providence on purpose: it tests the moment the lender is revealed.
 
 ---
 
@@ -88,9 +88,13 @@ Read all three. Then answer below.
 
 ---
 
-## Q3 · The email you get after you say yes
+## Q3 · The handoff, in three parts
 
-You replied to Email B: *"Yeah, I might be adding a unit. What would it look like?"* Twenty minutes later this comes back:
+You replied to Email B: *"Yeah, I might be adding a unit. What would it look like?"*
+
+### Part 1 · The email you get back
+
+Twenty minutes later this comes back:
 
 > **From:** Mike at Ironmark
 > **Cc:** David LaSaee
@@ -109,6 +113,40 @@ You replied to Email B: *"Yeah, I might be adding a unit. What would it look lik
 - ☐ Bait and switch; I'd want Mike to call
 
 **Would you rather:** ☐ David just calls me ☐ I pick a time on the link ☐ I get the numbers by email first
+
+### Part 2 · Copied in, or asked first
+
+Two ways Mike could bring David in. Which do you prefer?
+
+**Version 1** *(David is copied without asking; the email in Part 1)*
+> I've copied David LaSaee, who handles this for the businesses we work with; he'll call you today.
+
+**Version 2** *(you are asked first)*
+> Mind if I loop in David LaSaee, who handles this for the businesses we work with? Reply "sure" and he'll call you today at the number on your reply.
+
+**I prefer:** ☐ Version 1 ☐ Version 2 ☐ No difference
+
+**If you got Version 2, would you actually reply "sure"?** ☐ Yes ☐ Probably ☐ No, I'd let it drop
+
+### Part 3 · Sending the paperwork
+
+David calls. You talk for ten minutes and it sounds worth doing. He tells you he is with **Providence Capital Funding**, one of the lenders Ironmark works with, and asks for a one-page credit application: business name and address, your name and Social Security number, and three months of bank statements.
+
+**Where would you be comfortable sending it?** Pick one.
+- ☐ To David at his Providence Capital Funding email
+- ☐ Through Ironmark's website, the company that first emailed me
+- ☐ Either one
+- ☐ Neither; I'd want to see an office, or do it in person
+- ☐ I'd stop here and not send it
+
+**The first email said Ironmark. The paperwork goes to Providence. Does that bother you?** ☐ Yes ☐ A little ☐ No
+
+**Here is a line from Ironmark's website. Does it help?**
+> Ironmark works with a small number of funding partners. Providence Capital Funding is one of them. Your application goes to the partner, not to us.
+
+☐ Makes me more comfortable ☐ Less ☐ No difference
+
+**In one line: what would make you comfortable enough to send it?** ________________________________
 
 ---
 
@@ -286,14 +324,14 @@ Two ways a company can answer your "yes, I'm interested." Which one do you prefe
 
 ## What we are not asking
 
-Anything about Providence's rates or terms, anything about David's role at Providence, anything that requires a screen or a demo, and no question that describes the product instead of showing the exact text.
+Anything about Providence's rates or terms, anything about David's role at Providence beyond "he is with Providence" in Q3, anything that requires a screen or a demo, and no question that describes the product instead of showing the exact text.
 
 ## What each question decides (for us, not for the group)
 
 | Question | Decision it feeds |
 |---|---|
 | Q2 | who the sender is on the 30 mailboxes: an Ironmark name or David (`outbound.md` §5b, T32) |
-| Q3 | whether introducing David in the acknowledgment reads as a handoff or a bait-and-switch; the one message the engine sends on its own |
+| Q3 | the handoff design (`outbound.md` §5e): whether the acknowledgment reads as a handoff or a bait-and-switch; copy David unasked or ask first; whether people will send an application to Providence, to Ironmark, or not at all, and whether the partner line on the site helps |
 | Q4 | whether the DOT-specific detail (the same specificity the first email opens with) keeps people reading or stops them |
 | Q5 | what the trust page must show before the first send |
 | Q6 | the honest referral line for the site and the "question" acknowledgment variant |
