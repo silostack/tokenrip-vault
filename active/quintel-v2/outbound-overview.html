@@ -1,0 +1,235 @@
+<title>Ironmark Engine Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#F2F4F6; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6877; --line:#C8D0D8; --rule:#E3E8ED;
+  --im:#2F63A3; --im-soft:#DCE7F5;
+  --ld:#6D4C9F; --ld-soft:#EAE2F5;
+  --own:#1F7A4D; --own-soft:#DDF1E6;
+  --dv:#C2410C; --dv-soft:#FBE4D6;
+  --core:#EEF2F6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1318; --surface:#161D25; --ink:#E4EAF0; --muted:#93A2B1; --line:#33404D; --rule:#26313C;
+    --im:#74A6E0; --im-soft:#1B2A3D; --ld:#B294E3; --ld-soft:#2A2038; --own:#5CC592; --own-soft:#16301F;
+    --dv:#F0834A; --dv-soft:#3A2418; --core:#1B242E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1318; --surface:#161D25; --ink:#E4EAF0; --muted:#93A2B1; --line:#33404D; --rule:#26313C;
+  --im:#74A6E0; --im-soft:#1B2A3D; --ld:#B294E3; --ld-soft:#2A2038; --own:#5CC592; --own-soft:#16301F;
+  --dv:#F0834A; --dv-soft:#3A2418; --core:#1B242E; color-scheme:dark;
+}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15.5px;line-height:1.55}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:32px 64px;display:grid;gap:36px}
+h1{font-size:30px;line-height:1.15;margin:4px 0 0;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:21px;margin:0;font-weight:600;text-wrap:balance}
+h3{margin:0;font-size:16px;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:17.5px;max-width:72ch;margin:10px 0 0}
+.sub{color:var(--muted);max-width:76ch}
+.muted{color:var(--muted);font-size:13.5px;max-width:100ch}
+section{display:grid;gap:14px;scroll-margin-top:16px}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px}
+nav.toc a{font-size:13px;color:var(--ink);text-decoration:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--im);outline:none}
+figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.scroll{overflow-x:auto}
+.scroll svg{display:block;width:100%;height:auto;color:var(--ink)}
+figcaption{color:var(--muted);font-size:13px;margin-top:10px;display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+.key{display:inline-flex;align-items:center;gap:6px}
+.sw{width:14px;height:10px;border-radius:2px;display:inline-block}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:8px;align-content:start}
+.card.im{border-top:4px solid var(--im)} .card.ld{border-top:4px solid var(--ld)} .card.own{border-top:4px solid var(--own)} .card.dv{border-top:4px solid var(--dv)}
+.card p{font-size:14.5px}
+.card ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:600;background:var(--bg)}
+tr:last-child td{border-bottom:none}
+td.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.im{color:var(--im);font-weight:600} td.ld{color:var(--ld);font-weight:600} td.dv{color:var(--dv);font-weight:600} td.own{color:var(--own);font-weight:600}
+ol,ul{margin:0;padding-left:20px;display:grid;gap:6px}
+li{max-width:70ch}
+.rule{border-left:4px solid var(--dv);background:var(--surface);border-radius:10px;padding:14px 16px;display:grid;gap:6px}
+.rule b{font-size:15px}
+.note{color:var(--muted);font-size:13px;max-width:100ch;border-top:1px solid var(--rule);padding-top:14px}
+/* svg */
+svg text{fill:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:12.5px}
+svg .h{font-weight:600;font-size:13.5px}
+svg .sub{fill:var(--muted);font-size:11.5px}
+svg .lane{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;letter-spacing:.06em;font-weight:600}
+svg .n{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;fill:var(--muted)}
+svg .box{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+svg .core{fill:var(--core)}
+svg .band{fill:var(--bg);stroke:var(--line)}
+svg .band.im{fill:var(--im-soft);stroke:var(--im)} svg .band.ld{fill:var(--ld-soft);stroke:var(--ld)} svg .band.own{fill:var(--own-soft);stroke:var(--own)} svg .band.dv{fill:var(--dv-soft);stroke:var(--dv)}
+svg .chip{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+svg .chip.im{stroke:var(--im)} svg .chip.ld{stroke:var(--ld)} svg .chip.own{stroke:var(--own)} svg .chip.dv{stroke:var(--dv)}
+svg .soft-im{fill:var(--im-soft);stroke:var(--im)} svg .soft-ld{fill:var(--ld-soft);stroke:var(--ld)} svg .soft-own{fill:var(--own-soft);stroke:var(--own)} svg .soft-dv{fill:var(--dv-soft);stroke:var(--dv)}
+svg .tim{fill:var(--im)} svg .tld{fill:var(--ld)} svg .town{fill:var(--own)} svg .tdv{fill:var(--dv)}
+svg .edge{fill:none;stroke:var(--muted);stroke-width:1.5}
+svg .eim{stroke:var(--im)} svg .eld{stroke:var(--ld)} svg .eown{stroke:var(--own)} svg .edv{stroke:var(--dv)}
+svg .dashed{stroke-dasharray:5 4}
+svg .life{stroke:var(--line);stroke-width:1.2;stroke-dasharray:3 4}
+svg .ahp{fill:var(--muted)}
+svg .lbl{font-size:12px} svg .lbl.b{font-weight:600}
+svg .self{fill:var(--dv-soft);stroke:var(--dv)}
+@media (max-width:820px){.cards{grid-template-columns:1fr}.two{grid-template-columns:1fr}}
+</style>
+
+<div class="wrap">
+<header>
+<div class="eyebrow">Ironmark · Quintel v2 · how the engine works · for Simon, Alek and David · Sep 26, 2026</div>
+<h1>How the Ironmark Engine Works</h1>
+<p class="lead">Ironmark finds owners who are likely to buy equipment, emails them under its own name, and hands every real reply to the right lender with the context needed to call. The lender does everything from the call onward. A shared ledger records each step so both sides see the same thing and the referral is provable.</p>
+</header>
+
+<nav class="toc" aria-label="Sections"><a href="#glance">At a glance</a><a href="#who">Who is who</a><a href="#flow">The handoff, step by step</a><a href="#routing">Where a reply goes</a><a href="#timing">What the owner hears, and when</a><a href="#ledger">What David sees</a><a href="#split">People and software</a><a href="#launch">First send</a></nav>
+
+<section id="glance">
+<h2>At a glance</h2>
+<p class="sub">Six steps. The first two are Ironmark's. The check is David's. The handoff is where the lead changes hands. Everything after it belongs to the lender.</p>
+<figure><div class="scroll"><svg viewBox="0 0 1200 250" role="img" aria-label="Six boxes left to right: public records, Ironmark email, owner replies, book check, handoff, application and funding. A ledger bar underneath spans from the reply to funding." style="min-width:860px">
+<defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahp"/></marker></defs>
+<rect x="20" y="30" width="170" height="90" rx="8" class="chip"/><text x="105" y="58" class="h" text-anchor="middle">Public records</text><text x="105" y="78" class="sub" text-anchor="middle">DOT, permits, UCC filings,</text><text x="105" y="94" class="sub" text-anchor="middle">licenses, in six states</text>
+<polyline points="190,75 214,75" class="edge" marker-end="url(#a1)"/>
+<rect x="214" y="30" width="170" height="90" rx="8" class="chip im"/><text x="299" y="58" class="h tim" text-anchor="middle">Ironmark emails</text><text x="299" y="78" class="sub" text-anchor="middle">own domains, a named person,</text><text x="299" y="94" class="sub" text-anchor="middle">in the owner's own trade terms</text>
+<polyline points="384,75 408,75" class="edge" marker-end="url(#a1)"/>
+<rect x="408" y="30" width="170" height="90" rx="8" class="chip own"/><text x="493" y="58" class="h town" text-anchor="middle">Owner replies</text><text x="493" y="78" class="sub" text-anchor="middle">"might be adding a unit,</text><text x="493" y="94" class="sub" text-anchor="middle">what would it look like?"</text>
+<polyline points="578,75 602,75" class="edge" marker-end="url(#a1)"/>
+<rect x="602" y="30" width="170" height="90" rx="8" class="chip dv"/><text x="687" y="58" class="h tdv" text-anchor="middle">Book check</text><text x="687" y="78" class="sub" text-anchor="middle">David checks Providence's</text><text x="687" y="94" class="sub" text-anchor="middle">records; minutes</text>
+<polyline points="772,75 796,75" class="edge" marker-end="url(#a1)"/>
+<rect x="796" y="30" width="170" height="90" rx="8" class="chip ld"/><text x="881" y="58" class="h tld" text-anchor="middle">Handoff</text><text x="881" y="78" class="sub" text-anchor="middle">one email to the owner naming</text><text x="881" y="94" class="sub" text-anchor="middle">who calls, from which lender</text>
+<polyline points="966,75 990,75" class="edge" marker-end="url(#a1)"/>
+<rect x="990" y="30" width="190" height="90" rx="8" class="chip ld"/><text x="1085" y="58" class="h tld" text-anchor="middle">Call, application, funding</text><text x="1085" y="78" class="sub" text-anchor="middle">the lender's own process;</text><text x="1085" y="94" class="sub" text-anchor="middle">Ironmark never holds the application</text>
+<rect x="408" y="160" width="772" height="60" rx="8" class="soft-ld"/>
+<text x="794" y="185" class="h" text-anchor="middle">Shared ledger</text>
+<text x="794" y="205" class="sub" text-anchor="middle">one row per real reply · Ironmark writes the context, the lender writes what happened · the record the referral fee is paid on</text>
+<polyline points="493,120 493,160" class="edge dashed"/><polyline points="687,120 687,160" class="edge dashed"/><polyline points="881,120 881,160" class="edge dashed"/><polyline points="1085,120 1085,160" class="edge dashed"/>
+</svg></div>
+<figcaption><span class="key"><i class="sw" style="background:var(--im)"></i>Ironmark</span><span class="key"><i class="sw" style="background:var(--own)"></i>Owner</span><span class="key"><i class="sw" style="background:var(--dv)"></i>David</span><span class="key"><i class="sw" style="background:var(--ld)"></i>Lender and the shared record</span></figcaption></figure>
+</section>
+
+<section id="who">
+<h2>Who is who</h2>
+<div class="cards">
+<div class="card im"><h3 style="color:var(--im)">Ironmark</h3><p>The name on the email and the website. A real person at Ironmark (a founder) is the sender and answers anything before the call. Ironmark's site says plainly that it is not the lender, that it works with a small number of funding partners, and that the application goes to the partner.</p><ul><li>Finds and emails the owners</li><li>Sends the one handoff email after the check</li><li>Keeps the ledger and the suppression list</li><li>Holds no application, no SSN, no bank statements</li></ul></div>
+<div class="card dv"><h3 style="color:var(--dv)">David, at Providence</h3><p>The first lender on the panel. He is introduced by name, with Providence's name, in the handoff email once the book check is clear, and copied on it at his Providence address. From the call onward it is his process.</p><ul><li>Checks each reply against Providence's records</li><li>Calls the same day</li><li>Takes the application through Providence's own channel</li><li>Updates the ledger: contacted, application, approved, funded, and why not</li></ul></div>
+<div class="card ld"><h3 style="color:var(--ld)">The shared ledger</h3><p>One place both sides look. A row exists only when a real person has replied with interest, never for a name on a list. Ironmark fills in what it knows; David fills in what happens.</p><ul><li>The reply and the email it answered, on the row</li><li>The book-check result</li><li>Four flags with dates</li><li>Referral coded, fee reconciled monthly</li></ul></div>
+</div>
+</section>
+
+<section id="flow">
+<h2>The handoff, step by step</h2>
+<p class="sub">What happens between an owner replying and David's call. The book check comes before the owner hears anything back, so the one email they get already names the right person at the right lender.</p>
+<figure><div class="scroll"><svg viewBox="0 0 1200 640" role="img" aria-label="Sequence diagram with four lanes: owner, Ironmark, shared ledger, David at Providence. Ironmark emails the owner; the owner replies; a ledger row is created; David is pinged with the packet; David checks Providence's book and records the result; Ironmark sends the handoff email naming David and copying him at Providence; David calls the same day; the application runs through Providence; David updates the ledger; the referral is reconciled from the ledger." style="min-width:900px">
+<defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahp"/></marker></defs>
+<rect x="60" y="20" width="180" height="36" rx="6" class="band own"/><text x="150" y="43" class="lane town" text-anchor="middle">OWNER</text>
+<rect x="360" y="20" width="180" height="36" rx="6" class="band im"/><text x="450" y="43" class="lane tim" text-anchor="middle">IRONMARK</text>
+<rect x="660" y="20" width="180" height="36" rx="6" class="band ld"/><text x="750" y="43" class="lane tld" text-anchor="middle">SHARED LEDGER</text>
+<rect x="960" y="20" width="200" height="36" rx="6" class="band dv"/><text x="1060" y="43" class="lane tdv" text-anchor="middle">DAVID · PROVIDENCE</text>
+<line x1="150" y1="56" x2="150" y2="620" class="life"/><line x1="450" y1="56" x2="450" y2="620" class="life"/><line x1="750" y1="56" x2="750" y2="620" class="life"/><line x1="1060" y1="56" x2="1060" y2="620" class="life"/>
+<!-- 1 -->
+<polyline points="450,95 150,95" class="edge eim" marker-end="url(#a2)"/><text x="300" y="86" class="lbl" text-anchor="middle">1 · cold email, from a named Ironmark person, Ironmark domain</text>
+<!-- 2 -->
+<polyline points="150,135 450,135" class="edge eown" marker-end="url(#a2)"/><text x="300" y="126" class="lbl b" text-anchor="middle">2 · "might be adding a unit, what would it look like?"</text>
+<!-- 3 -->
+<polyline points="450,175 750,175" class="edge eim" marker-end="url(#a2)"/><text x="600" y="166" class="lbl" text-anchor="middle">3 · row created: business, state, equipment, the reply, the email it answered</text>
+<!-- 4 -->
+<polyline points="750,215 1060,215" class="edge eld" marker-end="url(#a2)"/><text x="905" y="206" class="lbl" text-anchor="middle">4 · ping with the packet (Slack, text)</text>
+<!-- 5 self -->
+<rect x="1000" y="240" width="120" height="44" rx="6" class="self"/><text x="1060" y="258" class="lbl b" text-anchor="middle">5 · checks the book</text><text x="1060" y="274" class="sub" text-anchor="middle">clear · in the book · pass</text>
+<!-- 6 -->
+<polyline points="1060,310 750,310" class="edge edv" marker-end="url(#a2)"/><text x="905" y="301" class="lbl" text-anchor="middle">6 · result on the row</text>
+<!-- 7 -->
+<polyline points="750,350 450,350" class="edge eld" marker-end="url(#a2)"/><text x="600" y="341" class="lbl" text-anchor="middle">7 · routing decided: who calls, from which lender</text>
+<!-- 8 -->
+<polyline points="450,395 150,395" class="edge eim" marker-end="url(#a2)"/><text x="300" y="378" class="lbl b" text-anchor="middle">8 · the handoff email, in the owner's thread</text><text x="300" y="410" class="sub" text-anchor="middle">"David LaSaee with Providence Capital Funding will call you today" · David copied at Providence · pick-a-time link</text>
+<polyline points="450,395 450,420 1060,420" class="edge eim dashed"/><text x="760" y="432" class="sub" text-anchor="middle">copy</text>
+<!-- 9 -->
+<polyline points="1060,465 150,465" class="edge edv" marker-end="url(#a2)"/><text x="600" y="456" class="lbl b" text-anchor="middle">9 · the call, same day (two-hour clock from the ping)</text>
+<!-- 10 -->
+<polyline points="150,505 1060,505" class="edge eown" marker-end="url(#a2)"/><text x="600" y="496" class="lbl" text-anchor="middle">10 · application through Providence's own channel; Ironmark never sees it</text>
+<!-- 11 -->
+<polyline points="1060,550 750,550" class="edge edv" marker-end="url(#a2)"/><text x="905" y="541" class="lbl" text-anchor="middle">11 · contacted → application → approved → funded, or why not</text>
+<!-- 12 -->
+<rect x="690" y="575" width="120" height="36" rx="6" class="soft-ld"/><text x="750" y="598" class="lbl b" text-anchor="middle">12 · referral reconciled</text>
+</svg></div>
+<figcaption><span>Steps 3, 4, 7 and 8 are software. Steps 5, 6, 9, 10 and 11 are David. Step 8 goes out only after step 6.</span></figcaption></figure>
+</section>
+
+<section id="routing">
+<h2>Where a reply goes</h2>
+<p class="sub">The book check decides the route. The owner gets one email either way, and it names whoever is actually going to call.</p>
+<figure><div class="scroll"><svg viewBox="0 0 1200 300" role="img" aria-label="A book-check box branches to four outcomes: clear goes to David at Providence; in Providence's book goes to the account's own rep through David; outside Providence's box or Providence passes goes to another lender on the panel; cannot verify the business is parked for a person." style="min-width:860px">
+<defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahp"/></marker></defs>
+<rect x="20" y="110" width="200" height="80" rx="8" class="chip dv"/><text x="120" y="142" class="h tdv" text-anchor="middle">Book check</text><text x="120" y="162" class="sub" text-anchor="middle">David, against Providence's</text><text x="120" y="178" class="sub" text-anchor="middle">records, before any reply goes out</text>
+<line x1="220" y1="150" x2="300" y2="150" class="edge"/><line x1="300" y1="45" x2="300" y2="255" class="edge"/>
+<polyline points="300,45 340,45" class="edge" marker-end="url(#a3)"/><polyline points="300,115 340,115" class="edge" marker-end="url(#a3)"/><polyline points="300,185 340,185" class="edge" marker-end="url(#a3)"/><polyline points="300,255 340,255" class="edge" marker-end="url(#a3)"/>
+<rect x="340" y="20" width="220" height="50" rx="6" class="soft-own"/><text x="450" y="41" class="h" text-anchor="middle">Clear</text><text x="450" y="59" class="sub" text-anchor="middle">most replies</text>
+<rect x="340" y="90" width="220" height="50" rx="6" class="chip"/><text x="450" y="111" class="h" text-anchor="middle">Already in Providence's book</text><text x="450" y="129" class="sub" text-anchor="middle">a customer, or another rep's account</text>
+<rect x="340" y="160" width="220" height="50" rx="6" class="chip"/><text x="450" y="181" class="h" text-anchor="middle">Not a Providence deal</text><text x="450" y="199" class="sub" text-anchor="middle">outside the box, or Providence passes</text>
+<rect x="340" y="230" width="220" height="50" rx="6" class="chip"/><text x="450" y="251" class="h" text-anchor="middle">Can't verify the business</text><text x="450" y="269" class="sub" text-anchor="middle">reply doesn't match a public record</text>
+<polyline points="560,45 620,45" class="edge" marker-end="url(#a3)"/><polyline points="560,115 620,115" class="edge" marker-end="url(#a3)"/><polyline points="560,185 620,185" class="edge" marker-end="url(#a3)"/><polyline points="560,255 620,255" class="edge" marker-end="url(#a3)"/>
+<rect x="620" y="20" width="560" height="50" rx="6" class="soft-dv"/><text x="634" y="41" class="h">David calls, as Providence</text><text x="634" y="59" class="sub">handoff email names David and Providence, copies him; same-day call; application through Providence</text>
+<rect x="620" y="90" width="560" height="50" rx="6" class="chip"/><text x="634" y="111" class="h">The account's own rep, through David</text><text x="634" y="129" class="sub">as David does today; Ironmark stops emailing that company; no referral claimed</text>
+<rect x="620" y="160" width="560" height="50" rx="6" class="soft-ld"/><text x="634" y="181" class="h tld">Another lender on the panel, by the agreed rule</text><text x="634" y="199" class="sub">handoff email names that lender's rep instead; same-day call promise applies to them too; until a second lender is seated, the lead waits</text>
+<rect x="620" y="230" width="560" height="50" rx="6" class="chip"/><text x="634" y="251" class="h">Parked; a person looks</text><text x="634" y="269" class="sub">nobody is called until the business reconciles with a filed record; this is how a fresh brand keeps fraud out</text>
+</svg></div>
+<figcaption><span>Which replies in "already in Providence's book" or "Providence passes" may go to another lender is a rule David agrees to once, not a per-lead decision.</span></figcaption></figure>
+</section>
+
+<section id="timing">
+<h2>What the owner hears, and when</h2>
+<div class="two">
+<div class="rule"><b>The check comes first, then the reply.</b><p style="font-size:14.5px">When a real reply lands, David gets the ping right away with everything on the row. The owner's reply email waits for his check. That way the one email they receive already says who is calling and from which lender, and David is copied at Providence with nothing to walk back later. If the check has not happened within an hour of his working day, the owner gets a plain "someone from one of the lenders we work with will call you today" so nobody is left waiting, and the named email follows the check.</p></div>
+<div class="tbl"><table><thead><tr><th>Reply received (Eastern)</th><th>The email promises</th></tr></thead><tbody>
+<tr><td class="num">Mon–Fri, 5:00 AM – 6:30 PM</td><td>a call today</td></tr>
+<tr><td class="num">Mon–Thu after 6:30 PM, or before 5:00 AM</td><td>a call tomorrow morning</td></tr>
+<tr><td class="num">Fri after 6:30 PM</td><td>a call Monday</td></tr>
+<tr><td class="num">Sat before 1:00 PM</td><td>a call today</td></tr>
+<tr><td class="num">Sat after 1:00 PM, and Sunday</td><td>a call Monday</td></tr>
+<tr><td class="num">Holidays and days David has blocked</td><td>next working day; David sets these himself</td></tr>
+</tbody></table></div>
+</div>
+<p class="muted">The email also offers a pick-a-time link after the phone promise, never in the first cold email. The promise and the two-hour reminder to David are driven by the same calendar, so the email never names a day he is not working.</p>
+</section>
+
+<section id="ledger">
+<h2>What David sees</h2>
+<div class="cards">
+<div class="card dv"><h3>His queue</h3><p>New replies not yet contacted, oldest first, with the clock running. On each row: the reply text, the email it answered, business name, state, equipment, years in business, fleet, any lien on file, the phone.</p></div>
+<div class="card dv"><h3>His columns</h3><p>The book-check result. Four flags with dates: contacted, application, approved or declined, funded or dead. The LeasePath id and whether the referral is coded. A reason code and one line on anything that dies.</p></div>
+<div class="card ld"><h3>The reconciliation</h3><p>Funded rows for the month with the referral fee due and paid. The row's timestamp is the attribution: the reply came through Ironmark before Providence's application date, and it funded within twelve months.</p></div>
+</div>
+</section>
+
+<section id="split">
+<h2>People and software</h2>
+<div class="two">
+<div class="card im"><h3>Software does</h3><ul><li>Finds the companies and writes the first email from public facts</li><li>Files every reply, creates the row, pings David</li><li>Sends the one handoff email after the check, with the right name in it</li><li>Stops emailing anyone who says stop, bounces, or is in Providence's book</li><li>Keeps the ledger and the numbers</li></ul></div>
+<div class="card dv"><h3>People do</h3><ul><li>David checks the book and records the result</li><li>David calls, quotes, takes the application, closes</li><li>The Ironmark sender answers any question an owner asks before the call</li><li>David writes why a lead died, which is how Ironmark learns what to send next</li></ul><p class="muted">No software ever talks to an owner on its own beyond the one handoff email.</p></div>
+</div>
+</section>
+
+<section id="launch">
+<h2>Before the first send</h2>
+<div class="tbl"><table><thead><tr><th>When</th><th>What</th><th>Whose</th></tr></thead><tbody>
+<tr><td class="num">now</td><td>Ironmark's website live with a real address, named people, and the funding-partners line naming Providence</td><td class="im">Ironmark</td></tr>
+<tr><td class="num">now</td><td>Whose name goes on the Ironmark emails, and David's working hours and days off</td><td>Ironmark, David</td></tr>
+<tr><td class="num">before 10-06</td><td>Ledger live: David's queue, his columns, the ping to his phone</td><td class="im">Ironmark</td></tr>
+<tr><td class="num">before 10-06</td><td>Reply handling and the handoff email working end to end on test replies</td><td class="im">Ironmark</td></tr>
+<tr><td class="num">10-06</td><td>First send, a few hundred a day, in the six states; volume rises as bounce and reply rates allow</td><td class="im">Ironmark</td></tr>
+<tr><td class="num">from 10-06</td><td>Same-day calls and ledger updates on every routed reply</td><td class="dv">David</td></tr>
+</tbody></table></div>
+<p class="note">This page is the plain version. The working design with every mechanism, the numbers behind it and the build order is a separate document. Names in examples (Joe, Mike) are stand-ins; Ironmark and Providence Capital Funding are real.</p>
+</section>
+</div>

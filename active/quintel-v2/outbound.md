@@ -16,7 +16,7 @@ Alek's model and the ledger describe two thirds of the engine. The send machine 
 Three decisions, made here:
 
 1. **Automate the sorting, never the conversation.** Classification, verification against the pool, suppression, the acknowledgment and the ping run without a human from day one. The conversation with the owner is David's, by hand. This is not a compromise between Alek's position (AI books the calls) and Simon's (all manual). At full volume the inbox is roughly 20–50 replies a day, of which two to four are positives (§3). The two to four are trivially manual. The rest are bounces, out-of-office, unsubscribes and no's, and hand-processing those is what actually breaks a domain. AI drafting of replies to prospects is off until the ledger holds 100 positives with David's reason codes; that is the data Simon said we need before deciding.
-2. **David's acknowledgment spec is a template with a clock, not an AI.** His three-line spec ("acknowledge, introduce me, copy me, give the timeline") is deterministic: one message, chosen by receipt time in Eastern, sent as a reply in the same thread from the mailbox the owner wrote to. No model writes it. §5 gives the rules and the four gaps in his spec that need his answer.
+2. **David's acknowledgment spec is a template with a clock, not an AI.** His three-line spec ("acknowledge, introduce me, copy me, give the timeline") is deterministic: one message, chosen by receipt time in Eastern, sent as a reply in the same thread from the mailbox the owner wrote to, after the book check so it names the right caller (§5g). No model writes it. §5 gives the rules and the four gaps in his spec that need his answer.
 3. **One database, two ledgers, one bridge.** Alek's stage-2 tables record every company and every send; that record is ours and private. David's ledger records one row per positive reply, and both sides write to it. They are different objects with different rules (`ledger.md` §4: "a lead is a row only after a person has replied positively, never a name from a list"). The reply machine is the only thing that creates a row in the second from the first. Quintel already has the second layer's schema (§4).
 
 The assumption everything here rests on: **positives arrive at roughly 3 per 1,000 sends** (Alek's number from David's test, ~1,000 sends, small sample). If it is 0.3, the reply machine is over-built and the problem is the list. If it is 30, David's five-applications-a-day ceiling binds in week two. Either way the machine below is the same; only the alert cadence changes.
@@ -195,6 +195,18 @@ Two flags, not one. Suppression stops *emailing* a collision company (no more se
 **What has to exist before any of this pays.** A second originator on the panel with a same-day call SLA, because the acknowledgment's "today" is a promise whoever calls. Today that is a thread (T31) with a lane conflict to settle, so collision leads park with a date until it is real. The design preserves the option at no cost: the row exists, the reason code is on it, and the routing table has a slot.
 
 Under the shared ledger, David sees Providence's rows only. A re-routed lead lives under the other originator's account (`registered_lead` is account-keyed), which is how the same database serves two lenders without either seeing the other's queue.
+
+### 5g. Check first, then acknowledge (Simon, 09-26)
+
+Supersedes the instant-acknowledgment rule in §5a and the unnamed-caller rule in §5f. The owner's reply email now waits for the book check. Sequence: reply lands → row created → David pinged with the packet → David checks Providence's records and marks the row (clear, in the book, pass) → routing decided → one email to the owner, in their thread, naming who calls and from which lender → the call.
+
+What this buys: the first thing the owner hears back already carries the right person and the right lender, so there is nothing to walk back, and David can be copied at his **Providence** address because Providence has been cleared by then. That restores David's original spec ("introduced in the same message and copied") without the collision leak that §5e option A had, and it makes the re-route in §5f invisible to the owner: the email simply names the other lender's rep instead.
+
+What it costs: the acknowledgment's latency is now David's check latency. At two to four positives a day and a ping to his phone, that is minutes when he is at his desk. The cap: if the check has not happened within one hour of his working day, the unnamed acknowledgment from §5f goes out ("someone from one of the lenders we work with will call you today") so nobody waits, and the named email follows the check. Outside his hours the reply waits for the morning, which the timeline rules in §5a already promise.
+
+The availability config in §6 now drives three things: the timeline promise, the two-hour re-ping, and the one-hour acknowledgment cap.
+
+Focus-group Q3 part 2 (named, unnamed, asked) still stands: it now tells us how much the named email is worth over the fallback, which decides how hard to hold the cap.
 
 ## 6. The rest of the moving parts
 
