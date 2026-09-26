@@ -2,8 +2,8 @@
 contact: David LaSaee
 company: Providence Capital Funding (contractor)
 call_type: firm-direct
-status: terms negotiation, domain decision reversed — 09-22 call re-litigated branding and settled on **own-brand domains** (not Providence-branded), overriding the 09-19 close, on the strength of real send data (Quintel-domain emails getting replies, Providence-domain emails getting zero). Fee structure (12.5% to $7K GM, flat 10% above, ~$1,000 cap) and the pre-tax payment mechanism for David are still unresolved after three-plus calls. Gate is still on our side: do the economics clear our cost — still unmodeled.
-last_contact: 2026-09-22
+status: ops locked for 10-06 send, commercials still unsigned — 09-26 locked send calendar (~600/day from 10-06, skip 10-12), two-step handoff + Slack CRM check, vendor dials Monday on Alek's ~73 list. Own-brand Ironmark stays; v1 visuals = yellow iron. Fee structure (12.5% to $7K GM, flat 10% above, ~$1,000 cap) and pre-tax payment for David still unresolved after five-plus calls. New collision: David told us to take existing-PCF CRM hits to a *different lender*. Gate still on our side: economics unmodeled.
+last_contact: 2026-09-26
 sensitivity: David asked not to be recorded on 09-03; keep his quotes internal
 ---
 
@@ -29,6 +29,9 @@ Contractor paid by Providence, listed as Account Manager (Brea, CA). Not a phone
   — Simon + Alek + David, 112 min, Saturday, prep [[active/quintel-v2/tearsheet_2026-09-19]] (largely unexecuted). David opened Providence's books to kill the Max rev-share and substitute his own model. Headlines: **Providence runs at break-even** (Aug $758K GM → 50% to AEs/Max → ~$375K vs ~$200K+ opex; break-even ~$300K/mo; owners' profit is 60% back-end residuals five years out, shifted from 70-30 to 40-60 in 2.5 years; revenue flat-to-declining). Max's rev share **never approved and never will be** — 2–3% of the house 50% "a possibility," 15–30% "dead on arrival." His counter: **as an AE he can unilaterally book a deal as a referral and the company pays a referral fee, capped ~$1,000, 100% to Quintel, plus a share of his own 45%, in writing, he signs it** — no owner approval needed. He materially walked back his own 09-10 "25% of funded value / $300 CPI" anchor. Also delivered: vendor ICP criteria (outskirts, no lender on the website, target the *salespeople*), the Danny Stewart headwind (27 vendors in 14 years, 6 constant), the trade-show playbook (perimeter booths, 5–7 touch pre-show, Pack Expo Chicago, season ends end of October), and the vendor differentiation answer (rebuild their websites + backlinks — his Advanced Innovative Technologies and Quantum J's Canning proofs). Vendors = 70% of August business. Asks: 200 Providence-branded domains with cost-share, exclusivity to one lender, Max kept whole at 5%. Next call = the deal call.
 - **2026-09-22**: [[bd/calls/transcripts/david-lasaee-2026-09-22]] · [[bd/calls/notes/david-lasaee-2026-09-22]]
   — Simon + Alek + David. Largely re-litigated ground from 09-10/09-16/09-19: full process walkthrough from zero (David asked again whether Max ever went through it), dedup/compliance risk of a 70K-send blast against Providence's 32K-customer book (4,800 currently active/off-limits), UCC-state availability (bulk only in FL/CO/CT; TX/IN/MI/OH gated or unavailable), and the 12.5%-to-$7K / flat-10%-above fee tiers (still needing a higher band for large-GM deals) plus the pre-tax payment mechanism for David (still no answer — phase 1/2/3 proposed). **New and consequential: the domain-branding decision flipped.** 09-19 had closed in favor of Providence-branded domains; this call reopened it and settled on **own-brand domains instead**, driven by real data — the live Quintel-domain send has gotten replies, the live Providence-domain send has gotten zero. Branding style (finance-forward vs. blue-collar-general) still unresolved, to be focus-group tested this weekend (500–1,000 people, A/B/C: finance-forward / blue-collar-general / Providence-branded). Landing-page clarity flagged as a real gap (Alek: Providence's site has a much clearer CTA than the draft site sent). Target date for first mass batch: ~2026-10-06 (2-week domain warm). Next: Alek sends NC list + vendor list; David take the 60–70 vendor list, dedupe, start calling; Simon/Alek send focus-group questions; Simon/Alek land on the brand name.
+
+- **2026-09-26**: [[bd/calls/transcripts/david-lasaee-2026-09-26]] · [[bd/calls/notes/david-lasaee-2026-09-26]]
+  — Simon + Alek + David, ~145 min, Saturday, immediately before David's $45k JP Chase focus groups. Locked: first send **2026-10-06** at ~600/day (30 mb × 20; second round warming for redundancy); skip 10-12; David forecasts *sustainable* inbound **mid-January**. Ironmark v1 = yellow-iron visuals (packaging/PhD ICP is a later skin; Approve-style vendor comfort). Two-step copy still 50/50 ("help you finance" vs "work with financing partners"); **do not ask for phone on touch one** (Apex X Logistics 439 FICO / 11 hard inquiries is why the Max handoff "worked"). Handoff script: Slack CRM check on every positive; if already PCF and not David's book, **place elsewhere**; call as "Alex told me to call" or marketing-vs-finance platform. Vendor list ~73 (8 already in PCF) — DMs this weekend, **calls Monday 09-29**. Commercials not reopened.
 
 ## Running Intelligence
 
@@ -79,7 +82,35 @@ Cumulative 250–300 calls across FL/WI/OH, zero applications vs. 2% baseline (s
 **Price anchors he set.** Raw leads $3–4. Applications ~$10; "$100 an application — who's going to pay that." Then argued against his own framing: "**forget the application — funded deals.**"
 
 
+### 2026-09-26 — send calendar, two ICPs, handoff specified, exclusivity cracked
+
+**Buyer search path (his, repeated live).** Equipment noun first (`dozer`, `grinder`), then price, then Marketplace/Trader sites with their own calculators. Finance is not in the first query. They never search "equipment" — they search the machine. SERP for `dump truck financing` ≠ `filling machine financing`; Providence ranks on packaging because Max sold it (<3% of book), yellow iron is page 15–16. Google will sell 30-day "for sale" lookbacks, not last-five-minutes live intent.
+
+**Two ICPs.** (1) Hands / yellow iron / construction. (2) Packaging / robotics / AI, 2–6 people, no CFO, PhDs who will "turn their noses up" at bulldozer imagery. Visuals > name. v1: commit Ironmark to iron; second skin later. Approve / eCurrency as the vendor-comfort pattern (service, not a competitors' club). Hide common ownership with Quintel/PCF.
+
+**Calendar.** Warm from 09-22. First send **Tue 10-06**, ~600/day (30×20, heading to 750–900). Skip **10-12**. Dead: ~11-17 through 11-30, after 12-15. Sustainable inbound in his mouth: **mid-January**. Lucky conversions before that are allowed.
+
+**Vendor near-term revenue.** Alek's ~73 US outskirts list: 8 already in PCF, rest being DM-mapped this weekend, **calls Monday 09-29**. Kill if OEM-owned (CAT et al. keep the local name, captive financing). Non-US: only bankable + US face; PCF floats 10–20M of its own money as interim; China +17 weeks; Max's China trip is not a channel.
+
+**Ascending-company markers, from All American Septic (East Dublin GA, 9 funded deals) vs Indiana septic that told him to F off:** real website, Google image footprint, consistent site traffic, search volume that is both *up* and *from a non-trivial base* (25→50, not 3→15), live phone traffic. Chicken-and-egg: need the company first. Simon's correct push: start from labeled repeaters, not 10k scraped sites.
+
+**Copy / handoff (working spec, FG to confirm).**
+- Subject = hello; intent noun in subject when we have it. Language: DOT not FMCSA; **terms / financing options, not rate**.
+- Touch 1: gauge interest, same-channel reply. Do **not** ask for a phone number (Apex X Logistics: 439 FICO, 11 hard inquiries, collections — that's who gives a number on email one).
+- Touch 2 after Slack CRM check (minutes, not 24h). If already PCF and not David's: **place with another lender**. If David's: profit-share. Call: "Alex told me to call" if Alek-signed; "marketing platform / finance platform" if David-signed.
+- Four reply modes to support: text, email, you-call, they-call-to-verify. Permissioned holiday nurture (Happy Holidays, not Christmas).
+- Day-one "we shop 10 lenders" is a lie. Alek named it. Unresolved vs Simon's LendingTree frame.
+
+**Do not build:** fake-review bots (David volunteered AU/UK/NZ; he said illegal in US).
+
 ## Relationship / Pipeline State
+
+### 2026-09-26 update
+**Ops calendar is real; the contract is not.** 10-06 send, 09-29 vendor dials, standing Sat + optional Wed, Slack CRM gate — all agreed in the room. The 09-19 signable instrument, the 45% share, the pre-tax mechanism, and exclusivity were not mentioned. New: he *instructed* us to take existing-PCF hits off-Providence so we get paid — that is a de facto non-exclusivity for CRM collisions, and it was not reconciled with "it has to be targeted to one company."
+
+**What he is expecting next:** FG results shared back, copy locked before 10-06, Slack that answers in minutes, vendor-list polish (Alek's sheets "don't look easy"), Saturday 30-min standing.
+
+**Ownership on our side:** Simon — economics model (overdue) + labeled-repeater feature work if David feeds the 9-deal names. Alek — send infra, copy variants, vendor-sheet hygiene, calendar.
 
 ### 2026-09-22 update
 **Branding decision reversed on data, economics still open.** 09-19 looked like it had closed the domain-branding question in favor of Providence-branded domains, built around David's attribution mechanism. 09-22 reopened it and landed on own-brand domains instead — a legitimate, evidence-driven reversal (live send data: Quintel domains get replies, Providence domains get none), not indecision. But it means the attribution/dedup mechanism from 09-19 ("we own the domains → Providence-branded email → replies land with us") needs to be re-derived for an own-brand domain, since that mechanism assumed Providence branding did the trust-building work. **This is unresolved and should be surfaced before domains go live.** Separately, the fee-tier arithmetic (#28 from 09-19) and the pre-tax payment mechanism have now been raised across four consecutive calls (09-10, 09-16, 09-19, 09-22) without landing — a pattern worth naming directly to David rather than re-opening cold each time.
@@ -105,7 +136,10 @@ Cumulative 250–300 calls across FL/WI/OH, zero applications vs. 2% baseline (s
 | 7 | This motion has a fallback if David does not | **inferred, low.** One 1099 contractor with other clients who raised his own mortality unprompted | Ask him to name one other AE or client who could absorb the flow |
 | 8 | Providence's owners fund the ListPad API at ~$200K/mo revenue | his claim, unconfirmed; Lee and Horn have never been in the room | Not worth testing until the revenue exists; manual entry is his cost until then |
 | 9 | Attribution is verifiable | **downgraded back to medium, 09-22** — the 09-19 mechanism assumed Providence-branded domains; 09-22 switched to own-brand domains without re-deriving how attribution/trust-building works without the Providence name doing the work | Ask directly: with own-brand domains, what tells David a reply is a Quintel-sourced lead vs. noise, and what tells Providence's CRM the deal came through this channel? |
-| 10 | The 12.5%/flat-10% fee tiers (plus ~$1,000 cap) clear Quintel's cost to generate a funded deal | **still unmodeled as of 09-22** — same gap as assumption #1, raised across four calls (09-10, 09-16, 09-19, 09-22) without being run against actual cost-per-contact | Run the model before the next call; stop re-opening the number cold each time |
+| 10 | The 12.5%/flat-10% fee tiers (plus ~$1,000 cap) clear Quintel's cost to generate a funded deal | **still unmodeled as of 09-26** — same gap as assumption #1, now five calls | Run the model before next Saturday; put it on the standing-meeting agenda |
+| 11 | Day-one copy can claim "lending partners" / best-match while the only funder is Providence | **inferred, contested on-call** (Alek: "still a lie"; Simon: frame as value-add; David: be honest up front) | FG will pick a preference; we still have to decide whether we *fulfill* multi-lender. Do not ship the winning lie |
+| 12 | Digital-footprint / search-lift predicts fundable growth | **inferred, medium** — All American Septic is n=1 labeled success vs Indiana septic failures | Ask David for the 10–15 repeat-funded names (the labeled set). Do not scrape 10k sites first |
+| 13 | Exclusivity still holds after "take CRM hits to another lender" | **contradicted on-call, unresolved** | Put both sentences in front of him next Saturday and pick one |
 
 ## Open Commitments
 
@@ -152,14 +186,19 @@ Cumulative 250–300 calls across FL/WI/OH, zero applications vs. 2% baseline (s
 | 39 | Resend narrowed target-states list | David | 2026-09-22 *(inferred)* | New |
 | 40 | Reach 1,000 calls and tabulate connect rate by SIC across the three industries | David | ~2026-09-26 (his "next seven days") | New |
 | 41 | Send North Carolina list | Alek | 2026-09-22 | New |
-| 42 | Send vendor list (60–70, dead-on ICP fit) | Alek | 2026-09-22/23 *(inferred)* | New — "mostly built," to be sent first |
-| 43 | Dedupe the 60–70 vendor list against Providence's DB, then start calling | David | after #42 | New |
-| 44 | Send focus-group questions (branding A/B/C test: finance-forward / blue-collar-general / Providence-branded) | Simon / Alek | 2026-09-23 *(inferred, before Saturday focus groups)* | New |
-| 45 | Run 500–1,000-person focus groups on branding + copy, report results | David | weekend of 2026-09-26/27 | New |
-| 46 | Land on own-brand name (blue-collar-general per Simon vs. equipment-finance-focused per Alek) | Simon + Alek | before domains are bought | New — unresolved on-call, Alek deferred to David as tiebreaker but no decision made |
-| 47 | Re-derive attribution/dedup mechanism for own-brand domains (the 09-19 mechanism assumed Providence branding) | Simon + Alek | before domains go live | New — see assumption #9 |
-| 48 | Model the 12.5%/flat-10% fee tiers against actual cost-per-contact before finalizing | Simon | before next call | New — 4th time this has been raised without being modeled (see assumption #10) |
-| 49 | Buy/warm domains, target first mass-batch send ~2026-10-06 | Simon / Alek | 2026-10-06 *(David/Alek's stated 2-week timeline)* | New |
+| 42 | Send vendor list (60–70, dead-on ICP fit) | Alek | 2026-09-22/23 *(inferred)* | **Done** — ~73 sent; 8 already in PCF |
+| 43 | Dedupe the 60–70 vendor list against Providence's DB, then start calling | David | **2026-09-29** | In progress — 8 pulled; DMs this weekend; calls Monday |
+| 44 | Send focus-group questions (branding A/B/C test: finance-forward / blue-collar-general / Providence-branded) | Simon / Alek | 2026-09-23 *(inferred, before Saturday focus groups)* | **Done** — copy variants emailed on 09-26 call; FG running that afternoon |
+| 45 | Run 500–1,000-person focus groups on branding + copy, report results | David | weekend of 2026-09-26/27 | **In progress** — $45k JP Chase session 09-26 afternoon |
+| 46 | Land on own-brand name (blue-collar-general per Simon vs. equipment-finance-focused per Alek) | Simon + Alek | before domains are bought | **Closed 09-26 as Ironmark / yellow-iron v1**; packaging is a later skin. Visuals still FG-tested |
+| 47 | Re-derive attribution/dedup mechanism for own-brand domains (the 09-19 mechanism assumed Providence branding) | Simon + Alek | before domains go live | **Partially specified 09-26** — Slack CRM check before touch 2; remaining: what the CRM records as source, and the other-lender path on hits |
+| 48 | Model the 12.5%/flat-10% fee tiers against actual cost-per-contact before finalizing | Simon | before next Saturday | Still open — 5th call without a model |
+| 49 | Buy/warm domains, target first mass-batch send ~2026-10-06 | Simon / Alek | **2026-10-06** | Warm from 09-22; 30 mailboxes; ~600/day day one; skip 10-12 |
+| 50 | Standing Sat 30-min + optional mid-week (Wed-ish) | Alek | this week | New 09-26 |
+| 51 | Slack (then a three-person platform) for positive-reply → David CRM check in minutes | Simon / Alek | before 10-06 | New 09-26 |
+| 52 | Reconcile exclusivity vs "place existing-PCF hits with another lender" | Simon + David | next Saturday | New 09-26; see assumption #13 |
+| 53 | Ask David for 10–15 labeled repeat-funded names (All American Septic pattern) | Simon | next Saturday | New 09-26 |
+| 54 | Second mailbox round for burn redundancy | Alek | warming from 09-26 | New 09-26 |
 | — | Prior items (agenda email, campaign numbers, our numbers, hand-count) | | | Done / closed 09-02–03 |
 
 ### 2026-09-09 — v2 call report back in one day
