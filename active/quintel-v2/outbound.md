@@ -183,6 +183,8 @@ It changes two things in the chain.
 
 **The acknowledgment does not name the rep.** It goes out before the CRM check, and about a fifth of the time the caller will not be David. Naming him and then sending a correction to a fifth of positives is worse than not naming him. So the acknowledgment says "someone from one of the lenders we work with will call you today," and whoever calls introduces themselves. Whether a named rep in the acknowledgment matters to trust is the focus group's job (Q3 part 2, three versions). Variant I in §5d is rewritten accordingly; the named version stays as an option if the group says the name matters and the collision rate turns out low.
 
+**Update 09-26:** David said it himself on the call: a collision lead should go to a different lender, "otherwise you're not going to make money," with profit sharing if it is his own customer. The typed rule below stands; the nine-month class no longer waits on a hypothetical yes. Put it in the written referral terms; do not re-open it on a call. It is still his position, not ownership's.
+
 **The re-route rule has types, and David says yes to it.** The CRM check is information David gives us to protect himself inside Providence. Routing Providence's existing customer to Providence's competitor on the strength of his own check is the "David's partner is stealing our accounts" story with a different lender's name on it, and if it surfaces it lands on him.
 
 | CRM check result | Phase 1 rule | Later |
@@ -198,9 +200,11 @@ Two flags, not one. Suppression stops *emailing* a collision company (no more se
 
 Under the shared ledger, David sees Providence's rows only. A re-routed lead lives under the other originator's account (`registered_lead` is account-keyed), which is how the same database serves two lenders without either seeing the other's queue.
 
-### 5g. Check first, then acknowledge (Simon, 09-26)
+### 5g. Check first, then hand off (Simon, 09-26; amended after the David call the same day)
 
-Supersedes the instant-acknowledgment rule in §5a and the unnamed-caller rule in §5f. The owner's reply email now waits for the book check. Sequence: reply lands → row created → David pinged with the packet → David checks Providence's records and marks the row (clear, in the book, pass) → routing decided → one email to the owner, in their thread, naming who calls and from which lender → the call.
+**Amendment (09-26, after the call, `call-analysis-2026-09-26.md` §3):** the check gates the *handoff*, not the *acknowledgment*. David's rule is a response within minutes ("8:47 pm … 8:49"), so the instant reply from §5f goes out at once, names no lender, and asks one low-friction question back (what are you looking at, or how would you like to talk). The handoff email that names the rep and the lender, and copies the rep at Providence, waits for the check. Everything below about latency and the cap applies to the handoff, not to the first reply.
+
+Original text: supersedes the instant-acknowledgment rule in §5a and the unnamed-caller rule in §5f. The owner's reply email now waits for the book check. Sequence: reply lands → row created → David pinged with the packet → David checks Providence's records and marks the row (clear, in the book, pass) → routing decided → one email to the owner, in their thread, naming who calls and from which lender → the call.
 
 What this buys: the first thing the owner hears back already carries the right person and the right lender, so there is nothing to walk back, and David can be copied at his **Providence** address because Providence has been cleared by then. That restores David's original spec ("introduced in the same message and copied") without the collision leak that §5e option A had, and it makes the re-route in §5f invisible to the owner: the email simply names the other lender's rep instead.
 
@@ -209,6 +213,18 @@ What it costs: the acknowledgment's latency is now David's check latency. At two
 The availability config in §6 now drives three things: the timeline promise, the two-hour re-ping, and the one-hour acknowledgment cap.
 
 Focus-group Q3 part 2 (named, unnamed, asked) still stands: it now tells us how much the named email is worth over the fallback, which decides how hard to hold the cap.
+
+### 5h. The conversational layer (added after the 09-26 call)
+
+What the call settled: the first reply opens a short conversation. Owners ask the rate first and cannot get it by email; they ask who we are and how we got their name; many will say "text me"; and nobody commits $50–75K to someone they have not spoken to. The engine therefore carries a small, fixed, human-sent conversation before the handoff and moves to voice as soon as the owner allows.
+
+- **Templates, not drafting.** Six question sub-classes (rate, who are you, how did you get my name, who is the lender, send me information, channel preference) each with a fixed answer and slots, sent by a person with one click from the takeover inbox. The rate answer is David's: terms depend on time in business and credit; a ten-minute call gets a real number. The rule in §3c (no AI-drafted replies until 100 labeled positives) is unchanged; templates are not drafting.
+- **After "interested," no more back-and-forth.** The next message is the handoff (after the check). The conversation is pre-positive.
+- **Channels.** Email now; SMS in weeks 3–4 behind explicit consent (a "text me" reply or an opt-in), with quiet hours and STOP. A nurture track for "not now" and safe holiday touches uses the same machinery on a slower clock. Never text without consent.
+- **Adverse selection.** The one reply that volunteered a phone number on the first line was a 439 FICO with eleven hard inquiries. Owners who resist the number ask are the ICP. The packet to David carries years in business, prior financing and fleet; the fit scorer drops interstate truckers before they reach him.
+- **The shield line.** The directional-drill owner gets ten emails and six calls a day from lenders who bought his name. "One lender, one call, we don't sell your information" is true on day one and answers "why do I need a middle guy." Run it as copy; it is the same assurance vendors need on the site.
+
+Full detail and the build items: `build.md` §5g.
 
 ## 6. The rest of the moving parts
 

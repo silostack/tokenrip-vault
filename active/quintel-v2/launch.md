@@ -1,6 +1,6 @@
 ---
-status: v0.3
-last_revised: 2026-09-22 (three-phase commercials after David's reply to Alek's one-pager)
+status: v0.4
+last_revised: 2026-09-26 (§8a after the 09-26 call: learning window, capacity, conversational first reply, trades-only lanes, vendor lane as near-term revenue)
 owner: Simon and Alek
 serves: the immediate plan after the 09-19 kickoff with David: the math, the next moves, the follow-ups on both sides, ledger v0, the email infrastructure, and what to do when the vendor ICP arrives
 tier: internal (shareable with Alek in full; the follow-up list in §4 is written to be lifted into an email to David)
@@ -124,7 +124,7 @@ Every party is paid from the same $7K: the vendor asks what is in it for him, a 
 | 13  | American Equipment Exchange: on the 09-23 agenda (`tearsheet_2026-09-23.md` §4): ask his reading first, then the three questions for AEX and the decision rule (they show the tab = pilot vendor; lender number only = his own time)                                                             | Simon                           | 09-23                        | nothing                                                  |
 | 14  | One question added to David's end-user script: "where did you buy your last unit, and did they arrange the financing?" Every call, including the no's, becomes a vendor lead on the demand side; the answers are logged to the vendor tab                                                        | Alek asks David                 | 09-23                        | nothing                                                  |
 | 16  | Contact-seller test: twenty hand-sent messages to marketplace dealers (5+ listings, truck lanes, no financing on their own site); rule 3 of 20 replies                                                                                                                                           | Simon                           | 09-26                        | §7d                                                      |
-| 15  | Lane pick for the six weeks: two truck lanes (hydro vac / pump trucks, box and work trucks, tow and cranes as the used-truck core) plus one machinery lane (packaging and food processing). The other nine industries wait for a registry and a source each                                      | Simon proposes, David confirms  | 09-23                        | §7                                                       |
+| 15  | Lane pick for the six weeks: two truck lanes (hydro vac / pump trucks, box and work trucks, tow and cranes as the used-truck core) plus one machinery lane (packaging and food processing). The other nine industries wait for a registry and a source each. **Amended 09-26:** the machinery lane leaves the Ironmark email program (the sophisticated ICP will not associate with an iron brand; second brand or tenant later); it stays in the vendor lane and David's own calls (`call-analysis-2026-09-26.md` §3) | Simon proposes, David confirms  | 09-23; amended 09-26        | §7                                                       |
 
 Weekly cadence from 09-23: Tuesday, numbers and ledger review with David (30 minutes); Friday, one line changed in `gameplan.md`.
 
@@ -258,6 +258,16 @@ Absorbs `active/flpool/EMAIL_INFRA_PLAN_2026-09-09.md`; the mechanics there stil
 - **Gates,** pre-registered: bounce under 3% per domain; scale an arm at 1% positive reply; stop and rewrite under 0.3% after 600 sends. Vendor arm: scale at 5% reply, since the list is small and named.
 - **Costs:** under $200 a month now, under $600 at 30 mailboxes.
 - **Calls stay David's.** He wants 1,000 dials in seven days and 2,000 before he trusts the ICP; we feed the lists. The email arm does not wait for that; two hits from 900 sends is enough to keep sending on the honed list.
+
+## 8a. What the 09-26 call changed in the six weeks
+
+- **The learning window is Oct 6 to Nov 14.** David's send calendar: no Oct 12; Nov 17–30 dark; Dec 16 to about Jan 20 dark. He expects no sustainable revenue before mid-January. Front-load measurement (the 3-per-1,000 rate, the collision rate, the contact-append rate) inside the window; use the dark weeks to build v2 (connectors, SMS, nurture, second brand).
+- **Capacity 10-06 is 600 a day** (20 per mailbox), then 750–900. A second mailbox round is warming for redundancy.
+- **The first reply is a conversation.** Instant reply within minutes naming no lender; the check gates the handoff; templated answers to the rate, who-are-you and how-got-my-name questions; SMS behind consent in weeks 3–4. `build.md` §5g.
+- **Ironmark v1 is trades and trucks only.** Machinery lanes out of the email program (#15 above).
+- **Near-term revenue is the vendor lane.** David's team is researching decision makers and parent ownership on the 73 by hand; Quintel can run both lookups before Monday. Non-US vendors are capital-constrained on Providence's side and not a lane.
+- **David's economics.** $45K on this weekend's focus groups, charged back to him; "spending like a drunken sailor." The ledger's vendor tab should show him a number before the emails do.
+- **Cadence:** standing Saturday meeting, optional Wednesday.
 
 ## 9. Keep in mind, keep tracking
 

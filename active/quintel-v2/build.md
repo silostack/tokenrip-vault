@@ -1,5 +1,5 @@
 ---
-status: v0.2 PRD, the starting point for Quintel and Ironmark engineering tasks (v0.1 re-architected 09-26: Ironmark is a standalone system, Quintel is its first lead source behind an adapter, the register lives in Ironmark)
+status: v0.3 PRD, the starting point for Quintel and Ironmark engineering tasks (v0.2 09-26: Ironmark standalone, Quintel first lead source, register in Ironmark; v0.3 09-26 after the David call: instant reply without a lender, conversational layer, Channel port and SMS consent, send calendar, re-contact policy, trades-only ICP, liveness prequal)
 last_revised: 2026-09-26
 owner: Simon
 serves: what the outbound engine is for, how the systems divide the work, the data each owns, the contracts between them, the feedback loops, and the build order; enough for the whole system to come into view from an engineering seat without the copy, the classifier prompts or the per-feed plumbing
@@ -51,7 +51,7 @@ Boundary rules:
 - No application data crosses any boundary. The handoff ends at "who calls."
 - Ironmark carries a `tenant_id` on every row from day one. There is one tenant (Ironmark Equipment Partners); the column costs nothing now and everything later.
 
-## 3. Architecture: four ports, one core
+## 3. Architecture: five ports, one core
 
 ```
                        ┌──────────────────────────────────────────────────────────────────────┐
@@ -74,7 +74,7 @@ Boundary rules:
                             └──────────────┘           └──────────────┘
 ```
 
-Four ports, each a small interface with one implementation in v1:
+Five ports, each a small interface with one implementation in v1 (the fifth, `Channel`, added 09-26):
 
 | Port | v1 adapter | Later adapters | What crosses it |
 |---|---|---|---|
@@ -82,6 +82,7 @@ Four ports, each a small interface with one implementation in v1:
 | `Destination` | Providence (register UI + Slack/text + handoff email) | a second lender; a CRM webhook; a partner API | the routed lead, the check result, the handoff, the outcome |
 | `Sequencer` | Smartlead | Instantly, others | pushes, pauses, thread replies, webhooks, health |
 | `FleetProvider` | Icemail | Smart Senders, manual | orders, mailbox status, credentials, export |
+| `Channel` | email (through the sequencer's thread reply) | SMS (Twilio), later others | the conversational replies and nurture touches, with consent per contact (§5g) |
 
 Three loops run through the core:
 
@@ -116,7 +117,7 @@ LeadEnvelope {
   contact:  { email, first_name?, last_name?, title?, phone?, email_status: valid|unverified }
   company:  { name, dba?, website?, city, state, country, industry_code?, industry_label,
               size_band?, years_in_business?, fleet_band?, identifiers: { usdot?, mc?, sos_id?, ucc_ref? } }
-  fit:      { score, reasons[], box_version }
+  fit:      { score, reasons[], box_version, icp_profile }        ← trades_trucks | machinery | ...; Ironmark v1 takes trades_trucks only
   origin:   { kind: event|roster, feed, event_date?, event_summary? }
   facts:    [ { key, value, source_url, observed_at } ]   ← the ONLY input the copy generator may use
   prequal:  pass | unknown | fail
@@ -138,12 +139,15 @@ Rules: `facts` are typed and sourced or they are not facts. `email_status` is th
 | `suppression` | **the list of record for this brand** | `scope` (email / domain / company_key), `value`, `reason` (unsubscribe / hard_bounce / dnc / partner_book / manual / legal), `source_system`, `until` (null = forever), `lead_id?` |
 | `sender_identity` | the name on the emails | display name, real person ref, signature block, mailboxes it may use |
 | `domain`, `mailbox` | the fleet registry | provider ids on both vendors, `state_code`, `sender_identity_id`, warmup start, ready date, `daily_limit`, `daily_sent`, `health` (ok / watch / paused / retired), `bounce_7d`, `complaint_7d`, `reputation_score` |
-| `campaign` | one sequencer campaign | `sequencer_campaign_id`, `state_code`, `arm`, schedule, `daily_cap`, mailboxes |
+| `campaign` | one sequencer campaign | `sequencer_campaign_id`, `state_code`, `arm`, schedule, `daily_cap`, mailboxes, `recontact_policy` (cooldown_90d / cohort_quarterly) |
 | `daily_plan` | one row per campaign per day | `date`, `cap`, `ramp_step`, `slots_filled`, `held_reason?` |
 | `draft` | generated copy for a lead | `lead_id`, `line1`, `line2`, `template_version`, `facts_used[]`, `validator_result`, `reviewed_by?` |
 | `outreach` | a lead inside a campaign | `lead_id`, `campaign_id`, `sequencer_lead_id`, `status` (pushed / active / paused / stopped / done), `pushed_at`, `last_step` |
 | `event_log` | every vendor webhook and poll result, raw | `provider`, `event_type`, `provider_event_id`, `payload`, `received_at`, `processed_at`, `forwarded_to_source_at` |
-| `reply` | one inbound message | `outreach_id`, `thread_id`, `message_id`, `email_stats_id` (from the sequencer, needed to reply), `received_at`, `body`, `sequencer_category`, `our_class`, `confidence`, `verify_status`, `handled_by` |
+| `reply` | one inbound message | `outreach_id`, `thread_id`, `message_id`, `email_stats_id` (from the sequencer, needed to reply), `received_at`, `body`, `sequencer_category`, `our_class`, `sub_class?` (rate / who / how_got_name / lender / send_info / call_me / text_me), `confidence`, `verify_status`, `handled_by` |
+| `conversation_message` | every message we send after a reply, by any channel | `reply_id`, `channel`, `template_id`, `slots`, `sent_by`, `sent_at`, `provider_message_id` |
+| `consent` | what a contact has allowed | `contact_id`, `channel` (sms / email_nurture), `basis` (text_me reply / opt-in / form), `at`, `revoked_at?` |
+| `send_calendar` | days the planner must not send | `tenant_id`, `date`, `scope` (all / state), `reason` |
 | `partner` (destination) | a lender or other receiving org | name, kind, routing config, `attribution_window_days`, `sla_hours` |
 | `partner_user` | a person at a partner | login, phone, Slack, `availability` (hours, days off, holidays) |
 | `routing_rule` | who a positive goes to | `partner_id`, `states[]`, conditions, `collision_policy`, priority |
@@ -172,7 +176,7 @@ Ready is a query: `lifecycle = ready AND contact.email_status ∈ {valid} AND NO
 **Register (`registered_lead`)**
 
 ```
- registered (partner pinged, clock started, NO email to the owner yet)
+ registered (partner pinged, clock started; the owner gets the instant reply, no lender named)
      → checked (partner marks: clear | in_book:* | pass)          ← the one required human step
      → routed  (rule → partner_user, cc_address, template_variant, promise_window, route_mode)
          ├─ handoff_sent   (case 1: templated email in the owner's thread from the Ironmark mailbox,
@@ -192,7 +196,7 @@ Quintel builds and serves; Ironmark never runs this.
 2. **Resolution** maps records to `company` with Quintel's identity tooling; UCC secured parties join through `lender.aliases`.
 3. **ICP fit** scores against an Ironmark `buy_box` row (2–25 employees, 2+ years, preferred and restricted lists, intrastate vocational fleets 2–7 units, the six states) into a Quintel-side `lead` row with `fit_score`, `fit_reasons`, `origin_kind`. New scorer beside the trigger scorer.
 4. **Contact append** runs the existing `enrichment_job` chain with `contact_requirements = [email]`. The found-and-verified rate on address-only feeds is the volume gate (`source-feeds.md` §5); measure it on 200 companies before more connectors.
-5. **Pre-qualification** is a bounded web check per company (exists, operating, trade matches, not restricted, fleet or size hints) producing `prequal` and the typed, sourced `facts`. Reuses the triage-agent job shape with a different rubric.
+5. **Pre-qualification** is a bounded web check per company (exists, operating, trade matches, not restricted, fleet or size hints) producing `prequal` and the typed, sourced `facts`. Reuses the triage-agent job shape with a different rubric. After 09-26 it also checks **liveness and owner currency** (SOS status active, website alive, a public trace in the last 12 months, the named contact still appears as the officer); a stale row is `rejected: stale`. It records **footprint** facts (website quality, Google Business presence and review recency, indexed pages, marketplace listings) into a `footprint_score`, tested against register labels before it is allowed to rank anything. The fit scorer for the Ironmark tenant excludes the machinery lanes (packaging, food processing, pharma, robotics, lab) and interstate truckers; `icp_profile` on the envelope says which profile a lead fits.
 6. **Serve.** Quintel exposes the LeadSource provider API (§6a) over its ready-pool query, with leases.
 
 ### 5b. Ironmark: claim to push
@@ -260,14 +264,37 @@ Built to hold the two cases set on 09-26 and shaped so a third destination is a 
 1. **Ingest.** `EMAIL_REPLY` (plus the 15-minute poll) → `event_log` → `reply`, with the thread, the email it answered, and `email_stats_id` fetched from message-history.
 2. **Classify.** Rules first for legally weighted classes (bounce codes, list-unsubscribe, "remove me" forms, auto-reply headers). A model picks one of `interested / question / not now / not interested / wrong person / do not contact / out of office / cannot tell` with confidence; Smartlead's category is an input, never the decision. First 200 replies: a person confirms every class. Then only `cannot tell` and low confidence go to a person. No drafting in this step.
 3. **Verify (positives).** `verify(reply)` through the LeadSource port: does the replying address or stated business reconcile with the company (domain, legal name, officer)? Fail → hold; nothing reaches the partner.
-4. **Register.** Create `registered_lead` under the routing partner (Providence), snapshot the packet, attach the reply and the original email, set `registered_at` (the attribution timestamp), notify the partner user (Slack, text) with the packet, start the two-hour clock. **No email to the owner yet.**
-5. **Check.** The partner user opens the row in the register UI and marks `clear`, `in_book:*`, or `pass`. This is the one required human step before any reply goes out.
+4. **Register and answer.** Create `registered_lead` under the routing partner (Providence), snapshot the packet, attach the reply and the original email, set `registered_at` (the attribution timestamp), notify the partner user (Slack, text) with the packet, start the two-hour clock. In the same minute, send the **instant reply**: a fixed template that acknowledges, names no lender, and asks one low-friction question back (what are you looking at, or how would you like to talk: call, email, text). This is the two-minute response David asked for on 09-26 (§5g). For a `question` class, the instant reply is the templated answer for that sub-class, sent by a person with one click.
+5. **Check.** The partner user opens the row in the register UI and marks `clear`, `in_book:*`, or `pass`. This is the one required human step before any lender is named to the owner. The check gates the handoff, not the acknowledgment.
 6. **Route.** `routing_rule` + `availability` → `{partner_user, cc_address, template_variant, promise_window, route_mode}`. Phase-1 policy (`outbound.md` §5f): clear → Providence, David, `handoff`; `in_book:customer` / `in_book:other_rep` → `handoff` to the rep of record via the cc David enters, no referral claimed, company suppressed for future sends; `in_book:contacted_9mo` → `park` unless David has approved re-routing for the class; `pass` → `takeover` until a second destination is seated, then that destination.
-7. **Handoff (case 1).** The partner user presses **send handoff** on the row (cc pre-filled to their own partner address, editable to another rep's). Ironmark sends the templated email in the owner's thread via `reply-email-thread` from the Ironmark mailbox, signed by the sender identity, naming the rep and the partner, with the promise from `availability` and the pick-a-time link. If the check has not happened within the cap (one hour inside the partner user's working day), the unnamed acknowledgment goes out and the named email follows the check (`outbound.md` §5g). SMTP fallback (Icemail app password, `In-Reply-To` set, lead paused in Smartlead) only if the live cc test fails.
+7. **Handoff (case 1).** The partner user presses **send handoff** on the row (cc pre-filled to their own partner address, editable to another rep's). Ironmark sends the templated email in the owner's thread via `reply-email-thread` from the Ironmark mailbox, signed by the sender identity, naming the rep and the partner, with the promise from `availability` and the pick-a-time link. Once the owner has said they are interested, this is the next message they get; no further back-and-forth (David, 09-26). If the check has not happened within the cap (one hour inside the partner user's working day), a reminder fires and the register shows the row as overdue; the owner has already had the instant reply. SMTP fallback (Icemail app password, `In-Reply-To` set, lead paused in Smartlead) only if the live cc test fails.
 8. **Takeover (case 2).** `route_mode = takeover`: outreach paused in the sequencer, the thread appears in the Ironmark takeover inbox (master-inbox thread view plus the register row), an Ironmark person owns it, and outcomes are entered by hand on the same row.
 9. **Outcomes.** The partner user's four flags and reason code close the loop; Ironmark emits `outcome(...)` to the source and computes the fee line.
 
 Constraints: every step idempotent on `(thread_id, message_id)`; every message to an owner is a fixed template with five slots; every decision is a row a person can read; if any component is down the system degrades to "a person reads the master inbox" without losing the register row.
+
+### 5g. The conversational layer and channels (added 09-26)
+
+The 09-26 call settled that the first reply opens a short conversation before anyone is handed to a lender: the owner asks a question, wants information, or names a channel, and "nobody makes a $50–75K decision on texts and emails with someone they have never talked to." The engine carries that conversation with fixed templates, not drafting, and moves it to a phone call as fast as the owner allows.
+
+**Question sub-classes and their templated answers** (fixed copy, slots, one-click send by a person from the takeover inbox; all human-approved, none AI-written):
+
+| Sub-class | The answer's job |
+|---|---|
+| `rate` | the pivot to voice: terms depend on time in business and credit; a ten-minute call gets a real number (David's line). Expect this on most positives |
+| `who_are_you` | the sender, the site, the partner line the focus group picks |
+| `how_got_my_name` | the public-records line the focus group picks |
+| `who_is_the_lender` | a specialist lender for your equipment; named on the call (never a list we do not have) |
+| `send_info` | one paragraph plus the site link; then the channel question |
+| `call_me` / `text_me` / `email_me` | channel preference captured on the lead; `text_me` is the consent event for SMS |
+
+**Channels are a port (`Channel`)**: email now; SMS in weeks 3–4 through a `TwilioChannel` adapter, sent only after an explicit `text_me` or an opt-in recorded on the contact, with quiet hours, STOP handling and a consent record; the conversational templates are channel-agnostic. Never text without consent. A **nurture track** ("not now, six months"; safe holiday touches by first name) is the same machinery on a slower clock, with its own consent for SMS.
+
+**Send calendar** in the planner: no send on federal holidays (Oct 12 first), dark Nov 17–30, dark Dec 16 to about Jan 20, per-state holidays later. The learning window for phase 1 is Oct 6 to Nov 14.
+
+**Re-contact policy per arm.** The UCC past-filer cohort is touched on a cadence (quarterly to start) rather than one-and-done; rosters keep the 90-day cooldown. `recontact_policy` on the campaign arm.
+
+**Copy rules the template system enforces.** Subject per origin: the equipment name when there is an intent signal, an opening statement when not. "DOT" not "FMCSA." "Terms" not "rate." First name always. Touch one never asks for a phone number; the CTA is "if you're interested, reply" or a one-word confirmation. The partner line runs as an arm on touch one.
 
 ### 5f. The fleet (Icemail + Smartlead, operated by Ironmark)
 
@@ -361,10 +388,10 @@ Two tracks and a contract. The contract (§4b envelope, §6a provider API) is ag
 
 | Week | Quintel (source) | Ironmark (core + adapters) | Together |
 |---|---|---|---|
-| **1 (to 10-03)** | Quintel-side `lead` for Ironmark fit, ICP scorer v0, ready-pool query with leases; provider API (§6a) including `events` and `verify`; suppression hints | tenant, lead, contact, suppression, register, partner tables; `CsvLeadSource` and `QuintelLeadSource`; Smartlead adapter (push, pause, thread reply with cc, message-history, health, block list) and the user-level webhook receiver with raw log; classifier (rules + model + confirm gate); handoff templates and the **live cc test**; planner with ramp and tenant cap; register UI v0 (queue, row, check, send-handoff, flags, reason) and Slack/text notifications | end-to-end on 20 seeded leads through the CSV source with a test recipient, then the same through the Quintel source: reply → register → check → handoff in thread with cc |
-| **2 (10-06 first send)** | contact-append measurement on 200 address-only companies; CO UCC and FMCSA connectors live; prequal job v0 producing `facts` | fleet registry with health polls and brakes; 15-minute reply poll; takeover inbox; daily digest; draft review queue | first send at ~500 a day; a person confirms every class; Tuesday numbers |
-| **3–4** | remaining build-now connectors by measured yield; lead/prospect overlap view; feedback-driven source ranking v0 | ramp to 900; second domains into rotation; Icemail replacement flow automated the first time it runs; operator dashboard | first re-measure of the 3-per-1,000 rate; gates checked |
-| **later** | site inbound door as a second `LeadSource`; a second lender's box as a second fit profile | second `Destination` (lender or CRM webhook) and its routing rows; vendor arm campaigns on separate domains; drafted-reply experiment after 100 labeled positives; second tenant | phase-2 commercial gate on the register's count |
+| **1 (to 10-03)** | Quintel-side `lead` for Ironmark fit (trades and trucks profile only), ICP scorer v0, ready-pool query with leases; provider API (§6a) including `events` and `verify`; suppression hints | tenant, lead, contact, suppression, register, partner tables; `CsvLeadSource` and `QuintelLeadSource`; Smartlead adapter (push, pause, thread reply with cc, message-history, health, block list) and the user-level webhook receiver with raw log; classifier (rules + model + confirm gate) with the question sub-classes; instant-reply and handoff templates and the **live cc test**; the conversational templates (rate, who, how-got-name, lender, send-info, channel) with one-click send; planner with ramp, tenant cap and the send calendar; register UI v0 (queue, row, check, send-handoff, flags, reason) and Slack/text notifications | end-to-end on 20 seeded leads through the CSV source with a test recipient, then the same through the Quintel source: reply → register → check → handoff in thread with cc |
+| **2 (10-06 first send)** | contact-append measurement on 200 address-only companies; CO UCC and FMCSA connectors live; prequal job v0 producing `facts` with the liveness check; decision-maker and parent-ownership lookups on the vendor list | fleet registry with health polls and brakes; 15-minute reply poll; takeover inbox; daily digest; draft review queue | first send at ~500 a day; a person confirms every class; Tuesday numbers |
+| **3–4** | remaining build-now connectors by measured yield; lead/prospect overlap view; footprint facts and the pre-registered footprint test against register labels | ramp to 900; second domains into rotation; `TwilioChannel` with consent capture and STOP; nurture track v0; UCC cohort re-contact; Icemail replacement flow automated the first time it runs; operator dashboard | first re-measure of the 3-per-1,000 rate; gates checked |
+| **later** | site inbound door as a second `LeadSource`; a second lender's box as a second fit profile; the machinery-lane profile for a second tenant | second `Destination` (lender or CRM webhook) and its routing rows; vendor arm campaigns on separate domains; drafted-reply experiment after 100 labeled positives; second tenant | phase-2 commercial gate on the register's count |
 
 Each cell is one to three tickets.
 
@@ -380,6 +407,10 @@ Each cell is one to three tickets.
 6. **Ironmark keeps only the envelope snapshot** of a lead, never the source's pool.
 7. **Suppression:** Ironmark's list is the record for the channel and is mirrored to Smartlead's block lists; the source is told and marks its contacts; no global unsubscribe for cooldowns.
 8. **Tenant column from day one**, single tenant in production.
+9. **(09-26)** The instant reply after a positive names no lender and asks one question; the check gates the handoff. A templated, human-approved conversational layer exists from day one; AI drafting still does not.
+10. **(09-26)** Ironmark v1 serves the trades-and-trucks ICP only. The sophisticated small-company ICP (packaging, robotics, lab, pharma) is a second tenant with its own brand and imagery, not a lane here.
+11. **(09-26)** Re-routing a collision to another lender is David's stated position; the typed rule in `outbound.md` §5f stands and goes into the written referral terms.
+12. **(09-26)** SMS is a channel behind consent; no texting without an explicit `text_me` or opt-in.
 
 **Open.**
 
@@ -387,6 +418,8 @@ Each cell is one to three tickets.
 2. **Pre-warmed domains versus cold domains** for the second family and for replacements (Icemail `prewarm` vs `order`).
 3. **Whether the CSV source doubles as the manual "add a lead" path** for Alek's hand-built lists in week 1. Recommendation: yes; it costs nothing extra.
 4. **Smartlead plan tier** (60 vs 120 per minute) and the exact v1 path for the email block list; both settle in the week-1 spike.
+5. **The Quintel line on the Ironmark site.** David asked us not to advertise the same owners; the brand decision put "a Quintel product" in the footer for domain age. We do not fake a city or an entity. Options: keep the founders on the About page and drop the Quintel wording; or keep it. Lean: drop the wording, keep the people (`threads.md` T37).
+6. **Which instant-reply question touch two asks:** channel preference (David) or what they are looking at (Simon). Run both as an arm; the focus group and the first 50 positives decide.
 
 ## 11. What "done" looks like for phase 1
 

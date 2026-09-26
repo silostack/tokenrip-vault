@@ -142,7 +142,7 @@ svg .self{fill:var(--dv-soft);stroke:var(--dv)}
 <!-- 2 -->
 <polyline points="150,135 450,135" class="edge eown" marker-end="url(#a2)"/><text x="300" y="126" class="lbl b" text-anchor="middle">2 · "might be adding a unit, what would it look like?"</text>
 <!-- 3 -->
-<polyline points="450,175 750,175" class="edge eim" marker-end="url(#a2)"/><text x="600" y="166" class="lbl" text-anchor="middle">3 · row created: business, state, equipment, the reply, the email it answered</text>
+<polyline points="450,175 750,175" class="edge eim" marker-end="url(#a2)"/><text x="600" y="166" class="lbl" text-anchor="middle">3 · row created: business, state, equipment, the reply, the email it answered · instant reply to the owner (no lender named, one question back)</text>
 <!-- 4 -->
 <polyline points="750,215 1060,215" class="edge eld" marker-end="url(#a2)"/><text x="905" y="206" class="lbl" text-anchor="middle">4 · ping with the packet (Slack, text)</text>
 <!-- 5 self -->
@@ -163,7 +163,7 @@ svg .self{fill:var(--dv-soft);stroke:var(--dv)}
 <!-- 12 -->
 <rect x="690" y="575" width="120" height="36" rx="6" class="soft-ld"/><text x="750" y="598" class="lbl b" text-anchor="middle">12 · referral reconciled</text>
 </svg></div>
-<figcaption><span>Steps 3, 4, 7 and 8 are software. Steps 5, 6, 9, 10 and 11 are David. Step 8 goes out only after step 6.</span></figcaption></figure>
+<figcaption><span>Steps 3, 4, 7 and 8 are software (step 3 includes the instant reply to the owner). Steps 5, 6, 9, 10 and 11 are David. Step 8, the email that names David and Providence, goes out only after step 6.</span></figcaption></figure>
 </section>
 
 <section id="routing">
@@ -190,7 +190,7 @@ svg .self{fill:var(--dv-soft);stroke:var(--dv)}
 <section id="timing">
 <h2>What the owner hears, and when</h2>
 <div class="two">
-<div class="rule"><b>The check comes first, then the reply.</b><p style="font-size:14.5px">When a real reply lands, David gets the ping right away with everything on the row. The owner's reply email waits for his check. That way the one email they receive already says who is calling and from which lender, and David is copied at Providence with nothing to walk back later. If the check has not happened within an hour of his working day, the owner gets a plain "someone from one of the lenders we work with will call you today" so nobody is left waiting, and the named email follows the check.</p></div>
+<div class="rule"><b>An answer in minutes; the lender's name after the check.</b><p style="font-size:14.5px">When a real reply lands, two things happen at once: David gets the ping with everything on the row, and the owner gets a short reply within minutes that acknowledges them and asks one easy question back (what are you looking at, or how would you like to talk). That reply names no lender. Common questions ("what's your rate," "who are you," "how did you get my name") get a short fixed answer from a person at Ironmark; the rate answer always points to a ten-minute call. Once David has checked the book, the owner gets the one email that names him and Providence, with David copied. After the owner says they are interested, there is no more back-and-forth: the next thing is the call.</p></div>
 <div class="tbl"><table><thead><tr><th>Reply received (Eastern)</th><th>The email promises</th></tr></thead><tbody>
 <tr><td class="num">Mon–Fri, 5:00 AM – 6:30 PM</td><td>a call today</td></tr>
 <tr><td class="num">Mon–Thu after 6:30 PM, or before 5:00 AM</td><td>a call tomorrow morning</td></tr>
@@ -200,7 +200,7 @@ svg .self{fill:var(--dv-soft);stroke:var(--dv)}
 <tr><td class="num">Holidays and days David has blocked</td><td>next working day; David sets these himself</td></tr>
 </tbody></table></div>
 </div>
-<p class="muted">The email also offers a pick-a-time link after the phone promise, never in the first cold email. The promise and the two-hour reminder to David are driven by the same calendar, so the email never names a day he is not working.</p>
+<p class="muted">The handoff email offers a pick-a-time link after the phone promise, never in the first cold email. The promise and the two-hour reminder to David are driven by the same calendar, so the email never names a day he is not working. Texting is added once an owner has said "text me"; nobody is texted without that. No sends on holidays, and the calendar goes dark from mid-November through mid-January except the first half of December.</p>
 </section>
 
 <section id="ledger">
@@ -215,8 +215,8 @@ svg .self{fill:var(--dv-soft);stroke:var(--dv)}
 <section id="split">
 <h2>People and software</h2>
 <div class="two">
-<div class="card im"><h3>Software does</h3><ul><li>Finds the companies and writes the first email from public facts</li><li>Files every reply, creates the row, pings David</li><li>Sends the one handoff email after the check, with the right name in it</li><li>Stops emailing anyone who says stop, bounces, or is in Providence's book</li><li>Keeps the ledger and the numbers</li></ul></div>
-<div class="card dv"><h3>People do</h3><ul><li>David checks the book and records the result</li><li>David calls, quotes, takes the application, closes</li><li>The Ironmark sender answers any question an owner asks before the call</li><li>David writes why a lead died, which is how Ironmark learns what to send next</li></ul><p class="muted">No software ever talks to an owner on its own beyond the one handoff email.</p></div>
+<div class="card im"><h3>Software does</h3><ul><li>Finds the companies and writes the first email from public facts</li><li>Files every reply, creates the row, pings David</li><li>Sends the instant reply within minutes, then the one handoff email after the check, with the right name in it</li><li>Stops emailing anyone who says stop, bounces, or is in Providence's book</li><li>Keeps the ledger and the numbers</li></ul></div>
+<div class="card dv"><h3>People do</h3><ul><li>David checks the book and records the result</li><li>David calls, quotes, takes the application, closes</li><li>The Ironmark sender answers any question an owner asks before the call, from a short set of fixed answers</li><li>David writes why a lead died, which is how Ironmark learns what to send next</li></ul><p class="muted">No software ever talks to an owner on its own beyond the one handoff email.</p></div>
 </div>
 </section>
 
