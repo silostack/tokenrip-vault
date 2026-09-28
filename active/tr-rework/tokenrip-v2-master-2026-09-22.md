@@ -23,6 +23,8 @@ Every load-bearing claim is tagged **[fact]** (observed or shipped), **[decision
 
 The document supersedes the onboarding and GTM recommendations of 2026-09-08 where they conflict. Section 15 lists what changed and why.
 
+**Amended 2026-09-24** by `tokenrip-harness-lockin-and-workspace-templates-2026-09-24.md`: §8.1 first hour (harness fills a template, second harness loads it; crossing at step one), §9.3 (state before listings; listings point at template URLs), §10 (export and open format not charged for), §11 (second-harness-writes as the N=1 activation signal), §12 (templates inserted), §13 (risk 8: harnesses restrict memory export), §14 and §16 (new assumptions and decisions). That document carries the per-section list; this text is unchanged below.
+
 ## 1. The idea in one paragraph
 
 Every person is about to have an always-on AI agent that acts for them. Muse, Instinct, Grok Bot, Claude Cowork, and ChatGPT Work are the first wave [fact]. These agents live inside their vendors' hosts and cannot share working state with each other, with people on other hosts, or with people who have no agent. Tokenrip is the shared workspace that sits between them: a neutral, versioned record of a project or a relationship that any person's agent, on any host, can plug into and work from, and that a person with no agent can still touch through a link. The founding insight is that once every person has an agent, the operational difference between a person and a small company collapses to one thing, the record they share. Tokenrip is that record, priced per workspace, free for one person, paid when the workspace runs on its own or grows beyond one.

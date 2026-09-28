@@ -1,6 +1,6 @@
 ---
 title: Tokenrip Rework. Where the Thinking Is, What Is Decided, What Is Next
-status: lead note, maintained; last updated 2026-09-17
+status: lead note, maintained; last updated 2026-09-24
 created: 2026-09-07
 owner: Simon
 purpose: Jumping-off point for the whole Tokenrip rework (June to September 2026). Read this first, then follow the links.
@@ -65,6 +65,10 @@ Each of these blocks a specific section of the page. Full table in v3.1 under "B
 ## The documents
 
 ### Current (the page and the model it rests on)
+
+**`tokenrip-harness-lockin-and-workspace-templates-2026-09-24.md`** · the latest amendment to the v2 master. Chain/wallet framing as a design generator (never as copy); the lock-in story as the problem statement; N=1 multi-harness as the front door; workspace templates as the format any harness can fill and any other can load; first hour rewritten so the crossing is step one; export and open format as obligations. Ends with a per-section amendment list for the master, a zero-code test, and nine homepage changes against the live page (§8), each with its claim-discipline condition.
+
+**`tokenrip-v2-master-2026-09-22.md`** · the self-contained account of the whole idea as of 2026-09-22, with every claim tagged fact / decision / inference. Source for the deck and the outside pressure test. Read with the 09-24 amendments above.
 
 **`tokenrip-homepage-v3.1-2026-09-05.md`** · the shipping spec. Literal hero, git problem, patch bay scene split from the terminal block, "decisions" everywhere, office analogy in three places, copy cut by a third. Ends with prerequisites, success checks, and a change log from v3. Supersedes v3.
 

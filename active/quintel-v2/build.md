@@ -1,6 +1,6 @@
 ---
-status: v0.3 PRD, the starting point for Quintel and Ironmark engineering tasks (v0.2 09-26: Ironmark standalone, Quintel first lead source, register in Ironmark; v0.3 09-26 after the David call: instant reply without a lender, conversational layer, Channel port and SMS consent, send calendar, re-contact policy, trades-only ICP, liveness prequal)
-last_revised: 2026-09-26
+status: v0.4 PRD, the starting point for Quintel and Ironmark engineering tasks (v0.4 09-27: §12 build sequence as milestones, gates and parallel waves; ICP box (`icp_box`) separated from the buy box (§4a); §12h decisions settled; v0.2 09-26: Ironmark standalone, Quintel first lead source, register in Ironmark; v0.3 09-26 after the David call: instant reply without a lender, conversational layer, Channel port and SMS consent, send calendar, re-contact policy, trades-only ICP, liveness prequal)
+last_revised: 2026-09-27
 owner: Simon
 serves: what the outbound engine is for, how the systems divide the work, the data each owns, the contracts between them, the feedback loops, and the build order; enough for the whole system to come into view from an engineering seat without the copy, the classifier prompts or the per-feed plumbing
 tier: internal (shareable with Alek in full)
@@ -94,15 +94,23 @@ Three loops run through the core:
 
 ### 4a. Lead, prospect, trigger: keeping the tracks straight
 
-Quintel already has **prospects**: a company plus a dated **trigger**, surfaced to a lender account in Quintel's own product. For Ironmark, Quintel produces **leads**: a company plus a contact that fits the Ironmark buy box, with or without an event behind it. Same company and contact tables in Quintel, different objects on top, separate tracks.
+Quintel already has **prospects**: a company plus a dated **trigger**, surfaced to a lender account in Quintel's own product. For Ironmark, Quintel produces **leads**: a company plus a contact that fits one of the Ironmark account's ICP boxes, with or without an event behind it. Same company and contact tables in Quintel, different objects on top, separate tracks.
 
 | | Prospect (Quintel, exists) | Lead (Quintel → Ironmark, new) |
 |---|---|---|
-| What it is | a company with a live trigger, ranked, delivered to a lender's queue | a company + contact fitting the buy box, queued for outreach |
-| Selected by | trigger state and score, buy box | ICP fit, contact availability, state, cooldown |
+| What it is | a company with a live trigger, ranked, delivered to a lender's queue | a company + contact fitting an ICP box, queued for outreach |
+| Selected by | trigger state and score, the account's buy box | ICP fit (an `icp_box` row), contact availability, state, cooldown |
+| Owning account | a lender account | the Ironmark account, a separate account kind with no buy box |
 | Consumer | lender users in Quintel | Ironmark, through the LeadSource port |
 | Event behind it | always | `origin_kind = event` (a UCC filing, a permit, a fleet add) or `origin_kind = roster` (a standing list) |
 | Link | | `trigger_event_id?`, `signal_ids[]` on the Quintel side; the envelope carries `origin_kind` and the facts, not Quintel's internals |
+
+**ICP box and buy box are sibling concepts, kept separate (decided 09-27).** Both play the same role: a set of criteria a candidate passes or fails before it enters a queue. They differ in owner and subject.
+
+- **`buy_box`** is what a lender will fund: its deal criteria. It admits **prospects** in Quintel's lender product and belongs to a lender account.
+- **`icp_box`** is who an outbound tenant wants to reach: trade and lanes, size (2–25 employees), age (2+ years), fleet (2–7 intrastate units), states, preferred and restricted lists. It admits **leads** and belongs to a lead-consumer account (Ironmark).
+
+**Siblings, not subtypes.** The two are separate tables. There is no shared base table, no type column and no conversion from one to the other, even where the criteria overlap. The Ironmark account holds ICP boxes and has no buy box. `trades_trucks` is the first ICP box; `machinery` is the second, for a later tenant. Quintel's existing docs say "ICP-matched" loosely when they mean passing an account's buy-box policy. From here on, ICP criteria live only in `icp_box`.
 
 A lead may also be a prospect (same Quintel `company_id`). Keep both; expose the overlap as a Quintel view so we can test later whether event-origin leads convert better. Ironmark never sees Quintel's prospect objects; it sees envelopes.
 
@@ -117,7 +125,7 @@ LeadEnvelope {
   contact:  { email, first_name?, last_name?, title?, phone?, email_status: valid|unverified }
   company:  { name, dba?, website?, city, state, country, industry_code?, industry_label,
               size_band?, years_in_business?, fleet_band?, identifiers: { usdot?, mc?, sos_id?, ucc_ref? } }
-  fit:      { score, reasons[], box_version, icp_profile }        ← trades_trucks | machinery | ...; Ironmark v1 takes trades_trucks only
+  fit:      { score, reasons[], icp_box, icp_box_version }        ← trades_trucks | machinery | ...; Ironmark v1 takes trades_trucks only
   origin:   { kind: event|roster, feed, event_date?, event_summary? }
   facts:    [ { key, value, source_url, observed_at } ]   ← the ONLY input the copy generator may use
   prequal:  pass | unknown | fail
@@ -194,9 +202,9 @@ Quintel builds and serves; Ironmark never runs this.
 
 1. **Connectors** pull the build-now feeds (`source-feeds.md` §3) on Quintel's existing `source_state` cursor pattern. Four hosts need a US egress. Rosters load as companies and diff monthly; only dated events create signals.
 2. **Resolution** maps records to `company` with Quintel's identity tooling; UCC secured parties join through `lender.aliases`.
-3. **ICP fit** scores against an Ironmark `buy_box` row (2–25 employees, 2+ years, preferred and restricted lists, intrastate vocational fleets 2–7 units, the six states) into a Quintel-side `lead` row with `fit_score`, `fit_reasons`, `origin_kind`. New scorer beside the trigger scorer.
+3. **ICP fit** scores against an `icp_box` row owned by the Ironmark account (2–25 employees, 2+ years, preferred and restricted lists, intrastate vocational fleets 2–7 units, the six states), not against a buy box, into a Quintel-side `lead` row with `fit_score`, `fit_reasons`, `origin_kind`. New scorer beside the trigger scorer.
 4. **Contact append** runs the existing `enrichment_job` chain with `contact_requirements = [email]`. The found-and-verified rate on address-only feeds is the volume gate (`source-feeds.md` §5); measure it on 200 companies before more connectors.
-5. **Pre-qualification** is a bounded web check per company (exists, operating, trade matches, not restricted, fleet or size hints) producing `prequal` and the typed, sourced `facts`. Reuses the triage-agent job shape with a different rubric. After 09-26 it also checks **liveness and owner currency** (SOS status active, website alive, a public trace in the last 12 months, the named contact still appears as the officer); a stale row is `rejected: stale`. It records **footprint** facts (website quality, Google Business presence and review recency, indexed pages, marketplace listings) into a `footprint_score`, tested against register labels before it is allowed to rank anything. The fit scorer for the Ironmark tenant excludes the machinery lanes (packaging, food processing, pharma, robotics, lab) and interstate truckers; `icp_profile` on the envelope says which profile a lead fits.
+5. **Pre-qualification** is a bounded web check per company (exists, operating, trade matches, not restricted, fleet or size hints) producing `prequal` and the typed, sourced `facts`. Reuses the triage-agent job shape with a different rubric. After 09-26 it also checks **liveness and owner currency** (SOS status active, website alive, a public trace in the last 12 months, the named contact still appears as the officer); a stale row is `rejected: stale`. It records **footprint** facts (website quality, Google Business presence and review recency, indexed pages, marketplace listings) into a `footprint_score`, tested against register labels before it is allowed to rank anything. The fit scorer for the Ironmark tenant excludes the machinery lanes (packaging, food processing, pharma, robotics, lab) and interstate truckers; `icp_box` on the envelope says which ICP box a lead fits.
 6. **Serve.** Quintel exposes the LeadSource provider API (§6a) over its ready-pool query, with leases.
 
 ### 5b. Ironmark: claim to push
@@ -365,7 +373,7 @@ Operator views (Ironmark users): sources and claims, plans and caps, draft revie
 | Copy → reply | which arm and template version get replies and positives, per state | `pushed(arm, template_version)` × `replied(class)` | Ironmark: arms; Alek: copy |
 | Contact append → volume | found-and-verified rate by feed and state | Quintel enrichment outcomes; Ironmark `invalid_email` events | Quintel provider chain; volume plan |
 | Check → routing | collision rate by state and feed; re-route yield once a second destination exists | `check_result` | routing rules; the Providence conversation |
-| Reason codes → selection | why leads die after handoff | `reason_code` via `feedback(outcome)` | ICP scorer, buy-box edges, lanes |
+| Reason codes → selection | why leads die after handoff | `reason_code` via `feedback(outcome)` | ICP scorer, ICP-box edges, lanes |
 | Fleet → capacity | bounce, complaint, reputation by domain and mailbox | sequencer events and health polls | planner caps, brakes, fleet orders |
 
 Gates, pre-registered: bounce under 3% per domain; scale an arm at 1% positive; stop and rewrite under 0.3% after 600 sends.
@@ -384,14 +392,16 @@ Gates, pre-registered: bounce under 3% per domain; scale an arm at 1% positive; 
 
 ## 9. Build plan
 
+**Sequencing is in §12** (milestones, gates and what runs in parallel). The week table below stays as the scope reference.
+
 Two tracks and a contract. The contract (§4b envelope, §6a provider API) is agreed first, because both tracks build against it. The reply and handoff engine is built before more connectors: the general bucket carries week one and the first positive arrives the first morning.
 
 | Week | Quintel (source) | Ironmark (core + adapters) | Together |
 |---|---|---|---|
-| **1 (to 10-03)** | Quintel-side `lead` for Ironmark fit (trades and trucks profile only), ICP scorer v0, ready-pool query with leases; provider API (§6a) including `events` and `verify`; suppression hints | tenant, lead, contact, suppression, register, partner tables; `CsvLeadSource` and `QuintelLeadSource`; Smartlead adapter (push, pause, thread reply with cc, message-history, health, block list) and the user-level webhook receiver with raw log; classifier (rules + model + confirm gate) with the question sub-classes; instant-reply and handoff templates and the **live cc test**; the conversational templates (rate, who, how-got-name, lender, send-info, channel) with one-click send; planner with ramp, tenant cap and the send calendar; register UI v0 (queue, row, check, send-handoff, flags, reason) and Slack/text notifications | end-to-end on 20 seeded leads through the CSV source with a test recipient, then the same through the Quintel source: reply → register → check → handoff in thread with cc |
+| **1 (to 10-03)** | Quintel-side `lead` for Ironmark fit (the `trades_trucks` ICP box only), ICP scorer v0, ready-pool query with leases; provider API (§6a) including `events` and `verify`; suppression hints | tenant, lead, contact, suppression, register, partner tables; `CsvLeadSource` and `QuintelLeadSource`; Smartlead adapter (push, pause, thread reply with cc, message-history, health, block list) and the user-level webhook receiver with raw log; classifier (rules + model + confirm gate) with the question sub-classes; instant-reply and handoff templates and the **live cc test**; the conversational templates (rate, who, how-got-name, lender, send-info, channel) with one-click send; planner with ramp, tenant cap and the send calendar; register UI v0 (queue, row, check, send-handoff, flags, reason) and Slack/text notifications | end-to-end on 20 seeded leads through the CSV source with a test recipient, then the same through the Quintel source: reply → register → check → handoff in thread with cc |
 | **2 (10-06 first send)** | contact-append measurement on 200 address-only companies; CO UCC and FMCSA connectors live; prequal job v0 producing `facts` with the liveness check; decision-maker and parent-ownership lookups on the vendor list | fleet registry with health polls and brakes; 15-minute reply poll; takeover inbox; daily digest; draft review queue | first send at ~500 a day; a person confirms every class; Tuesday numbers |
 | **3–4** | remaining build-now connectors by measured yield; lead/prospect overlap view; footprint facts and the pre-registered footprint test against register labels | ramp to 900; second domains into rotation; `TwilioChannel` with consent capture and STOP; nurture track v0; UCC cohort re-contact; Icemail replacement flow automated the first time it runs; operator dashboard | first re-measure of the 3-per-1,000 rate; gates checked |
-| **later** | site inbound door as a second `LeadSource`; a second lender's box as a second fit profile; the machinery-lane profile for a second tenant | second `Destination` (lender or CRM webhook) and its routing rows; vendor arm campaigns on separate domains; drafted-reply experiment after 100 labeled positives; second tenant | phase-2 commercial gate on the register's count |
+| **later** | site inbound door as a second `LeadSource`; a second ICP box for a second lender's market; the `machinery` ICP box for a second tenant | second `Destination` (lender or CRM webhook) and its routing rows; vendor arm campaigns on separate domains; drafted-reply experiment after 100 labeled positives; second tenant | phase-2 commercial gate on the register's count |
 
 Each cell is one to three tickets.
 
@@ -411,6 +421,9 @@ Each cell is one to three tickets.
 10. **(09-26)** Ironmark v1 serves the trades-and-trucks ICP only. The sophisticated small-company ICP (packaging, robotics, lab, pharma) is a second tenant with its own brand and imagery, not a lane here.
 11. **(09-26)** Re-routing a collision to another lender is David's stated position; the typed rule in `outbound.md` §5f stands and goes into the written referral terms.
 12. **(09-26)** SMS is a channel behind consent; no texting without an explicit `text_me` or opt-in.
+13. **(09-27)** Ironmark leads are selected by **ICP fit, not buy-box fit.** Ironmark is a Quintel account of a new kind. It has ICP boxes (`icp_box`) and no buy box. The two are sibling tables that never merge (§4a).
+14. **(09-27)** The first send is supplied by the Q-0 CSV export, a small list to build the plumbing on. Average volume is measured from it, and the list is widened by re-running the export (§12c).
+15. **(09-27)** If G2 slips, send on G1 with a named person working the inbox. Never send without G1 (§12b).
 
 **Open.**
 
@@ -424,3 +437,145 @@ Each cell is one to three tickets.
 ## 11. What "done" looks like for phase 1
 
 An owner in one of six states replies to an Ironmark email. Within minutes David's phone shows the row with the reply and everything the source knew about the business. He marks the book check. He presses one button and the owner receives one email in the same thread naming David and Providence, with David copied, promising a call at the time his calendar allows. David calls, takes the application through Providence, and ticks four boxes with a reason code when it ends. Ironmark holds every event from claim to outcome with the source, feed, arm and template that produced it; Quintel has received the same events as labels on its lead, contact and company. Nothing in either system holds the application. Bounce stayed under 3%. When the same reply comes from a company already in Providence's book, the thread lands in an Ironmark person's inbox instead, with the row still on the register. And the whole path was run once end to end from a CSV before Quintel was ever connected, which is the proof that the source is a port.
+
+## 12. Build sequence: milestones, gates, and what runs in parallel
+
+§9 is the scope, arranged by week. This section sets the order of the work: milestones with a done-when test, what each one waits on, and which of them can run side by side. It uses no dates. The one outside constraint is the first send, because the mailboxes finish warming around 10-06 and the learning window is 10-06 to 11-14.
+
+### 12a. The so what: three things unlock the parallelism, and Quintel is not on the first-send path
+
+- **Three blocking pieces, all small.** (1) The contract (J0): the envelope, the feedback event kinds and the provider API as typed schemas with golden fixtures. (2) Ironmark's core schema (IM-1). (3) Quintel's lead model (Q-1). Once those three land, Ironmark splits into five parallel streams and Quintel into three. Nothing else is a shared dependency.
+- **Connectors do not depend on the lead model; the scorer does.** Feeds load companies and signals through the existing `source_state` and resolution pattern, which the lead object does not touch. Only the fit scorer (Q-3) and the provider API (Q-4) need `lead`. Connectors can start today.
+- **What gates the connector fan-out is the contact-append measurement (Q-5), not the lead model.** Only six of the 26 build-now feeds carry an email (`source-feeds.md` §5). The found-and-verified rate on 200 address-only companies decides whether the intent bucket fills at all, so it comes before any connector beyond the v0 three.
+- **The first send runs from a CSV of Quintel data, not through the Quintel adapter (decided 09-27).** A small export (Q-0) of the FMCSA census for the six states, filtered to the `trades_trucks` ICP box, emails verified, written as envelope-shaped rows with USDOT and email as keys, feeds `CsvLeadSource`. That takes Q-1, Q-3 and Q-4 off the critical path, so they can be built properly rather than rushed for 10-06. It also makes the §11 proof ("run end to end from a CSV before Quintel was connected") the path to production instead of a test fixture. The list starts small on purpose: it builds the plumbing and measures average volume, and widening it is a re-run of the export with broader filters. Events on bridge leads are replayed to Quintel by identifier once Q-4 exists (J2).
+- **The engine goes in the existing Ironmark repo** (`~/projects/maxi/ironmark`), next to the site. The staff console (staff identity, sessions, inquiry workflow) is the base for the operator views. The data-modeling standard (`planning/design/2026-09-24-data-modeling-design.md`) applies to every new table. The site's inquiry intake becomes the "site inbound" `LeadSource` later.
+
+### 12b. The gates the milestones serve
+
+| Gate | What is true | Milestones required |
+|---|---|---|
+| **G1 Safe to send** | leads can be claimed, planned, drafted, pushed and capped; every unsubscribe, bounce and DNC is suppressed in minutes and mirrored; a domain over 3% bounce gets zero slots | J0, IM-1, IM-2, IM-3, IM-4, IM-5, Q-0; plus the inputs in §12f |
+| **G2 A positive is handled by the machine** | reply → classify → verify → register → instant reply → check → handoff in thread with cc, proven on seeded leads | G1 + IM-6, IM-7a, J1 |
+| **G3 Quintel is the source** | the same path runs through `QuintelLeadSource` on the scored pool; bridge-lead history replayed | G2 + Q-1, Q-3, Q-4, J2 |
+| **G4 The loop is closed** | reply classes, check results and outcomes land in Quintel as labels; numbers readable per feed, state and arm | G3 + IM-10, J3 |
+| **G5 Full volume** | 900 a day, fleet brakes automatic, second domains in rotation, register operations complete | G2 + IM-7b, IM-9 |
+| **G6 Beyond email** | SMS behind consent, the nurture track, UCC cohort re-contact | G2 + IM-8, IM-11 |
+
+**First-send rule (decided 09-27).** Aim for G1 and G2 together. If IM-6 or IM-7a slips, send on G1 anyway, using the degraded mode in §5e: a named person works the Smartlead master inbox with the fixed templates and logs each positive. At roughly 1.5 positives a day that is manageable, and a held week costs a sixth of the learning window. Do not send without G1. The safety loop is the part a person cannot backfill.
+
+### 12c. The milestones
+
+**Joint (the contract and the proofs)**
+
+| ID | Milestone | Done when | Waits on |
+|---|---|---|---|
+| J0 | **Contract.** `LeadEnvelope`, the feedback event kinds (§5d) and the provider API (§6a) as Zod schemas with `contract_version`; 6–10 golden envelopes (event-origin, roster, thin-facts CSV) | Both repos test against the same fixtures; Ironmark owns the definition (it owns the port) and Quintel pins a copy | nothing |
+| J1 | **CSV end to end** | 20 seeded leads through `CsvLeadSource` to a test recipient: reply → register → check → instant reply → handoff in thread with cc, all on real Smartlead | IM-3 to IM-7a |
+| J2 | **Quintel connected** | the J1 path runs through `QuintelLeadSource`; bridge-lead events are replayed to Quintel, resolved by USDOT and email | J1, Q-3, Q-4 |
+| J3 | **Loop closed** | a week of real events is visible in Quintel as labels on lead, contact and company; Tuesday numbers come from the system | J2, IM-10 |
+
+**Ironmark**
+
+| ID | Milestone | Done when | Waits on |
+|---|---|---|---|
+| IM-1 | **Core schema and port skeleton.** All of §4c in one baseline migration; lead and register state machines as tested code; the five port interfaces; `FakeSequencer`, `FakeDestination`, `FakeChannel`, `CsvLeadSource`; an `event_log` → handler registry; a feedback emitter that writes to the source port (a log for CSV) | a lead can be walked through every lifecycle state against the fakes in a test | J0 |
+| IM-2 | **Smartlead spike (live).** `reply-email-thread` with cc threads correctly (case 1 depends on it); real payloads captured for every webhook type; `email_stats_id` via message-history; the email and domain block-list paths; plan tier and rate limit | recorded fixtures in the repo plus a one-page findings note; the SMTP fallback called in or out | nothing (start now) |
+| IM-3 | **Sequencer adapter and event intake.** The §6c methods; user-level webhook receiver with HMAC, raw log before parse, idempotency, retrigger replay; the 15-minute master-inbox backfill poll | replaying IM-2's fixtures twice produces one set of events | IM-1, IM-2 |
+| IM-4 | **Send path.** Claim and release from any `LeadSource`; planner (ramp, tenant cap, send calendar, event-origin first, paused domains at zero); draft from `facts` with the validator and the plain-template fallback; review queue (random 20, push blocked above threshold) on the staff console; push ≤400 with custom fields; skipped-lead events; per-state campaign settings (stop on reply, tracking off) | a day's plan for six state campaigns is built, reviewed and pushed to the fake sequencer from a CSV | IM-1; real push after IM-3; arm copy (§12f) |
+| IM-5 | **Safety loop.** Suppression of record loaded from every source (`outbound.md` §6.1), checked at plan time and at push time; handlers for hard bounce, unsubscribe and DNC; the rules classifier for the legally weighted classes; mirror to Smartlead block lists; domain bounce counter and the 3% brake; the compliance footer enforced in every template | an unsubscribe fixture suppresses the address, mirrors it and removes it from tomorrow's plan in one run | IM-1; mirror after IM-3 |
+| IM-6 | **Reply engine.** Reply rows with thread and `email_stats_id`; model classifier with confidence and the question sub-classes; person-confirms gate on the first 200; verify through the source port (`unknown` goes to a person); act-by-class (cooldown, park, out-of-office pause, wrong person); the instant reply sent in thread | each reply fixture lands in the right class with the right side effects and exactly one instant reply | IM-1, IM-3 |
+| IM-7a | **Register and handoff (Providence).** Partner, partner user with availability, routing rules; `registered_lead` on a positive with packet snapshot and attribution timestamp; Slack and text notify; register UI for the partner role (queue with clock, reply and original email, check control, send-handoff with editable cc, four flags, reason code); routing per §5f; takeover as a route mode | David's check on a seeded positive sends the handoff in thread with his cc, or moves the row to takeover | IM-1; send-handoff after IM-3; live positives after IM-6 |
+| IM-7b | **Register operations.** One-hour check-cap reminder, two-hour re-ping, 7 AM digest, export in LeasePath column order, monthly reconciliation and fee line | a month of seeded rows reconciles to a fee total | IM-7a |
+| IM-8 | **Conversation and takeover inbox.** The question-answer templates with one-click send; channel preference captured on the lead; takeover inbox (thread plus register row); SMTP fallback if IM-2 ruled it in | a `rate` question is answered in two clicks from the takeover inbox | IM-6, IM-7a |
+| IM-9 | **Fleet loop.** Sender-identity `from_name` job; mailbox and domain health polls; automatic brakes beyond bounce (SMTP failure, disconnect, reputation); Icemail adapter with order, export and webhooks; second domains attached | a simulated disconnect pauses the mailbox and zeroes its slots without a person | IM-3 |
+| IM-10 | **Numbers.** The §8 observability counts, per-port lag, one dashboard, the Tuesday export, reconciliation against Smartlead analytics by send date | Tuesday's review runs off the dashboard | IM-3 to IM-7a; grows with each |
+| IM-11 | **Channels and nurture.** `TwilioChannel` behind the `Channel` port with consent records, STOP and quiet hours; the nurture track; the UCC cohort re-contact policy | a `text_me` reply records consent and the next template goes by SMS | IM-8 |
+
+**Quintel**
+
+| ID | Milestone | Done when | Waits on |
+|---|---|---|---|
+| Q-0 | **Bridge export (first-send supply).** A repeatable script: FMCSA census for the six states, filtered to the `trades_trucks` ICP box (intrastate, 2–7 power units, excluded lanes out), emails verified through the existing enrichment chain, written as envelope-shaped CSV with USDOT, email and census fields as typed facts. Starts as a small list to build the plumbing | a small verified list feeds J1 and the first sends; average volume (verified rows per state per filter) is measured; a wider re-run is one command | J0 |
+| Q-1 | **Lead model and the Ironmark account.** A new account kind for lead consumers, with ICP boxes and no buy box; the lender product's account-driven jobs (daily allocation, surfacing, admission, billing) skip it, which means auditing the ~35 files that touch `BuyBox`; a typed `icp_box` table with `trades_trucks` as the first row, a sibling of `buy_box` with no shared base, type column or conversion (§4a); Quintel-side `lead` scoped to the account (company, contact, fit score and reasons, `icp_box`, `origin_kind`, trigger and signal links, claim lease, cooldown and park, lifecycle); `contact.email_status` extended to bounced and invalid; an inbound label table keyed by idempotency key | a lead can be created, claimed, leased, released, cooled down and labeled in tests; the Ironmark account never appears in a lender job's run | J0 |
+| Q-2 | **Connectors v0.** CO UCC initial filings with the secured-party → `lender.aliases` join; FMCSA census with the monthly diff (Socrata app token); TN contractor licenses (US host) | three feeds run nightly on the cursor pattern and resolve to `company` with signals for dated events | nothing (start now) |
+| Q-3 | **ICP fit scorer v0.** Writes leads for the `trades_trucks` ICP box from resolved companies, excluding machinery lanes and interstate carriers, with `fit_reasons` | a ready pool per state exists and is spot-checked against the ICP box | Q-1; fresh input from Q-2 |
+| Q-4 | **Provider API.** The §6a endpoints with leases; idempotent events written as labels; `verify` on domain, legal name and officer; suppression hints; service token with actor `ironmark`, audited | Ironmark's contract tests pass against it; it serves hand-seeded leads before Q-3 lands | Q-1, J0 |
+| Q-5 | **Contact-append measurement.** 200 address-only companies from CO UCC and TXG11 through website → email → verify | the found-and-verified rate replaces the model's 0.5, and the connector order in Q-7 is written from it | the 200 rows (pull by hand now or from Q-2) |
+| Q-6 | **Prequal and facts.** The bounded web check (operating, trade match, not restricted, liveness and owner currency) producing typed, sourced facts and `prequal`; footprint facts recorded, not ranked | a lead carries facts the draft validator accepts; stale rows are `rejected: stale` | Q-1 |
+| Q-7 | **Connector fan-out.** Remaining build-now feeds in order of measured yield; the lead/prospect overlap view; the footprint test against register labels | each new feed's leads-per-month and verified-email rate are on its row | Q-5, Q-2; the footprint test also waits on J3 |
+
+### 12d. The dependency graph
+
+```
+ START NOW (no dependencies)        AFTER THE CONTRACT               AFTER THE CORE                        PROOFS AND LATER
+ ───────────────────────────        ──────────────────               ──────────────                        ────────────────
+ J0 contract ─────────────────┬───► IM-1 core schema ──────────┬──►  IM-3 sequencer ◄── IM-2              J1 CSV e2e  ═► G1 + G2
+                              │                                 ├──►  IM-4 send path                       │   (first send)
+ IM-2 Smartlead spike ────────┼─────────────────────────────────┤     IM-5 safety loop                     ▼
+                              │                                 ├──►  IM-6 reply engine                   IM-7b, IM-8, IM-10
+                              │                                 └──►  IM-7a register + handoff            IM-9 fleet ═► G5
+                              │                                                                           IM-11 channels ═► G6
+                              ├───► Q-0 bridge export ──────────────────────────────────────────────►  (feeds J1 and first send)
+                              │
+                              └───► Q-1 lead model ────────────┬──►  Q-3 fit scorer ─────┐
+                                                               ├──►  Q-4 provider API ───┼──────────► J2 Quintel connected ═► G3
+ Q-2 connectors v0 ────────────────────────────────────────────┴──►  Q-6 prequal + facts │            J3 loop closed ═► G4
+ Q-5 contact-append measure ──────────────────────────────────────────────────────────────┴──────────► Q-7 connector fan-out
+```
+
+### 12e. The waves: what runs side by side
+
+| Wave | Ironmark | Quintel | Width |
+|---|---|---|---|
+| **0: now** | J0 contract; IM-2 Smartlead spike | Q-2 connectors v0; Q-5 measurement on hand-pulled rows | 4 streams |
+| **1: after J0** | IM-1 core schema (one owner, one migration) | Q-0 bridge export; Q-1 lead model | 3 streams, while wave-0 streams continue |
+| **2: after IM-1 and IM-2** | IM-3, IM-4, IM-5, IM-6, IM-7a | Q-3, Q-4, Q-6 (after Q-1) | 8 streams, the widest point |
+| **3: J1, then first send** | IM-7b, IM-8, IM-10 | Q-7 once Q-5 reads | 4 streams |
+| **4: while sending** | J2, then J3; IM-9; IM-11 in the dark weeks (11-17 to 11-30, 12-16 to ~01-20) | Q-7 continues; footprint test on register labels | 3–4 streams |
+
+The critical path to the first send is **J0 → IM-1 → {IM-3, IM-4, IM-5, IM-6, IM-7a} → J1**, with IM-2 feeding IM-3 and Q-0 feeding J1. Of these, IM-1 is the narrowest: it holds up five streams, so it gets one owner and nothing else in wave 1 on the Ironmark side.
+
+### 12f. Inputs from people that gate milestones
+
+| Input | Owner | Gates | If late |
+|---|---|---|---|
+| Touch-one to touch-three copy per origin, and the partner-line arm | Alek | IM-4, G1 | nothing pushes; the template slots are ready without it |
+| Sender identity on the 30 mailboxes (§10 open 1) | Simon and Alek, after the focus group | G1 | the send waits; display names change in an hour once decided |
+| Instant-reply text and the question answers, with David's `rate` line | Alek, David | IM-6, IM-8 | positives wait on a person |
+| David's availability (hours, Saturdays, holidays, days off) | David | IM-7a | the promise in the handoff is wrong; default to the weekday rule in `outbound.md` §5a |
+| Suppression sources: David's April list, Origami history, flpool touches | Alek (Origami), Simon | IM-5, G1 | do not send; the list of record must exist before the first push |
+| Trust surface: postal address and opt-out line on the site and in the footer | Simon | G1 | do not send (compliance) |
+| Second domain per state warming | Simon (ops) | G5 | nothing now; a burned domain later takes its state dark for weeks |
+
+### 12g. Rules for running in parallel
+
+1. **Schema first in Ironmark.** IM-1 lands all of §4c at once. Later milestones add behavior, not tables. Five wave-2 streams each adding migrations would race each other and the migration-drift test. A stream that needs a column asks the IM-1 owner.
+2. **Fakes and recorded payloads, not live vendors.** Every stream tests against the fakes and IM-2's fixtures. Live Smartlead calls happen only in IM-2 and J1.
+3. **The contract changes only at J0.** A change to the envelope or an event kind is a fixture change made in both repos together, never a local edit on one side.
+4. **One event dispatcher.** IM-5 and IM-6 both consume `event_log`. IM-1 provides the handler registry so the two streams add handlers without editing each other's code.
+5. **One app, two roles.** Operator views extend the existing staff console. The partner role is added in IM-7a, not as a separate app.
+6. **Each milestone is one design → plan → build → review cycle** in the repo's workflow. If a milestone needs more than one plan, split it before starting.
+
+### 12i. Workstream briefs for the kickoff
+
+The kickoff is four streams. Each milestone has a brief in `workstreams/`: a starting point for the brainstorm → design → plan → build cycle in its repo, read together with this doc. The briefs are not design contracts.
+
+| Stream | Milestone | Brief | Repo |
+|---|---|---|---|
+| 1 | J0, then IM-1 | `workstreams/j0-lead-source-contract.md`, `workstreams/im1-core-schema-and-ports.md` | ironmark (J0 consumed by quintel) |
+| 2 | IM-2 | `workstreams/im2-smartlead-spike.md` | ironmark (Simon hands-on) |
+| 3 | Q-0 | `workstreams/q0-bridge-export.md` | quintel |
+| 4 | Q-1 | `workstreams/q1-lead-model-and-ironmark-account.md` | quintel |
+
+Two findings from writing the briefs (09-27):
+
+- **Quintel's existing FMCSA connector serves a different population.** It pulls new interstate registrations, without email, officer or operation type. The Q-0 roster is therefore a separate filtered pull.
+- **Quintel has no email verifier.** The enrichment chain finds contacts but never checks the deliverability of an address it already holds. Q-0 must add one (the flpool plan named MillionVerifier or ZeroBounce, at about $0.005 an address) before any row is sendable.
+
+### 12h. Decisions this sequence needed (settled 09-27)
+
+1. **Who owns a Quintel lead: the Ironmark account.** It is a new account kind with ICP boxes and no buy box. The concept first named `icp_profile` on the envelope is renamed **`icp_box`** (09-27), so it reads as a sibling of `buy_box` and cannot be confused with the loose "ICP-matched" wording in Quintel's docs. `trades_trucks` is its first value, now a typed row. It is not a buy-box extension, and the two never share a table (§4a, §10 #13). The one piece of work this adds to Q-1 is keeping the new kind out of the lender product's account-driven jobs.
+2. **First-send supply is the Q-0 export**, small at first, to build the plumbing and measure average volume. It is widened by re-running the export (§10 #14).
+3. **Send on G1 if G2 slips**, with a named person working the inbox (§10 #15).
+
+Execution model: each milestone is run as a parallel agent workstream, and Simon reviews.

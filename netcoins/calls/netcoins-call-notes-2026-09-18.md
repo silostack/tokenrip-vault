@@ -1,14 +1,14 @@
 ---
 title: Netcoins — yield integration intro (Pavel + Kim Dwyer + Jay), call notes
-date: 2026-09-22
+date: 2026-09-18
 call_type: product-integration
-transcript: "[[netcoins/calls/netcoins-2026-09-22]]"
+transcript: "[[netcoins/calls/netcoins-2026-09-18]]"
 prep_file: "[[netcoins/calls/pavel-call-prep-2026-09-18]]"
 deal: "[[netcoins/netcoins]]"
 momentum: advancing
 ---
 
-# Netcoins Yield Call — 2026-09-22 (product-integration)
+# Netcoins Yield Call — 2026-09-18 (product-integration)
 
 ## Bottom line
 
@@ -20,9 +20,9 @@ Netcoins has stopped talking to other yield partners and now treats RebelFi as i
 
 | # | Action | Owner | Due |
 |---|---|---|---|
-| 1 | **Send a one-page "boring v1" spec to Pavel, Kim and Jay.** It should cover USDC only, one curated Morpho vault (Coinbase parity), a user signature on every transaction, the fee mechanics and suggested disclosure wording, and the wallet options (Privy vs. Fireblocks' embedded wallet). Send it before their Monday internal sync so it frames that meeting. | Simon | 2026-09-25 *(inferred)* |
-| 2 | **Offer Kim the flow-of-funds diagram for her regulator story.** She described the regulator pack word for word: "flow of funds, how we protect consumers, why we're allowed to do it." `flow-of-funds/rebelfi-flow-of-funds-v2.pdf` already exists. Adapt it to the Netcoins yield path. This moves Condition 1, and every earn-out component depends on it. | Simon | 2026-09-29 *(inferred)* |
-| 3 | Send Kim the details on the insured-vault partner Alek mentioned. It speaks directly to her regulator's first concern, which is consumer losses. | Alek | 2026-09-25 *(inferred)* |
+| 1 | **Send a one-page "boring v1" spec to Pavel, Kim and Jay.** It should cover USDC only, one curated Morpho vault (Coinbase parity), a user signature on every transaction, the fee mechanics and suggested disclosure wording, and the wallet options (Privy vs. Fireblocks' embedded wallet). Send it before their Monday internal sync so it frames that meeting. | Simon | 2026-09-22 *(inferred)* |
+| 2 | **Offer Kim the flow-of-funds diagram for her regulator story.** She described the regulator pack word for word: "flow of funds, how we protect consumers, why we're allowed to do it." `flow-of-funds/rebelfi-flow-of-funds-v2.pdf` already exists. Adapt it to the Netcoins yield path. This moves Condition 1, and every earn-out component depends on it. | Simon | 2026-09-22 *(inferred)* |
+| 3 | Send Kim the details on the insured-vault partner Alek mentioned. It speaks directly to her regulator's first concern, which is consumer losses. | Alek | 2026-09-22 *(inferred)* |
 | 4 | **Write the integration milestone around this yield integration** (battle plan #5). Acceptance must mean deployed and working in Surge's environment. It must not mean live to Netcoins clients. Client launch depends on the regulator, and the milestone cannot. | Simon | Before DA draft |
 | 5 | **Propose the Net Revenue formula using the mechanism Simon described** (battle plan #6): the spread taken on withdrawal from RebelFi-routed balances counts as Net Revenue, whichever group entity books it. Settle whether treasury-float yield counts. | Simon + Alek | Before DA draft |
 | 6 | Put the treasury-float path on the table. The prep marked it "your fastest win; propose it," and it was not raised on the call. | Alek | Next contact |
@@ -31,12 +31,12 @@ Netcoins has stopped talking to other yield partners and now treats RebelFi as i
 
 | # | Action | Who | Due |
 |---|---|---|---|
-| 1 | Send the Coinbase/Morpho press release and Kraken Canada's yield materials | Kim | ~2026-09-25 *(inferred)* |
+| 1 | Send the Coinbase/Morpho press release and Kraken Canada's yield materials | Kim | ~2026-09-22 *(inferred)* |
 | 2 | Pull the Coinbase and Kraken terms of service and disclosures, map the flow and the counterparties behind it, and check whether Coinbase Canada is live | Kim (+ Jay, who has been through the Kraken flow) | Before Monday sync *(inferred)* |
-| 3 | Evaluate wallets: Privy call next, then confirm whether Fireblocks can do non-custodial wallets for retail | Pavel + Jay | ~2026-09-28 |
-| 4 | Internal sync on structure using existing partners' infrastructure | Pavel, Kim, Jay | Mon 2026-09-28 |
+| 3 | Evaluate wallets: Privy call next, then confirm whether Fireblocks can do non-custodial wallets for retail | Pavel + Jay | ~2026-09-21 |
+| 4 | Internal sync on structure using existing partners' infrastructure | Pavel, Kim, Jay | Mon 2026-09-21 |
 | 5 | Size the build against Pavel's backlog | Pavel | With the update |
-| 6 | Send RebelFi an update | Pavel / Kim | ~2026-09-29 to 10-02 ("next week or so") |
+| 6 | Send RebelFi an update | Pavel / Kim | ~2026-09-25 to 09-28 ("next week or so") |
 | 7 | Build the regulator narrative and take it to the CSA, building in parallel | Kim | After the model is settled |
 
 ### What They're Expecting From Us

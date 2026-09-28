@@ -1,6 +1,6 @@
 ---
 status: v0.2
-last_revised: 2026-09-24
+last_revised: 2026-09-24 (v0.2: US-host retest merged; §1, §2, §4, §5 updated from it)
 owner: Simon
 serves: which public feeds the Ironmark outbound engine ingests first, judged as data plumbing (access, cadence, incremental pull, fields, contact yield, build effort), not as sales signal
 tier: internal (shareable with Alek)
@@ -11,9 +11,9 @@ relationship: evaluates the 61 A-tier sources in Alek's Six-State Outbound Model
 
 ## 1. The so what
 
-Getting the data in is easier than the model assumed. Of the 52 in-box A-tier sources, 26 can be built now, and most of those are Socrata or ArcGIS APIs that support date-based incremental pulls and take under half a day each. The hard part comes after ingestion: **only about six of the 26 build-now feeds carry an email address.** The intent feeds (Colorado UCC, TCEQ permits, diesel registrations, city permits) name a company and an address and stop there. Every lead from them has to pass through a contact-append stage (website → email → verify), and that stage's hit rate sets real volume. The model assumes 50% "valid email found." For rural companies with 2–25 employees known only by name and address, that number is unmeasured. Measure it first. It decides whether the six states can fill 300 leads a day, not the connectors.
+Getting the data in is easier than the model assumed. Of the 52 in-box A-tier sources, 30 can be built now (26 on the first pass, and 4 more once a US host retest showed they were only geoblocked), and most of those are Socrata or ArcGIS APIs that support date-based incremental pulls and take under half a day each. The hard part comes after ingestion: **only about seven of the 30 build-now feeds carry an email address.** The intent feeds (Colorado UCC, TCEQ permits, diesel registrations, city permits) name a company and an address and stop there. Every lead from them has to pass through a contact-append stage (website → email → verify), and that stage's hit rate sets real volume. The model assumes 50% "valid email found." For rural companies with 2–25 employees known only by name and address, that number is unmeasured. Measure it first. It decides whether the six states can fill 300 leads a day, not the connectors.
 
-This corrects part of my 09-24 v0 advice ("no nightly connectors in v0"). Several intent feeds cost half a day each, so a small connector set is affordable in v0: Colorado UCC, FMCSA and two or three Texas Socrata feeds. The build-order discipline doesn't change. Contact-append and the ledger come first.
+This corrects part of my 09-24 v0 advice ("no nightly connectors in v0"). Several intent feeds cost half a day each, so a small connector set is affordable in v0: Colorado UCC, FMCSA, the Tennessee contractor-license file and two or three Texas Socrata feeds. Four of those hosts only answer US IPs, so the nightly fetch runs on a US server, not from Colombia. The build-order discipline doesn't change. Contact-append and the ledger come first.
 
 Scope: 61 A-tier sources in Alek's model; 9 are out of box (liquor, beer, food service, veterinary, certificate of need) and were not investigated. Six agents fetched each of the other 52 on 2026-09-24.
 
@@ -28,9 +28,9 @@ Scope: 61 A-tier sources in Alek's model; 9 are out of box (liquor, beer, food s
 Access methods: 19 Socrata, 9 ArcGIS, 4 other APIs, 10 bulk files, 2 PDFs, 3 HTML scrapes, 5 portal searches.
 
 **Contact fields in build-now feeds (fact, measured on samples):**
-- Email present: FMCSA census (~46% in Indiana, 18,368 of 39,771), Colorado dewatering permits (legal contact phone and email on nearly every row), IDEM septage permittees (~50%), INDOT bid tabs (bidders, nearly all), TxDOT vendor list.
+- Email present: TN contractor licenses (95%, 190 of 200; about 38% are free-mail addresses), FMCSA census (~46% in Indiana, 18,368 of 39,771), Colorado dewatering permits (legal contact phone and email on nearly every row), IDEM septage permittees (~50%), INDOT bid tabs (bidders, nearly all), TxDOT vendor list.
 - Phone only: TDLR tow (97%), TSBPE master plumbers (51%), Palm Beach towing, Miami-Dade permits (contractor phone), Georgia EPD solid waste, Chattanooga permits.
-- Nothing but name and address: everything else, including Colorado UCC, all TCEQ feeds, Comptroller diesel registrations, TxDOT bid tabs, Dallas ROW, Florida grease haulers and FDEP air.
+- Nothing but name and address: everything else, including Colorado UCC, both DBPR licensee files, the Hillsborough NOC index, all TCEQ feeds, Comptroller diesel registrations, TxDOT bid tabs, Dallas ROW, Florida grease haulers and FDEP air.
 
 ## 3. The feeds to build first
 
@@ -58,6 +58,12 @@ Colorado UCC needs one clarification. The SOS sells a $10K-a-year "UCC Master Fi
 ## 4. Cross-cutting findings
 
 - **Four of five blocked hosts were geoblocked; TDEC blocks datacenter IPs everywhere.** A retest on 2026-09-24 from a US datacenter host (DigitalOcean, Clifton NJ) reached data.tn.gov, Hillsborough Clerk and both DBPR CSVs. DBPR is still behind Cloudflare, but it serves the files to a US IP with no challenge, so its rule is geographic, not bot protection. TDEC's DataViewer returns 403 from its AWS load balancer on every path, robots.txt included, from the US as well. That is an IP-range block, not geography (inferred; a residential US IP was not tested, and the headless test was skipped because Chromium couldn't be installed without root). **Production fetches for these four hosts must run from a US host; local development from Colombia cannot reach them.** Tennessee moves from one build-now source to two, and TN-g5-05 (email 95%, phone 73%) becomes one of the most contact-rich feeds in the set. Detail: `data/geoblock-probe-2026-09-24.json`, `data/geoblock-retest-2026-09-24.json`.
+- **Two of the four recovered sources don't do what their descriptions promised** (fact, from the retest):
+  - **Hillsborough NOCs post 2–18 days after recording, with a median of 6**, not the 1 day the prior round reported. The contractor mix skews residential (roofers, pool builders, home builders, Lowe's) and includes solar, which is restricted. About a third of the named contractors look like individuals. At ~5,400 NOCs a month (an estimate from one day) the volume is large, but the in-box share after the DBPR trade join is unmeasured. Treat it as unproven until one month has been joined and counted.
+  - **DBPR's column 16 is the original license date, not the license type** (the type is column 2). The files carry no phone or email. Their job is to decode trade (CUC underground utility, 2,739 rows; CGC, CBC and the like) for NOC contractors and Miami-Dade permits, not to supply leads directly.
+- **New licenses are not proof of a 2-year-old business.** TN contractor licenses (126–216 a month) and DBPR (~1,630 a month) are both easy to trigger on, but many new licenses belong to new firms, and the buy box requires 2+ years in business. Every new-license event has to pass a charter-age check against the state SOS before it becomes a lead (inferred; the retest did not measure the share of new licenses held by new entities).
+- **A state license roster that carries email can serve as contact-append for that state's permit feeds.** The TN license file (email 95%) keys on license number and company name. Nashville and Chattanooga permits name contractors but carry no email (Chattanooga has `contractorlicnum`), so joining them to the roster supplies the address the permits lack. This is the cheapest contact-append path in Tennessee. Test the match rate on one month of Chattanooga permits.
+- **Tennessee's intent bucket rested on TDEC, and TDEC is out.** The artifact estimated ~340 live events a month in Tennessee, and TDEC construction stormwater and stream permits made up about 287 of them (prior round's figures). With TDEC blocked for datacenter IPs, Tennessee becomes a general-bucket state (contractor-license roster, FMCSA, city permits) until a residential-IP test or a TDEC bulk alternative says otherwise.
 - **Many records don't name the equipment buyer.** Dallas ROW is dominated by large primes and unrelated installers. Nashville ROW fills its company field in only 22% of rows. TCEQ OSSF names an individual license holder. Permit feeds need the contractor join the model already flags as a risk. Feeds that name the contractor directly: Colorado dewatering, Miami-Dade (contractor number in DBPR format), Austin (`contractor_trade`).
 - **Rosters are the other half of the set, and they're snapshots, not events.** TDLR tow, TSBPE, IDEM septage, GA EPD and the TxDOT vendor list are full-file downloads with no add date. They load as companies and get compared month to month. Only dated events should become triggers.
 - **Traps a pipeline will hit:**
@@ -80,7 +86,9 @@ Colorado UCC needs one clarification. The SOS sells a $10K-a-year "UCC Master Fi
 2. **Put Colorado UCC and FMCSA in v0.** Both are small builds, both are live, and together they cover the one validated signal plus the carrier universe in all six states.
 3. **Get a free Socrata app token** before any scheduled job runs. FMCSA throttled unauthenticated calls repeatedly.
 4. ~~Retest the seven blocked records from a US host.~~ **Done 2026-09-24:** four moved to build_now (TN-g5-05, FL-g3-01, FL-g3-02, FL-g3-06); the three TDEC DataViewer feeds stay build_later, blocked from US datacenter IPs too.
-5. **Correct the volumes in the artifact's by-state table** where the fetch measured them: Colorado UCC 4,000–4,650 initial UCC-1s a month, TXR05 industrial stormwater 266 in 30 days rather than ~137 a month, and Indiana FMCSA intrastate 39,771 before filters.
+5. **Correct the volumes in the artifact's by-state table** where the fetch measured them: Colorado UCC 4,000–4,650 initial UCC-1s a month, TXR05 industrial stormwater 266 in 30 days rather than ~137 a month, and Indiana FMCSA intrastate 39,771 before filters, Tennessee live events from ~340 to roughly 50 a month without TDEC, and Hillsborough NOCs at ~5,400 a month with a 6-day median lag.
+6. **Run the nightly fetch on a US host.** Four build-now hosts (data.tn.gov, Hillsborough, both DBPR files) refuse Colombian IPs, so local runs from Medellín can't be the pipeline, and development against these hosts has to happen on the server. The DigitalOcean host in Clifton, NJ reached all four. Confirm where Quintel production runs before putting these connectors there.
+7. **Add TN contractor licenses to v0.** One 9.4 MB GET, email on 95% of rows, trade codes and a dollar aggregate limit as a size signal. It is the richest contact source in the set and needs no contact-append.
 
 ## 6. Scorecard, all 52
 

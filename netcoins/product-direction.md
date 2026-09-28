@@ -3,13 +3,14 @@ title: Surge / RebelFi — product direction and decision tracker
 type: internal
 status: live
 created: 2026-09-23
-updated: 2026-09-23
+updated: 2026-09-25
 source: https://claude.ai/artifact/GUFQqVGxbCdkQTaWUQG6t7
 source_version: v0.4.1, 2026-09-23
 related:
   - "[[netcoins/netcoins]]"
   - "[[netcoins/battle-plan]]"
-  - "[[netcoins/calls/netcoins-call-notes-2026-09-22]]"
+  - "[[netcoins/calls/netcoins-call-notes-2026-09-18]]"
+  - "[[netcoins/calls/netcoins-call-notes-2026-09-25]]"
 ---
 
 # Surge / RebelFi product direction
@@ -35,11 +36,12 @@ related:
 
 ## Decisions and conflicts that matter now
 
-1. **Separate the consumer app from the Netcoins yield integration.** The [22 Sept operator call](calls/netcoins-call-notes-2026-09-22.md) scoped a deliberately narrow USDC-only yield offering for Netcoins users, modelled on Coinbase/Kraken. Fraser's artifact describes a much larger consumer wallet with four assets, cross-chain transfers, conversion, chat and agents in Phase 1. These may be two products or two stages of one product; nobody has confirmed the relationship. The DA integration milestone must name its own acceptance criteria and must not silently inherit the 12-week app scope.
+1. **Separate the consumer app from the Netcoins yield integration.** The [18 Sept operator call](calls/netcoins-call-notes-2026-09-18.md) scoped a deliberately narrow USDC-only yield offering for Netcoins users, modelled on Coinbase/Kraken. Fraser's artifact describes a much larger consumer wallet with four assets, cross-chain transfers, conversion, chat and agents in Phase 1. These may be two products or two stages of one product; nobody has confirmed the relationship. The DA integration milestone must name its own acceptance criteria and must not silently inherit the 12-week app scope.
 2. **Yield architecture is unresolved.** The call discussed a curated Morpho-style vault, Privy versus Fireblocks wallets, and user signatures. The artifact chooses Privy/Solana and RebelFi's own orchestration, with Morpho/Aave expressly excluded. Ask Pavel, Kim and Fraser whether the Netcoins offer and consumer app use different yield paths, and who approves a change. The distinction affects regulatory review, delivery time and the earn-out.
 3. **A “non-custodial” label does not settle the legal perimeter.** Fiat conversion, BTC held via Netcoins, sponsored transactions, delegated agent spending, an x402 facilitator and yield each introduce different control and regulated-activity questions. Treat the artifact's US/Canada regulatory rows as questions for counsel and Kim's flow-of-funds review, especially before accepting an entity or launch plan.
 4. **The proposed scope is wider than the financing and operating agreement currently support.** Phase 1 depends on Netcoins CaaS terms, program redeploy/audit, Privy, Circle CCTP, USDT0, Kora, KYC and regulatory advice. The artifact assigns Simon engineering work and suggests a lead-plus-contractor model, but the LOI does not itself settle authority, budget, hours or staffing. A 12-week target is a hypothesis until those dependencies have owners and dates.
 5. **The Canada wedge changed with QCAD's removal.** Canadian customers would see CAD but hold USD assets. That may fit cross-border use, but it creates FX exposure and changes the claim from CAD-native money to Canadian access to digital dollars. Test that with actual target users before making it the positioning anchor.
+6. **09-25: Fraser walked the consumer focus out of Canada, and split build vs buy.** On the call he said stablecoin *spending* in Canada is not a use case, the primary consumer focus is largely outside Canada, RebelFi's job is the personal app, and merchant invoicing (live at a law firm) will be purchased rather than built. He also said the v0.4.1 write-up can be overwritten. Pavel argued against a walled garden. Alex (marketing) argued LatAm is already served and that the cheap test is a diaspora niche in Canada. None of this is a decision. It is evidence the artifact's Canada-first Phase 1 is not the room's plan. Milestone wording stays separate until Fraser, Kim, Pavel and Simon name one product.
 
 ## Open decisions to resolve in the next working session
 
@@ -56,8 +58,9 @@ related:
 
 | Date | Source | Change | Standing |
 |---|---|---|---|
-| 2026-09-22 | [Pavel/Kim/Jay call](calls/netcoins-call-notes-2026-09-22.md) | Netcoins operator group scoped a USDC-only, simple yield offering; wallet vendor and structure open; Kim owns regulator path. | Direct call record |
+| 2026-09-18 | [Pavel/Kim/Jay call](calls/netcoins-call-notes-2026-09-18.md) | Netcoins operator group scoped a USDC-only, simple yield offering; wallet vendor and structure open; Kim owns regulator path. | Direct call record |
 | 2026-09-23 | [Fraser artifact v0.4.1](https://claude.ai/artifact/GUFQqVGxbCdkQTaWUQG6t7) | Consumer wallet direction recorded: Solana, Privy, USDC/USDT/BTC/SOL, CCTP/USDT0, Netcoins conversion, agent layer; QCAD out, BancoLibre passed. | Fraser-authored plan; joint acceptance unconfirmed |
+| 2026-09-25 | [Fraser / Pavel / Alex call](calls/netcoins-call-notes-2026-09-25.md) | Fraser: RebelFi is the personal app (Kast/Ether.fi); merchant payments bought, not built; Canada spend is not the market. Pavel: don't build a walled garden. Alex: diaspora-in-Canada is the cheap test; LatAm cards already covered. No use case chosen. | Proposed. Fraser said his own spec can be overwritten. Not a joint decision. |
 
 ## Tracking rule
 
