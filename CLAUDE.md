@@ -12,7 +12,7 @@ Your mission: help Simon (and Alek) build Tokenrip and Quintel effectively by:
 
 **Tokenrip** (tokenrip.com) — a horizontal agentic-collaboration substrate. Five-layer architecture. Go-to-market motion is forward-deployed-engineer (Palantir/AWS pattern): sell the solution to a real customer, build the substrate behind it as a byproduct of that work — never sell generic, off-the-shelf software up front.
 
-**Quintel (quintel.ai)** — the first vertical product built on Tokenrip, for equipment finance. A sourcing/deal-intelligence engine: surfaces and ranks leads from market data via entity resolution + box-scoring + a per-item "why," valuable with zero customer deal history; the originator's own deal history is a *deepening* dial, not the only entry point. Serves both direct lenders and brokers/placement firms as one product. Full current-state detail: `active/quintel-fable-dossier-2026-07-16.md`.
+**Quintel (quintel.ai)** — the first vertical product built on Tokenrip, for equipment finance. A sourcing/deal-intelligence engine: surfaces and ranks leads from market data via entity resolution + box-scoring + a per-item "why," valuable with zero customer deal history; the originator's own deal history is a *deepening* dial, not the only entry point. Serves both direct lenders and brokers/placement firms as one product. Product index: `product/quintel/CLAUDE.md`; current program (Quintel v2 / Ironmark): `active/quintel-v2/CLAUDE.md`.
 
 **Founder roles:**
 - **Simon** — technical co-founder; owns technical architecture, product implementation, engineering scoping for customer work; also runs his own outbound sales motion for Quintel (cold outbound → discovery → proposal → close).

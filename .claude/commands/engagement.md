@@ -2,7 +2,7 @@
 
 ## Config
 
-- **AgentMail API Key:** `am_us_1eee6c92d56f53b81bc3d8adad229a737cf3a9e514d604515e67861333bb097e`
+- **AgentMail API Key:** lives outside the repo in `~/.agentmail/config` — never paste it into this file
 - **AgentMail Inbox:** `tokenrip@agentmail.to`
 - **Default batch size:** 10
 
@@ -10,7 +10,7 @@
 
 Run these commands in order:
 
-1. First, export the API key so agentmail commands can use it: `export AGENTMAIL_API_KEY="am_us_1eee6c92d56f53b81bc3d8adad229a737cf3a9e514d604515e67861333bb097e"`
+1. Check that `AGENTMAIL_API_KEY` is set in the environment (load it from `~/.agentmail/config`). If it isn't, stop and ask Simon — don't hunt for the key in the vault.
 2. Run `rip asset cat engagement-common` to load shared context
 3. Based on the mode in $ARGUMENTS, load the mode-specific instructions:
    - `ingest` → Run `rip asset cat engagement-ingest`

@@ -1,6 +1,6 @@
 # Content Folder
 
-Blog posts and supporting research for the Tokenrip blog. *(The "Intelligence Engine" motion that framed this content pipeline was archived 2026-06-04 → `__ARCHIVE/intelligence-engine/`; the blog tooling itself still functions.)*
+Blog posts and supporting research for the Tokenrip blog.
 
 ## Layout
 

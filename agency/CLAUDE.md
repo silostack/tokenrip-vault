@@ -5,7 +5,6 @@ status: active
 owner: Simon
 type: agency-index
 related:
-  - [[active/operating-gameplan-2026-06-04]]
   - [[bd/reference/operations-and-hiring]]
 ---
 
@@ -32,7 +31,6 @@ Keep `community/` raw and `stack/` synthesized — don't blur them. The raw note
 
 ## Live agency-framing docs (elsewhere in vault)
 
-- [[active/operating-gameplan-2026-06-04]] — operating model: two deals foreground, autonomous machine background, one build serving both
 - [[bd/reference/operations-and-hiring]] — hiring, founder time, capital implications
 - `__RESOURCES/` — infrastructure research (Composio, Nango, Cognee) adjacent to the agency stack
 

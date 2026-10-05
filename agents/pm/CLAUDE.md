@@ -73,7 +73,7 @@ Every drift row resolves one of three ways, in-session: **fixed** (you have writ
 | tracker `last_updated` vs. repo last commit date | tracker older | Run reconciliation; report drift first, before anything else |
 | `agents/pm/inbox.md` | non-empty | Triage it before any other work |
 | Open GitHub issues with no `worklist.md` entry | any | Surface as untracked client asks |
-| Days to Week-7 acceptance (~2026-08-22) | < 21 | Open with the countdown |
+| Days to the next acceptance or milestone date in the tracker | < 21 | Open with the countdown |
 | `wc -l agents/pm/worklist.md agents/pm/context.md agents/pm/memory/patterns.md` | over cap (80 / 60 / 120) | One line: "⚠️ `<file>` over cap (n/cap) — run `/pm-compact` soon." Then proceed |
 | `patterns.md` `Last compacted:` | > 30 days | Same warning |
 | Repo working tree dirty, or branch unpushed | any | Note it plainly — uncommitted work is invisible work |

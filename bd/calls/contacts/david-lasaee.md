@@ -2,8 +2,8 @@
 contact: David LaSaee
 company: Providence Capital Funding (contractor)
 call_type: firm-direct
-status: ops locked for 10-06 send, commercials still unsigned — 09-26 locked send calendar (~600/day from 10-06, skip 10-12), two-step handoff + Slack CRM check, vendor dials Monday on Alek's ~73 list. Own-brand Ironmark stays; v1 visuals = yellow iron. Fee structure (12.5% to $7K GM, flat 10% above, ~$1,000 cap) and pre-tax payment for David still unresolved after five-plus calls. New collision: David told us to take existing-PCF CRM hits to a *different lender*. Gate still on our side: economics unmodeled.
-last_contact: 2026-09-26
+status: borrower-email launch locked for 10-06 as a controlled finance-first ramp (~400/day initially, current cap ~1,200/day); vendor offer still unproven and phone path weak. Commercials, attribution, exclusivity, and David's payment mechanism remain unsigned; do not scale delivery until economics are modeled.
+last_contact: 2026-10-03
 sensitivity: David asked not to be recorded on 09-03; keep his quotes internal
 ---
 
@@ -32,6 +32,9 @@ Contractor paid by Providence, listed as Account Manager (Brea, CA). Not a phone
 
 - **2026-09-26**: [[bd/calls/transcripts/david-lasaee-2026-09-26]] · [[bd/calls/notes/david-lasaee-2026-09-26]]
   — Simon + Alek + David, ~145 min, Saturday, immediately before David's $45k JP Chase focus groups. Locked: first send **2026-10-06** at ~600/day (30 mb × 20; second round warming for redundancy); skip 10-12; David forecasts *sustainable* inbound **mid-January**. Ironmark v1 = yellow-iron visuals (packaging/PhD ICP is a later skin; Approve-style vendor comfort). Two-step copy still 50/50 ("help you finance" vs "work with financing partners"); **do not ask for phone on touch one** (Apex X Logistics 439 FICO / 11 hard inquiries is why the Max handoff "worked"). Handoff script: Slack CRM check on every positive; if already PCF and not David's book, **place elsewhere**; call as "Alex told me to call" or marketing-vs-finance platform. Vendor list ~73 (8 already in PCF) — DMs this weekend, **calls Monday 09-29**. Commercials not reopened.
+
+- **2026-10-03**: [[bd/calls/transcripts/david-lasaee-2026-10-03]] · [[bd/calls/notes/david-lasaee-2026-10-03]]
+  — Simon + Alek + David. Decided the 10-06 borrower-email launch is **finance-first**, not a generic equipment-finder pitch: the latter may lose the customer who already selected a unit and has a short financing window. Start near 400/day and ramp toward a current ~1,200/day cap after deliverability/reply review. New segmentation read: firm operating model × state matters more than SIC alone (single-truck septic/tree operators vs multi-asset firms; Colorado concrete differs from California). Vendor acquisition remains unresolved: a vendor values an approved, fundable buyer, not an unqualified shopper; no truthful cold vendor offer is yet specified. Commercials again went untouched.
 
 ## Running Intelligence
 
@@ -103,6 +106,20 @@ Cumulative 250–300 calls across FL/WI/OH, zero applications vs. 2% baseline (s
 
 **Do not build:** fake-review bots (David volunteered AU/UK/NZ; he said illegal in US).
 
+### 2026-10-03 — finance-first launch; operating model beats SIC; vendor wedge remains absent
+
+Analysis: `active/quintel-v2/call-analysis-2026-10-03.md`. Day-1 build audit: `active/quintel-v2/launch-checklist-2026-10-06.md`.
+
+**Segment on operating model × state, then test.** David's field read is that septic and tree-service SICs contain both exhausted one-truck owner-operators and multi-asset firms that can add $700K equipment; Colorado concrete is receptive while California concrete is not. This is an **inference from a small call sample**, not a new exclusion rule. Run it as a stratified sample, with fleet / footprint / active-ad signals, rather than declaring sectors hot or cold.
+
+**Finance-first is the launch control.** For the first 5,000 low-intent rows, do not make an equipment-shopping offer the primary message. The ready borrower may already have a specific machine and has a short financing window. A dealer relationship begins when we bring an approved buyer, not an unqualified shopper. The later personal-shopper arm is a distinct test for an unselected buyer; it cannot replace the first sequence.
+
+**Automation boundary.** Clean files can be automated; the fundable non-standard borrower still requires human review, equipment comprehension, and an exception conversation. Build automation to identify, qualify, route, and preserve timing context, not to remove the human underwriting wedge that distinguishes Providence from a bank.
+
+**Nurture is a retained timing signal.** Prospects who say “call me next spring” belong in dated follow-up buckets, with non-generic personal/holiday/industry touches between now and the opportunity. Providence reps set a CRM task but do not run this nurture. This is a product advantage only if consent, relevance, and cadence prevent it from becoming the same spam problem the focus group described.
+
+**Vendor offer still fails the truth test.** A cold vendor will not donate proposals for “nurture,” and already has salespeople, outreach, and finance relationships. “We grow your business” may be the correct headline but is not an offer until Ironmark can name the mechanism. Do not use a ready-buyer claim before there is one.
+
 ## Relationship / Pipeline State
 
 ### 2026-09-26 update
@@ -111,6 +128,13 @@ Cumulative 250–300 calls across FL/WI/OH, zero applications vs. 2% baseline (s
 **What he is expecting next:** FG results shared back, copy locked before 10-06, Slack that answers in minutes, vendor-list polish (Alek's sheets "don't look easy"), Saturday 30-min standing.
 
 **Ownership on our side:** Simon — economics model (overdue) + labeled-repeater feature work if David feeds the 9-deal names. Alek — send infra, copy variants, vendor-sheet hygiene, calendar.
+
+### 2026-10-03 update
+**The first send is now a controlled finance test, not a broad product experiment.** Tuesday starts near 400/day and may ramp toward 1,200/day only after list verification, deliverability, and replies. The message should be brief and specific; its finance advantage must be true for the recipient. Company name alone versus company name plus a context descriptor is the subject-line test. The immediate decision is settled enough to run; the vendor wedge is not.
+
+**What he is expecting next:** Alek's copy today, David's review and promised proven variants, then a Monday lock. David also expects more research lists where he can use roughly 80 calls around his standing follow-ups.
+
+**Ownership on our side:** Alek — copy variants, send ramp, subject-line QA. Simon — truthful claim boundary, list verification and segmentation tests, commercial instrument/economics. Both — a vendor proposition before more outreach.
 
 ### 2026-09-22 update
 **Branding decision reversed on data, economics still open.** 09-19 looked like it had closed the domain-branding question in favor of Providence-branded domains, built around David's attribution mechanism. 09-22 reopened it and landed on own-brand domains instead — a legitimate, evidence-driven reversal (live send data: Quintel domains get replies, Providence domains get none), not indecision. But it means the attribution/dedup mechanism from 09-19 ("we own the domains → Providence-branded email → replies land with us") needs to be re-derived for an own-brand domain, since that mechanism assumed Providence branding did the trust-building work. **This is unresolved and should be surfaced before domains go live.** Separately, the fee-tier arithmetic (#28 from 09-19) and the pre-tax payment mechanism have now been raised across four consecutive calls (09-10, 09-16, 09-19, 09-22) without landing — a pattern worth naming directly to David rather than re-opening cold each time.
@@ -140,6 +164,8 @@ Cumulative 250–300 calls across FL/WI/OH, zero applications vs. 2% baseline (s
 | 11 | Day-one copy can claim "lending partners" / best-match while the only funder is Providence | **inferred, contested on-call** (Alek: "still a lie"; Simon: frame as value-add; David: be honest up front) | FG will pick a preference; we still have to decide whether we *fulfill* multi-lender. Do not ship the winning lie |
 | 12 | Digital-footprint / search-lift predicts fundable growth | **inferred, medium** — All American Septic is n=1 labeled success vs Indiana septic failures | Ask David for the 10–15 repeat-funded names (the labeled set). Do not scrape 10k sites first |
 | 13 | Exclusivity still holds after "take CRM hits to another lender" | **contradicted on-call, unresolved** | Put both sentences in front of him next Saturday and pick one |
+| 14 | Active advertising, online footprint, and growing search volume predict a fundable capacity expansion | **inferred, low-medium** — David's All American Septic example and Colorado call anecdotes support a hypothesis, not a validated model | Cross-reference active ads / footprint against the funded, callback, and dead rows before weighting the signal |
+| 15 | A truthful finance-first email can earn replies from the initial no-intent pool | **untested.** David's focus-group direction supports short email and a low-friction CTA; it does not prove a particular claim or conversion rate | Launch the controlled 10-06 ramp with variants; evaluate verified delivery, reply, qualified conversation, application, and funding separately |
 
 ## Open Commitments
 
@@ -166,7 +192,7 @@ Cumulative 250–300 calls across FL/WI/OH, zero applications vs. 2% baseline (s
 | 19 | Email brand | Simon / Alek | — | **Reopened and reversed 09-22.** 09-19 had closed on Providence-branded domains; 09-22 settled instead on **own-brand domains**, on the strength of live send data (Quintel domain gets replies, Providence domain gets none). Style (finance-forward vs. blue-collar-general vs. Providence) still open, to be focus-group tested this weekend. Attribution mechanism from 09-19 needs re-deriving for own-brand (see assumption #9) |
 | 20 | Commercial structure back to David | Simon | **next call (the deal call)** | **Un-parked by David 09-19.** He named the instrument and expects a signed one-pager. The "wait for ratios" posture is no longer available — he asked for our number three times across two calls and filled the vacuum himself both times |
 | 21 | Attribution terms before any rev share: written definition of "attributed deal" (our row, first-contact date, 12-month window, any rep), CRM dedupe list delivered *before* each batch, monthly funded-deal report | Simon / Alek | with #20 | New; see Commercial read below |
-| 22 | Send Texas leads (specialty-truck target or expanded ICP) | Alek / Simon | sent 09-18 | Sent; grading outstanding. David now also wants Colorado, Georgia, Indiana state tests |
+| 22 | Send Texas leads (specialty-truck target or expanded ICP) | Alek / Simon | sent 09-18 | **Graded, returned 09-30** with the completed CO: 0 apps, 18% CRM (see 2026-09-30 entry). 10-03: he wants more research lists (TX, CO, OH, IN, MI, OR, WA) |
 | 23 | Send additional target industries beyond specialty trucks | David | re-dated **2026-09-19 "before the weekend"** | Open — packaging named on-call (TechniBlend); two more industries promised |
 | 24 | Bring a commercial/JV framework to the Saturday call — David has now asked twice (09-10, 09-16) | Simon | 2026-09-19 | **Not delivered.** David asked a third time and filled the vacuum with his own capped model. Rolls into #28 |
 | 25 | Reconcile Quintel-pre-qual-funnel idea vs. the 09-10 Providence-branded-domain decision before either gets built | Simon | before next email build | **Closed 09-19** in favour of Providence-branded domains; David's whole model assumes Providence branding and our domain control is the attribution mechanism |
@@ -199,6 +225,12 @@ Cumulative 250–300 calls across FL/WI/OH, zero applications vs. 2% baseline (s
 | 52 | Reconcile exclusivity vs "place existing-PCF hits with another lender" | Simon + David | next Saturday | New 09-26; see assumption #13 |
 | 53 | Ask David for 10–15 labeled repeat-funded names (All American Septic pattern) | Simon | next Saturday | New 09-26 |
 | 54 | Second mailbox round for burn redundancy | Alek | warming from 09-26 | New 09-26 |
+| 55 | Draft and circulate finance-first copy variants | Alek | **2026-10-03** | New — David to review before Monday lock |
+| 56 | Lock claims, subject-line rules, list composition, CTA, and reply handoff for 10-06 | Simon / Alek / David | **2026-10-05** | New — finance-first control; personal-shopper remains separate |
+| 57 | Verify company status/email and QA the first 5,000 subject lines | Simon / Alek | before send | New — suppress closed firms and generic/unreachable mailboxes |
+| 58 | Start borrower-email ramp near 400/day; assess before increasing toward 1,200/day | Simon / Alek | **2026-10-06** | New — no confirmed-intent claim for this cohort |
+| 59 | Cross-reference active ads with existing call outcomes before adding it to the score | Simon / Alek | before next list revision | New — tests #14 |
+| 60 | Supply additional research lists (TX/CO, then OH/IN/MI/OR/WA where viable); call them | Simon / Alek → David | next available capacity | New — David estimates ~80 incremental calls around scheduled follow-ups |
 | — | Prior items (agenda email, campaign numbers, our numbers, hand-count) | | | Done / closed 09-02–03 |
 
 ### 2026-09-09 — v2 call report back in one day
@@ -221,6 +253,9 @@ Corrected the baseline line to 1 *funded* per 500 contacts; 500 contacts = 3 day
 
 ### 2026-09-14 — Wisconsin verdicts back
 Called all 50. Graded on the Comments cell (green = open/callback, blue = follow-up/timing, yellow±red = dead, light fill on LP/GM = existing/CRM, grey on Name/Title = "info not provided, added it"). Result: ~15/50 human, ~10 owner, **3 green + 2 blue opens (all callbacks: Delsart "$240K screener next year," Smart Cut "Jan," Tree Fellas "March," Captain Commodes "next week," PUSH "ask for the CFO"), 12 dead, 28 voicemail, 5 CRM (2 DO NOT CALL funded — United Electric, Mr Biffy), 0 applications yet.** Scored file `active/flpool/out/verdicts/david_wi_2026-09-14.csv` (`scripts/c5h_wi_verdicts.py`). Our read: (1) box is fixed — 0 out-of-box vs Ohio's 15, the ICP miss he flagged is addressed; (2) the Ohio hard-flag cut does NOT generalise — 2 opens sat on hard-flagged rows incl. our best lead, and fleet>7 / bank_lien were miscalibrated; (3) new negative: just-financed (lien <6mo) rejects the pitch reflexively — call at renewal, not now; (4) reach is the ceiling: mobile-heavy list, landlines reach 0 humans, iPhone AI-screening now blocks cold calls; (5) modal rejection is "no" at the word "financing" from in-box owners → the channel, not the list, is the constraint (reinforces the email-is-the-product thesis). LP/GM confirmed as CRM-presence flags. Still owe him: suppression list ask, Noise Level meaning, next domains.
+
+### 2026-09-30 — CO 99 + TX 50 completed (returned by email)
+Both sheets complete; scored to `active/flpool/out/verdicts/david_{co,tx}_completed_2026-09-30.csv`; analysis `active/flpool/gameplan.md` §4.13. **0 applications from rows not already Providence's.** CRM overlap CO 20% (6 funded), TX 18% (3 funded). Only live deal: Vizion Crane, $2.8MM crane at 100% / 72 months, a CRM row (LP/GM yes, last contact 07-25). Alek's second-tier `HELD_BEST` rows: 0 positives, 65% dead. CO crane lane 7/18 bad numbers. Twelve refusals name financing, an existing lender, cash or 0% factory paper. Cumulative phone lab ~390 rows, 0 apps.
 
 ### 2026-09-15 — FL-100 + CO-100 partial verdicts (before the call)
 Returned both mid-way: FL first 50 of 100, CO first 28 of 99. Scored to `active/flpool/out/verdicts/david_{fl,co}_partial_2026-09-15.csv` (`scripts/c5j_verdicts.py`); full analysis gameplan §4.11. Headlines: **(1) the intent layer separates outcomes — but only the event half.** Among the 13 FL rows he reached a live human, Alek's HOT event tags (hire/expansion/new-DOT/contract) went 0 dead; his WARM lien-timing tier went 11/11 dead. HOT held the only open and both CRM hits. HOT-reached n is 2 — confirm at n when he finishes. **(2) The 24–48mo warm band did NOT replicate from WI** (FL 38% dead ≈ 48+ 40%) — retires the "fix the intent clock" plan; the next batch should be selected on business events, not lien age. **(3) CO 21% CRM-overlap** (6/28 his own/funded customers, one funded 4 deals) → his suppression list is the top ask for the call, worth ~1 in 5 dials. **(4) Reach nuance:** owner_reached is the real metric; mobiles reach the owner but get AI-screened, office lines reach a gatekeeper who kills the call. **(5)** Two data defects on Alek's exports (4 FL dup pairs, a CO name-smudge) → dedup pass before the next list. Base rate is a hard cold list (FL 20/50 dead, 1 soft-open, 0 apps) — frame to David as "make the next list all-HOT," not "the list failed."

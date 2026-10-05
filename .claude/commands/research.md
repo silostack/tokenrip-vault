@@ -1,6 +1,6 @@
 # Deep Research Workflow
 
-You are conducting strategic research for RebelFi. The user has invoked this command to research a specific topic in depth, analyze its implications, and identify opportunities/challenges.
+You are conducting strategic research for Tokenrip and Quintel. The user has invoked this command to research a specific topic in depth, analyze its implications, and identify opportunities/challenges.
 
 ## Your Mission
 
@@ -8,7 +8,7 @@ Conduct rigorous, strategic research that:
 - Goes beyond surface-level analysis
 - Connects to existing vault knowledge
 - Identifies 1st and 2nd order effects
-- Surfaces opportunities and risks for RebelFi
+- Surfaces opportunities and risks for Tokenrip and Quintel
 - Challenges assumptions and uncovers blind spots
 
 ## Interactive Workflow
@@ -18,8 +18,8 @@ Conduct rigorous, strategic research that:
 Before starting research, use AskUserQuestion to clarify:
 
 1. **Research depth level:**
-   - Quick scan (30-45 min): Broad strokes, key trends, obvious implications
-   - Deep dive (2-3 hours): Comprehensive analysis, multiple sources, thorough investigation
+   - Quick scan: broad strokes, key trends, obvious implications
+   - Deep dive: comprehensive analysis across multiple sources and perspectives
 
 2. **Core questions:** What specific questions should this research answer? (Present 3-5 questions based on the topic and ask user to confirm, modify, or add)
 
@@ -33,12 +33,11 @@ Before starting research, use AskUserQuestion to clarify:
 
 Search the vault comprehensively for related content:
 
-**Use Task tool with subagent_type=Explore to:**
-- Search `sales/pipeline/` for leads related to this topic
-- Search `market/research/` for existing market intelligence
-- Search `market/competitive/` for competitor movements in this space
-- Search `strategy/opportunities/` for documented opportunities
-- Search `company/positioning/` for how this relates to RebelFi's narrative
+**Use the Agent tool with subagent_type=Explore to:**
+- Search `bd/` and `lenders/` for deals, contacts, and call notes related to this topic
+- Search `intelligence/` for existing market and competitive intelligence
+- Search `product/` (incl. `product/quintel/research/`) for product truth and positioning
+- Search `active/` for in-flight work on this topic
 
 **Present findings:**
 - What we already know from the vault
@@ -57,13 +56,13 @@ Search the vault comprehensively for related content:
 Conduct web research using WebSearch tool:
 
 **For quick scan:**
-- 3-5 high-quality searches covering different angles
+- A few high-quality searches covering different angles
 - Recent news and announcements (last 3-6 months)
 - Key players and market dynamics
 - Primary sources when available
 
 **For deep dive:**
-- 8-12 comprehensive searches from multiple perspectives
+- Searches from multiple perspectives, until the core questions are answered
 - Historical context and trend analysis
 - Detailed competitive landscape
 - Technical/regulatory considerations
@@ -90,10 +89,10 @@ Present initial analysis:
 
 **3. Conflicting Information:** Where do sources disagree or contradict?
 
-**4. Preliminary Implications:** Initial thoughts on what this means for RebelFi
+**4. Preliminary Implications:** Initial thoughts on what this means for Tokenrip and Quintel
 
 **Ask user:**
-- "Which findings are most strategically relevant to RebelFi?"
+- "Which findings are most strategically relevant to Tokenrip or Quintel?"
 - "What aspects should I dig deeper into for the final analysis?"
 - "Are there specific angles I'm missing?"
 
@@ -115,7 +114,7 @@ Based on research and user priorities, analyze:
 - Indirect impacts on stakeholders
 - Long-term structural changes
 
-#### Opportunities for RebelFi
+#### Opportunities for Tokenrip and Quintel
 **Ground in vault context:**
 - How does this create opportunities for existing leads/customers?
 - Does this enable new market segments?
@@ -175,7 +174,7 @@ Create a comprehensive research document:
 ### 2nd Order Effects
 ...
 
-### Opportunities for RebelFi
+### Opportunities for Tokenrip and Quintel
 ...
 
 ### Risks & Challenges
@@ -202,7 +201,7 @@ Create a comprehensive research document:
 **After creating document:**
 1. Add relevant tags based on content
 2. Create wiki-links `[[Related Lead]]` to connected vault notes
-3. Suggest permanent location (likely `strategy/opportunities/` or `market/research/`)
+3. Suggest permanent location (likely `intelligence/` or the relevant `product/` subfolder)
 
 ---
 
@@ -218,7 +217,7 @@ Create a comprehensive research document:
 ## Example Invocation
 
 ```
-/research non-USD stablecoins
+/research AI adoption at equipment-finance lenders
 ```
 
-This would research the rise of non-USD stablecoins (Japan, Pakistan, Canada, EU), analyze implications for global payments/DeFi, and identify specific opportunities for RebelFi based on existing leads and market positioning.
+This would research how equipment-finance lenders are adopting AI for origination, analyze implications for Quintel's sourcing positioning, and identify specific opportunities based on live deals and market positioning.

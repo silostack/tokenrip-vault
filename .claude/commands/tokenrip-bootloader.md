@@ -1,10 +1,10 @@
-<!-- tokenrip-bootloader-version: 11 -->
 ---
 name: tokenrip-bootloader
 description: "Run a Tokenrip-published agent or skill. Pass the slug as the first argument (or omit it to browse)."
 argument-hint: "[agent-slug] [optional session context...]"
 allowed-tools: Bash(npm install -g @tokenrip/cli), Bash(rip:*), Bash(curl:*)
 ---
+<!-- tokenrip-bootloader-version: 11 -->
 
 # tokenrip-bootloader — Claude Code slash command
 

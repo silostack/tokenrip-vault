@@ -20,8 +20,8 @@ Anthropic's Fable guide is explicit on two things that pull against each other:
 
 - **Over-prescription DEGRADES Fable.** A short instruction plus the *why* beats a twelve-rule
   rulebook. Reusing older over-detailed prompts makes output worse. And any instruction telling the
-  model to echo / narrate / explain its reasoning triggers a `reasoning_extraction` refusal that
-  silently hands the task to Opus 4.8.
+  model to echo / narrate / explain its reasoning triggers a `reasoning_extraction` refusal, and that
+  refusal is not retried on a fallback model — the turn simply fails.
 - **Fable is best-in-class at discovering unknowns itself** — it searches code/web fast, knows more
   than you about the average topic, iterates from failure fast.
 

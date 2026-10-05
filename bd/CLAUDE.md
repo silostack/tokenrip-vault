@@ -6,22 +6,18 @@
 
 **Current motion (locked 2026-05-23)**: forward-deployed engineer (Palantir / AWS pattern). Sell the solution, build the substrate behind it.
 
-**Owners**: Simon (Upwork bidding + Stephanie/AICAP close + Stauss). Alek (Upwork bidding + Luai). New process (2026-05-31): initial calls handled individually first.
+**Owners**: see Founder roles in the root `CLAUDE.md`.
 
 ## Where to look
 
 | When you need... | Read |
 |---|---|
-| **Current motion + this-week focus** | [[bd/get-a-sale/CLAUDE.md]] |
-| **Channel decisions (active, killed, demoted)** | [[get-a-sale/channel-verdicts]] |
-| **LinkedIn warm-pipeline playbook** | [[get-a-sale/linkedin-pipeline]] |
-| **Reddit demand-scout agent spec** | [[get-a-sale/demand-scout-spec]] |
+| **Current motion + this-week focus** | `DASHBOARD.md` (vault root) |
 | **Live opportunities + call notes** | `calls/` (contacts, notes, transcripts, proposals) |
 | **Borrower dial playbook (sprint)** | `calls/borrower-dial-playbook-2026-08-21.md` (script, branches, objections, data-mining questions, note format) |
 | **Live lenders (terms agreed): operating context, agreements, routing rule** | `lenders/CLAUDE.md` (vault root) — Onset · Wingspire · Envision |
 | **Per-deal living briefings + opportunity clusters** | [[bd/deals/CLAUDE.md]] — e.g. Quintel EF (Empire = live independent lender · Stauss-channel cluster: Bevel/DCF/VFI/NED) |
 | **This-week KPI tracker** | [[weekly-kpi-scorecard]] |
-| **Call insight library** | `learnings/` |
 
 ## Durable reference (doesn't decay across motions)
 

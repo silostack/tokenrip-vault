@@ -12,8 +12,8 @@ You are sending a document or message via email on behalf of Simon using the `.s
 
 | Alias | Email Address |
 |-------|---------------|
-| `alek` | alek@rebelfi.io |
-| `me`, `simon` | simon@rebelfi.io |
+| `alek` | alek@quintel.ai |
+| `me`, `simon` | simon@quintel.ai |
 
 When Simon says "email alek" or "cc me", automatically use the corresponding email address. Do not ask for confirmation on alias expansion—just use the mapped address.
 
@@ -147,11 +147,11 @@ Attachment: filename.ext (if applicable)
 
 **File paths:**
 - Always use absolute paths for attachments
-- If Simon provides a relative path, resolve it from the vault root: `/Users/si/rebelfi-vault/`
+- If Simon provides a relative path, resolve it from the vault root: `/Users/si/tokenrip-vault/`
 - Common locations:
   - `active/` - work-in-progress documents
-  - `sales/pipeline/` - customer notes
-  - `market/research/` - research documents
+  - `bd/` and `lenders/` - deal, contact, and call notes
+  - `intelligence/` - research documents
 
 **Markdown files:**
 - If attaching `.md` files to external recipients, consider suggesting PDF conversion first
@@ -168,10 +168,10 @@ Attachment: filename.ext (if applicable)
 ```
 User: /email the Rojifi discovery prep to alek
 
-Claude: Sending email to alek@rebelfi.io...
+Claude: Sending email to alek@quintel.ai...
 Converting active/rojifi-discovery-prep.md to HTML...
 ✓ Markdown converted to styled HTML
-✓ Email sent successfully to alek@rebelfi.io
+✓ Email sent successfully to alek@quintel.ai
   Subject: Rojifi Discovery Prep - Nov 5, 2025
 ```
 
@@ -200,9 +200,9 @@ Proceed with sending? [waits for confirmation]
 
 **Example 3: Email with CC alias and custom message**
 ```
-User: /email update to leads@rebelfi.io and CC alek
+User: /email update to team@example.com and CC alek
 
-Claude: I'll compose an email to the leads address with Alek CC'd (alek@rebelfi.io).
+Claude: I'll compose an email to the team address with Alek CC'd (alek@quintel.ai).
 
 What should the subject line be?
 [Simon provides subject]
@@ -212,8 +212,8 @@ What's the email body?
 
 Ready to send email:
 
-To: leads@rebelfi.io
-CC: alek@rebelfi.io
+To: team@example.com
+CC: alek@quintel.ai
 Subject: [subject]
 Body: [preview]
 Format: Plain text
@@ -225,7 +225,7 @@ Proceed with sending? [waits for confirmation]
 ```
 User: /email the proposal to prospect@company.com and cc me
 
-Claude: Sending email to prospect@company.com (CC: simon@rebelfi.io)...
+Claude: Sending email to prospect@company.com (CC: simon@quintel.ai)...
 ```
 
 ## Quality Checklist
@@ -250,4 +250,4 @@ When sending markdown files with `--markdown-body`:
 - ✅ **Clean inbox**: No attachments cluttering the inbox
 - ✅ **Automatic conversion**: Uses pandoc (already installed), no manual work
 
-**Always use this for .md files—no attachments needed.**
+**Use this for .md files; attach the original only when Simon asks for it.**

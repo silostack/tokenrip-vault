@@ -11,7 +11,7 @@
 - **Evaluation:** three months from Oct 1. "Double" if it works, "shut it down" if not. He floated "$5 a lead" if quality drops and "an extra thousand on the card" if they close four.
 - **Send format asks:** right email + phone, UCC lender on file, B-space credits only (no investment-grade), subs welcome.
 
-## Status 2026-09-02 — commercial structure being renegotiated (paid pilot)
+## History: 2026-09-02 renegotiation (superseded by the 09-15 terms above)
 First 10 names delivered ~2026-08-31 via the no-login list page. Rob (with Eric) has asked for a hybrid: a monthly fee in the **$500–1,000 range Eric pre-approved**, plus a per-funded-deal component, plus an attribution clock and a **quarterly "has any of these closed?" reconciliation list**. He floated a flat ~$5k success fee with a 6-month sunset; **not accepted** (reprice vs 0.5%). Written proposal owed 2026-09-03. **The 10 in flight remain on the 0.5% handshake below.** Three-month evaluation to ~2026-12-01. Call: [[bd/calls/notes/rob-lewis-2026-09-02]].
 
 ## Superseded terms (08-20 handshake; historical from 09-15)
@@ -33,7 +33,7 @@ First 10 names delivered ~2026-08-31 via the no-login list page. Rob (with Eric)
 
 ## How leads go over
 Email from Simon: company, who to call, evidence, why it fits. Optional link to background. No forms, no packets. A handful a week, quality-gated; never "10–50 a week."
-Send format + no-login list page (verdicts, clock, history, scoreboard) specified in [[product/quintel/quintel-lender-referral-channel-prd-2026-08-26]].
+Send format + no-login list page: verdicts, clock, history, scoreboard (spec not in the vault).
 
 ## Don'ts
 - Don't send a broker agreement unless he asks.

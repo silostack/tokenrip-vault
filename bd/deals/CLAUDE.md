@@ -28,9 +28,6 @@ Once terms are agreed with a lender, its folder moves to vault-root `lenders/<sl
 **Empire Asset Finance** — a direct, balance-sheet equipment lender; subsidiary of Arena Investors, LP ($4.6B). The first **independent, zero-conflict** EF lead — *not* Stauss-channeled, none of the VFI employment/trade-secret exposure. Same vertical as `equipment-finance/`, deliberately a **separate cluster**: Empire is the clean lead; the EF cluster is the Stauss-channeled one. **They are also peers/competitors** (Empire's capital-markets desk trades syndicated deals with VFI-type institutions) — which is why EF-vertical exclusivity is off the table here (see term-sheet draft). Product is **Quintel**; this folder holds the deal/prep layer.
 
 - **Champion:** Katharine Rudzitis (VP Direct Originations) — qualified, asked pricing unprompted, circulating internally for a team call. [[bd/calls/contacts/katharine-rudzitis]]
-- **Deliverable in flight:** redacted prior deal run → packet for the team call. Workflow + gap scope: [[quintel-empire-redacted-deal-run-scope-2026-06-19]]
-- **Team-call close-readiness plan:** [[quintel-empire-team-call-readiness-2026-06-19]]
-- **Deal terms / lever map:** [[quintel-empire-term-sheet-draft-2026-06-20]]
 - **Economic buyers (team call):** Rick Rockhold (CEO), Mike Miroshnikov (COO/CCO, F2 user).
 
 ### `equipment-finance/` — the first dense substrate cluster (Stauss-channeled)
@@ -38,7 +35,7 @@ The opportunity Stauss Paulos opened. He functions as the **channel** (distribut
 
 - **Living briefing:** [[bd/deals/equipment-finance/stauss-vfi-tokenrip-briefing|stauss-vfi-tokenrip-briefing]] — deal / relationship / strategy / risks / decisions.
 - **Domain primer:** [[equipment-finance-domain-primer-2026-05-30]] — the *industry* (durable across the vertical).
-- **Product + build (in `product/quintel/`):** [[quintel-sourcing-intelligence-prd-2026-06-29]] — the canonical **customer-data-first** PRD (supersedes the archived broker-first / three-archetype build architecture).
+- **Product + build (in `product/quintel/`):** [[quintel-sourcing-intelligence-prd-2026-06-29]] — the canonical **sourcing-first** PRD (supersedes the archived broker-first / three-archetype build architecture).
 - **Nodes** (interaction record lives in `bd/calls/`):
   - **Stauss Paulos / VFI** — channel + would-be operating partner. [[bd/calls/contacts/stauss-paulos]]
   - **Bevel — Ted Craver** — arm's-length placement firm; first live intro; cleaner first customer than VFI (no employment conflict-of-interest). [[bd/calls/contacts/ted-craver]]

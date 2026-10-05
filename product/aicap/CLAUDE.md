@@ -2,7 +2,7 @@
 
 > **AICAP** (AI Credentialing Augmentation and Privileging) is a stealth-stage healthcare startup building pre-intake intelligence for medical-staff credentialing. Founder **Stephanie Williamson** — CPCS-certified, 20+ years in hospital credentialing — is a buyer-turned-founder building the exact product she'd have bought. Tokenrip is the **forward-deployed engineer** on her build: we sell the solution and build the substrate behind it.
 
-> **This is a live paid engagement, not a speculative vertical.** The signed artifact is the **[[aicap-validation-mvp-sow-2026-06-22|Validation MVP SOW]]** — a ~7-week, $11K-net AI-assisted application-completion workflow for healthcare credentialing. Kickoff is imminent (as of 2026-07-01).
+> **This is a live paid engagement, not a speculative vertical.** The signed artifact is the **[[aicap-validation-mvp-sow-2026-06-22|Validation MVP SOW]]** — a ~7-week, $11K-net AI-assisted application-completion workflow for healthcare credentialing.
 
 ## What AICAP is (the pain)
 
@@ -12,9 +12,9 @@ When a hospital hires a physician, the physician must complete a credentialing a
 
 An AI-assisted workflow that takes a provider from the start of an application to a complete, credentialing-ready submission in one guided pass, producing two PDFs (completed application + audit trail). Five provider-facing surfaces: **(1)** autofill from CV + government ID, **(2)** context-aware field expansion, **(3)** automated compliance review against AICAP's checklist, **(4)** provider review/confirm, **(5)** guided intake for residual unknowns. Plus a minimal coordinator admin view. Built on **de-identified data only** (no PHI / no BAA blocker); integration into hospital credentialing software is a **configurable seam only** (out of scope). Full scope: the SOW.
 
-## Current status (2026-07-01)
+## Current status
 
-**Phase 0 (foundation + de-risk): complete.** The self-contained TypeScript stack (`@aicap/core` on Zod + Mastra; NestJS backend; TanStack frontend) is built, and both load-bearing risks — **vision extraction** and **suspend/resume on Postgres** — are retired with live evidence. **Weeks 1–7 (the product flows) remain, hard-gated on AICAP's kickoff inputs** (compliance checklist + baseline config + guided-question content + de-identified samples). Week 1 = autofill live.
+Lives in [[aicap-project-tracker]] (engagement) and the repo's `docs/STATUS.md` (build). Stack: self-contained TypeScript (`@aicap/core` on Zod + Mastra; NestJS backend; TanStack frontend).
 
 ## Key docs
 
@@ -35,4 +35,3 @@ An AI-assisted workflow that takes a provider from the start of an application t
 - **Here (`product/aicap/`)** → *what we're building* — the SOW + project reference at top level; research under `research/`; the delivered client feasibility study under `deliverables/`; integration/engineering analysis under `engineering/`.
 - **The executable build plan lives in the AICAP repo, not the vault** — `~/projects/maxi/aicap/docs/aicap-mvp-gameplan.md` (authoritative status + week-by-week build plan, Phase 0 → Weeks 1–7) and `aicap-mvp-buildlog.md` (append-only execution record). AICAP graduated to its own repo 2026-06-29.
 - **Deal / relationship / call history** → [[bd/calls/contacts/stephanie-williamson]] (contact doc, open commitments, running intelligence) + `bd/calls/transcripts/` + `bd/calls/notes/`.
-- **Kickoff meeting prep** → `active/aicap-kickoff-gameplan-2026-07-01.md`.

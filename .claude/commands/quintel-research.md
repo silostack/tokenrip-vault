@@ -39,9 +39,8 @@ unmistakably same article) is already logged, tell Simon and stop — don't
 re-file. If he wants to update an existing entry, edit in place instead.
 
 ### 3 — Ground the tie-in
-Read the current Quintel PRD/roadmap doc — check `product/quintel/CLAUDE.md`'s
-"Key docs" table for what's current (as of this writing:
-`quintel-customer-data-first-prd-2026-06-29.md`). Find the *specific* section
+Read the current Quintel PRD/roadmap doc — the canonical PRD is whichever one
+`product/quintel/CLAUDE.md`'s "Key docs" table names. Find the *specific* section
 this article validates, sharpens, or challenges. "This is about underwriting"
 is not a tie-in — "validates §10's explainable-ranker bet" is. If the article
 touches a load-bearing assumption from the PRD's own risk log (§18), say so

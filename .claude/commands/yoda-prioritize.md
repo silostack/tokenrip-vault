@@ -66,7 +66,7 @@ Ask:
 ## Step 6: Connect to Bigger Picture
 
 Tie back to the overall context:
-- Does this week's priority move the fundraise forward?
+- Does this week's priority move the ONE thing in `DASHBOARD.md` forward?
 - Does this align with what Simon said mattered most?
 - Is Simon optimizing for the right time horizon?
 

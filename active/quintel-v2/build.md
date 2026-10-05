@@ -1,6 +1,6 @@
 ---
 status: v0.4 PRD, the starting point for Quintel and Ironmark engineering tasks (v0.4 09-27: §12 build sequence as milestones, gates and parallel waves; ICP box (`icp_box`) separated from the buy box (§4a); §12h decisions settled; v0.2 09-26: Ironmark standalone, Quintel first lead source, register in Ironmark; v0.3 09-26 after the David call: instant reply without a lender, conversational layer, Channel port and SMS consent, send calendar, re-contact policy, trades-only ICP, liveness prequal)
-last_revised: 2026-09-27
+last_revised: 2026-10-03 (pointer only: the 10-06 day-1 cut of this scope, with the 10-03 ramp of ~400/day +50 to 750, is `launch-checklist-2026-10-06.md`)
 owner: Simon
 serves: what the outbound engine is for, how the systems divide the work, the data each owns, the contracts between them, the feedback loops, and the build order; enough for the whole system to come into view from an engineering seat without the copy, the classifier prompts or the per-feed plumbing
 tier: internal (shareable with Alek in full)

@@ -1,8 +1,8 @@
 # Tokenrip — Agentic Collaboration Platform
 
-**Status:** Ideation → First build  
+**Status:** Substrate roadmap paused pending a live customer pulling on it; the stable-URL artifact primitive is live  
 **Owner:** Simon  
-**Domain:** rip.to (planned)
+**Domain:** tokenrip.com
 
 ## What This Is
 
@@ -34,8 +34,6 @@ Each layer accumulates defensible data: the coordination graph (Layer 2), the wo
 - **Horizontal substrate** beneath vertical products — first one is [[product/quintel/CLAUDE|Quintel]] (equipment finance); the deal-graph it accumulates *is* Tokenrip substrate
 - **Protocol seed** — the API primitives are designed to become the standard for agentic collaboration
 
-*(The Intelligence Engine — formerly the first thing built on Tokenrip — was archived 2026-06-04: `__ARCHIVE/intelligence-engine/`.)*
-
 ## Key Documents
 
 - [[tokenrip-context]] — **Start here.** Comprehensive product reference: what Tokenrip is, five-layer architecture, core primitives, organizational model, collaboration features, technical details, use cases
@@ -44,8 +42,7 @@ Each layer accumulates defensible data: the coordination graph (Layer 2), the wo
 - [[tool-layer]] — The skill/tool distinction, bypassable-vs-substrate test, three tool categories, COI email worked example. Foundational for any tool-layer implementation work
 - [[business-model]] — Monetization architecture: charge for substrate, three revenue lines, pricing tiers, anti-patterns. Companion to tool-layer
 - [[distribution-strategy]] — Distribution plan: integration hierarchy, viral mechanics, branding tiers
-- [[tokenrip-homepage-redesign]] — Homepage design spec (locked)
-- Branding & voice guide: `content/tokenrip-branding.md`
+- Branding & voice guide: `product/tokenrip/tokenrip-branding.md`
 
 ## Related Projects
 

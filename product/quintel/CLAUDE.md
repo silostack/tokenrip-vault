@@ -2,7 +2,7 @@
 
 > **Quintel** (quintel.ai) is Tokenrip's first vertical product: an equipment-finance deal-intelligence platform. It is the **enterprise-friendly named entity** for the equipment-finance build — "powered by Tokenrip" — adopted because "TokenRip" reads crypto, not institutional, to a finance buyer. **Tokenrip is the horizontal substrate; Quintel is the vertical product on top.**
 
-> **Current direction (2026-07-14): sourcing-first, deepened by the customer's book.** The canonical doc is **[[quintel-sourcing-intelligence-prd-2026-06-29]]** (filename retains the old "customer-data-first" slug for link stability); the current UX is [[quintel-ux-framework-2026-07-01]]. Quintel **leads on sourcing** — surfacing + ranking higher-quality leads from market data run through the intelligence layer (resolution + box-scoring + per-item *why*), valuable with zero customer data — and the customer's own deal history is the *deepening* dial. **Crucial distinction:** leading on sourcing does **not** revive the archived naive "resell raw public deal signals" motion — the differentiation is the *reasoning layer*, never the raw feed. This still supersedes the earlier broker-first motion and the naive resold-signals motion (both archived at `__ARCHIVE/product/quintel/`), and the 2026-07-14 reframe supersedes the prior "customer-data-first" *emphasis*. Serves both lenders and brokers as one product, pointed at a different list.
+> **Current direction (2026-07-14): sourcing-first, deepened by the customer's book.** The canonical doc is **[[quintel-sourcing-intelligence-prd-2026-06-29]]**; the current UX is [[quintel-ux-framework-2026-07-01]]. Quintel **leads on sourcing** — surfacing + ranking higher-quality leads from market data run through the intelligence layer (resolution + box-scoring + per-item *why*), valuable with zero customer data — and the customer's own deal history is the *deepening* dial. **Crucial distinction:** leading on sourcing does **not** revive the archived naive "resell raw public deal signals" motion — the differentiation is the *reasoning layer*, never the raw feed. This still supersedes the earlier broker-first motion and the naive resold-signals motion (both archived at `__ARCHIVE/product/quintel/`), and the 2026-07-14 reframe supersedes the prior "customer-data-first" *emphasis*. Serves both lenders and brokers as one product, pointed at a different list.
 
 ## What Quintel is
 
@@ -45,7 +45,7 @@ The **per-customer deal-graph *is* Tokenrip substrate**, and Quintel's artifacts
 | `positioning/` | [[quintel-positioning-synthesis-2026-06-28]] — the sell reasoning the PRD synthesizes (dial-vs-switch, the commodity trap, objection lines; companion to the sales tear-sheet) · [[quintel-homepage-positioning-spec-2026-06-24]] — homepage messaging spec |
 | Domain primer | [[equipment-finance-domain-primer-2026-05-30]] — the equipment-finance *industry* (durable across the vertical) |
 
-Superseded broker-first / three-archetype / sourcing-signals docs are archived at `__ARCHIVE/product/quintel/` (retained for their schemas + data edge, not their strategy).
+Superseded broker-first / three-archetype / sourcing-signals docs are no longer in the vault (git history only).
 
 **Deal / relationship context lives in BD, not here** (this folder is product/build only — mirrors the `bd/deals/CLAUDE.md` split):
 

@@ -34,14 +34,7 @@ Treat these as modes, not a rigid script.
 
 ## Close
 
-When the session is done:
-
-1. Give a brief synthesis of where the idea landed, and what shifted.
-2. Do not turn the session into action items unless Simon asks.
-3. Update memory:
-   - Create or update relevant files in `agents/bean/ideas/` using `agents/bean/ideas/_template.md`
-   - Create `agents/bean/sessions/YYYY-MM-DD.md` using `agents/bean/sessions/_template.md`
-   - Append cross-idea patterns (dated) to `agents/bean/insights-archive.md`; promote to `agents/bean/patterns.md` only if durable (cap: promote = demote one)
+When the session is done, give a brief synthesis of where the idea landed and what shifted, then follow the Session Ending Protocol in `agents/bean/CLAUDE.md`. Do not turn the session into action items unless Simon asks.
 
 ## Voice
 

@@ -11,7 +11,7 @@ Use the `/quintel-research` command/skill for this (it automates the steps below
 
 1. **Fetch or accept the content.** URL → fetch it. Paywalled/pasted → use the text given.
 2. **Extract the core argument** — what does the piece actually claim, with what evidence (stats, quotes, examples)? Note explicitly if a piece is assertion-only with no supporting data — don't let a confident-sounding claim get filed as if it were evidence.
-3. **Tie it to a specific, current Quintel doc section** — not a vague "this is relevant to sourcing." Ground it in an actual section number/concept from `quintel-customer-data-first-prd-2026-06-29.md` (or whichever roadmap doc is current — check `product/quintel/CLAUDE.md`'s "Key docs" table for what's current). If a piece *corroborates* a load-bearing assumption (PRD §18) or *challenges* one, say which.
+3. **Tie it to a specific, current Quintel doc section** — not a vague "this is relevant to sourcing." Ground it in an actual section number/concept from `quintel-sourcing-intelligence-prd-2026-06-29.md` (or whichever roadmap doc is current — check `product/quintel/CLAUDE.md`'s "Key docs" table for what's current). If a piece *corroborates* a load-bearing assumption (PRD §18) or *challenges* one, say which.
 4. **Add a row to `research-log.md`** — always, regardless of depth. Table columns: Date | Source | Title | Insight | Quintel tie-in | Link.
 5. **Decide whether it earns a deep-dive file.** Write one when the tie-in needs more than ~2 sentences to explain properly, or the piece corroborates/challenges a load-bearing PRD assumption. Otherwise the log row is enough — don't create a file for every clip on principle.
 

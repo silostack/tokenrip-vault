@@ -5,38 +5,19 @@
 
 ## What This Is
 
-The strategic research layer for RebelFi's positioning in the agentic economy. Houses market intelligence, competitive analysis, strategic frameworks, and the evolving landscape tracker for AI agent infrastructure and payments.
+Competitive and landscape research for Tokenrip and Quintel: who else is building agent-collaboration infrastructure, and adjacent AI products in equipment finance.
 
-Originally a structured 4-week exploration sprint to test whether the agentic economy opportunity was real, timely, and ours to capture. Now a living intelligence repository that informs Agent CLI, Tokenrip, and the broader RebelFi strategy.
-
-## Core Question (Origin)
-
-> Do agents need financial infrastructure today, and is the gap real — or is the thesis directionally right but too early?
-
-The answer was yes. See `gameplan.md` for the full hypothesis testing results.
+The original Feb–Mar 2026 agentic-economy sprint (RebelFi-era gameplan, strategy landscape, a16z/Citrini readings, experiments) lives in `__ARCHIVE/from-rebelfi-vault/__PROJECTS/agentic-economy/`. Its conclusions are background, not current strategy.
 
 ## What Lives Here
 
-| Area                     | Content                                                                                                 |
-| ------------------------ | ------------------------------------------------------------------------------------------------------- |
-| **Strategy**             | `gameplan.md` (hypotheses, kill criteria), `strategy-landscape.md` (competitive landscape, positioning) |
-| **Market Research**      | `landscape-tracker.md` (ongoing), `research/` (deep dives on specific segments)                         |
-| **Competitive Analysis** | `competitive-testing/` (hands-on competitor teardowns)                                                  |
-| **Frameworks**           | `agentic-strategy-reference.md`, readings analysis (a16z, Citrini, etc.)                                |
-| **Experiments**          | `experiments/` (individual experiment writeups)                                                         |
-
-## Key Documents
-
-- [[active/gameplan]] — Full strategy: hypotheses, success/kill criteria, experimentation roadmap, market signals
-- [[strategy-landscape]] — Competitive landscape, positioning options, go-to-market strategies
-- [[landscape-tracker]] — Ongoing competitive landscape tracking
-- [[agentic-strategy-reference]] — Synthesized strategic reference (used by Agent CLI)
-- [[a16z-agentic-commerce-cards-analysis]] — a16z analysis: vibe coders, x402, underwriting intelligence
-- [[citrini-2028-gic-analysis]] — Citrini 2028 GIC: interchange disruption, stablecoin payment rails
-- `research/` — Deep research on specific competitors and segments
+| Area | Content |
+| --- | --- |
+| **Landscape tracking** | `landscape-tracker.md`, `tokenrip-landscape-tracker.md` |
+| **Deep dives** | `research/` — `tokenrip/`, `quintel/`, `cross-platform/` |
+| **One-off landscapes** | e.g. `cloud-storage-agents-landscape.md`, `ai-infrastructure-vendors.md` |
 
 ## Related Projects
 
 - `product/tokenrip/` — horizontal substrate product informed by this research
 - `product/quintel/` — equipment-finance vertical product (powered by Tokenrip)
-- *(The Intelligence Engine, once the evolved form of this research capability, was archived 2026-06-04 → `__ARCHIVE/intelligence-engine/`.)*

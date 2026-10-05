@@ -1,6 +1,6 @@
 ---
 name: premortem
-description: "Run a premortem on any plan, launch, product, hire, strategy, or decision. Assumes it already failed 6 months from now and works backward to find every reason why. Produces a revised plan with blind spots exposed. MANDATORY TRIGGERS: 'premortem this', 'premortem my', 'run a premortem', 'what could kill this', 'future-proof this', 'stress test this plan', 'what am i missing here', 'find the blind spots'. STRONG TRIGGERS: 'what could go wrong', 'am i missing anything', 'poke holes in this', 'where will this break', 'devil's advocate this'. Do NOT trigger on simple feedback requests, factual questions, or LLM Council requests. DO trigger when someone has a plan or commitment where the cost of being wrong is high."
+description: "Run a premortem on any plan, launch, product, hire, strategy, or decision. Assumes it already failed 6 months from now and works backward to find every reason why. Produces a revised plan with blind spots exposed. MANDATORY TRIGGERS: 'premortem this', 'premortem my', 'run a premortem', 'what could kill this', 'future-proof this', 'stress test this plan', 'what am i missing here', 'find the blind spots'. STRONG TRIGGERS: 'what could go wrong', 'am i missing anything', 'poke holes in this', 'where will this break', 'devil's advocate this'. Do NOT trigger on simple feedback requests or factual questions. DO trigger when someone has a plan or commitment where the cost of being wrong is high."
 ---
 
 # Premortem
@@ -91,7 +91,7 @@ This framing matters. It shifts the mode from "evaluate this plan" (which trigge
 
 Run the raw premortem as a single comprehensive analysis. No prescribed categories, no lenses, no constraints. Just the core Klein method:
 
-"This plan has failed 6 months from now. Generate every genuine reason it could have died. Be comprehensive. Be specific. Ground every reason in the actual details of the plan. Don't pad with weak reasons and don't stop early if there are more."
+"This plan has failed 6 months from now. Generate every genuine reason it could have died, each grounded in the actual details of the plan. Leave out weak or generic reasons."
 
 The output should be a comprehensive list of failure reasons, each stated in 1-2 sentences. Be honest and thorough. Some plans might have 4 genuine failure modes. Others might have 9. The number should be whatever is real for this specific plan.
 
@@ -128,7 +128,7 @@ Your output should include:
 
 3. EARLY WARNING SIGNS: 1-2 concrete, observable signals the user could watch for that would indicate this failure mode is starting to play out. These should be things you can actually see or measure, not vague feelings.
 
-Keep the total response under 300 words. Be direct. Don't hedge. Don't sugarcoat.
+Be direct and specific; cover these three sections and nothing else.
 ```
 
 ### Step 4: Synthesis
@@ -184,7 +184,7 @@ premortem-transcript-[timestamp].md  # full transcript for reference
 
 The user sees the HTML report first. The transcript is there if they want to dig deeper into the reasoning behind each failure scenario.
 
-Also provide a concise summary in the chat: the most likely failure, the hidden assumption, and the single most important revision to the plan. Three sentences max. The report has the full details.
+Also provide a short summary in the chat: the most likely failure, the hidden assumption, and the single most important revision to the plan. The report has the full details.
 
 ---
 
@@ -215,4 +215,4 @@ Also provide a concise summary in the chat: the most likely failure, the hidden 
 - **Don't sugarcoat.** The whole point of a premortem is to tell the user things they don't want to hear before reality does. If a plan has serious problems, say so directly.
 - **The revised plan must be concrete.** Don't say "consider testing your pricing." Say "run a $47 pilot with 20 people before committing to the full $297 workshop." Every revision should be something the user can actually do this week.
 - **Respect the minimum context threshold.** Running a premortem on insufficient context produces generic failures that waste the user's time. It's better to ask one more question than to produce a bad premortem.
-- **This is not the LLM Council.** The council gives multiple perspectives on a decision right now. The premortem sends Claude into the future where the decision already failed and works backward to explain why. Different psychological mechanism, different output. If the user seems to want multiple perspectives rather than failure analysis, suggest the council instead.
+- **This is failure analysis, not a multi-perspective review.** If the user wants several viewpoints on a decision rather than an account of how it failed, say so and offer that instead.

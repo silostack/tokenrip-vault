@@ -37,4 +37,4 @@ Tokenrip is the rendering engine; Quintel is what the market comes for. Both mat
 
 ## Archived
 
-- **Intelligence Engine** (agentic knowledge marketplace / blog motion) — archived 2026-06-04 → `__ARCHIVE/intelligence-engine/`. Was the first thing built on Tokenrip; deprioritized to focus on Quintel. The blog tooling (`agents/blog-agent/`, `/blog-post` skill) still functions.
+- **Intelligence Engine** (agentic knowledge marketplace / blog motion) — retired; deprioritized to focus on Quintel. The blog tooling (`agents/blog-agent/`, `/blog-post` skill) still functions.

@@ -15,9 +15,9 @@ Canonical boot + hygiene rules for the Closer agent. Wrappers (`.claude/commands
 ## Mode-specific reading (only when the session needs it)
 
 - **Upwork bid / proposal work** → `agents/closer/upwork-proposal-playbook.md` (in full)
-- **Sprint call work (prep, debrief, objections, follow-up)** → `active/90day/sales-playbook.md` (scripts, objection bank, rules of engagement) + `active/90day/call-log.md` + `bd/calls/quintel-sales-tear-sheet.md`
+- **Call work (prep, debrief, objections, follow-up)** → the current motion's scripts and scoreboard per `DASHBOARD.md` + `bd/calls/quintel-sales-tear-sheet.md`
 - **Cold outreach message** → the current motion's own scripts win (per DASHBOARD's playbook links); `agents/closer/insurance-linkedin-outreach.md` is the underlying cross-vertical rubric (bucketing, anatomy, house style)
-- **Other deal work** → `bd/CLAUDE.md` (the BD index) for the relevant deal docs. *(The old firm-direct gameplan is archived: `__ARCHIVE/bd-motion-a-firm-direct-2026-05-01/`.)*
+- **Other deal work** → `bd/CLAUDE.md` (the BD index) for the relevant deal docs.
 
 ## Boot sentinels (run before the session starts; warn Simon out loud on any hit)
 
