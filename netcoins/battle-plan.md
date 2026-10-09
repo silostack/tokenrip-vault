@@ -17,6 +17,25 @@ status: live; update as items close
 - **So the DA clock starts when we deliver our paperwork.** Every day we sit on the cap table, consents and tax filings is a day added to their deadline and a day of exclusivity burned for nothing.
 - Nothing is owed to us before closing: no fees, no expenses. Our only leverage now is speed and the 10.3 termination right if their draft is late.
 
+## Structure letter (09-29) and the cash ask (updated 2026-10-06)
+
+Source: `deal/loi/Surge_Deal_Structure_Letter_29Sep2026.md`. Unsigned. Not the DA: Surge's counsel drafts the DA from it after we acknowledge. Non-binding except the Nov 30 extension, which is the one thing they need our signature for.
+
+| # | Change vs. the signed LOI | Read | Position |
+|---|---|---|---|
+| 1 | **C$0.30 floor** on milestone/earn-out share pricing | Against us. Stock ~C$0.28 on 09-29; C$600K of tranches already worth ~C$560K, no offsetting upside. The 10% insider threshold only needs a floor near C$0.13 (inferred) | Erin: minimum share count ("in no event fewer than"). Alternative: keep the share cap, Surge pays the shortfall in cash |
+| 2 | **Taxable share purchase** (§4) | Acceptable in itself; a reorg is hard with 86% contingent consideration and Surge's cash election (inferred, CPA to confirm). Cost: tax on each tranche when received, in stock under a 4-month hold | Accept, and ask for cash to cover it: re-cut closing as C$80K shares + C$20K cash; at least 20% cash on later tranches |
+| 3 | Deemed acceptance excludes "material cybersecurity, regulatory or legal-compliance" defects; cycles limited | Against us; can swallow deemed acceptance | Carve-out only against written criteria; cycle limit ends in expert determination, not forfeiture |
+| 4 | Buyer and consulting counterparty is a new US shell | Shell has no assets | Surge parent guarantee |
+| 5 | Accredited-investor or Reg S reps at every issuance | Neither founder is accredited (10-02). Reg S likely works for Simon from Colombia (inferred) | Counsel finds the exemption before anyone signs a rep. In the first markup |
+| 6 | Tranches pro rata to stockholders (55/45), not compensation | Good for capital-gain treatment; overrides the 50/50 placeholder in the split agreement | Settle the split now |
+| 7 | 120-day escrow now C$200K cash; independent expert; milestone completable by a replacement | Better | Keep |
+| 8 | Exclusivity and DA deadline to Nov 30; no DA draft date | Every month of slip is a month without fees | Trade our signature for a dated DA draft and the cash points below |
+
+**The cash ask (founders' conditions, 2026-10-06).** Two conditions, one principle: Surge chose a structure with no cash at close, so transaction expenses and the tax the structure creates come out of the founders' pockets. (a) Transaction expenses (legal, CPA, out-of-pocket) reimbursed at closing on the funds flow or by note; Erin sends it uncapped, US$15K (the LOI §10 number) is the fallback. (b) Cash to cover tax: ~C$20K at close is enough (tax on C$100K of closing shares at ~15% is roughly US$5–6K each, inferred). Send both legs together. Tax is assessed at closing but paid the following April (US), after the hold lapses; the risk is stranded tax if the stock cannot be sold, so size the ask to that and do not call it "immediate".
+
+**Still to ask for:** §4.4 cap covering the specific indemnities; earn-out on change of control; which product the C$200K milestone is. **Sellers' Representative:** Simon (proposed). **Typo:** letter §6 cites "Section 5.5"; the extension is §5.4.
+
 ## The order of operations
 
 | #   | When         | What                                                                                                                                                                                                                                                                                                                              | Who             |
@@ -61,7 +80,7 @@ status: live; update as items close
 4. Earn-out (d): objective release criteria + same deemed mechanism as the milestone; add change-of-control language (earn-out accelerates or is assumed if RebelFi or Surge is sold/merged).
 5. Consulting agreements: level set by mutual agreement at closing (push once more for Simon FT at US$7,500 — he owns the milestone; 80 hrs/month doesn't deliver it); excluded-IP schedule attached and specific (Tokenrip, Quintel repos named).
 6. Set-off only against agreed/finally-determined amounts (carry LOI §5 setoff language into the DA verbatim).
-7. Share pricing: confirm in writing announcement-date vs issuance-date VWAP (Fraser still owes this answer); no TSXV Policy 5.4 escrow, in writing.
+7. Share pricing: **answered 09-29** — issuance-date 20-day VWAP, with a C$0.30 floor on milestone/earn-out shares (fight the floor; see the structure-letter section). Still needed: no TSXV Policy 5.4 escrow, in writing.
 8. No new conditions beyond the LOI's 19 without mutual agreement.
 
 ## Hygiene (Conditions Precedent)

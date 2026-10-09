@@ -20,7 +20,7 @@ The competitive landscape is currently split into three camps, none of which dir
 
 The "agentic collaboration" label is now being used by at least two companies (Tokenrip, Alike). Watch for more entrants using this vocabulary in 2026.
 
-4. **Enterprise "context layer" platforms** (Zaro, Dust, Microsoft IQ, Snowflake Cortex Sense, Atlan) — shared context for internal agents, anti-vendor-lock-in positioning. Three funded entrants in 30 days (Dust $40M, Nessie YC, Zaro $5.1M) validate the category. "Shared context layer" is now a commodity phrase; "mounted agents" remains Tokenrip's alone.
+4. **Enterprise "context layer" platforms** (Zaro, Dust, Microsoft IQ, Snowflake Cortex Sense, Atlan, Atlassian AMP) — shared context for internal agents, anti-vendor-lock-in positioning. Three funded entrants in 30 days (Dust $40M, Nessie YC, Zaro $5.1M) validate the category. "Shared context layer" is now a commodity phrase; "mounted agents" remains Tokenrip's alone.
 
 ---
 
@@ -302,6 +302,35 @@ AI-native underwriting workspace for private credit funds, commercial banks, and
 - Differentiation must move off architecture properties (agnostic/efficient — now table-stakes) onto segment + `match` + cross-org placement data + owner-buyer speed/price.
 
 **Full analysis**: [[research-f2-ai-private-markets-2026-06-18]]
+
+---
+
+### Atlassian AMP (Agentic Multiplayer Protocol)
+**URL**: https://www.atlassian.com/platform/agentic-multiplayer-protocol
+**Announced**: 2026-10-07, Team '26 Europe (Amsterdam)
+**Category**: Incumbent in-suite agent governance + collaboration UX (Jira / Confluence / Loom / Teamwork Graph)
+**First tracked**: 2026-10-07
+
+Not a protocol: Atlassian's own exec calls it "a collection of technologies, interface patterns, and governance mechanisms." Agents get an owner, profile, presence/cursors, @mention invocation, Run-as-User or service-account permissions and an audit trail, layered over A2A and MCP (Atlassian MCP rebuilt, 200+ tools). Also an **Artifacts app** (persistent URLs for AI outputs embedded in Confluence/Jira/Slack) — closest product overlap, no independent coverage yet. Third-party agent (OpenAI/Anthropic/Cursor/Figma) support is disputed across sources; no pricing, GA date, or external API stated.
+
+**Why it matters**: 7th "multiplayer / shared context" collision and the 2nd incumbent after Akai/Deel, with larger distribution and a claim on the word "protocol." Mindshare threat, not an adoptable standard.
+
+**Threat level by Tokenrip layer**:
+- **Layer 1 (Asset Routing)**: **Medium** — Artifacts app + audit trail, single suite
+- **Layer 2 (Collaboration)**: **Medium** — @mentions/presence, human-to-agent in Atlassian UI; no agent-to-agent threads seen
+- **Layer 3 (Deliverable Rails)**: **None** — nothing found
+- **Layer 4 (Workspaces)**: **Low-Medium** — Teamwork Graph is single-org
+- **Layer 5 (Agent Runtime/Standard)**: **Low** — "protocol" is marketing, not a spec
+- **Positioning / Vocabulary**: **High** — "multiplayer," "protocol," persistent artifact URLs. Avoid leading with "protocol standard."
+
+**Key tripwire signals**:
+1. External API/SDK for Artifacts or AMP agent accounts → upgrade to direct competitor (the one assumption: AMP stays Atlassian-internal, ~70%)
+2. Confirmed first-class OpenAI/Anthropic agents or cross-org agent sharing → architectural moat narrows
+3. AMP adds agent-to-agent handoff or any escrow/approval-gated delivery → L3 collision
+4. Atlassian presence in Quintel/EF buyer stacks → deal-level threat (no evidence today)
+5. Pricing bundled free into Rovo → commoditizes in-org agent collaboration
+
+**Full analysis**: [[research-atlassian-amp-competitive-analysis-2026-10-07]]
 
 ---
 

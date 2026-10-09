@@ -2,7 +2,7 @@
 
 **Status**: developing
 **Created**: 2026-06-14
-**Last touched**: 2026-09-14
+**Last touched**: 2026-10-08
 
 ## Thesis
 
@@ -10,6 +10,7 @@ A *workspace* is shared storage; a *workspace brain* is shared memory. The two t
 
 ## Evolution
 
+- **2026-10-08**: The write-side got its mechanism. Per-call `why` (required once at session head, inherited after) is the zero-ceremony ingestion the brain was waiting on, and a per-call why is already an atom with an envelope. Procedures become a fold over repeated why-sequences ("skills are compiled sessions"). See [[why-on-every-call]].
 - **2026-06-14**: Generalized from the marketing-brain design (Bean session 2026-06-13/14). Established the 3-zones-2-operations model; identified that "completeness" comes from naming *operations*, not adding storage zones; named the consolidate step (Simon's intuited "process step") as the memory-consolidation move that separates a flywheel from a shelf. Resolved the storage-vs-retrieval question (atomic notes + envelope + retained source docs, semantic-not-positional decomposition, lazy seeding). Mapped folder-linking topology and the cross-org boundary. Full spec → `active/workspace-brain-architecture-2026-06-14.md`.
 - **2026-08-29**: Revived and expanded into [[sovereign-organizational-memory]]. The prior Signals / Doctrine / Output anatomy describes storage and consolidation, but Simon's company-brain model exposed two additional distinctions: raw sources are **evidence**, not facts; and reusable modules are the organization's **procedural memory**, not merely tools beside the brain. Personal context is better modeled as a sovereign peer scope composed into a task-specific view than as a child layer stored “on top” of company memory.
 
