@@ -141,7 +141,7 @@ Additional checks before using real company data:
 
 ## This changes the entry point, not necessarily the entire product strategy
 
-The September plan selects call processing as the acquisition lure and the inbox as the recurring surface. File collaboration is an alternative first-value path with fewer prerequisites: the user already has an output, needs no notetaker integration, and can experience value alone before inviting a teammate. That makes it worth testing ahead of a more elaborate onboarding dependency chain, not proof that the call loop should be abandoned. [Current rework](tr-rework/README.md), [first-loop plan](tr-rework/tokenrip-first-loop-site-gtm-2026-09-04.md).
+The September plan selects call processing as the acquisition lure and the inbox as the recurring surface. File collaboration is an alternative first-value path with fewer prerequisites: the user already has an output, needs no notetaker integration, and can experience value alone before inviting a teammate. That makes it worth testing ahead of a more elaborate onboarding dependency chain, not proof that the call loop should be abandoned. [Current rework](tr-v2/README.md), [first-loop plan](tr-v2/tokenrip-first-loop-site-gtm-2026-09-04.md).
 
 The sharper early audience is people already generating, exchanging, and correcting work artifacts with AI—especially across tools. This remains a behavior-based audience rather than a permanent two-founder headcount restriction.
 
