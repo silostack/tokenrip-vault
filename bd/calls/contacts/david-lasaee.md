@@ -2,8 +2,8 @@
 contact: David LaSaee
 company: Providence Capital Funding (contractor)
 call_type: firm-direct
-status: borrower-email launch locked for 10-06 as a controlled finance-first ramp (~400/day initially, current cap ~1,200/day); vendor offer still unproven and phone path weak. Commercials, attribution, exclusivity, and David's payment mechanism remain unsigned; do not scale delivery until economics are modeled.
-last_contact: 2026-10-03
+status: borrower email live since 10-06 (1,567 sent by 10-09; one positive reply, not fundable). Vendor lane is now David's stated economic center but the offer is unspecified and his calling number is burned. Commercials, attribution, exclusivity, and David's payment mechanism remain unsigned and were not raised 10-10; do not scale delivery until economics are modeled.
+last_contact: 2026-10-10
 sensitivity: David asked not to be recorded on 09-03; keep his quotes internal
 ---
 
@@ -35,6 +35,10 @@ Contractor paid by Providence, listed as Account Manager (Brea, CA). Not a phone
 
 - **2026-10-03**: [[bd/calls/transcripts/david-lasaee-2026-10-03]] · [[bd/calls/notes/david-lasaee-2026-10-03]]
   — Simon + Alek + David. Decided the 10-06 borrower-email launch is **finance-first**, not a generic equipment-finder pitch: the latter may lose the customer who already selected a unit and has a short financing window. Start near 400/day and ramp toward a current ~1,200/day cap after deliverability/reply review. New segmentation read: firm operating model × state matters more than SIC alone (single-truck septic/tree operators vs multi-asset firms; Colorado concrete differs from California). Vendor acquisition remains unresolved: a vendor values an approved, fundable buyer, not an unqualified shopper; no truthful cold vendor offer is yet specified. Commercials again went untouched.
+- **2026-10-01** *(backfilled; transcript and note existed but were not indexed here)*: [[bd/calls/transcripts/david-lasaee-2026-10-01]] · [[bd/calls/notes/david-lasaee-2026-10-01]]
+  — Focus-group tabulation to be read before copy/cadence changes; Tuesday send stays a ramp, general/OTR trucking out; two cadence buckets (intent fast, no-intent stretched); personal-shopper arm is a test, not Tuesday; vendor dials 42 called / 26 voicemails, "no fee until you close" is untrue until a buyer is in hand; fee model unsigned (sixth call). See note for full commitments.
+- **2026-10-10**: [[bd/calls/transcripts/david-lasaee-2026-10-10]] · [[bd/calls/notes/david-lasaee-2026-10-10]]
+  — Simon + Alek + David, 84 min, Saturday call, no prep. Send week review (1,567 sent, 2.7% replies, 1 positive not fundable, bounce high, Tennessee 66 unsent). David asked for targets "then regroup"; not answered. Opt-out line to be tested off on touch 1 only. Second half built a vendor lane live from an OEM dealer locator: US only, no captive, no named lender, outskirts, ≥$20K min and ≥10 units; Alek builds list Saturday, David dials ~100/day from Monday. David's phone number is burned (~50 blocked in a day). Monday 10-12 send reinstated. Commercials not raised.
 
 ## Running Intelligence
 
@@ -120,7 +124,40 @@ Analysis: `active/quintel-v2/call-analysis-2026-10-03.md`. Day-1 build audit: `a
 
 **Vendor offer still fails the truth test.** A cold vendor will not donate proposals for “nurture,” and already has salespeople, outreach, and finance relationships. “We grow your business” may be the correct headline but is not an offer until Ironmark can name the mechanism. Do not use a ready-buyer claim before there is one.
 
+### 2026-10-10 — send-week review; economics move to vendors; his phone number is burned
+
+Analysis: `bd/calls/notes/david-lasaee-2026-10-10.md`.
+
+**Send health (as stated).** 1,567 sent since 10-06. 10-08: 484 vs 400 cap. 10-09: 334, with 66 Tennessee sends never going out (cause unknown). Sequence 3 → 6 touch. Bounce "pretty high" vs <3% target (David wants <1%); the actual % was never given. Reply rate 2.7% (≈42, composition unknown). One positive: 62-year-old, wants $250K, no company, never borrowed; David puts funding odds <1%. He calls every email he gets and did not understand "American lenders" (the email line; the "100%" hook was not in it). No click tracking. David's count of "five applications for ~3,000 emails" pools Quintel, Max, and Marco sources, so it is not a clean Quintel-sourced figure (inferred).
+
+**He asked for targets and kill criteria.** "If we don't hit them we have to regroup." Alek deferred to 10–20K sends; nobody committed to numbers. Same vacuum pattern as price on 09-10 and 09-19.
+
+**His economic read moved.** Borrower email is "not enough unless we get to a hundred thousand emails a day"; his gut max is ~2,000/day (Alek: 10,000 eventually). "For three of us to make money, we really need to zoom in on the vendors." In the same breath: finance "really is not a pain point" for a vendor, and the differentiator is "the billion-dollar question." Three pain points he offers instead: not enough business, not enough product (tariffs), "I'm a total idiot." Only the first is addressable and it is not a financing claim.
+
+**Vendor filters, new (David, accepted by Alek and Simon).** Back into it from the preferred equipment list → who sells it → drop OEM captives (Volvo) → no lender named / no financing tab (an unnamed "several banks" tab is "normally not a good sign") → outskirts, not Chicago/Houston → min listed price ≥$20K → ≥10 units for sale → simpler website is better (HD video, many locations = less chance) → no Canada. Sourcing method confirmed live: OEM "find a dealer" locators; OEMs themselves will not give distributor lists (his 20 years). Simon's live read of the sample: no financing tab is "fairly common." Contested: Simon thinks lawn-lot, no-website dealers may be more receptive; David says those are $10–20K tickets. Both lists to be run. Floor-line (car dealers) and bank-captive vendors are out ("they don't need us").
+
+**Kimball as the template.** 15 locations, $100K+ inventory, ex-Wells Fargo because they "didn't return his call in two minutes"; $1.2M deal at ~$40–45K GM, then seven more. David reads it as timing, not a repeatable pattern; Alek says it is a one-off. Candidate vendor values on the table: speed, multiple options (Simon's one-partner hypothesis, "Multiple options. That's the value prop"), deals-your-bank-won't-fund (Alek; David: "everybody's zigging"). Unresolved: which one is true on day one.
+
+**Phone channel is being damaged.** ~50 numbers blocked in a day; Verizon/Spectrum/AT&T show him as spam on caller ID; calls drop to voicemail without ringing. His JPMorgan contact: "your number probably cannot be repaired", the company must give him a new one. He attributes it to the cold-call volume of the past four weeks. His offer of ~100 vendor calls/day (500/week) assumes a working number. The ticket/unit filters are partly to stop burning more.
+
+**JPMorgan as a check (inferred relationship).** He proposes testing our vendor sample against JPMorgan's vendor system ("1.2 million vendors", but it counts any equipment seller with a bank account) and treating a JPM relationship as a negative. His access, not ours. Quintel receives keep/exclude only.
+
+**Portability, unprompted.** "Whether it's with Providence or some other company… you're the guinea pig." "Maybe you go after a different type of clientele, for different lenders or different entities." Not a term, but the first time he has said it.
+
+**Opt-out.** He says US law requires it and that Gmail/Yahoo can burn a domain; the team will test touch 1 without it, with it from touch 2–3. Test design still open: Simon's 50% concurrent split vs Alek's week-with / week-without.
+
+**Reversals.** Monday 10-12 send reinstated (09-26 had "skip 10-12"). Vendor outreach stays calls-only, under Providence, for now (David: calling as Ironmark invites technical questions; vendors may already be PCF customers). Simon's "Ironmark should own the relationship" was raised, not resolved.
+
+**Open miss.** Simon was asked about "fully automating… AI agents, a month out?", answered literally, and David moved on; the expectation is unclear.
+
 ## Relationship / Pipeline State
+
+### 2026-10-10 update
+**Operating alignment is the best it has been; revenue evidence has not moved.** "Best call ever" was about finding a logical vendor filter, not an outcome. Zero qualified applications from email at 1,567; phone lab remains 0 from non-PCF rows (09-30); the lane David now wants to weight has no tested offer.
+
+**What he is expecting next:** a vendor list on his filters Saturday so he can dial Monday; Monday sends; a lower bounce rate and a fixed Tennessee gap; an answer on regroup targets (implied).
+
+**Ownership on our side:** Alek — vendor run, sends, copy implementation, Erin. Simon — deliverability root cause, regroup targets, the economics model and instrument (still overdue), the vendor opener (with Alek).
 
 ### 2026-09-26 update
 **Ops calendar is real; the contract is not.** 10-06 send, 09-29 vendor dials, standing Sat + optional Wed, Slack CRM gate — all agreed in the room. The 09-19 signable instrument, the 45% share, the pre-tax mechanism, and exclusivity were not mentioned. New: he *instructed* us to take existing-PCF hits off-Providence so we get paid — that is a de facto non-exclusivity for CRM collisions, and it was not reconciled with "it has to be targeted to one company."
@@ -153,19 +190,23 @@ Analysis: `active/quintel-v2/call-analysis-2026-10-03.md`. Day-1 build audit: `a
 |------|-----------|----------------------|---------------|
 | 1 | The ≤$1,000/funded-deal cap plus a share of David's 45% covers Quintel's cost to generate a funded deal | **untested — not yet modelled.** At his floor ratios (2% apply, 10% fund) one funded deal ≈ 500 contacts, i.e. ~$2/contact to cover sourcing, verification, domains, inboxes, sending and build, before margin. It clears only at owner ratios (25-5-1), at higher tickets, or if the 45% share is material | Run the model this week — he explicitly asked for it. **The 45% share is where the deal actually lives and it went unquantified; pin that number, not the cap** |
 | 2 | David's referral-fee authority survives volume | fact at small scale ("I have the ability as an AE"; "the most I have paid is a thousand" — one payment, not a policy); **inferred, low-medium at scale** | Ask: what's the largest total referral spend you've had go through in a month, and is it per-deal discretionary or budgeted? |
-| 3 | The population of vendors with no incumbent lender is large enough to build a channel on | **his explicit counter-claim: "a lot smaller than what you think"** (Danny Stewart: 27 vendors/14 years, 6 constant). Our thesis rests on the opposite | Scrape 500 association-listed vendors in his geography, count no-financing-tab. Runnable this week; decides whether the vendor lane is a channel or a trickle |
+| 3 | The population of vendors with no incumbent lender is large enough to build a channel on | **his explicit counter-claim: "a lot smaller than what you think"** (Danny Stewart: 27 vendors/14 years, 6 constant). Our thesis rests on the opposite | Scrape 500 association-listed vendors in his geography, count no-financing-tab. Runnable this week; decides whether the vendor lane is a channel or a trickle. **10-10 partial:** live OEM-locator sample (n≈4): no financing tab "fairly common" (Simon), but a missing tab can mean a captive (Power Equipment / Volvo). Count must also exclude captives |
 | 4 | Email converts rows the phone cannot — i.e. the channel, not the list, is the constraint | our data supports it (300 dials/0 apps; event rows 18% dead vs lien-timing 57%); **David disputes the sequencing** and wants 2,000 dials first, unchallenged on 09-19 | Run a 2,000-send test in parallel rather than serially. Do not let his sequencing set our calendar by default |
-| 5 | Exclusivity to Providence is acceptable to us | his condition, stated plainly ("it has to be targeted to one company"). **Caps Quintel to one customer in EF small-ticket**, with an exit path he himself calls a dying business | Ask directly whether a non-competing lender (different ticket band or geography) breaks it. Decide deliberately, do not drift |
+| 5 | Exclusivity to Providence is acceptable to us | his condition, stated plainly ("it has to be targeted to one company"). **Caps Quintel to one customer in EF small-ticket**, with an exit path he himself calls a dying business | Ask directly whether a non-competing lender (different ticket band or geography) breaks it. Decide deliberately, do not drift. **10-10: David decoupled it himself** ("whether it's with Providence or some other company"; "different lenders or different entities"). Get it said as a term, not an aside |
 | 6 | The website/backlink wedge actually moves a vendor to switch | inferred, **medium-high** — two live proofs from David (Advanced Innovative Technologies → first deal + 2-3/mo promised; Quantum J's Canning $25K → $250K/mo), but both closed by *him*, not by the artifact | Build one vendor site free in exchange for a link and see whether deal flow follows. Cheap, and it is the only wedge a Danny Stewart cannot copy |
 | 7 | This motion has a fallback if David does not | **inferred, low.** One 1099 contractor with other clients who raised his own mortality unprompted | Ask him to name one other AE or client who could absorb the flow |
 | 8 | Providence's owners fund the ListPad API at ~$200K/mo revenue | his claim, unconfirmed; Lee and Horn have never been in the room | Not worth testing until the revenue exists; manual entry is his cost until then |
 | 9 | Attribution is verifiable | **downgraded back to medium, 09-22** — the 09-19 mechanism assumed Providence-branded domains; 09-22 switched to own-brand domains without re-deriving how attribution/trust-building works without the Providence name doing the work | Ask directly: with own-brand domains, what tells David a reply is a Quintel-sourced lead vs. noise, and what tells Providence's CRM the deal came through this channel? |
-| 10 | The 12.5%/flat-10% fee tiers (plus ~$1,000 cap) clear Quintel's cost to generate a funded deal | **still unmodeled as of 09-26** — same gap as assumption #1, now five calls | Run the model before next Saturday; put it on the standing-meeting agenda |
+| 10 | The 12.5%/flat-10% fee tiers (plus ~$1,000 cap) clear Quintel's cost to generate a funded deal | **still unmodeled as of 10-10** — same gap as assumption #1; David 10-10: "I don't know what the expenses are" | Run the model before next Saturday; put it on the standing-meeting agenda |
 | 11 | Day-one copy can claim "lending partners" / best-match while the only funder is Providence | **inferred, contested on-call** (Alek: "still a lie"; Simon: frame as value-add; David: be honest up front) | FG will pick a preference; we still have to decide whether we *fulfill* multi-lender. Do not ship the winning lie |
 | 12 | Digital-footprint / search-lift predicts fundable growth | **inferred, medium** — All American Septic is n=1 labeled success vs Indiana septic failures | Ask David for the 10–15 repeat-funded names (the labeled set). Do not scrape 10k sites first |
 | 13 | Exclusivity still holds after "take CRM hits to another lender" | **contradicted on-call, unresolved** | Put both sentences in front of him next Saturday and pick one |
 | 14 | Active advertising, online footprint, and growing search volume predict a fundable capacity expansion | **inferred, low-medium** — David's All American Septic example and Colorado call anecdotes support a hypothesis, not a validated model | Cross-reference active ads / footprint against the funded, callback, and dead rows before weighting the signal |
-| 15 | A truthful finance-first email can earn replies from the initial no-intent pool | **untested.** David's focus-group direction supports short email and a low-friction CTA; it does not prove a particular claim or conversion rate | Launch the controlled 10-06 ramp with variants; evaluate verified delivery, reply, qualified conversation, application, and funding separately |
+| 15 | A truthful finance-first email can earn replies from the initial no-intent pool | **partly tested 10-10:** 1,567 sent, 2.7% replies (composition unknown), 1 positive that is not fundable, 0 attributable applications; a reply is not fundable intent. David's focus-group direction supports short email and a low-friction CTA; it does not prove a particular claim or conversion rate | Launch the controlled 10-06 ramp with variants; evaluate verified delivery, reply, qualified conversation, application, and funding separately |
+| 16 | The vendor lane can carry the program's economics | **inferred, medium-low.** His claim ("for three of us to make money, zoom in on the vendors"; borrower email not enough below ~100K/day) plus 09-19 "vendors = 70% of August business"; offer unspecified; he also says finance "is not a pain point" for vendors | First 100 filtered vendor calls, logged: decision-maker reached / live deal in 30 days / willing to route one. Needs a scripted opener first; A/B two |
+| 17 | David's 100 calls/day is real and sustainable | **inferred, low.** ~50 numbers blocked in one day; carriers flag his name; "your number probably cannot be repaired" | Ask which number vendor calls come from, who issues it, and the daily ceiling before burn |
+| 18 | "No financing tab" means addressable vendor | **inferred, low-medium.** n≈4 informal; captive financing (Volvo) and "several banks" language make tab absence noisy | Carry OEM-captive as a column from the manufacturer list; count addressable only |
+| 19 | Floor filters (≥$20K min price, ≥10 units) select vendors who want a partner | **inferred, medium-low.** Rule is David's, drawn from Kimball and one retiring crane dealer; Simon countered that lawn-lot dealers may be more receptive at $10–20K | Alek's two-list comparison on one script; compare reach and live-deal rate |
 
 ## Open Commitments
 
@@ -231,6 +272,19 @@ Analysis: `active/quintel-v2/call-analysis-2026-10-03.md`. Day-1 build audit: `a
 | 58 | Start borrower-email ramp near 400/day; assess before increasing toward 1,200/day | Simon / Alek | **2026-10-06** | New — no confirmed-intent claim for this cohort |
 | 59 | Cross-reference active ads with existing call outcomes before adding it to the score | Simon / Alek | before next list revision | New — tests #14 |
 | 60 | Supply additional research lists (TX/CO, then OH/IN/MI/OR/WA where viable); call them | Simon / Alek → David | next available capacity | New — David estimates ~80 incremental calls around scheduled follow-ups |
+| 61 | Vendor sample to David's filters (US, no captive, no named lender, outskirts, ≥$20K min, ≥10 units); columns per dealer: min price, unit count, tab status, locations, site sophistication, OEM lines | Alek + Simon | 2026-10-11 | New 10-10 |
+| 62 | Comparison list: lawn-lot / no-website dealers on the same columns | Alek + Simon | 2026-10-11 *(inferred)* | New 10-10; tests #19 |
+| 63 | Vendor opener: pick one of speed / multiple options / deals-your-bank-won't-fund; two A/B scripts for the first 20 calls | Simon + Alek | 2026-10-11 *(inferred)* | New 10-10; tests #16 |
+| 64 | Send borrower emails Monday 10-12 (reverses 09-26 "skip 10-12") | Alek / Simon | 2026-10-12 | Decided 10-10 |
+| 65 | Opt-out test: touch 1 off, touch 2+ on; concurrent split by mailbox vs week-over-week | Simon + Alek | before first no-opt-out send *(inferred 10-13)* | Open |
+| 66 | Root-cause Tennessee (66 unsent 10-09) and the 10-08 overrun; report actual bounce % by verifier vs source | Simon | 2026-10-13 *(inferred)* | Open |
+| 67 | Regroup / kill criteria David asked for, posted in Slack: sends, bounce, positive-reply rate, qualified apps, date | Simon + Alek | 2026-10-16 *(inferred)* | New 10-10; unanswered on call |
+| 68 | Copy: "American lenders" → "US-based lenders" variant | David drafts, Alek implements | 2026-10-11 (his "tomorrow") | New 10-10 |
+| 69 | Email the vendor spreadsheet (50 of 73 contacted, PCF color coding, 25 to go) | David | 2026-10-10 *(inferred)* | New 10-10 |
+| 70 | Check vendor sample against JPMorgan's vendor system; return keep/exclude only | David | 2026-10-12 *(inferred)* | New 10-10 |
+| 71 | Dial ~100 vendors/day from Monday | David | 2026-10-12 | New 10-10; contingent on #61 and a working number |
+| 72 | Replacement calling number | David / Providence | not dated | Open; tests #17 |
+| 73 | Chase Erin; clarify the "cap" and who is footing the bill | Alek | 2026-10-13 | New 10-10, internal |
 | — | Prior items (agenda email, campaign numbers, our numbers, hand-count) | | | Done / closed 09-02–03 |
 
 ### 2026-09-09 — v2 call report back in one day
